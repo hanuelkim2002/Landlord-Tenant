@@ -1,0 +1,55 @@
+# Changelog
+
+Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
+session can see why the code is the way it is.
+
+## 2026-09-26
+
+- `git init` and first commit of the module split, so every later step is a readable diff. `.gitignore`
+  keeps out `.env`, `matters/`, `venv/`, `__pycache__/`. `lease.pdf` left untracked pending a decision on
+  whether the sample lease belongs in the repo. (TODO item 1, formerly item 2.)
+- DOCUMENTATION.md filled from the code: modules and imports, data flow, files on disk with every event
+  kind, the seven tools, the system prompt order, the playbook schema field by field with which code reads
+  each, and running and testing. Replaces the section placeholders. Notes that every module needs
+  `UF_API_KEY` set to import (config raises), so the offline checks need the key present but make no call.
+  (TODO item 3.)
+- Ran `python run.py` end to end against the UF gateway on `test-001`: lease profile loaded from disk,
+  intake, all five proposed facts confirmed one by one, `get_deadlines`, a pasted landlord email recorded
+  by `add_communication`, an assert letter from `draft_letter`, then `timeline`, `timeline full`,
+  `timeline lease_ending`, `bye`. `python smoke.py` passed first, all playbook quote checks OK. The move
+  from Colab broke nothing. Four findings added to TODO.md (double period in letters, one rule 2 slip,
+  `timeline full` tag on a corrected fact, `lease_ending` preloading sections). No code changed.
+  (TODO item 1.)
+- Added README.md (fixed plan), TODO.md (working list), DOCUMENTATION.md (to be filled), CHANGELOG.md.
+  CLAUDE.md slimmed to conventions, guardrails, and pointers to those four files. Its "Next steps" section
+  moved to TODO.md with the review pushbacks folded in.
+
+## 2026-09-25
+
+- Moved from `Landlord_Tenant_chatbot_v3_2.ipynb` (Colab) to modules in this folder, one per notebook
+  section: config, lease, corpus, deterministic, record, timeline, tools, schemas, agent, run, smoke.
+  Colab `userdata` and Drive replaced by `.env` (python-dotenv) and paths relative to the folder.
+- Shared state convention: `matter` and `profile` live in `record.py`; other modules use `record.matter`
+  and `record.profile`. Replaces the notebook's single namespace.
+- `draft_letter` completed: `issue` parameter added to the signature (v3_2 checked it but never received
+  it); draft file name is now `draft_<date>_<issue>_<posture>.txt`; the `draft` event carries `issue`; the
+  note under the letter comes from `playbooks[issue]` (was a reference to a `playbook` global that no
+  longer existed).
+- Rule 11: asks which issue the letter is about when the matter has more than one. Rule 15's example file
+  name updated to the new pattern.
+- `run.py` loads `lease_profile.json` if it exists and runs the extraction model only the first time.
+  The notebook re-extracted on every run.
+- `corpus.py` loads all playbooks silently at import; `check_all_playbooks()` prints the quote checks on
+  demand (the notebook printed them in the loading cell).
+- Added requirements.txt, .env.example, .gitignore, setup.sh, empty `matters/`.
+
+## Before the move (from PROJECT_STATE.md, 2026-09-18 and earlier)
+
+- 2026-09-24: multi-playbook support (`playbooks` dict, `active_playbooks`, `element_status`, deadlines
+  tagged by issue); timeline as a DATE / EVENT / SOURCE / FILE table with `timeline`, `timeline full`,
+  `timeline <issue>`; sent letters recorded through `add_communication` (rule 15) instead of a new tool.
+- 2026-09-18: v3 restructured into the class notebook's section layout; PyPDF2 replaced pymupdf.
+- 2026-09-15: second playbook deposit_claim_received v0.1, quotes verified; letter became a code template;
+  `fetch_log` and `drafts` lists replaced by `fetch` and `draft` events.
+- 2026-09-14: fact provenance: `fill_facts` proposes with stated/inferred tags and basis; `record_facts`
+  is the only door into confirmed facts; `get_deadlines` refuses while anything is unconfirmed.

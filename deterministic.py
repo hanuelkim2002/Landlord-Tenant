@@ -1,0 +1,145 @@
+"""Deterministic Layer: element status and date arithmetic (no model), plus the two one-shot intake calls."""
+import json
+from datetime import date, timedelta
+
+from config import agent_llm, squash
+
+
+# ---- Element Status
+
+def check_elements(playbook, profile, facts, proposed):
+    """For each element: known (confirmed), proposed (needs the tenant's confirmation), missing, or n/a.
+    facts = confirmed answers keyed by element id. proposed = unconfirmed answers with how and basis."""
+    rows = []
+    for e in playbook.spec.elements:
+        # Elements that only matter if another CONFIRMED fact is true. n/a until then.
+        if e.applies_if and not facts.get(e.applies_if):
+            rows.append({"id": e.id, "status": "n/a"})
+            continue
+
+        value, found_in = None, None
+        for src in e.source:
+            if src == "user" and e.id in facts:
+                value, found_in = facts[e.id], "user"
+            elif src.startswith("lease_profile."):
+                clause = getattr(profile, src.replace("lease_profile.", ""))
+                if clause.present:
+                    value, found_in = clause.quote, src
+            if value is not None:
+                break
+
+        if value is not None:
+            rows.append({"id": e.id, "status": "known", "value": value, "from": found_in})
+        elif e.id in proposed:
+            p = proposed[e.id]
+            rows.append({"id": e.id, "status": "proposed", "value": p["value"], "how": p["how"], "basis": p["basis"],
+                         "ask": "Confirm with the tenant: " + playbook.guidance["questions"][e.id]})
+        else:
+            rows.append({"id": e.id, "status": "missing", "ask": playbook.guidance["questions"][e.id]})
+    return rows
+
+
+# ---- Deadlines: the only date arithmetic in the project.
+
+def compute_deadlines(playbook, facts, today):
+    """Date arithmetic only. Dates in facts are strings like '2026-07-31'."""
+    out = []
+    for c in playbook.spec.clocks:
+        # Same applies_if rule as elements: skip clocks that don't apply.
+        if c.applies_if and not facts.get(c.applies_if):
+            continue
+        # Can't compute without the trigger date. Say which one is needed.
+        if c.trigger not in facts:
+            out.append({"clock": c.id, "status": "need date for " + c.trigger})
+            continue
+
+        # Turn "2026-07-31" into a real date, then add or subtract the day count.
+        start = date.fromisoformat(facts[c.trigger])
+        if c.direction == "after":
+            deadline = start + timedelta(days=c.days)
+        else:
+            deadline = start - timedelta(days=c.days)
+
+        # One result per clock, carrying the cite and the counting assumption
+        # so whoever reads it can see where the number came from.
+        out.append({
+            "clock": c.id,
+            "actor": c.actor,
+            "from": f"{c.trigger} {start}",
+            "rule": f"{c.days} days {c.direction}",
+            "deadline": deadline,
+            "status": "passed" if deadline < today else "upcoming",
+            "cite": c.cite,
+            "counting": playbook.counting["convention"],
+        })
+    return out
+
+
+# ---- Classify and Fill Facts: two one-shot model calls made once at intake. Nothing here is confirmed.
+
+# Issue label -> statute sections to preload. Section lists are from the project plan and NOT yet verified against the statute text.
+ROUTING = {
+    "deposit_not_returned":         {"sections": ["83.49"]},
+    "deposit_claim_received":       {"sections": ["83.49"]},
+    "repair_not_made":              {"sections": ["83.51", "83.60", "83.56"]},
+    "notice_received_nonpayment":   {"sections": ["83.56", "83.60"]},
+    "notice_received_violation":    {"sections": ["83.56"]},
+    "landlord_entered_unannounced": {"sections": ["83.53", "83.67"]},
+    "rent_increased":               {"sections": ["83.46"]},
+    "wants_to_leave_early":         {"sections": ["83.595", "83.56"]},
+    "lease_ending":                 {"sections": ["83.575", "83.57", "83.58"]},
+    "other":                        {"sections": []},
+}
+
+
+def ask_json(llm, prompt):
+    """Send a prompt, strip any markdown fences, return parsed JSON."""
+    raw = llm.invoke(prompt).content.strip()
+    raw = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+    return json.loads(raw)
+
+
+def classify(description):
+    """Which issue labels fit the tenant's description? Multi-label. 'other' is allowed."""
+    prompt = f"""A Florida residential tenant describes a problem. Pick every label that fits.
+Labels: {list(ROUTING)}
+Use "other" if nothing fits. Do not guess facts the tenant did not state.
+Return ONLY JSON: {{"issues": [...], "reason": "one sentence per label, quoting what the tenant said"}}
+
+TENANT SAID:
+{description}"""
+    result = ask_json(agent_llm, prompt)
+    result["issues"] = [i for i in result["issues"] if i in ROUTING]   # drop anything invented
+    return result
+
+
+def fill_facts(description, playbook):
+    """Pull answers out of the description. Each is tagged stated or inferred and must rest on the tenant's
+    own words. Nothing here is confirmed; the agent confirms each one before record_facts stores it."""
+    slots = [{"id": e.id, "type": e.type, "question": playbook.guidance["questions"][e.id]}
+             for e in playbook.spec.elements if "user" in e.source]
+    prompt = f"""Read what the tenant said and answer each question if you can.
+Return ONLY a JSON object. For each id: {{"value": ..., "how": "stated" or "inferred", "said": "exact words copied from the tenant"}}.
+"stated" means the tenant answered the question directly. "inferred" means the answer follows from what the
+tenant said (for example, comparing two dates they gave). Either way, "said" must be the tenant's exact words
+that the answer rests on. If nothing the tenant said supports an answer, omit the id.
+Rules: date -> "YYYY-MM-DD" only if the tenant gave day, month, and year. bool -> true/false.
+money -> number without $ or commas. Never compute a date; only copy one the tenant gave.
+
+QUESTIONS:
+{json.dumps(slots, indent=2)}
+
+TENANT SAID:
+{description}"""
+    answers = ask_json(agent_llm, prompt)
+
+    slot_ids = [s["id"] for s in slots]
+    proposed = {}
+    for slot_id, a in answers.items():
+        said = squash(a.get("said", ""))
+        how = a.get("how")
+        if slot_id in slot_ids and how in ("stated", "inferred") and said and said in squash(description):
+            proposed[slot_id] = {"value": a["value"], "how": how, "basis": a["said"]}
+        else:
+            print(f"  dropped {slot_id}: no supporting quote or tag")
+    return proposed

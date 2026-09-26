@@ -1,0 +1,136 @@
+issue: deposit_not_returned
+description: Tenant moved out. Landlord has neither returned the deposit nor sent a claim against it.
+statutory_hook: "83.49"
+
+provenance:
+  statute_year: 2026
+  verified_against: statutes/83.49.txt
+  verified_by: null          # your name, once you've read each quote against the file
+  verified_on: null
+  version: 0.2
+
+counting:
+  convention: calendar days, trigger day not counted, no weekend or holiday adjustment
+  status: ASSUMPTION. Florida's court rule for counting days has not been checked against statutory deadlines outside litigation. Show this line with every computed date.
+
+# ---------- read by code ----------
+spec:
+  elements:
+    - id: deposit_amount
+      type: money
+      source: [lease_profile.security_deposit, user]
+    - id: tenancy_terminated
+      type: date
+      source: [user]
+    - id: vacated
+      type: date
+      source: [user]
+    - id: claim_notice_received
+      type: bool
+      source: [user]
+    - id: claim_notice_date
+      type: date
+      source: [user]
+      applies_if: claim_notice_received
+    - id: forwarding_address_given
+      type: bool
+      source: [user]
+    - id: early_or_periodic
+      type: bool
+      source: [user]
+    - id: seven_day_notice_given
+      type: bool
+      source: [user]
+      applies_if: early_or_periodic
+
+  clocks:
+    - id: return_if_no_claim
+      actor: landlord
+      trigger: tenancy_terminated
+      days: 15
+      direction: after
+      cite: "83.49(3)(a)"
+      quote: "if the landlord does not intend to impose a claim on the security deposit, the landlord must return the security deposit, together with interest if otherwise required, within 15 days after the termination of the rental agreement"
+
+    - id: claim_notice_deadline
+      actor: landlord
+      trigger: tenancy_terminated
+      days: 30
+      direction: after
+      delivery: [certified mail to last known mailing address, e-mail per 83.505]
+      cite: "83.49(3)(a)"
+      quote: "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."
+      consequence: "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
+
+    - id: tenant_seven_day_notice
+      actor: tenant
+      trigger: vacated
+      days: 7
+      direction: before
+      applies_if: early_or_periodic
+      delivery: [certified mail, personal delivery]
+      cite: "83.49(5)"
+      quote: "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"
+      consequence: "Failure to give such notice relieves the landlord of the notice requirement of paragraph (3)(a) but does not waive any right the tenant may have to the security deposit or any part of it."
+
+  lease_overrides:
+    - clock: tenant_seven_day_notice
+      lease_field: notice_before_vacating     # new field for cell 3
+      cite: "83.49(5)"
+      quote: "Except when otherwise provided by the terms of a written rental agreement"
+
+  exclusions:
+    - cite: "83.49(4)"
+      quote: "This section does not apply to transient rentals by hotels or motels as defined in chapter 509 or in those instances in which the amount of rent or deposit, or both, is regulated by law or by rules or regulations of a public body"
+    - cite: "83.42"
+      quote: null
+      note: Not yet read. Check whether university-owned housing is excluded from Part II.
+
+  related_issues:
+    - issue: deposit_claim_received
+      when: claim_notice_received == true
+
+  open_questions:
+    - id: termination_date_meaning
+      sections: ["83.49"]
+      text: The clocks run from "termination of the rental agreement." The text does not say whether that is the lease end date or the move-out date. Record both; no cases loaded yet.
+
+# ---------- read by the model ----------
+guidance:
+  questions:
+    deposit_amount: How much was your security deposit?
+    tenancy_terminated: What date did the lease end, or what date was it terminated?
+    vacated: What date did you move out and return the keys?
+    claim_notice_received: Have you received any written notice from the landlord about keeping part of the deposit?
+    claim_notice_date: What date did you receive that notice?
+    forwarding_address_given: Did you give the landlord your new mailing address in writing?
+    early_or_periodic: Did you move out before the lease end date, or was this a month-to-month arrangement?
+    seven_day_notice_given: Before moving out, did you send the landlord written notice at least 7 days ahead, by certified mail or in person, with your new address?
+
+  lease_checks:
+    security_deposit: Confirms the amount and that it was called a deposit.
+    nonrefundable_fees: Money labeled nonrefundable may fall under 83.491 instead. Do not treat it as outside 83.49 without reading 83.491.
+    forwarding_address_requirement: The landlord's notice goes to the "last known mailing address."
+    move_out_requirements: Cleaning and carpet clauses are the usual basis of a claim.
+    notices_to_landlord: Where the tenant's letter must be sent.
+    joint_and_several_liability: Whether one roommate's damage can be charged against the whole deposit.
+
+  evidence:
+    - proof of deposit payment
+    - move-out date (key receipt, walkthrough form, last utility bill)
+    - move-in and move-out photos
+    - forwarding-address notice with delivery proof
+    - any landlord letters or emails, with envelope or full headers
+
+  postures:
+    core: [today's date, obligation identified, amount and return address, response deadline computed by the tool, delivery method]
+    preserve: States move-out date, amount, forwarding address. Asks for return. Cites nothing.
+    assert: Adds the 83.49(3)(a) obligation, quoted.
+    escalate: Adds the forfeiture consequence, quoted, and 83.49(3)(c) fee-shifting.
+    notice_sufficiency: No tenant letter after move-out starts a statutory clock in this issue. The only tenant-side clock is the 7-day pre-vacate notice, which cannot be cured afterward. Say so when it is missing.
+
+  failure_modes:
+    - Using the lease end date as the termination date without also recording move-out.
+    - Treating a "nonrefundable fee" as outside 83.49 without reading 83.491.
+    - Skipping the 7-day notice question on an early move-out.
+    - Computing any date outside compute_deadlines.

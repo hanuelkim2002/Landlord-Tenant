@@ -1,0 +1,149 @@
+issue: deposit_claim_received
+description: Tenant moved out and has received the landlord's written notice of intent to impose a claim on the deposit.
+statutory_hook: "83.49"
+
+provenance:
+  statute_year: 2026
+  verified_against: statutes/83.49.txt
+  verified_by: null          # your name, once you've read each quote against the file
+  verified_on: null
+  version: 0.1
+
+counting:
+  convention: calendar days, trigger day not counted, no weekend or holiday adjustment
+  status: ASSUMPTION. Florida's court rule for counting days has not been checked against statutory deadlines outside litigation. Show this line with every computed date.
+
+# ---------- read by code ----------
+spec:
+  elements:
+    - id: deposit_amount
+      type: money
+      source: [lease_profile.security_deposit, user]
+    - id: tenancy_terminated
+      type: date
+      source: [user]
+    - id: claim_notice_dated
+      type: date
+      source: [user]
+    - id: claim_notice_received_on
+      type: date
+      source: [user]
+    - id: claim_delivery
+      type: text
+      source: [user]
+    - id: claim_amount
+      type: money
+      source: [user]
+    - id: claim_reason
+      type: text
+      source: [user]
+    - id: notice_states_objection_window
+      type: bool
+      source: [user]
+    - id: objected
+      type: bool
+      source: [user]
+    - id: objection_date
+      type: date
+      source: [user]
+      applies_if: objected
+    - id: objection_delivery
+      type: text
+      source: [user]
+      applies_if: objected
+
+  clocks:
+    - id: claim_notice_deadline
+      actor: landlord
+      trigger: tenancy_terminated
+      days: 30
+      direction: after
+      delivery: [certified mail to last known mailing address, e-mail per 83.505]
+      cite: "83.49(3)(a)"
+      quote: "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."
+      consequence: "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
+
+    - id: tenant_objection_deadline
+      actor: tenant
+      trigger: claim_notice_received_on
+      days: 15
+      direction: after
+      delivery: [in writing, to the address stated in the landlord's notice]
+      cite: "83.49(3)(b)"
+      quote: "Unless the tenant objects to the imposition of the landlord’s claim or the amount thereof within 15 days after receipt of the landlord’s notice of intention to impose a claim, the landlord may then deduct the amount of his or her claim and shall remit the balance of the deposit to the tenant within 30 days after the date of the notice of intention to impose a claim for damages."
+      consequence: "The failure of the tenant to make a timely objection does not waive any rights of the tenant to seek damages in a separate action."
+
+    - id: landlord_remit_balance
+      actor: landlord
+      trigger: claim_notice_dated
+      days: 30
+      direction: after
+      cite: "83.49(3)(b)"
+      quote: "shall remit the balance of the deposit to the tenant within 30 days after the date of the notice of intention to impose a claim for damages"
+      # The sentence this comes from begins "Unless the tenant objects". The tool computes this date
+      # in every case and shows the quote; it does not decide whether the condition is met.
+
+  lease_overrides: []
+
+  exclusions:
+    - cite: "83.49(4)"
+      quote: "This section does not apply to transient rentals by hotels or motels as defined in chapter 509 or in those instances in which the amount of rent or deposit, or both, is regulated by law or by rules or regulations of a public body"
+
+  related_issues:
+    - issue: deposit_not_returned
+      when: claim_notice_received == false
+
+  open_questions:
+    - id: receipt_date
+      sections: ["83.49", "83.505"]
+      text: The objection clock runs from "receipt of the landlord’s notice" while the remit clock runs from "the date of the notice". Record both dates. For e-mail, 83.505(4) says a notice "is deemed delivered at the time it is sent, unless the e-mail is returned to the sender as undeliverable"; the tool records how the notice arrived and does not decide which date counts.
+    - id: email_notice_conditions
+      sections: ["83.505"]
+      text: 83.505(1) allows e-mail delivery only "if the parties have signed an addendum to the rental agreement". The tool records whether the tenant recalls such an addendum and does not decide whether the notice was validly delivered.
+    - id: objection_form
+      sections: ["83.49"]
+      text: The statute's model notice says the tenant "must object in writing" and that the objection "must be sent to (landlord’s address)". No other delivery method or content requirement appears in the text. No cases loaded yet.
+
+# ---------- read by the model ----------
+guidance:
+  questions:
+    deposit_amount: How much was your security deposit?
+    tenancy_terminated: What date did the lease end, or what date was it terminated?
+    claim_notice_dated: What date is printed on the landlord's notice?
+    claim_notice_received_on: What date did you actually receive the notice?
+    claim_delivery: How did the notice reach you (certified mail, regular mail, e-mail, hand delivery, something else)?
+    claim_amount: How much does the notice say the landlord is claiming from the deposit?
+    claim_reason: What reason does the notice give for the claim? Copy the words from the notice.
+    notice_states_objection_window: Does the notice tell you that you must object in writing within 15 days, and give an address to send the objection to?
+    objected: Have you already sent the landlord a written objection to the claim?
+    objection_date: What date did you send the objection?
+    objection_delivery: How did you send the objection, and to what address?
+
+  lease_checks:
+    security_deposit: Confirms the amount and that it was called a deposit.
+    deposit_deductions: What the lease says the landlord may deduct for. Compare against the reason in the notice.
+    move_out_requirements: Cleaning and carpet clauses are the usual basis of a claim.
+    nonrefundable_fees: Money labeled nonrefundable may fall under 83.491 instead. Do not treat it as outside 83.49 without reading 83.491.
+    notices_to_landlord: Where the tenant's objection must be sent under the lease, alongside the address given in the notice.
+    joint_and_several_liability: Whether one roommate's damage can be charged against the whole deposit.
+
+  evidence:
+    - the notice itself, with the envelope or the full e-mail headers
+    - the date the notice arrived (postmark, delivery scan, e-mail timestamp)
+    - move-in and move-out photos
+    - move-out walkthrough form, if any
+    - receipts for cleaning or repairs the tenant paid for
+    - the objection letter with proof of how and when it was sent
+
+  postures:
+    core: [today's date, the claim amount and reason as stated in the notice, the tenant's objection, the deposit amount, a return address, response deadline computed by the tool, delivery method]
+    preserve: States that the tenant objects to the claim, the amount, and the reason. Asks for return of the full deposit. Cites nothing.
+    assert: Adds the 83.49(3)(b) sentence on the 15-day objection, quoted.
+    escalate: Adds the 83.49(3)(c) sentence on court costs and attorney fees, quoted.
+    notice_sufficiency: For this issue your letter is the objection itself. The statute sentence on objections is quoted above, and the tool has computed the 15-day date from the day you said you received the notice. Whether a letter sent after that date has any effect is not something this tool decides.
+
+  failure_modes:
+    - Computing the objection window from the date on the notice instead of the date of receipt, or the remit window from receipt instead of the date on the notice.
+    - Treating the remit clock as unconditional. It comes from a sentence that begins "Unless the tenant objects".
+    - Skipping the question of how the notice was delivered when it came by e-mail.
+    - Computing any date outside compute_deadlines.
