@@ -102,7 +102,7 @@ Listed from the bottom of the import chain up. Every module imports `config`, so
   same issue and posture overwrites the file; the earlier `draft` event remains.
 - `artifacts/<sha256[:12]>_<name>`: copies of files stored by `add_artifact`.
 
-Outside `matters/`: `lease.pdf` (the input lease read by `run.py`), `statutes/83.*.txt` and `.html` (the
+Outside `matters/`: `lease.pdf` (the input lease read by `run.py`; a sample, gitignored), `statutes/83.*.txt` and `.html` (the
 read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key).
 
 ## Tools the model can call

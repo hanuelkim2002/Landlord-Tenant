@@ -5,6 +5,8 @@ session can see why the code is the way it is.
 
 ## 2026-09-26
 
+- `lease.pdf` added to `.gitignore`. It is a sample lease, not a real one, but it carries names and
+  addresses, so it stays out of history. Replaces the earlier state of leaving it untracked by hand.
 - `git init` and first commit of the module split, so every later step is a readable diff. `.gitignore`
   keeps out `.env`, `matters/`, `venv/`, `__pycache__/`. `lease.pdf` left untracked pending a decision on
   whether the sample lease belongs in the repo. (TODO item 1, formerly item 2.)
