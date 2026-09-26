@@ -37,8 +37,8 @@ student, not admitted.
   deadline into a playbook, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
 - After any edit to a playbook YAML, run the playbook quote check and every line must be OK.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
-- `run.py` is interactive and calls the UF gateway. `smoke.py` calls the model for classify and fill_facts.
-  Everything else can be checked without the key.
+- `run.py` is interactive and calls the UF gateway. `smoke_online.py` calls the model for classify and
+  fill_facts. Everything else, including `smoke.py`, runs without the key.
 
 ## How to work with the author
 
@@ -53,7 +53,8 @@ student, not admitted.
     bash setup.sh            # once: venv, pip install, .env from template, matters/
     source venv/bin/activate
     python run.py            # extracts the lease profile the first time, then intake + chat
-    python smoke.py          # checks without the agent
+    python smoke.py          # offline checks, no key needed
+    python smoke_online.py   # classify and fill_facts, calls the model
     python schemas.py        # what the model sees per tool
 
 Chat commands: `timeline`, `timeline full`, `timeline <issue>`, `bye`.

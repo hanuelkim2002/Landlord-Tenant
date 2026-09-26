@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-26
 
+- `smoke.py` split: `smoke.py` keeps the offline checks (playbook quotes, elements, deadlines, letter,
+  timelines) and `smoke_online.py` holds the two model calls (`classify`, `fill_facts`). Replaces one
+  script that needed the key for everything. To let the offline part run with no key, `config.py` no
+  longer raises at import: the model clients are `None` without a key, and the new `require_key()` raises
+  the old message. `run.py` and `smoke_online.py` call it first. CLAUDE.md's running lines updated.
+  (TODO item 1, formerly item 3.)
 - `intake` pastes only the model-facing part of each playbook into the system prompt: `issue`, `guidance`,
   and `spec.open_questions`, dumped as YAML. Replaces pasting the whole YAML file, which put elements,
   clocks, exclusions, related issues, provenance, and counting into the context. `open_questions` kept

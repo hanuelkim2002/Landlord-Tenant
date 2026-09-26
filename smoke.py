@@ -1,13 +1,13 @@
-"""Smoke Tests: each block checks one piece without the agent. Needs a saved lease profile for the matter.
+"""Smoke Tests, offline: each block checks one piece without the agent and without a model call, so it runs
+with no key. Needs a saved lease profile for the matter. The model calls are in smoke_online.py.
 
     python smoke.py
 """
-import json
 from datetime import date
 
 import record
 from corpus import check_all_playbooks, playbooks
-from deterministic import check_elements, classify, compute_deadlines, fill_facts
+from deterministic import check_elements, compute_deadlines
 from lease import LeaseProfile
 from record import matter_dir
 from timeline import render_timeline
@@ -33,17 +33,6 @@ for row in check_elements(pb, record.profile, test_facts, {}):
 print()
 for d in compute_deadlines(pb, test_facts, today=date(2026, 9, 8)):
     print(d)
-print()
-
-# classifier and slot filling on a description (two model calls)
-description = """I rented a house in Gainesville. My lease ended July 31, 2026 and I moved out
-and gave the keys back on July 30, 2026. I emailed the property manager my new address the same
-day. It's September now and I haven't gotten my $1,850 deposit back or any letter about it."""
-print(classify(description))
-proposed = fill_facts(description, pb)
-print(proposed)
-for row in check_elements(pb, record.profile, {}, proposed):
-    print(row)
 print()
 
 # the letter template

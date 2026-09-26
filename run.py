@@ -2,9 +2,11 @@
 
     python run.py
 """
+from config import ROOT, require_key
+require_key()                   # this script calls the models; stop here if the key is missing
+
 import record
 from agent import chat, intake
-from config import ROOT
 from lease import LeaseProfile, check_quotes, extract_profile, ingest_pdf
 from record import matter_dir
 

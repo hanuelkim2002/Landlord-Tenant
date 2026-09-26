@@ -6,13 +6,14 @@ not what is planned (that is TODO.md) or what changed (that is CHANGELOG.md).
 
 ## Modules
 
-Listed from the bottom of the import chain up. Every module imports `config`, so nothing imports without
-`UF_API_KEY` set (see Running and testing).
+Listed from the bottom of the import chain up. Every module imports `config`. Everything imports without
+`UF_API_KEY`; only a model call needs it (see Running and testing).
 
 - `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `PLAYBOOKS`), the two model clients (`agent_llm` on
   `AGENT_MODEL`, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0), and `squash`
-  (collapse whitespace, lowercase; used for every quote comparison). Reads `.env` with python-dotenv and
-  raises if `UF_API_KEY` is missing. Imports nothing from the project.
+  (collapse whitespace, lowercase; used for every quote comparison). Reads `.env` with python-dotenv. The
+  two clients are `None` when `UF_API_KEY` is missing; `require_key()` raises with a clear message then,
+  and `run.py` and `smoke_online.py` call it first. Imports nothing from the project.
 - `lease.py`: lease intake. `ingest_pdf` (store the PDF under its hash, extract page text with PyPDF2,
   write `pages.json`), the `Clause` and `LeaseProfile` shapes (fifteen named clauses), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
@@ -41,7 +42,8 @@ Listed from the bottom of the import chain up. Every module imports `config`, so
   Imports `record`, `config`, `corpus`, `deterministic`, `timeline`, `tools`. Imported by `run`.
 - `run.py`: entry point. Loads or extracts the lease profile, then `intake` on a hard-coded description,
   then `chat`. Reads `lease.pdf` from the project folder.
-- `smoke.py`: entry point. Checks each piece without the agent (see Running and testing).
+- `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
+- `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
 
 ## Data flow
@@ -186,21 +188,21 @@ on load and never reach the model.
     bash setup.sh            # once: venv, pip install, .env from template, matters/
     source venv/bin/activate
 
-Every module imports `config`, which raises if `UF_API_KEY` is not set. So every command below needs the
-key present in `.env`, but only the ones marked "calls the model" send anything to the gateway.
+Offline checks (no model call, no key needed):
 
-Offline checks (no model call):
-
+    python smoke.py                                                              # the offline smoke tests
     python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook quotes: every line OK
-    python -c "import agent, tools, timeline, lease"                             # everything imports
     python schemas.py                                                            # what the model sees per tool
 
-Calls the model:
-
 - `python smoke.py`: needs `matters/test-001/lease_profile.json`. Runs the playbook quote check, element
-  status and deadlines on hand-typed facts with today fixed at 2026-09-08, then `classify` and
-  `fill_facts` on the sample description (two model calls), then the letter template and both timelines.
-  The last two read the real `events.jsonl` of `test-001`.
+  status and deadlines on hand-typed facts with today fixed at 2026-09-08, the letter template, and both
+  timelines. The timelines read the real `events.jsonl` of `test-001`. Importing `tools` and `timeline`
+  also checks that the modules import.
+
+Calls the model (needs the key in `.env`; stops at `require_key()` without it):
+
+- `python smoke_online.py`: needs the same lease profile. `classify` and `fill_facts` on the sample
+  description (two model calls), then element status from the proposed facts.
 - `python run.py`: interactive. Extracts the lease profile the first time (one extraction call), then
   intake (two calls) and the chat. Chat commands, handled by the loop without the model: `timeline`,
   `timeline full`, `timeline <issue>`; an empty line or `bye` exits. Each run resets `facts` and

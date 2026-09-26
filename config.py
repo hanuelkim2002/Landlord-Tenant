@@ -1,7 +1,7 @@
 """Setup: paths, models, and the one string helper every other module uses.
 
 Replaces the Colab cells that read the key from userdata and mounted Drive.
-The key now comes from a .env file next to this module (see .env.example).
+The key now comes from a .env file next to this module (see .env.example). It is needed only to call a model.
 """
 import os
 from pathlib import Path
@@ -18,14 +18,24 @@ PLAYBOOKS = ROOT / "playbooks"
 
 UF_BASE_URL = "https://api.ai.it.ufl.edu"
 uf_api_key = os.environ.get("UF_API_KEY")
-if not uf_api_key:
-    raise RuntimeError("UF_API_KEY is not set. Copy .env.example to .env and put the key there.")
 
 AGENT_MODEL   = "nemotron-3-super-120b-a12b"   # LOCAL, text only
 EXTRACT_MODEL = "gemma-4-31b-it"               # LOCAL, text + image
 
-agent_llm   = ChatOpenAI(model=AGENT_MODEL,   base_url=UF_BASE_URL, api_key=uf_api_key, temperature=0, max_tokens=4000)
-extract_llm = ChatOpenAI(model=EXTRACT_MODEL, base_url=UF_BASE_URL, api_key=uf_api_key, temperature=0, max_tokens=8000)
+# The model clients exist only when the key is set. Without it they are None, so the offline checks
+# (smoke.py, the playbook quote check, schemas.py) still import and run. Anything that calls a model
+# calls require_key() first.
+if uf_api_key:
+    agent_llm   = ChatOpenAI(model=AGENT_MODEL,   base_url=UF_BASE_URL, api_key=uf_api_key, temperature=0, max_tokens=4000)
+    extract_llm = ChatOpenAI(model=EXTRACT_MODEL, base_url=UF_BASE_URL, api_key=uf_api_key, temperature=0, max_tokens=8000)
+else:
+    agent_llm = extract_llm = None
+
+
+def require_key():
+    """Stop with a clear message if the key is missing. Called at the top of every script that calls a model."""
+    if not uf_api_key:
+        raise RuntimeError("UF_API_KEY is not set. Copy .env.example to .env and put the key there.")
 
 
 def squash(text):
