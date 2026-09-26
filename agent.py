@@ -66,10 +66,10 @@ Rules:
 """
 
 
-# ---- Intake: classify the description, propose facts, build the system prompt, return an agent.
+# ---- Intake: classify the description, propose facts, then build the agent.
 
 def intake(description):
-    """Classify, fill facts for every matching playbook, build the hot set, return an agent."""
+    """Classify, fill facts for every matching playbook, save, return an agent. For a new matter only."""
     matter = record.matter
     matter["description"] = description
     matter["issues"] = classify(description)["issues"]
@@ -79,7 +79,16 @@ def intake(description):
         for fact_id, p in fill_facts(description, pb).items():
             matter["proposed"].setdefault(fact_id, p)
     save(matter)
+    print("proposed:", list(matter["proposed"]))
+    return build_agent()
 
+
+# ---- Build Agent: the system prompt from whatever the record holds now. Called by intake for a new matter,
+# and directly by run.py when an existing matter is opened (no model call until the tenant types).
+
+def build_agent():
+    """Build the system prompt from the current matter and lease profile, return an agent."""
+    matter = record.matter
     sections = sorted({s for i in matter["issues"] for s in ROUTING[i]["sections"]})
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
     # Only the model-facing part of each playbook: the guidance half, plus the open questions rule 5 refers
@@ -96,7 +105,7 @@ def intake(description):
               + "\n\nELEMENT STATUS (by issue):\n" + json.dumps(element_status(), indent=2))
 
     print("issues:", matter["issues"], "| playbooks:", [pb.issue for pb in active_playbooks()],
-          "| proposed:", list(matter["proposed"]), "| sections:", sections)
+          "| sections:", sections)
     return create_agent(agent_llm, tools=tools, system_prompt=system, checkpointer=InMemorySaver())
 
 

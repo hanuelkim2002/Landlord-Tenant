@@ -34,7 +34,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `profile` from `lease_profile.json`, or `None` if there is none; raises `FileNotFoundError` for a matter
   that does not exist), `save` (writes `matter.json`), `append_event` and `read_events`
   (`events.jsonl`), `active_playbooks`, `element_status`. The starting `matter` is the test matter,
-  tenant `"t-test"`, id `"test-001"`; nothing calls the id helpers yet; the smoke scripts call `load_matter`.
+  tenant `"t-test"`, id `"test-001"`, used by the smoke scripts through `load_matter`. `new_matter(tenant_id)`
+  replaces `matter` with an empty one under the next matter id and clears `profile`; `run.py` calls it.
   Imports `config`, `corpus`, `deterministic`, `lease`. Imported by `timeline`, `tools`, `agent`, `run`,
   `smoke`, `smoke_online`.
 - `timeline.py`: `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
@@ -43,20 +44,23 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `tools.py`: the seven `@tool` functions and the `tools` list (see Tools the model can call), plus the
   plain helpers `pretty`, `quote_is_real`, and `build_letter`. Imports `record`, `config`, `corpus`,
   `deterministic`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`).
-- `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, build the
-  system prompt, return a LangChain agent with an in-memory checkpointer), and `chat` (the terminal loop).
+- `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, save, then
+  `build_agent`; for a new matter only), `build_agent` (the system prompt from the current record, and a
+  LangChain agent with an in-memory checkpointer; no model call), and `chat` (the terminal loop).
   Imports `record`, `config`, `corpus`, `deterministic`, `timeline`, `tools`. Imported by `run`.
-- `run.py`: entry point. Loads or extracts the lease profile, then `intake` on a hard-coded description,
-  then `chat`. Reads `lease.pdf` from the project folder.
+- `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
+  (`new_tenant_id`), calls `new_matter`, asks for the lease path (`ask_path`, which accepts a path dragged
+  into the terminal), reads the lease (`read_lease`), asks for the description (`ask_description`, ended by
+  an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked, then
+  `build_agent`, with no re-intake; it stops if the matter has no lease profile. Then `chat`.
 - `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
 - `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
 
 ## Data flow
 
-1. Lease PDF to profile (`run.py`). If `lease_profile.json` exists in `matter_dir()` it is loaded into
-   `record.profile` and no model runs. Otherwise `ingest_pdf` stores the PDF and page text in `matter_dir()`,
-   `extract_profile` asks the extraction model for a JSON `LeaseProfile`, `check_quotes` prints OK or FAIL
+1. Lease PDF to profile (`read_lease` in `run.py`, new matters only; an existing matter's profile comes
+   from `load_matter`). `ingest_pdf` stores the PDF and page text in `matter_dir()`, `extract_profile` asks the extraction model for a JSON `LeaseProfile`, `check_quotes` prints OK or FAIL
    for every clause, and the profile is saved. A FAIL is printed, not enforced: the profile is saved anyway.
 2. Description to issues and proposed facts (`intake`). `classify` returns issue labels; labels not in
    `ROUTING` are dropped. Labels with no playbook stay in `matter["issues"]` but have no elements or
@@ -112,7 +116,7 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   same issue and posture overwrites the file; the earlier `draft` event remains.
 - `artifacts/<sha256[:12]>_<name>`: copies of files stored by `add_artifact`.
 
-Outside `matters/`: `lease.pdf` (the input lease read by `run.py`; a sample, gitignored), `statutes/83.*.txt` and `.html` (the
+Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `statutes/83.*.txt` and `.html` (the
 read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key).
 
 ## Tools the model can call
@@ -141,7 +145,7 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
 
 ## The system prompt
 
-Built in `intake`, in this order:
+Built in `build_agent` (called by `intake`, or directly for an existing matter), in this order:
 
 1. `RULES`, fifteen numbered rules. In short: 1 quote only from the profile or stored statute; 2 never
    compute dates, use `get_deadlines`; 3 confirm proposed rows, ask missing rows, then `record_facts`;
@@ -183,9 +187,9 @@ on load and never reach the model.
   - `lease_overrides`, `exclusions`: lists of dicts. Any item with a `quote` is checked by
     `check_playbook` against the section in its `cite`. Otherwise not read by code.
   - `related_issues`: not read by code and not shown to the model.
-  - `open_questions`: not read by code. `intake` pastes them into the prompt next to `guidance`, the only
+  - `open_questions`: not read by code. `build_agent` pastes them into the prompt next to `guidance`, the only
     part of `spec` the model sees.
-- `guidance` (prose, pasted into the prompt by `intake`), with two pieces also read by code:
+- `guidance` (prose, pasted into the prompt by `build_agent`), with two pieces also read by code:
   - `questions`: one question per element id. `check_elements` needs one for every element that can be
     proposed or missing; `fill_facts` sends them to the model.
   - `postures.notice_sufficiency`: appended to every `draft_letter` result as the note to the tenant.
@@ -211,7 +215,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
 
 - `python smoke_online.py`: opens the same test matter with `load_matter`. `classify` and `fill_facts` on the sample
   description (two model calls), then element status from the proposed facts.
-- `python run.py`: interactive. Extracts the lease profile the first time (one extraction call), then
-  intake (two calls) and the chat. Chat commands, handled by the loop without the model: `timeline`,
-  `timeline full`, `timeline <issue>`; an empty line or `bye` exits. Each run resets `facts` and
-  `proposed` but appends to the same `events.jsonl`.
+- `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
+  and runs intake (two calls) before the chat. An existing matter goes straight to the chat from its saved
+  facts; the model is called only when the tenant types. Chat commands, handled by the loop without the
+  model: `timeline`, `timeline full`, `timeline <issue>`; an empty line or `bye` exits. Every run appends
+  to the matter's `events.jsonl`.

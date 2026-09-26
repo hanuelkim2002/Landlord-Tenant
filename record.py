@@ -60,6 +60,15 @@ def load_matter(tenant_id, matter_id):
     return matter
 
 
+def new_matter(tenant_id):
+    """Start an empty matter for this tenant with the next matter id, and clear `profile`. Nothing is written
+    until the lease is read or the matter is saved."""
+    global matter, profile
+    matter = {"id": new_matter_id(tenant_id), "tenant": tenant_id, "issues": [], "facts": {}, "proposed": {}}
+    profile = None
+    return matter
+
+
 def save(matter):
     """matter.json holds current state only. History lives in events.jsonl."""
     folder = matter_dir()

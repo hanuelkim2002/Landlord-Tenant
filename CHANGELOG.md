@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-09-26
 
+- Matter structure, step 3 of 3: `run.py` rewritten around `start()`, which asks new or existing. New:
+  pick a tenant or make one, `record.new_matter`, lease path asked (replaces hard-coded `lease.pdf`),
+  lease read, description typed by the tenant (replaces the hard-coded sample), intake. Existing: pick from
+  `list_matters`, `load_matter`, straight to chat with no re-intake. `agent.intake` split: the system
+  prompt and agent now come from a new `build_agent`, which a resumed matter calls directly. Tested live:
+  resumed `t-test/test-001` went to deadlines from saved facts; a new matter `t-4c4d2e/m-001` was made
+  from the sample lease (bad path refused, dragged path with escaped spaces accepted, 15 of 15 quotes OK),
+  and its first confirmed fact landed in its own folder. The matter structure item is done.
 - Matter structure, step 2 of 3: `list_matters` (tenant, id, and issues of every saved matter; no
   description or facts) and `load_matter(tenant_id, matter_id)` (replaces `record.matter` and
   `record.profile` from disk, profile `None` if the lease has not been read) in `record.py`, which now
