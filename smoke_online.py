@@ -1,5 +1,5 @@
 """Smoke Tests, online: the two one-shot intake calls on a sample description. Two model calls, needs the key.
-Needs a saved lease profile for the matter. The offline checks are in smoke.py.
+Needs the saved test matter, matters/t-test/test-001/. The offline checks are in smoke.py.
 
     python smoke_online.py
 """
@@ -9,10 +9,9 @@ require_key()                   # this script calls the model; stop here if the 
 import record
 from corpus import playbooks
 from deterministic import check_elements, classify, fill_facts
-from lease import LeaseProfile
-from record import matter_dir
+from record import load_matter
 
-record.profile = LeaseProfile.model_validate_json((matter_dir() / "lease_profile.json").read_text())
+load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
 pb = playbooks["deposit_not_returned"]
 
 # classifier and slot filling on a description (two model calls)

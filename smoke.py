@@ -1,5 +1,5 @@
 """Smoke Tests, offline: each block checks one piece without the agent and without a model call, so it runs
-with no key. Needs a saved lease profile for the matter. The model calls are in smoke_online.py.
+with no key. Needs the saved test matter, matters/t-test/test-001/. The model calls are in smoke_online.py.
 
     python smoke.py
 """
@@ -8,13 +8,17 @@ from datetime import date
 import record
 from corpus import check_all_playbooks, playbooks
 from deterministic import check_elements, compute_deadlines
-from lease import LeaseProfile
-from record import matter_dir
+from record import list_matters, load_matter
 from timeline import render_timeline
 from tools import build_letter
 
-record.profile = LeaseProfile.model_validate_json((matter_dir() / "lease_profile.json").read_text())
+load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
 pb = playbooks["deposit_not_returned"]
+
+# listing and loading: every saved matter, then what load_matter put in record
+print(list_matters())
+print(record.matter["tenant"], record.matter["id"], record.matter["issues"], type(record.profile).__name__)
+print()
 
 # playbook quotes against the statute text
 check_all_playbooks()

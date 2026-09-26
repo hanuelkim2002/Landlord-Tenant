@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-26
 
+- Matter structure, step 2 of 3: `list_matters` (tenant, id, and issues of every saved matter; no
+  description or facts) and `load_matter(tenant_id, matter_id)` (replaces `record.matter` and
+  `record.profile` from disk, profile `None` if the lease has not been read) in `record.py`, which now
+  imports `lease` for `LeaseProfile`. `smoke.py` and `smoke_online.py` open the test matter with
+  `load_matter` instead of reading the lease profile by hand, and `smoke.py` prints `list_matters()`.
+  Checked by hand that `tools` and `timeline` see a newly loaded matter. Step 3 (`start()`) stays in TODO.md.
 - Matter structure, step 1 of 3: matters now live at `matters/<tenant id>/<matter id>/`. `record.matter`
   gains a `tenant` key and `record.matter_dir` builds the path from both ids; it replaces
   `MATTERS / matter["id"]`. `ingest_pdf` now takes the matter folder instead of a matter id, so

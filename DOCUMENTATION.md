@@ -17,7 +17,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `lease.py`: lease intake. `ingest_pdf(pdf_path, matter_dir)` (store the PDF under its hash in the folder
   it is given, extract page text with PyPDF2, write `pages.json`), the `Clause` and `LeaseProfile` shapes (fifteen named clauses), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
-  or start there and run onto the next). Imports `config`. Imported by `run.py` and `smoke.py`.
+  or start there and run onto the next). Imports `config`. Imported by `record` and `run.py`.
 - `corpus.py`: the stored corpus, loaded once at import. `statute` (dict, section number to text, from
   `statutes/83.*.txt`), the playbook shapes (`Element`, `Clock`, `Spec`, `Playbook`), `load_playbook`,
   `check_playbook`, `check_all_playbooks`, and `playbooks` (dict, issue to `Playbook`, from
@@ -29,10 +29,14 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `record.py`: the shared state. `matter` and `profile` live here and every other module reaches them as
   `record.matter` and `record.profile`. `matter_dir` (the only function that knows the folder layout),
   `new_tenant_id` (random `t-` plus six hex characters), `new_matter_id(tenant_id)` (`m-001`, `m-002`, ...
-  counting the tenant's `m-*` folders), `save` (writes `matter.json`), `append_event` and `read_events`
+  counting the tenant's `m-*` folders), `list_matters` (every saved matter as `{"tenant", "id", "issues"}`,
+  nothing else read out), `load_matter(tenant_id, matter_id)` (replaces `matter` from `matter.json` and
+  `profile` from `lease_profile.json`, or `None` if there is none; raises `FileNotFoundError` for a matter
+  that does not exist), `save` (writes `matter.json`), `append_event` and `read_events`
   (`events.jsonl`), `active_playbooks`, `element_status`. The starting `matter` is the test matter,
-  tenant `"t-test"`, id `"test-001"`; nothing calls the id helpers yet. Imports `config`, `corpus`, `deterministic`. Imported by `timeline`, `tools`, `agent`,
-  `run`, `smoke`.
+  tenant `"t-test"`, id `"test-001"`; nothing calls the id helpers yet; the smoke scripts call `load_matter`.
+  Imports `config`, `corpus`, `deterministic`, `lease`. Imported by `timeline`, `tools`, `agent`, `run`,
+  `smoke`, `smoke_online`.
 - `timeline.py`: `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
   `label` and `confirmation_of`. Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
   `deterministic`. Imported by `agent`, `smoke`.
@@ -198,14 +202,14 @@ Offline checks (no model call, no key needed):
     python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook quotes: every line OK
     python schemas.py                                                            # what the model sees per tool
 
-- `python smoke.py`: needs `matters/t-test/test-001/lease_profile.json`. Runs the playbook quote check, element
-  status and deadlines on hand-typed facts with today fixed at 2026-09-08, the letter template, and both
+- `python smoke.py`: needs the saved test matter `matters/t-test/test-001/` with its lease profile. Opens it
+  with `load_matter` and prints `list_matters()`, then runs the playbook quote check, element status and deadlines on hand-typed facts with today fixed at 2026-09-08, the letter template, and both
   timelines. The timelines read the real `events.jsonl` of `test-001`. Importing `tools` and `timeline`
   also checks that the modules import.
 
 Calls the model (needs the key in `.env`; stops at `require_key()` without it):
 
-- `python smoke_online.py`: needs the same lease profile. `classify` and `fill_facts` on the sample
+- `python smoke_online.py`: opens the same test matter with `load_matter`. `classify` and `fill_facts` on the sample
   description (two model calls), then element status from the proposed facts.
 - `python run.py`: interactive. Extracts the lease profile the first time (one extraction call), then
   intake (two calls) and the chat. Chat commands, handled by the loop without the model: `timeline`,

@@ -13,6 +13,7 @@ from datetime import datetime
 from config import MATTERS
 from corpus import playbooks
 from deterministic import check_elements
+from lease import LeaseProfile
 
 # The test matter. "t-test" is the test tenant's id; a real tenant gets a random one from new_tenant_id().
 matter = {"id": "test-001", "tenant": "t-test", "issues": [], "facts": {}, "proposed": {}}
@@ -34,6 +35,29 @@ def new_matter_id(tenant_id):
     """The next matter id for this tenant: 'm-001', then 'm-002', counting the folders already there."""
     existing = list((MATTERS / tenant_id).glob("m-*")) if (MATTERS / tenant_id).exists() else []
     return f"m-{len(existing) + 1:03d}"
+
+
+# ---- Finding and opening a saved matter.
+
+def list_matters():
+    """Every saved matter, as {"tenant", "id", "issues"}. Nothing else is read out, so a listing never shows
+    a description or a fact."""
+    found = []
+    for path in sorted(MATTERS.glob("*/*/matter.json")):
+        saved = json.loads(path.read_text())
+        found.append({"tenant": saved["tenant"], "id": saved["id"], "issues": saved["issues"]})
+    return found
+
+
+def load_matter(tenant_id, matter_id):
+    """Open a saved matter: replace `matter` with its matter.json and `profile` with its lease profile (None if
+    the lease has not been read yet). This is why every module uses record.matter, never its own copy."""
+    global matter, profile
+    folder = MATTERS / tenant_id / matter_id
+    matter = json.loads((folder / "matter.json").read_text())
+    profile_path = folder / "lease_profile.json"
+    profile = LeaseProfile.model_validate_json(profile_path.read_text()) if profile_path.exists() else None
+    return matter
 
 
 def save(matter):
