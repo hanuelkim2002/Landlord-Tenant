@@ -14,8 +14,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   (collapse whitespace, lowercase; used for every quote comparison). Reads `.env` with python-dotenv. The
   two clients are `None` when `UF_API_KEY` is missing; `require_key()` raises with a clear message then,
   and `run.py` and `smoke_online.py` call it first. Imports nothing from the project.
-- `lease.py`: lease intake. `ingest_pdf` (store the PDF under its hash, extract page text with PyPDF2,
-  write `pages.json`), the `Clause` and `LeaseProfile` shapes (fifteen named clauses), `extract_profile`
+- `lease.py`: lease intake. `ingest_pdf(pdf_path, matter_dir)` (store the PDF under its hash in the folder
+  it is given, extract page text with PyPDF2, write `pages.json`), the `Clause` and `LeaseProfile` shapes (fifteen named clauses), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
   or start there and run onto the next). Imports `config`. Imported by `run.py` and `smoke.py`.
 - `corpus.py`: the stored corpus, loaded once at import. `statute` (dict, section number to text, from
@@ -27,9 +27,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `fill_facts`, both through `ask_json` on `agent_llm`. Imports `config`. Imported by `record`,
   `timeline`, `tools`, `agent`, `smoke`.
 - `record.py`: the shared state. `matter` and `profile` live here and every other module reaches them as
-  `record.matter` and `record.profile`. `matter_dir`, `save` (writes `matter.json`), `append_event` and
-  `read_events` (`events.jsonl`), `active_playbooks`, `element_status`. The matter id is hard-coded
-  `"test-001"`. Imports `config`, `corpus`, `deterministic`. Imported by `timeline`, `tools`, `agent`,
+  `record.matter` and `record.profile`. `matter_dir` (the only function that knows the folder layout),
+  `new_tenant_id` (random `t-` plus six hex characters), `new_matter_id(tenant_id)` (`m-001`, `m-002`, ...
+  counting the tenant's `m-*` folders), `save` (writes `matter.json`), `append_event` and `read_events`
+  (`events.jsonl`), `active_playbooks`, `element_status`. The starting `matter` is the test matter,
+  tenant `"t-test"`, id `"test-001"`; nothing calls the id helpers yet. Imports `config`, `corpus`, `deterministic`. Imported by `timeline`, `tools`, `agent`,
   `run`, `smoke`.
 - `timeline.py`: `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
   `label` and `confirmation_of`. Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
@@ -48,8 +50,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 
 ## Data flow
 
-1. Lease PDF to profile (`run.py`). If `matters/<id>/lease_profile.json` exists it is loaded into
-   `record.profile` and no model runs. Otherwise `ingest_pdf` stores the PDF and page text,
+1. Lease PDF to profile (`run.py`). If `lease_profile.json` exists in `matter_dir()` it is loaded into
+   `record.profile` and no model runs. Otherwise `ingest_pdf` stores the PDF and page text in `matter_dir()`,
    `extract_profile` asks the extraction model for a JSON `LeaseProfile`, `check_quotes` prints OK or FAIL
    for every clause, and the profile is saved. A FAIL is printed, not enforced: the profile is saved anyway.
 2. Description to issues and proposed facts (`intake`). `classify` returns issue labels; labels not in
@@ -81,12 +83,14 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 
 ## Files on disk
 
-`matters/<matter id>/` (currently only `test-001`, set in `record.matter`):
+`matters/<tenant id>/<matter id>/`, built by `record.matter_dir` from `matter["tenant"]` and `matter["id"]`.
+A tenant id is opaque, never a name or an email. Currently only `matters/t-test/test-001/`, set in
+`record.matter`:
 
 - `lease_<sha256[:12]>.pdf`: the lease as provided, named by its hash.
 - `pages.json`: list of `{"page": n, "text": ...}` from PyPDF2.
 - `lease_profile.json`: the `LeaseProfile`, one `Clause` per field: `present`, `quote`, `page`, `section`.
-- `matter.json`: current state only, overwritten by `save`. Keys: `id`, `description` (the intake text),
+- `matter.json`: current state only, overwritten by `save`. Keys: `id`, `tenant`, `description` (the intake text),
   `issues` (labels from `classify`), `facts` (confirmed, element id to value), `proposed` (unconfirmed,
   element id to `{"value", "how", "basis"}`).
 - `events.jsonl`: the history, one JSON object per line, append-only. Every event has `when` (local time,
@@ -194,7 +198,7 @@ Offline checks (no model call, no key needed):
     python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook quotes: every line OK
     python schemas.py                                                            # what the model sees per tool
 
-- `python smoke.py`: needs `matters/test-001/lease_profile.json`. Runs the playbook quote check, element
+- `python smoke.py`: needs `matters/t-test/test-001/lease_profile.json`. Runs the playbook quote check, element
   status and deadlines on hand-typed facts with today fixed at 2026-09-08, the letter template, and both
   timelines. The timelines read the real `events.jsonl` of `test-001`. Importing `tools` and `timeline`
   also checks that the modules import.

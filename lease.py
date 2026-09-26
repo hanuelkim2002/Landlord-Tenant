@@ -7,14 +7,14 @@ from typing import Optional
 import PyPDF2
 from pydantic import BaseModel, Field
 
-from config import MATTERS, extract_llm, squash
+from config import extract_llm, squash
 
 
 # ---- Ingest PDF: store the PDF under its hash and pull the text of each page. No model involved.
 
-def ingest_pdf(pdf_path, matter_id):
-    """Store the PDF under its hash and pull text page by page. No extraction yet."""
-    matter_dir = MATTERS / matter_id
+def ingest_pdf(pdf_path, matter_dir):
+    """Store the PDF under its hash and pull text page by page. No extraction yet.
+    matter_dir is the matter's folder, from record.matter_dir()."""
     matter_dir.mkdir(parents=True, exist_ok=True)
 
     pdf_bytes = Path(pdf_path).read_bytes()

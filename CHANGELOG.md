@@ -5,6 +5,13 @@ session can see why the code is the way it is.
 
 ## 2026-09-26
 
+- Matter structure, step 1 of 3: matters now live at `matters/<tenant id>/<matter id>/`. `record.matter`
+  gains a `tenant` key and `record.matter_dir` builds the path from both ids; it replaces
+  `MATTERS / matter["id"]`. `ingest_pdf` now takes the matter folder instead of a matter id, so
+  `matter_dir` is the only code that knows the layout (it replaces the path `lease.py` built itself).
+  New helpers `new_tenant_id` (random `t-xxxxxx`, never from a name or email) and `new_matter_id`
+  (`m-001`, `m-002`, ...), not called yet. The test matter moved to `matters/t-test/test-001/` and its
+  `matter.json` gained `"tenant": "t-test"`. Steps 2 (list and load) and 3 (`start()`) stay in TODO.md.
 - Second end-to-end `run.py` run, after the guidance-only prompt and the smoke split. Same facts, same
   deadlines, email recorded, assert letter drafted, timelines correct. Rule 5 still works (the model said
   the statute does not settle the termination-date question). Run 1's `events.jsonl` and draft renamed to

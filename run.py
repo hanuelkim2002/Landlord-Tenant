@@ -16,7 +16,7 @@ if profile_path.exists():
     record.profile = LeaseProfile.model_validate_json(profile_path.read_text())
     print("loaded", profile_path)
 else:
-    pages = ingest_pdf(ROOT / "lease.pdf", record.matter["id"])
+    pages = ingest_pdf(ROOT / "lease.pdf", matter_dir())
     record.profile = extract_profile(pages)
     check_quotes(record.profile, pages)
     profile_path.write_text(record.profile.model_dump_json(indent=2))
