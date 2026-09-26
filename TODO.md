@@ -37,6 +37,8 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
     Even now it adds 83.57, 83.575, and 83.58 to the prompt, since `ROUTING` preloads sections for issues
     with no playbook.
 10. `check_elements` should flag a tenant fact that contradicts a lease field (tenant's end date vs. `term_end`).
+    The sample lease shows it: its term is October 1, 2026 to September 30, 2027, while the test story ends
+    July 31, 2026, and nothing flagged it in the 2026-09-26 run.
 11. Counting convention is a stated assumption in each playbook. Check the time-computation rule in the
     corpus before relying on it. Do not settle this from memory.
 12. Between test runs, delete the test matter's `events.jsonl` or use a new matter id.
@@ -46,6 +48,11 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 15. `timeline full` shows a corrected fact with the proposal's tag: `early_or_periodic = False` appears as
     "inferred" though the tenant corrected the inferred `true`. The event holds `proposed_value`, so this is
     display only.
+16. Since only `guidance` is pasted, the model mis-cited the forfeiture sentence as 83.49(3)(b) when
+    explaining the escalate posture (it is 83.49(3)(a)). The escalate line in `guidance.postures` names no
+    cite. Either give each posture line its cite in the playbook, or show the model the clock cites.
+17. After `record_facts` turned `seven_day_notice_given` to n/a, the model still asked its question. It
+    had the intake-time ELEMENT STATUS in the prompt, where that row was proposed.
 
 ## Open questions
 

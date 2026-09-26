@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-26
 
+- Second end-to-end `run.py` run, after the guidance-only prompt and the smoke split. Same facts, same
+  deadlines, email recorded, assert letter drafted, timelines correct. Rule 5 still works (the model said
+  the statute does not settle the termination-date question). Run 1's `events.jsonl` and draft renamed to
+  `events_run1.jsonl` and `run1_draft_...` in `matters/test-001/` rather than deleted. Two findings added
+  to TODO.md (a mis-cite for the escalate posture, an n/a question asked) and a note on the sample lease's
+  term. No code changed.
 - `smoke.py` split: `smoke.py` keeps the offline checks (playbook quotes, elements, deadlines, letter,
   timelines) and `smoke_online.py` holds the two model calls (`classify`, `fill_facts`). Replaces one
   script that needed the key for everything. To let the offline part run with no key, `config.py` no
