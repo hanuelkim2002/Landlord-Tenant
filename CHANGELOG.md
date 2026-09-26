@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-09-26
 
+- `intake` pastes only the model-facing part of each playbook into the system prompt: `issue`, `guidance`,
+  and `spec.open_questions`, dumped as YAML. Replaces pasting the whole YAML file, which put elements,
+  clocks, exclusions, related issues, provenance, and counting into the context. `open_questions` kept
+  because rule 5 refers to them (decided with the author). Playbook text in the prompt roughly halves.
+  `agent.py` no longer imports `PLAYBOOKS`. (TODO item 1, formerly item 2.)
 - `lease.pdf` added to `.gitignore`. It is a sample lease, not a real one, but it carries names and
   addresses, so it stays out of history. Replaces the earlier state of leaving it untracked by hand.
 - `git init` and first commit of the module split, so every later step is a readable diff. `.gitignore`

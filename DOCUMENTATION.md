@@ -142,7 +142,8 @@ Built in `intake`, in this order:
    `draft_letter` and one sentence; 12 never write a letter yourself; 13 never apply a provision to the
    facts; 14 record pasted messages with `add_communication`; 15 record a sent letter the same way.
 2. `LEASE PROFILE`: the whole profile as JSON.
-3. `PLAYBOOKS`: the full YAML file of each active playbook, `spec` and `guidance` both.
+3. `PLAYBOOKS`: for each active playbook, YAML of its `issue`, its `guidance`, and its
+   `spec.open_questions` (which rule 5 refers to). The rest of `spec` never enters the context.
 4. `STATUTE SECTIONS`: the text of every section `ROUTING` lists for every issue in the matter, including
    issues that have no playbook.
 5. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at intake time.
@@ -154,7 +155,7 @@ return values.
 
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
 clock's `trigger` is not a date element. Keys the `Playbook` class does not define (`description`) are dropped
-on load and reach the model only through the pasted YAML.
+on load and never reach the model.
 
 - `issue`: the label; must match a `ROUTING` key to be classified. Key of `playbooks`.
 - `statutory_hook`: section number. Not read by code.
@@ -171,9 +172,10 @@ on load and reach the model only through the pasted YAML.
     `clocks[0].quote`.
   - `lease_overrides`, `exclusions`: lists of dicts. Any item with a `quote` is checked by
     `check_playbook` against the section in its `cite`. Otherwise not read by code.
-  - `related_issues`, `open_questions`: not read by code. They reach the model only because the whole YAML
-    is pasted into the prompt.
-- `guidance` (prose, read by the model through the pasted YAML), with two pieces also read by code:
+  - `related_issues`: not read by code and not shown to the model.
+  - `open_questions`: not read by code. `intake` pastes them into the prompt next to `guidance`, the only
+    part of `spec` the model sees.
+- `guidance` (prose, pasted into the prompt by `intake`), with two pieces also read by code:
   - `questions`: one question per element id. `check_elements` needs one for every element that can be
     proposed or missing; `fill_facts` sends them to the model.
   - `postures.notice_sufficiency`: appended to every `draft_letter` result as the note to the tenant.

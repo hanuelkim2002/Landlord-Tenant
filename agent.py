@@ -1,13 +1,14 @@
 """Agent: the rules, intake (builds the system prompt and returns an agent), and the chat loop."""
 import json
 
+import yaml
 from langchain.agents import create_agent
 from langchain.messages import HumanMessage
 from langchain_core.utils.uuid import uuid7
 from langgraph.checkpoint.memory import InMemorySaver
 
 import record
-from config import PLAYBOOKS, agent_llm
+from config import agent_llm
 from corpus import statute
 from deterministic import ROUTING, classify, fill_facts
 from record import active_playbooks, element_status, save
@@ -81,7 +82,12 @@ def intake(description):
 
     sections = sorted({s for i in matter["issues"] for s in ROUTING[i]["sections"]})
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
-    playbook_text = "\n\n".join((PLAYBOOKS / f"{pb.issue}.yaml").read_text() for pb in active_playbooks())
+    # Only the model-facing part of each playbook: the guidance half, plus the open questions rule 5 refers
+    # to. The rest of spec (elements, clocks, exclusions) is for code and never enters the context.
+    playbook_text = "\n\n".join(
+        yaml.safe_dump({"issue": pb.issue, "guidance": pb.guidance, "open_questions": pb.spec.open_questions},
+                       sort_keys=False, allow_unicode=True, width=110)
+        for pb in active_playbooks())
 
     system = (RULES
               + "\n\nLEASE PROFILE:\n" + record.profile.model_dump_json(indent=2)
