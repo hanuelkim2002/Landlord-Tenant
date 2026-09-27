@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Sessions, step 2 of 2: transcripts. `record.append_transcript` writes to
+  `matters/<tenant>/<matter>/sessions/<session id>.jsonl`; `agent.chat` writes every new message of each
+  turn (tenant, model with its tool calls and arguments, tool results) and every `timeline` command.
+  `timeline full` puts the transcript path next to "session started". Tested live on `t-test/test-002`:
+  the transcript held the question, both tool calls with arguments, both results, the reply, and the
+  command; the session's tagged events matched the visit. The sessions item is done.
 - Sessions, step 1 of 2: `record.start_session(how)` / `record.end_session()` log `session_started` and
   `session_ended`, and while a session is open `append_event` tags every event with its id (a time-ordered
   uuid7). `run.py` opens the session once the matter is chosen, before intake or resume, and closes it after

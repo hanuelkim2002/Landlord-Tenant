@@ -137,7 +137,20 @@ def build_agent():
 
 
 # ---- Chat: read a line, run a turn, print the reply. Tool output is hidden except draft_letter, whose
-# result is printed directly. The word `timeline` prints the record without the model.
+# result is printed directly. The word `timeline` prints the record without the model. Everything said,
+# every tool call, and every command goes to the session's transcript.
+
+def transcript_entry(m):
+    """One message from the thread as a transcript line: who said it, what, and any tool calls with arguments."""
+    if m.type == "human":
+        return {"role": "tenant", "text": m.content}
+    if m.type == "tool":
+        return {"role": "tool", "name": m.name, "text": m.content}
+    entry = {"role": "model", "text": m.content}
+    if m.tool_calls:
+        entry["tool_calls"] = [{"name": c["name"], "args": c["args"]} for c in m.tool_calls]
+    return entry
+
 
 def chat(agent):
     # The chat thread takes the session's id, so the conversation and the record's events share one id.
@@ -148,6 +161,7 @@ def chat(agent):
         if q in ("", "bye"):
             break
         if q.strip().lower().startswith("timeline"):
+            record.append_transcript({"role": "command", "text": q})
             words = q.split()[1:]
             full = "full" in words
             issue = next((w for w in words if w != "full"), None)
@@ -157,6 +171,8 @@ def chat(agent):
             print(render_timeline(issue, full), "\n")
             continue
         result = agent.invoke({"messages": [HumanMessage(content=q)]}, config=config)
+        for m in result["messages"][seen:]:              # everything new this turn, your own message included
+            record.append_transcript(transcript_entry(m))
         for m in result["messages"][seen + 1:]:          # everything new this turn, minus your own message
             if m.type == "tool" and m.name == "draft_letter":
                 print(m.content, "\n")

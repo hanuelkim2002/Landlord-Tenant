@@ -65,7 +65,8 @@ def render_timeline(issue=None, full=False):
             what = f"read statute {ev['section']}" if "section" in ev else f"searched statute for '{ev['search']}'"
             rows.append((day, what, "tool", ""))
         elif full and ev["kind"] == "session_started":
-            rows.append((day, f"session {ev['session'][:8]} started ({ev['how']} matter)", "tool", ""))
+            rows.append((day, f"session {ev['session'][:8]} started ({ev['how']} matter)", "tool",
+                         f"sessions/{ev['session']}.jsonl"))            # the transcript of this session
         elif full and ev["kind"] == "session_ended":
             rows.append((day, f"session {ev['session'][:8]} ended", "tool", ""))
         elif full and ev["kind"] == "deadlines_computed":

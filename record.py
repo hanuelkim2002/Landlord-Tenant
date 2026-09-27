@@ -109,6 +109,18 @@ def end_session():
     session = None
 
 
+def append_transcript(entry):
+    """One line to sessions/<session id>.jsonl: what was said in this session. Outside events.jsonl, so the
+    evidentiary log stays facts, messages, files, and letters. Does nothing when no session is open."""
+    if not session:
+        return
+    folder = matter_dir() / "sessions"
+    folder.mkdir(parents=True, exist_ok=True)
+    line = {"when": datetime.now().isoformat(timespec="seconds"), **entry}
+    with open(folder / f"{session}.jsonl", "a") as f:
+        f.write(json.dumps(line, default=str) + "\n")
+
+
 def read_events():
     path = matter_dir() / "events.jsonl"
     if not path.exists():
