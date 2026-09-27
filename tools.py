@@ -62,7 +62,7 @@ def record_facts(facts_json: str) -> str:
 def get_deadlines() -> str:
     """Compute every deadline from the CONFIRMED facts, for every issue in this matter. This is the ONLY way
     to get a date. Never count or calculate days yourself. Refuses until every element is confirmed or n/a."""
-    waiting = [r["id"] for rows in element_status().values() for r in rows if r["status"] in ("proposed", "missing")]
+    waiting = [r["id"] for rows in element_status().values() for r in rows if r["status"] in ("proposed", "changed", "missing")]
     if waiting:
         return "Not yet. These facts are still unconfirmed: " + ", ".join(sorted(set(waiting)))
     result = []

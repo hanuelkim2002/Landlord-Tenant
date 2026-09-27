@@ -74,10 +74,13 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    (or `how: "asked"` when nothing was proposed). This is the only code that writes `matter["facts"]`.
 4. Element status (`check_elements`). For each element in order: `n/a` if it has an `applies_if` and that
    fact is not confirmed truthy (unconfirmed counts as not truthy); `known` if a source gives a value (a confirmed fact, or a present lease clause's
-   quote, in the order listed in `source`); `proposed` if it is in `proposed`; otherwise `missing`. Proposed
-   and missing rows carry the `guidance.questions` text as `ask`.
-5. Confirmed to deadlines (`get_deadlines`, then `compute_deadlines`). Refuses while any row is proposed
-   or missing. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
+   quote, in the order listed in `source`); `changed` instead of `known` if the value is a confirmed fact
+   and `proposed` holds a different value for the same id (the row carries both, `value` and `new_value`,
+   plus the proposal's `how` and `basis`; a value read from the lease is never `changed`); `proposed` if it
+   is in `proposed`; otherwise `missing`. Changed, proposed, and missing rows carry the `guidance.questions`
+   text in `ask`. A changed row is resolved by `record_facts`, with either value.
+5. Confirmed to deadlines (`get_deadlines`, then `compute_deadlines`). Refuses while any row is proposed,
+   changed, or missing. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
    if the trigger date is not confirmed; otherwise trigger date plus or minus `days` calendar days, status
    `passed` if before today else `upcoming`, with the cite and the playbook's `counting.convention`.
 6. Record to timeline (`render_timeline`). Rows come from confirmed date facts, freshly computed deadlines,
@@ -130,7 +133,7 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
 - `record_facts(facts_json)`: JSON object of element id to confirmed value. Moves each into `facts`,
   writes a `fact_confirmed` event per fact, saves `matter.json`, returns the new element status. Does not
   check that the id is a real element or that the value has the element's type.
-- `get_deadlines()`: refuses with the list of unconfirmed ids while any row is proposed or missing.
+- `get_deadlines()`: refuses with the list of unconfirmed ids while any row is proposed, changed, or missing.
   Otherwise returns every clock's result for every active playbook, tagged with `issue`, and writes a
   `deadlines_computed` event per playbook.
 - `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
@@ -148,7 +151,8 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
 Built in `build_agent` (called by `intake`, or directly for an existing matter), in this order:
 
 1. `RULES`, fifteen numbered rules. In short: 1 quote only from the profile or stored statute; 2 never
-   compute dates, use `get_deadlines`; 3 confirm proposed rows, ask missing rows, then `record_facts`;
+   compute dates, use `get_deadlines`; 3 confirm proposed rows, show both values of changed rows and ask which is right, ask missing rows,
+   then `record_facts`;
    4 look up the statute when the preloaded text does not answer, otherwise say so; 5 open questions are
    unsettled; 6 draft only when asked, never send; 7 never say which of lease or statute controls; 8 fetch a
    section before mentioning it; 9 never record an unconfirmed value; 10 ask whose notice is meant;
@@ -207,7 +211,9 @@ Offline checks (no model call, no key needed):
     python schemas.py                                                            # what the model sees per tool
 
 - `python smoke.py`: needs the saved test matter `matters/t-test/test-001/` with its lease profile. Opens it
-  with `load_matter` and prints `list_matters()`, then runs the playbook quote check, element status and deadlines on hand-typed facts with today fixed at 2026-09-08, the letter template, and both
+  with `load_matter` and prints `list_matters()`, then runs the playbook quote check, element status and deadlines on hand-typed facts with today fixed at 2026-09-08, a hand-typed update
+  against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`
+  refusing), the letter template, and both
   timelines. The timelines read the real `events.jsonl` of `test-001`. Importing `tools` and `timeline`
   also checks that the modules import.
 

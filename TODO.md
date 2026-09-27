@@ -8,12 +8,12 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 
 ## Data bank
 
-1. Resume path. Decided 2026-09-27: when an existing matter is opened, ask "anything new?" (Enter skips).
+1. Resume path (step 1 of 3 done: the "changed" status; next `resume()`, then `start_existing`). Decided 2026-09-27: when an existing matter is opened, ask "anything new?" (Enter skips).
    A. Classify only the new text. B. Issues are only added, never removed.
    C. Run `fill_facts` on the new text for every element of every active playbook, old and new. A value that
       matches a confirmed fact is ignored; a new element is proposed as usual; a value that differs from a
       confirmed fact is proposed as a change and shown to the tenant against the confirmed value before
-      `record_facts` (needs a "changed" status in `check_elements` and a line in rule 3). Facts a new issue
+      `record_facts` (the "changed" status, done). Facts a new issue
       shares with an old one by element id carry over already (one `facts` pool keyed by id).
    D. The update text goes in a new `tenant_update` event, verbatim; `matter["description"]` stays the
       first story. The timeline shows it.

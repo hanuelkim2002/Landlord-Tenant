@@ -8,7 +8,8 @@ from config import agent_llm, squash
 # ---- Element Status
 
 def check_elements(playbook, profile, facts, proposed):
-    """For each element: known (confirmed), proposed (needs the tenant's confirmation), missing, or n/a.
+    """For each element: known (confirmed), changed (confirmed, but a later update suggests a different value),
+    proposed (needs the tenant's confirmation), missing, or n/a.
     facts = confirmed answers keyed by element id. proposed = unconfirmed answers with how and basis."""
     rows = []
     for e in playbook.spec.elements:
@@ -28,7 +29,15 @@ def check_elements(playbook, profile, facts, proposed):
             if value is not None:
                 break
 
-        if value is not None:
+        # A confirmed fact with a different value waiting in proposed: show both, the tenant decides.
+        # Only for facts the tenant confirmed; a value read from the lease is not changed this way.
+        if found_in == "user" and e.id in proposed and proposed[e.id]["value"] != value:
+            p = proposed[e.id]
+            rows.append({"id": e.id, "status": "changed", "value": value, "new_value": p["value"],
+                         "how": p["how"], "basis": p["basis"],
+                         "ask": f"The tenant confirmed {value}; their update suggests {p['value']}. Ask which is "
+                                f"right: " + playbook.guidance["questions"][e.id]})
+        elif value is not None:
             rows.append({"id": e.id, "status": "known", "value": value, "from": found_in})
         elif e.id in proposed:
             p = proposed[e.id]

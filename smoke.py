@@ -10,7 +10,7 @@ from corpus import check_all_playbooks, playbooks
 from deterministic import check_elements, compute_deadlines
 from record import list_matters, load_matter
 from timeline import render_timeline
-from tools import build_letter
+from tools import build_letter, get_deadlines
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
 pb = playbooks["deposit_not_returned"]
@@ -37,6 +37,23 @@ for row in check_elements(pb, record.profile, test_facts, {}):
 print()
 for d in compute_deadlines(pb, test_facts, today=date(2026, 9, 8)):
     print(d)
+print()
+
+# a later update against confirmed facts: a different value is "changed", the same value stays "known",
+# and a value read from the lease is never "changed". get_deadlines waits while a change is open.
+update = {
+    "claim_notice_received": {"value": True, "how": "stated", "basis": "I got a letter keeping $400"},
+    "vacated": {"value": "2026-07-30", "how": "stated", "basis": "July 30, 2026"},
+    "deposit_amount": {"value": 1500, "how": "stated", "basis": "$1,500"},
+}
+for row in check_elements(pb, record.profile, test_facts, update):
+    if row["id"] in update:
+        print(row)
+record.matter["issues"] = ["deposit_not_returned"]
+record.matter["facts"] = dict(test_facts)
+record.matter["proposed"] = update
+print(get_deadlines.invoke({}))
+record.matter["proposed"] = {}
 print()
 
 # the letter template

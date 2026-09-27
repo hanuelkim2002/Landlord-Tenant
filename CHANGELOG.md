@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Resume, step 1 of 3: `check_elements` has a fifth status, `changed`, for a confirmed fact whose id also
+  has a different value waiting in `proposed`. The row carries both values and the tenant's words; before
+  this, any confirmed fact read as `known` and a differing proposal was invisible. Only confirmed facts can
+  be changed this way, not lease values. `get_deadlines` now also waits on changed rows. Rule 3 says to show
+  both values and record whichever the tenant picks. `smoke.py` gained an offline block that checks all of
+  this with a hand-typed update.
 - Resume decisions written into TODO.md (A to D), replacing the open question on what `intake` classifies
   for a returning matter. Checked offline that facts shared by element id already carry across issues.
   Added a TODO item for the one fact the two deposit playbooks name twice. No code changed.
