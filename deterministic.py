@@ -124,7 +124,7 @@ TENANT SAID:
 
 def fill_facts(description, playbook):
     """Pull answers out of the description. Each is tagged stated or inferred and must rest on the tenant's
-    own words. Nothing here is confirmed; the agent confirms each one before record_facts stores it."""
+    own words. Nothing here is confirmed; the tenant confirms each one on the intake sheet (sheet.py)."""
     slots = [{"id": e.id, "type": e.type, "question": playbook.guidance["questions"][e.id]}
              for e in playbook.spec.elements if "user" in e.source]
     prompt = f"""Read what the tenant said and answer each question if you can.

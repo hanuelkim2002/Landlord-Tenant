@@ -40,24 +40,28 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `session` holds the open session's id or `None`; `start_session(how)` opens one (a new time-ordered
   uuid7) and logs `session_started`, `end_session()` logs `session_ended` and clears it. While a session is
   open, `append_event` adds its id to every event. `append_transcript(entry)` writes one line to the open
-  session's transcript (does nothing with no session open).
+  session's transcript (does nothing with no session open). `tenant_words()` returns the tenant's lines from the open session's
+  transcript.
   Imports `config`, `corpus`, `deterministic`, `lease`. Imported by `timeline`, `tools`, `agent`, `run`,
   `smoke`, `smoke_online`.
 - `timeline.py`: `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
   `label` and `confirmation_of`. Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
   `deterministic`. Imported by `agent`, `smoke`.
-- `tools.py`: the seven `@tool` functions and the `tools` list (see Tools the model can call), plus the
+- `tools.py`: the eight `@tool` functions and the `tools` list (see Tools the model can call), plus the
   plain helpers `pretty`, `quote_is_real`, and `build_letter`. Imports `record`, `config`, `corpus`,
-  `deterministic`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`).
+  `deterministic`, `sheet`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
 - `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, save; for a
   new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
   add new issues, propose facts from the update, save). Neither builds the agent: `run.py` runs the intake
   sheet first, then `build_agent`.
   `build_agent` (the system prompt from the current record, and a
   LangChain agent with an in-memory checkpointer; no model call), `transcript_entry` (one thread message as a transcript line), and `chat` (the terminal loop; its
-  thread id is the session id when one is open; it writes every new message of each turn, the tenant's
-  included, and every `timeline` command to the transcript).
-  Imports `record`, `config`, `corpus`, `deterministic`, `timeline`, `tools`. Imported by `run`.
+  thread id is the session id when one is open). Each turn, `chat` writes the tenant's message to the
+  transcript before the model runs (so `propose_facts` can check the tenant's words), then every new message
+  of the turn. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
+  tenant confirmed there is sent to the model as a "[Program note: ...]" line at the front of the tenant's
+  next message, and logged as a `program` transcript line. `timeline` commands go to the transcript too.
+  Imports `record`, `config`, `corpus`, `deterministic`, `sheet`, `timeline`, `tools`. Imported by `run`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
   (`new_tenant_id`), calls `new_matter` and `start_session("new")`, asks for the lease path (`ask_path`, which accepts a path dragged
   into the terminal), reads the lease (`read_lease`), asks for the description (`ask_text`, several lines
@@ -72,7 +76,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and commas, non-empty text), `shown`,
   and `run_sheet(ask=input)` (asks one fact at a time, rebuilding the list after each answer so an
   `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; saves each answer with
-  `record.confirm_fact` and a transcript line). Imports `record`, `corpus`. Imported by `run`.
+  `record.confirm_fact` and a transcript line; returns the saved facts as `(id, value)` pairs). Imports
+  `record`, `corpus`. Imported by `run`, `agent`, `tools` (for `parse_answer` and `shown`).
 - `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
 - `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
@@ -98,15 +103,17 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 3. Proposed to confirmed (`record.confirm_fact`, the only code that writes `matter["facts"]`). It moves
    the value into `facts`, removes it from `proposed`, and appends a `fact_confirmed` event carrying the
    proposal's `how`, `basis`, and `proposed_value` (or `how: "asked"` when nothing was proposed) and
-   `confirmed_in`. Two callers: the intake sheet (`sheet.run_sheet`, the tenant answers code directly,
-   `confirmed_in: "sheet"`) and the model's `record_facts` tool (`confirmed_in: "chat"`).
+   `confirmed_in`. One caller: the intake sheet (`sheet.run_sheet`, the tenant answers code directly,
+   `confirmed_in: "sheet"`). The model cannot confirm a fact; it can only add to `proposed` with
+   `propose_facts`, and the sheet follows its turn. Events from before 2026-09-27 may say
+   `confirmed_in: "chat"` or have no `confirmed_in`: those were recorded by the old `record_facts` tool.
 4. Element status (`check_elements`). For each element in order: `n/a` if it has an `applies_if` and that
    fact is not confirmed truthy (unconfirmed counts as not truthy); `known` if a source gives a value (a confirmed fact, or a present lease clause's
    quote, in the order listed in `source`); `changed` instead of `known` if the value is a confirmed fact
    and `proposed` holds a different value for the same id (the row carries both, `value` and `new_value`,
    plus the proposal's `how` and `basis`; a value read from the lease is never `changed`); `proposed` if it
    is in `proposed`; otherwise `missing`. Changed, proposed, and missing rows carry the `guidance.questions`
-   text in `ask`. A changed row is resolved by `record_facts`, with either value.
+   text in `ask`. A changed row is resolved on the sheet, with either value.
 5. Confirmed to deadlines (`get_deadlines`, then `compute_deadlines`). Refuses while any row is proposed,
    changed, or missing. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
    if the trigger date is not confirmed; otherwise trigger date plus or minus `days` calendar days, status
@@ -160,8 +167,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
 - `sessions/<session id>.jsonl`: the transcript of one session, outside the evidentiary log. One line per
   entry, each with `when` and `role`: `tenant` (`text`, as typed), `model` (`text`, plus `tool_calls`, a
   list of `{"name", "args"}`, when it called tools), `tool` (`name`, `text`: the result the model saw),
-  `command` (`text`: a `timeline` command, handled without the model), or `sheet` (`id`, `question`,
-  `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved). Only the chat is transcribed; the
+  `command` (`text`: a `timeline` command, handled without the model), `sheet` (`id`, `question`,
+  `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved), or
+  `program` (`text`: the note sent to the model ahead of the tenant's message after a sheet). Only the chat is transcribed; the
   intake or resume calls before it are not.
 
 Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `statutes/83.*.txt` and `.html` (the
@@ -175,9 +183,13 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   listing what is available. Writes a `fetch` event.
 - `search_statute(phrase)`: every section containing the phrase (case-insensitive), with a snippet.
   Writes a `fetch` event.
-- `record_facts(facts_json)`: JSON object of element id to confirmed value. Moves each into `facts`
-  through `record.confirm_fact` (`confirmed_in: "chat"`), saves `matter.json`, returns the new element status. Does not
-  check that the id is a real element or that the value has the element's type.
+- `propose_facts(facts_json)`: JSON object keyed by element id, each `{"value", "how", "said"}`. Puts a
+  suggestion in `proposed` only if the id is a user-sourced element of an active playbook, the value fits
+  the element's type (`sheet.parse_answer`, and it is stored as parsed), `how` is stated or inferred, and
+  `said` appears in what the tenant typed this session (`record.tenant_words`, substring after `squash`).
+  A value equal to the confirmed one is refused. Saves `matter.json`; returns what was taken and why
+  anything was refused. Never confirms: the chat loop runs the sheet after the turn.
+- `fact_status()`: `element_status()` as JSON. Read only.
 - `get_deadlines()`: refuses with the list of unconfirmed ids while any row is proposed, changed, or missing.
   Otherwise returns every clock's result for every active playbook, tagged with `issue`, and writes a
   `deadlines_computed` event per playbook.
@@ -193,14 +205,14 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
 
 ## The system prompt
 
-Built in `build_agent` (called by `intake`, or directly for an existing matter), in this order:
+Built in `build_agent` (called by `run.py` after the intake sheet), in this order:
 
 1. `RULES`, fifteen numbered rules. In short: 1 quote only from the profile or stored statute; 2 never
-   compute dates, use `get_deadlines`; 3 confirm proposed rows, show both values of changed rows and ask which is right, ask missing rows,
-   then `record_facts`;
+   compute dates, use `get_deadlines`; 3 facts are confirmed on the sheet, not in chat: propose with `propose_facts`, check with
+   `fact_status` after a sheet, no `get_deadlines` while anything is open;
    4 look up the statute when the preloaded text does not answer, otherwise say so; 5 open questions are
    unsettled; 6 draft only when asked, never send; 7 never say which of lease or statute controls; 8 fetch a
-   section before mentioning it; 9 never record an unconfirmed value; 10 ask whose notice is meant;
+   section before mentioning it; 9 the model cannot confirm a fact and never says one is recorded unless `fact_status` shows it; 10 ask whose notice is meant;
    11 the letter questions (issue, ask, reply days, delivery method, the sentence relied on, posture), then
    `draft_letter` and one sentence; 12 never write a letter yourself; 13 never apply a provision to the
    facts; 14 record pasted messages with `add_communication`; 15 record a sent letter the same way.
@@ -211,8 +223,8 @@ Built in `build_agent` (called by `intake`, or directly for an existing matter),
    issues that have no playbook.
 5. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at intake time.
 
-The prompt is fixed for the session. Later element status reaches the model only through `record_facts`
-return values.
+The prompt is fixed for the session. Later element status reaches the model through `fact_status`,
+`propose_facts` return values, and the program note after a sheet.
 
 ## Playbook schema
 

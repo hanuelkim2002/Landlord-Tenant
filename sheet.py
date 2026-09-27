@@ -83,10 +83,11 @@ HINT = {"date": "YYYY-MM-DD", "bool": "yes/no", "money": "amount", "text": "word
 
 
 def run_sheet(ask=input):
-    """Ask every pending fact until none is left or the tenant has skipped the rest. Returns how many were saved.
+    """Ask every pending fact until none is left or the tenant has skipped the rest. Returns the facts saved,
+    as (id, value) pairs, so the chat loop can tell the model what the tenant confirmed.
     ask is the function that reads one answer; input by default, a list's iterator in tests."""
     print("\nFacts for your matter. Enter accepts a suggested answer, or type the right one. ? skips for now.\n")
-    skipped, saved, last_issue = set(), 0, None
+    skipped, saved, last_issue = set(), [], None
     while True:
         rows = [r for r in pending_rows() if r["id"] not in skipped]
         if not rows:
@@ -122,7 +123,7 @@ def run_sheet(ask=input):
         save(record.matter)
         record.append_transcript({"role": "sheet", "id": r["id"], "question": r["question"],
                                   "typed": answer, "value": value})
-        saved += 1
+        saved.append((r["id"], value))
 
     if skipped:
         print(f"\nSkipped for now: {', '.join(sorted(skipped))}. Deadlines wait until these are answered.")

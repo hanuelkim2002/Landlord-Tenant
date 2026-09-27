@@ -16,7 +16,8 @@ import record
 from config import squash
 from corpus import playbooks, statute
 from deterministic import compute_deadlines
-from record import active_playbooks, append_event, confirm_fact, element_status, matter_dir, save
+from record import active_playbooks, append_event, element_status, matter_dir, save
+from sheet import parse_answer, shown
 
 
 # ---- Statute Lookup
@@ -41,16 +42,55 @@ def search_statute(phrase: str) -> str:
     return "\n".join(hits) or "No matches."
 
 
-# ---- Record Facts
+# ---- Propose Facts and Fact Status: the model can suggest a fact and read the status, never confirm one.
+# Confirming is the tenant's, on the intake sheet the chat loop shows after the turn (sheet.run_sheet).
 
 @tool
-def record_facts(facts_json: str) -> str:
-    """Save facts the tenant has CONFIRMED, after you showed them the value and asked. Input: JSON object
-    keyed by element id, e.g. {"early_or_periodic": true}. Dates as YYYY-MM-DD. Returns updated element status."""
-    confirmed = json.loads(facts_json)
-    for fact_id, value in confirmed.items():
-        confirm_fact(fact_id, value, "chat")
+def propose_facts(facts_json: str) -> str:
+    """Suggest facts the tenant stated or implied in this chat. You cannot confirm or record a fact: the tenant
+    confirms each suggestion on a sheet the program shows right after your reply. Do not ask them to confirm
+    it in the chat. Input: JSON object keyed by element id, each {"value": ..., "how": "stated" or "inferred",
+    "said": "the tenant's exact words the value rests on"}. Dates as YYYY-MM-DD, yes/no as true/false, money
+    as a number. Returns which suggestions were taken and why any were refused."""
+    try:
+        proposals = json.loads(facts_json)
+    except json.JSONDecodeError:
+        return "facts_json is not valid JSON."
+    kinds = {e.id: e.type for pb in active_playbooks() for e in pb.spec.elements if "user" in e.source}
+    said_by_tenant = squash(" ".join(record.tenant_words()))
+    taken, refused = [], []
+    for fact_id, p in proposals.items():
+        if fact_id not in kinds:
+            refused.append(f"{fact_id}: not a fact this matter's issues ask for")
+            continue
+        if p.get("value") is None:
+            refused.append(f"{fact_id}: no value given")
+            continue
+        value, expected = parse_answer(kinds[fact_id], shown(p["value"]))
+        if expected:
+            refused.append(f"{fact_id}: value must be {expected}")
+        elif p.get("how") not in ("stated", "inferred"):
+            refused.append(f"{fact_id}: how must be stated or inferred")
+        elif not p.get("said") or squash(p["said"]) not in said_by_tenant:
+            refused.append(f"{fact_id}: said must be the tenant's exact words from this chat")
+        elif fact_id in record.matter["facts"] and record.matter["facts"][fact_id] == value:
+            refused.append(f"{fact_id}: already confirmed with that value")
+        else:
+            record.matter["proposed"][fact_id] = {"value": value, "how": p["how"], "basis": p["said"]}
+            taken.append(fact_id)
     save(record.matter)
+    lines = []
+    if taken:
+        lines.append("Suggested: " + ", ".join(taken) + ". The tenant confirms them on the sheet shown after your reply.")
+    if refused:
+        lines.append("Refused: " + "; ".join(refused))
+    return "\n".join(lines) or "Nothing to suggest."
+
+
+@tool
+def fact_status() -> str:
+    """The current status of every fact, by issue: known (confirmed), changed, proposed, missing, or n/a.
+    Call it before relying on a fact, and after the tenant has been shown the sheet."""
     return json.dumps(element_status(), indent=2)
 
 
@@ -179,4 +219,4 @@ def add_communication(sent_on: str, sender: str, recipient: str, channel: str, t
 
 # ---- Tools List: what the agent may call. A new tool goes here after it is defined above.
 
-tools = [get_statute_section, search_statute, record_facts, get_deadlines, draft_letter, add_artifact, add_communication]
+tools = [get_statute_section, search_statute, propose_facts, fact_status, get_deadlines, draft_letter, add_artifact, add_communication]

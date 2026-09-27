@@ -12,6 +12,7 @@ from config import agent_llm
 from corpus import statute
 from deterministic import ROUTING, classify, fill_facts
 from record import active_playbooks, append_event, element_status, save
+from sheet import pending_rows, run_sheet
 from timeline import render_timeline
 from tools import tools
 
@@ -28,13 +29,12 @@ Rules:
    SECTIONS below or from get_statute_section. Never from memory.
 2. Never count, add, or compute days or dates. For any deadline, call get_deadlines and report exactly
    what it returns, including its "counting" line.
-3. ELEMENT STATUS rows marked "proposed" are unconfirmed. Before anything else, show the tenant each one:
-   the value, whether it was stated or inferred, and the words it rests on. Ask if it is correct. Then call
-   record_facts with the confirmed value, corrected if the tenant corrected it. Rows marked "changed" hold a
-   value the tenant already confirmed ("value") and a different one from their latest update ("new_value"):
-   show both, with the words the new one rests on, ask which is right, and call record_facts with the answer,
-   even if it is the old value. Rows marked "missing": ask that row's "ask" question, one at a time, and call
-   record_facts with the answer. Do not call get_deadlines while any row is proposed, changed, or missing.
+3. The tenant confirms facts on a sheet the program shows, not in this chat. ELEMENT STATUS below (and
+   fact_status, which gives the current rows) shows each fact as known, changed, proposed, missing, or n/a.
+   When the tenant says something that answers a missing fact or differs from a known one, call
+   propose_facts with the value, "stated" or "inferred", and the tenant's exact words. The sheet appears
+   after your reply; do not ask the tenant to confirm in the chat. After a sheet, call fact_status before
+   relying on a fact. Do not call get_deadlines while any row is proposed, changed, or missing.
 4. If the preloaded material does not answer a question, use search_statute or get_statute_section.
    If the statute does not answer it either, say so plainly. Do not fill the gap with your own view.
 5. The PLAYBOOK's open_questions are unsettled. When one comes up, say the statute does not settle it.
@@ -43,7 +43,7 @@ Rules:
    interact. Show both texts side by side and say: this tool does not resolve conflicts between them.
 8. Before you mention any section not in STATUTE SECTIONS, call get_statute_section for it first
    and quote from what it returns.
-9. Never call record_facts with a value the tenant has not confirmed in this conversation.
+9. You cannot confirm or record a fact. Never say a fact is recorded unless fact_status shows it as known.
 10. If a question could be about the tenant's notice or the landlord's notice, ask which before answering.
 11. When the tenant asks for a letter: if the matter has more than one issue, ask which issue the letter is
     about. Ask what they want the landlord to do, how many days to give for a reply, and how they will send
@@ -136,8 +136,9 @@ def build_agent():
 
 
 # ---- Chat: read a line, run a turn, print the reply. Tool output is hidden except draft_letter, whose
-# result is printed directly. The word `timeline` prints the record without the model. Everything said,
-# every tool call, and every command goes to the session's transcript.
+# result is printed directly. The word `timeline` prints the record without the model. After a turn in which
+# the model proposed facts, the intake sheet asks the tenant to confirm them. Everything said, every tool
+# call, every command, and every sheet answer goes to the session's transcript.
 
 def transcript_entry(m):
     """One message from the thread as a transcript line: who said it, what, and any tool calls with arguments."""
@@ -155,6 +156,7 @@ def chat(agent):
     # The chat thread takes the session's id, so the conversation and the record's events share one id.
     config = {"configurable": {"thread_id": record.session or str(uuid7())}}
     seen = 0            # result holds the whole thread; seen marks how much we already printed
+    note = ""           # what the tenant confirmed on a sheet since the model last ran; goes with the next message
     while True:
         q = input(">> ")
         if q in ("", "bye"):
@@ -169,12 +171,25 @@ def chat(agent):
                 continue
             print(render_timeline(issue, full), "\n")
             continue
-        result = agent.invoke({"messages": [HumanMessage(content=q)]}, config=config)
-        for m in result["messages"][seen:]:              # everything new this turn, your own message included
+        record.append_transcript({"role": "tenant", "text": q})   # before the model runs: propose_facts checks it
+        if note:
+            record.append_transcript({"role": "program", "text": note})
+        result = agent.invoke({"messages": [HumanMessage(content=note + q)]}, config=config)
+        note = ""
+        new = result["messages"][seen + 1:]              # everything new this turn, minus the tenant's message
+        for m in new:
             record.append_transcript(transcript_entry(m))
-        for m in result["messages"][seen + 1:]:          # everything new this turn, minus your own message
+        for m in new:                                    # print the replies, and a letter if one was drafted
             if m.type == "tool" and m.name == "draft_letter":
                 print(m.content, "\n")
             elif m.type == "ai" and m.content:
                 print(m.content, "\n")
         seen = len(result["messages"])
+        # The model suggested facts: the tenant confirms them on the sheet now, with code, not with the model.
+        # The model learns the result with the tenant's next message, since the sheet runs between its turns.
+        if any(m.type == "tool" and m.name == "propose_facts" for m in new) and pending_rows():
+            confirmed = run_sheet()
+            print()
+            if confirmed:
+                note = ("[Program note: the tenant confirmed on the sheet: "
+                        + ", ".join(f"{i} = {v}" for i, v in confirmed) + "]\n")

@@ -75,8 +75,8 @@ def new_matter(tenant_id):
 # ---- Confirm Fact: the only code that writes a confirmed fact.
 
 def confirm_fact(fact_id, value, confirmed_in):
-    """Move one fact into matter["facts"] and log it. confirmed_in: "sheet" (the tenant answered the intake
-    sheet) or "chat" (the model called record_facts). The event keeps what was proposed and on what words."""
+    """Move one fact into matter["facts"] and log it. confirmed_in: where the tenant confirmed it; "sheet"
+    (the intake sheet) is the only caller now. The event keeps what was proposed and on what words."""
     was = matter["proposed"].pop(fact_id, {"value": None, "how": "asked", "basis": None})
     matter["facts"][fact_id] = value
     append_event("fact_confirmed", id=fact_id, value=value, how=was["how"], basis=was["basis"],
@@ -130,6 +130,17 @@ def append_transcript(entry):
     line = {"when": datetime.now().isoformat(timespec="seconds"), **entry}
     with open(folder / f"{session}.jsonl", "a") as f:
         f.write(json.dumps(line, default=str) + "\n")
+
+
+def tenant_words():
+    """Everything the tenant typed in the open session's chat, from the transcript. Empty with no session."""
+    if not session:
+        return []
+    path = matter_dir() / "sessions" / f"{session}.jsonl"
+    if not path.exists():
+        return []
+    lines = [json.loads(line) for line in path.read_text().splitlines()]
+    return [line["text"] for line in lines if line["role"] == "tenant"]
 
 
 def read_events():

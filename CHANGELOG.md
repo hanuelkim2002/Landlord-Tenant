@@ -5,6 +5,17 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Intake sheet, step 3 of 3: the model can no longer confirm a fact. `record_facts` is replaced by
+  `propose_facts`, which only adds to `proposed` and checks each suggestion in code (the id is a fact of the
+  matter's issues, the value fits its type, how is stated or inferred, and the cited words appear in what
+  the tenant typed this session, from the new `record.tenant_words`). New read-only `fact_status` tool,
+  replacing the element status `record_facts` used to return. The chat loop writes the tenant's message to
+  the transcript before the model runs, runs the sheet after any turn that proposed a fact, and sends what
+  the tenant confirmed to the model as a "[Program note: ...]" at the front of the next message (added
+  after the first live run showed the model did not know the sheet had run). `run_sheet` returns the saved
+  facts instead of a count. Rules 3 and 9 reworded. CLAUDE.md's "only door" line updated. Tested offline
+  (one proposal taken, five refused for five reasons) and live on `t-test/m-001` (a date corrected in the
+  chat, confirmed on the sheet, then deadlines on the next turn). The intake sheet item is done.
 - Intake sheet, step 2 of 3: `run.py` runs the sheet after intake or resume (and on an existing matter with
   facts still open), then builds the agent. `intake` and `resume` no longer build the agent; they only
   update the record, and `start()` returns True when a matter is open. This way the prompt's ELEMENT
