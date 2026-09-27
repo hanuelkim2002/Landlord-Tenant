@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- TODO.md reorganized by the author's priority: structure and code first, model behavior later. "Guards and
+  known issues" split into "Harness and code" and "Model behavior (later)"; playbook data items moved under
+  "Playbooks". The `lease_ending` item split into its code half (`ROUTING` preloading sections for issues
+  without a playbook) and its model half (the classifier). New harness item for stale proposals. No code
+  changed.
 - Resume, step 3 of 3: `start_existing` asks "Anything new since last time?" after loading a matter; text
   goes to `agent.resume`, an empty answer straight to chat. `ask_description` in `run.py` became
   `ask_text(prompt)` and serves both questions. Tested live on a copy of the test matter
