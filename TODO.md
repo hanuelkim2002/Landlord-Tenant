@@ -19,8 +19,8 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.
 
 3. Intake sheet, replacing the code-side guard for rule 9 (the model once recorded a fact without asking).
-   Step 1 done: `sheet.py` and `record.confirm_fact`. Step 2: `run.py` shows the sheet after intake or
-   resume, before the chat. Step 3: replace `record_facts` with `propose_facts` (the model can only add to
+   Steps 1 and 2 done: `sheet.py`, `record.confirm_fact`, and `run.py` showing the sheet before the chat.
+   Step 3: replace `record_facts` with `propose_facts` (the model can only add to
    `proposed`), and the chat loop shows the sheet after any turn that proposed something; adjust rules 3
    and 9 to match. Decided 2026-09-27: suggestions pre-filled, `?` skips, the model only proposes, rows
    kept separate from the terminal asking so a front end can draw them as a form.

@@ -68,10 +68,11 @@ Rules:
 """
 
 
-# ---- Intake: classify the description, propose facts, then build the agent.
+# ---- Intake: classify the description and propose facts. The sheet and the agent come after, in run.py.
 
 def intake(description):
-    """Classify, fill facts for every matching playbook, save, return an agent. For a new matter only."""
+    """Classify, fill facts for every matching playbook, save. For a new matter only. The agent is built
+    afterwards (build_agent), once the intake sheet has run, so the prompt shows the confirmed facts."""
     matter = record.matter
     matter["description"] = description
     matter["issues"] = classify(description)["issues"]
@@ -82,13 +83,12 @@ def intake(description):
             matter["proposed"].setdefault(fact_id, p)
     save(matter)
     print("proposed:", list(matter["proposed"]))
-    return build_agent()
 
 
 # ---- Resume: an existing matter, and the tenant says what is new since last time.
 
 def resume(update_text):
-    """Record the update, add any new issues, propose facts from the update, return an agent.
+    """Record the update, add any new issues, propose facts from the update. The agent is built afterwards.
     Classifies only the update (the old issues are already known) and never removes an issue. Proposes
     for every active playbook, old and new: a value equal to a confirmed fact is dropped, a value that
     differs from one shows up as "changed" in the element status, and a new one as "proposed"."""
@@ -107,11 +107,10 @@ def resume(update_text):
     matter["proposed"].update(fresh)                       # a newer suggestion replaces an older pending one
     save(matter)
     print("new issues:", new_issues, "| proposed from update:", list(fresh))
-    return build_agent()
 
 
-# ---- Build Agent: the system prompt from whatever the record holds now. Called by intake for a new matter,
-# and directly by run.py when an existing matter is opened (no model call until the tenant types).
+# ---- Build Agent: the system prompt from whatever the record holds now. Called by run.py after the intake
+# sheet, for a new or an existing matter (no model call until the tenant types).
 
 def build_agent():
     """Build the system prompt from the current matter and lease profile, return an agent."""

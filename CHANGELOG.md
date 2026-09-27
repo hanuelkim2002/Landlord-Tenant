@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Intake sheet, step 2 of 3: `run.py` runs the sheet after intake or resume (and on an existing matter with
+  facts still open), then builds the agent. `intake` and `resume` no longer build the agent; they only
+  update the record, and `start()` returns True when a matter is open. This way the prompt's ELEMENT
+  STATUS is taken after the sheet. Tested live: new matter `t-test/m-001` from the sample lease, five facts
+  confirmed on the sheet (one inferred suggestion corrected), and the model gave deadlines on the first
+  question with no confirmation back-and-forth.
 - Intake sheet, step 1 of 3: new `sheet.py`. `pending_rows` lists every changed, proposed, or missing fact
   of the matter's issues once per fact id; `run_sheet` asks them in the terminal one at a time, checks each
   answer against the element's type (`parse_answer`), pre-fills suggestions with the tenant's words,

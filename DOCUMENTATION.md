@@ -49,9 +49,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `tools.py`: the seven `@tool` functions and the `tools` list (see Tools the model can call), plus the
   plain helpers `pretty`, `quote_is_real`, and `build_letter`. Imports `record`, `config`, `corpus`,
   `deterministic`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`).
-- `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, save, then
-  `build_agent`; for a new matter only), `resume` (for an existing matter: log a `tenant_update` event,
-  classify the update only, add new issues, propose facts from the update, save, then `build_agent`),
+- `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, save; for a
+  new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
+  add new issues, propose facts from the update, save). Neither builds the agent: `run.py` runs the intake
+  sheet first, then `build_agent`.
   `build_agent` (the system prompt from the current record, and a
   LangChain agent with an in-memory checkpointer; no model call), `transcript_entry` (one thread message as a transcript line), and `chat` (the terminal loop; its
   thread id is the session id when one is open; it writes every new message of each turn, the tenant's
@@ -62,15 +63,16 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   into the terminal), reads the lease (`read_lease`), asks for the description (`ask_text`, several lines
   ended by an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked
   (it stops if the matter has no lease profile), `start_session("existing")`, then asks "Anything new since last time?" with `ask_text`:
-  text goes to `resume`, an empty answer to `build_agent`. Then `chat`, then `end_session()` on a normal
-  exit. A session opens before intake or resume, so everything done in the visit carries its id.
+  text goes to `resume`, an empty answer goes on. Both return True when a matter is open. Then, if
+  `pending_rows()` has anything, `run_sheet()`; then `chat(build_agent())`, so the prompt holds the facts as
+  confirmed on the sheet; then `end_session()` on a normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
 - `sheet.py`: the intake sheet, asked and saved by code with no model. `pending_rows()` (every changed,
   proposed, or missing fact across the matter's issues, once per fact id, with its question, type, and
   any suggestion), `parse_answer(kind, text)` (checks an answer against the element's type: dates as
   `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and commas, non-empty text), `shown`,
   and `run_sheet(ask=input)` (asks one fact at a time, rebuilding the list after each answer so an
   `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; saves each answer with
-  `record.confirm_fact` and a transcript line). Imports `record`, `corpus`. Nothing calls it yet.
+  `record.confirm_fact` and a transcript line). Imports `record`, `corpus`. Imported by `run`.
 - `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
 - `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
@@ -265,7 +267,7 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
 - `python smoke_online.py`: opens the same test matter with `load_matter`. `classify` and `fill_facts` on the sample
   description (two model calls), then element status from the proposed facts.
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
-  and runs intake (two calls) before the chat. An existing matter asks what is new: an update runs
-  `resume` (two calls) before the chat; nothing new goes straight to the chat from the saved facts. Chat commands, handled by the loop without the
+  and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).
+  Then the intake sheet asks every open fact (no model), and the chat starts. Chat commands, handled by the loop without the
   model: `timeline`, `timeline full`, `timeline <issue>`; an empty line or `bye` exits. Every run appends
   to the matter's `events.jsonl`.

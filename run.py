@@ -3,8 +3,9 @@
     python run.py
 
 New matter: pick a tenant (or make a new one), give the lease PDF's path, describe the problem. The lease is
-read once with Gemma, then intake. Existing matter: pick it from the list and say what is new, if anything.
-An update goes through resume (new issues added, facts proposed from it); nothing new goes straight to chat.
+read once with Gemma, then intake. Existing matter: pick it from the list and say what is new, if anything;
+an update goes through resume (new issues added, facts proposed from it). Either way, the intake sheet then
+asks for every fact still open, and the chat starts with the confirmed facts in the prompt.
 """
 from pathlib import Path
 
@@ -14,6 +15,7 @@ require_key()                   # this script calls the models; stop here if the
 import record
 from agent import build_agent, chat, intake, resume
 from lease import check_quotes, extract_profile, ingest_pdf
+from sheet import pending_rows, run_sheet
 from record import end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id, start_session
 
 
@@ -47,7 +49,7 @@ def read_lease(pdf_path):
 
 
 def start_new():
-    """New matter: tenant, lease, description, intake. Returns the agent."""
+    """New matter: tenant, lease, description, intake. Returns True: a matter is open."""
     tenants = sorted({m["tenant"] for m in list_matters()})
     if tenants:
         print("Existing tenants:", ", ".join(tenants))
@@ -59,12 +61,13 @@ def start_new():
     start_session("new")                       # from here on, every event carries this session's id
 
     read_lease(ask_path("Path to the lease PDF: "))
-    return intake(ask_text("Describe the problem in your own words. Press Enter on an empty line when done."))
+    intake(ask_text("Describe the problem in your own words. Press Enter on an empty line when done."))
+    return True
 
 
 def start_existing():
-    """Existing matter: pick from the list, load it, ask what is new. Returns the agent, or None if there is
-    nothing to open."""
+    """Existing matter: pick from the list, load it, ask what is new. Returns True if a matter is open,
+    None if there is nothing to open."""
     found = list_matters()
     if not found:
         print("No saved matters yet.")
@@ -85,12 +88,12 @@ def start_existing():
     update = ask_text("Anything new since last time? Type it in your own words and press Enter on an empty\n"
                       "line when done. Press Enter right away if nothing is new.")
     if update:
-        return resume(update)                  # logs the update, adds issues, proposes facts from it
-    return build_agent()
+        resume(update)                         # logs the update, adds issues, proposes facts from it
+    return True
 
 
 def start():
-    """The front door: new or existing. Returns an agent, or None to stop."""
+    """The front door: new or existing. Returns True when a matter is open, None to stop."""
     while True:
         choice = input("New matter or existing matter? [new/existing] ").strip().lower()
         if choice in ("new", "n"):
@@ -99,7 +102,8 @@ def start():
             return start_existing()
 
 
-agent = start()
-if agent:
-    chat(agent)
+if start():
+    if pending_rows():
+        run_sheet()                            # the tenant confirms facts with code, before the model sees them
+    chat(build_agent())                        # built after the sheet, so the prompt holds the confirmed facts
     end_session()                              # only on a normal exit; a crash leaves the start without an end
