@@ -27,7 +27,7 @@ student, not admitted.
 - Adding a tool: one `@tool` function in `tools.py` with a docstring written to the model, then add it to
   the `tools` list at the bottom of that file. `python schemas.py` shows what the model sees.
 - `matter.json` is current state only. `events.jsonl` is the only history, append-only.
-- `record_facts` is the only door into `matter["facts"]`. `compute_deadlines` is the only date arithmetic.
+- `record.confirm_fact` is the only door into `matter["facts"]` (called by the intake sheet and `record_facts`). `compute_deadlines` is the only date arithmetic.
 - Every quote (lease, statute, tenant's words) is checked by substring against its source before use.
 - Letters are a code template (`build_letter`). The timeline is printed by the chat loop, never by the model.
 

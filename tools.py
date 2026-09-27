@@ -16,7 +16,7 @@ import record
 from config import squash
 from corpus import playbooks, statute
 from deterministic import compute_deadlines
-from record import active_playbooks, append_event, element_status, matter_dir, save
+from record import active_playbooks, append_event, confirm_fact, element_status, matter_dir, save
 
 
 # ---- Statute Lookup
@@ -49,9 +49,7 @@ def record_facts(facts_json: str) -> str:
     keyed by element id, e.g. {"early_or_periodic": true}. Dates as YYYY-MM-DD. Returns updated element status."""
     confirmed = json.loads(facts_json)
     for fact_id, value in confirmed.items():
-        was = record.matter["proposed"].pop(fact_id, {"value": None, "how": "asked", "basis": None})
-        record.matter["facts"][fact_id] = value
-        append_event("fact_confirmed", id=fact_id, value=value, how=was["how"], basis=was["basis"], proposed_value=was["value"])
+        confirm_fact(fact_id, value, "chat")
     save(record.matter)
     return json.dumps(element_status(), indent=2)
 

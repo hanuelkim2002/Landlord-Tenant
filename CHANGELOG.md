@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Intake sheet, step 1 of 3: new `sheet.py`. `pending_rows` lists every changed, proposed, or missing fact
+  of the matter's issues once per fact id; `run_sheet` asks them in the terminal one at a time, checks each
+  answer against the element's type (`parse_answer`), pre-fills suggestions with the tenant's words,
+  accepts `?` to skip, and saves through the new `record.confirm_fact`. That function is now the only code
+  that writes a confirmed fact; it replaces the body of `tools.record_facts`, which now calls it. Every
+  `fact_confirmed` event gains `confirmed_in` ("sheet" or "chat"). CLAUDE.md's "only door" line updated.
+  Not called from `run.py` yet. Tested offline on a throwaway copy of `t-test/test-002` with scripted
+  answers (corrections, bad input re-asked, a changed fact, an applies_if fact appearing, a skip).
+  This replaces the planned code-side `confirm_facts` guard.
 - Sessions, step 2 of 2: transcripts. `record.append_transcript` writes to
   `matters/<tenant>/<matter>/sessions/<session id>.jsonl`; `agent.chat` writes every new message of each
   turn (tenant, model with its tool calls and arguments, tool results) and every `timeline` command.

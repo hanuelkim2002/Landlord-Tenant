@@ -72,6 +72,17 @@ def new_matter(tenant_id):
     return matter
 
 
+# ---- Confirm Fact: the only code that writes a confirmed fact.
+
+def confirm_fact(fact_id, value, confirmed_in):
+    """Move one fact into matter["facts"] and log it. confirmed_in: "sheet" (the tenant answered the intake
+    sheet) or "chat" (the model called record_facts). The event keeps what was proposed and on what words."""
+    was = matter["proposed"].pop(fact_id, {"value": None, "how": "asked", "basis": None})
+    matter["facts"][fact_id] = value
+    append_event("fact_confirmed", id=fact_id, value=value, how=was["how"], basis=was["basis"],
+                 proposed_value=was["value"], confirmed_in=confirmed_in)
+
+
 def save(matter):
     """matter.json holds current state only. History lives in events.jsonl."""
     folder = matter_dir()
