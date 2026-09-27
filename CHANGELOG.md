@@ -3,6 +3,12 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-09-27
+
+- Resume decisions written into TODO.md (A to D), replacing the open question on what `intake` classifies
+  for a returning matter. Checked offline that facts shared by element id already carry across issues.
+  Added a TODO item for the one fact the two deposit playbooks name twice. No code changed.
+
 ## 2026-09-26
 
 - Matter structure, step 3 of 3: `run.py` rewritten around `start()`, which asks new or existing. New:

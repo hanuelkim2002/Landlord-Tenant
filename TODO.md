@@ -8,8 +8,15 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 
 ## Data bank
 
-1. Resume path: `intake` on an existing matter takes a "what is new" description, adds issues, leaves
-   confirmed facts alone, runs `fill_facts` only for unconfirmed elements. Decide the open question below first.
+1. Resume path. Decided 2026-09-27: when an existing matter is opened, ask "anything new?" (Enter skips).
+   A. Classify only the new text. B. Issues are only added, never removed.
+   C. Run `fill_facts` on the new text for every element of every active playbook, old and new. A value that
+      matches a confirmed fact is ignored; a new element is proposed as usual; a value that differs from a
+      confirmed fact is proposed as a change and shown to the tenant against the confirmed value before
+      `record_facts` (needs a "changed" status in `check_elements` and a line in rule 3). Facts a new issue
+      shares with an old one by element id carry over already (one `facts` pool keyed by id).
+   D. The update text goes in a new `tenant_update` event, verbatim; `matter["description"]` stays the
+      first story. The timeline shows it.
 2. Sessions: `session_started` / `session_ended` events in `events.jsonl` (with a session id) so the record
    shows when the tool was used. Transcripts go to `sessions/<id>.jsonl`, outside the evidentiary log.
    The timeline shows sessions only under `full`.
@@ -50,11 +57,13 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
     cite. Either give each posture line its cite in the playbook, or show the model the clock cites.
 16. After `record_facts` turned `seven_day_notice_given` to n/a, the model still asked its question. It
     had the intake-time ELEMENT STATUS in the prompt, where that row was proposed.
+17. The two deposit playbooks name the same fact twice: `claim_notice_date` (deposit_not_returned) and
+    `claim_notice_received_on` (deposit_claim_received) both ask when the tenant received the landlord's
+    notice. Facts carry across issues only by id, so this one would be asked again. Rename one in its
+    playbook, then run the quote check.
 
 ## Open questions
 
-- Resume: what does `intake` classify on a returning matter? Rerunning `classify` on the old description
-  recreates the old issues. Proposed: a new description of what is new, issues added, never removed.
 - Playbook open question (deposit_not_returned): whether returning keys one day before the term end is
   "vacating before the expiration of the term." The 7-day clock currently applies whenever
   `early_or_periodic` is confirmed true.
