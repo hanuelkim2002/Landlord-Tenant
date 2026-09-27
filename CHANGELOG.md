@@ -5,6 +5,13 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Sessions, step 1 of 2: `record.start_session(how)` / `record.end_session()` log `session_started` and
+  `session_ended`, and while a session is open `append_event` tags every event with its id (a time-ordered
+  uuid7). `run.py` opens the session once the matter is chosen, before intake or resume, and closes it after
+  the chat. The chat's thread id is now the session id (was a fresh uuid7 per chat). `timeline full` shows
+  sessions. `render_timeline` sorts by date only, keeping the order rows were added within a day; before,
+  same-day rows sorted alphabetically, which would have put "session ended" before "session started".
+  Tested on a throwaway copy of the test matter.
 - TODO.md reorganized by the author's priority: structure and code first, model behavior later. "Guards and
   known issues" split into "Harness and code" and "Model behavior (later)"; playbook data items moved under
   "Playbooks". The `lease_ending` item split into its code half (`ROUTING` preloading sections for issues

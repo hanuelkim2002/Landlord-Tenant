@@ -8,9 +8,10 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 
 ## Data bank
 
-1. Sessions: `session_started` / `session_ended` events in `events.jsonl` (with a session id) so the record
-   shows when the tool was used. Transcripts go to `sessions/<id>.jsonl`, outside the evidentiary log.
-   The timeline shows sessions only under `full`.
+1. Sessions, step 2 (step 1, session events and the tag on every event, is done): transcripts in
+   `matters/<tenant>/<matter>/sessions/<session id>.jsonl`, outside the evidentiary log. Each holds the
+   tenant's messages, the model's replies, and every tool call with its arguments and result. Test with a
+   short live run.
 
 ## Skills
 

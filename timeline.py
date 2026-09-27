@@ -64,10 +64,15 @@ def render_timeline(issue=None, full=False):
         elif full and ev["kind"] == "fetch":
             what = f"read statute {ev['section']}" if "section" in ev else f"searched statute for '{ev['search']}'"
             rows.append((day, what, "tool", ""))
+        elif full and ev["kind"] == "session_started":
+            rows.append((day, f"session {ev['session'][:8]} started ({ev['how']} matter)", "tool", ""))
+        elif full and ev["kind"] == "session_ended":
+            rows.append((day, f"session {ev['session'][:8]} ended", "tool", ""))
         elif full and ev["kind"] == "deadlines_computed":
             rows.append((day, "computed deadlines: " + ", ".join(label(c) for c in ev["clocks"]), "tool", ""))
 
-    rows.sort()
+    rows.sort(key=lambda row: row[0])                     # by date only; within a day, rows keep the order
+                                                           # they were added, so events stay in log order
     lines = [f"{'DATE':<12} {'EVENT':<64} {'SOURCE':<44} FILE"]
     for day, what, source, file in rows:
         lines.append(f"{day:<12} {what:<64} {source:<44} {file}")

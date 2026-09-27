@@ -140,7 +140,8 @@ def build_agent():
 # result is printed directly. The word `timeline` prints the record without the model.
 
 def chat(agent):
-    config = {"configurable": {"thread_id": str(uuid7())}}
+    # The chat thread takes the session's id, so the conversation and the record's events share one id.
+    config = {"configurable": {"thread_id": record.session or str(uuid7())}}
     seen = 0            # result holds the whole thread; seen marks how much we already printed
     while True:
         q = input(">> ")

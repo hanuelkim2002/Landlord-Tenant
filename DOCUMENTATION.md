@@ -36,6 +36,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   (`events.jsonl`), `active_playbooks`, `element_status`. The starting `matter` is the test matter,
   tenant `"t-test"`, id `"test-001"`, used by the smoke scripts through `load_matter`. `new_matter(tenant_id)`
   replaces `matter` with an empty one under the next matter id and clears `profile`; `run.py` calls it.
+  `session` holds the open session's id or `None`; `start_session(how)` opens one (a new time-ordered
+  uuid7) and logs `session_started`, `end_session()` logs `session_ended` and clears it. While a session is
+  open, `append_event` adds its id to every event.
   Imports `config`, `corpus`, `deterministic`, `lease`. Imported by `timeline`, `tools`, `agent`, `run`,
   `smoke`, `smoke_online`.
 - `timeline.py`: `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
@@ -48,14 +51,16 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `build_agent`; for a new matter only), `resume` (for an existing matter: log a `tenant_update` event,
   classify the update only, add new issues, propose facts from the update, save, then `build_agent`),
   `build_agent` (the system prompt from the current record, and a
-  LangChain agent with an in-memory checkpointer; no model call), and `chat` (the terminal loop).
+  LangChain agent with an in-memory checkpointer; no model call), and `chat` (the terminal loop; its thread id is the session id when one
+  is open).
   Imports `record`, `config`, `corpus`, `deterministic`, `timeline`, `tools`. Imported by `run`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
-  (`new_tenant_id`), calls `new_matter`, asks for the lease path (`ask_path`, which accepts a path dragged
+  (`new_tenant_id`), calls `new_matter` and `start_session("new")`, asks for the lease path (`ask_path`, which accepts a path dragged
   into the terminal), reads the lease (`read_lease`), asks for the description (`ask_text`, several lines
   ended by an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked
-  (it stops if the matter has no lease profile), then asks "Anything new since last time?" with `ask_text`:
-  text goes to `resume`, an empty answer to `build_agent`. Then `chat`.
+  (it stops if the matter has no lease profile), `start_session("existing")`, then asks "Anything new since last time?" with `ask_text`:
+  text goes to `resume`, an empty answer to `build_agent`. Then `chat`, then `end_session()` on a normal
+  exit. A session opens before intake or resume, so everything done in the visit carries its id.
 - `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
 - `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
@@ -94,8 +99,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    if the trigger date is not confirmed; otherwise trigger date plus or minus `days` calendar days, status
    `passed` if before today else `upcoming`, with the cite and the playbook's `counting.convention`.
 6. Record to timeline (`render_timeline`). Rows come from confirmed date facts, freshly computed deadlines,
-   and events (see Files on disk). Sorted by date string. `issue` filters deadlines and issue-tagged events;
-   untagged events always show. `full` adds `fact_confirmed`, `fetch`, and `deadlines_computed` events.
+   and events (see Files on disk). Sorted by date only; rows on the same day keep the order they were
+   added (confirmed dates and deadlines first, then events in log order). `issue` filters deadlines and
+   issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`,
+   `deadlines_computed`, `session_started`, and `session_ended` events.
 7. Letter assembly (`draft_letter`, then `build_letter`). Checks the issue and posture, checks each quote
    with `quote_is_real` (substring of a present lease clause quote or any stored statute section), then
    builds the letter from a template: today's date, landlord and premises quotes from the profile, every
@@ -115,7 +122,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   `issues` (labels from `classify`), `facts` (confirmed, element id to value), `proposed` (unconfirmed,
   element id to `{"value", "how", "basis"}`).
 - `events.jsonl`: the history, one JSON object per line, append-only. Every event has `when` (local time,
-  ISO, to the second) and `kind`. Kinds and their other fields:
+  ISO, to the second) and `kind`, then `session` (the session id) if a session was open when it was
+  written. Events written before sessions existed, or outside `run.py`, have no `session`. Kinds and their
+  other fields:
   - `fact_confirmed`: `id`, `value`, `how` (stated, inferred, or asked), `basis`, `proposed_value`.
     Written by `record_facts`.
   - `fetch`: `section` (from `get_statute_section`) or `search` (from `search_statute`).
@@ -127,6 +136,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
     `add_communication`. The timeline sorts it by `sent_on`, not `when`.
   - `tenant_update`: `text`, what a returning tenant typed as new, verbatim. Written by `resume`. Shown in
     the timeline as "tenant update" with the first words.
+  - `session_started`: `how` ("new" or "existing"). Written by `start_session`. `timeline full` only.
+  - `session_ended`: no other fields. Written by `end_session` on a normal exit. A session with a start and
+    no end was cut off. `timeline full` only.
 - `draft_<YYYY-MM-DD>_<issue>_<posture>.txt`: each drafted letter. A second draft on the same day with the
   same issue and posture overwrites the file; the earlier `draft` event remains.
 - `artifacts/<sha256[:12]>_<name>`: copies of files stored by `add_artifact`.

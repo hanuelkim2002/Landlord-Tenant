@@ -14,7 +14,7 @@ require_key()                   # this script calls the models; stop here if the
 import record
 from agent import build_agent, chat, intake, resume
 from lease import check_quotes, extract_profile, ingest_pdf
-from record import list_matters, load_matter, matter_dir, new_matter, new_tenant_id
+from record import end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id, start_session
 
 
 def ask_path(prompt):
@@ -56,6 +56,7 @@ def start_new():
         tenant = new_tenant_id()
     new_matter(tenant)
     print("New matter", record.matter["tenant"], record.matter["id"])
+    start_session("new")                       # from here on, every event carries this session's id
 
     read_lease(ask_path("Path to the lease PDF: "))
     return intake(ask_text("Describe the problem in your own words. Press Enter on an empty line when done."))
@@ -79,6 +80,7 @@ def start_existing():
     if record.profile is None:
         print("This matter has no lease profile yet. Start a new matter with the lease instead.")
         return None
+    start_session("existing")                  # before the update, so the update belongs to this session
 
     update = ask_text("Anything new since last time? Type it in your own words and press Enter on an empty\n"
                       "line when done. Press Enter right away if nothing is new.")
@@ -100,3 +102,4 @@ def start():
 agent = start()
 if agent:
     chat(agent)
+    end_session()                              # only on a normal exit; a crash leaves the start without an end

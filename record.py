@@ -10,6 +10,8 @@ import json
 import secrets
 from datetime import datetime
 
+from langchain_core.utils.uuid import uuid7
+
 from config import MATTERS
 from corpus import playbooks
 from deterministic import check_elements
@@ -18,6 +20,7 @@ from lease import LeaseProfile
 # The test matter. "t-test" is the test tenant's id; a real tenant gets a random one from new_tenant_id().
 matter = {"id": "test-001", "tenant": "t-test", "issues": [], "facts": {}, "proposed": {}}
 profile = None          # the LeaseProfile for this matter. Set by run.py after intake or load.
+session = None          # the open session's id, or None. Set by start_session, cleared by end_session.
 
 
 # ---- Where a matter lives: matters/<tenant id>/<matter id>/. The only function that knows this layout.
@@ -77,12 +80,33 @@ def save(matter):
 
 
 def append_event(kind, **data):
-    """One line to events.jsonl. Never edited, never deleted. The only history the tool keeps."""
+    """One line to events.jsonl. Never edited, never deleted. The only history the tool keeps.
+    While a session is open, the event carries its id, so every entry can be traced to the visit it came from."""
     folder = matter_dir()
     folder.mkdir(parents=True, exist_ok=True)
-    event = {"when": datetime.now().isoformat(timespec="seconds"), "kind": kind, **data}
+    event = {"when": datetime.now().isoformat(timespec="seconds"), "kind": kind}
+    if session:
+        event["session"] = session
+    event.update(data)
     with open(folder / "events.jsonl", "a") as f:
         f.write(json.dumps(event, default=str) + "\n")
+
+
+# ---- Sessions: one visit to one matter, from the moment the matter is chosen to the end of the chat.
+
+def start_session(how):
+    """Open a session on the current matter and log it. how: "new" or "existing". Returns the session id."""
+    global session
+    session = str(uuid7())                  # time-ordered, so session ids sort by when they started
+    append_event("session_started", how=how)
+    return session
+
+
+def end_session():
+    """Log the end of the open session and close it. A crash leaves a start with no end, which is the truth."""
+    global session
+    append_event("session_ended")
+    session = None
 
 
 def read_events():
