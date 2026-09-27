@@ -3,8 +3,8 @@
     python run.py
 
 New matter: pick a tenant (or make a new one), give the lease PDF's path, describe the problem. The lease is
-read once with Gemma, then intake. Existing matter: pick it from the list, and the chat picks up from the
-saved record. There is no re-intake on an existing matter until the resume question in TODO.md is decided.
+read once with Gemma, then intake. Existing matter: pick it from the list and say what is new, if anything.
+An update goes through resume (new issues added, facts proposed from it); nothing new goes straight to chat.
 """
 from pathlib import Path
 
@@ -12,7 +12,7 @@ from config import require_key
 require_key()                   # this script calls the models; stop here if the key is missing
 
 import record
-from agent import build_agent, chat, intake
+from agent import build_agent, chat, intake, resume
 from lease import check_quotes, extract_profile, ingest_pdf
 from record import list_matters, load_matter, matter_dir, new_matter, new_tenant_id
 
@@ -27,9 +27,9 @@ def ask_path(prompt):
         print("No file at", path)
 
 
-def ask_description():
-    """Read the tenant's description, several lines, ended by an empty line."""
-    print("Describe the problem in your own words. Press Enter on an empty line when done.")
+def ask_text(prompt):
+    """Read several lines from the tenant, ended by an empty line. An empty first line returns ""."""
+    print(prompt)
     lines = []
     while True:
         line = input()
@@ -58,12 +58,12 @@ def start_new():
     print("New matter", record.matter["tenant"], record.matter["id"])
 
     read_lease(ask_path("Path to the lease PDF: "))
-    return intake(ask_description())
+    return intake(ask_text("Describe the problem in your own words. Press Enter on an empty line when done."))
 
 
 def start_existing():
-    """Existing matter: pick from the list, load it, build the agent from the saved record. Returns the agent,
-    or None if there is nothing to open."""
+    """Existing matter: pick from the list, load it, ask what is new. Returns the agent, or None if there is
+    nothing to open."""
     found = list_matters()
     if not found:
         print("No saved matters yet.")
@@ -79,6 +79,11 @@ def start_existing():
     if record.profile is None:
         print("This matter has no lease profile yet. Start a new matter with the lease instead.")
         return None
+
+    update = ask_text("Anything new since last time? Type it in your own words and press Enter on an empty\n"
+                      "line when done. Press Enter right away if nothing is new.")
+    if update:
+        return resume(update)                  # logs the update, adds issues, proposes facts from it
     return build_agent()
 
 

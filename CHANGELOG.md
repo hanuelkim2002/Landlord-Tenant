@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Resume, step 3 of 3: `start_existing` asks "Anything new since last time?" after loading a matter; text
+  goes to `agent.resume`, an empty answer straight to chat. `ask_description` in `run.py` became
+  `ask_text(prompt)` and serves both questions. Tested live on a copy of the test matter
+  (`t-test/test-002`, so `test-001` stays one issue for the smoke scripts): the claim-letter update added
+  `deposit_claim_received`, the model showed `claim_notice_received` as false against true and recorded
+  true, the claim facts were confirmed, and `get_deadlines` gave the objection date (Oct 10) and the remit
+  date (Oct 22). Timeline shows the update. Two rule slips from that run added to TODO.md. The resume item
+  is done.
 - Resume, step 2 of 3: `agent.resume(update_text)` for an existing matter. Logs the update verbatim as a
   new `tenant_update` event (the description keeps the first story), classifies only the update, appends
   new issues without removing any, runs `fill_facts` on the update for every active playbook, drops values

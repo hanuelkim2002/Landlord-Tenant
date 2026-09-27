@@ -52,9 +52,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   Imports `record`, `config`, `corpus`, `deterministic`, `timeline`, `tools`. Imported by `run`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
   (`new_tenant_id`), calls `new_matter`, asks for the lease path (`ask_path`, which accepts a path dragged
-  into the terminal), reads the lease (`read_lease`), asks for the description (`ask_description`, ended by
-  an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked, then
-  `build_agent`, with no re-intake; it stops if the matter has no lease profile. Then `chat`.
+  into the terminal), reads the lease (`read_lease`), asks for the description (`ask_text`, several lines
+  ended by an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked
+  (it stops if the matter has no lease profile), then asks "Anything new since last time?" with `ask_text`:
+  text goes to `resume`, an empty answer to `build_agent`. Then `chat`.
 - `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
 - `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
@@ -233,7 +234,7 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
 - `python smoke_online.py`: opens the same test matter with `load_matter`. `classify` and `fill_facts` on the sample
   description (two model calls), then element status from the proposed facts.
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
-  and runs intake (two calls) before the chat. An existing matter goes straight to the chat from its saved
-  facts; the model is called only when the tenant types. Chat commands, handled by the loop without the
+  and runs intake (two calls) before the chat. An existing matter asks what is new: an update runs
+  `resume` (two calls) before the chat; nothing new goes straight to the chat from the saved facts. Chat commands, handled by the loop without the
   model: `timeline`, `timeline full`, `timeline <issue>`; an empty line or `bye` exits. Every run appends
   to the matter's `events.jsonl`.

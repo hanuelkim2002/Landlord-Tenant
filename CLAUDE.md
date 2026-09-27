@@ -52,7 +52,7 @@ student, not admitted.
 
     bash setup.sh            # once: venv, pip install, .env from template, matters/
     source venv/bin/activate
-    python run.py            # new matter (lease path, description, intake) or existing matter, then chat
+    python run.py            # new matter (lease, description, intake) or existing (what is new, resume), then chat
     python smoke.py          # offline checks, no key needed
     python smoke_online.py   # classify and fill_facts, calls the model
     python schemas.py        # what the model sees per tool
