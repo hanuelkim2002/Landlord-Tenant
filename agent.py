@@ -11,7 +11,7 @@ import record
 from config import agent_llm
 from corpus import statute
 from deterministic import ROUTING, classify, fill_facts
-from record import active_playbooks, element_status, save
+from record import active_playbooks, append_event, element_status, save
 from timeline import render_timeline
 from tools import tools
 
@@ -82,6 +82,31 @@ def intake(description):
             matter["proposed"].setdefault(fact_id, p)
     save(matter)
     print("proposed:", list(matter["proposed"]))
+    return build_agent()
+
+
+# ---- Resume: an existing matter, and the tenant says what is new since last time.
+
+def resume(update_text):
+    """Record the update, add any new issues, propose facts from the update, return an agent.
+    Classifies only the update (the old issues are already known) and never removes an issue. Proposes
+    for every active playbook, old and new: a value equal to a confirmed fact is dropped, a value that
+    differs from one shows up as "changed" in the element status, and a new one as "proposed"."""
+    matter = record.matter
+    append_event("tenant_update", text=update_text)        # the update, verbatim; description stays the first story
+
+    new_issues = [i for i in classify(update_text)["issues"] if i not in matter["issues"]]
+    matter["issues"] += new_issues
+
+    fresh = {}
+    for pb in active_playbooks():                          # first playbook to propose a fact wins, as in intake
+        for fact_id, p in fill_facts(update_text, pb).items():
+            if fact_id in matter["facts"] and matter["facts"][fact_id] == p["value"]:
+                continue                                   # the tenant already confirmed this value
+            fresh.setdefault(fact_id, p)
+    matter["proposed"].update(fresh)                       # a newer suggestion replaces an older pending one
+    save(matter)
+    print("new issues:", new_issues, "| proposed from update:", list(fresh))
     return build_agent()
 
 

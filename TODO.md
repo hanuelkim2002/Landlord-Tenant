@@ -8,7 +8,8 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 
 ## Data bank
 
-1. Resume path (step 1 of 3 done: the "changed" status; next `resume()`, then `start_existing`). Decided 2026-09-27: when an existing matter is opened, ask "anything new?" (Enter skips).
+1. Resume path (steps 1 and 2 of 3 done: the "changed" status, `agent.resume`; next `start_existing` asks
+   "anything new?" and calls `resume`, then a live run of the claim-letter case). Decided 2026-09-27: when an existing matter is opened, ask "anything new?" (Enter skips).
    A. Classify only the new text. B. Issues are only added, never removed.
    C. Run `fill_facts` on the new text for every element of every active playbook, old and new. A value that
       matches a confirmed fact is ignored; a new element is proposed as usual; a value that differs from a

@@ -52,6 +52,9 @@ def render_timeline(issue=None, full=False):
             rows.append((day, f"{ev['channel']} from {ev['sender']} to {ev['recipient']}", source, draft.group() if draft else ""))
         elif ev["kind"] == "artifact":
             rows.append((day, ev["note"], "tenant provided", f"{ev['sha256'][:12]}_{ev['file']}"))
+        elif ev["kind"] == "tenant_update":
+            text = " ".join(ev["text"].split())
+            rows.append((day, "tenant update: " + text[:48] + ("..." if len(text) > 48 else ""), "tenant typed", ""))
         elif ev["kind"] == "draft":
             rows.append((day, f"letter drafted, {ev['posture']} posture", "tool, from confirmed facts", ev["file"]))
         elif full and ev["kind"] == "fact_confirmed":

@@ -45,7 +45,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   plain helpers `pretty`, `quote_is_real`, and `build_letter`. Imports `record`, `config`, `corpus`,
   `deterministic`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`).
 - `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, save, then
-  `build_agent`; for a new matter only), `build_agent` (the system prompt from the current record, and a
+  `build_agent`; for a new matter only), `resume` (for an existing matter: log a `tenant_update` event,
+  classify the update only, add new issues, propose facts from the update, save, then `build_agent`),
+  `build_agent` (the system prompt from the current record, and a
   LangChain agent with an in-memory checkpointer; no model call), and `chat` (the terminal loop).
   Imports `record`, `config`, `corpus`, `deterministic`, `timeline`, `tools`. Imported by `run`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
@@ -68,6 +70,13 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    the tenant's exact words for every element whose `source` includes `user`. An answer is kept only if
    its words appear in the description (substring after `squash`). The first playbook to propose a fact id
    wins. `intake` resets `facts` and `proposed` to empty before this, then saves `matter.json`.
+2b. An update to an existing matter (`resume`). The text is logged verbatim as a `tenant_update` event;
+   `description` is not touched. `classify` runs on the update only, and any label not already in
+   `matter["issues"]` is appended; none is removed. `fill_facts` runs on the update for every active
+   playbook, old and new. A value equal to the confirmed fact of the same id is dropped; the rest go into
+   `proposed`, replacing any older pending proposal for that id. A proposal next to a confirmed fact with a
+   different value shows as `changed` (step 4). Facts two playbooks share by element id need nothing: there
+   is one `facts` pool for the matter, so a new issue's shared elements are already known.
 3. Proposed to confirmed (`record_facts`). The model shows each proposed row, the tenant confirms or
    corrects, and `record_facts` moves the value into `matter["facts"]`, removing it from `proposed`. It
    appends a `fact_confirmed` event carrying the proposal's `how`, `basis`, and `proposed_value`
@@ -115,6 +124,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `artifact`: `file` (original name), `sha256`, `note`. Written by `add_artifact`.
   - `communication`: `sent_on` (YYYY-MM-DD), `sender`, `recipient`, `channel`, `text`. Written by
     `add_communication`. The timeline sorts it by `sent_on`, not `when`.
+  - `tenant_update`: `text`, what a returning tenant typed as new, verbatim. Written by `resume`. Shown in
+    the timeline as "tenant update" with the first words.
 - `draft_<YYYY-MM-DD>_<issue>_<posture>.txt`: each drafted letter. A second draft on the same day with the
   same issue and posture overwrites the file; the earlier `draft` event remains.
 - `artifacts/<sha256[:12]>_<name>`: copies of files stored by `add_artifact`.

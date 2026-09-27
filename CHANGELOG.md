@@ -5,6 +5,13 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Resume, step 2 of 3: `agent.resume(update_text)` for an existing matter. Logs the update verbatim as a
+  new `tenant_update` event (the description keeps the first story), classifies only the update, appends
+  new issues without removing any, runs `fill_facts` on the update for every active playbook, drops values
+  equal to confirmed facts, and lets a newer proposal replace an older pending one. The timeline shows a
+  "tenant update" row. Nothing calls `resume` yet. Tested on a throwaway copy of `test-001` with a
+  claim-letter update: `deposit_claim_received` added, `claim_notice_received` shown as changed from False
+  to True, shared facts known in the new issue, the notice's dated and received dates proposed separately.
 - Resume, step 1 of 3: `check_elements` has a fifth status, `changed`, for a confirmed fact whose id also
   has a different value waiting in `proposed`. The row carries both values and the tenant's words; before
   this, any confirmed fact read as `known` and a differing proposal was invisible. Only confirmed facts can
