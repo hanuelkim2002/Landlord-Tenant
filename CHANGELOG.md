@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Permanent smoke checks for code that writes to a matter, replacing the hand tests on throwaway copies.
+  New `checks.py` (named OK/FAIL checks, a summary line, and scratch copies of the test matter that can
+  only be made and removed under `matters/t-smoke*`). `smoke.py` gained 31 checks on `t-smoke/m-001`:
+  sessions, `propose_facts`, the sheet, deadlines, `fact_status`, events, the transcript, the timeline.
+  `smoke_online.py` gained 7 `resume` checks on `t-smoke-online/m-001` (2 of them depend on the model).
+  Checked that the checks fail when they should: with the tenant-words test removed from `propose_facts`,
+  exactly the two checks covering it failed and the scratch copy was still removed. The test matter's files
+  are unchanged by smoke runs. CLAUDE.md: every named check must be OK, and a change to code that writes to
+  a matter gets a check.
 - Intake sheet, step 3 of 3: the model can no longer confirm a fact. `record_facts` is replaced by
   `propose_facts`, which only adds to `proposed` and checks each suggestion in code (the id is a fact of the
   matter's issues, the value fits its type, how is stated or inferred, and the cited words appear in what

@@ -32,21 +32,18 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 8. Between test runs, delete the test matter's `events.jsonl` or use a new matter id. Test matters now:
     `t-test/test-001` (one issue, used by the smoke scripts), `t-test/test-002` (two issues, after resume),
     `t-4c4d2e/m-001` (made by the new-matter run).
-9. Code that writes to a matter (sessions, resume, the sheet) is tested by hand on a throwaway copy of
-    a test matter. Make that a permanent offline smoke: copy `t-test/test-001` to a scratch matter, run the
-    writing code with scripted input, check the record, remove the copy.
 
 ## Playbooks
 
-10. repair_not_made, notice_received_violation, rent_increased, lease_ending. Each is a research task
+9. repair_not_made, notice_received_violation, rent_increased, lease_ending. Each is a research task
     against `statutes/`, then `check_all_playbooks` must be all OK, then a hand check.
-11. The two deposit playbooks name the same fact twice: `claim_notice_date` (deposit_not_returned) and
+10. The two deposit playbooks name the same fact twice: `claim_notice_date` (deposit_not_returned) and
     `claim_notice_received_on` (deposit_claim_received) both ask when the tenant received the landlord's
     notice. Facts carry across issues only by id, so the tenant is asked twice (seen live 2026-09-27).
     Rename one in its playbook, then run the quote check.
-12. Counting convention is a stated assumption in each playbook. Check the time-computation rule in the
+11. Counting convention is a stated assumption in each playbook. Check the time-computation rule in the
     corpus before relying on it. Do not settle this from memory.
-13. Reword `guidance.postures.notice_sufficiency` in deposit_not_returned.yaml to face the tenant (it
+12. Reword `guidance.postures.notice_sufficiency` in deposit_not_returned.yaml to face the tenant (it
     currently ends with an instruction to the model).
 
 ## Model behavior (later)
@@ -54,21 +51,21 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 Slips seen in live runs. Logged, not fixed yet: rules and prompts get tuned after the structure is right,
 and some may go away with a more capable model.
 
-14. The model stated the remit clock's condition backwards: "Landlord's deadline to remit balance if you
+13. The model stated the remit clock's condition backwards: "Landlord's deadline to remit balance if you
     object." 83.49(3)(b) begins "Unless the tenant objects." A rule 13 breach close to the playbook's own
     failure mode (2026-09-27, resume run on `t-test/test-002`). The clock's quote no longer reaches the
     model since only `guidance` is pasted.
-15. In the same run the model summarized 83.49 in its own words instead of quoting it (rule 1), and
+14. In the same run the model summarized 83.49 in its own words instead of quoting it (rule 1), and
     added words the sentence does not have ("objects in writing within 15 days").
-16. Since only `guidance` is pasted, the model mis-cited the forfeiture sentence as 83.49(3)(b) when
+15. Since only `guidance` is pasted, the model mis-cited the forfeiture sentence as 83.49(3)(b) when
     explaining the escalate posture (it is 83.49(3)(a)). The escalate line in `guidance.postures` names no
     cite.
-17. After `record_facts` turned `seven_day_notice_given` to n/a, the model still asked its question. It
+16. After `record_facts` turned `seven_day_notice_given` to n/a, the model still asked its question. It
     had the intake-time ELEMENT STATUS in the prompt, where that row was proposed.
-18. The model compared dates itself when confirming `early_or_periodic` ("Does that mean you moved out one
+17. The model compared dates itself when confirming `early_or_periodic` ("Does that mean you moved out one
     day before the lease ended?"). A rule 2 slip, seen once.
-19. `classify` false positive: `lease_ending` fires on "my lease ended." Seen in two of four runs.
-20. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that
+18. `classify` false positive: `lease_ending` fires on "my lease ended." Seen in two of four runs.
+19. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that
     correct?"), though rule 3 says the sheet does it. Harmless: the sheet follows and is what counts.
 
 ## Open questions

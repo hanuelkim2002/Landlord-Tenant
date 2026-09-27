@@ -78,8 +78,13 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; saves each answer with
   `record.confirm_fact` and a transcript line; returns the saved facts as `(id, value)` pairs). Imports
   `record`, `corpus`. Imported by `run`, `agent`, `tools` (for `parse_answer` and `shown`).
+- `checks.py`: helpers for the smoke scripts. `check(name, condition)` prints `OK` or `FAIL` and keeps the
+  failures, `summary()` prints the last line, `make_scratch(tenant_id, **changes)` copies the test matter
+  (without its transcripts) to `matters/<tenant_id>/m-001` and changes `matter.json` keys, and
+  `remove_scratch(tenant_id)` removes it; it refuses any tenant id not starting with `t-smoke`.
 - `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
-- `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description.
+- `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description, then `resume`
+  checks on a scratch matter.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
 
 ## Data flow
@@ -272,12 +277,21 @@ Offline checks (no model call, no key needed):
   against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`
   refusing), the letter template, and both
   timelines. The timelines read the real `events.jsonl` of `test-001`. Importing `tools` and `timeline`
-  also checks that the modules import.
+  also checks that the modules import. Last, on a scratch copy `matters/t-smoke/m-001` (removed at the
+  end, even after a failure), about thirty named checks of the code that writes to a matter: listing and
+  ids, sessions and their tags, `propose_facts` taking one suggestion and refusing five for five reasons,
+  the sheet with scripted answers (accept, correct, bad input, a changed fact, an `applies_if` fact, a
+  skip), `get_deadlines` waiting and then answering, `fact_status`, events, the transcript, and the
+  timeline. Every line must be OK; the last line says "all checks OK" or lists the failures. The test
+  matter itself is not changed by a smoke run.
 
 Calls the model (needs the key in `.env`; stops at `require_key()` without it):
 
 - `python smoke_online.py`: opens the same test matter with `load_matter`. `classify` and `fill_facts` on the sample
-  description (two model calls), then element status from the proposed facts.
+  description (two model calls), then element status from the proposed facts. Then `resume` on a scratch
+  copy `matters/t-smoke-online/m-001` (two more calls) with named checks: the update logged verbatim, the
+  description and old issues kept, nothing confirmed, no suggestion equal to a confirmed value. Checks
+  marked "(model)" depend on the model's answer (the new issue added, the changed fact proposed).
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
   and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).
   Then the intake sheet asks every open fact (no model), and the chat starts. Chat commands, handled by the loop without the

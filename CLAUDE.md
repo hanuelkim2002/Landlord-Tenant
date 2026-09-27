@@ -15,7 +15,8 @@ student, not admitted.
 ## Duties on every change
 
 1. Make the one change asked for. Nothing else.
-2. Run the offline checks (see DOCUMENTATION.md, Running and testing). Playbook quote checks must all be OK.
+2. Run the offline checks (see DOCUMENTATION.md, Running and testing). Playbook quote checks and the
+   named smoke checks must all be OK. A change to code that writes to a matter gets a check in `smoke.py`.
 3. Add a CHANGELOG.md entry saying what was added and what it replaced.
 4. Update DOCUMENTATION.md if a function, tool, file, event kind, or rule changed.
 5. Move the finished TODO.md item to the changelog.
@@ -38,8 +39,9 @@ student, not admitted.
   deadline into a playbook, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
 - After any edit to a playbook YAML, run the playbook quote check and every line must be OK.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
-- `run.py` is interactive and calls the UF gateway. `smoke_online.py` calls the model for classify and
-  fill_facts. Everything else, including `smoke.py`, runs without the key.
+- `run.py` is interactive and calls the UF gateway. `smoke_online.py` calls the model for classify,
+  fill_facts, and resume. Everything else, including `smoke.py`, runs without the key.
+- Smoke runs write only to scratch matters under `matters/t-smoke*`, which they remove; never to `t-test`.
 
 ## How to work with the author
 
@@ -55,7 +57,7 @@ student, not admitted.
     source venv/bin/activate
     python run.py            # new matter (lease, intake) or existing (what is new, resume), then the sheet, then chat
     python smoke.py          # offline checks, no key needed
-    python smoke_online.py   # classify and fill_facts, calls the model
+    python smoke_online.py   # classify, fill_facts, resume; calls the model
     python schemas.py        # what the model sees per tool
 
 Chat commands: `timeline`, `timeline full`, `timeline <issue>`, `bye`.
