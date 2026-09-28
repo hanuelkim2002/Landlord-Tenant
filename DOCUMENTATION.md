@@ -227,7 +227,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   intake or resume calls before it are not.
 
 Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `statutes/83.*.txt` and `.html` (the
-read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key), and `calendars/` (read-only, like `statutes/`):
+read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key), `docs/structure/` (dated snapshots of the structure: a diagram of a
+session, a diagram of the storage, and the Skills history; not kept current), and `calendars/` (read-only, like `statutes/`):
 `court_holidays_circuit8.json` (Eighth Judicial Circuit: Alachua, Baker, Bradford, Gilchrist, Levy, and
 Union counties; for each of 2026 and 2027 the holidays in the Chief Judge's memorandum, each with its date,
 name, the date as printed, and its marker in the memorandum, plus the memorandum's source URL, issue date, and

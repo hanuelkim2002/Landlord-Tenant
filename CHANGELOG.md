@@ -5,6 +5,9 @@ session can see why the code is the way it is.
 
 ## 2026-09-28
 
+- `docs/structure/2026-09-28.md` with two standalone SVG diagrams (how a session works, where data is
+  stored) and the history of the Skills plan versus what was built: a dated snapshot of the structure,
+  not kept current (DOCUMENTATION.md is). No code changed.
 - Two more live scenarios, both run: `dev/scenarios/repair_notice.json` (repair_not_made, 83.60(1)(b)
   date 2026-09-17, a preserve letter with its note) and `dev/scenarios/claim_letter.json` (a claim letter
   reported mid-chat: sheet in the chat, claim_notice_received no to yes, deposit_claim_received added with

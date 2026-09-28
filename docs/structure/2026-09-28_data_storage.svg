@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="560" viewBox="0 0 680 560" role="img">
+<title>Where data is stored (structure as of 2026-09-28)</title>
+<desc>Private data lives under matters, never in git: one folder per tenant named by a random id, one folder per matter inside it. A matter folder holds matter.json with current state, events.jsonl with the append-only history, sessions with one transcript per visit, and the lease files and letters. Shared, read-only corpora live in git: statutes, playbooks, and calendars.</desc>
+<style>
+  text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  .th { font-size: 14px; font-weight: 500; fill: #2C2C2A; }
+  .ts { font-size: 12px; font-weight: 400; fill: #5F5E5A; }
+  .c-purple > rect, rect.c-purple { fill: #EEEDFE; stroke: #534AB7; stroke-width: 0.5; }
+  .c-purple > .th { fill: #3C3489; } .c-purple > .ts { fill: #534AB7; }
+  .c-teal > rect, rect.c-teal { fill: #E1F5EE; stroke: #0F6E56; stroke-width: 0.5; }
+  .c-teal > .th { fill: #085041; } .c-teal > .ts { fill: #0F6E56; }
+  .c-gray > rect, rect.c-gray { fill: #F1EFE8; stroke: #5F5E5A; stroke-width: 0.5; }
+  .c-gray > .th { fill: #444441; } .c-gray > .ts { fill: #5F5E5A; }
+</style>
+<rect width="680" height="560" fill="#FFFFFF"/>
+<rect x="30" y="30" width="440" height="490" rx="8" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="4 4"/>
+<text class="th" x="46" y="52">matters/ (private, never in git)</text>
+<g class="c-purple"><rect x="50" y="64" width="200" height="44" rx="4"/>
+<text class="th" x="150" y="82" text-anchor="middle">t-3f9a2c/</text>
+<text class="ts" x="150" y="99" text-anchor="middle">tenant: random id, no name</text></g>
+<path d="M70 108 V142 H90" fill="none" stroke="#888780" stroke-width="0.5"/>
+<g class="c-purple"><rect x="90" y="120" width="200" height="44" rx="4"/>
+<text class="th" x="190" y="138" text-anchor="middle">m-001/</text>
+<text class="ts" x="190" y="155" text-anchor="middle">one dispute</text></g>
+<line x1="190" y1="164" x2="190" y2="178" stroke="#888780" stroke-width="0.5"/>
+<rect x="45" y="178" width="415" height="330" rx="6" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 3"/>
+<g class="c-gray"><rect x="55" y="190" width="195" height="148" rx="4"/>
+<text class="th" x="71" y="212">matter.json</text>
+<text class="ts" x="71" y="230">whiteboard: right now</text>
+<text class="ts" x="71" y="256">id, tenant, description</text>
+<text class="ts" x="71" y="276">issues</text>
+<text class="ts" x="71" y="296">facts: confirmed</text>
+<text class="ts" x="71" y="316">proposed: waiting</text></g>
+<g class="c-gray"><rect x="258" y="190" width="195" height="148" rx="4"/>
+<text class="th" x="274" y="212">events.jsonl</text>
+<text class="ts" x="274" y="230">logbook: never erased</text>
+<text class="ts" x="274" y="256">fact_confirmed (sheet)</text>
+<text class="ts" x="274" y="276">issue_added, tenant_update</text>
+<text class="ts" x="274" y="296">communication, draft</text>
+<text class="ts" x="274" y="316">session start and end</text></g>
+<g class="c-gray"><rect x="55" y="350" width="195" height="148" rx="4"/>
+<text class="th" x="71" y="372">sessions/</text>
+<text class="ts" x="71" y="390">one transcript per visit</text>
+<text class="ts" x="71" y="416">the tenant's words</text>
+<text class="ts" x="71" y="436">model, tool calls</text>
+<text class="ts" x="71" y="456">sheet answers</text>
+<text class="ts" x="71" y="476">program notes</text></g>
+<g class="c-gray"><rect x="258" y="350" width="195" height="148" rx="4"/>
+<text class="th" x="274" y="372">Lease and letters</text>
+<text class="ts" x="274" y="390">read once, kept as is</text>
+<text class="ts" x="274" y="416">lease_&lt;hash&gt;.pdf</text>
+<text class="ts" x="274" y="436">lease_profile.json</text>
+<text class="ts" x="274" y="456">draft letters</text>
+<text class="ts" x="274" y="476">artifacts/ (uploads)</text></g>
+<rect x="490" y="30" width="170" height="300" rx="8" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="4 4"/>
+<text class="th" x="506" y="52">Shared, read-only</text>
+<g class="c-teal"><rect x="505" y="70" width="140" height="56" rx="4"/>
+<text class="th" x="575" y="92" text-anchor="middle">statutes/</text>
+<text class="ts" x="575" y="110" text-anchor="middle">ch. 83 part II</text></g>
+<g class="c-teal"><rect x="505" y="150" width="140" height="56" rx="4"/>
+<text class="th" x="575" y="172" text-anchor="middle">playbooks/</text>
+<text class="ts" x="575" y="190" text-anchor="middle">9 issues, YAML</text></g>
+<g class="c-teal"><rect x="505" y="230" width="140" height="56" rx="4"/>
+<text class="th" x="575" y="252" text-anchor="middle">calendars/</text>
+<text class="ts" x="575" y="270" text-anchor="middle">court holidays</text></g>
+<rect x="490" y="350" width="12" height="12" rx="2" class="c-purple"/>
+<text class="ts" x="508" y="360">folders</text>
+<rect x="490" y="372" width="12" height="12" rx="2" class="c-gray"/>
+<text class="ts" x="508" y="382">files per matter</text>
+<rect x="490" y="394" width="12" height="12" rx="2" class="c-teal"/>
+<text class="ts" x="508" y="404">in git, checked</text>
+</svg>
