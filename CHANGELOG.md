@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Rerun of the 83.56(3) live test with typed answers (`t-test/m-003`), after fixing the test driver, which
+  had pressed Enter at every question because each question prints on the same line as the previous
+  prompt. The new driver finds the question on screen by its type hint. Typed answers in other formats
+  were saved normalized (9/18/2026 as 2026-09-18, $1,850.00 as 1850, n as false); two bad answers
+  ("Sept 18", "maybe") were refused and asked again; two answers that differed from the suggestions were
+  logged as corrections. `get_deadlines` again gave 2026-09-24. No code changed.
 - Live test of the 83.56(3) court-day clock through `run.py`: a new matter `t-test/m-002` (sample lease,
   Alachua County) with a notice handed over Friday 2026-09-18 and stating "pay or leave by September 21".
   The classifier picked notice_received_nonpayment, the sheet confirmed the facts (county included), and
