@@ -51,6 +51,9 @@ and some may go away with a more capable model.
     correct?"), though rule 3 says the sheet does it. Harmless: the sheet follows and is what counts.
 10. After calling `propose_facts`, the model told the tenant values were "as you just confirmed" before
     the sheet had run (rule 9). Seen 2026-09-27; the sheet still decided.
+11. Reporting the 83.56(3) court-day date, the model did not show the date the notice itself states next
+    to it, as the playbook's failure modes ask, and closed with "Would you like to proceed with any action
+    based on this deadline?" (live run 2026-09-27, `t-test/m-002`). The timeline shows both dates.
 
 ## Open questions
 

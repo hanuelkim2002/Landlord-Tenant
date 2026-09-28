@@ -5,6 +5,13 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Live test of the 83.56(3) court-day clock through `run.py`: a new matter `t-test/m-002` (sample lease,
+  Alachua County) with a notice handed over Friday 2026-09-18 and stating "pay or leave by September 21".
+  The classifier picked notice_received_nonpayment, the sheet confirmed the facts (county included), and
+  `get_deadlines` gave 2026-09-24, skipping the weekend and Yom Kippur (Monday 2026-09-21, on the Eighth
+  Circuit's list), with the counting line naming the memorandum. The timeline shows the delivery date, the
+  notice's stated date, and the computed date side by side. One model-behavior finding added to TODO.md.
+  No code changed.
 - Court business days, for 83.56(3). New `calendars/` corpus (read-only, like `statutes/`) with the
   Eighth Judicial Circuit's official holiday memoranda for 2026 and 2027 (Chief Judge William E. Davis,
   issued 2025-07-08 and 2026-08-21, from circuit8.org, PDFs kept in `calendars/sources/`), extracted by code
