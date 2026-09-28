@@ -5,6 +5,8 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- TODO.md: dropped the note about clearing a test matter's history between runs; the smoke scripts now use
+  scratch copies and never write to the test matters. No code changed.
 - The timeline marks a fact the tenant corrected: "tenant (corrected, confirmed ...)" in the plain
   timeline, "corrected from <how> <suggested value>" in `timeline full`, replacing the suggestion's own
   tag (a corrected `early_or_periodic = False` used to read "inferred"). New `timeline.corrected`. The
