@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Live run of the Skills chain on `t-test/m-001` (one issue): the tenant reported the claim letter in the
+  chat, the model proposed the change, the sheet confirmed it, `deposit_claim_received` was added by its
+  related rule and logged, its questions came up in the same sheet, corrections typed in the chat came back
+  as changed rows, and the model then gave both issues' deadlines (objection 2026-10-10, remit 2026-10-22)
+  with the remit condition stated the right way round. Two findings added to TODO.md: a shared clock
+  listed twice (harness), and an "as you just confirmed" slip (model behavior). No code changed.
 - Skills, step 3 of 3: statute sections come from the playbook. `statutory_hook: "83.49"` (read by no
   code) became `sections: ["83.49"]`, checked against `statutes/` by `load_playbook`; `system_prompt`
   loads the sections of the active playbooks, so an issue with no playbook yet adds none (a `lease_ending`
