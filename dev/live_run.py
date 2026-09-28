@@ -6,8 +6,8 @@ A scenario is a JSON file with three parts:
   "start"  the lines typed before the sheet: new or existing, the tenant id, the lease path, the description
            (or the update), and the empty line that ends it.
   "sheet"  rules for the intake sheet: a piece of a question's text -> a list of answers, used in order, so a
-           bad answer then a good one tests that the sheet asks again. A question no rule matches is skipped
-           with "?". Used for every sheet in the session, including one that appears mid-chat.
+           bad answer then a good one tests that the sheet asks again. When several rules match, the longest
+           one with answers left is used. A question no rule matches is skipped with "?". Used for every sheet in the session, including one that appears mid-chat.
   "chat"   the lines typed in the chat, one at a time; "bye" is sent after the last.
 
 It calls the model (run.py does) and writes a real matter under matters/, so use a test tenant (t-test).
@@ -40,8 +40,9 @@ def answer_sheet(process, log, text, rules, typed):
     """Answer sheet questions by the question on screen until the chat prompt comes back."""
     while text.endswith("    > "):
         question = QUESTION.findall(text)[-1]
-        rule = next((k for k in rules if k in question), None)
-        answer = rules[rule].pop(0) if rule and rules[rule] else "?"
+        # the longest matching rule that still has answers, so a broad rule cannot take a specific one's question
+        matching = sorted((k for k in rules if k in question and rules[k]), key=len, reverse=True)
+        answer = rules[matching[0]].pop(0) if matching else "?"
         typed.append((question, answer))
         size = len(text)
         send(process, answer)

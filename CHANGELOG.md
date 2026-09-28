@@ -3,6 +3,17 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-09-28
+
+- Two more live scenarios, both run: `dev/scenarios/repair_notice.json` (repair_not_made, 83.60(1)(b)
+  date 2026-09-17, a preserve letter with its note) and `dev/scenarios/claim_letter.json` (a claim letter
+  reported mid-chat: sheet in the chat, claim_notice_received no to yes, deposit_claim_received added with
+  its questions, then four deadlines with the shared one listed once, objection 2026-10-10, remit
+  2026-10-22). `dev/live_run.py` now uses the longest matching rule that still has answers, replacing the
+  first match (a broad rule had taken a more specific rule's question). The first repair run showed that a
+  wrongly classified issue blocks every deadline in the matter; added to TODO.md as a harness decision,
+  with two model-behavior findings. Test matters `t-test/m-006` to `m-009` created.
+
 ## 2026-09-27
 
 - New `dev/live_run.py` and `dev/scenarios/nonpayment_3day.json`: the live-test driver moved into the project.

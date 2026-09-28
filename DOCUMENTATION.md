@@ -379,8 +379,11 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   matches gets "?"), and the chat lines (`chat`, then "bye"). Questions are found on screen by their type
   hint, since each prints on the same line as the previous prompt. A sheet that appears mid-chat is answered
   by the same rules. Prints the whole screen and the answers typed. Calls the model and writes a real matter:
-  use the test tenant `t-test`; every "new" scenario adds a matter. `nonpayment_3day.json` checks the
-  83.56(3) court-day count (expected 2026-09-24).
+  use the test tenant `t-test`; every "new" scenario adds a matter. When several rules match a question,
+  the longest one with answers left is used. Scenarios, each with its expected results in `about`:
+  `nonpayment_3day.json` (the 83.56(3) court-day count, 2026-09-24), `repair_notice.json` (the 83.60(1)(b)
+  date 2026-09-17 and a preserve letter with its note), `claim_letter.json` (a claim letter reported
+  mid-chat: a sheet in the chat, deposit_claim_received added, objection 2026-10-10 and remit 2026-10-22).
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
   and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).
   Then the intake sheet asks every open fact (no model), and the chat starts. Chat commands, handled by the loop without the
