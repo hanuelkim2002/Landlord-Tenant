@@ -15,7 +15,7 @@ student, not admitted.
 ## Duties on every change
 
 1. Make the one change asked for. Nothing else.
-2. Run the offline checks (see DOCUMENTATION.md, Running and testing). Playbook quote checks and the
+2. Run the offline checks (see DOCUMENTATION.md, Running and testing). Playbook checks and the
    named smoke checks must all be OK. A change to code that writes to a matter gets a check in `smoke.py`.
 3. Add a CHANGELOG.md entry saying what was added and what it replaced.
 4. Update DOCUMENTATION.md if a function, tool, file, event kind, or rule changed.
@@ -38,7 +38,8 @@ student, not admitted.
 
 - `statutes/` is a read-only corpus. Never edit it. Never write statutory text, a section number, or a
   deadline into a playbook, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
-- After any edit to a playbook YAML, run the playbook quote check and every line must be OK.
+- After any edit to a playbook YAML, run the playbook checks (`check_all_playbooks`, also run by `smoke.py`)
+  and every line must be OK. They check quotes in the prose too, not only in `spec`.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
 - `run.py` is interactive and calls the UF gateway. `smoke_online.py` calls the model for classify,
   fill_facts, and resume. Everything else, including `smoke.py`, runs without the key.

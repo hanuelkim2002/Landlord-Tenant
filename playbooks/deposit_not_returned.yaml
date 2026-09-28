@@ -103,7 +103,7 @@ guidance:
     tenancy_terminated: What date did the lease end, or what date was it terminated?
     vacated: What date did you move out and return the keys?
     claim_notice_received: Have you received any written notice from the landlord about keeping part of the deposit?
-    claim_notice_date: What date did you receive that notice?
+    claim_notice_date: What date did you receive the landlord's written notice about keeping part of the deposit?
     forwarding_address_given: Did you give the landlord your new mailing address in writing?
     early_or_periodic: Did you move out before the lease end date, or was this a month-to-month arrangement?
     seven_day_notice_given: Before moving out, did you send the landlord written notice at least 7 days ahead, by certified mail or in person, with your new address?
@@ -111,7 +111,7 @@ guidance:
   lease_checks:
     security_deposit: Confirms the amount and that it was called a deposit.
     nonrefundable_fees: Money labeled nonrefundable may fall under 83.491 instead. Do not treat it as outside 83.49 without reading 83.491.
-    forwarding_address_requirement: The landlord's notice goes to the "last known mailing address."
+    forwarding_address_requirement: The landlord's notice goes to the "last known mailing address".
     move_out_requirements: Cleaning and carpet clauses are the usual basis of a claim.
     notices_to_landlord: Where the tenant's letter must be sent.
     joint_and_several_liability: Whether one roommate's damage can be charged against the whole deposit.

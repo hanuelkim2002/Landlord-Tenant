@@ -20,7 +20,12 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   or start there and run onto the next). Imports `config`. Imported by `record` and `run.py`.
 - `corpus.py`: the stored corpus, loaded once at import. `statute` (dict, section number to text, from
   `statutes/83.*.txt`), the playbook shapes (`Element`, `Clock`, `Spec`, `Playbook`), `load_playbook`,
-  `check_playbook`, `check_all_playbooks`, and `playbooks` (dict, issue to `Playbook`, from
+  `check_playbook` (one playbook: every spec quote verbatim in its cited section, every
+  quotation of 20 or more characters in the guidance and open questions verbatim in a stored section, a
+  question for every element and an element for every question, `applies_if` naming a yes/no fact, clock
+  cites among `sections`, the guidance parts the tool reads; prints a line per check via `report`, returns
+  the failures), `check_all_playbooks` (all of them, plus a fact id shared by playbooks having the same type
+  and question; returns the failures), and `playbooks` (dict, issue to `Playbook`, from
   `playbooks/*.yaml`). No model calls. Imports `config`, `lease` (for `LeaseProfile`, to check
   `compare_to`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
 - `deterministic.py`: `check_elements` (element status), `lease_value` and `lease_differs` (a lease quote
@@ -320,11 +325,12 @@ on load and never reach the model.
 Offline checks (no model call, no key needed):
 
     python smoke.py                                                              # the offline smoke tests
-    python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook quotes: every line OK
+    python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook checks: every line OK
     python schemas.py                                                            # what the model sees per tool
 
 - `python smoke.py`: needs the saved test matter `matters/t-test/test-001/` with its lease profile. Opens it
-  with `load_matter` and prints `list_matters()`, then runs the playbook quote check, element status and deadlines on hand-typed facts with today fixed at 2026-09-08, a hand-typed update
+  with `load_matter` and prints `list_matters()`, then runs the playbook checks (one named check, "every
+  playbook check is OK", fails if any line of `check_all_playbooks` does), element status and deadlines on hand-typed facts with today fixed at 2026-09-08, a hand-typed update
   against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`
   refusing), the letter template, and both
   timelines. The timelines read the real `events.jsonl` of `test-001`. Importing `tools` and `timeline`

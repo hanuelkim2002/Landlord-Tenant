@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- The stricter playbook checks moved into `corpus.check_playbook` / `check_all_playbooks`, replacing the
+  quote-only check (and the one-off draft script): quotations in guidance and open-question prose are now
+  checked too, plus a question per element, `applies_if` on yes/no facts, clock cites among `sections`, the
+  guidance parts the tool reads, and shared fact ids with the same type and question. Both functions return
+  the number of failures; `smoke.py` turns that into a named check. The new checks caught two things in the
+  deposit playbooks, fixed: a quote with its period inside the quote marks ("last known mailing address."),
+  and `claim_notice_date` asked in two wordings (now one: "What date did you receive the landlord's written
+  notice about keeping part of the deposit?"). Checked that an altered prose quote fails. CLAUDE.md's
+  playbook-check lines updated.
 - Seven playbooks, version 0.1, written against `statutes/` in the format of the deposit playbooks:
   repair_not_made (83.51, 83.56(1) and 83.60(1)(b) 7-day notices), notice_received_nonpayment (83.56(3),
   83.60; no clocks), notice_received_violation (83.56(2)(a) and (b) 7-day periods), landlord_entered_unannounced

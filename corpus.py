@@ -2,6 +2,7 @@
 
 Both are loaded once when this module is imported. Nothing here calls a model.
 """
+import re
 from typing import List, Literal, Optional, Union
 
 import yaml
@@ -100,8 +101,32 @@ def load_playbook(path):
     return pb
 
 
+def report(name, ok):
+    """Print one playbook check line, OK or FAIL, and return 1 for a failure so callers can count them."""
+    print(("OK   " if ok else "FAIL ") + name)
+    return 0 if ok else 1
+
+
+def prose_strings(x):
+    """Every string inside a playbook's guidance or open questions, one at a time, so quotations are read
+    within the string they belong to."""
+    if isinstance(x, str):
+        yield x
+    elif isinstance(x, dict):
+        for v in x.values():
+            yield from prose_strings(v)
+    elif isinstance(x, list):
+        for v in x:
+            yield from prose_strings(v)
+
+
 def check_playbook(playbook, statute):
-    """Every quote in spec must appear word for word in the section it cites."""
+    """Check one playbook and print a line per check. Returns the number of failures.
+    Quotes: every spec quote word for word in the section it cites, and every quotation of 20 or more
+    characters in the guidance and open questions word for word in a stored section. Shape: a question for
+    every element and an element for every question, applies_if naming a yes/no fact, clock cites among the
+    playbook's sections, and the guidance parts the tool reads (postures, including notice_sufficiency)."""
+    fails = 0
     quotes = []
     for c in playbook.spec.clocks:
         quotes.append((c.id, c.cite, c.quote))
@@ -110,19 +135,48 @@ def check_playbook(playbook, statute):
     for item in playbook.spec.lease_overrides + playbook.spec.exclusions:
         if item.get("quote"):
             quotes.append((item["cite"], item["cite"], item["quote"]))
-
     for name, cite, quote in quotes:
         section = cite.split("(")[0]                    # "83.49(3)(a)" -> "83.49"
-        found = squash(quote) in squash(statute[section])
-        print("OK  " if found else "FAIL", name, cite)
+        fails += report(f"{name} {cite}", squash(quote) in squash(statute[section]))
+
+    for text in prose_strings([playbook.guidance, playbook.spec.open_questions]):
+        for quoted in re.findall(r'"([^"]*)"', text):
+            if len(quoted) >= 20:                        # shorter ones are words in quotes, not statute text
+                fails += report(f'prose quote "{quoted[:50]}..."',
+                                any(squash(quoted) in squash(t) for t in statute.values()))
+
+    elements = {e.id: e for e in playbook.spec.elements}
+    questions = playbook.guidance.get("questions", {})
+    fails += report("a question for every element, an element for every question", set(elements) == set(questions))
+    for thing in playbook.spec.elements + playbook.spec.clocks:
+        if thing.applies_if:
+            target = elements.get(thing.applies_if)
+            fails += report(f"{thing.id}: applies_if {thing.applies_if} is a yes/no fact", target is not None and target.type == "bool")
+    for c in playbook.spec.clocks:
+        fails += report(f"clock {c.id}: {c.cite} is among the playbook's sections", c.cite.split("(")[0] in playbook.sections)
+    postures = playbook.guidance.get("postures", {})
+    fails += report("guidance has lease_checks, evidence, failure_modes, and every posture",
+                    all(k in playbook.guidance for k in ("lease_checks", "evidence", "failure_modes"))
+                    and all(k in postures for k in ("core", "preserve", "assert", "escalate", "notice_sufficiency")))
+    return fails
 
 
 def check_all_playbooks():
-    """Run check_playbook on every loaded playbook. Called by smoke.py, not at import."""
+    """Run check_playbook on every loaded playbook, then check that a fact id used by more than one playbook
+    has the same type and question in each. Called by smoke.py, not at import. Returns the number of failures."""
+    fails = 0
     for issue, pb in playbooks.items():
         print(f"--- {issue}")
-        check_playbook(pb, statute)
+        fails += check_playbook(pb, statute)
+    print("--- facts shared across playbooks")
+    for fact_id in sorted({e.id for pb in playbooks.values() for e in pb.spec.elements}):
+        uses = [(pb.issue, e.type, pb.guidance["questions"].get(fact_id)) for pb in playbooks.values()
+                for e in pb.spec.elements if e.id == fact_id]
+        if len(uses) > 1:
+            fails += report(f"{fact_id}: same type and question in {[u[0] for u in uses]}",
+                            len({u[1] for u in uses}) == 1 and len({u[2] for u in uses}) == 1)
     print(len(playbooks), "playbooks loaded:", list(playbooks))
+    return fails
 
 
 playbooks = {}

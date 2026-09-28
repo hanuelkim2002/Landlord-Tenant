@@ -111,7 +111,7 @@ guidance:
     deposit_amount: How much was your security deposit?
     tenancy_terminated: What date did the lease end, or what date was it terminated?
     claim_notice_dated: What date is printed on the landlord's notice?
-    claim_notice_date: What date did you actually receive the notice?
+    claim_notice_date: What date did you receive the landlord's written notice about keeping part of the deposit?
     claim_delivery: How did the notice reach you (certified mail, regular mail, e-mail, hand delivery, something else)?
     claim_amount: How much does the notice say the landlord is claiming from the deposit?
     claim_reason: What reason does the notice give for the claim? Copy the words from the notice.

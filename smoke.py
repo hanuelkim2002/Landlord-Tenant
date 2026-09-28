@@ -30,8 +30,8 @@ print(list_matters())
 print(record.matter["tenant"], record.matter["id"], record.matter["issues"], type(record.profile).__name__)
 print()
 
-# playbook quotes against the statute text
-check_all_playbooks()
+# playbook checks: quotes (spec and prose) against the statute text, shape, and shared facts
+check("every playbook check is OK", check_all_playbooks() == 0)
 print()
 
 # elements and deadlines with hand-typed facts and a fixed "today"
@@ -177,7 +177,7 @@ try:
     check("sheet: the lease's words appear where they differ",
           f'your lease says: "{record.profile.term_end.quote}"' in shown_sheet.getvalue())
     check("sheet: a fact two issues share is asked once", shown_sheet.getvalue().count("What date did the lease end") == 1
-          and shown_sheet.getvalue().count("receive that notice") + shown_sheet.getvalue().count("receive the notice") == 1)
+          and shown_sheet.getvalue().count("receive the landlord's written notice") == 1)
     check("prune drops a suggestion once its condition is confirmed no",
           "seven_day_notice_given" not in record.matter["proposed"])
     check("sheet: a skipped fact stays open", [r["id"] for r in pending_rows()] == ["notice_states_objection_window"])
