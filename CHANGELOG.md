@@ -12,7 +12,7 @@ session can see why the code is the way it is.
   2026-10-22). `dev/live_run.py` now uses the longest matching rule that still has answers, replacing the
   first match (a broad rule had taken a more specific rule's question). The first repair run showed that a
   wrongly classified issue blocks every deadline in the matter; added to TODO.md as a harness decision,
-  with two model-behavior findings. Test matters `t-test/m-006` to `m-009` created.
+  with two model-behavior findings. Test matters `t-test/m-006` to `m-010` created (three repair runs, two claim runs).
 
 ## 2026-09-27
 
