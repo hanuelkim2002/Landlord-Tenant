@@ -72,7 +72,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `deterministic`, `sheet`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
 - `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, save; for a
   new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
-  add new issues, propose facts from the update, save). Neither builds the agent: `run.py` runs the intake
+  add new issues, propose facts from the update, save; returns the issues it added). Neither builds the agent: `run.py` runs the intake
   sheet first, then `build_agent`.
   `system_prompt()` (the whole system prompt, built from the record as it stands),
   `prompt_from_record` (LangChain `dynamic_prompt` middleware that calls `system_prompt()` before every
@@ -89,8 +89,12 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   into the terminal), reads the lease (`read_lease`), asks for the description (`ask_text`, several lines
   ended by an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked
   (it stops if the matter has no lease profile), `start_session("existing")`, then asks "Anything new since last time?" with `ask_text`:
-  text goes to `resume`, an empty answer goes on. Both return True when a matter is open. Then, if
-  `pending_rows()` has anything, `run_sheet()`; then `chat(build_agent())`; then `end_session()` on a normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
+  text goes to `resume`, an empty answer goes on. Both return True when a matter is open. If `other` came in
+  alongside a covered issue, the tenant is told part of it may not be covered. Then, if the matter has no
+  active playbook (every issue is `other`), the tool says it does not cover this situation and ends the
+  session: no sheet, no chat; the description or update and the `other` label stay in the record for a
+  later pipeline. Otherwise, if `pending_rows()` has anything, `run_sheet()`; then `chat(build_agent())`;
+  then `end_session()` on a normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
 - `sheet.py`: the intake sheet, asked and saved by code with no model. `pending_rows()` (every changed,
   proposed, or missing fact across the matter's issues, once per fact id, with its question, type, and
   any suggestion), `parse_answer(kind, text)` (checks an answer against the element's type: dates as
@@ -385,7 +389,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   the longest one with answers left is used. Scenarios, each with its expected results in `about`:
   `nonpayment_3day.json` (the 83.56(3) court-day count, 2026-09-24), `repair_notice.json` (the 83.60(1)(b)
   date 2026-09-17 and a preserve letter with its note), `claim_letter.json` (a claim letter reported
-  mid-chat: a sheet in the chat, deposit_claim_received added, objection 2026-10-10 and remit 2026-10-22).
+  mid-chat: a sheet in the chat, deposit_claim_received added, objection 2026-10-10 and remit 2026-10-22),
+  `not_covered.json` (a roommate dispute: only `other`, the tool stops before the sheet). The driver also
+  handles run.py exiting by itself.
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
   and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).
   Then the intake sheet asks every open fact (no model), and the chat starts. Chat commands, handled by the loop without the

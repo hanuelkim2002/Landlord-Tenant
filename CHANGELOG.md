@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-09-28
 
+- The tool stops when nothing it covers applies: if every issue in the matter is `other`, `run.py` says so
+  and ends the session before the sheet and the chat, keeping the description (or update) and the `other`
+  label in the record. Before, such a matter went on to an empty sheet and a chat with no guidance. When
+  `other` comes with a covered issue, the tenant is told part of it may not be covered. `resume` now returns
+  the issues it added. `dev/live_run.py` handles run.py exiting by itself; new scenario
+  `dev/scenarios/not_covered.json` (run: stopped as expected, `t-test/m-011`). Investigated the repair
+  misclassification: the classifier sees bare label names and read the tenant's own withholding notice as a
+  landlord's rent demand; added to TODO.md with a proposed fix.
 - `get_deadlines` works issue by issue: it returns the deadlines of every issue whose facts are all
   confirmed and lists the issues still waiting with their open facts, as `{"deadlines", "waiting"}`. It
   replaces a matter-wide refusal, under which one issue with open facts (such as one classified by mistake)

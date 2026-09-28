@@ -25,13 +25,16 @@ ROOT = Path(__file__).resolve().parent.parent            # the project folder
 QUESTION = re.compile(r"([A-Z][^\n>]*?\((?:YYYY-MM-DD|yes/no|amount|words)\))")
 
 
-def wait_for_prompt(log, after, seconds=600):
+def wait_for_prompt(log, after, process, seconds=600):
     """Wait until the screen has grown past `after` characters and ends with a prompt: "    > " (the sheet)
-    or ">> " (the chat). Returns the screen so far."""
+    or ">> " (the chat), or until run.py has exited (it stops by itself when nothing it covers applies).
+    Returns the screen so far."""
     for _ in range(seconds * 5):
         text = log.read_text()
         if len(text) > after and (text.endswith("    > ") or text.endswith(">> ")):
             return text
+        if process.poll() is not None:
+            return log.read_text()
         time.sleep(0.2)
     raise TimeoutError("run.py did not come back to a prompt")
 
@@ -46,7 +49,7 @@ def answer_sheet(process, log, text, rules, typed):
         typed.append((question, answer))
         size = len(text)
         send(process, answer)
-        text = wait_for_prompt(log, size)
+        text = wait_for_prompt(log, size, process)
     return text
 
 
@@ -65,12 +68,15 @@ def main(scenario_path):
                                    stdout=screen, stderr=subprocess.STDOUT, text=True)
         for line in scenario["start"]:
             send(process, line)
-        text = answer_sheet(process, log, wait_for_prompt(log, 0), rules, typed)
+        text = answer_sheet(process, log, wait_for_prompt(log, 0, process), rules, typed)
         for line in scenario["chat"]:
+            if process.poll() is not None:                # run.py stopped before the chat
+                break
             size = len(text)
             send(process, line)
-            text = answer_sheet(process, log, wait_for_prompt(log, size), rules, typed)
-        send(process, "bye")
+            text = answer_sheet(process, log, wait_for_prompt(log, size, process), rules, typed)
+        if process.poll() is None:
+            send(process, "bye")
         process.wait(timeout=60)
     print(log.read_text())
     print("\n--- sheet answers typed")

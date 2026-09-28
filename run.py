@@ -16,7 +16,12 @@ import record
 from agent import build_agent, chat, intake, resume
 from lease import check_quotes, extract_profile, ingest_pdf
 from sheet import pending_rows, run_sheet
-from record import end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id, start_session
+from record import (active_playbooks, end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id,
+                    start_session)
+
+
+NOT_COVERED = ("\nPart of what you described may not be covered by this tool yet (it has no playbook for it). The\n"
+               "tool continues with what it does cover.")
 
 
 def ask_path(prompt):
@@ -62,6 +67,8 @@ def start_new():
 
     read_lease(ask_path("Path to the lease PDF: "))
     intake(ask_text("Describe the problem in your own words. Press Enter on an empty line when done."))
+    if "other" in record.matter["issues"] and active_playbooks():
+        print(NOT_COVERED)
     return True
 
 
@@ -88,7 +95,8 @@ def start_existing():
     update = ask_text("Anything new since last time? Type it in your own words and press Enter on an empty\n"
                       "line when done. Press Enter right away if nothing is new.")
     if update:
-        resume(update)                         # logs the update, adds issues, proposes facts from it
+        if "other" in resume(update) and active_playbooks():   # logs the update, adds issues, proposes facts
+            print(NOT_COVERED)
     return True
 
 
@@ -102,7 +110,14 @@ def start():
             return start_existing()
 
 
-if start():
+matter_open = start()
+if matter_open and not active_playbooks():
+    # Nothing the tool covers: every issue it found is "other". Stop before the sheet and the chat; the
+    # description (or update) and the "other" label are already in the record for a later pipeline.
+    print("\nThis tool does not cover this situation yet, so it stops here. What you described is saved in your\n"
+          "matter's record.")
+    end_session()
+elif matter_open:
     if pending_rows():
         run_sheet()                            # the tenant confirms facts with code, before the model sees them
     chat(build_agent())                        # built after the sheet, so the prompt holds the confirmed facts

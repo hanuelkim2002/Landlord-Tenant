@@ -92,7 +92,8 @@ def intake(description):
 # ---- Resume: an existing matter, and the tenant says what is new since last time.
 
 def resume(update_text):
-    """Record the update, add any new issues, propose facts from the update. The agent is built afterwards.
+    """Record the update, add any new issues, propose facts from the update, return the issues it added. The
+    agent is built afterwards.
     Classifies only the update (the old issues are already known) and never removes an issue. Proposes
     for every active playbook, old and new: a value equal to a confirmed fact is dropped, a value that
     differs from one shows up as "changed" in the element status, and a new one as "proposed"."""
@@ -112,6 +113,7 @@ def resume(update_text):
     prune_proposals()
     save(matter)
     print("new issues:", new_issues, "| proposed from update:", list(fresh))
+    return new_issues
 
 
 # ---- System Prompt and Agent: the prompt is built from whatever the record holds at the moment the model is
