@@ -2,12 +2,13 @@
 
 Both are loaded once when this module is imported. Nothing here calls a model.
 """
-from typing import List, Literal, Optional
+from typing import List, Literal, Optional, Union
 
 import yaml
 from pydantic import BaseModel
 
 from config import PLAYBOOKS, STATUTES, squash
+from deterministic import ROUTING
 from lease import LeaseProfile
 
 
@@ -44,6 +45,19 @@ class Clock(BaseModel):
     applies_if: Optional[str] = None
 
 
+class Condition(BaseModel):
+    """A confirmed fact and the value it must have, e.g. claim_notice_received equals true."""
+    fact: str
+    equals: Union[bool, str, int, float]
+
+
+class RelatedIssue(BaseModel):
+    """Another issue this one leads to: record.add_related_issues adds it once the condition's fact is
+    confirmed with that value."""
+    issue: str
+    when: Condition
+
+
 class Spec(BaseModel):
     """The code-facing half of a playbook. Strictly typed where code computes
     from it (elements, clocks); loose lists where nothing does yet."""
@@ -51,7 +65,7 @@ class Spec(BaseModel):
     clocks: List[Clock]
     lease_overrides: list = []
     exclusions: list = []
-    related_issues: list = []
+    related_issues: List[RelatedIssue] = []
     open_questions: list = []
 
 
@@ -111,3 +125,12 @@ playbooks = {}
 for path in sorted(PLAYBOOKS.glob("*.yaml")):
     pb = load_playbook(path)
     playbooks[pb.issue] = pb
+
+# A related issue must be a label the classifier knows, and its condition a fact some playbook asks for.
+_all_facts = {e.id for pb in playbooks.values() for e in pb.spec.elements}
+for pb in playbooks.values():
+    for rel in pb.spec.related_issues:
+        if rel.issue not in ROUTING:
+            raise ValueError(f"{pb.issue}: related issue {rel.issue} is not an issue label")
+        if rel.when.fact not in _all_facts:
+            raise ValueError(f"{pb.issue}: related issue condition {rel.when.fact} is not a fact any playbook asks for")

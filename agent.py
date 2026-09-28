@@ -12,7 +12,8 @@ import record
 from config import agent_llm
 from corpus import statute
 from deterministic import ROUTING, classify, fill_facts
-from record import active_playbooks, append_event, element_status, prune_proposals, save
+from record import (active_playbooks, add_issues, add_related_issues, append_event, element_status,
+                    prune_proposals, save)
 from sheet import pending_rows, run_sheet
 from timeline import render_timeline
 from tools import tools
@@ -76,9 +77,10 @@ def intake(description):
     afterwards (build_agent), once the intake sheet has run, so the prompt shows the confirmed facts."""
     matter = record.matter
     matter["description"] = description
-    matter["issues"] = classify(description)["issues"]
+    matter["issues"] = []
     matter["facts"] = {}
     matter["proposed"] = {}
+    add_issues(classify(description)["issues"], "classify", "the tenant's description")
     for pb in active_playbooks():                          # first playbook to propose a fact wins
         for fact_id, p in fill_facts(description, pb).items():
             matter["proposed"].setdefault(fact_id, p)
@@ -97,8 +99,8 @@ def resume(update_text):
     matter = record.matter
     append_event("tenant_update", text=update_text)        # the update, verbatim; description stays the first story
 
-    new_issues = [i for i in classify(update_text)["issues"] if i not in matter["issues"]]
-    matter["issues"] += new_issues
+    new_issues = add_issues(classify(update_text)["issues"], "classify", "the tenant's update")
+    new_issues += add_related_issues()                     # facts already confirmed may bring in more
 
     fresh = {}
     for pb in active_playbooks():                          # first playbook to propose a fact wins, as in intake

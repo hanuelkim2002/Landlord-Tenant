@@ -92,7 +92,7 @@ spec:
 
   related_issues:
     - issue: deposit_not_returned
-      when: claim_notice_received == false
+      when: {fact: claim_notice_received, equals: false}   # added once this fact is confirmed so
 
   open_questions:
     - id: receipt_date

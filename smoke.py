@@ -225,4 +225,41 @@ try:
 finally:
     remove_scratch("t-smoke")
 check("the scratch matter is removed", not (MATTERS / "t-smoke").exists())
+print()
+
+
+# ---- Related issues, on a second scratch copy with one issue: confirming "received a notice: yes" on the
+# sheet brings in deposit_claim_received, logs it, and puts its questions and guidance in front of the tenant
+# and the model at once.
+make_scratch("t-smoke-related", issues=["deposit_not_returned"], facts={"claim_notice_received": False},
+             proposed={"claim_notice_received": stated(True, "I got a letter from the landlord")})
+try:
+    load_matter("t-smoke-related", "m-001")
+    sid = start_session("existing")
+    check("a related issue is not added before its fact is confirmed", record.add_related_issues() == []
+          and record.matter["issues"] == ["deposit_not_returned"])
+    shown_sheet = io.StringIO()
+    def accept_notice_skip_rest(prompt):
+        """Answer by the question on screen: accept the suggested change to "received a notice", skip the rest."""
+        last_question = [line for line in shown_sheet.getvalue().splitlines() if line.startswith("  ") and
+                         not line.startswith("    ")][-1]
+        return "" if "received any written notice" in last_question else "?"
+    with contextlib.redirect_stdout(shown_sheet):
+        run_sheet(accept_notice_skip_rest)
+    added = [e for e in read_events() if e["kind"] == "issue_added"]
+    check("confirming the fact adds the related issue", record.matter["issues"] == ["deposit_not_returned",
+          "deposit_claim_received"])
+    check("the added issue is logged with its source and reason", added and added[-1]["issue"] == "deposit_claim_received"
+          and added[-1]["source"] == "related" and added[-1]["because"] == "claim_notice_received is true"
+          and added[-1]["session"] == sid)
+    check("the sheet says so and asks the new issue's questions in the same run",
+          "Added to your matter: deposit_claim_received" in shown_sheet.getvalue()
+          and "What date is printed on the landlord's notice?" in shown_sheet.getvalue())
+    check("the model's next prompt has the new issue's guidance", "issue: deposit_claim_received" in system_prompt())
+    check("add_issues never adds an issue twice", record.add_issues(["deposit_claim_received"], "classify", "x") == [])
+    check("timeline full shows the added issue", "issue added: deposit claim received" in render_timeline(full=True))
+    end_session()
+finally:
+    remove_scratch("t-smoke-related")
+check("the second scratch matter is removed", not (MATTERS / "t-smoke-related").exists())
 summary()

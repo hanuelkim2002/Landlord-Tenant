@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Skills, step 2 of 3: related issues as data. In both deposit playbooks `when: claim_notice_received ==
+  true` (a string no code read) became `when: {fact: claim_notice_received, equals: true}`, typed in
+  `corpus.py` (`Condition`, `RelatedIssue`) and validated after load. New `record.add_issues`, the only
+  code that adds an issue, logging a new `issue_added` event (source and reason); `intake` and `resume`
+  use it instead of writing `matter["issues"]` directly. New `record.add_related_issues`, run after every
+  confirmed fact and in `resume`: a matching rule adds its issue at once, the sheet says "Added to your
+  matter" and asks the new issue's questions in the same run, and the model's next prompt carries its
+  guidance. `timeline full` shows added issues. CLAUDE.md names `add_issues` as the only door into
+  issues. Playbook quote checks all OK after the YAML edits. Seven new smoke checks on a second scratch
+  matter.
 - Skills, step 1 of 3: the system prompt is rebuilt from the record on every model call. `build_agent` now
   gives `create_agent` a `dynamic_prompt` middleware (`prompt_from_record`) that calls the new
   `system_prompt()`; before, the prompt was built once and frozen for the session. The conversation is

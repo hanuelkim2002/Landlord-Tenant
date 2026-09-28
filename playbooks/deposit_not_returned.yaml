@@ -89,7 +89,7 @@ spec:
 
   related_issues:
     - issue: deposit_claim_received
-      when: claim_notice_received == true
+      when: {fact: claim_notice_received, equals: true}   # added once this fact is confirmed so
 
   open_questions:
     - id: termination_date_meaning

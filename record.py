@@ -81,7 +81,40 @@ def confirm_fact(fact_id, value, confirmed_in):
     matter["facts"][fact_id] = value
     append_event("fact_confirmed", id=fact_id, value=value, how=was["how"], basis=was["basis"],
                  proposed_value=was["value"], confirmed_in=confirmed_in)
+    add_related_issues()                       # this fact may bring in another issue (related_issues)
     prune_proposals()                          # a "no" here can make another suggestion moot
+
+
+# ---- Issues: add_issues is the only code that adds an issue to the matter. Issues are never removed.
+
+def add_issues(issues, source, because):
+    """Add each issue the matter does not have yet, in order, and log an issue_added event for it.
+    source: "classify" (from the tenant's description or update) or "related" (a related_issues rule).
+    because: what brought it in, in words. Returns the issues that were new."""
+    added = []
+    for issue in issues:
+        if issue not in matter["issues"]:
+            matter["issues"].append(issue)
+            append_event("issue_added", issue=issue, source=source, because=because)
+            added.append(issue)
+    return added
+
+
+def add_related_issues():
+    """Add every issue an active playbook's related_issues rule points to, once the rule's fact is confirmed
+    with the rule's value. Repeats until nothing is added, since a new issue may bring its own rules.
+    Returns every issue added."""
+    all_added = []
+    while True:
+        added = []
+        for pb in active_playbooks():
+            for rel in pb.spec.related_issues:
+                fact = rel.when.fact
+                if fact in matter["facts"] and matter["facts"][fact] == rel.when.equals:
+                    added += add_issues([rel.issue], "related", f"{fact} is {json.dumps(rel.when.equals)}")
+        if not added:
+            return all_added
+        all_added += added
 
 
 def prune_proposals():

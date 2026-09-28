@@ -123,10 +123,14 @@ def run_sheet(ask=input):
                 print(f"    Please type {expected}, or ? to skip.")
                 continue
 
-        confirm_fact(r["id"], value, "sheet")
+        issues_before = list(record.matter["issues"])
+        confirm_fact(r["id"], value, "sheet")              # may add a related issue; its questions come next
         save(record.matter)
+        added = [i for i in record.matter["issues"] if i not in issues_before]
+        for issue in added:
+            print(f"    Added to your matter: {issue}. Its questions follow.")
         record.append_transcript({"role": "sheet", "id": r["id"], "question": r["question"],
-                                  "typed": answer, "value": value})
+                                  "typed": answer, "value": value, **({"issues_added": added} if added else {})})
         saved.append((r["id"], value))
 
     if skipped:

@@ -30,7 +30,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `timeline`, `tools`, `agent`, `smoke`.
 - `record.py`: the shared state. `matter` and `profile` live here and every other module reaches them as
   `record.matter` and `record.profile`. `confirm_fact` (the only code that writes a confirmed fact),
-  `prune_proposals` (drops suggestions that can never be asked; see Data flow 3),
+  `prune_proposals` (drops suggestions that can never be asked; see Data flow 3), `add_issues(issues,
+  source, because)` (the only code that adds an issue; never removes one; logs `issue_added`),
+  `add_related_issues()` (adds every issue a related_issues rule of an active playbook points to once its
+  fact is confirmed with the rule's value, repeating until nothing new is added; returns what it added),
   `matter_dir` (the only function that knows the folder layout),
   `new_tenant_id` (random `t-` plus six hex characters), `new_matter_id(tenant_id)` (`m-001`, `m-002`, ...
   counting the tenant's `m-*` folders), `list_matters` (every saved matter as `{"tenant", "id", "issues"}`,
@@ -100,14 +103,15 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    from `load_matter`). `ingest_pdf` stores the PDF and page text in `matter_dir()`, `extract_profile` asks the extraction model for a JSON `LeaseProfile`, `check_quotes` prints OK or FAIL
    for every clause, and the profile is saved. A FAIL is printed, not enforced: the profile is saved anyway.
 2. Description to issues and proposed facts (`intake`). `classify` returns issue labels; labels not in
-   `ROUTING` are dropped. Labels with no playbook stay in `matter["issues"]` but have no elements or
-   clocks. For each active playbook, `fill_facts` asks for a value, a `how` ("stated" or "inferred"), and
+   `ROUTING` are dropped, and the rest are added with `add_issues` (source "classify"). Labels with no
+   playbook stay in `matter["issues"]` but have no elements or clocks. For each active playbook, `fill_facts` asks for a value, a `how` ("stated" or "inferred"), and
    the tenant's exact words for every element whose `source` includes `user`. An answer is kept only if
    its words appear in the description (substring after `squash`). The first playbook to propose a fact id
    wins. `intake` resets `facts` and `proposed` to empty before this, then saves `matter.json`.
 2b. An update to an existing matter (`resume`). The text is logged verbatim as a `tenant_update` event;
    `description` is not touched. `classify` runs on the update only, and any label not already in
-   `matter["issues"]` is appended; none is removed. `fill_facts` runs on the update for every active
+   `matter["issues"]` is added with `add_issues` (source "classify"), then `add_related_issues` in case a
+   confirmed fact already triggers a rule of a newly added playbook; none is removed. `fill_facts` runs on the update for every active
    playbook, old and new. A value equal to the confirmed fact of the same id is dropped; the rest go into
    `proposed`, replacing any older pending proposal for that id. A proposal next to a confirmed fact with a
    different value shows as `changed` (step 4). Facts two playbooks share by element id need nothing: there
@@ -116,7 +120,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    the value into `facts`, removes it from `proposed`, and appends a `fact_confirmed` event carrying the
    proposal's `how`, `basis`, and `proposed_value` (or `how: "asked"` when nothing was proposed) and
    `confirmed_in`. One caller: the intake sheet (`sheet.run_sheet`, the tenant answers code directly,
-   `confirmed_in: "sheet"`). Then `prune_proposals` drops every suggestion that can never be asked: all
+   `confirmed_in: "sheet"`). Then `add_related_issues`: if the fact triggers a related_issues rule, the
+   related issue is added at once (source "related"), and since the sheet rebuilds its list after every
+   answer, the new issue's questions come up in the same sheet, which says "Added to your matter"; the
+   model's next prompt carries the new issue's guidance. Then `prune_proposals` drops every suggestion that can never be asked: all
    elements with its id take the value from the lease (a present clause listed before `user` in
    `source`), or depend on a fact confirmed as not true with no change to it pending, or no active playbook
    asks for it. A suggestion whose condition is still open, or has a pending change, is kept. `intake`,
@@ -142,7 +149,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    and events (see Files on disk). Sorted by date only; rows on the same day keep the order they were
    added (confirmed dates and deadlines first, then events in log order). `issue` filters deadlines and
    issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`,
-   `deadlines_computed`, `session_started`, and `session_ended` events.
+   `deadlines_computed`, `issue_added`, `session_started`, and `session_ended` events.
 7. Letter assembly (`draft_letter`, then `build_letter`). Checks the issue and posture, checks each quote
    with `quote_is_real` (substring of a present lease clause quote or any stored statute section), then
    builds the letter from a template: today's date, landlord and premises quotes from the profile, every
@@ -175,6 +182,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `artifact`: `file` (original name), `sha256`, `note`. Written by `add_artifact`.
   - `communication`: `sent_on` (YYYY-MM-DD), `sender`, `recipient`, `channel`, `text`. Written by
     `add_communication`. The timeline sorts it by `sent_on`, not `when`.
+  - `issue_added`: `issue`, `source` ("classify" or "related"), `because` (e.g. "the tenant's update",
+    "claim_notice_received is true"). Written by `record.add_issues`. `timeline full` only. Matters from
+    before 2026-09-27 have issues with no such event.
   - `tenant_update`: `text`, what a returning tenant typed as new, verbatim. Written by `resume`. Shown in
     the timeline as "tenant update" with the first words.
   - `session_started`: `how` ("new" or "existing"). Written by `start_session`. `timeline full` only, with
@@ -188,7 +198,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   entry, each with `when` and `role`: `tenant` (`text`, as typed), `model` (`text`, plus `tool_calls`, a
   list of `{"name", "args"}`, when it called tools), `tool` (`name`, `text`: the result the model saw),
   `command` (`text`: a `timeline` command, handled without the model), `sheet` (`id`, `question`,
-  `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved), or
+  `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_added`
+  when the answer brought in a related issue), or
   `program` (`text`: the note sent to the model ahead of the tenant's message after a sheet). Only the chat is transcribed; the
   intake or resume calls before it are not.
 
@@ -250,7 +261,9 @@ The program note after a sheet still tells the model, in the conversation, that 
 ## Playbook schema
 
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
-clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field. Keys the `Playbook` class does not define (`description`) are dropped
+clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field.
+After all playbooks load, `corpus.py` also raises if a related issue is not a `ROUTING` label or its
+condition's fact is not an element of any playbook. Keys the `Playbook` class does not define (`description`) are dropped
 on load and never reach the model.
 
 - `issue`: the label; must match a `ROUTING` key to be classified. Key of `playbooks`.
@@ -270,7 +283,8 @@ on load and never reach the model.
     `clocks[0].quote`.
   - `lease_overrides`, `exclusions`: lists of dicts. Any item with a `quote` is checked by
     `check_playbook` against the section in its `cite`. Otherwise not read by code.
-  - `related_issues`: not read by code and not shown to the model.
+  - `related_issues`: list of `{issue, when: {fact, equals}}`. Read by `record.add_related_issues`: once
+    `fact` is confirmed with the value `equals`, `issue` is added to the matter. Not shown to the model.
   - `open_questions`: not read by code. `system_prompt` puts them into the prompt next to `guidance`, the only
     part of `spec` the model sees.
 - `guidance` (prose, put into the prompt by `system_prompt`), with two pieces also read by code:
