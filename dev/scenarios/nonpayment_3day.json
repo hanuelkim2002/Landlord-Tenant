@@ -1,0 +1,27 @@
+{
+  "about": "A 3-day notice for unpaid rent handed over Friday 2026-09-18, stating 'pay or leave by September 21'. The court-day count should skip the weekend and Yom Kippur (Monday 2026-09-21, Eighth Circuit) and give Thursday 2026-09-24. Two bad answers test that the sheet asks again.",
+  "start": [
+    "new",
+    "t-test",
+    "lease.pdf",
+    "I rent a house in Gainesville, Alachua County. My rent is $1,850 a month. I did not pay September rent because I lost my job.",
+    "On September 18, 2026 the landlord handed me a notice saying I owe $1,850 and must pay or leave by September 21, 2026.",
+    "I have not paid anything since, and no court papers have been served on me.",
+    ""
+  ],
+  "sheet": {
+    "notice demanding rent delivered": ["Sept 18", "9/18/2026"],
+    "How did the notice reach you": ["handed to me at my door by the landlord"],
+    "last day to pay or leave": ["2026-09-21"],
+    "How much does the notice say": ["$1,850.00"],
+    "still unpaid": ["yes"],
+    "pay part of the rent": ["maybe", "no"],
+    "hold back rent because": ["n"],
+    "What county": ["Alachua"],
+    "eviction case": ["no"]
+  },
+  "chat": [
+    "What are my deadlines?",
+    "timeline"
+  ]
+}

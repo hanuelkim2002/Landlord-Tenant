@@ -63,5 +63,6 @@ student, not admitted.
     python smoke.py          # offline checks, no key needed
     python smoke_online.py   # classify, fill_facts, resume; calls the model
     python schemas.py        # what the model sees per tool
+    python dev/live_run.py dev/scenarios/nonpayment_3day.json   # a scripted live session; calls the model
 
 Chat commands: `timeline`, `timeline full`, `timeline <issue>`, `bye`.

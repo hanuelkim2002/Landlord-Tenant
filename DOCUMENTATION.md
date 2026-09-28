@@ -107,6 +107,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
 - `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description, then `resume`
   checks on a scratch matter.
+- `dev/live_run.py`: entry point for live tests. Starts `run.py` itself and drives a whole session from a
+  scenario file in `dev/scenarios/` (see Running and testing). Imports nothing from the project.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
 
 ## Data flow
@@ -371,6 +373,14 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   copy `matters/t-smoke-online/m-001` (two more calls) with named checks: the update logged verbatim, the
   description and old issues kept, nothing confirmed, no suggestion equal to a confirmed value. Checks
   marked "(model)" depend on the model's answer (the new issue added, the changed fact proposed).
+- `python dev/live_run.py dev/scenarios/<name>.json`: a live session without typing. The scenario gives the
+  lines typed before the sheet (`start`), rules for the sheet (`sheet`: a piece of a question's text to a
+  list of answers used in order, so a bad answer then a good one tests the re-ask; a question no rule
+  matches gets "?"), and the chat lines (`chat`, then "bye"). Questions are found on screen by their type
+  hint, since each prints on the same line as the previous prompt. A sheet that appears mid-chat is answered
+  by the same rules. Prints the whole screen and the answers typed. Calls the model and writes a real matter:
+  use the test tenant `t-test`; every "new" scenario adds a matter. `nonpayment_3day.json` checks the
+  83.56(3) court-day count (expected 2026-09-24).
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
   and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).
   Then the intake sheet asks every open fact (no model), and the chat starts. Chat commands, handled by the loop without the

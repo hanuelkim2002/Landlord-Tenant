@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- New `dev/live_run.py` and `dev/scenarios/nonpayment_3day.json`: the live-test driver moved into the project.
+  It replaces the scratch scripts (a shell loop feeding run.py through a file, and a separate sheet driver):
+  it starts run.py itself, types the scenario's start lines, answers every sheet by the question on screen
+  (including one that appears mid-chat), sends the chat lines, and prints the screen and the answers typed.
+  Run once: the 3-day scenario gave 2026-09-24 again, both bad answers were asked again, `t-test/m-004` was
+  created. DOCUMENTATION.md and CLAUDE.md's Running list updated.
 - Rerun of the 83.56(3) live test with typed answers (`t-test/m-003`), after fixing the test driver, which
   had pressed Enter at every question because each question prints on the same line as the previous
   prompt. The new driver finds the question on screen by its type hint. Typed answers in other formats
