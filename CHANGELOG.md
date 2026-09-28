@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- TODO.md: the `ROUTING` preloading item moved from "Harness and code" into the Skills `load_skill` item,
+  since every label but `other` will get a playbook and on-demand loading replaces preloading. The
+  Playbooks item now lists all seven playbooks still to write, each carrying its own checked section list
+  in `statutory_hook`. The Skills `related_issues` item no longer names the removed `record_facts`.
+  No code changed.
 - Permanent smoke checks for code that writes to a matter, replacing the hand tests on throwaway copies.
   New `checks.py` (named OK/FAIL checks, a summary line, and scratch copies of the test matter that can
   only be made and removed under `matters/t-smoke*`). `smoke.py` gained 31 checks on `t-smoke/m-001`:
