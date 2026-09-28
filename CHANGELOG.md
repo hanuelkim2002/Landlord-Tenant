@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- deposit_claim_received.yaml: the fact `claim_notice_received_on` renamed `claim_notice_date`, the id
+  deposit_not_returned already uses for the same date (when the tenant received the landlord's notice),
+  along with the `tenant_objection_deadline` trigger and the question key. Facts carry across issues by
+  id, so the tenant is now asked this date once instead of twice. In deposit_not_returned the fact still
+  applies only once a notice is confirmed received; in deposit_claim_received it is always asked. Playbook
+  quote checks all OK. Existing test matters keep the old key in `matter.json` as an unused leftover; both
+  also hold `claim_notice_date` with the same date. Smoke fixture and counts adjusted; the "asked once"
+  check now covers this date too.
 - A deadline two issues share is listed once, tagged with both (the author's decision). New
   `deterministic.matter_deadlines` merges rows with the same clock id, cite, date, and status; both
   `get_deadlines` (rows now carry `issues`, a list, instead of `issue`) and the timeline use it, replacing

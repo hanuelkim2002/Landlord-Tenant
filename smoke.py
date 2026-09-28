@@ -120,7 +120,6 @@ make_scratch("t-smoke",
                        "claim_notice_received": stated(True, "I got a letter from the landlord"),
                        "claim_notice_date": stated("2026-09-25", "on September 25, 2026"),
                        "claim_notice_dated": stated("2026-09-22", "dated September 22, 2026"),
-                       "claim_notice_received_on": stated("2026-09-25", "on September 25, 2026"),
                        "claim_delivery": stated("certified mail", "by certified mail"),
                        "claim_amount": stated(400, "keeping $400"),
                        "claim_reason": stated("cleaning", "for cleaning"),
@@ -164,10 +163,10 @@ try:
     prompt_before_sheet = system_prompt()
     shown_sheet = io.StringIO()
     with contextlib.redirect_stdout(shown_sheet):
-        saved = run_sheet(scripted(["", "7/28/2026", "maybe", "", "", "y", "no", "", "", "", "$1,2x", "400",
+        saved = run_sheet(scripted(["", "7/28/2026", "maybe", "", "", "y", "no", "", "", "$1,2x", "400",
                                     "cleaning and carpet", "?", "no"]))
     facts = record.matter["facts"]
-    check("sheet saves every answered fact", len(saved) == 12)
+    check("sheet saves every answered fact", len(saved) == 11)
     check("sheet: Enter accepts a suggestion", facts["tenancy_terminated"] == "2026-07-31")
     check("sheet: a typed answer replaces a suggestion", facts["vacated"] == "2026-07-28")
     check("sheet: a changed fact takes the new value", facts["claim_notice_received"] is True)
@@ -177,7 +176,8 @@ try:
           and facts["early_or_periodic"] is False)
     check("sheet: the lease's words appear where they differ",
           f'your lease says: "{record.profile.term_end.quote}"' in shown_sheet.getvalue())
-    check("sheet: a fact two issues share is asked once", shown_sheet.getvalue().count("What date did the lease end") == 1)
+    check("sheet: a fact two issues share is asked once", shown_sheet.getvalue().count("What date did the lease end") == 1
+          and shown_sheet.getvalue().count("receive that notice") + shown_sheet.getvalue().count("receive the notice") == 1)
     check("prune drops a suggestion once its condition is confirmed no",
           "seven_day_notice_given" not in record.matter["proposed"])
     check("sheet: a skipped fact stays open", [r["id"] for r in pending_rows()] == ["notice_states_objection_window"])
@@ -214,11 +214,11 @@ try:
     check("an event after the session carries no id", "session" not in new_events[-1])
     check("session_started and session_ended are logged", in_session[0]["kind"] == "session_started"
           and in_session[-1]["kind"] == "session_ended")
-    check("every fact is confirmed on the sheet", len(confirmations) == 13
+    check("every fact is confirmed on the sheet", len(confirmations) == 12
           and all(e["confirmed_in"] == "sheet" for e in confirmations))
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{sid}.jsonl").read_text().splitlines()]
     check("the transcript holds the tenant's words and every sheet answer",
-          [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 13)
+          [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 12)
 
     # the timeline
     full, plain = render_timeline(full=True), render_timeline()

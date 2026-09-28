@@ -26,7 +26,7 @@ spec:
     - id: claim_notice_dated
       type: date
       source: [user]
-    - id: claim_notice_received_on
+    - id: claim_notice_date                  # same id as in deposit_not_returned: asked once, shared
       type: date
       source: [user]
     - id: claim_delivery
@@ -66,7 +66,7 @@ spec:
 
     - id: tenant_objection_deadline
       actor: tenant
-      trigger: claim_notice_received_on
+      trigger: claim_notice_date
       days: 15
       direction: after
       delivery: [in writing, to the address stated in the landlord's notice]
@@ -111,7 +111,7 @@ guidance:
     deposit_amount: How much was your security deposit?
     tenancy_terminated: What date did the lease end, or what date was it terminated?
     claim_notice_dated: What date is printed on the landlord's notice?
-    claim_notice_received_on: What date did you actually receive the notice?
+    claim_notice_date: What date did you actually receive the notice?
     claim_delivery: How did the notice reach you (certified mail, regular mail, e-mail, hand delivery, something else)?
     claim_amount: How much does the notice say the landlord is claiming from the deposit?
     claim_reason: What reason does the notice give for the claim? Copy the words from the notice.
