@@ -8,9 +8,13 @@ line must be OK, like the playbook quote checks.
 import contextlib
 import io
 import json
+import re
 from datetime import date
 
+import PyPDF2
+
 import record
+from calendars import court_calendars
 from checks import check, make_scratch, remove_scratch, summary
 from config import MATTERS
 from corpus import check_all_playbooks, playbooks
@@ -64,6 +68,23 @@ record.matter["facts"] = dict(test_facts)
 record.matter["proposed"] = update
 print(get_deadlines.invoke({}))
 record.matter["proposed"] = {}
+print()
+
+# court business days (83.56(3)): the circuit's holiday calendar, the count, and refusing instead of guessing
+nonpayment = playbooks["notice_received_nonpayment"]
+def three_day(delivered, county):
+    row = next(d for d in compute_deadlines(nonpayment, {"nonpayment_notice_delivered": delivered, "premises_county": county},
+                                            today=date(2026, 9, 27)) if d["clock"] == "three_day_demand_period")
+    return str(row.get("deadline")), row
+check("court calendar: every holiday date is in its memorandum", all(
+    re.sub(r"\s+", "", h["as_printed"].removeprefix("Note: ")) in re.sub(r"\s+", "", "\n".join(
+        p.extract_text() for p in PyPDF2.PdfReader(entry["document"]).pages))
+    for cal in court_calendars for entry in cal["years"].values() for h in entry["holidays"]))
+check("court days skip Thanksgiving, the Friday after, and the weekend", three_day("2026-11-24", "Alachua")[0] == "2026-12-01")
+check("court days cross into the next year's memorandum", three_day("2026-12-30", "Alachua County")[0] == "2027-01-06")
+check("court days refuse a year with no memorandum loaded", three_day("2027-12-29", "Alachua")[1]["status"].startswith("not computed"))
+check("court days refuse a county with no calendar", three_day("2026-11-24", "Miami-Dade")[1]["status"].startswith("not computed"))
+check("a court-day date carries its counting line", "Eighth Judicial Circuit" in three_day("2026-11-24", "Alachua")[1]["counting"])
 print()
 
 # a tenant fact next to the lease field its playbook names (compare_to): shown only when they differ
@@ -289,6 +310,8 @@ def answer_by_type(shown_so_far):
     def ask(prompt):
         last = [line for line in shown_so_far.getvalue().splitlines() if line.startswith("  ") and
                 not line.startswith("    ")][-1]
+        if "What county" in last:
+            return "Alachua"                             # a county with a stored court holiday calendar
         for hint, answer in (("(YYYY-MM-DD)", "2026-10-31"), ("(yes/no)", "yes"), ("(amount)", "1200"), ("(words)", "a test answer")):
             if last.endswith(hint):
                 return answer

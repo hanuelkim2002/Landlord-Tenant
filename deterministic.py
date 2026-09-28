@@ -3,6 +3,8 @@ import json
 import re
 from datetime import date, datetime, timedelta
 
+
+from calendars import court_calendar, holidays_in
 from config import agent_llm, squash
 
 
@@ -92,6 +94,30 @@ def check_elements(playbook, profile, facts, proposed):
 
 # ---- Deadlines: the only date arithmetic in the project.
 
+def court_days(start, days, direction, county):
+    """Count court business days from start: one day at a time, the start day not counted, skipping Saturdays,
+    Sundays, and every holiday in the calendar of the circuit that includes the county. Returns (date, the
+    counting line to show with it), or (None, why it cannot be computed): no calendar for the county, or a day
+    in a year with no memorandum loaded. Never guesses a holiday."""
+    cal = court_calendar(county)
+    if cal is None:
+        return None, f"not computed: no court holiday calendar for {county + ' County' if county else 'the rental county'}"
+    holidays = holidays_in(cal)
+    step = timedelta(days=1 if direction == "after" else -1)
+    day, counted, years = start, 0, set()
+    while counted < days:
+        day += step
+        if str(day.year) not in cal["years"]:
+            return None, f"not computed: no {cal['circuit']} holiday memorandum loaded for {day.year}"
+        years.add(day.year)
+        if day.weekday() < 5 and day not in holidays:      # Monday to Friday, not a court holiday
+            counted += 1
+    used = ", ".join(f"{y} (issued {cal['years'][str(y)]['issued_on']})" for y in sorted(years))
+    return day, (f"court business days, start day not counted, Saturdays, Sundays, and every holiday in the "
+                 f"{cal['circuit']} Chief Judge's memorandum skipped ({used}). ASSUMPTION: the counting rule and "
+                 f"which holidays count are open questions; show this line with the date.")
+
+
 def compute_deadlines(playbook, facts, today):
     """Date arithmetic only. Dates in facts are strings like '2026-07-31'."""
     out = []
@@ -106,7 +132,13 @@ def compute_deadlines(playbook, facts, today):
 
         # Turn "2026-07-31" into a real date, then add or subtract the day count.
         start = date.fromisoformat(facts[c.trigger])
-        if c.direction == "after":
+        counting = playbook.counting["convention"]
+        if c.count == "court_business_days":
+            deadline, counting = court_days(start, c.days, c.direction, facts.get("premises_county"))
+            if deadline is None:                           # no calendar for the county or the year: say so
+                out.append({"clock": c.id, "status": counting})
+                continue
+        elif c.direction == "after":
             deadline = start + timedelta(days=c.days)
         else:
             deadline = start - timedelta(days=c.days)
@@ -117,11 +149,11 @@ def compute_deadlines(playbook, facts, today):
             "clock": c.id,
             "actor": c.actor,
             "from": f"{c.trigger} {start}",
-            "rule": f"{c.days} days {c.direction}",
+            "rule": f"{c.days} {'court business days' if c.count == 'court_business_days' else 'days'} {c.direction}",
             "deadline": deadline,
             "status": "passed" if deadline < today else "upcoming",
             "cite": c.cite,
-            "counting": playbook.counting["convention"],
+            "counting": counting,
         })
     return out
 

@@ -33,7 +33,8 @@ class Element(BaseModel):
 
 class Clock(BaseModel):
     """One statutory deadline: whose it is, which date it counts from, how many
-    days, and the sentence it comes from. compute_deadlines reads these."""
+    days, and the sentence it comes from. compute_deadlines reads these. count: calendar days (the default)
+    or court business days, which skip Saturdays, Sundays, and the county's court holidays (calendars.py)."""
     id: str
     actor: Literal["landlord", "tenant"]
     trigger: str
@@ -44,6 +45,7 @@ class Clock(BaseModel):
     consequence: Optional[str] = None
     delivery: Optional[List[str]] = None
     applies_if: Optional[str] = None
+    count: Literal["calendar_days", "court_business_days"] = "calendar_days"
 
 
 class Condition(BaseModel):
@@ -98,6 +100,8 @@ def load_playbook(path):
     for c in pb.spec.clocks:
         if c.trigger not in date_ids:
             raise ValueError(f"clock {c.id}: trigger {c.trigger} is not a date element")
+        if c.count == "court_business_days" and "premises_county" not in [e.id for e in pb.spec.elements]:
+            raise ValueError(f"clock {c.id}: court business days need a premises_county element")
     return pb
 
 

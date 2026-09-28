@@ -18,6 +18,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   it is given, extract page text with PyPDF2, write `pages.json`), the `Clause` and `LeaseProfile` shapes (fifteen named clauses), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
   or start there and run onto the next). Imports `config`. Imported by `record` and `run.py`.
+- `calendars.py`: the court holiday calendars, loaded once at import from `calendars/*.json` into
+  `court_calendars`. `load_calendar` (raises if a holiday is filed under the wrong year or its printed
+  weekday is not the date's weekday), `court_calendar(county)` (the calendar of the circuit that includes
+  the county, "Alachua" or "Alachua County", or None), `holidays_in(cal)`. Imports `config`. Imported by
+  `deterministic`, `smoke`.
 - `corpus.py`: the stored corpus, loaded once at import. `statute` (dict, section number to text, from
   `statutes/83.*.txt`), the playbook shapes (`Element`, `Clock`, `Spec`, `Playbook`), `load_playbook`,
   `check_playbook` (one playbook: every spec quote verbatim in its cited section, every
@@ -28,7 +33,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   and question; returns the failures), and `playbooks` (dict, issue to `Playbook`, from
   `playbooks/*.yaml`). No model calls. Imports `config`, `lease` (for `LeaseProfile`, to check
   `compare_to`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
-- `deterministic.py`: `check_elements` (element status), `lease_value` and `lease_differs` (a lease quote
+- `deterministic.py`: `check_elements` (element status), `court_days` (court business days from a
+  county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
   deadlines, with one that two playbooks share listed once, tagged with both issues),
   `ISSUE_LABELS` (the labels `classify` can pick), and the two one-shot intake calls `classify` and
@@ -150,7 +156,12 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 5. Confirmed to deadlines (`get_deadlines`, then `matter_deadlines`, then `compute_deadlines` per playbook). Refuses while any row is proposed,
    changed, or missing. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
    if the trigger date is not confirmed; otherwise trigger date plus or minus `days` calendar days, status
-   `passed` if before today else `upcoming`, with the cite and the playbook's `counting.convention`.
+   `passed` if before today else `upcoming`, with the cite and the playbook's `counting.convention`. A clock
+   with `count: court_business_days` goes through `court_days` instead: one day at a time from the trigger
+   date (not counted), skipping Saturdays, Sundays, and every holiday in the calendar of the circuit that
+   includes the confirmed `premises_county`. Its row carries its own counting line naming the circuit and
+   the memoranda used. With no calendar for the county, or a day in a year with no memorandum loaded, the
+   row says "not computed: ..." and has no date; nothing is guessed.
    `matter_deadlines` then merges a row two playbooks share (same clock id, cite, date, and status) into
    one, and every row carries `issues`, the list of issues it belongs to.
 6. Record to timeline (`render_timeline`). Rows come from confirmed date facts, freshly computed deadlines
@@ -214,7 +225,12 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   intake or resume calls before it are not.
 
 Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `statutes/83.*.txt` and `.html` (the
-read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key).
+read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key), and `calendars/` (read-only, like `statutes/`):
+`court_holidays_circuit8.json` (Eighth Judicial Circuit: Alachua, Baker, Bradford, Gilchrist, Levy, and
+Union counties; for each of 2026 and 2027 the holidays in the Chief Judge's memorandum, each with its date,
+name, the date as printed, and its marker in the memorandum, plus the memorandum's source URL, issue date, and
+fetch date) and `sources/`, the memoranda PDFs. A new year or circuit is added from its official memorandum,
+checked against the PDF, never typed from memory.
 
 ## Tools the model can call
 
@@ -274,10 +290,10 @@ The program note after a sheet still tells the model, in the conversation, that 
 Nine playbooks, one per label in `ISSUE_LABELS` except `other`: deposit_not_returned,
 deposit_claim_received, repair_not_made, notice_received_nonpayment, notice_received_violation,
 landlord_entered_unannounced, rent_increased, wants_to_leave_early, lease_ending. The seven written
-2026-09-27 are version 0.1 with `verified_by: null` until the author's hand check. Three have no clocks,
-and say why in `counting.note`: notice_received_nonpayment (83.56(3) and 83.60(2) exclude weekends and
-court-observed holidays), landlord_entered_unannounced (83.53(2) is in hours), rent_increased (no
-section on notice of a rent increase). Facts shared across playbooks by id: `claim_notice_date`,
+2026-09-27 are version 0.1 with `verified_by: null` until the author's hand check. Two have no clocks,
+and say why in `counting.note`: landlord_entered_unannounced (83.53(2) is in hours), rent_increased (no
+section on notice of a rent increase). notice_received_nonpayment computes 83.56(3) in court business days
+and leaves 83.60(2) uncomputed. Facts shared across playbooks by id: `claim_notice_date`,
 `tenancy_terminated`, `deposit_amount`, `eviction_action_filed`, `fixed_term_lease`, `term_end_date`,
 `month_to_month`, `monthly_rent`.
 
@@ -302,7 +318,9 @@ on load and never reach the model.
     `check_elements`, `fill_facts` (only elements with `user` in `source`), `build_letter` and
     `render_timeline` (date elements).
   - `clocks`: `id`, `actor` (landlord, tenant), `trigger` (a date element id), `days`, `direction`
-    (before, after), `cite`, `quote`, optional `consequence`, `delivery`, `applies_if`. Read by
+    (before, after), `cite`, `quote`, optional `consequence`, `delivery`, `applies_if`, `count`
+    (`calendar_days`, the default, or `court_business_days`; a playbook with a court-day clock must have a
+    `premises_county` element, checked by `load_playbook`). Read by
     `compute_deadlines`; `quote` and `consequence` checked by `check_playbook`; `smoke.py` uses
     `clocks[0].quote`.
   - `lease_overrides`, `exclusions`: lists of dicts. Any item with a `quote` is checked by

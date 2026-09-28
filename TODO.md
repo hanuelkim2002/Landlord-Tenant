@@ -12,11 +12,12 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.
 
-1. Clocks `compute_deadlines` cannot compute yet, found writing the seven playbooks. Each is recorded, quoted,
-   and left uncomputed: (a) days "excluding Saturday, Sunday, and legal holidays", with legal holidays
-   "court-observed holidays only" (83.56(3), 83.60(2)); needs a court holiday calendar, researched, not from
-   memory; (b) periods the lease sets (83.575(1)-(2), 83.595(4)); needs a clock whose length is a confirmed
-   fact; (c) hours (83.53(2)); (d) months (83.56(2), 12 months). Decide which to support.
+1. Clocks `compute_deadlines` cannot compute yet: (a) court business days are done for 83.56(3) in the
+   Eighth Judicial Circuit, 2026 and 2027; other circuits need their own memoranda (add a county's circuit
+   when a tenant there uses the tool), and each new year's memorandum must be added when the circuit
+   publishes it (the 2028 one is needed for any count reaching January 2028); 83.60(2) waits on the open
+   question below; (b) periods the lease sets (83.575(1)-(2), 83.595(4)); needs a clock whose length is a
+   confirmed fact; (c) hours (83.53(2)); (d) months (83.56(2), 12 months). Decide which to support.
 
 
 ## Playbooks
@@ -53,6 +54,13 @@ and some may go away with a more capable model.
 
 ## Open questions
 
+- Counting court business days (83.56(3)), for the author to research: whether the delivery day counts,
+  what happens when the notice is delivered on a weekend or a holiday, and when the last day ends. The tool
+  counts forward from the delivery date, the delivery day not counted, and labels it an assumption.
+- Which holidays are "court-observed holidays only" (83.56(3)): the tool skips every holiday in the circuit
+  Chief Judge's memorandum, including those marked as designated by the Chief Judge and the additional
+  discretionary ones. And whether 83.60(2)'s "legal holidays" is the same list, since 83.56(3) defines the
+  term "for the purpose of this section". Until settled, 83.60(2) is not computed.
 - Playbook open question (deposit_not_returned): whether returning keys one day before the term end is
   "vacating before the expiration of the term." The 7-day clock currently applies whenever
   `early_or_periodic` is confirmed true.

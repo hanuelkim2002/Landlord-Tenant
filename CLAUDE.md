@@ -36,6 +36,8 @@ student, not admitted.
 
 ## Guardrails
 
+- `calendars/` is read-only too: each court holiday comes from the circuit's official memorandum (PDF kept in
+  `calendars/sources/`) and is checked against it by `smoke.py`. Never add or change a holiday from memory.
 - `statutes/` is a read-only corpus. Never edit it. Never write statutory text, a section number, or a
   deadline into a playbook, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
 - After any edit to a playbook YAML, run the playbook checks (`check_all_playbooks`, also run by `smoke.py`)

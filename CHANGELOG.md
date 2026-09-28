@@ -5,6 +5,19 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Court business days, for 83.56(3). New `calendars/` corpus (read-only, like `statutes/`) with the
+  Eighth Judicial Circuit's official holiday memoranda for 2026 and 2027 (Chief Judge William E. Davis,
+  issued 2025-07-08 and 2026-08-21, from circuit8.org, PDFs kept in `calendars/sources/`), extracted by code
+  and checked name by name and date by date against the PDFs; the 2026 list also matches the circuit's web
+  page. New `calendars.py` loads them and checks printed weekdays. Clocks gain `count: court_business_days`;
+  `deterministic.court_days` counts inside `compute_deadlines`, skipping Saturdays, Sundays, and the
+  circuit's holidays, and refuses (no date) for a county with no calendar or a year with no memorandum.
+  notice_received_nonpayment gains the 83.56(3) clock `three_day_demand_period` and a `premises_county`
+  fact, replacing "no clocks" for that playbook; 83.60(2) stays uncomputed. The two legal questions
+  (how the days are counted, which holidays count) are recorded as open, as the author asked, in the
+  playbook and in TODO.md. Found while researching: court holidays are set per circuit, not statewide.
+  Seven new smoke checks (the calendar against its PDFs, four hand-checked counts including both
+  refusals, the counting line). CLAUDE.md: `calendars/` guardrail.
 - The stricter playbook checks moved into `corpus.check_playbook` / `check_all_playbooks`, replacing the
   quote-only check (and the one-off draft script): quotations in guidance and open-question prose are now
   checked too, plus a question per element, `applies_if` on yes/no facts, clock cites among `sections`, the

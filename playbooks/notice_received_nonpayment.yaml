@@ -10,9 +10,9 @@ provenance:
   version: 0.1
 
 counting:
-  convention: calendar days, trigger day not counted, no weekend or holiday adjustment
-  status: ASSUMPTION. Florida's court rule for counting days has not been checked against statutory deadlines outside litigation. Show this line with every computed date.
-  note: This playbook has no clocks. The periods in 83.56(3) and 83.60(2) exclude Saturdays, Sundays, and legal holidays, which compute_deadlines does not support.
+  convention: court business days, trigger day not counted, Saturdays, Sundays, and the circuit's court holidays skipped (calendars/)
+  status: ASSUMPTION. The counting rule and which holidays count are open questions (see open_questions). Show the counting line with every computed date.
+  note: 83.56(3) is computed in court business days from the circuit's holiday memorandum. 83.60(2) is not computed; whether its "legal holidays" are the same list is an open question.
 
 # ---------- read by code ----------
 spec:
@@ -45,6 +45,9 @@ spec:
     - id: withheld_for_repairs
       type: bool
       source: [user]
+    - id: premises_county
+      type: text
+      source: [user]
     - id: eviction_action_filed
       type: bool
       source: [user]
@@ -53,7 +56,17 @@ spec:
       source: [user]
       applies_if: eviction_action_filed
 
-  clocks: []
+  clocks:
+    - id: three_day_demand_period
+      actor: tenant
+      trigger: nonpayment_notice_delivered
+      days: 3
+      direction: after
+      count: court_business_days
+      delivery: [mailing, delivering a true copy, e-mail per 83.505, leaving a copy at the residence if the tenant is absent]
+      cite: "83.56(3)"
+      quote: "If the tenant fails to pay rent when due and the default continues for 3 days, excluding Saturday, Sunday, and legal holidays, after delivery of written demand by the landlord for payment of the rent or possession of the premises, the landlord may terminate the rental agreement."
+      consequence: "Legal holidays for the purpose of this section shall be court-observed holidays only."
 
   lease_overrides:
     - cite: "83.56(4)"
@@ -72,19 +85,29 @@ spec:
       when: {fact: withheld_for_repairs, equals: true}   # added once this fact is confirmed so
 
   open_questions:
-    - id: business_day_count
+    - id: counting_rule
       sections: ["83.56"]
       text: >-
         83.56(3) counts "3 days, excluding Saturday, Sunday, and legal holidays, after delivery of written demand
-        by the landlord for payment of the rent or possession of the premises", and says "Legal holidays for the
-        purpose of this section shall be court-observed holidays only." This tool counts calendar days only and
-        holds no court holiday calendar, so it does not compute this date. It records the date the notice itself
-        states.
+        by the landlord for payment of the rent or possession of the premises". The tool counts forward from the
+        delivery date, the delivery day not counted, and shows the date the notice itself states next to it. How
+        the days are counted (the delivery day, delivery on a weekend or holiday, when the last day ends) is an
+        open question the author is researching. Show the counting line with the date and do not settle it.
+    - id: court_observed_holidays
+      sections: ["83.56"]
+      text: >-
+        83.56(3) says "Legal holidays for the purpose of this section shall be court-observed holidays only." The
+        tool skips every holiday in the circuit Chief Judge's memorandum for the year, including those marked as
+        designated by the Chief Judge and those it marks as additional discretionary holidays. Whether each of those is a
+        court-observed holiday in the statute's sense is an open question. Calendars are stored only for the
+        counties in calendars/; for any other county, or a year with no memorandum, the date is not computed.
     - id: registry_count
       sections: ["83.60"]
       text: >-
         Once an eviction case is served, 83.60(2) sets "5 days, excluding Saturdays, Sundays, and legal holidays,
-        after the date of service of process". The tool does not compute that date either.
+        after the date of service of process". The definition of legal holidays in 83.56(3) is stated "for the
+        purpose of this section", and whether 83.60(2) uses the same list is an open question. The tool does not
+        compute this date.
     - id: notice_form
       sections: ["83.56"]
       text: >-
@@ -109,6 +132,7 @@ guidance:
     partial_rent_accepted: After the notice was delivered, did you pay part of the rent, and did the landlord accept it?
     partial_payment_receipt: Did the landlord give you a receipt showing the date, the amount received, and the agreed date and balance still due?
     withheld_for_repairs: Did you hold back rent because the landlord did not make repairs?
+    premises_county: What county is the rental in? (For example, Alachua.)
     eviction_action_filed: Has the landlord filed an eviction case in court against you?
     court_papers_served: What date were you served with the court papers?
 
@@ -131,11 +155,13 @@ guidance:
     notice_sufficiency: >-
       A letter from you does not change the period in Fla. Stat. 83.56(3), which runs "after delivery of written
       demand by the landlord for payment of the rent or possession of the premises" and counts "3 days,
-      excluding Saturday, Sunday, and legal holidays". This tool does not compute that date. It records the date
-      your notice states and the date it was delivered, as you gave them.
+      excluding Saturday, Sunday, and legal holidays". This tool computed that date from the delivery date you
+      gave, skipping the holidays in your court circuit's published calendar, and shows it next to the date
+      your notice states. How the days are counted is stated with the date as an assumption.
 
   failure_modes:
-    - Counting the 3 days in calendar days, or counting holidays other than court-observed ones.
-    - Computing any date for this issue; the tool computes none.
+    - Counting the 3 days in calendar days, or counting holidays yourself; only get_deadlines computes the date.
+    - Reporting the computed date without its counting line, or without the date the notice itself states.
+    - Computing the 83.60(2) date; the tool does not.
     - Treating an accepted partial payment as ending the notice without showing 83.56(5)(a).
     - Not asking whether court papers have been served.

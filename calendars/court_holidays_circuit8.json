@@ -1,0 +1,207 @@
+{
+  "circuit": "Eighth Judicial Circuit of Florida",
+  "counties": [
+    "Alachua",
+    "Baker",
+    "Bradford",
+    "Gilchrist",
+    "Levy",
+    "Union"
+  ],
+  "source_page": "https://circuit8.org/court-calendars/holidays/",
+  "note": "Holidays observed by the circuit's courts, as listed in the Chief Judge's memorandum for each year. Read only: a new year is added from its memorandum, never edited from memory.",
+  "years": {
+    "2026": {
+      "document": "calendars/sources/Memorandum-2026-Eighth-Judicial-Circuit-Holidays.pdf",
+      "source": "https://circuit8.org/wp-content/uploads/Memorandum-2026-Eighth-Judicial-Circuit-Holidays.pdf",
+      "issued_by": "William E. Davis, Chief Judge",
+      "issued_on": "2025-07-08",
+      "fetched_on": "2026-09-27",
+      "holidays": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year’s Day",
+          "as_printed": "Thursday, January 1, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-01-19",
+          "name": "Martin Luther King, Jr. Birthday",
+          "as_printed": "Monday, January 19, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday",
+          "as_printed": "Friday, April 3, 2026",
+          "marker": "designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Memorial Day",
+          "as_printed": "Monday, May 25, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-07-03",
+          "name": "Independence Day (Observed)",
+          "as_printed": "Friday, July 3, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-09-07",
+          "name": "Labor Day",
+          "as_printed": "Monday, September 7, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-09-11",
+          "name": "Rosh Hashanah (Observed)",
+          "as_printed": "Friday, September 11, 2026",
+          "marker": "designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2026-09-21",
+          "name": "Yom Kippur",
+          "as_printed": "Monday, September 21, 2026",
+          "marker": "designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2026-11-11",
+          "name": "Veteran’s Day",
+          "as_printed": "Wednesday, November 11, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-11-26",
+          "name": "Thanksgiving Day",
+          "as_printed": "Thursday, November 26, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-11-27",
+          "name": "Friday after Thanksgiving",
+          "as_printed": "Friday, November 27, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-12-24",
+          "name": "Day before Christmas",
+          "as_printed": "Thursday, December 24, 2026",
+          "marker": "additional discretionary holiday, designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day",
+          "as_printed": "Friday, December 25, 2026",
+          "marker": "listed"
+        },
+        {
+          "date": "2026-12-31",
+          "name": "Day before New Year’s",
+          "as_printed": "Thursday, December 31, 2026",
+          "marker": "additional discretionary holiday, designated by Chief Judge, SCR Personnel Regulations"
+        }
+      ]
+    },
+    "2027": {
+      "document": "calendars/sources/Memorandum-2027-Eighth-Judicial-Circuit-Holidays.pdf",
+      "source": "https://circuit8.org/wp-content/uploads/Memorandum-2027-Eighth-Judicial-Circuit-Holidays.pdf",
+      "issued_by": "William E. Davis, Chief Judge",
+      "issued_on": "2026-08-21",
+      "fetched_on": "2026-09-27",
+      "holidays": [
+        {
+          "date": "2027-01-01",
+          "name": "New Year’s Day",
+          "as_printed": "Friday, January 1, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-01-18",
+          "name": "Martin Luther King, Jr. Birthday",
+          "as_printed": "Monday, January 18, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-03-26",
+          "name": "Good Friday",
+          "as_printed": "Friday, March 26, 2027",
+          "marker": "designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2027-05-31",
+          "name": "Memorial Day",
+          "as_printed": "Monday, May 31, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-07-05",
+          "name": "Independence Day (Observed)",
+          "as_printed": "Monday, July 5, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-09-06",
+          "name": "Labor Day",
+          "as_printed": "Monday, September 6, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-10-01",
+          "name": "Rosh Hashanah (Observed)",
+          "as_printed": "Friday, October 1, 2027",
+          "marker": "designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2027-10-11",
+          "name": "Yom Kippur",
+          "as_printed": "Monday, October 11, 2027",
+          "marker": "designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2027-11-11",
+          "name": "Veteran’s Day",
+          "as_printed": "Thursday, November 11, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-11-25",
+          "name": "Thanksgiving Day",
+          "as_printed": "Thursday, November 25, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-11-26",
+          "name": "Friday after Thanksgiving",
+          "as_printed": "Friday, November 26, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-12-23",
+          "name": "Day before Christmas Holiday",
+          "as_printed": "Thursday, December 23, 2027",
+          "marker": "additional discretionary holiday, designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2027-12-24",
+          "name": "Christmas Day (Observed)",
+          "as_printed": "Friday, December 24, 2027",
+          "marker": "listed"
+        },
+        {
+          "date": "2027-12-27",
+          "name": "Day after Christmas Holiday",
+          "as_printed": "Monday, December 27, 2027",
+          "marker": "additional discretionary holiday, designated by Chief Judge, SCR Personnel Regulations"
+        },
+        {
+          "date": "2027-12-31",
+          "name": "New Year’s Day 2028 (Observed)",
+          "as_printed": "Note: December 31, 2027, is an observed holiday for New Year’s Day 2028.",
+          "marker": "listed in a note below the list"
+        }
+      ]
+    }
+  }
+}
