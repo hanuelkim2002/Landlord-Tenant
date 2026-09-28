@@ -78,6 +78,7 @@ def propose_facts(facts_json: str) -> str:
         else:
             record.matter["proposed"][fact_id] = {"value": value, "how": p["how"], "basis": p["said"]}
             taken.append(fact_id)
+    record.prune_proposals()
     save(record.matter)
     lines = []
     if taken:

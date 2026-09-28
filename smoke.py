@@ -117,7 +117,9 @@ make_scratch("t-smoke",
                        "claim_notice_received_on": stated("2026-09-25", "on September 25, 2026"),
                        "claim_delivery": stated("certified mail", "by certified mail"),
                        "claim_amount": stated(400, "keeping $400"),
-                       "claim_reason": stated("cleaning", "for cleaning")})
+                       "claim_reason": stated("cleaning", "for cleaning"),
+                       "deposit_amount": stated(1850, "my $1,850 deposit"),          # the lease gives it: stale
+                       "seven_day_notice_given": stated(False, "no notice")})        # waits on early_or_periodic
 try:
     load_matter("t-smoke", "m-001")
     check("list_matters finds the scratch matter", {"tenant": "t-smoke", "id": "m-001"}.items()
@@ -127,6 +129,10 @@ try:
 
     sid = start_session("existing")
     check("start_session opens a session", record.session == sid)
+    record.prune_proposals()
+    check("prune drops a suggestion the lease already answers", "deposit_amount" not in record.matter["proposed"])
+    check("prune keeps a suggestion whose condition is still open", "seven_day_notice_given" in record.matter["proposed"])
+    check("prune keeps a suggestion whose condition has a change pending", "claim_notice_date" in record.matter["proposed"])
 
     # propose_facts: one suggestion taken, five refused, each for its own reason
     append_transcript({"role": "tenant", "text": "Actually I moved out on July 29, 2026. I never got any letter."})
@@ -163,6 +169,8 @@ try:
     check("sheet: the lease's words appear where they differ",
           f'your lease says: "{record.profile.term_end.quote}"' in shown_sheet.getvalue())
     check("sheet: a fact two issues share is asked once", shown_sheet.getvalue().count("What date did the lease end") == 1)
+    check("prune drops a suggestion once its condition is confirmed no",
+          "seven_day_notice_given" not in record.matter["proposed"])
     check("sheet: a skipped fact stays open", [r["id"] for r in pending_rows()] == ["notice_states_objection_window"])
     with contextlib.redirect_stdout(io.StringIO()):
         run_sheet(scripted(["yes"]))

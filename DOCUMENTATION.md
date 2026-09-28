@@ -30,6 +30,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `timeline`, `tools`, `agent`, `smoke`.
 - `record.py`: the shared state. `matter` and `profile` live here and every other module reaches them as
   `record.matter` and `record.profile`. `confirm_fact` (the only code that writes a confirmed fact),
+  `prune_proposals` (drops suggestions that can never be asked; see Data flow 3),
   `matter_dir` (the only function that knows the folder layout),
   `new_tenant_id` (random `t-` plus six hex characters), `new_matter_id(tenant_id)` (`m-001`, `m-002`, ...
   counting the tenant's `m-*` folders), `list_matters` (every saved matter as `{"tenant", "id", "issues"}`,
@@ -112,7 +113,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    the value into `facts`, removes it from `proposed`, and appends a `fact_confirmed` event carrying the
    proposal's `how`, `basis`, and `proposed_value` (or `how: "asked"` when nothing was proposed) and
    `confirmed_in`. One caller: the intake sheet (`sheet.run_sheet`, the tenant answers code directly,
-   `confirmed_in: "sheet"`). The model cannot confirm a fact; it can only add to `proposed` with
+   `confirmed_in: "sheet"`). Then `prune_proposals` drops every suggestion that can never be asked: all
+   elements with its id take the value from the lease (a present clause listed before `user` in
+   `source`), or depend on a fact confirmed as not true with no change to it pending, or no active playbook
+   asks for it. A suggestion whose condition is still open, or has a pending change, is kept. `intake`,
+   `resume`, and `propose_facts` prune too. Pruning is not logged. The model cannot confirm a fact; it can only add to `proposed` with
    `propose_facts`, and the sheet follows its turn. Events from before 2026-09-27 may say
    `confirmed_in: "chat"` or have no `confirmed_in`: those were recorded by the old `record_facts` tool.
 4. Element status (`check_elements`). For each element in order: `n/a` if it has an `applies_if` and that

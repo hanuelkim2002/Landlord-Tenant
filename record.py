@@ -81,6 +81,30 @@ def confirm_fact(fact_id, value, confirmed_in):
     matter["facts"][fact_id] = value
     append_event("fact_confirmed", id=fact_id, value=value, how=was["how"], basis=was["basis"],
                  proposed_value=was["value"], confirmed_in=confirmed_in)
+    prune_proposals()                          # a "no" here can make another suggestion moot
+
+
+def prune_proposals():
+    """Drop suggestions that can never be asked: every element with that id either takes its value from the
+    lease, depends on a fact the tenant confirmed as no (with no change to it pending), or no issue of the
+    matter asks for it. A suggestion that depends on a fact still open is kept, since that fact may yet be yes. Nothing is logged: suggestions
+    are not history, and the tenant's words they came from stay in the description or the update."""
+    for fact_id in list(matter["proposed"]):
+        uses = [e for pb in active_playbooks() for e in pb.spec.elements if e.id == fact_id]
+        if all(_cannot_be_asked(e) for e in uses):
+            del matter["proposed"][fact_id]
+
+
+def _cannot_be_asked(e):
+    """True if this element will never show a suggestion: the lease comes first in its sources and has the
+    clause, or the fact it depends on (applies_if) is confirmed as not true with no change to it pending."""
+    for src in e.source:
+        if src == "user":
+            break
+        if profile is not None and getattr(profile, src.replace("lease_profile.", "")).present:
+            return True
+    return (e.applies_if in matter["facts"] and not matter["facts"][e.applies_if]
+            and e.applies_if not in matter["proposed"])     # a pending change could still make it true
 
 
 def save(matter):

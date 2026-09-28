@@ -11,7 +11,7 @@ import record
 from config import agent_llm
 from corpus import statute
 from deterministic import ROUTING, classify, fill_facts
-from record import active_playbooks, append_event, element_status, save
+from record import active_playbooks, append_event, element_status, prune_proposals, save
 from sheet import pending_rows, run_sheet
 from timeline import render_timeline
 from tools import tools
@@ -81,6 +81,7 @@ def intake(description):
     for pb in active_playbooks():                          # first playbook to propose a fact wins
         for fact_id, p in fill_facts(description, pb).items():
             matter["proposed"].setdefault(fact_id, p)
+    prune_proposals()                                      # e.g. a deposit amount the lease already gives
     save(matter)
     print("proposed:", list(matter["proposed"]))
 
@@ -105,6 +106,7 @@ def resume(update_text):
                 continue                                   # the tenant already confirmed this value
             fresh.setdefault(fact_id, p)
     matter["proposed"].update(fresh)                       # a newer suggestion replaces an older pending one
+    prune_proposals()
     save(matter)
     print("new issues:", new_issues, "| proposed from update:", list(fresh))
 

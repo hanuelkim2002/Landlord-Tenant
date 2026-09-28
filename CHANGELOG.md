@@ -5,6 +5,13 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Stale suggestions are cleared: new `record.prune_proposals`, called by `confirm_fact`, `intake`,
+  `resume`, and `propose_facts`. It drops a suggestion only when it can never be asked (the lease gives
+  the value, its condition is confirmed as no with no change pending, or no issue asks for it). Before
+  this, suggestions such as `deposit_amount` sat in `matter.json` forever. The first version also dropped
+  a suggestion whose condition was a confirmed no with a change to yes pending; the smoke run caught it
+  (the notice date lost its suggestion once the tenant accepted the change), and pending changes now keep
+  it. Four new smoke checks.
 - A tenant fact that differs from the lease is shown next to it. Playbook elements gain an optional
   `compare_to: lease_profile.<field>` (checked by `load_playbook`); both deposit playbooks set it on
   `tenancy_terminated` against `term_end`. `check_elements` adds `lease_says`, the lease's exact words,
