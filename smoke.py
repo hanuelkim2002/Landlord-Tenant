@@ -20,7 +20,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
 from sheet import pending_rows, run_sheet
 from timeline import render_timeline
 from agent import system_prompt
-from tools import build_letter, get_deadlines, get_statute_section, propose_facts
+from tools import build_letter, draft_letter, get_deadlines, get_statute_section, propose_facts
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
 pb = playbooks["deposit_not_returned"]
@@ -268,13 +268,52 @@ try:
           and "What date is printed on the landlord's notice?" in shown_sheet.getvalue())
     check("the model's next prompt has the new issue's guidance", "issue: deposit_claim_received" in system_prompt())
     check("the prompt carries the sections the active playbooks name", "=== 83.49 ===" in system_prompt())
-    record.add_issues(["lease_ending"], "classify", "a smoke check")
-    check("an issue with no playbook yet adds no sections", "=== 83.57" not in system_prompt()
-          and "=== 83.575" not in system_prompt())
+    sections_before = system_prompt().split("STATUTE SECTIONS:")[1].split("ELEMENT STATUS")[0]
+    record.add_issues(["other"], "classify", "a smoke check")        # "other" is the one label with no playbook
+    check("an issue with no playbook adds no sections",
+          system_prompt().split("STATUTE SECTIONS:")[1].split("ELEMENT STATUS")[0] == sections_before)
     check("add_issues never adds an issue twice", record.add_issues(["deposit_claim_received"], "classify", "x") == [])
     check("timeline full shows the added issue", "issue added: deposit claim received" in render_timeline(full=True))
     end_session()
 finally:
     remove_scratch("t-smoke-related")
 check("the second scratch matter is removed", not (MATTERS / "t-smoke-related").exists())
+print()
+
+
+# ---- Every playbook through the real code path, on a scratch matter: the sheet asks every question (a "yes"
+# to every yes/no, so every applies_if question comes up), every clock gets a date, and a letter carries the
+# playbook's note to the tenant. A new playbook is covered without a new check.
+def answer_by_type(shown_so_far):
+    """An ask function that answers the question on screen by its type hint."""
+    def ask(prompt):
+        last = [line for line in shown_so_far.getvalue().splitlines() if line.startswith("  ") and
+                not line.startswith("    ")][-1]
+        for hint, answer in (("(YYYY-MM-DD)", "2026-10-31"), ("(yes/no)", "yes"), ("(amount)", "1200"), ("(words)", "a test answer")):
+            if last.endswith(hint):
+                return answer
+        return "?"
+    return ask
+
+make_scratch("t-smoke-playbooks")
+try:
+    load_matter("t-smoke-playbooks", "m-001")
+    for issue in sorted(playbooks):
+        record.matter.update(issues=[], facts={}, proposed={})
+        record.add_issues([issue], "classify", "a smoke check")
+        shown_sheet = io.StringIO()
+        with contextlib.redirect_stdout(shown_sheet):
+            run_sheet(answer_by_type(shown_sheet))
+        listed = get_deadlines.invoke({})
+        clocks = [c.id for i in record.matter["issues"] if i in playbooks for c in playbooks[i].spec.clocks]
+        dated = [d["clock"] for d in json.loads(listed) if "deadline" in d] if not listed.startswith("Not yet") else []
+        letter = draft_letter.invoke({"issue": issue, "posture": "preserve", "ask": "Confirm receipt of this letter",
+                                      "respond_within_days": 10, "delivery_method": "certified mail"})
+        check(f"{issue}: the sheet asks every fact, every clock gets a date, a letter carries its note",
+              not pending_rows() and sorted(set(dated)) == sorted(set(clocks))
+              and playbooks[issue].guidance["postures"]["notice_sufficiency"] in letter
+              and f"issue: {issue}" in system_prompt())
+finally:
+    remove_scratch("t-smoke-playbooks")
+check("the playbook scratch matter is removed", not (MATTERS / "t-smoke-playbooks").exists())
 summary()

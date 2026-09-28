@@ -266,6 +266,16 @@ The program note after a sheet still tells the model, in the conversation, that 
 
 ## Playbook schema
 
+Nine playbooks, one per label in `ISSUE_LABELS` except `other`: deposit_not_returned,
+deposit_claim_received, repair_not_made, notice_received_nonpayment, notice_received_violation,
+landlord_entered_unannounced, rent_increased, wants_to_leave_early, lease_ending. The seven written
+2026-09-27 are version 0.1 with `verified_by: null` until the author's hand check. Three have no clocks,
+and say why in `counting.note`: notice_received_nonpayment (83.56(3) and 83.60(2) exclude weekends and
+court-observed holidays), landlord_entered_unannounced (83.53(2) is in hours), rent_increased (no
+section on notice of a rent increase). Facts shared across playbooks by id: `claim_notice_date`,
+`tenancy_terminated`, `deposit_amount`, `eviction_action_filed`, `fixed_term_lease`, `term_end_date`,
+`month_to_month`, `monthly_rent`.
+
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
 section is not in `statutes/`, a clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field.
 After all playbooks load, `corpus.py` also raises if a related issue is not in `ISSUE_LABELS` or its
@@ -276,12 +286,14 @@ on load and never reach the model.
 - `sections`: the statute sections the playbook rests on, e.g. `["83.49"]`. `load_playbook` raises if one is
   not in `statutes/`. `system_prompt` puts their text into the prompt while the issue is active.
 - `provenance`: statute year, file verified against, who and when, version. Not read by code.
-- `counting.convention`: copied into every `compute_deadlines` result. `counting.status`: not read by code.
+- `counting.convention`: copied into every `compute_deadlines` result. `counting.status` and the optional
+  `counting.note` (why a playbook computes fewer dates than its sections mention): not read by code.
 - `spec` (typed, read by code):
   - `elements`: `id`, `type` (date, money, bool, text), `source` (list; `user` and/or
     `lease_profile.<field>`, tried in order), `applies_if` (id of a bool element), `compare_to` (optional,
-    `lease_profile.<field>`: the lease field to show next to the tenant's value when they differ; both
-    deposit playbooks set `tenancy_terminated` against `term_end`). Read by
+    `lease_profile.<field>`: the lease field to show next to the tenant's value when they differ; the
+    deposit playbooks set `tenancy_terminated` against `term_end`; rent_increased, wants_to_leave_early, and
+    lease_ending set `term_end_date` against it). Read by
     `check_elements`, `fill_facts` (only elements with `user` in `source`), `build_letter` and
     `render_timeline` (date elements).
   - `clocks`: `id`, `actor` (landlord, tenant), `trigger` (a date element id), `days`, `direction`
@@ -321,8 +333,12 @@ Offline checks (no model call, no key needed):
   ids, sessions and their tags, `propose_facts` taking one suggestion and refusing five for five reasons,
   the sheet with scripted answers (accept, correct, bad input, a changed fact, an `applies_if` fact, a
   skip), `get_deadlines` waiting and then answering, the prompt following the record, events, the transcript, and the
-  timeline. Every line must be OK; the last line says "all checks OK" or lists the failures. The test
-  matter itself is not changed by a smoke run.
+  timeline. Then related issues on `matters/t-smoke-related/m-001`, and every playbook through the real
+  code path on `matters/t-smoke-playbooks/m-001`: for each, the sheet is answered by type ("yes" to every
+  yes/no, so every `applies_if` question comes up), every clock must get a date, and a preserve letter must
+  carry the playbook's `notice_sufficiency` note. A new playbook is covered without a new check. Every line
+  must be OK; the last line says "all checks OK" or lists the failures. The test matter itself is not
+  changed by a smoke run.
 
 Calls the model (needs the key in `.env`; stops at `require_key()` without it):
 

@@ -1,0 +1,141 @@
+issue: notice_received_nonpayment
+description: Tenant received a landlord's written demand for unpaid rent or possession (the 3-day notice).
+sections: ["83.56", "83.60", "83.42"]   # the statute sections this playbook rests on; loaded into the prompt
+
+provenance:
+  statute_year: 2026
+  verified_against: statutes/83.56.txt, statutes/83.60.txt, statutes/83.42.txt
+  verified_by: null          # your name, once you've read each quote against the file
+  verified_on: null
+  version: 0.1
+
+counting:
+  convention: calendar days, trigger day not counted, no weekend or holiday adjustment
+  status: ASSUMPTION. Florida's court rule for counting days has not been checked against statutory deadlines outside litigation. Show this line with every computed date.
+  note: This playbook has no clocks. The periods in 83.56(3) and 83.60(2) exclude Saturdays, Sundays, and legal holidays, which compute_deadlines does not support.
+
+# ---------- read by code ----------
+spec:
+  elements:
+    - id: nonpayment_notice_delivered
+      type: date
+      source: [user]
+    - id: nonpayment_notice_method
+      type: text
+      source: [user]
+    - id: notice_stated_payment_date
+      type: date
+      source: [user]
+    - id: amount_demanded
+      type: money
+      source: [user]
+    - id: monthly_rent
+      type: money
+      source: [lease_profile.rent, user]
+    - id: rent_unpaid
+      type: bool
+      source: [user]
+    - id: partial_rent_accepted
+      type: bool
+      source: [user]
+    - id: partial_payment_receipt
+      type: bool
+      source: [user]
+      applies_if: partial_rent_accepted
+    - id: withheld_for_repairs
+      type: bool
+      source: [user]
+    - id: eviction_action_filed
+      type: bool
+      source: [user]
+    - id: court_papers_served
+      type: date
+      source: [user]
+      applies_if: eviction_action_filed
+
+  clocks: []
+
+  lease_overrides:
+    - cite: "83.56(4)"
+      quote: "The notice requirements of subsections (1)-(3) may not be waived in the rental agreement."
+      note: The lease cannot waive the notice. The tool shows the sentence next to any lease clause about notices.
+
+  exclusions:
+    - cite: "83.56(5)(a)"
+      quote: "However, a landlord does not waive the right to terminate the rental agreement or to bring a civil action for that noncompliance by accepting partial rent for the period."
+    - cite: "83.42(1)"
+      quote: "Residency or detention in a facility, whether public or private, when residence or detention is incidental to the provision of medical, geriatric, educational, counseling, religious, or similar services."
+      note: College housing. The tool records the facts and does not decide whether this exclusion applies.
+
+  related_issues:
+    - issue: repair_not_made
+      when: {fact: withheld_for_repairs, equals: true}   # added once this fact is confirmed so
+
+  open_questions:
+    - id: business_day_count
+      sections: ["83.56"]
+      text: >-
+        83.56(3) counts "3 days, excluding Saturday, Sunday, and legal holidays, after delivery of written demand
+        by the landlord for payment of the rent or possession of the premises", and says "Legal holidays for the
+        purpose of this section shall be court-observed holidays only." This tool counts calendar days only and
+        holds no court holiday calendar, so it does not compute this date. It records the date the notice itself
+        states.
+    - id: registry_count
+      sections: ["83.60"]
+      text: >-
+        Once an eviction case is served, 83.60(2) sets "5 days, excluding Saturdays, Sundays, and legal holidays,
+        after the date of service of process". The tool does not compute that date either.
+    - id: notice_form
+      sections: ["83.56"]
+      text: >-
+        83.56(3) says the notice "shall contain a statement in substantially the following form". The tool does
+        not decide whether a notice meets that form.
+    - id: partial_rent_steps
+      sections: ["83.56"]
+      text: >-
+        If partial rent is accepted after the notice, 83.56(5)(a) lists what the landlord must then do ("If
+        partial rent is accepted after posting the notice for nonpayment, the landlord must:"). The tool records
+        whether a receipt was given and does not decide whether the list was followed.
+
+# ---------- read by the model ----------
+guidance:
+  questions:
+    nonpayment_notice_delivered: What date was the landlord's notice demanding rent delivered to you (or left at your home)?
+    nonpayment_notice_method: How did the notice reach you (handed to you, mailed, e-mailed, left at your door, something else)?
+    notice_stated_payment_date: What date does the notice give as the last day to pay or leave? Copy it from the notice.
+    amount_demanded: How much does the notice say you owe?
+    monthly_rent: How much is your monthly rent?
+    rent_unpaid: Is any of the rent the notice asks for still unpaid?
+    partial_rent_accepted: After the notice was delivered, did you pay part of the rent, and did the landlord accept it?
+    partial_payment_receipt: Did the landlord give you a receipt showing the date, the amount received, and the agreed date and balance still due?
+    withheld_for_repairs: Did you hold back rent because the landlord did not make repairs?
+    eviction_action_filed: Has the landlord filed an eviction case in court against you?
+    court_papers_served: What date were you served with the court papers?
+
+  lease_checks:
+    rent: The rent amount and due date, next to the amount the notice demands.
+    notices_to_landlord: Where the tenant's reply must be sent under the lease.
+
+  evidence:
+    - the notice itself, with a photo of where it was left or the envelope or e-mail headers
+    - rent receipts, bank or payment app records for the months in question
+    - any receipt for partial rent the landlord accepted
+    - any written notice about repairs sent before rent was held back
+    - court papers, if served, with the date of service
+
+  postures:
+    core: [today's date, the amount demanded, what the tenant has paid and when, the tenant's reply, delivery method]
+    preserve: States the amount demanded and what the tenant has paid, and asks the landlord for an account of the balance. Cites nothing.
+    assert: Adds the 83.56(5)(a) sentence on partial rent, quoted.
+    escalate: Adds the 83.60(1)(a) sentence on defenses, quoted.
+    notice_sufficiency: >-
+      A letter from you does not change the period in Fla. Stat. 83.56(3), which runs "after delivery of written
+      demand by the landlord for payment of the rent or possession of the premises" and counts "3 days,
+      excluding Saturday, Sunday, and legal holidays". This tool does not compute that date. It records the date
+      your notice states and the date it was delivered, as you gave them.
+
+  failure_modes:
+    - Counting the 3 days in calendar days, or counting holidays other than court-observed ones.
+    - Computing any date for this issue; the tool computes none.
+    - Treating an accepted partial payment as ending the notice without showing 83.56(5)(a).
+    - Not asking whether court papers have been served.

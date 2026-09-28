@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Seven playbooks, version 0.1, written against `statutes/` in the format of the deposit playbooks:
+  repair_not_made (83.51, 83.56(1) and 83.60(1)(b) 7-day notices), notice_received_nonpayment (83.56(3),
+  83.60; no clocks), notice_received_violation (83.56(2)(a) and (b) 7-day periods), landlord_entered_unannounced
+  (83.53, 83.67; no clocks), rent_increased (83.46, 83.57, 83.64, 83.425; no clocks, the stored text has no
+  rent-increase notice section), wants_to_leave_early (83.49(5) 7-day notice, 83.682(1) servicemember
+  30 days, 83.595), lease_ending (83.57(3) month-to-month 30 days for each party, 83.575, 83.58). Each
+  carries the 83.42(1) exclusion quote for college housing, undecided. Two new related rules:
+  withheld_for_repairs and reason_is_landlord_noncompliance bring in repair_not_made. Checked before
+  installing by a stricter one-off script (145 checks: quotes in the prose too, a question per element,
+  applies_if on yes/no facts, shared fact ids consistent); playbook quote checks 44 OK. New smoke section
+  runs every playbook through the sheet, deadlines, and a letter; the "no playbook adds no sections" check
+  now uses `other`. Checked live: one update about a broken AC, withheld rent, and a 3-day notice brought
+  in both new issues with sensible suggestions. Clocks that cannot be computed yet, and folding the stricter
+  checks into `check_all_playbooks`, went to TODO.md. Replaces the TODO item listing the seven to write.
 - deposit_not_returned.yaml: `guidance.postures.notice_sufficiency` (printed under every letter for this
   issue as a note to the tenant) reworded to face the tenant. It replaces text that ended with an
   instruction to the model ("Say so when it is missing") and stated a conclusion ("cannot be cured

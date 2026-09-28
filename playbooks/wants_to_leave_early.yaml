@@ -1,0 +1,177 @@
+issue: wants_to_leave_early
+description: Tenant wants to move out before the lease term ends.
+sections: ["83.595", "83.49", "83.682", "83.575", "83.42"]   # the statute sections this playbook rests on; loaded into the prompt
+
+provenance:
+  statute_year: 2026
+  verified_against: statutes/83.595.txt, statutes/83.49.txt, statutes/83.682.txt, statutes/83.42.txt
+  verified_by: null          # your name, once you've read each quote against the file
+  verified_on: null
+  version: 0.1
+
+counting:
+  convention: calendar days, trigger day not counted, no weekend or holiday adjustment
+  status: ASSUMPTION. Florida's court rule for counting days has not been checked against statutory deadlines outside litigation. Show this line with every computed date.
+
+# ---------- read by code ----------
+spec:
+  elements:
+    - id: planned_move_out
+      type: date
+      source: [user]
+    - id: fixed_term_lease
+      type: bool
+      source: [user]
+    - id: term_end_date
+      type: date
+      source: [user]
+      applies_if: fixed_term_lease
+      compare_to: lease_profile.term_end      # shown next to the tenant's date when they differ
+    - id: monthly_rent
+      type: money
+      source: [lease_profile.rent, user]
+    - id: reason_for_leaving
+      type: text
+      source: [user]
+    - id: reason_is_landlord_noncompliance
+      type: bool
+      source: [user]
+    - id: early_termination_addendum
+      type: bool
+      source: [user]
+    - id: early_termination_amount
+      type: money
+      source: [user]
+      applies_if: early_termination_addendum
+    - id: leave_notice_given
+      type: bool
+      source: [user]
+    - id: leave_notice_date
+      type: date
+      source: [user]
+      applies_if: leave_notice_given
+    - id: servicemember
+      type: bool
+      source: [user]
+    - id: servicemember_notice_given
+      type: bool
+      source: [user]
+      applies_if: servicemember
+    - id: servicemember_notice_received
+      type: date
+      source: [user]
+      applies_if: servicemember_notice_given
+
+  clocks:
+    - id: seven_day_notice_before_leaving
+      actor: tenant
+      trigger: planned_move_out
+      days: 7
+      direction: before
+      delivery: [certified mail, personal delivery]
+      cite: "83.49(5)"
+      quote: "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"
+      consequence: "Failure to give such notice relieves the landlord of the notice requirement of paragraph (3)(a) but does not waive any right the tenant may have to the security deposit or any part of it."
+
+    - id: servicemember_earliest_termination
+      actor: tenant
+      trigger: servicemember_notice_received
+      days: 30
+      direction: after
+      applies_if: servicemember_notice_given
+      cite: "83.682(1)"
+      quote: "written notice of termination to be effective on the date stated in the notice which is at least 30 days after the landlord’s receipt of the notice"
+
+  lease_overrides:
+    - clock: seven_day_notice_before_leaving
+      lease_field: notice_before_vacating
+      cite: "83.49(5)"
+      quote: "Except when otherwise provided by the terms of a written rental agreement"
+
+  exclusions:
+    - cite: "83.595(4)(b)"
+      quote: "This subsection does not apply if the breach is failure to give notice as provided in s. 83.575 ."
+    - cite: "83.682(5)"
+      quote: "The provisions of this section may not be waived or modified by the agreement of the parties under any circumstances."
+    - cite: "83.42(1)"
+      quote: "Residency or detention in a facility, whether public or private, when residence or detention is incidental to the provision of medical, geriatric, educational, counseling, religious, or similar services."
+      note: College housing. The tool records the facts and does not decide whether this exclusion applies.
+
+  related_issues:
+    - issue: repair_not_made
+      when: {fact: reason_is_landlord_noncompliance, equals: true}   # added once this fact is confirmed so
+
+  open_questions:
+    - id: landlord_choice
+      sections: ["83.595"]
+      text: >-
+        83.595 lists what "the landlord may" do when a tenant surrenders or abandons the unit, in four
+        subsections. The tool shows the list and does not decide which the landlord will choose or what the
+        tenant will owe.
+    - id: fee_notice_period
+      sections: ["83.595"]
+      text: >-
+        83.595(4) refers to an early termination fee where "the tenant is required to give no more than 60 days’
+        notice, as provided in the rental agreement, prior to the proposed date of early termination". The period
+        comes from the lease, and this tool does not compute a date from a period the lease sets.
+    - id: servicemember_criteria
+      sections: ["83.682"]
+      text: >-
+        83.682(1) applies only "if any of the following criteria are met", and 83.682(2) says the notice "must be
+        accompanied by either a copy of the official military orders or a written verification signed by the
+        servicemember’s commanding officer". The tool records what the tenant reports and does not decide
+        whether the criteria are met.
+    - id: casualty
+      sections: ["83.63"]
+      text: >-
+        If the tenant is leaving because the unit was damaged or destroyed (for example, by fire or a storm),
+        83.63 may be the relevant section. There is no playbook for it; fetch it with get_statute_section.
+
+# ---------- read by the model ----------
+guidance:
+  questions:
+    planned_move_out: What date do you plan to move out?
+    fixed_term_lease: Does your lease have a fixed end date (for example, a one-year lease)?
+    term_end_date: What date does your lease term end?
+    monthly_rent: How much is your monthly rent?
+    reason_for_leaving: Why do you want to leave early? In your own words.
+    reason_is_landlord_noncompliance: Is part of the reason that the landlord has not made repairs or kept the unit as required?
+    early_termination_addendum: When you signed the lease, did you also sign a separate addendum choosing to pay liquidated damages or an early termination fee?
+    early_termination_amount: What amount does that addendum set?
+    leave_notice_given: Have you given the landlord written notice that you are leaving?
+    leave_notice_date: What date was that notice delivered to the landlord?
+    servicemember: Are you a servicemember (including the National Guard or reserves) with military orders that affect where you live?
+    servicemember_notice_given: Have you given the landlord a written notice of termination with a copy of your orders or a letter from your commanding officer?
+    servicemember_notice_received: What date did the landlord receive that notice?
+
+  lease_checks:
+    notice_before_vacating: Any lease term on notice before moving out early, next to 83.49(5).
+    term_end: The date the lease term ends, next to the planned move-out date.
+    rent: The monthly rent, next to any early termination amount.
+    notices_to_landlord: Where and how the tenant's notice must be sent under the lease.
+    joint_and_several_liability: Whether roommates staying on are liable for the whole rent.
+
+  evidence:
+    - the lease and any early termination addendum
+    - the written notice of leaving, with proof of certified mail or personal delivery
+    - the forwarding address given to the landlord
+    - for a servicemember, the orders or commanding officer's letter sent with the notice
+    - move-out photos and the key return date
+
+  postures:
+    core: [today's date, the planned move-out date, the forwarding address, what the tenant asks for, delivery method]
+    preserve: States the planned move-out date and a forwarding address, and asks the landlord to confirm what, if anything, the landlord will charge. Cites nothing.
+    assert: Adds the 83.49(5) sentence on notice before vacating, quoted.
+    escalate: Adds the 83.595(4) sentence on liquidated damages or an early termination fee, quoted.
+    notice_sufficiency: >-
+      This tool computes the 7-day date in Fla. Stat. 83.49(5), which requires "at least 7 days’ written notice
+      by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which
+      notice must include the address where the tenant may be reached", counted back from the move-out date you
+      gave. Whether this letter is that notice is not something this tool decides.
+
+  failure_modes:
+    - Stating what the tenant will owe; 83.595 lists the landlord's choices and the tool decides none.
+    - Treating an early termination fee as agreed without the separate addendum 83.595(4) describes.
+    - Counting the 7 days from the notice date instead of back from the move-out date.
+    - Computing a period the lease sets (such as the notice for an early termination fee).
+    - Computing any date outside compute_deadlines.

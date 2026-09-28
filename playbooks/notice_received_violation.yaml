@@ -1,0 +1,152 @@
+issue: notice_received_violation
+description: Tenant received a landlord's written notice about a lease violation other than unpaid rent (the 7-day notice).
+sections: ["83.56", "83.52", "83.42"]   # the statute sections this playbook rests on; loaded into the prompt
+
+provenance:
+  statute_year: 2026
+  verified_against: statutes/83.56.txt, statutes/83.52.txt, statutes/83.42.txt
+  verified_by: null          # your name, once you've read each quote against the file
+  verified_on: null
+  version: 0.1
+
+counting:
+  convention: calendar days, trigger day not counted, no weekend or holiday adjustment
+  status: ASSUMPTION. Florida's court rule for counting days has not been checked against statutory deadlines outside litigation. Show this line with every computed date.
+
+# ---------- read by code ----------
+spec:
+  elements:
+    - id: violation_notice_delivered
+      type: date
+      source: [user]
+    - id: violation_notice_method
+      type: text
+      source: [user]
+    - id: violation_described
+      type: text
+      source: [user]
+    - id: notice_offers_cure
+      type: bool
+      source: [user]
+    - id: notice_terminates_now
+      type: bool
+      source: [user]
+    - id: prior_written_warning
+      type: bool
+      source: [user]
+    - id: prior_warning_date
+      type: date
+      source: [user]
+      applies_if: prior_written_warning
+    - id: violation_corrected
+      type: bool
+      source: [user]
+      applies_if: notice_offers_cure
+    - id: violation_corrected_date
+      type: date
+      source: [user]
+      applies_if: violation_corrected
+    - id: landlord_accepted_rent_after_notice
+      type: bool
+      source: [user]
+    - id: eviction_action_filed
+      type: bool
+      source: [user]
+
+  clocks:
+    - id: seven_days_to_correct
+      actor: tenant
+      trigger: violation_notice_delivered
+      days: 7
+      direction: after
+      applies_if: notice_offers_cure
+      cite: "83.56(2)(b)"
+      quote: "deliver a written notice to the tenant specifying the noncompliance, including a notice that, if the noncompliance is not corrected within 7 days from the date that the written notice is delivered, the landlord shall terminate the rental agreement by reason thereof."
+      consequence: "If such noncompliance recurs within 12 months after notice, an eviction action may commence without delivering a subsequent notice pursuant to paragraph (a) or this paragraph."
+
+    - id: seven_days_to_vacate
+      actor: tenant
+      trigger: violation_notice_delivered
+      days: 7
+      direction: after
+      applies_if: notice_terminates_now
+      cite: "83.56(2)(a)"
+      quote: "In such event, the landlord may terminate the rental agreement, and the tenant shall have 7 days from the date that the notice is delivered to vacate the premises."
+
+  lease_overrides:
+    - cite: "83.56(4)"
+      quote: "The notice requirements of subsections (1)-(3) may not be waived in the rental agreement."
+      note: The lease cannot waive the notice. The tool shows the sentence next to any lease clause about notices.
+
+  exclusions:
+    - cite: "83.56(5)(a)"
+      quote: "If the landlord accepts rent with actual knowledge of a noncompliance by the tenant or accepts performance by the tenant of any other provision of the rental agreement that is at variance with its provisions, or if the tenant pays rent with actual knowledge of a noncompliance by the landlord or accepts performance by the landlord of any other provision of the rental agreement that is at variance with its provisions, the landlord or tenant waives his or her right to terminate the rental agreement or to bring a civil action for that noncompliance, but not for any subsequent or continuing noncompliance."
+    - cite: "83.42(1)"
+      quote: "Residency or detention in a facility, whether public or private, when residence or detention is incidental to the provision of medical, geriatric, educational, counseling, religious, or similar services."
+      note: College housing. The tool records the facts and does not decide whether this exclusion applies.
+
+  related_issues: []
+
+  open_questions:
+    - id: which_paragraph
+      sections: ["83.56"]
+      text: >-
+        83.56(2)(a) covers noncompliance "of a nature that the tenant should not be given an opportunity to cure
+        it" and 83.56(2)(b) noncompliance "of a nature that the tenant should be given an opportunity to cure
+        it". The tool records what the notice says and does not decide which paragraph applies.
+    - id: delivered_or_received
+      sections: ["83.56"]
+      text: >-
+        The text of 83.56(2)(b) runs the period "from the date that the written notice is delivered", while the
+        model form says "within 7 days of receipt of this notice". The tool counts from the delivery date the
+        tenant gives and does not decide whether the two differ.
+    - id: twelve_months
+      sections: ["83.56"]
+      text: >-
+        Both paragraphs refer to a period of 12 months (a "written warning by the landlord of a similar violation",
+        and noncompliance that "recurs within 12 months after notice"). This tool counts in days and does not
+        compute a 12-month period. It records the dates.
+
+# ---------- read by the model ----------
+guidance:
+  questions:
+    violation_notice_delivered: What date was the landlord's notice about a lease violation delivered to you?
+    violation_notice_method: How did the notice reach you (handed to you, mailed, e-mailed, left at your door, something else)?
+    violation_described: What does the notice say you did? Copy the words from the notice.
+    notice_offers_cure: Does the notice give you 7 days to fix the problem, saying the lease will end if you do not?
+    notice_terminates_now: Does the notice say your lease is terminated and give you 7 days to move out?
+    prior_written_warning: Have you received a written warning from the landlord about a similar problem in the last 12 months?
+    prior_warning_date: What date was that earlier written warning delivered?
+    violation_corrected: Have you fixed the problem the notice describes?
+    violation_corrected_date: What date did you fix it?
+    landlord_accepted_rent_after_notice: Has the landlord accepted rent from you since the notice was delivered?
+    eviction_action_filed: Has the landlord filed an eviction case in court against you?
+
+  lease_checks:
+    notices_to_landlord: Where the tenant's reply must be sent under the lease.
+    move_out_requirements: What the lease requires when a tenant moves out, if the notice says the lease is terminated.
+
+  evidence:
+    - the notice itself, with a photo of where it was left or the envelope or e-mail headers
+    - photos or other proof of the correction, with dates
+    - any earlier written warning
+    - receipts for rent paid after the notice
+    - the lease clause or rule the notice points to
+
+  postures:
+    core: [today's date, the notice and its date, the tenant's account or the correction made, delivery method]
+    preserve: States the tenant's account and any correction made, and asks the landlord to confirm the matter is resolved. Cites nothing.
+    assert: Adds the 83.56(2)(b) sentence, quoted.
+    escalate: Adds the 83.56(5)(a) sentence, quoted.
+    notice_sufficiency: >-
+      The 7-day periods this tool computes for this issue run from the date the landlord's notice was delivered,
+      as you gave it. Fla. Stat. 83.56(2)(b) speaks of a noncompliance "corrected within 7 days from the date that
+      the written notice is delivered". A letter from you does not change that date, and whether it shows a
+      correction is not something this tool decides.
+
+  failure_modes:
+    - Counting from the date the notice was written instead of the date it was delivered.
+    - Deciding whether the notice falls under 83.56(2)(a) or (b); record what it says instead.
+    - Skipping whether the landlord accepted rent after the notice (83.56(5)(a)).
+    - Computing a 12-month period; the tool counts days only.
+    - Computing any date outside compute_deadlines.

@@ -1,0 +1,168 @@
+issue: repair_not_made
+description: Something in the unit needs repair and the landlord has not fixed it.
+sections: ["83.51", "83.56", "83.60", "83.64", "83.42"]   # the statute sections this playbook rests on; loaded into the prompt
+
+provenance:
+  statute_year: 2026
+  verified_against: statutes/83.51.txt, statutes/83.56.txt, statutes/83.60.txt, statutes/83.42.txt
+  verified_by: null          # your name, once you've read each quote against the file
+  verified_on: null
+  version: 0.1
+
+counting:
+  convention: calendar days, trigger day not counted, no weekend or holiday adjustment
+  status: ASSUMPTION. Florida's court rule for counting days has not been checked against statutory deadlines outside litigation. Show this line with every computed date.
+
+# ---------- read by code ----------
+spec:
+  elements:
+    - id: problem_description
+      type: text
+      source: [user]
+    - id: problem_started
+      type: date
+      source: [user]
+    - id: single_family_or_duplex
+      type: bool
+      source: [user]
+    - id: caused_by_tenant_side
+      type: bool
+      source: [user]
+    - id: written_notice_delivered
+      type: bool
+      source: [user]
+    - id: written_notice_date
+      type: date
+      source: [user]
+      applies_if: written_notice_delivered
+    - id: written_notice_method
+      type: text
+      source: [user]
+      applies_if: written_notice_delivered
+    - id: notice_states_termination_intent
+      type: bool
+      source: [user]
+      applies_if: written_notice_delivered
+    - id: notice_states_withholding_intent
+      type: bool
+      source: [user]
+      applies_if: written_notice_delivered
+    - id: rent_paid_since_known
+      type: bool
+      source: [user]
+    - id: landlord_response
+      type: text
+      source: [user]
+    - id: eviction_action_filed
+      type: bool
+      source: [user]
+
+  clocks:
+    - id: seven_days_after_termination_notice
+      actor: landlord
+      trigger: written_notice_date
+      days: 7
+      direction: after
+      applies_if: notice_states_termination_intent
+      delivery: [mailing, delivering a true copy, e-mail per 83.505]
+      cite: "83.56(1)"
+      quote: "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement."
+
+    - id: seven_days_after_withholding_notice
+      actor: landlord
+      trigger: written_notice_date
+      days: 7
+      direction: after
+      applies_if: notice_states_withholding_intent
+      cite: "83.60(1)(b)"
+      quote: "The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof."
+      consequence: "A material noncompliance with s. 83.51 (1) by the landlord is a complete defense to an action for possession based upon nonpayment of rent"
+
+  lease_overrides:
+    - cite: "83.51(1)"
+      quote: "The landlord’s obligations under this subsection may be altered or modified in writing with respect to a single-family home or duplex."
+      note: Check the lease for a written change to the landlord's duty. The tool does not decide its effect.
+
+  exclusions:
+    - cite: "83.51(2)(c)"
+      quote: "Nothing in this part authorizes the tenant to raise a noncompliance by the landlord with this subsection as a defense to an action for possession under s. 83.59 ."
+      note: Applies to the items in 83.51(2) (extermination, locks and keys, common areas, garbage, heat, running water, hot water).
+    - cite: "83.51(4)"
+      quote: "The landlord is not responsible to the tenant under this section for conditions created or caused by the negligent or wrongful act or omission of the tenant, a member of the tenant’s family, or other person on the premises with the tenant’s consent."
+    - cite: "83.56(5)(a)"
+      quote: "if the tenant pays rent with actual knowledge of a noncompliance by the landlord or accepts performance by the landlord of any other provision of the rental agreement that is at variance with its provisions, the landlord or tenant waives his or her right to terminate the rental agreement or to bring a civil action for that noncompliance, but not for any subsequent or continuing noncompliance."
+    - cite: "83.42(1)"
+      quote: "Residency or detention in a facility, whether public or private, when residence or detention is incidental to the provision of medical, geriatric, educational, counseling, religious, or similar services."
+      note: College housing. The tool records the facts and does not decide whether this exclusion applies.
+
+  related_issues: []
+
+  open_questions:
+    - id: which_code_applies
+      sections: ["83.51"]
+      text: >-
+        83.51(1)(a) points to "the requirements of applicable building, housing, and health codes". Those codes
+        are not in the stored text. The tool does not decide whether a condition violates a code.
+    - id: material_noncompliance
+      sections: ["83.56", "83.60"]
+      text: >-
+        Both 7-day periods concern a landlord who "materially fails to comply" or a "material noncompliance".
+        The stored text does not define "material". No cases loaded yet.
+    - id: subsection_one_or_two
+      sections: ["83.51"]
+      text: >-
+        83.51(1) and 83.51(2) list different duties, and 83.51(2)(c) treats subsection (2) differently in an
+        action for possession. The tool shows both texts and does not decide which subsection a condition falls
+        under.
+    - id: court_procedure
+      sections: ["83.60"]
+      text: >-
+        Once an eviction case is filed, 83.60(2) sets a period of "5 days, excluding Saturdays, Sundays, and legal
+        holidays, after the date of service of process". This tool counts calendar days only and does not
+        compute that date.
+
+# ---------- read by the model ----------
+guidance:
+  questions:
+    problem_description: What is the problem that needs repair? Describe it in your own words.
+    problem_started: What date did the problem start, or when did you first notice it?
+    single_family_or_duplex: Is the place you rent a single-family house or a duplex (not a unit in an apartment building or a dorm)?
+    caused_by_tenant_side: Was the problem caused by you, a member of your household, or someone you let in?
+    written_notice_delivered: Have you delivered a written notice to the landlord describing the problem?
+    written_notice_date: What date was your written notice delivered to the landlord?
+    written_notice_method: How did you deliver the written notice (for example, by hand, certified mail, or e-mail), and to whom?
+    notice_states_termination_intent: Does your written notice say that you intend to end the lease because of the problem?
+    notice_states_withholding_intent: Does your written notice say that you intend not to pay rent because of the problem?
+    rent_paid_since_known: Have you paid rent since you knew about the problem?
+    landlord_response: What has the landlord said or done about the problem so far?
+    eviction_action_filed: Has the landlord filed an eviction case in court against you?
+
+  lease_checks:
+    notices_to_landlord: Where and how the tenant's written notice must be sent under the lease.
+    deposit_deductions: Whether the lease says anything about repairs the tenant pays for.
+
+  evidence:
+    - photos or video of the condition, with dates
+    - the written notice, with proof of how and when it was delivered
+    - every reply from the landlord, with dates
+    - any code enforcement complaint or inspection report
+    - rent receipts for the months since the problem started
+
+  postures:
+    core: [today's date, the condition and when it started, the repair requested, response deadline chosen by the tenant, delivery method]
+    preserve: Describes the condition and asks for the repair. Cites nothing.
+    assert: Adds the 83.51(1) duty, quoted.
+    escalate: Adds the 83.56(1) sentence, quoted.
+    notice_sufficiency: >-
+      The 7-day periods this tool computes for this issue run from the delivery of a written notice. In Fla.
+      Stat. 83.56(1) that is a notice "specifying the noncompliance and indicating the intention of the tenant to
+      terminate the rental agreement by reason thereof", and in 83.60(1)(b) one "specifying the noncompliance and
+      indicating the intention of the tenant not to pay rent by reason thereof". This letter states your request
+      and any sentences quoted above. Whether it is such a notice is not something this tool decides.
+
+  failure_modes:
+    - Treating any written complaint as the notice in 83.56(1) or 83.60(1)(b); each names an intention the notice must state.
+    - Counting the 7 days from the date the notice was sent instead of the date it was delivered.
+    - Skipping whether the tenant paid rent after knowing of the problem (83.56(5)(a)).
+    - Treating an 83.51(2) item as an 83.51(1) item without showing both texts.
+    - Computing any date outside compute_deadlines.
