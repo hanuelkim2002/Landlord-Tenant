@@ -126,6 +126,22 @@ def compute_deadlines(playbook, facts, today):
     return out
 
 
+def matter_deadlines(playbooks, facts, today):
+    """compute_deadlines for every playbook of the matter, with a deadline two playbooks share listed once and
+    tagged with every issue that has it. Shared means the same clock id, cite, and result (date and status);
+    two different rules that happen to share an id stay separate. Each row carries "issues", a list."""
+    merged = []
+    for pb in playbooks:
+        for d in compute_deadlines(pb, facts, today):
+            same = next((m for m in merged if m["clock"] == d["clock"] and m.get("cite") == d.get("cite")
+                         and m.get("deadline") == d.get("deadline") and m["status"] == d["status"]), None)
+            if same:
+                same["issues"].append(pb.issue)
+            else:
+                merged.append({**d, "issues": [pb.issue]})
+    return merged
+
+
 # ---- Classify and Fill Facts: two one-shot model calls made once at intake. Nothing here is confirmed.
 
 # The issue labels classify can pick. Each gets a playbook (except "other", which means none fits); a playbook

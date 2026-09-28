@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- A deadline two issues share is listed once, tagged with both (the author's decision). New
+  `deterministic.matter_deadlines` merges rows with the same clock id, cite, date, and status; both
+  `get_deadlines` (rows now carry `issues`, a list, instead of `issue`) and the timeline use it, replacing
+  their own per-playbook loops. `claim_notice_deadline` now shows once as
+  `[deposit_not_returned, deposit_claim_received]`, and `timeline <issue>` keeps it under either issue.
+  Three new smoke checks.
 - Live run of the Skills chain on `t-test/m-001` (one issue): the tenant reported the claim letter in the
   chat, the model proposed the change, the sheet confirmed it, `deposit_claim_received` was added by its
   related rule and logged, its questions came up in the same sheet, corrections typed in the chat came back

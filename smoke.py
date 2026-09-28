@@ -185,6 +185,17 @@ try:
         run_sheet(scripted(["yes"]))
     deadlines = {d["clock"]: str(d.get("deadline")) for d in json.loads(get_deadlines.invoke({}))}
     check("get_deadlines answers once every fact is confirmed", deadlines.get("tenant_objection_deadline") == "2026-10-10")
+    listed = json.loads(get_deadlines.invoke({}))
+    shared = [d for d in listed if d["clock"] == "claim_notice_deadline"]
+    check("a deadline two issues share is listed once, with both issues", len(shared) == 1
+          and shared[0]["issues"] == ["deposit_not_returned", "deposit_claim_received"])
+    timeline_now = render_timeline()
+    check("the timeline shows a shared deadline once, tagged with both issues",
+          timeline_now.count("claim notice deadline") == 1
+          and "[deposit_not_returned, deposit_claim_received] landlord deadline: claim notice deadline" in timeline_now)
+    check("timeline <issue> keeps a shared deadline under either issue",
+          "claim notice deadline" in render_timeline("deposit_claim_received")
+          and "claim notice deadline" in render_timeline("deposit_not_returned"))
     status_now = json.loads(system_prompt().split("ELEMENT STATUS (by issue):\n")[1])
     check("the prompt's element status is the record as it is now", any(
           r["id"] == "vacated" and r["status"] == "known" and r["value"] == "2026-07-28"

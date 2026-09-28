@@ -15,7 +15,7 @@ from langchain.tools import tool
 import record
 from config import squash
 from corpus import playbooks, statute
-from deterministic import compute_deadlines
+from deterministic import matter_deadlines
 from record import active_playbooks, append_event, element_status, matter_dir, save
 from sheet import parse_answer, shown
 
@@ -93,17 +93,15 @@ def propose_facts(facts_json: str) -> str:
 @tool
 def get_deadlines() -> str:
     """Compute every deadline from the CONFIRMED facts, for every issue in this matter. This is the ONLY way
-    to get a date. Never count or calculate days yourself. Refuses until every element is confirmed or n/a."""
+    to get a date. Never count or calculate days yourself. Refuses until every element is confirmed or n/a.
+    Each deadline lists the issues it belongs to; one that two issues share appears once."""
     waiting = [r["id"] for rows in element_status().values() for r in rows if r["status"] in ("proposed", "changed", "missing")]
     if waiting:
         return "Not yet. These facts are still unconfirmed: " + ", ".join(sorted(set(waiting)))
-    result = []
+    result = matter_deadlines(active_playbooks(), record.matter["facts"], date.today())   # shared ones once
     for pb in active_playbooks():
-        rows = compute_deadlines(pb, record.matter["facts"], date.today())
-        for d in rows:
-            d["issue"] = pb.issue
-        result += rows
-        append_event("deadlines_computed", issue=pb.issue, clocks=[d["clock"] for d in rows if "deadline" in d])
+        append_event("deadlines_computed", issue=pb.issue,
+                     clocks=[d["clock"] for d in result if pb.issue in d["issues"] and "deadline" in d])
     return json.dumps(result, indent=2, default=str)
 
 

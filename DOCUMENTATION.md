@@ -24,7 +24,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `playbooks/*.yaml`). No model calls. Imports `config`, `lease` (for `LeaseProfile`, to check
   `compare_to`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
 - `deterministic.py`: `check_elements` (element status), `lease_value` and `lease_differs` (a lease quote
-  read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic),
+  read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
+  deadlines, with one that two playbooks share listed once, tagged with both issues),
   `ISSUE_LABELS` (the labels `classify` can pick), and the two one-shot intake calls `classify` and
   `fill_facts`, both through `ask_json` on `agent_llm`. Imports `config`. Imported by `record`,
   `timeline`, `tools`, `agent`, `smoke`.
@@ -141,11 +142,15 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    (read by `lease_value`: dates as printed, dollar figures) differs from the tenant's value (the confirmed
    one, the suggestion, or for a changed row the new value). Nothing is compared when the quote cannot be
    read. The tool shows both and does not decide which is right.
-5. Confirmed to deadlines (`get_deadlines`, then `compute_deadlines`). Refuses while any row is proposed,
+5. Confirmed to deadlines (`get_deadlines`, then `matter_deadlines`, then `compute_deadlines` per playbook). Refuses while any row is proposed,
    changed, or missing. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
    if the trigger date is not confirmed; otherwise trigger date plus or minus `days` calendar days, status
    `passed` if before today else `upcoming`, with the cite and the playbook's `counting.convention`.
-6. Record to timeline (`render_timeline`). Rows come from confirmed date facts, freshly computed deadlines,
+   `matter_deadlines` then merges a row two playbooks share (same clock id, cite, date, and status) into
+   one, and every row carries `issues`, the list of issues it belongs to.
+6. Record to timeline (`render_timeline`). Rows come from confirmed date facts, freshly computed deadlines
+   (from `matter_deadlines`, so a shared deadline is one row tagged `[issue, issue]`, kept under either
+   issue by `timeline <issue>`),
    and events (see Files on disk). Sorted by date only; rows on the same day keep the order they were
    added (confirmed dates and deadlines first, then events in log order). `issue` filters deadlines and
    issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`,
@@ -221,8 +226,9 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   A value equal to the confirmed one is refused. Saves `matter.json`; returns what was taken and why
   anything was refused. Never confirms: the chat loop runs the sheet after the turn.
 - `get_deadlines()`: refuses with the list of unconfirmed ids while any row is proposed, changed, or missing.
-  Otherwise returns every clock's result for every active playbook, tagged with `issue`, and writes a
-  `deadlines_computed` event per playbook.
+  Otherwise returns every clock's result for the active playbooks from `matter_deadlines`, each with
+  `issues` (a list; a deadline two issues share appears once), and writes a `deadlines_computed` event per
+  playbook listing the clocks that belong to it.
 - `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
   obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a playbook;
   `posture` is preserve (no quotes), assert (obligation quote), or escalate (both quotes). Rejects any quote

@@ -4,7 +4,7 @@ import re
 from datetime import date
 
 import record
-from deterministic import compute_deadlines
+from deterministic import matter_deadlines
 from record import active_playbooks, read_events
 from sheet import shown
 
@@ -45,10 +45,11 @@ def render_timeline(issue=None, full=False):
             if e.type == "date" and e.id in facts and e.id not in dates_shown:
                 dates_shown.add(e.id)
                 rows.append((facts[e.id], label(e.id), confirmation_of(e.id, events), ""))
-        for d in compute_deadlines(pb, facts, date.today()):
-            if "deadline" in d:
-                rows.append((str(d["deadline"]), f"[{pb.issue}] {d['actor']} deadline: {label(d['clock'])}",
-                             f"computed, {d['cite']}, {d['status']}", ""))
+
+    for d in matter_deadlines(active_playbooks(), facts, date.today()):   # a shared deadline once, both issues
+        if "deadline" in d and (not issue or issue in d["issues"]):
+            rows.append((str(d["deadline"]), f"[{', '.join(d['issues'])}] {d['actor']} deadline: {label(d['clock'])}",
+                         f"computed, {d['cite']}, {d['status']}", ""))
 
     for ev in events:
         if issue and ev.get("issue") not in (None, issue):
