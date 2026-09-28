@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- deposit_not_returned.yaml: `guidance.postures.notice_sufficiency` (printed under every letter for this
+  issue as a note to the tenant) reworded to face the tenant. It replaces text that ended with an
+  instruction to the model ("Say so when it is missing") and stated a conclusion ("cannot be cured
+  afterward"). The new note says what the tool tracks and quotes 83.49(5); both quotes were checked by
+  substring against `statutes/83.49.txt` before writing, since the playbook quote check does not cover
+  guidance prose. Playbook quote checks all OK.
 - deposit_claim_received.yaml: the fact `claim_notice_received_on` renamed `claim_notice_date`, the id
   deposit_not_returned already uses for the same date (when the tenant received the landlord's notice),
   along with the `tenant_objection_deadline` trigger and the question key. Facts carry across issues by

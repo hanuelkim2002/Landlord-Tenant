@@ -128,7 +128,7 @@ guidance:
     preserve: States move-out date, amount, forwarding address. Asks for return. Cites nothing.
     assert: Adds the 83.49(3)(a) obligation, quoted.
     escalate: Adds the forfeiture consequence, quoted, and 83.49(3)(c) fee-shifting.
-    notice_sufficiency: No tenant letter after move-out starts a statutory clock in this issue. The only tenant-side clock is the 7-day pre-vacate notice, which cannot be cured afterward. Say so when it is missing.
+    notice_sufficiency: 'Sending this letter does not start any deadline that this tool computes for this issue. The only notice from a tenant that this tool tracks here is in Fla. Stat. 83.49(5), which says that "any tenant who vacates or abandons the premises before the expiration of the term specified in the rental agreement" "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises". The same sentence also covers week-to-week, month-to-month, and other periodic tenancies. Whether it applies to you is not something this tool decides.'
 
   failure_modes:
     - Using the lease end date as the termination date without also recording move-out.
