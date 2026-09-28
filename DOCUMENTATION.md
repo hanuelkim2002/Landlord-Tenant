@@ -52,15 +52,17 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   and `confirmation_of`. A confirmed date's SOURCE reads "tenant (corrected, ...)" when corrected, and in
   `timeline full` a corrected fact reads "corrected from <how> <suggested value>". Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
   `deterministic`, `sheet` (for `shown`). Imported by `agent`, `smoke`.
-- `tools.py`: the eight `@tool` functions and the `tools` list (see Tools the model can call), plus the
+- `tools.py`: the seven `@tool` functions and the `tools` list (see Tools the model can call), plus the
   plain helpers `pretty`, `quote_is_real`, and `build_letter`. Imports `record`, `config`, `corpus`,
   `deterministic`, `sheet`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
 - `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, save; for a
   new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
   add new issues, propose facts from the update, save). Neither builds the agent: `run.py` runs the intake
   sheet first, then `build_agent`.
-  `build_agent` (the system prompt from the current record, and a
-  LangChain agent with an in-memory checkpointer; no model call), `transcript_entry` (one thread message as a transcript line), and `chat` (the terminal loop; its
+  `system_prompt()` (the whole system prompt, built from the record as it stands),
+  `prompt_from_record` (LangChain `dynamic_prompt` middleware that calls `system_prompt()` before every
+  model call), `build_agent` (a LangChain agent with that middleware and an in-memory checkpointer; no
+  model call), `transcript_entry` (one thread message as a transcript line), and `chat` (the terminal loop; its
   thread id is the session id when one is open). Each turn, `chat` writes the tenant's message to the
   transcript before the model runs (so `propose_facts` can check the tenant's words), then every new message
   of the turn. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
@@ -73,8 +75,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   ended by an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked
   (it stops if the matter has no lease profile), `start_session("existing")`, then asks "Anything new since last time?" with `ask_text`:
   text goes to `resume`, an empty answer goes on. Both return True when a matter is open. Then, if
-  `pending_rows()` has anything, `run_sheet()`; then `chat(build_agent())`, so the prompt holds the facts as
-  confirmed on the sheet; then `end_session()` on a normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
+  `pending_rows()` has anything, `run_sheet()`; then `chat(build_agent())`; then `end_session()` on a normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
 - `sheet.py`: the intake sheet, asked and saved by code with no model. `pending_rows()` (every changed,
   proposed, or missing fact across the matter's issues, once per fact id, with its question, type, and
   any suggestion), `parse_answer(kind, text)` (checks an answer against the element's type: dates as
@@ -208,7 +209,6 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   `said` appears in what the tenant typed this session (`record.tenant_words`, substring after `squash`).
   A value equal to the confirmed one is refused. Saves `matter.json`; returns what was taken and why
   anything was refused. Never confirms: the chat loop runs the sheet after the turn.
-- `fact_status()`: `element_status()` as JSON. Read only.
 - `get_deadlines()`: refuses with the list of unconfirmed ids while any row is proposed, changed, or missing.
   Otherwise returns every clock's result for every active playbook, tagged with `issue`, and writes a
   `deadlines_computed` event per playbook.
@@ -224,14 +224,17 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
 
 ## The system prompt
 
-Built in `build_agent` (called by `run.py` after the intake sheet), in this order:
+Built by `agent.system_prompt()` on every model call (through the `prompt_from_record` middleware), so it
+always matches the record: facts confirmed on the sheet and issues added mid-chat show up on the model's
+next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
+this order:
 
 1. `RULES`, fifteen numbered rules. In short: 1 quote only from the profile or stored statute; 2 never
-   compute dates, use `get_deadlines`; 3 facts are confirmed on the sheet, not in chat: propose with `propose_facts`, check with
-   `fact_status` after a sheet, no `get_deadlines` while anything is open;
+   compute dates, use `get_deadlines`; 3 facts are confirmed on the sheet, not in chat: propose with `propose_facts`, read ELEMENT
+   STATUS (current as of each reply), no `get_deadlines` while anything is open;
    4 look up the statute when the preloaded text does not answer, otherwise say so; 5 open questions are
    unsettled; 6 draft only when asked, never send; 7 never say which of lease or statute controls; 8 fetch a
-   section before mentioning it; 9 the model cannot confirm a fact and never says one is recorded unless `fact_status` shows it; 10 ask whose notice is meant;
+   section before mentioning it; 9 the model cannot confirm a fact and never says one is recorded unless ELEMENT STATUS shows it; 10 ask whose notice is meant;
    11 the letter questions (issue, ask, reply days, delivery method, the sentence relied on, posture), then
    `draft_letter` and one sentence; 12 never write a letter yourself; 13 never apply a provision to the
    facts; 14 record pasted messages with `add_communication`; 15 record a sent letter the same way.
@@ -240,10 +243,9 @@ Built in `build_agent` (called by `run.py` after the intake sheet), in this orde
    `spec.open_questions` (which rule 5 refers to). The rest of `spec` never enters the context.
 4. `STATUTE SECTIONS`: the text of every section `ROUTING` lists for every issue in the matter, including
    issues that have no playbook.
-5. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at intake time.
+5. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at the moment of the call.
 
-The prompt is fixed for the session. Later element status reaches the model through `fact_status`,
-`propose_facts` return values, and the program note after a sheet.
+The program note after a sheet still tells the model, in the conversation, that a sheet just ran.
 
 ## Playbook schema
 
@@ -269,9 +271,9 @@ on load and never reach the model.
   - `lease_overrides`, `exclusions`: lists of dicts. Any item with a `quote` is checked by
     `check_playbook` against the section in its `cite`. Otherwise not read by code.
   - `related_issues`: not read by code and not shown to the model.
-  - `open_questions`: not read by code. `build_agent` pastes them into the prompt next to `guidance`, the only
+  - `open_questions`: not read by code. `system_prompt` puts them into the prompt next to `guidance`, the only
     part of `spec` the model sees.
-- `guidance` (prose, pasted into the prompt by `build_agent`), with two pieces also read by code:
+- `guidance` (prose, put into the prompt by `system_prompt`), with two pieces also read by code:
   - `questions`: one question per element id. `check_elements` needs one for every element that can be
     proposed or missing; `fill_facts` sends them to the model.
   - `postures.notice_sufficiency`: appended to every `draft_letter` result as the note to the tenant.
@@ -297,7 +299,7 @@ Offline checks (no model call, no key needed):
   end, even after a failure), about thirty named checks of the code that writes to a matter: listing and
   ids, sessions and their tags, `propose_facts` taking one suggestion and refusing five for five reasons,
   the sheet with scripted answers (accept, correct, bad input, a changed fact, an `applies_if` fact, a
-  skip), `get_deadlines` waiting and then answering, `fact_status`, events, the transcript, and the
+  skip), `get_deadlines` waiting and then answering, the prompt following the record, events, the transcript, and the
   timeline. Every line must be OK; the last line says "all checks OK" or lists the failures. The test
   matter itself is not changed by a smoke run.
 

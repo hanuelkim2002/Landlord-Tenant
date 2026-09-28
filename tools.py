@@ -42,7 +42,7 @@ def search_statute(phrase: str) -> str:
     return "\n".join(hits) or "No matches."
 
 
-# ---- Propose Facts and Fact Status: the model can suggest a fact and read the status, never confirm one.
+# ---- Propose Facts: the model can suggest a fact, never confirm one. It reads the status in its prompt.
 # Confirming is the tenant's, on the intake sheet the chat loop shows after the turn (sheet.run_sheet).
 
 @tool
@@ -86,13 +86,6 @@ def propose_facts(facts_json: str) -> str:
     if refused:
         lines.append("Refused: " + "; ".join(refused))
     return "\n".join(lines) or "Nothing to suggest."
-
-
-@tool
-def fact_status() -> str:
-    """The current status of every fact, by issue: known (confirmed), changed, proposed, missing, or n/a.
-    Call it before relying on a fact, and after the tenant has been shown the sheet."""
-    return json.dumps(element_status(), indent=2)
 
 
 # ---- Deadlines
@@ -221,4 +214,4 @@ def add_communication(sent_on: str, sender: str, recipient: str, channel: str, t
 
 # ---- Tools List: what the agent may call. A new tool goes here after it is defined above.
 
-tools = [get_statute_section, search_statute, propose_facts, fact_status, get_deadlines, draft_letter, add_artifact, add_communication]
+tools = [get_statute_section, search_statute, propose_facts, get_deadlines, draft_letter, add_artifact, add_communication]

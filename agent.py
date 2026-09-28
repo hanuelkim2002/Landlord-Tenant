@@ -3,6 +3,7 @@ import json
 
 import yaml
 from langchain.agents import create_agent
+from langchain.agents.middleware import dynamic_prompt
 from langchain.messages import HumanMessage
 from langchain_core.utils.uuid import uuid7
 from langgraph.checkpoint.memory import InMemorySaver
@@ -17,8 +18,8 @@ from timeline import render_timeline
 from tools import tools
 
 
-# ---- Rules: the system prompt. The lease profile, the playbooks, the statute sections, and the element
-# status are appended to it at intake.
+# ---- Rules: the fixed part of the system prompt. The lease profile, the playbooks, the statute sections,
+# and the element status are appended to it on every model call (system_prompt, below).
 
 RULES = """You help a Florida residential tenant organize a landlord-tenant dispute. You are not a lawyer.
 You give no legal advice and make no recommendations.
@@ -29,12 +30,12 @@ Rules:
    SECTIONS below or from get_statute_section. Never from memory.
 2. Never count, add, or compute days or dates. For any deadline, call get_deadlines and report exactly
    what it returns, including its "counting" line.
-3. The tenant confirms facts on a sheet the program shows, not in this chat. ELEMENT STATUS below (and
-   fact_status, which gives the current rows) shows each fact as known, changed, proposed, missing, or n/a.
-   When the tenant says something that answers a missing fact or differs from a known one, call
-   propose_facts with the value, "stated" or "inferred", and the tenant's exact words. The sheet appears
-   after your reply; do not ask the tenant to confirm in the chat. After a sheet, call fact_status before
-   relying on a fact. Do not call get_deadlines while any row is proposed, changed, or missing.
+3. The tenant confirms facts on a sheet the program shows, not in this chat. ELEMENT STATUS below is
+   current as of this reply and shows each fact as known, changed, proposed, missing, or n/a. When the
+   tenant says something that answers a missing fact or differs from a known one, call propose_facts with
+   the value, "stated" or "inferred", and the tenant's exact words. The sheet appears after your reply; do
+   not ask the tenant to confirm in the chat. Do not call get_deadlines while any row is proposed, changed,
+   or missing.
 4. If the preloaded material does not answer a question, use search_statute or get_statute_section.
    If the statute does not answer it either, say so plainly. Do not fill the gap with your own view.
 5. The PLAYBOOK's open_questions are unsettled. When one comes up, say the statute does not settle it.
@@ -43,7 +44,7 @@ Rules:
    interact. Show both texts side by side and say: this tool does not resolve conflicts between them.
 8. Before you mention any section not in STATUTE SECTIONS, call get_statute_section for it first
    and quote from what it returns.
-9. You cannot confirm or record a fact. Never say a fact is recorded unless fact_status shows it as known.
+9. You cannot confirm or record a fact. Never say a fact is recorded unless ELEMENT STATUS shows it as known.
 10. If a question could be about the tenant's notice or the landlord's notice, ask which before answering.
 11. When the tenant asks for a letter: if the matter has more than one issue, ask which issue the letter is
     about. Ask what they want the landlord to do, how many days to give for a reply, and how they will send
@@ -111,11 +112,12 @@ def resume(update_text):
     print("new issues:", new_issues, "| proposed from update:", list(fresh))
 
 
-# ---- Build Agent: the system prompt from whatever the record holds now. Called by run.py after the intake
-# sheet, for a new or an existing matter (no model call until the tenant types).
+# ---- System Prompt and Agent: the prompt is built from whatever the record holds at the moment the model is
+# called, on every call, so facts confirmed on the sheet and issues added mid-chat reach the model at once.
 
-def build_agent():
-    """Build the system prompt from the current matter and lease profile, return an agent."""
+def system_prompt():
+    """The rules, the lease profile, each active issue's guidance and open questions, the statute sections,
+    and the element status, as the record stands now."""
     matter = record.matter
     sections = sorted({s for i in matter["issues"] for s in ROUTING[i]["sections"]})
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
@@ -125,16 +127,23 @@ def build_agent():
         yaml.safe_dump({"issue": pb.issue, "guidance": pb.guidance, "open_questions": pb.spec.open_questions},
                        sort_keys=False, allow_unicode=True, width=110)
         for pb in active_playbooks())
+    return (RULES
+            + "\n\nLEASE PROFILE:\n" + record.profile.model_dump_json(indent=2)
+            + "\n\nPLAYBOOKS:\n" + playbook_text
+            + "\n\nSTATUTE SECTIONS:\n" + hot
+            + "\n\nELEMENT STATUS (by issue):\n" + json.dumps(element_status(), indent=2))
 
-    system = (RULES
-              + "\n\nLEASE PROFILE:\n" + record.profile.model_dump_json(indent=2)
-              + "\n\nPLAYBOOKS:\n" + playbook_text
-              + "\n\nSTATUTE SECTIONS:\n" + hot
-              + "\n\nELEMENT STATUS (by issue):\n" + json.dumps(element_status(), indent=2))
 
-    print("issues:", matter["issues"], "| playbooks:", [pb.issue for pb in active_playbooks()],
-          "| sections:", sections)
-    return create_agent(agent_llm, tools=tools, system_prompt=system, checkpointer=InMemorySaver())
+@dynamic_prompt
+def prompt_from_record(request):
+    """LangChain calls this before every model call and uses what it returns as the system prompt."""
+    return system_prompt()
+
+
+def build_agent():
+    """An agent whose system prompt is rebuilt from the record on every model call. No model call here."""
+    print("issues:", record.matter["issues"], "| playbooks:", [pb.issue for pb in active_playbooks()])
+    return create_agent(agent_llm, tools=tools, middleware=[prompt_from_record], checkpointer=InMemorySaver())
 
 
 # ---- Chat: read a line, run a turn, print the reply. Tool output is hidden except draft_letter, whose

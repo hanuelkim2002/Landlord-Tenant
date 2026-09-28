@@ -55,12 +55,10 @@ and some may go away with a more capable model.
 9. Since only `guidance` is pasted, the model mis-cited the forfeiture sentence as 83.49(3)(b) when
     explaining the escalate posture (it is 83.49(3)(a)). The escalate line in `guidance.postures` names no
     cite.
-10. After `record_facts` turned `seven_day_notice_given` to n/a, the model still asked its question. It
-    had the intake-time ELEMENT STATUS in the prompt, where that row was proposed.
-11. The model compared dates itself when confirming `early_or_periodic` ("Does that mean you moved out one
+10. The model compared dates itself when confirming `early_or_periodic` ("Does that mean you moved out one
     day before the lease ended?"). A rule 2 slip, seen once.
-12. `classify` false positive: `lease_ending` fires on "my lease ended." Seen in two of four runs.
-13. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that
+11. `classify` false positive: `lease_ending` fires on "my lease ended." Seen in two of four runs.
+12. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that
     correct?"), though rule 3 says the sheet does it. Harmless: the sheet follows and is what counts.
 
 ## Open questions

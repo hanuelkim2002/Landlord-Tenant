@@ -5,6 +5,13 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Skills, step 1 of 3: the system prompt is rebuilt from the record on every model call. `build_agent` now
+  gives `create_agent` a `dynamic_prompt` middleware (`prompt_from_record`) that calls the new
+  `system_prompt()`; before, the prompt was built once and frozen for the session. The conversation is
+  kept by the checkpointer as before. The `fact_status` tool is removed (the prompt's element status is
+  now always current); rules 3 and 9 point at ELEMENT STATUS instead. This also settles the model-behavior
+  item about the stale intake-time status. Two new smoke checks; checked live on a scratch matter that a
+  fact changed in the record between two turns shows up in the model's next answer, with the history kept.
 - TODO.md: dropped the note about clearing a test matter's history between runs; the smoke scripts now use
   scratch copies and never write to the test matters. No code changed.
 - The timeline marks a fact the tenant corrected: "tenant (corrected, confirmed ...)" in the plain

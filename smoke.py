@@ -19,7 +19,8 @@ from record import (append_event, append_transcript, end_session, list_matters, 
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
 from timeline import render_timeline
-from tools import build_letter, fact_status, get_deadlines, get_statute_section, propose_facts
+from agent import system_prompt
+from tools import build_letter, get_deadlines, get_statute_section, propose_facts
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
 pb = playbooks["deposit_not_returned"]
@@ -160,6 +161,7 @@ try:
     check("get_deadlines waits while facts are open", get_deadlines.invoke({}).startswith("Not yet"))
 
     # the intake sheet: accept, correct, bad input asked again, a changed fact, an applies_if fact, a skip
+    prompt_before_sheet = system_prompt()
     shown_sheet = io.StringIO()
     with contextlib.redirect_stdout(shown_sheet):
         saved = run_sheet(scripted(["", "7/28/2026", "maybe", "", "", "y", "no", "", "", "", "$1,2x", "400",
@@ -183,8 +185,11 @@ try:
         run_sheet(scripted(["yes"]))
     deadlines = {d["clock"]: str(d.get("deadline")) for d in json.loads(get_deadlines.invoke({}))}
     check("get_deadlines answers once every fact is confirmed", deadlines.get("tenant_objection_deadline") == "2026-10-10")
-    check("fact_status shows a confirmed fact as known", any(r["id"] == "vacated" and r["status"] == "known"
-          for r in json.loads(fact_status.invoke({}))["deposit_not_returned"]))
+    status_now = json.loads(system_prompt().split("ELEMENT STATUS (by issue):\n")[1])
+    check("the prompt's element status is the record as it is now", any(
+          r["id"] == "vacated" and r["status"] == "known" and r["value"] == "2026-07-28"
+          for r in status_now["deposit_not_returned"]))
+    check("the prompt changes when the record does", prompt_before_sheet != system_prompt())
 
     # events and the transcript
     append_event("tenant_update", text="The landlord emailed me again today about the cleaning charge.")
