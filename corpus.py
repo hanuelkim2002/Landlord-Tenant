@@ -8,7 +8,7 @@ import yaml
 from pydantic import BaseModel
 
 from config import PLAYBOOKS, STATUTES, squash
-from deterministic import ROUTING
+from deterministic import ISSUE_LABELS
 from lease import LeaseProfile
 
 
@@ -71,9 +71,10 @@ class Spec(BaseModel):
 
 class Playbook(BaseModel):
     """One YAML playbook loaded into Python. spec is validated; provenance,
-    counting, and guidance are plain dicts read by people or the model."""
+    counting, and guidance are plain dicts read by people or the model.
+    sections: the statute sections the playbook rests on, put into the prompt while its issue is active."""
     issue: str
-    statutory_hook: str
+    sections: List[str]
     provenance: dict
     counting: dict
     spec: Spec
@@ -83,9 +84,12 @@ class Playbook(BaseModel):
 # ---- Load and Check Playbook
 
 def load_playbook(path):
-    """Validate the shape, confirm every clock counts from a date element, and every compare_to names a real
-    lease field."""
+    """Validate the shape, confirm every section is in statutes/, every clock counts from a date element,
+    and every compare_to names a real lease field."""
     pb = Playbook.model_validate(yaml.safe_load(open(path)))
+    for s in pb.sections:
+        if s not in statute:
+            raise ValueError(f"{pb.issue}: section {s} is not in statutes/")
     for e in pb.spec.elements:
         if e.compare_to and e.compare_to.replace("lease_profile.", "") not in LeaseProfile.model_fields:
             raise ValueError(f"element {e.id}: compare_to {e.compare_to} is not a lease profile field")
@@ -130,7 +134,7 @@ for path in sorted(PLAYBOOKS.glob("*.yaml")):
 _all_facts = {e.id for pb in playbooks.values() for e in pb.spec.elements}
 for pb in playbooks.values():
     for rel in pb.spec.related_issues:
-        if rel.issue not in ROUTING:
+        if rel.issue not in ISSUE_LABELS:
             raise ValueError(f"{pb.issue}: related issue {rel.issue} is not an issue label")
         if rel.when.fact not in _all_facts:
             raise ValueError(f"{pb.issue}: related issue condition {rel.when.fact} is not a fact any playbook asks for")

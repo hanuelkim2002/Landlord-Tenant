@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- Skills, step 3 of 3: statute sections come from the playbook. `statutory_hook: "83.49"` (read by no
+  code) became `sections: ["83.49"]`, checked against `statutes/` by `load_playbook`; `system_prompt`
+  loads the sections of the active playbooks, so an issue with no playbook yet adds none (a `lease_ending`
+  label used to add 83.57, 83.575, and 83.58). `deterministic.ROUTING` (label to unverified section list)
+  became `ISSUE_LABELS`, the labels `classify` can pick; its section lists moved to the TODO Playbooks
+  item as unverified research candidates. README's Skills line now says guidance and sections load when an
+  issue becomes active. The planned `load_skill` tool was dropped (the author's decision): code, not the
+  model, decides what is in the prompt. The Skills TODO section is done. Two new smoke checks; checked
+  that a playbook naming a section not in `statutes/` is refused.
 - Skills, step 2 of 3: related issues as data. In both deposit playbooks `when: claim_notice_received ==
   true` (a string no code read) became `when: {fact: claim_notice_received, equals: true}`, typed in
   `corpus.py` (`Condition`, `RelatedIssue`) and validated after load. New `record.add_issues`, the only

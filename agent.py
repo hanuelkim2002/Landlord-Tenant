@@ -11,7 +11,7 @@ from langgraph.checkpoint.memory import InMemorySaver
 import record
 from config import agent_llm
 from corpus import statute
-from deterministic import ROUTING, classify, fill_facts
+from deterministic import classify, fill_facts
 from record import (active_playbooks, add_issues, add_related_issues, append_event, element_status,
                     prune_proposals, save)
 from sheet import pending_rows, run_sheet
@@ -121,7 +121,7 @@ def system_prompt():
     """The rules, the lease profile, each active issue's guidance and open questions, the statute sections,
     and the element status, as the record stands now."""
     matter = record.matter
-    sections = sorted({s for i in matter["issues"] for s in ROUTING[i]["sections"]})
+    sections = sorted({s for pb in active_playbooks() for s in pb.sections})   # an issue with no playbook adds none
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
     # Only the model-facing part of each playbook: the guidance half, plus the open questions rule 5 refers
     # to. The rest of spec (elements, clocks, exclusions) is for code and never enters the context.

@@ -1,6 +1,6 @@
 issue: deposit_not_returned
 description: Tenant moved out. Landlord has neither returned the deposit nor sent a claim against it.
-statutory_hook: "83.49"
+sections: ["83.49"]          # the statute sections this playbook rests on; loaded into the prompt
 
 provenance:
   statute_year: 2026

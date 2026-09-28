@@ -128,19 +128,20 @@ def compute_deadlines(playbook, facts, today):
 
 # ---- Classify and Fill Facts: two one-shot model calls made once at intake. Nothing here is confirmed.
 
-# Issue label -> statute sections to preload. Section lists are from the project plan and NOT yet verified against the statute text.
-ROUTING = {
-    "deposit_not_returned":         {"sections": ["83.49"]},
-    "deposit_claim_received":       {"sections": ["83.49"]},
-    "repair_not_made":              {"sections": ["83.51", "83.60", "83.56"]},
-    "notice_received_nonpayment":   {"sections": ["83.56", "83.60"]},
-    "notice_received_violation":    {"sections": ["83.56"]},
-    "landlord_entered_unannounced": {"sections": ["83.53", "83.67"]},
-    "rent_increased":               {"sections": ["83.46"]},
-    "wants_to_leave_early":         {"sections": ["83.595", "83.56"]},
-    "lease_ending":                 {"sections": ["83.575", "83.57", "83.58"]},
-    "other":                        {"sections": []},
-}
+# The issue labels classify can pick. Each gets a playbook (except "other", which means none fits); a playbook
+# names the statute sections it rests on in its own `sections`, checked against statutes/ when it loads.
+ISSUE_LABELS = [
+    "deposit_not_returned",
+    "deposit_claim_received",
+    "repair_not_made",
+    "notice_received_nonpayment",
+    "notice_received_violation",
+    "landlord_entered_unannounced",
+    "rent_increased",
+    "wants_to_leave_early",
+    "lease_ending",
+    "other",
+]
 
 
 def ask_json(llm, prompt):
@@ -153,14 +154,14 @@ def ask_json(llm, prompt):
 def classify(description):
     """Which issue labels fit the tenant's description? Multi-label. 'other' is allowed."""
     prompt = f"""A Florida residential tenant describes a problem. Pick every label that fits.
-Labels: {list(ROUTING)}
+Labels: {ISSUE_LABELS}
 Use "other" if nothing fits. Do not guess facts the tenant did not state.
 Return ONLY JSON: {{"issues": [...], "reason": "one sentence per label, quoting what the tenant said"}}
 
 TENANT SAID:
 {description}"""
     result = ask_json(agent_llm, prompt)
-    result["issues"] = [i for i in result["issues"] if i in ROUTING]   # drop anything invented
+    result["issues"] = [i for i in result["issues"] if i in ISSUE_LABELS]   # drop anything invented
     return result
 
 

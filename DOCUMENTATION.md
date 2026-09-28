@@ -25,7 +25,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `compare_to`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
 - `deterministic.py`: `check_elements` (element status), `lease_value` and `lease_differs` (a lease quote
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic),
-  `ROUTING` (issue label to statute sections to preload), and the two one-shot intake calls `classify` and
+  `ISSUE_LABELS` (the labels `classify` can pick), and the two one-shot intake calls `classify` and
   `fill_facts`, both through `ask_json` on `agent_llm`. Imports `config`. Imported by `record`,
   `timeline`, `tools`, `agent`, `smoke`.
 - `record.py`: the shared state. `matter` and `profile` live here and every other module reaches them as
@@ -103,7 +103,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    from `load_matter`). `ingest_pdf` stores the PDF and page text in `matter_dir()`, `extract_profile` asks the extraction model for a JSON `LeaseProfile`, `check_quotes` prints OK or FAIL
    for every clause, and the profile is saved. A FAIL is printed, not enforced: the profile is saved anyway.
 2. Description to issues and proposed facts (`intake`). `classify` returns issue labels; labels not in
-   `ROUTING` are dropped, and the rest are added with `add_issues` (source "classify"). Labels with no
+   `ISSUE_LABELS` are dropped, and the rest are added with `add_issues` (source "classify"). Labels with no
    playbook stay in `matter["issues"]` but have no elements or clocks. For each active playbook, `fill_facts` asks for a value, a `how` ("stated" or "inferred"), and
    the tenant's exact words for every element whose `source` includes `user`. An answer is kept only if
    its words appear in the description (substring after `squash`). The first playbook to propose a fact id
@@ -252,8 +252,8 @@ this order:
 2. `LEASE PROFILE`: the whole profile as JSON.
 3. `PLAYBOOKS`: for each active playbook, YAML of its `issue`, its `guidance`, and its
    `spec.open_questions` (which rule 5 refers to). The rest of `spec` never enters the context.
-4. `STATUTE SECTIONS`: the text of every section `ROUTING` lists for every issue in the matter, including
-   issues that have no playbook.
+4. `STATUTE SECTIONS`: the text of every section the active playbooks list in `sections`, once each. An
+   issue with no playbook yet adds none.
 5. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at the moment of the call.
 
 The program note after a sheet still tells the model, in the conversation, that a sheet just ran.
@@ -261,13 +261,14 @@ The program note after a sheet still tells the model, in the conversation, that 
 ## Playbook schema
 
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
-clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field.
-After all playbooks load, `corpus.py` also raises if a related issue is not a `ROUTING` label or its
+section is not in `statutes/`, a clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field.
+After all playbooks load, `corpus.py` also raises if a related issue is not in `ISSUE_LABELS` or its
 condition's fact is not an element of any playbook. Keys the `Playbook` class does not define (`description`) are dropped
 on load and never reach the model.
 
-- `issue`: the label; must match a `ROUTING` key to be classified. Key of `playbooks`.
-- `statutory_hook`: section number. Not read by code.
+- `issue`: the label; must be in `deterministic.ISSUE_LABELS` to be classified. Key of `playbooks`.
+- `sections`: the statute sections the playbook rests on, e.g. `["83.49"]`. `load_playbook` raises if one is
+  not in `statutes/`. `system_prompt` puts their text into the prompt while the issue is active.
 - `provenance`: statute year, file verified against, who and when, version. Not read by code.
 - `counting.convention`: copied into every `compute_deadlines` result. `counting.status`: not read by code.
 - `spec` (typed, read by code):

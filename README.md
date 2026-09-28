@@ -30,8 +30,9 @@ the tenant, which of the lease or statute controls, or what the tenant should do
 
 1. The chatbot: a LangChain agent with a small set of tools and a rules-based system prompt.
 2. The data bank: one folder per tenant and per matter, so a returning tenant resumes where they left off.
-3. Skills: the guidance half of each playbook, loaded on demand instead of pasted into every prompt, so the
-   context window holds only what the current issue needs.
+3. Skills: the guidance half of each playbook and the statute sections it rests on, loaded into the prompt
+   when its issue becomes active instead of pasted for every issue, so the context window holds only what
+   the matter's issues need.
 
 ## Non-negotiables
 
