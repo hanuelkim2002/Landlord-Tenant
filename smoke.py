@@ -162,10 +162,12 @@ try:
     # the intake sheet: accept, correct, bad input asked again, a changed fact, an applies_if fact, a skip
     shown_sheet = io.StringIO()
     with contextlib.redirect_stdout(shown_sheet):
-        saved = run_sheet(scripted(["", "", "maybe", "", "", "y", "no", "", "", "", "$1,2x", "400", "", "?", "no"]))
+        saved = run_sheet(scripted(["", "7/28/2026", "maybe", "", "", "y", "no", "", "", "", "$1,2x", "400",
+                                    "cleaning and carpet", "?", "no"]))
     facts = record.matter["facts"]
     check("sheet saves every answered fact", len(saved) == 12)
-    check("sheet: Enter accepts a suggestion", facts["vacated"] == "2026-07-29")
+    check("sheet: Enter accepts a suggestion", facts["tenancy_terminated"] == "2026-07-31")
+    check("sheet: a typed answer replaces a suggestion", facts["vacated"] == "2026-07-28")
     check("sheet: a changed fact takes the new value", facts["claim_notice_received"] is True)
     check("sheet: an applies_if fact is asked once it applies", facts.get("claim_notice_date") == "2026-09-25")
     check("sheet: a bad amount is asked again, then saved", facts["claim_amount"] == 400)
@@ -208,6 +210,11 @@ try:
           and f"sessions/{sid}.jsonl" in full)
     check("the plain timeline leaves sessions out", "session" not in plain)
     check("the timeline shows a tenant update", "tenant update: The landlord emailed me again" in plain)
+    check("the plain timeline marks a corrected date", "tenant (corrected, confirmed" in plain)
+    check("timeline full marks a corrected fact with the suggestion it replaced",
+          "claim reason = cleaning and carpet" in full and "corrected from stated cleaning" in full)
+    check("timeline full keeps the tag of an accepted suggestion",
+          "fact confirmed: claim delivery = certified mail" in full and "corrected from stated certified" not in full)
     check("the timeline keeps same-day events in log order",
           full.index(f"session {sid[:8]} started") < full.index(f"session {sid[:8]} ended"))
 finally:

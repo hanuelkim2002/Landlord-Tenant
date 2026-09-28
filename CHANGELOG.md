@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- The timeline marks a fact the tenant corrected: "tenant (corrected, confirmed ...)" in the plain
+  timeline, "corrected from <how> <suggested value>" in `timeline full`, replacing the suggestion's own
+  tag (a corrected `early_or_periodic = False` used to read "inferred"). New `timeline.corrected`. The
+  scratch smoke run now corrects two suggestions on the sheet; four new checks.
 - `build_letter` strips a trailing period from the ask before adding its own, so a request ending in "."
   no longer prints ".." (seen in the first live run). One new smoke check.
 - Stale suggestions are cleared: new `record.prune_proposals`, called by `confirm_fact`, `intake`,

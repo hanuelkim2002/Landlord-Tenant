@@ -6,6 +6,7 @@ from datetime import date
 import record
 from deterministic import compute_deadlines
 from record import active_playbooks, read_events
+from sheet import shown
 
 
 def label(ident):
@@ -13,11 +14,18 @@ def label(ident):
     return ident.replace("_", " ")
 
 
+def corrected(ev):
+    """True if the tenant confirmed a different value from the one suggested. Compared as shown, so 400 and
+    "400" are the same answer."""
+    return ev.get("proposed_value") is not None and shown(ev["proposed_value"]) != shown(ev["value"])
+
+
 def confirmation_of(fact_id, events):
     """How and when the tenant confirmed a fact, from the last fact_confirmed event for it."""
     for ev in reversed(events):
         if ev["kind"] == "fact_confirmed" and ev["id"] == fact_id:
-            return f"tenant ({ev['how']}, confirmed {ev['when'][:10]})"
+            how = "corrected" if corrected(ev) else ev["how"]
+            return f"tenant ({how}, confirmed {ev['when'][:10]})"
     return "tenant"
 
 
@@ -59,7 +67,8 @@ def render_timeline(issue=None, full=False):
             rows.append((day, f"letter drafted, {ev['posture']} posture", "tool, from confirmed facts", ev["file"]))
         elif full and ev["kind"] == "fact_confirmed":
             basis = (ev.get("basis") or "")[:50] + ("..." if len(ev.get("basis") or "") > 50 else "")
-            source = f"{ev['how']}, basis: {basis}" if basis else ev["how"]
+            how = f"corrected from {ev['how']} {shown(ev['proposed_value'])}" if corrected(ev) else ev["how"]
+            source = f"{how}, basis: {basis}" if basis else how
             rows.append((day, f"fact confirmed: {label(ev['id'])} = {ev['value']}", source, ""))
         elif full and ev["kind"] == "fetch":
             what = f"read statute {ev['section']}" if "section" in ev else f"searched statute for '{ev['search']}'"
