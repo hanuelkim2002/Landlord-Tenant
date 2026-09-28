@@ -5,6 +5,8 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- `build_letter` strips a trailing period from the ask before adding its own, so a request ending in "."
+  no longer prints ".." (seen in the first live run). One new smoke check.
 - Stale suggestions are cleared: new `record.prune_proposals`, called by `confirm_fact`, `intake`,
   `resume`, and `propose_facts`. It drops a suggestion only when it can never be asked (the lease gives
   the value, its condition is confirmed as no with no change pending, or no issue asks for it). Before

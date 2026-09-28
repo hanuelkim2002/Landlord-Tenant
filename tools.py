@@ -143,6 +143,7 @@ def build_letter(ask, respond_within_days, delivery_method, quotes):
             if e.type == "date" and e.id in facts and e.id not in dates_shown:
                 dates_shown.add(e.id)
                 lines.append(f"{e.id.replace('_', ' ').capitalize()}: {pretty(facts[e.id])}")
+    ask = ask.strip().rstrip(".")                          # the sentence below adds its own period
     lines += ["", f"I request that you {ask[0].lower() + ask[1:]}.",
               f"Please respond by {pretty(today + timedelta(days=respond_within_days))}.", ""]
     for q in quotes:

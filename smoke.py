@@ -84,6 +84,11 @@ print(build_letter("Return the $1,850.00 deposit to 12 Elm St, Gainesville FL 32
                    [{"cite": "Fla. Stat. 83.49(3)(a)", "text": pb.spec.clocks[0].quote}]))
 print()
 
+check("a letter's request ends with one period, whatever the ask ends with",
+      "32601.\n" in build_letter("Return the deposit to 12 Elm St, Gainesville FL 32601.", 10, "certified mail", [])
+      and ".." not in build_letter("Return the deposit to 12 Elm St, Gainesville FL 32601.", 10, "certified mail", []))
+print()
+
 # the record as the tenant sees it, then with the tool's bookkeeping included
 print(render_timeline())
 print()
