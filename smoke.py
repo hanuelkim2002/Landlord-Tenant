@@ -204,9 +204,9 @@ try:
     check("sheet: a skipped fact stays open", [r["id"] for r in pending_rows()] == ["notice_states_objection_window"])
     with contextlib.redirect_stdout(io.StringIO()):
         run_sheet(scripted(["yes"]))
-    deadlines = {d["clock"]: str(d.get("deadline")) for d in json.loads(get_deadlines.invoke({}))}
+    deadlines = {d["clock"]: str(d.get("deadline")) for d in json.loads(get_deadlines.invoke({}))["deadlines"]}
     check("get_deadlines answers once every fact is confirmed", deadlines.get("tenant_objection_deadline") == "2026-10-10")
-    listed = json.loads(get_deadlines.invoke({}))
+    listed = json.loads(get_deadlines.invoke({}))["deadlines"]
     shared = [d for d in listed if d["clock"] == "claim_notice_deadline"]
     check("a deadline two issues share is listed once, with both issues", len(shared) == 1
           and shared[0]["issues"] == ["deposit_not_returned", "deposit_claim_received"])
@@ -295,6 +295,14 @@ try:
           system_prompt().split("STATUTE SECTIONS:")[1].split("ELEMENT STATUS")[0] == sections_before)
     check("add_issues never adds an issue twice", record.add_issues(["deposit_claim_received"], "classify", "x") == [])
     check("timeline full shows the added issue", "issue added: deposit claim received" in render_timeline(full=True))
+    # deadlines per issue: deposit_not_returned complete, deposit_claim_received still open (its facts skipped)
+    record.matter["facts"].update(tenancy_terminated="2026-07-31", vacated="2026-07-30", claim_notice_date="2026-09-25",
+                                  forwarding_address_given=True, early_or_periodic=False)
+    per_issue = json.loads(get_deadlines.invoke({}))
+    check("an issue with open facts does not block another issue's deadlines",
+          {d["clock"] for d in per_issue["deadlines"]} == {"return_if_no_claim", "claim_notice_deadline"}
+          and all(d["issues"] == ["deposit_not_returned"] for d in per_issue["deadlines"])
+          and "deposit_claim_received" in per_issue["waiting"] and "deposit_not_returned" not in per_issue["waiting"])
     end_session()
 finally:
     remove_scratch("t-smoke-related")
@@ -329,7 +337,7 @@ try:
             run_sheet(answer_by_type(shown_sheet))
         listed = get_deadlines.invoke({})
         clocks = [c.id for i in record.matter["issues"] if i in playbooks for c in playbooks[i].spec.clocks]
-        dated = [d["clock"] for d in json.loads(listed) if "deadline" in d] if not listed.startswith("Not yet") else []
+        dated = [d["clock"] for d in json.loads(listed)["deadlines"] if "deadline" in d] if not listed.startswith("Not yet") else []
         letter = draft_letter.invoke({"issue": issue, "posture": "preserve", "ask": "Confirm receipt of this letter",
                                       "respond_within_days": 10, "delivery_method": "certified mail"})
         check(f"{issue}: the sheet asks every fact, every clock gets a date, a letter carries its note",

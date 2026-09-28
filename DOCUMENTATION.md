@@ -155,8 +155,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    (read by `lease_value`: dates as printed, dollar figures) differs from the tenant's value (the confirmed
    one, the suggestion, or for a changed row the new value). Nothing is compared when the quote cannot be
    read. The tool shows both and does not decide which is right.
-5. Confirmed to deadlines (`get_deadlines`, then `matter_deadlines`, then `compute_deadlines` per playbook). Refuses while any row is proposed,
-   changed, or missing. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
+5. Confirmed to deadlines (`get_deadlines`, then `matter_deadlines`, then `compute_deadlines` per playbook). Only issues with no proposed, changed, or
+   missing row are computed; the others are returned as waiting. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
    if the trigger date is not confirmed; otherwise trigger date plus or minus `days` calendar days, status
    `passed` if before today else `upcoming`, with the cite and the playbook's `counting.convention`. A clock
    with `count: court_business_days` goes through `court_days` instead: one day at a time from the trigger
@@ -249,10 +249,11 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   `said` appears in what the tenant typed this session (`record.tenant_words`, substring after `squash`).
   A value equal to the confirmed one is refused. Saves `matter.json`; returns what was taken and why
   anything was refused. Never confirms: the chat loop runs the sheet after the turn.
-- `get_deadlines()`: refuses with the list of unconfirmed ids while any row is proposed, changed, or missing.
-  Otherwise returns every clock's result for the active playbooks from `matter_deadlines`, each with
-  `issues` (a list; a deadline two issues share appears once), and writes a `deadlines_computed` event per
-  playbook listing the clocks that belong to it.
+- `get_deadlines()`: works issue by issue. An issue is ready when none of its rows is proposed, changed, or
+  missing. Returns JSON `{"deadlines": [...], "waiting": {issue: [open fact ids]}}`: the clocks of the ready
+  issues from `matter_deadlines`, each with `issues` (a list; a deadline two issues share appears once), and,
+  if any, the issues still waiting with their open facts. Refuses ("Not yet. ...", with the open facts by
+  issue) only when no issue is ready. Writes a `deadlines_computed` event per ready playbook.
 - `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
   obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a playbook;
   `posture` is preserve (no quotes), assert (obligation quote), or escalate (both quotes). Rejects any quote
@@ -272,7 +273,7 @@ this order:
 
 1. `RULES`, fifteen numbered rules. In short: 1 quote only from the profile or stored statute; 2 never
    compute dates, use `get_deadlines`; 3 facts are confirmed on the sheet, not in chat: propose with `propose_facts`, read ELEMENT
-   STATUS (current as of each reply), no `get_deadlines` while anything is open;
+   STATUS (current as of each reply), `get_deadlines` gives dates for ready issues and names the waiting ones;
    4 look up the statute when the preloaded text does not answer, otherwise say so; 5 open questions are
    unsettled; 6 draft only when asked, never send; 7 never say which of lease or statute controls; 8 fetch a
    section before mentioning it; 9 the model cannot confirm a fact and never says one is recorded unless ELEMENT STATUS shows it; 10 ask whose notice is meant;

@@ -12,12 +12,9 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.
 
-1. One issue with open facts blocks every deadline in the matter: `get_deadlines` refuses while any fact of
-   any issue is open. Seen 2026-09-28: the classifier added notice_received_nonpayment to a repair story
-   ("I have not paid rent"), its questions all assume a notice exists, so they could only be skipped, and
-   the repair date was never returned (the timeline, which computes per issue, showed it). Issues are never
-   removed, so this would last. Decide: compute per issue and name the issues still waiting, and/or let the
-   tenant mark an issue as not applying (logged, not deleted).
+1. A wrongly classified issue stays forever (issues are only added) and keeps asking its questions. Deadlines
+   no longer block on it (computed per issue since 2026-09-28). Decide how an issue can be confirmed or
+   removed by the tenant, logged, never deleted.
 2. Clocks `compute_deadlines` cannot compute yet: (a) court business days are done for 83.56(3) in the
    Eighth Judicial Circuit, 2026 and 2027; other circuits need their own memoranda (add a county's circuit
    when a tenant there uses the tool), and each new year's memorandum must be added when the circuit

@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-09-28
 
+- `get_deadlines` works issue by issue: it returns the deadlines of every issue whose facts are all
+  confirmed and lists the issues still waiting with their open facts, as `{"deadlines", "waiting"}`. It
+  replaces a matter-wide refusal, under which one issue with open facts (such as one classified by mistake)
+  hid every deadline in the matter. It refuses only when no issue is ready. Rule 3 updated. One new smoke
+  check; three smoke checks read the new shape.
 - `docs/structure/2026-09-28.md` with two standalone SVG diagrams (how a session works, where data is
   stored) and the history of the Skills plan versus what was built: a dated snapshot of the structure,
   not kept current (DOCUMENTATION.md is). No code changed.

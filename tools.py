@@ -92,16 +92,25 @@ def propose_facts(facts_json: str) -> str:
 
 @tool
 def get_deadlines() -> str:
-    """Compute every deadline from the CONFIRMED facts, for every issue in this matter. This is the ONLY way
-    to get a date. Never count or calculate days yourself. Refuses until every element is confirmed or n/a.
-    Each deadline lists the issues it belongs to; one that two issues share appears once."""
-    waiting = [r["id"] for rows in element_status().values() for r in rows if r["status"] in ("proposed", "changed", "missing")]
-    if waiting:
-        return "Not yet. These facts are still unconfirmed: " + ", ".join(sorted(set(waiting)))
-    result = matter_deadlines(active_playbooks(), record.matter["facts"], date.today())   # shared ones once
-    for pb in active_playbooks():
+    """Compute every deadline from the CONFIRMED facts. This is the ONLY way to get a date. Never count or
+    calculate days yourself. Works issue by issue: returns the deadlines of every issue whose facts are all
+    confirmed or n/a, and under "waiting" the issues whose facts are still open, with those facts. A deadline
+    two issues share appears once. Report both parts."""
+    waiting = {}
+    for issue, rows in element_status().items():
+        open_ids = sorted({r["id"] for r in rows if r["status"] in ("proposed", "changed", "missing")})
+        if open_ids:
+            waiting[issue] = open_ids
+    ready = [pb for pb in active_playbooks() if pb.issue not in waiting]
+    if not ready:
+        return "Not yet. No issue has all its facts confirmed. Still open, by issue: " + json.dumps(waiting)
+    deadlines = matter_deadlines(ready, record.matter["facts"], date.today())   # shared ones once
+    for pb in ready:
         append_event("deadlines_computed", issue=pb.issue,
-                     clocks=[d["clock"] for d in result if pb.issue in d["issues"] and "deadline" in d])
+                     clocks=[d["clock"] for d in deadlines if pb.issue in d["issues"] and "deadline" in d])
+    result = {"deadlines": deadlines}
+    if waiting:
+        result["waiting"] = waiting            # these issues' dates come once their facts are confirmed
     return json.dumps(result, indent=2, default=str)
 
 
