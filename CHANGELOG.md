@@ -5,6 +5,9 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- README.md: the playbooks in scope grow from six to nine, adding notice_received_nonpayment,
+  landlord_entered_unannounced, and wants_to_leave_early, so every classifier label but "other" gets one
+  (the author's decision).
 - TODO.md: the `ROUTING` preloading item moved from "Harness and code" into the Skills `load_skill` item,
   since every label but `other` will get a playbook and on-demand loading replaces preloading. The
   Playbooks item now lists all seven playbooks still to write, each carrying its own checked section list
