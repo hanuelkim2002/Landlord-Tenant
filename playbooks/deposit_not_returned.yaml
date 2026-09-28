@@ -22,6 +22,7 @@ spec:
     - id: tenancy_terminated
       type: date
       source: [user]
+      compare_to: lease_profile.term_end      # shown next to the tenant's date when they differ
     - id: vacated
       type: date
       source: [user]

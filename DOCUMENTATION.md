@@ -21,8 +21,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `corpus.py`: the stored corpus, loaded once at import. `statute` (dict, section number to text, from
   `statutes/83.*.txt`), the playbook shapes (`Element`, `Clock`, `Spec`, `Playbook`), `load_playbook`,
   `check_playbook`, `check_all_playbooks`, and `playbooks` (dict, issue to `Playbook`, from
-  `playbooks/*.yaml`). No model calls. Imports `config`. Imported by `record`, `tools`, `agent`, `smoke`.
-- `deterministic.py`: `check_elements` (element status), `compute_deadlines` (the only date arithmetic),
+  `playbooks/*.yaml`). No model calls. Imports `config`, `lease` (for `LeaseProfile`, to check
+  `compare_to`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
+- `deterministic.py`: `check_elements` (element status), `lease_value` and `lease_differs` (a lease quote
+  read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic),
   `ROUTING` (issue label to statute sections to preload), and the two one-shot intake calls `classify` and
   `fill_facts`, both through `ask_json` on `agent_llm`. Imports `config`. Imported by `record`,
   `timeline`, `tools`, `agent`, `smoke`.
@@ -75,7 +77,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   any suggestion), `parse_answer(kind, text)` (checks an answer against the element's type: dates as
   `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and commas, non-empty text), `shown`,
   and `run_sheet(ask=input)` (asks one fact at a time, rebuilding the list after each answer so an
-  `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; saves each answer with
+  `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; shows "your lease
+  says" next to a row carrying `lease_says`; saves each answer with
   `record.confirm_fact` and a transcript line; returns the saved facts as `(id, value)` pairs). Imports
   `record`, `corpus`. Imported by `run`, `agent`, `tools` (for `parse_answer` and `shown`).
 - `checks.py`: helpers for the smoke scripts. `check(name, condition)` prints `OK` or `FAIL` and keeps the
@@ -118,7 +121,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    and `proposed` holds a different value for the same id (the row carries both, `value` and `new_value`,
    plus the proposal's `how` and `basis`; a value read from the lease is never `changed`); `proposed` if it
    is in `proposed`; otherwise `missing`. Changed, proposed, and missing rows carry the `guidance.questions`
-   text in `ask`. A changed row is resolved on the sheet, with either value.
+   text in `ask`. A changed row is resolved on the sheet, with either value. A row whose element names a
+   lease field in `compare_to` also carries `lease_says`, the lease's exact words, when the lease's value
+   (read by `lease_value`: dates as printed, dollar figures) differs from the tenant's value (the confirmed
+   one, the suggestion, or for a changed row the new value). Nothing is compared when the quote cannot be
+   read. The tool shows both and does not decide which is right.
 5. Confirmed to deadlines (`get_deadlines`, then `compute_deadlines`). Refuses while any row is proposed,
    changed, or missing. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
    if the trigger date is not confirmed; otherwise trigger date plus or minus `days` calendar days, status
@@ -234,7 +241,7 @@ The prompt is fixed for the session. Later element status reaches the model thro
 ## Playbook schema
 
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
-clock's `trigger` is not a date element. Keys the `Playbook` class does not define (`description`) are dropped
+clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field. Keys the `Playbook` class does not define (`description`) are dropped
 on load and never reach the model.
 
 - `issue`: the label; must match a `ROUTING` key to be classified. Key of `playbooks`.
@@ -243,7 +250,9 @@ on load and never reach the model.
 - `counting.convention`: copied into every `compute_deadlines` result. `counting.status`: not read by code.
 - `spec` (typed, read by code):
   - `elements`: `id`, `type` (date, money, bool, text), `source` (list; `user` and/or
-    `lease_profile.<field>`, tried in order), `applies_if` (id of a bool element). Read by
+    `lease_profile.<field>`, tried in order), `applies_if` (id of a bool element), `compare_to` (optional,
+    `lease_profile.<field>`: the lease field to show next to the tenant's value when they differ; both
+    deposit playbooks set `tenancy_terminated` against `term_end`). Read by
     `check_elements`, `fill_facts` (only elements with `user` in `source`), `build_letter` and
     `render_timeline` (date elements).
   - `clocks`: `id`, `actor` (landlord, tenant), `trigger` (a date element id), `days`, `direction`

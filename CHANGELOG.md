@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-09-27
 
+- A tenant fact that differs from the lease is shown next to it. Playbook elements gain an optional
+  `compare_to: lease_profile.<field>` (checked by `load_playbook`); both deposit playbooks set it on
+  `tenancy_terminated` against `term_end`. `check_elements` adds `lease_says`, the lease's exact words,
+  when the lease value (new `lease_value`: printed dates, dollar figures) differs from the tenant's; the
+  sheet prints "your lease says" with it, and the model sees it in the element status. The tool shows both
+  and decides nothing. Before this, a tenant date a year off the lease's term end passed unremarked.
+  Playbook quote checks all OK after the YAML edit. Five new smoke checks; the scratch run now asks the
+  termination date on the sheet, so the note is tested where the tenant sees it.
 - README.md: the playbooks in scope grow from six to nine, adding notice_received_nonpayment,
   landlord_entered_unannounced, and wants_to_leave_early, so every classifier label but "other" gets one
   (the author's decision).

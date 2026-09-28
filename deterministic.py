@@ -1,15 +1,50 @@
 """Deterministic Layer: element status and date arithmetic (no model), plus the two one-shot intake calls."""
 import json
-from datetime import date, timedelta
+import re
+from datetime import date, datetime, timedelta
 
 from config import agent_llm, squash
 
 
 # ---- Element Status
 
+def lease_value(kind, quote):
+    """Read a lease quote as the element's type, so it can be compared with the tenant's answer. Dates as
+    printed ("September 30, 2027", "9/30/2027", "2027-09-30") and dollar amounts ("$1,850.00"). None when
+    the quote cannot be read that way; then nothing is compared."""
+    if kind == "date":
+        for fmt in ("%B %d, %Y", "%b %d, %Y", "%m/%d/%Y", "%Y-%m-%d"):
+            try:
+                return datetime.strptime(quote.strip().rstrip("."), fmt).date().isoformat()
+            except ValueError:
+                pass
+    if kind == "money":
+        found = re.search(r"\$([\d,]+(?:\.\d\d)?)", quote)
+        if found:
+            amount = float(found.group(1).replace(",", ""))
+            return int(amount) if amount == int(amount) else amount
+    return None
+
+
+def lease_differs(e, profile, tenant_value):
+    """The lease's exact words when the element names a lease field (compare_to) and the lease's value,
+    read as the element's type, differs from the tenant's. Otherwise None. The tool shows both; it does
+    not decide which is right."""
+    if not e.compare_to or profile is None:
+        return None
+    clause = getattr(profile, e.compare_to.replace("lease_profile.", ""))
+    if not clause.present:
+        return None
+    lease = lease_value(e.type, clause.quote)
+    if lease is None or lease == tenant_value:
+        return None
+    return clause.quote
+
+
 def check_elements(playbook, profile, facts, proposed):
     """For each element: known (confirmed), changed (confirmed, but a later update suggests a different value),
-    proposed (needs the tenant's confirmation), missing, or n/a.
+    proposed (needs the tenant's confirmation), missing, or n/a. A row whose tenant value differs from the
+    lease field named in compare_to also carries lease_says, the lease's exact words.
     facts = confirmed answers keyed by element id. proposed = unconfirmed answers with how and basis."""
     rows = []
     for e in playbook.spec.elements:
@@ -45,6 +80,13 @@ def check_elements(playbook, profile, facts, proposed):
                          "ask": "Confirm with the tenant: " + playbook.guidance["questions"][e.id]})
         else:
             rows.append({"id": e.id, "status": "missing", "ask": playbook.guidance["questions"][e.id]})
+            continue
+
+        row = rows[-1]                                     # the tenant's value this row shows, if any
+        tenant_value = row.get("new_value", row.get("value")) if row.get("from", "user") == "user" else None
+        says = lease_differs(e, profile, tenant_value) if tenant_value is not None else None
+        if says:
+            row["lease_says"] = says
     return rows
 
 

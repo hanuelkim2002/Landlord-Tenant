@@ -8,6 +8,7 @@ import yaml
 from pydantic import BaseModel
 
 from config import PLAYBOOKS, STATUTES, squash
+from lease import LeaseProfile
 
 
 # ---- Load Statutes: one entry per section, keyed by number ("83.49").
@@ -19,11 +20,13 @@ statute = {p.stem: p.read_text() for p in STATUTES.glob("83.*.txt")}
 
 class Element(BaseModel):
     """One fact the tool needs before it can say anything about this issue.
-    check_elements reads these to decide what is known and what to ask."""
+    check_elements reads these to decide what is known and what to ask. compare_to names a lease field
+    (e.g. "lease_profile.term_end") to set next to the tenant's answer when the two differ."""
     id: str
     type: Literal["date", "money", "bool", "text"]
     source: List[str]
     applies_if: Optional[str] = None
+    compare_to: Optional[str] = None
 
 
 class Clock(BaseModel):
@@ -66,8 +69,12 @@ class Playbook(BaseModel):
 # ---- Load and Check Playbook
 
 def load_playbook(path):
-    """Validate the shape and confirm every clock counts from a date element."""
+    """Validate the shape, confirm every clock counts from a date element, and every compare_to names a real
+    lease field."""
     pb = Playbook.model_validate(yaml.safe_load(open(path)))
+    for e in pb.spec.elements:
+        if e.compare_to and e.compare_to.replace("lease_profile.", "") not in LeaseProfile.model_fields:
+            raise ValueError(f"element {e.id}: compare_to {e.compare_to} is not a lease profile field")
     date_ids = [e.id for e in pb.spec.elements if e.type == "date"]
     for c in pb.spec.clocks:
         if c.trigger not in date_ids:

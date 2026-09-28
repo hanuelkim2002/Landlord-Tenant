@@ -18,7 +18,8 @@ from record import confirm_fact, element_status, save
 
 def pending_rows():
     """The facts that need the tenant, in playbook order. Each row: issue, id, type, question, status,
-    suggested (a value or None), basis (the tenant's words behind the suggestion), confirmed (for changed)."""
+    suggested (a value or None), basis (the tenant's words behind the suggestion), confirmed (for changed),
+    lease_says (the lease's words, when the lease field named in the playbook differs from the suggestion)."""
     rows, seen = [], set()
     for issue, statuses in element_status().items():
         pb = playbooks[issue]
@@ -33,6 +34,7 @@ def pending_rows():
                 "suggested": s.get("new_value") if s["status"] == "changed" else s.get("value"),
                 "basis": s.get("basis"),
                 "confirmed": s.get("value") if s["status"] == "changed" else None,
+                "lease_says": s.get("lease_says"),
             })
     return rows
 
@@ -106,6 +108,8 @@ def run_sheet(ask=input):
             print(f"    you confirmed: {shown(r['confirmed'])}   your update says: {shown(r['suggested'])}")
         if suggested is not None:
             print(f"    suggested: {shown(suggested)}, from your words: \"{r['basis']}\"")
+        if r["lease_says"]:
+            print(f"    your lease says: \"{r['lease_says']}\" (shown for comparison; this tool does not decide which is right)")
 
         answer = ask("    > ").strip()
         if answer == "?":

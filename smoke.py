@@ -14,7 +14,7 @@ import record
 from checks import check, make_scratch, remove_scratch, summary
 from config import MATTERS
 from corpus import check_all_playbooks, playbooks
-from deterministic import check_elements, compute_deadlines
+from deterministic import check_elements, compute_deadlines, lease_value
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
@@ -65,6 +65,18 @@ print(get_deadlines.invoke({}))
 record.matter["proposed"] = {}
 print()
 
+# a tenant fact next to the lease field its playbook names (compare_to): shown only when they differ
+def row_for(fact_id, facts, proposed={}):
+    return next(r for r in check_elements(pb, record.profile, facts, proposed) if r["id"] == fact_id)
+check("a tenant date that differs from the lease carries the lease's words",
+      row_for("tenancy_terminated", {"tenancy_terminated": "2026-07-31"}).get("lease_says") == record.profile.term_end.quote)
+check("a tenant date that matches the lease carries nothing",
+      "lease_says" not in row_for("tenancy_terminated", {"tenancy_terminated": lease_value("date", record.profile.term_end.quote)}))
+check("a suggestion is compared with the lease too", "lease_says" in row_for(
+      "tenancy_terminated", {}, {"tenancy_terminated": {"value": "2026-07-31", "how": "stated", "basis": "x"}}))
+check("lease amounts are read from the printed figure", lease_value("money", record.profile.security_deposit.quote) == 1850)
+print()
+
 # the letter template
 record.matter["issues"] = ["deposit_not_returned"]
 record.matter["facts"] = dict(test_facts)
@@ -97,8 +109,9 @@ def stated(value, words):
 
 make_scratch("t-smoke",
              issues=["deposit_not_returned", "deposit_claim_received"],
-             facts={"tenancy_terminated": "2026-07-31", "claim_notice_received": False},
-             proposed={"claim_notice_received": stated(True, "I got a letter from the landlord"),
+             facts={"claim_notice_received": False},
+             proposed={"tenancy_terminated": stated("2026-07-31", "My lease ended July 31, 2026"),
+                       "claim_notice_received": stated(True, "I got a letter from the landlord"),
                        "claim_notice_date": stated("2026-09-25", "on September 25, 2026"),
                        "claim_notice_dated": stated("2026-09-22", "dated September 22, 2026"),
                        "claim_notice_received_on": stated("2026-09-25", "on September 25, 2026"),
@@ -124,28 +137,32 @@ try:
         "forwarding_address_given": {"value": True, "how": "stated", "said": "I told them by phone"},
         "early_or_periodic": {"value": "not sure", "how": "stated", "said": said},
         "objected": {"value": False, "how": "guessed", "said": said},
-        "tenancy_terminated": {"value": "2026-07-31", "how": "stated", "said": said},
+        "claim_notice_received": {"value": False, "how": "stated", "said": "I never got any letter"},
     })})
     check("propose_facts takes a well-formed suggestion", "Suggested: vacated." in reply)
     check("propose_facts refuses a fact the issues do not ask for", "rent_amount: not a fact" in reply)
     check("propose_facts refuses words the tenant never typed", "forwarding_address_given: said must be" in reply)
     check("propose_facts refuses a value of the wrong type", "early_or_periodic: value must be yes or no" in reply)
     check("propose_facts refuses a how other than stated or inferred", "objected: how must be" in reply)
-    check("propose_facts refuses a value already confirmed", "tenancy_terminated: already confirmed" in reply)
+    check("propose_facts refuses a value already confirmed", "claim_notice_received: already confirmed" in reply)
     check("propose_facts never confirms", "vacated" not in record.matter["facts"])
     check("get_deadlines waits while facts are open", get_deadlines.invoke({}).startswith("Not yet"))
 
     # the intake sheet: accept, correct, bad input asked again, a changed fact, an applies_if fact, a skip
-    with contextlib.redirect_stdout(io.StringIO()):
-        saved = run_sheet(scripted(["", "maybe", "", "", "y", "no", "", "", "", "$1,2x", "400", "", "?", "no"]))
+    shown_sheet = io.StringIO()
+    with contextlib.redirect_stdout(shown_sheet):
+        saved = run_sheet(scripted(["", "", "maybe", "", "", "y", "no", "", "", "", "$1,2x", "400", "", "?", "no"]))
     facts = record.matter["facts"]
-    check("sheet saves every answered fact", len(saved) == 11)
+    check("sheet saves every answered fact", len(saved) == 12)
     check("sheet: Enter accepts a suggestion", facts["vacated"] == "2026-07-29")
     check("sheet: a changed fact takes the new value", facts["claim_notice_received"] is True)
     check("sheet: an applies_if fact is asked once it applies", facts.get("claim_notice_date") == "2026-09-25")
     check("sheet: a bad amount is asked again, then saved", facts["claim_amount"] == 400)
     check("sheet: yes/no answers are saved as true/false", facts["forwarding_address_given"] is True
           and facts["early_or_periodic"] is False)
+    check("sheet: the lease's words appear where they differ",
+          f'your lease says: "{record.profile.term_end.quote}"' in shown_sheet.getvalue())
+    check("sheet: a fact two issues share is asked once", shown_sheet.getvalue().count("What date did the lease end") == 1)
     check("sheet: a skipped fact stays open", [r["id"] for r in pending_rows()] == ["notice_states_objection_window"])
     with contextlib.redirect_stdout(io.StringIO()):
         run_sheet(scripted(["yes"]))
@@ -166,11 +183,11 @@ try:
     check("an event after the session carries no id", "session" not in new_events[-1])
     check("session_started and session_ended are logged", in_session[0]["kind"] == "session_started"
           and in_session[-1]["kind"] == "session_ended")
-    check("every fact is confirmed on the sheet", len(confirmations) == 12
+    check("every fact is confirmed on the sheet", len(confirmations) == 13
           and all(e["confirmed_in"] == "sheet" for e in confirmations))
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{sid}.jsonl").read_text().splitlines()]
     check("the transcript holds the tenant's words and every sheet answer",
-          [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 12)
+          [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 13)
 
     # the timeline
     full, plain = render_timeline(full=True), render_timeline()
