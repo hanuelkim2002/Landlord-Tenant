@@ -120,7 +120,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 1. Lease PDF to profile (`read_lease` in `run.py`, new matters only; an existing matter's profile comes
    from `load_matter`). `ingest_pdf` stores the PDF and page text in `matter_dir()`, `extract_profile` asks the extraction model for a JSON `LeaseProfile`, `check_quotes` prints OK or FAIL
    for every clause, and the profile is saved. A FAIL is printed, not enforced: the profile is saved anyway.
-2. Description to issues and proposed facts (`intake`). `classify` returns issue labels; labels not in
+2. Description to issues and proposed facts (`intake`). `classify` reads each label with its situation
+   (`corpus.issue_menu()`: the playbook's `description`, and "None of the situations above." for `other`),
+   is told a notice the tenant sent is not one the tenant received, and returns issue labels; an empty
+   answer becomes `["other"]`; labels not in
    `ISSUE_LABELS` are dropped, and the rest are added with `add_issues` (source "classify"). Labels with no
    playbook stay in `matter["issues"]` but have no elements or clocks. For each active playbook, `fill_facts` asks for a value, a `how` ("stated" or "inferred"), and
    the tenant's exact words for every element whose `source` includes `user`. An answer is kept only if
@@ -308,10 +311,12 @@ and leaves 83.60(2) uncomputed. Facts shared across playbooks by id: `claim_noti
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
 section is not in `statutes/`, a clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field.
 After all playbooks load, `corpus.py` also raises if a related issue is not in `ISSUE_LABELS` or its
-condition's fact is not an element of any playbook. Keys the `Playbook` class does not define (`description`) are dropped
-on load and never reach the model.
+condition's fact is not an element of any playbook. Keys the `Playbook` class does not define are dropped on load.
 
 - `issue`: the label; must be in `deterministic.ISSUE_LABELS` to be classified. Key of `playbooks`.
+- `description`: the situation the playbook covers, in one line, naming the event that starts the issue
+  rather than background facts (the classifier reads an update on its own). Read by `corpus.issue_menu`,
+  which `classify` receives instead of bare label names.
 - `sections`: the statute sections the playbook rests on, e.g. `["83.49"]`. `load_playbook` raises if one is
   not in `statutes/`. `system_prompt` puts their text into the prompt while the issue is active.
 - `provenance`: statute year, file verified against, who and when, version. Not read by code.

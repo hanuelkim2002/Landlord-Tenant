@@ -11,7 +11,7 @@ import record
 from agent import resume
 from checks import check, make_scratch, remove_scratch, summary
 from config import MATTERS
-from corpus import playbooks
+from corpus import issue_menu, playbooks
 from deterministic import check_elements, classify, fill_facts
 from record import end_session, load_matter, read_events, start_session
 
@@ -22,7 +22,18 @@ pb = playbooks["deposit_not_returned"]
 description = """I rented a house in Gainesville. My lease ended July 31, 2026 and I moved out
 and gave the keys back on July 30, 2026. I emailed the property manager my new address the same
 day. It's September now and I haven't gotten my $1,850 deposit back or any letter about it."""
-print(classify(description))
+print(classify(description, issue_menu()))
+
+# the story that was misread: the tenant's own withholding notice is not a landlord's rent demand
+repair = "\n".join([
+    "I rent a single-family house in Gainesville. The air conditioning has been broken since September 1, 2026.",
+    "On September 10, 2026 I hand-delivered a written notice to the landlord describing the broken air conditioning and saying I will not pay rent until it is fixed.",
+    "The landlord has not fixed it or replied. I have not paid rent since the air conditioning broke, and no court papers have been served on me.",
+])
+check("(model) classify reads the tenant's own notice as the tenant's", classify(repair, issue_menu())["issues"] == ["repair_not_made"])
+check("(model) a situation no playbook covers is classified other", classify(
+    "My roommate moved out in August and stopped paying his half of the rent. I paid the whole rent for September myself.",
+    issue_menu())["issues"] == ["other"])
 proposed = fill_facts(description, pb)
 print(proposed)
 for row in check_elements(pb, record.profile, {}, proposed):

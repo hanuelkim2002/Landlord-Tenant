@@ -3,6 +3,17 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-09-29
+
+- The classifier reads each label with the situation it covers (the playbook's `description`, now a
+  `Playbook` field, through the new `corpus.issue_menu()`), replacing bare label names; the prompt also
+  says a notice the tenant sent is not one the tenant received, and an empty answer becomes `other`. The
+  repair story that was read as a landlord's rent demand four times in four now classifies as
+  repair_not_made four times in four. Two descriptions reworded to name the event that starts the issue,
+  since an update is classified on its own and the classifier would not assume a move-out
+  (deposit_claim_received, deposit_not_returned). Checked on five stories; two new checks in
+  `smoke_online.py`.
+
 ## 2026-09-28
 
 - The tool stops when nothing it covers applies: if every issue in the matter is `other`, `run.py` says so

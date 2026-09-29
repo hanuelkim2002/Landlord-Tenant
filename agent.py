@@ -10,7 +10,7 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 import record
 from config import agent_llm
-from corpus import statute
+from corpus import issue_menu, statute
 from deterministic import classify, fill_facts
 from record import (active_playbooks, add_issues, add_related_issues, append_event, element_status,
                     prune_proposals, save)
@@ -80,7 +80,7 @@ def intake(description):
     matter["issues"] = []
     matter["facts"] = {}
     matter["proposed"] = {}
-    add_issues(classify(description)["issues"], "classify", "the tenant's description")
+    add_issues(classify(description, issue_menu())["issues"], "classify", "the tenant's description")
     for pb in active_playbooks():                          # first playbook to propose a fact wins
         for fact_id, p in fill_facts(description, pb).items():
             matter["proposed"].setdefault(fact_id, p)
@@ -100,7 +100,7 @@ def resume(update_text):
     matter = record.matter
     append_event("tenant_update", text=update_text)        # the update, verbatim; description stays the first story
 
-    new_issues = add_issues(classify(update_text)["issues"], "classify", "the tenant's update")
+    new_issues = add_issues(classify(update_text, issue_menu())["issues"], "classify", "the tenant's update")
     new_issues += add_related_issues()                     # facts already confirmed may bring in more
 
     fresh = {}

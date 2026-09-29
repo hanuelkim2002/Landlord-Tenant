@@ -199,17 +199,25 @@ def ask_json(llm, prompt):
     return json.loads(raw)
 
 
-def classify(description):
-    """Which issue labels fit the tenant's description? Multi-label. 'other' is allowed."""
-    prompt = f"""A Florida residential tenant describes a problem. Pick every label that fits.
-Labels: {ISSUE_LABELS}
-Use "other" if nothing fits. Do not guess facts the tenant did not state.
+def classify(description, menu):
+    """Which issue labels fit the tenant's description? Multi-label. menu: every label with the situation it
+    covers (corpus.issue_menu()). A label counts only if the tenant says that situation has happened."""
+    labels = "\n".join(f"- {label}: {situation}" for label, situation in menu.items())
+    prompt = f"""A Florida residential tenant describes a problem. Each label below covers one situation.
+Pick every label whose situation the tenant says has happened. Read who did what: a notice the tenant sent is
+not a notice the tenant received. Use "other" only if none of the situations fits.
+Do not guess facts the tenant did not state.
 Return ONLY JSON: {{"issues": [...], "reason": "one sentence per label, quoting what the tenant said"}}
+
+LABELS:
+{labels}
 
 TENANT SAID:
 {description}"""
     result = ask_json(agent_llm, prompt)
-    result["issues"] = [i for i in result["issues"] if i in ISSUE_LABELS]   # drop anything invented
+    result["issues"] = [i for i in result["issues"] if i in menu]   # drop anything invented
+    if not result["issues"]:
+        result["issues"] = ["other"]                                  # nothing fits: say so in the record
     return result
 
 

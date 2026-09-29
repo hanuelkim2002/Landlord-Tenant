@@ -75,8 +75,10 @@ class Spec(BaseModel):
 class Playbook(BaseModel):
     """One YAML playbook loaded into Python. spec is validated; provenance,
     counting, and guidance are plain dicts read by people or the model.
-    sections: the statute sections the playbook rests on, put into the prompt while its issue is active."""
+    sections: the statute sections the playbook rests on, put into the prompt while its issue is active.
+    description: the situation the playbook covers, in one line; shown to the classifier and to the tenant."""
     issue: str
+    description: str
     sections: List[str]
     provenance: dict
     counting: dict
@@ -196,3 +198,10 @@ for pb in playbooks.values():
             raise ValueError(f"{pb.issue}: related issue {rel.issue} is not an issue label")
         if rel.when.fact not in _all_facts:
             raise ValueError(f"{pb.issue}: related issue condition {rel.when.fact} is not a fact any playbook asks for")
+
+
+def issue_menu():
+    """Every label classify can pick, with the situation it covers: a playbook's description, and "other" for
+    none of them. What the classifier reads instead of bare label names."""
+    return {label: playbooks[label].description if label in playbooks else "None of the situations above."
+            for label in ISSUE_LABELS}

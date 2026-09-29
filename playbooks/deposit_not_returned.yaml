@@ -1,5 +1,5 @@
 issue: deposit_not_returned
-description: Tenant moved out. Landlord has neither returned the deposit nor sent a claim against it.
+description: The landlord has not returned the tenant's security deposit and has not sent a written claim against it.
 sections: ["83.49"]          # the statute sections this playbook rests on; loaded into the prompt
 
 provenance:

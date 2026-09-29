@@ -1,5 +1,5 @@
 issue: deposit_claim_received
-description: Tenant moved out and has received the landlord's written notice of intent to impose a claim on the deposit.
+description: Tenant has received the landlord's written notice that the landlord intends to keep all or part of the security deposit (a claim on the deposit).
 sections: ["83.49"]          # the statute sections this playbook rests on; loaded into the prompt
 
 provenance:
