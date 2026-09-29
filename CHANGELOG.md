@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-09-29
 
+- Issues are suggestions the tenant confirms, replacing the rule that issues are only ever added (the
+  author's decision). `record.add_issues` now suggests (`matter["proposed_issues"]`, event
+  `issue_proposed`); the intake sheet asks each suggested issue first, "This looks like: <description> Is
+  that part of your situation?", and a yes (`record.confirm_issue`, `issue_confirmed`) makes it active with
+  its questions next, a no (`record.reject_issue`, `issue_rejected`) takes it out and prunes its pending
+  suggestions. New chat commands `issues` and `drop <issue>` (`issue_dropped`). A related rule does not
+  re-suggest a rejected or dropped issue unless its fact is confirmed with a new value; a later
+  classification does. `other` is recorded at once (`issue_added`). Facts are suggested for suggested
+  issues too (`record.candidate_playbooks`). `run.py` now stops after the sheet when no covered issue is
+  active, so turning every suggestion down ends the visit as `other` does. `matter.json` gains
+  `proposed_issues` and `rejected_issues` (older matters get them empty on load). Smoke: the related-issue
+  section rewritten for suggestions, plus checks for reject, drop, not re-suggesting, and re-suggesting;
+  `smoke_online.py` checks resume suggests without activating. Scenarios answer the new question; claim,
+  repair, and not-covered scenarios rerun as expected (`t-test/m-012` to `m-014`).
 - The classifier reads each label with the situation it covers (the playbook's `description`, now a
   `Playbook` field, through the new `corpus.issue_menu()`), replacing bare label names; the prompt also
   says a notice the tenant sent is not one the tenant received, and an empty answer becomes `other`. The

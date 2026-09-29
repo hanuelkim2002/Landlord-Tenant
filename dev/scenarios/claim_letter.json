@@ -1,5 +1,5 @@
 {
-  "about": "A deposit not returned (lease ended 2026-07-31, moved out 2026-07-30). In the chat the tenant then reports the landlord's claim letter, dated 2026-09-22 and received 2026-09-25. Expected: the model proposes the change, a sheet appears mid-chat, claim_notice_received turns from no to yes, deposit_claim_received is added and its questions follow in the same sheet, and the deadlines then include the tenant's objection date 2026-10-10 and the landlord's remit date 2026-10-22, with the shared claim-notice deadline (2026-08-30) listed once for both issues.",
+  "about": "A deposit not returned (lease ended 2026-07-31, moved out 2026-07-30). In the chat the tenant then reports the landlord's claim letter, dated 2026-09-22 and received 2026-09-25. Expected: the model proposes the change, a sheet appears mid-chat, claim_notice_received turns from no to yes, deposit_claim_received is added and its questions follow in the same sheet, and the deadlines then include the tenant's objection date 2026-10-10 and the landlord's remit date 2026-10-22, with the shared claim-notice deadline (2026-08-30) listed once for both issues. If the classifier also suggests lease_ending (for 'my lease ended'), the tenant says no to it on the sheet.",
   "start": [
     "new",
     "t-test",
@@ -65,6 +65,15 @@
       "yes"
     ],
     "Is your tenancy month-to-month": [
+      "no"
+    ],
+    "Is that part of your situation?": [
+      "yes",
+      "yes",
+      "yes",
+      "yes"
+    ],
+    "The lease is ending or the tenancy is being ended": [
       "no"
     ]
   },

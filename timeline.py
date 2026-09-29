@@ -76,6 +76,12 @@ def render_timeline(issue=None, full=False):
             rows.append((day, what, "tool", ""))
         elif full and ev["kind"] == "issue_added":
             rows.append((day, f"issue added: {label(ev['issue'])}", f"{ev['source']}, {ev['because']}", ""))
+        elif full and ev["kind"] == "issue_proposed":
+            rows.append((day, f"issue suggested: {label(ev['issue'])}", f"{ev['source']}, {ev['because']}", ""))
+        elif full and ev["kind"] in ("issue_confirmed", "issue_rejected", "issue_dropped"):
+            what = ev["kind"].removeprefix("issue_")
+            where = "tenant, in the chat" if what == "dropped" else "tenant, on the sheet"
+            rows.append((day, f"issue {what}: {label(ev['issue'])}", where, ""))
         elif full and ev["kind"] == "session_started":
             rows.append((day, f"session {ev['session'][:8]} started ({ev['how']} matter)", "tool",
                          f"sessions/{ev['session']}.jsonl"))            # the transcript of this session

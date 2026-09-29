@@ -43,9 +43,16 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `record.py`: the shared state. `matter` and `profile` live here and every other module reaches them as
   `record.matter` and `record.profile`. `confirm_fact` (the only code that writes a confirmed fact),
   `prune_proposals` (drops suggestions that can never be asked; see Data flow 3), `add_issues(issues,
-  source, because)` (the only code that adds an issue; never removes one; logs `issue_added`),
-  `add_related_issues()` (adds every issue a related_issues rule of an active playbook points to once its
-  fact is confirmed with the rule's value, repeating until nothing new is added; returns what it added),
+  source, because)` (suggests each issue not already active or suggested, into `matter["proposed_issues"]`,
+  logging `issue_proposed`; a label with no playbook, `other`, is recorded in `issues` at once with
+  `issue_added`; a new suggestion clears an earlier rejection), `confirm_issue(issue)` (the tenant said yes:
+  active, `issue_confirmed`, then its own related rules are checked), `reject_issue(issue, kind)` (no on the
+  sheet, `issue_rejected`, or `drop` in the chat, `issue_dropped`: out of `issues` and `proposed_issues`,
+  into `rejected_issues`, pending fact suggestions pruned; confirmed facts stay), `add_related_issues(
+  renewed_fact=None)` (suggests every issue a related_issues rule of an active playbook points to once its
+  fact is confirmed with the rule's value; skips a rejected issue unless `renewed_fact` is the rule's fact,
+  just confirmed with a new value; returns what it suggested), `candidate_playbooks()` (active playbooks,
+  then those of suggested issues),
   `matter_dir` (the only function that knows the folder layout),
   `new_tenant_id` (random `t-` plus six hex characters), `new_matter_id(tenant_id)` (`m-001`, `m-002`, ...
   counting the tenant's `m-*` folders), `list_matters` (every saved matter as `{"tenant", "id", "issues"}`,
@@ -90,14 +97,17 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   ended by an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked
   (it stops if the matter has no lease profile), `start_session("existing")`, then asks "Anything new since last time?" with `ask_text`:
   text goes to `resume`, an empty answer goes on. Both return True when a matter is open. If `other` came in
-  alongside a covered issue, the tenant is told part of it may not be covered. Then, if the matter has no
-  active playbook (every issue is `other`), the tool says it does not cover this situation and ends the
-  session: no sheet, no chat; the description or update and the `other` label stay in the record for a
-  later pipeline. Otherwise, if `pending_rows()` has anything, `run_sheet()`; then `chat(build_agent())`;
-  then `end_session()` on a normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
-- `sheet.py`: the intake sheet, asked and saved by code with no model. `pending_rows()` (every changed,
-  proposed, or missing fact across the matter's issues, once per fact id, with its question, type, and
-  any suggestion), `parse_answer(kind, text)` (checks an answer against the element's type: dates as
+  alongside a covered issue (active or suggested), the tenant is told part of it may not be covered. Then,
+  if `pending_rows()` has anything, `run_sheet()`, which asks the suggested issues and the facts. If no
+  active playbook is left after it (every issue was `other`, or the tenant turned the suggestions down), the
+  tool says none of the situations it covers applies and stops: no chat; what was described and decided
+  stays in the record for a later pipeline. Otherwise `chat(build_agent())`. Then `end_session()` on a
+  normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
+- `sheet.py`: the intake sheet, asked and saved by code with no model. `pending_rows()` (first every
+  suggested issue as a yes/no row, "This looks like: <description> Is that part of your situation?", with
+  why it was suggested; then every changed, proposed, or missing fact of the active issues, once per fact
+  id, with its question, type, and any suggestion; a yes to an issue calls `confirm_issue` and its
+  questions follow, a no calls `reject_issue`), `parse_answer(kind, text)` (checks an answer against the element's type: dates as
   `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and commas, non-empty text), `shown`,
   and `run_sheet(ask=input)` (asks one fact at a time, rebuilding the list after each answer so an
   `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; shows "your lease
@@ -124,16 +134,17 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    (`corpus.issue_menu()`: the playbook's `description`, and "None of the situations above." for `other`),
    is told a notice the tenant sent is not one the tenant received, and returns issue labels; an empty
    answer becomes `["other"]`; labels not in
-   `ISSUE_LABELS` are dropped, and the rest are added with `add_issues` (source "classify"). Labels with no
-   playbook stay in `matter["issues"]` but have no elements or clocks. For each active playbook, `fill_facts` asks for a value, a `how` ("stated" or "inferred"), and
+   `ISSUE_LABELS` are dropped, and the rest go through `add_issues` (source "classify"): suggested, not yet active, until the
+   tenant says yes on the sheet; `other` is recorded at once. For each active or suggested playbook
+   (`candidate_playbooks`), `fill_facts` asks for a value, a `how` ("stated" or "inferred"), and
    the tenant's exact words for every element whose `source` includes `user`. An answer is kept only if
    its words appear in the description (substring after `squash`). The first playbook to propose a fact id
    wins. `intake` resets `facts` and `proposed` to empty before this, then saves `matter.json`.
 2b. An update to an existing matter (`resume`). The text is logged verbatim as a `tenant_update` event;
    `description` is not touched. `classify` runs on the update only, and any label not already in
-   `matter["issues"]` is added with `add_issues` (source "classify"), then `add_related_issues` in case a
-   confirmed fact already triggers a rule of a newly added playbook; none is removed. `fill_facts` runs on the update for every active
-   playbook, old and new. A value equal to the confirmed fact of the same id is dropped; the rest go into
+   `matter["issues"]` is suggested with `add_issues` (source "classify"), which also re-suggests an issue
+   the tenant rejected before; then `add_related_issues`. Nothing is activated or removed here; the sheet
+   asks. `fill_facts` runs on the update for every active or suggested playbook. A value equal to the confirmed fact of the same id is dropped; the rest go into
    `proposed`, replacing any older pending proposal for that id. A proposal next to a confirmed fact with a
    different value shows as `changed` (step 4). Facts two playbooks share by element id need nothing: there
    is one `facts` pool for the matter, so a new issue's shared elements are already known.
@@ -142,9 +153,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    proposal's `how`, `basis`, and `proposed_value` (or `how: "asked"` when nothing was proposed) and
    `confirmed_in`. One caller: the intake sheet (`sheet.run_sheet`, the tenant answers code directly,
    `confirmed_in: "sheet"`). Then `add_related_issues`: if the fact triggers a related_issues rule, the
-   related issue is added at once (source "related"), and since the sheet rebuilds its list after every
-   answer, the new issue's questions come up in the same sheet, which says "Added to your matter"; the
-   model's next prompt carries the new issue's guidance. Then `prune_proposals` drops every suggestion that can never be asked: all
+   related issue is suggested (source "related"); since the sheet rebuilds its list after every answer, it
+   is asked next in the same sheet ("Suggested for your matter"), and on a yes its questions follow and the
+   model's next prompt carries its guidance. Then `prune_proposals` drops every suggestion that can never be asked: all
    elements with its id take the value from the lease (a present clause listed before `user` in
    `source`), or depend on a fact confirmed as not true with no change to it pending, or no active playbook
    asks for it. A suggestion whose condition is still open, or has a pending change, is kept. `intake`,
@@ -179,7 +190,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    and events (see Files on disk). Sorted by date only; rows on the same day keep the order they were
    added (confirmed dates and deadlines first, then events in log order). `issue` filters deadlines and
    issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`,
-   `deadlines_computed`, `issue_added`, `session_started`, and `session_ended` events.
+   `deadlines_computed`, the issue events, `session_started`, and `session_ended` events.
 7. Letter assembly (`draft_letter`, then `build_letter`). Checks the issue and posture, checks each quote
    with `quote_is_real` (substring of a present lease clause quote or any stored statute section), then
    builds the letter from a template: today's date, landlord and premises quotes from the profile, every
@@ -196,7 +207,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
 - `pages.json`: list of `{"page": n, "text": ...}` from PyPDF2.
 - `lease_profile.json`: the `LeaseProfile`, one `Clause` per field: `present`, `quote`, `page`, `section`.
 - `matter.json`: current state only, overwritten by `save`. Keys: `id`, `tenant`, `description` (the intake text),
-  `issues` (labels from `classify`), `facts` (confirmed, element id to value), `proposed` (unconfirmed,
+  `issues` (active: confirmed by the tenant, plus `other` if classified), `proposed_issues` (suggested, not
+  yet confirmed: `{"issue", "source", "because"}`), `rejected_issues` (turned down or dropped; a related rule
+  skips them), `facts` (confirmed, element id to value), `proposed` (unconfirmed,
   element id to `{"value", "how", "basis"}`).
 - `events.jsonl`: the history, one JSON object per line, append-only. Every event has `when` (local time,
   ISO, to the second) and `kind`, then `session` (the session id) if a session was open when it was
@@ -212,9 +225,13 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `artifact`: `file` (original name), `sha256`, `note`. Written by `add_artifact`.
   - `communication`: `sent_on` (YYYY-MM-DD), `sender`, `recipient`, `channel`, `text`. Written by
     `add_communication`. The timeline sorts it by `sent_on`, not `when`.
-  - `issue_added`: `issue`, `source` ("classify" or "related"), `because` (e.g. "the tenant's update",
-    "claim_notice_received is true"). Written by `record.add_issues`. `timeline full` only. Matters from
-    before 2026-09-27 have issues with no such event.
+  - `issue_proposed`: `issue`, `source` ("classify" or "related"), `because` (e.g. "the tenant's update",
+    "claim_notice_received is true"). Written by `record.add_issues`. `timeline full` only.
+  - `issue_confirmed`, `issue_rejected` (on the sheet), `issue_dropped` (the `drop` chat command): `issue`.
+    Written by `record.confirm_issue` / `record.reject_issue`. `timeline full` only.
+  - `issue_added`: `issue`, `source`, `because`. Written by `record.add_issues` for a label with no playbook
+    (`other`), which has nothing to confirm. Before 2026-09-29 every issue was added this way, without
+    confirmation; matters from before 2026-09-27 have issues with no event at all.
   - `tenant_update`: `text`, what a returning tenant typed as new, verbatim. Written by `resume`. Shown in
     the timeline as "tenant update" with the first words.
   - `session_started`: `how` ("new" or "existing"). Written by `start_session`. `timeline full` only, with
@@ -400,5 +417,7 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
   and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).
   Then the intake sheet asks every open fact (no model), and the chat starts. Chat commands, handled by the loop without the
-  model: `timeline`, `timeline full`, `timeline <issue>`; an empty line or `bye` exits. Every run appends
+  model: `timeline`, `timeline full`, `timeline <issue>`, `issues` (the active and suggested issues),
+  `drop <issue>` (takes an active issue out, logged; the chat ends if no covered issue is left); an empty
+  line or `bye` exits. Every run appends
   to the matter's `events.jsonl`.

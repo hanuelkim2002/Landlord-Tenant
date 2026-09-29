@@ -29,8 +29,9 @@ student, not admitted.
   the `tools` list at the bottom of that file. `python schemas.py` shows what the model sees.
 - `matter.json` is current state only. `events.jsonl` is the only history, append-only.
 - `record.confirm_fact` is the only door into `matter["facts"]`, and only the intake sheet calls it. The model
-  can only propose (`propose_facts`). `record.add_issues` is the only door into `matter["issues"]`; issues are
-  never removed. `compute_deadlines` is the only date arithmetic.
+  can only propose (`propose_facts`). Issues work the same way: `record.add_issues` only suggests (the
+  classifier, a related rule), `record.confirm_issue` (a yes on the sheet) makes one active, and
+  `record.reject_issue` logs a no or a drop. Nothing is deleted from the history. `compute_deadlines` is the only date arithmetic.
 - Every quote (lease, statute, tenant's words) is checked by substring against its source before use.
 - Letters are a code template (`build_letter`). The timeline is printed by the chat loop, never by the model.
 
@@ -65,4 +66,4 @@ student, not admitted.
     python schemas.py        # what the model sees per tool
     python dev/live_run.py dev/scenarios/nonpayment_3day.json   # a scripted live session; calls the model
 
-Chat commands: `timeline`, `timeline full`, `timeline <issue>`, `bye`.
+Chat commands: `timeline`, `timeline full`, `timeline <issue>`, `issues`, `drop <issue>`, `bye`.

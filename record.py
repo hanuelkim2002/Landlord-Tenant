@@ -18,7 +18,8 @@ from deterministic import check_elements
 from lease import LeaseProfile
 
 # The test matter. "t-test" is the test tenant's id; a real tenant gets a random one from new_tenant_id().
-matter = {"id": "test-001", "tenant": "t-test", "issues": [], "facts": {}, "proposed": {}}
+matter = {"id": "test-001", "tenant": "t-test", "issues": [], "proposed_issues": [], "rejected_issues": [],
+          "facts": {}, "proposed": {}}
 profile = None          # the LeaseProfile for this matter. Set by run.py after intake or load.
 session = None          # the open session's id, or None. Set by start_session, cleared by end_session.
 
@@ -58,6 +59,8 @@ def load_matter(tenant_id, matter_id):
     global matter, profile
     folder = MATTERS / tenant_id / matter_id
     matter = json.loads((folder / "matter.json").read_text())
+    matter.setdefault("proposed_issues", [])            # matters saved before issues were confirmed
+    matter.setdefault("rejected_issues", [])
     profile_path = folder / "lease_profile.json"
     profile = LeaseProfile.model_validate_json(profile_path.read_text()) if profile_path.exists() else None
     return matter
@@ -67,7 +70,8 @@ def new_matter(tenant_id):
     """Start an empty matter for this tenant with the next matter id, and clear `profile`. Nothing is written
     until the lease is read or the matter is saved."""
     global matter, profile
-    matter = {"id": new_matter_id(tenant_id), "tenant": tenant_id, "issues": [], "facts": {}, "proposed": {}}
+    matter = {"id": new_matter_id(tenant_id), "tenant": tenant_id, "issues": [], "proposed_issues": [],
+              "rejected_issues": [], "facts": {}, "proposed": {}}
     profile = None
     return matter
 
@@ -78,52 +82,84 @@ def confirm_fact(fact_id, value, confirmed_in):
     """Move one fact into matter["facts"] and log it. confirmed_in: where the tenant confirmed it; "sheet"
     (the intake sheet) is the only caller now. The event keeps what was proposed and on what words."""
     was = matter["proposed"].pop(fact_id, {"value": None, "how": "asked", "basis": None})
+    renewed = fact_id not in matter["facts"] or matter["facts"][fact_id] != value     # new information
     matter["facts"][fact_id] = value
     append_event("fact_confirmed", id=fact_id, value=value, how=was["how"], basis=was["basis"],
                  proposed_value=was["value"], confirmed_in=confirmed_in)
-    add_related_issues()                       # this fact may bring in another issue (related_issues)
+    add_related_issues(fact_id if renewed else None)   # this fact may suggest another issue (related_issues)
     prune_proposals()                          # a "no" here can make another suggestion moot
 
 
-# ---- Issues: add_issues is the only code that adds an issue to the matter. Issues are never removed.
+# ---- Issues. The classifier and related rules only suggest an issue (add_issues); the tenant confirms or
+# rejects it on the intake sheet (confirm_issue, reject_issue) and can drop an active one in the chat. Every
+# step is logged; nothing is taken out of the history.
 
 def add_issues(issues, source, because):
-    """Add each issue the matter does not have yet, in order, and log an issue_added event for it.
-    source: "classify" (from the tenant's description or update) or "related" (a related_issues rule).
-    because: what brought it in, in words. Returns the issues that were new."""
-    added = []
+    """Suggest each issue that is not already active or suggested. source: "classify" (from the tenant's
+    description or update) or "related" (a related_issues rule); because: what brought it in, in words. An
+    issue with no playbook ("other") has nothing to confirm or ask, so it is recorded at once (issue_added).
+    A new suggestion clears an earlier rejection: the tenant is asked again. Returns the issues it took in."""
+    new = []
     for issue in issues:
-        if issue not in matter["issues"]:
+        if issue in matter["issues"] or any(p["issue"] == issue for p in matter["proposed_issues"]):
+            continue
+        if issue not in playbooks:
             matter["issues"].append(issue)
             append_event("issue_added", issue=issue, source=source, because=because)
-            added.append(issue)
+        else:
+            matter["proposed_issues"].append({"issue": issue, "source": source, "because": because})
+            if issue in matter["rejected_issues"]:
+                matter["rejected_issues"].remove(issue)
+            append_event("issue_proposed", issue=issue, source=source, because=because)
+        new.append(issue)
+    return new
+
+
+def confirm_issue(issue):
+    """The tenant said yes on the sheet: the issue becomes active and its own related rules are checked."""
+    matter["proposed_issues"] = [p for p in matter["proposed_issues"] if p["issue"] != issue]
+    matter["issues"].append(issue)
+    append_event("issue_confirmed", issue=issue)
+    add_related_issues()
+
+
+def reject_issue(issue, kind="issue_rejected"):
+    """The tenant said no to a suggested issue (issue_rejected, on the sheet) or dropped an active one
+    (issue_dropped, in the chat). Its questions stop and its pending suggestions go. A related rule does not
+    suggest it again unless the rule's fact is confirmed anew; a later classification of the tenant's words
+    does. Facts already confirmed stay in the matter."""
+    matter["proposed_issues"] = [p for p in matter["proposed_issues"] if p["issue"] != issue]
+    if issue in matter["issues"]:
+        matter["issues"].remove(issue)
+    if issue not in matter["rejected_issues"]:
+        matter["rejected_issues"].append(issue)
+    append_event(kind, issue=issue)
+    prune_proposals()
+
+
+def add_related_issues(renewed_fact=None):
+    """Suggest every issue an active playbook's related_issues rule points to, once the rule's fact is confirmed
+    with the rule's value. An issue the tenant rejected or dropped is skipped, unless renewed_fact is the
+    rule's fact, just confirmed with a new value. Returns the issues suggested."""
+    added = []
+    for pb in active_playbooks():
+        for rel in pb.spec.related_issues:
+            fact = rel.when.fact
+            if fact not in matter["facts"] or matter["facts"][fact] != rel.when.equals:
+                continue
+            if rel.issue in matter["rejected_issues"] and fact != renewed_fact:
+                continue
+            added += add_issues([rel.issue], "related", f"{fact} is {json.dumps(rel.when.equals)}")
     return added
-
-
-def add_related_issues():
-    """Add every issue an active playbook's related_issues rule points to, once the rule's fact is confirmed
-    with the rule's value. Repeats until nothing is added, since a new issue may bring its own rules.
-    Returns every issue added."""
-    all_added = []
-    while True:
-        added = []
-        for pb in active_playbooks():
-            for rel in pb.spec.related_issues:
-                fact = rel.when.fact
-                if fact in matter["facts"] and matter["facts"][fact] == rel.when.equals:
-                    added += add_issues([rel.issue], "related", f"{fact} is {json.dumps(rel.when.equals)}")
-        if not added:
-            return all_added
-        all_added += added
 
 
 def prune_proposals():
     """Drop suggestions that can never be asked: every element with that id either takes its value from the
     lease, depends on a fact the tenant confirmed as no (with no change to it pending), or no issue of the
-    matter asks for it. A suggestion that depends on a fact still open is kept, since that fact may yet be yes. Nothing is logged: suggestions
+    matter, active or suggested, asks for it. A suggestion that depends on a fact still open is kept, since that fact may yet be yes. Nothing is logged: suggestions
     are not history, and the tenant's words they came from stay in the description or the update."""
     for fact_id in list(matter["proposed"]):
-        uses = [e for pb in active_playbooks() for e in pb.spec.elements if e.id == fact_id]
+        uses = [e for pb in candidate_playbooks() for e in pb.spec.elements if e.id == fact_id]
         if all(_cannot_be_asked(e) for e in uses):
             del matter["proposed"][fact_id]
 
@@ -210,6 +246,12 @@ def read_events():
 def active_playbooks():
     """The loaded playbooks for this matter's issues, in the order classify listed them."""
     return [playbooks[i] for i in matter["issues"] if i in playbooks]
+
+
+def candidate_playbooks():
+    """The active playbooks, then those of suggested issues: the ones whose facts fill_facts may suggest and
+    prune_proposals keeps, since a suggested issue may yet be confirmed."""
+    return active_playbooks() + [playbooks[p["issue"]] for p in matter["proposed_issues"] if p["issue"] in playbooks]
 
 
 def element_status():

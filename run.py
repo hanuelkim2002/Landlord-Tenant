@@ -16,7 +16,7 @@ import record
 from agent import build_agent, chat, intake, resume
 from lease import check_quotes, extract_profile, ingest_pdf
 from sheet import pending_rows, run_sheet
-from record import (active_playbooks, end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id,
+from record import (active_playbooks, candidate_playbooks, end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id,
                     start_session)
 
 
@@ -67,7 +67,7 @@ def start_new():
 
     read_lease(ask_path("Path to the lease PDF: "))
     intake(ask_text("Describe the problem in your own words. Press Enter on an empty line when done."))
-    if "other" in record.matter["issues"] and active_playbooks():
+    if "other" in record.matter["issues"] and candidate_playbooks():
         print(NOT_COVERED)
     return True
 
@@ -95,7 +95,7 @@ def start_existing():
     update = ask_text("Anything new since last time? Type it in your own words and press Enter on an empty\n"
                       "line when done. Press Enter right away if nothing is new.")
     if update:
-        if "other" in resume(update) and active_playbooks():   # logs the update, adds issues, proposes facts
+        if "other" in resume(update) and candidate_playbooks():   # logs the update, suggests issues and facts
             print(NOT_COVERED)
     return True
 
@@ -110,15 +110,14 @@ def start():
             return start_existing()
 
 
-matter_open = start()
-if matter_open and not active_playbooks():
-    # Nothing the tool covers: every issue it found is "other". Stop before the sheet and the chat; the
-    # description (or update) and the "other" label are already in the record for a later pipeline.
-    print("\nThis tool does not cover this situation yet, so it stops here. What you described is saved in your\n"
-          "matter's record.")
-    end_session()
-elif matter_open:
+if start():
     if pending_rows():
-        run_sheet()                            # the tenant confirms facts with code, before the model sees them
-    chat(build_agent())                        # built after the sheet, so the prompt holds the confirmed facts
+        run_sheet()                            # the tenant confirms issues and facts with code, before the model
+    if not active_playbooks():
+        # Nothing the tool covers is left: every issue found was "other", or the tenant turned the suggestions
+        # down. Stop before the chat; what was described and decided is in the record for a later pipeline.
+        print("\nNone of the situations this tool covers applies, so it stops here. What you described is saved\n"
+              "in your matter's record.")
+    else:
+        chat(build_agent())                    # built after the sheet, so the prompt holds the confirmed facts
     end_session()                              # only on a normal exit; a crash leaves the start without an end

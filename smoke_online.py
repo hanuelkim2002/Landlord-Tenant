@@ -61,7 +61,9 @@ try:
     check("resume confirms nothing", facts == before["facts"])
     check("resume drops suggestions equal to a confirmed value",
           not any(i in facts and p["value"] == facts[i] for i, p in record.matter["proposed"].items()))
-    check("(model) resume adds deposit_claim_received", "deposit_claim_received" in record.matter["issues"])
+    check("(model) resume suggests deposit_claim_received", any(
+        p["issue"] == "deposit_claim_received" for p in record.matter["proposed_issues"]))
+    check("resume activates nothing: a suggested issue waits for the tenant", record.matter["issues"] == ["deposit_not_returned"])
     check("(model) the changed fact is proposed", record.matter["proposed"].get("claim_notice_received", {}).get("value") is True)
 finally:
     remove_scratch("t-smoke-online")

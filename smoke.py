@@ -260,41 +260,48 @@ check("the scratch matter is removed", not (MATTERS / "t-smoke").exists())
 print()
 
 
-# ---- Related issues, on a second scratch copy with one issue: confirming "received a notice: yes" on the
-# sheet brings in deposit_claim_received, logs it, and puts its questions and guidance in front of the tenant
-# and the model at once.
+# ---- Issues as suggestions, on a second scratch copy with one issue. Confirming "received a notice: yes" on
+# the sheet suggests deposit_claim_received; the tenant says yes to it and its questions and guidance follow.
+# Then: a rejected issue is not suggested again by its rule unless the fact is confirmed anew, a classifier
+# suggestion asks again, and an active issue can be dropped. Nothing leaves the history.
 make_scratch("t-smoke-related", issues=["deposit_not_returned"], facts={"claim_notice_received": False},
              proposed={"claim_notice_received": stated(True, "I got a letter from the landlord")})
 try:
     load_matter("t-smoke-related", "m-001")
     sid = start_session("existing")
-    check("a related issue is not added before its fact is confirmed", record.add_related_issues() == []
-          and record.matter["issues"] == ["deposit_not_returned"])
+    check("a related issue is not suggested before its fact is confirmed", record.add_related_issues() == []
+          and record.matter["issues"] == ["deposit_not_returned"] and record.matter["proposed_issues"] == [])
     shown_sheet = io.StringIO()
-    def accept_notice_skip_rest(prompt):
-        """Answer by the question on screen: accept the suggested change to "received a notice", skip the rest."""
+    def accept_notice_and_issue(prompt):
+        """Answer by the question on screen: accept the change to "received a notice", say yes to the suggested
+        issue, skip the rest."""
         last_question = [line for line in shown_sheet.getvalue().splitlines() if line.startswith("  ") and
                          not line.startswith("    ")][-1]
-        return "" if "received any written notice" in last_question else "?"
+        if "received any written notice" in last_question:
+            return ""
+        return "yes" if "Is that part of your situation?" in last_question else "?"
     with contextlib.redirect_stdout(shown_sheet):
-        run_sheet(accept_notice_skip_rest)
-    added = [e for e in read_events() if e["kind"] == "issue_added"]
-    check("confirming the fact adds the related issue", record.matter["issues"] == ["deposit_not_returned",
-          "deposit_claim_received"])
-    check("the added issue is logged with its source and reason", added and added[-1]["issue"] == "deposit_claim_received"
-          and added[-1]["source"] == "related" and added[-1]["because"] == "claim_notice_received is true"
-          and added[-1]["session"] == sid)
-    check("the sheet says so and asks the new issue's questions in the same run",
-          "Added to your matter: deposit_claim_received" in shown_sheet.getvalue()
-          and "What date is printed on the landlord's notice?" in shown_sheet.getvalue())
+        run_sheet(accept_notice_and_issue)
+    events = read_events()
+    proposed = [e for e in events if e["kind"] == "issue_proposed"]
+    check("confirming the fact suggests the related issue, with its source and reason", proposed
+          and proposed[-1]["issue"] == "deposit_claim_received" and proposed[-1]["source"] == "related"
+          and proposed[-1]["because"] == "claim_notice_received is true" and proposed[-1]["session"] == sid)
+    check("the sheet asks about the suggested issue before its facts, and yes makes it active",
+          "Suggested for your matter: deposit_claim_received" in shown_sheet.getvalue()
+          and "This looks like: Tenant has received the landlord's written notice" in shown_sheet.getvalue()
+          and shown_sheet.getvalue().index("Is that part of your situation?") < shown_sheet.getvalue().index("What date is printed on the landlord's notice?")
+          and record.matter["issues"] == ["deposit_not_returned", "deposit_claim_received"]
+          and any(e["kind"] == "issue_confirmed" and e["issue"] == "deposit_claim_received" for e in events))
     check("the model's next prompt has the new issue's guidance", "issue: deposit_claim_received" in system_prompt())
     check("the prompt carries the sections the active playbooks name", "=== 83.49 ===" in system_prompt())
     sections_before = system_prompt().split("STATUTE SECTIONS:")[1].split("ELEMENT STATUS")[0]
     record.add_issues(["other"], "classify", "a smoke check")        # "other" is the one label with no playbook
-    check("an issue with no playbook adds no sections",
-          system_prompt().split("STATUTE SECTIONS:")[1].split("ELEMENT STATUS")[0] == sections_before)
+    check("an issue with no playbook is recorded at once and adds no sections", "other" in record.matter["issues"]
+          and system_prompt().split("STATUTE SECTIONS:")[1].split("ELEMENT STATUS")[0] == sections_before)
     check("add_issues never adds an issue twice", record.add_issues(["deposit_claim_received"], "classify", "x") == [])
-    check("timeline full shows the added issue", "issue added: deposit claim received" in render_timeline(full=True))
+    check("timeline full shows the suggestion and the confirmation", "issue suggested: deposit claim received"
+          in render_timeline(full=True) and "issue confirmed: deposit claim received" in render_timeline(full=True))
     # deadlines per issue: deposit_not_returned complete, deposit_claim_received still open (its facts skipped)
     record.matter["facts"].update(tenancy_terminated="2026-07-31", vacated="2026-07-30", claim_notice_date="2026-09-25",
                                   forwarding_address_given=True, early_or_periodic=False)
@@ -303,6 +310,24 @@ try:
           {d["clock"] for d in per_issue["deadlines"]} == {"return_if_no_claim", "claim_notice_deadline"}
           and all(d["issues"] == ["deposit_not_returned"] for d in per_issue["deadlines"])
           and "deposit_claim_received" in per_issue["waiting"] and "deposit_not_returned" not in per_issue["waiting"])
+    # dropping, rejecting, and asking again
+    record.matter["proposed"]["claim_amount"] = stated(400, "keeping $400")
+    record.reject_issue("deposit_claim_received", "issue_dropped")
+    check("drop takes an issue out, logs it, and clears its pending suggestions",
+          "deposit_claim_received" not in record.matter["issues"] and "claim_amount" not in record.matter["proposed"]
+          and read_events()[-1]["kind"] == "issue_dropped")
+    check("the rule does not suggest a dropped issue again on its own", record.add_related_issues() == [])
+    record.confirm_fact("claim_notice_received", False, "sheet")
+    record.confirm_fact("claim_notice_received", True, "sheet")        # the notice fact confirmed anew
+    check("the rule suggests it again when its fact is confirmed anew",
+          [p["issue"] for p in record.matter["proposed_issues"]] == ["deposit_claim_received"])
+    record.reject_issue("deposit_claim_received")
+    check("no on the sheet rejects a suggestion and logs it", record.matter["proposed_issues"] == []
+          and read_events()[-1]["kind"] == "issue_rejected" and "deposit_claim_received" in record.matter["rejected_issues"])
+    record.add_issues(["deposit_claim_received"], "classify", "the tenant's update")
+    check("a later classification suggests a rejected issue again",
+          [p["issue"] for p in record.matter["proposed_issues"]] == ["deposit_claim_received"]
+          and "deposit_claim_received" not in record.matter["rejected_issues"])
     end_session()
 finally:
     remove_scratch("t-smoke-related")
@@ -330,7 +355,7 @@ make_scratch("t-smoke-playbooks")
 try:
     load_matter("t-smoke-playbooks", "m-001")
     for issue in sorted(playbooks):
-        record.matter.update(issues=[], facts={}, proposed={})
+        record.matter.update(issues=[], proposed_issues=[], rejected_issues=[], facts={}, proposed={})
         record.add_issues([issue], "classify", "a smoke check")
         shown_sheet = io.StringIO()
         with contextlib.redirect_stdout(shown_sheet):

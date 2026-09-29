@@ -10,10 +10,10 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 import record
 from config import agent_llm
-from corpus import issue_menu, statute
+from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
-from record import (active_playbooks, add_issues, add_related_issues, append_event, element_status,
-                    prune_proposals, save)
+from record import (active_playbooks, add_issues, add_related_issues, append_event, candidate_playbooks,
+                    element_status, prune_proposals, reject_issue, save)
 from sheet import pending_rows, run_sheet
 from timeline import render_timeline
 from tools import tools
@@ -81,7 +81,7 @@ def intake(description):
     matter["facts"] = {}
     matter["proposed"] = {}
     add_issues(classify(description, issue_menu())["issues"], "classify", "the tenant's description")
-    for pb in active_playbooks():                          # first playbook to propose a fact wins
+    for pb in candidate_playbooks():                       # suggested issues too; first to propose a fact wins
         for fact_id, p in fill_facts(description, pb).items():
             matter["proposed"].setdefault(fact_id, p)
     prune_proposals()                                      # e.g. a deposit amount the lease already gives
@@ -104,7 +104,7 @@ def resume(update_text):
     new_issues += add_related_issues()                     # facts already confirmed may bring in more
 
     fresh = {}
-    for pb in active_playbooks():                          # first playbook to propose a fact wins, as in intake
+    for pb in candidate_playbooks():                       # suggested issues too; first to propose a fact wins
         for fact_id, p in fill_facts(update_text, pb).items():
             if fact_id in matter["facts"] and matter["facts"][fact_id] == p["value"]:
                 continue                                   # the tenant already confirmed this value
@@ -176,6 +176,27 @@ def chat(agent):
         q = input(">> ")
         if q in ("", "bye"):
             break
+        if q.strip().lower() == "issues":                   # the matter's issues, from the record
+            record.append_transcript({"role": "command", "text": q})
+            for i in record.matter["issues"]:
+                print(f"  {i}: {playbooks[i].description if i in playbooks else 'not covered by this tool'}")
+            for p in record.matter["proposed_issues"]:
+                print(f"  {p['issue']}: suggested, not yet confirmed")
+            print()
+            continue
+        if q.strip().lower().startswith("drop "):           # the tenant takes an issue out of the matter
+            record.append_transcript({"role": "command", "text": q})
+            issue = q.split(maxsplit=1)[1].strip()
+            if issue not in record.matter["issues"] or issue not in playbooks:
+                print(f"No active issue named {issue}. Type issues to see them.\n")
+                continue
+            reject_issue(issue, "issue_dropped")
+            save(record.matter)
+            print(f"Dropped {issue} from this matter. It is logged, and it can be suggested again later.\n")
+            if not active_playbooks():
+                print("No issue this tool covers is left in this matter, so the chat ends here.\n")
+                break
+            continue
         if q.strip().lower().startswith("timeline"):
             record.append_transcript({"role": "command", "text": q})
             words = q.split()[1:]

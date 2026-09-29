@@ -11,16 +11,22 @@ from datetime import datetime
 
 import record
 from corpus import playbooks
-from record import confirm_fact, element_status, save
+from record import confirm_fact, confirm_issue, element_status, reject_issue, save
 
 
 # ---- Which rows: every changed, proposed, or missing fact across the matter's issues, once per fact id.
 
 def pending_rows():
-    """The facts that need the tenant, in playbook order. Each row: issue, id, type, question, status,
-    suggested (a value or None), basis (the tenant's words behind the suggestion), confirmed (for changed),
-    lease_says (the lease's words, when the lease field named in the playbook differs from the suggestion)."""
-    rows, seen = [], set()
+    """What needs the tenant: first every suggested issue (a yes/no row, kind "issue"), then the facts of the
+    active issues in playbook order (kind "fact"). Each row: kind, issue, id, type, question, status,
+    suggested (a value or None), basis (the tenant's words behind the suggestion, or why an issue was
+    suggested), confirmed (for changed), lease_says (the lease's words, when the lease field named in the
+    playbook differs from the suggestion)."""
+    rows = [{"kind": "issue", "issue": p["issue"], "id": "issue:" + p["issue"], "type": "bool",
+             "question": f"This looks like: {playbooks[p['issue']].description} Is that part of your situation?",
+             "status": "suggested", "suggested": None, "basis": p["because"], "confirmed": None, "lease_says": None}
+            for p in record.matter["proposed_issues"]]
+    seen = set()
     for issue, statuses in element_status().items():
         pb = playbooks[issue]
         types = {e.id: e.type for e in pb.spec.elements}
@@ -29,7 +35,7 @@ def pending_rows():
                 continue
             seen.add(s["id"])                          # a fact two issues share is asked once
             rows.append({
-                "issue": issue, "id": s["id"], "type": types[s["id"]],
+                "kind": "fact", "issue": issue, "id": s["id"], "type": types[s["id"]],
                 "question": pb.guidance["questions"][s["id"]], "status": s["status"],
                 "suggested": s.get("new_value") if s["status"] == "changed" else s.get("value"),
                 "basis": s.get("basis"),
@@ -85,8 +91,9 @@ HINT = {"date": "YYYY-MM-DD", "bool": "yes/no", "money": "amount", "text": "word
 
 
 def run_sheet(ask=input):
-    """Ask every pending fact until none is left or the tenant has skipped the rest. Returns the facts saved,
-    as (id, value) pairs, so the chat loop can tell the model what the tenant confirmed.
+    """Ask every suggested issue and pending fact until none is left or the tenant has skipped the rest.
+    Returns what was saved as (id, value) pairs (an issue as ("issue <name>", "confirmed" or "rejected")), so
+    the chat loop can tell the model what the tenant decided.
     ask is the function that reads one answer; input by default, a list's iterator in tests."""
     print("\nFacts for your matter. Enter accepts a suggested answer, or type the right one. ? skips for now.\n")
     skipped, saved, last_issue = set(), [], None
@@ -110,6 +117,8 @@ def run_sheet(ask=input):
             print(f"    suggested: {shown(suggested)}, from your words: \"{r['basis']}\"")
         if r["lease_says"]:
             print(f"    your lease says: \"{r['lease_says']}\" (shown for comparison; this tool does not decide which is right)")
+        if r["kind"] == "issue":
+            print(f"    suggested because of: {r['basis']}")
 
         answer = ask("    > ").strip()
         if answer == "?":
@@ -123,14 +132,23 @@ def run_sheet(ask=input):
                 print(f"    Please type {expected}, or ? to skip.")
                 continue
 
-        issues_before = list(record.matter["issues"])
-        confirm_fact(r["id"], value, "sheet")              # may add a related issue; its questions come next
+        if r["kind"] == "issue":                           # yes: active, its questions follow; no: logged, gone
+            (confirm_issue if value else reject_issue)(r["issue"])
+            save(record.matter)
+            print(f"    {'Its questions follow.' if value else 'Taken out of your matter; logged.'}")
+            record.append_transcript({"role": "sheet", "id": r["id"], "question": r["question"],
+                                      "typed": answer, "value": value})
+            saved.append((f"issue {r['issue']}", "confirmed" if value else "rejected"))
+            continue
+
+        suggested_before = [p["issue"] for p in record.matter["proposed_issues"]]
+        confirm_fact(r["id"], value, "sheet")              # may suggest a related issue; it is asked next
         save(record.matter)
-        added = [i for i in record.matter["issues"] if i not in issues_before]
+        added = [p["issue"] for p in record.matter["proposed_issues"] if p["issue"] not in suggested_before]
         for issue in added:
-            print(f"    Added to your matter: {issue}. Its questions follow.")
+            print(f"    Suggested for your matter: {issue}. It is asked next.")
         record.append_transcript({"role": "sheet", "id": r["id"], "question": r["question"],
-                                  "typed": answer, "value": value, **({"issues_added": added} if added else {})})
+                                  "typed": answer, "value": value, **({"issues_suggested": added} if added else {})})
         saved.append((r["id"], value))
 
     if skipped:
