@@ -9,6 +9,7 @@ from langchain_core.utils.uuid import uuid7
 from langgraph.checkpoint.memory import InMemorySaver
 
 import record
+from citations import caution, check_cites
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
@@ -167,6 +168,27 @@ def transcript_entry(m):
     return entry
 
 
+def sections_shown(messages):
+    """The sections the model could cite from: its STATUTE SECTIONS (the active playbooks' sections) plus every
+    section it fetched with get_statute_section in this chat's thread."""
+    fetched = {c["args"].get("section") for m in messages if m.type == "ai"
+               for c in m.tool_calls if c["name"] == "get_statute_section"}
+    return {s for pb in active_playbooks() for s in pb.sections} | fetched
+
+
+def check_reply(text, shown):
+    """Check the cites in one reply (citations.check_cites). Each failed cite gets a caution printed under the
+    reply, a line in the transcript, and a cite_flagged event. The reply itself was already shown."""
+    problems = check_cites(text, shown)
+    for cite, problem in problems:
+        line = caution(cite, problem)
+        print(line)
+        record.append_transcript({"role": "check", "text": line})
+        append_event("cite_flagged", cite=cite, problem=problem)
+    if problems:
+        print()
+
+
 def chat(agent):
     # The chat thread takes the session's id, so the conversation and the record's events share one id.
     config = {"configurable": {"thread_id": record.session or str(uuid7())}}
@@ -215,11 +237,13 @@ def chat(agent):
         new = result["messages"][seen + 1:]              # everything new this turn, minus the tenant's message
         for m in new:
             record.append_transcript(transcript_entry(m))
+        shown = sections_shown(result["messages"])       # what the model had to cite from, for check_reply
         for m in new:                                    # print the replies, and a letter if one was drafted
             if m.type == "tool" and m.name == "draft_letter":
                 print(m.content, "\n")
             elif m.type == "ai" and m.content:
                 print(m.content, "\n")
+                check_reply(m.content, shown)
         seen = len(result["messages"])
         # The model suggested facts: the tenant confirms them on the sheet now, with code, not with the model.
         # The model learns the result with the tenant's next message, since the sheet runs between its turns.

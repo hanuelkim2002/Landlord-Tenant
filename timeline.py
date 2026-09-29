@@ -87,6 +87,8 @@ def render_timeline(issue=None, full=False):
                          f"sessions/{ev['session']}.jsonl"))            # the transcript of this session
         elif full and ev["kind"] == "session_ended":
             rows.append((day, f"session {ev['session'][:8]} ended", "tool", ""))
+        elif full and ev["kind"] == "cite_flagged":
+            rows.append((day, f"a reply's cite flagged: {ev['cite']}", "tool, citations.check_cites", ""))
         elif full and ev["kind"] == "deadlines_computed":
             rows.append((day, "computed deadlines: " + ", ".join(label(c) for c in ev["clocks"]), "tool", ""))
 

@@ -5,6 +5,17 @@ session can see why the code is the way it is.
 
 ## 2026-09-29
 
+- Cite check on the model's replies (new `citations.py`; `agent.check_reply` and `sections_shown`). After each
+  reply, every ch. 83 cite in it is checked: the section must be in `statutes/`, must have been in the
+  prompt's STATUTE SECTIONS or fetched with `get_statute_section` in the chat (rule 8), and a subsection
+  such as 83.49(3)(b) must exist in the text. A failed cite gets a "[Check: ...]" line to the tenant under
+  the reply, a `check` transcript line, and a new `cite_flagged` event (`timeline full`). Before this,
+  rule 8 was only a prompt rule and nothing looked at the cites a reply contained. Subsections are found by
+  their markers in the one-line section text; smoke checks that the markers run in order in all 40 stored
+  sections. This does not catch TODO items 6 or 11: both cite a real subsection of a shown section, and the
+  check cannot tell whether a cite fits what the reply says (a smoke check records that item 11 passes).
+  Replayed over the `t-test` transcripts: 35 cites, 3 flagged, all 83.505 mentioned without a fetch
+  (m-001, m-009).
 - TODO.md tidied. Removed the model-behavior item on `classify` suggesting `lease_ending` for "my lease
   ended": the classifier now reads each label's description, and a wrong suggestion is turned down on the
   sheet instead of becoming active (both entries below). Removed the empty "Now" and "Data bank" headings

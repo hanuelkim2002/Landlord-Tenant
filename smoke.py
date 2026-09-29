@@ -12,18 +12,20 @@ import re
 from datetime import date
 
 import PyPDF2
+from langchain.messages import AIMessage
 
 import record
 from calendars import court_calendars
 from checks import check, make_scratch, remove_scratch, summary
+from citations import SUBSECTION_START, check_cites, subsections
 from config import MATTERS
-from corpus import check_all_playbooks, playbooks
+from corpus import check_all_playbooks, playbooks, statute
 from deterministic import check_elements, compute_deadlines, lease_value
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
 from timeline import render_timeline
-from agent import system_prompt
+from agent import check_reply, sections_shown, system_prompt
 from tools import build_letter, draft_letter, get_deadlines, get_statute_section, propose_facts
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
@@ -109,6 +111,37 @@ print()
 check("a letter's request ends with one period, whatever the ask ends with",
       "32601.\n" in build_letter("Return the deposit to 12 Elm St, Gainesville FL 32601.", 10, "certified mail", [])
       and ".." not in build_letter("Return the deposit to 12 Elm St, Gainesville FL 32601.", 10, "certified mail", []))
+print()
+
+# cites in a reply (citations.py): subsections are found in every stored section, and each kind of bad cite is
+# caught. A cite to a real, shown subsection passes even when it is the wrong one for the point (items 6, 11).
+def markers_in_order(section):
+    """Numbers run 1, 2, 3 and, after each number, letters run a, b, c."""
+    seq = [m.group(1) for m in SUBSECTION_START.finditer(statute[section])]
+    numbers = [int(x) for x in seq if x.isdigit()]
+    letters_ok, previous = True, None
+    for x in seq:
+        if x.isdigit():
+            previous = None
+            continue
+        letters_ok = letters_ok and x == ("a" if previous is None else chr(ord(previous) + 1))
+        previous = x
+    return numbers == list(range(1, len(numbers) + 1)) and letters_ok
+
+
+check("every stored section's subsection markers run in order", all(markers_in_order(s) for s in statute))
+start, end = subsections("83.49")["(3)(b)"]
+check("83.49(3)(b) is the objection paragraph", statute["83.49"][start:end].startswith("(b) Unless the tenant objects"))
+start, end = subsections("83.56")["(5)(a)"]
+check("a lettered subsection right after its number is found (83.56(5)(a))", statute["83.56"][start:end].startswith("(a) If the landlord"))
+check("a cite to a shown section and a real subsection passes", check_cites("See Fla. Stat. 83.49(3)(a).", {"83.49"}) == [])
+check("a cite written with a space is read the same", check_cites("s. 83.51 (1)", {"83.51"}) == [])
+check("a section not shown or fetched is flagged", check_cites("Under 83.64 the landlord", {"83.49"})[0][0] == "83.64")
+check("a subsection the section lacks is flagged", "does not have" in check_cites("83.49(3)(f)", {"83.49"})[0][1])
+check("a section not in the corpus is flagged", "is not a section" in check_cites("83.99", {"83.49"})[0][1])
+check("the same cite twice is flagged once", len(check_cites("83.64 and again 83.64", set())) == 1)
+check("item 11's wrong claim passes this check (its cite is real and shown)",
+      check_cites("you may terminate the lease under Fla. Stat. 83.56(1)", set(playbooks["repair_not_made"].sections)) == [])
 print()
 
 # the record as the tenant sees it, then with the tool's bookkeeping included
@@ -223,6 +256,15 @@ try:
           for r in status_now["deposit_not_returned"]))
     check("the prompt changes when the record does", prompt_before_sheet != system_prompt())
 
+    # a reply's cites: a fetched section counts as shown; a failed cite is printed, transcribed, and logged
+    fetch_call = AIMessage(content="", tool_calls=[{"name": "get_statute_section", "args": {"section": "83.505"}, "id": "c1"}])
+    check("a section the model fetched counts as shown", "83.505" in sections_shown([fetch_call]))
+    with contextlib.redirect_stdout(io.StringIO()) as printed:
+        check_reply("See Fla. Stat. 83.49(3)(a) and 83.64.", sections_shown([]))
+    flagged = [e for e in read_events()[events_before:] if e["kind"] == "cite_flagged"]
+    check("a flagged cite is printed and logged, a good one is not", "[Check: 83.64" in printed.getvalue()
+          and "83.49" not in printed.getvalue() and [e["cite"] for e in flagged] == ["83.64"])
+
     # events and the transcript
     append_event("tenant_update", text="The landlord emailed me again today about the cleaning charge.")
     end_session()
@@ -240,6 +282,8 @@ try:
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{sid}.jsonl").read_text().splitlines()]
     check("the transcript holds the tenant's words and every sheet answer",
           [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 12)
+    check("the transcript holds the cite caution", [line["text"][:13] for line in lines if line["role"] == "check"]
+          == ["[Check: 83.64"])
 
     # the timeline
     full, plain = render_timeline(full=True), render_timeline()
