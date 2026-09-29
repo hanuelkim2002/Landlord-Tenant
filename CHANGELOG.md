@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-09-29
 
+- TODO.md tidied. Removed the model-behavior item on `classify` suggesting `lease_ending` for "my lease
+  ended": the classifier now reads each label's description, and a wrong suggestion is turned down on the
+  sheet instead of becoming active (both entries below). Removed the empty "Now" and "Data bank" headings
+  and renumbered the model-behavior items 4 to 12. No code changed.
 - Issues are suggestions the tenant confirms, replacing the rule that issues are only ever added (the
   author's decision). `record.add_issues` now suggests (`matter["proposed_issues"]`, event
   `issue_proposed`); the intake sheet asks each suggested issue first, "This looks like: <description> Is

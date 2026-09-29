@@ -3,11 +3,6 @@
 The working list. Move an item to CHANGELOG.md when it is done, with the date. Reorder freely. Keep the
 "Open questions" section for things that need a decision before code is written.
 
-## Now
-
-
-## Data bank
-
 ## Harness and code
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.
@@ -18,7 +13,6 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
    publishes it (the 2028 one is needed for any count reaching January 2028); 83.60(2) waits on the open
    question below; (b) periods the lease sets (83.575(1)-(2), 83.595(4)); needs a clock whose length is a
    confirmed fact; (c) hours (83.53(2)); (d) months (83.56(2), 12 months). Decide which to support.
-
 
 ## Playbooks
 
@@ -46,18 +40,17 @@ and some may go away with a more capable model.
     cite.
 7. The model compared dates itself when confirming `early_or_periodic` ("Does that mean you moved out one
     day before the lease ended?"). A rule 2 slip, seen once.
-8. `classify` false positive: `lease_ending` fires on "my lease ended." Seen in two of four runs.
-9. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that
+8. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that
     correct?"), though rule 3 says the sheet does it. Harmless: the sheet follows and is what counts.
-10. After calling `propose_facts`, the model told the tenant values were "as you just confirmed" before
+9. After calling `propose_facts`, the model told the tenant values were "as you just confirmed" before
     the sheet had run (rule 9). Seen 2026-09-27; the sheet still decided.
-11. Reporting the 83.56(3) court-day date, the model did not show the date the notice itself states next
+10. Reporting the 83.56(3) court-day date, the model did not show the date the notice itself states next
     to it, as the playbook's failure modes ask, and closed with "Would you like to proceed with any action
     based on this deadline?" (live run 2026-09-27, `t-test/m-002`). The timeline shows both dates.
-12. Explaining the escalate posture for repair_not_made, the model said the tenant "may terminate the lease
+11. Explaining the escalate posture for repair_not_made, the model said the tenant "may terminate the lease
     under Fla. Stat. 83.56(1)" (rule 13); the playbook only says the posture adds the quoted sentence
     (2026-09-28, repair scenario).
-13. In the claim scenario the model suggested the letter's printed date (2026-09-22) as the date it was
+12. In the claim scenario the model suggested the letter's printed date (2026-09-22) as the date it was
     received; the sheet asked and the tenant's typed 2026-09-25 replaced it (logged as corrected).
 
 ## Open questions
