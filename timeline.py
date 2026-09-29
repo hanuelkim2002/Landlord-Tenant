@@ -89,6 +89,10 @@ def render_timeline(issue=None, full=False):
             rows.append((day, f"session {ev['session'][:8]} ended", "tool", ""))
         elif full and ev["kind"] == "cite_flagged":
             rows.append((day, f"a reply's cite flagged: {ev['cite']}", "tool, citations.check_cites", ""))
+        elif full and ev["kind"] == "quote_flagged":
+            words = ev["quote"].split()
+            rows.append((day, "a reply's quote flagged: \"" + " ".join(words[:5]) + ("...\"" if len(words) > 5 else "\""),
+                         "tool, citations.check_quoted", ""))
         elif full and ev["kind"] == "deadlines_computed":
             rows.append((day, "computed deadlines: " + ", ".join(label(c) for c in ev["clocks"]), "tool", ""))
 

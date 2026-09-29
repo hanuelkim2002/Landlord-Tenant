@@ -1,7 +1,8 @@
-"""Citations: find the statute cites in a reply the model wrote and check them against the stored statutes.
+"""Citations: find the statute cites and the quotes in a reply the model wrote and check them against the
+stored statutes and what the model was given.
 
-Nothing here calls a model or writes to a matter. The chat loop (agent.chat) runs check_cites on every reply
-and prints a caution for each cite that fails; the reply itself is still shown.
+Nothing here calls a model or writes to a matter. The chat loop (agent.check_reply) runs check_cites and
+check_quoted on every reply and prints a caution for each one that fails; the reply itself is still shown.
 """
 import re
 
@@ -69,6 +70,96 @@ def check_cites(text, shown):
     return problems
 
 
-def caution(cite, problem):
-    """The line printed under a reply for one failed cite. Written to the tenant."""
-    return f"[Check: {cite} {problem}. Read it in the statute yourself before relying on it.]"
+# ---- Quotes in a reply: each passage in quote marks, 20 characters or more (the length check_playbook uses
+# for quotations in prose), with the ch. 83 cite next to it if there is one. The model writes a cite either
+# after the quote on the same line ("..." (83.49(3)(a))) or in a heading just before it
+# (**Statute quote (Fla. Stat. 83.49(3)(b)):** "...").
+
+QUOTED = re.compile(r'"([^"\n]{20,}?)"|“([^”\n]{20,}?)”')
+
+
+def quoted_passages(text):
+    """Every quoted passage in a reply with the cite next to it, or "" when none: [(quote, cite)]. The cite is
+    the first one after the closing quote mark on the same line, or else the last one in the 80 characters
+    before the opening mark. A cite already used after one quote is never taken again for the next."""
+    found = []
+    used_up_to = 0                                   # nothing before this point can be the next quote's cite
+    for m in QUOTED.finditer(text):
+        quote = m.group(1) or m.group(2)
+        after = CITE.search(text[m.end():m.end() + 60].split("\n")[0])
+        window = text[max(used_up_to, m.start() - 80):m.start()]
+        # a cite before the quote counts only with no quote mark between them: in a tool result the model
+        # repeats ("cite": "83.56(3)", "counting": "..."), the cite belongs to another field
+        before = [c for c in CITE.finditer(window) if not re.search(r'["“”]', window[c.end():])]
+        if after:
+            cite = after.group(0)
+            used_up_to = m.end() + after.end()
+        else:
+            cite = before[-1].group(0) if before else ""
+            used_up_to = m.end()
+        found.append((quote, cite.replace(" ", "")))
+    return found
+
+
+TYPOGRAPHY = str.maketrans({"’": "'", "‘": "'", "“": '"', "”": '"', "‑": "-", "‐": "-", "–": "-", "—": "-"})
+
+
+def compact(text):
+    """Lowercase, curly quote marks and dash variants made plain, all whitespace removed. Looser than squash on
+    purpose: the model writes "tenant's" for the statute's "tenant’s", and "confirmation" for the lease PDF's
+    "confir mation". Neither is a misquote."""
+    return "".join(text.translate(TYPOGRAPHY).lower().split())
+
+
+def is_in(quote, text):
+    """The quote appears in the text, compared with compact. An ellipsis ("..." or "…") splits the quote into
+    pieces that must each appear. Punctuation at either end of a piece is left out: the model closes a quote
+    with a period where the source goes on ("July 31, 2026." for "July 31, 2026 and I moved out")."""
+    pieces = [p.strip(" .,;:") for p in re.split(r"\.\.\.|…", quote)]
+    pieces = [p for p in pieces if p]
+    return bool(pieces) and all(compact(p) in compact(text) for p in pieces)
+
+
+def where_in(quote, section):
+    """The narrowest subsection of a stored section that holds the quote, as a cite ("83.49(3)(a)"); the
+    section alone if it is in no single subsection; None if it is not in the section."""
+    if not is_in(quote, statute[section]):
+        return None
+    text = statute[section]
+    holding = [key for key, (start, end) in subsections(section).items() if is_in(quote, text[start:end])]
+    return section + max(holding, key=len) if holding else section
+
+
+def check_quoted(text, given):
+    """Check each quoted passage in a reply. given: everything the model was given for it, as one string (its
+    system prompt, the tenant's messages, the tool results). Returns [(quote, cite, problem)]:
+    - a quote with a cite must be in that section, and in that subsection when one is named;
+    - a quote without a cite must be in the stored statutes or in what the model was given.
+    A cite to a section or subsection that does not exist is left to check_cites."""
+    problems = []
+    for quote, cite in quoted_passages(text):
+        section, _, rest = cite.partition("(")
+        if not cite:
+            if not (is_in(quote, given) or any(is_in(quote, t) for t in statute.values())):
+                problems.append((quote, cite, "is not word for word in the statute, your lease, your own words, "
+                                              "or anything else the tool gave the model"))
+        elif section not in statute or (rest and "(" + rest not in subsections(section)):
+            continue
+        elif not is_in(quote, statute[section]):
+            elsewhere = [s for s in statute if is_in(quote, statute[s])]
+            problems.append((quote, cite, f"is not in {section}" + (f"; it is in {elsewhere[0]}" if elsewhere else "")))
+        elif rest and not is_in(quote, statute[section][slice(*subsections(section)["(" + rest])]):
+            problems.append((quote, cite, f"is in {where_in(quote, section)}, not {cite}"))
+    return problems
+
+
+def caution(what, problem):
+    """The line printed under a reply for one failed cite or quote. Written to the tenant."""
+    return f"[Check: {what} {problem}. Check it against the source yourself before relying on it.]"
+
+
+def quote_label(quote, cite):
+    """How a caution names a quote: its first six words, and its cite if it has one."""
+    words = quote.split()
+    short = " ".join(words[:6]) + ("..." if len(words) > 6 else "")
+    return f'the quote "{short}"' + (f" ({cite})" if cite else "")

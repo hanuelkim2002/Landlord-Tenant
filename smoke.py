@@ -17,7 +17,7 @@ from langchain.messages import AIMessage
 import record
 from calendars import court_calendars
 from checks import check, make_scratch, remove_scratch, summary
-from citations import SUBSECTION_START, check_cites, subsections
+from citations import SUBSECTION_START, check_cites, check_quoted, quoted_passages, subsections
 from config import MATTERS
 from corpus import check_all_playbooks, playbooks, statute
 from deterministic import check_elements, compute_deadlines, lease_value
@@ -25,7 +25,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
 from timeline import render_timeline
-from agent import check_reply, sections_shown, system_prompt
+from agent import check_reply, given_text, sections_shown, system_prompt
 from tools import build_letter, draft_letter, get_deadlines, get_statute_section, propose_facts
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
@@ -142,6 +142,31 @@ check("a section not in the corpus is flagged", "is not a section" in check_cite
 check("the same cite twice is flagged once", len(check_cites("83.64 and again 83.64", set())) == 1)
 check("item 11's wrong claim passes this check (its cite is real and shown)",
       check_cites("you may terminate the lease under Fla. Stat. 83.56(1)", set(playbooks["repair_not_made"].sections)) == [])
+
+# quotes in a reply (citations.check_quoted): which cite goes with which quote, then what each is checked against
+FORFEIT = "he or she forfeits the right to impose a claim upon the security deposit"     # in 83.49(3)(a)
+OBJECTS = "Unless the tenant objects to the imposition of the landlord’s claim"          # in 83.49(3)(b)
+check("a cite in a heading before a quote goes with it",
+      quoted_passages(f'**Statute quote (Fla. Stat. 83.49(3)(b)):**\n"{OBJECTS}"') == [(OBJECTS, "83.49(3)(b)")])
+check("a cite after a quote goes with it, and not with the next quote",
+      [c for q, c in quoted_passages(f'- "{FORFEIT}" (83.49(3)(a))\n- Lease: "Tenant shall notify Landlord in writing"')]
+      == ["83.49(3)(a)", ""])
+check("a cite inside a repeated tool result goes with no quote",
+      quoted_passages('"cite": "83.56(3)",\n    "counting": "court business days, start day not counted"')[0][1] == "")
+check("a quote in its cited subsection passes, whatever its apostrophes",
+      check_quoted(f'"{OBJECTS.replace("’", chr(39))}" (83.49(3)(b))', "") == [])
+check("a quote with an ellipsis passes when each piece is in the subsection",
+      check_quoted('"If the landlord fails to give the required written notice ... he or she forfeits the right" (83.49(3)(a))', "") == [])
+check("item 6: a real sentence cited to the wrong subsection is flagged with the right one",
+      check_quoted(f'"{FORFEIT}" (83.49(3)(b))', "")[0][2] == "is in 83.49(3)(a), not 83.49(3)(b)")
+check("item 5: words the statute does not have, inside quote marks, are flagged",
+      check_quoted('"Unless the tenant objects in writing within 15 days" (83.49(3)(b))', "")[0][2] == "is not in 83.49")
+check("a quote cited to the wrong section names the section that has it",
+      check_quoted(f'"{FORFEIT}" (83.56)', "")[0][2] == "is not in 83.56; it is in 83.49")
+check("a quote with no cite passes when it is in what the model was given",
+      check_quoted('You wrote "I will not pay rent until it is fixed."', "saying I will not pay rent until it is fixed") == [])
+check("a quote with no cite is flagged when it is nowhere",
+      "not word for word" in check_quoted('You asked for "repair within 5 days".', "Give them 5 days to reply.")[0][2])
 print()
 
 # the record as the tenant sees it, then with the tool's bookkeeping included
@@ -260,10 +285,14 @@ try:
     fetch_call = AIMessage(content="", tool_calls=[{"name": "get_statute_section", "args": {"section": "83.505"}, "id": "c1"}])
     check("a section the model fetched counts as shown", "83.505" in sections_shown([fetch_call]))
     with contextlib.redirect_stdout(io.StringIO()) as printed:
-        check_reply("See Fla. Stat. 83.49(3)(a) and 83.64.", sections_shown([]))
-    flagged = [e for e in read_events()[events_before:] if e["kind"] == "cite_flagged"]
-    check("a flagged cite is printed and logged, a good one is not", "[Check: 83.64" in printed.getvalue()
-          and "83.49" not in printed.getvalue() and [e["cite"] for e in flagged] == ["83.64"])
+        check_reply(f'See Fla. Stat. 83.49(3)(a) and 83.64. Under 83.49(3)(b): "{FORFEIT}"', [])
+    flagged = [e for e in read_events()[events_before:] if e["kind"] in ("cite_flagged", "quote_flagged")]
+    check("a flagged cite and quote are printed and logged, a good cite is not",
+          "[Check: 83.64" in printed.getvalue() and "[Check: 83.49" not in printed.getvalue()
+          and [(e["kind"], e.get("cite")) for e in flagged] == [("cite_flagged", "83.64"), ("quote_flagged", "83.49(3)(b)")])
+    said = " ".join(record.matter["description"].split()[:8])          # the first words of the description
+    check("the tenant's description counts as what the model was given", len(said) >= 20
+          and check_quoted(f'You said "{said}"', given_text([])) == [] and check_quoted(f'"{said}"', "") != [])
 
     # events and the transcript
     append_event("tenant_update", text="The landlord emailed me again today about the cleaning charge.")
@@ -282,8 +311,8 @@ try:
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{sid}.jsonl").read_text().splitlines()]
     check("the transcript holds the tenant's words and every sheet answer",
           [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 12)
-    check("the transcript holds the cite caution", [line["text"][:13] for line in lines if line["role"] == "check"]
-          == ["[Check: 83.64"])
+    check("the transcript holds both cautions", [line["text"][:17] for line in lines if line["role"] == "check"]
+          == ["[Check: 83.64 was", "[Check: the quote"])
 
     # the timeline
     full, plain = render_timeline(full=True), render_timeline()

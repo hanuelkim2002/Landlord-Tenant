@@ -33,15 +33,27 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   and question; returns the failures), and `playbooks` (dict, issue to `Playbook`, from
   `playbooks/*.yaml`). No model calls. Imports `config`, `lease` (for `LeaseProfile`, to check
   `compare_to`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
-- `citations.py`: checks the ch. 83 cites in a reply the model wrote. `SUBSECTION_START` (a marker such as
+- `citations.py`: checks the ch. 83 cites and the quotes in a reply the model wrote. `SUBSECTION_START` (a marker such as
   `(3)` or `(b)` starts a subsection when a space and a capital letter or an opening quote follow it, or a
   lettered marker first, as in `(5)(a) If`; not after "subsection", "paragraph", "subparagraph"),
   `subsections(section)` (every `"(3)"` and `"(3)(a)"` of a stored section with its start and end in the
   text), `cites_in(text)` (every `83.x` cite with its parenthesized parts, spaces removed, each once),
   `check_cites(text, shown)` (returns `(cite, problem)` for a section not in `statutes/`, a section not in
-  `shown`, or a subsection the section does not have), and `caution(cite, problem)` (the line printed to
-  the tenant). It checks that a cite exists and was available to the model, not that it is the right cite
-  for what the reply says. Imports `corpus`. Imported by `agent`, `smoke`.
+  `shown`, or a subsection the section does not have). Quotes: `quoted_passages(text)` (every passage of 20
+  or more characters in straight or curly quote marks, with its cite: the first cite after the closing mark
+  on the same line, or else the last cite in the 80 characters before the opening mark with no quote mark
+  in between, never one already used by the previous quote; "" when none), `compact` (lowercase, curly
+  quote marks and dash variants made plain, all whitespace removed; looser than `squash` because the model
+  writes "tenant's" for "tenant’s" and the lease PDF text has broken words like "confir mation"), `is_in`
+  (a quote in a text by `compact`, split at an ellipsis into pieces that must each appear, punctuation at
+  the ends ignored), `where_in(quote, section)` (the narrowest subsection holding it), and
+  `check_quoted(text, given)` (returns `(quote, cite, problem)`: a quote with a cite must be in that
+  section and that subsection, and the problem names where it really is; a quote with no cite must be in
+  `given` or any stored section). `caution(what, problem)` is the line printed to the tenant and
+  `quote_label` names a quote in it by its first six words. These check that a cite exists and was
+  available, and that quoted words are real and sit where they are cited. They cannot tell whether a cite
+  fits a claim made in the reply's own words, and a paraphrase outside quote marks is not checked.
+  Imports `corpus`. Imported by `agent`, `smoke`.
 - `deterministic.py`: `check_elements` (element status), `court_days` (court business days from a
   county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
@@ -99,10 +111,12 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   of the turn. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
   tenant confirmed there is sent to the model as a "[Program note: ...]" line at the front of the tenant's
   next message, and logged as a `program` transcript line. `timeline` commands go to the transcript too.
-  After printing each reply, `chat` calls `check_reply(text, shown)`: `shown` comes from
-  `sections_shown(messages)`, the active playbooks' `sections` plus every section fetched with
-  `get_statute_section` in the thread so far. Each cite that fails `citations.check_cites` gets a
-  "[Check: ...]" line printed under the reply, a `check` transcript line, and a `cite_flagged` event. The
+  After printing each reply, `chat` calls `check_reply(text, messages)` with the thread so far. It runs
+  `citations.check_cites` against `sections_shown(messages)` (the active playbooks' `sections` plus every
+  section fetched with `get_statute_section` in the thread) and `citations.check_quoted` against
+  `given_text(messages)` (the system prompt, the lease quotes as plain text, the tenant's description and
+  updates, and every thread message the model did not write). Each failure gets a "[Check: ...]" line
+  printed under the reply, a `check` transcript line, and a `cite_flagged` or `quote_flagged` event. The
   reply is not held back or changed, and the model is not told.
   Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `sheet`, `timeline`, `tools`. Imported by `run`, `smoke`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
@@ -203,7 +217,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    issue by `timeline <issue>`),
    and events (see Files on disk). Sorted by date only; rows on the same day keep the order they were
    added (confirmed dates and deadlines first, then events in log order). `issue` filters deadlines and
-   issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`, `cite_flagged`,
+   issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`, `cite_flagged`, `quote_flagged`,
    `deadlines_computed`, the issue events, `session_started`, and `session_ended` events.
 7. Letter assembly (`draft_letter`, then `build_letter`). Checks the issue and posture, checks each quote
    with `quote_is_real` (substring of a present lease clause quote or any stored statute section), then
@@ -235,6 +249,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `fetch`: `section` (from `get_statute_section`) or `search` (from `search_statute`).
   - `cite_flagged`: `cite` (e.g. "83.64"), `problem` (not a stored section, not shown or fetched in this
     chat, or no such subsection). Written by `agent.check_reply` after a reply. `timeline full` only.
+  - `quote_flagged`: `quote` (the quoted words), `cite` (the cite next to it, or ""), `problem` (e.g. "is in
+    83.49(3)(a), not 83.49(3)(b)"). Written by `agent.check_reply`. `timeline full` only.
   - `deadlines_computed`: `issue`, `clocks` (ids of clocks that produced a date). One per active playbook
     per `get_deadlines` call.
   - `draft`: `issue`, `posture`, `cites`, `file`. Written by `draft_letter`.
@@ -264,7 +280,7 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_added`
   when the answer brought in a related issue), or
   `program` (`text`: the note sent to the model ahead of the tenant's message after a sheet), or `check`
-  (`text`: a "[Check: ...]" caution printed under a reply, from `check_reply`). Only the chat is transcribed; the
+  (`text`: a "[Check: ...]" caution about a cite or a quote, printed under a reply by `check_reply`). Only the chat is transcribed; the
   intake or resume calls before it are not.
 
 Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `statutes/83.*.txt` and `.html` (the
@@ -398,14 +414,16 @@ Offline checks (no model call, no key needed):
   playbook check is OK", fails if any line of `check_all_playbooks` does), element status and deadlines on hand-typed facts with today fixed at 2026-09-08, a hand-typed update
   against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`
   refusing), the letter template, the cite checks (subsection markers in order in every stored section,
-  each kind of bad cite flagged, and a real, shown but wrong cite passing), and both
+  each kind of bad cite flagged, and a real, shown but wrong cite passing), the quote checks (which cite goes
+  with which quote, a good quote passing despite apostrophes or an ellipsis, items 5 and 6 of TODO.md as
+  they would look in quote marks), and both
   timelines. The timelines read the real `events.jsonl` of `test-001`. Importing `tools` and `timeline`
   also checks that the modules import. Last, on a scratch copy `matters/t-smoke/m-001` (removed at the
   end, even after a failure), about thirty named checks of the code that writes to a matter: listing and
   ids, sessions and their tags, `propose_facts` taking one suggestion and refusing five for five reasons,
   the sheet with scripted answers (accept, correct, bad input, a changed fact, an `applies_if` fact, a
-  skip), `get_deadlines` waiting and then answering, the prompt following the record, a flagged cite
-  printed and logged, events, the transcript, and the
+  skip), `get_deadlines` waiting and then answering, the prompt following the record, a flagged cite and
+  quote printed and logged, the tenant's description counting as given, events, the transcript, and the
   timeline. Then related issues on `matters/t-smoke-related/m-001`, and every playbook through the real
   code path on `matters/t-smoke-playbooks/m-001`: for each, the sheet is answered by type ("yes" to every
   yes/no, so every `applies_if` question comes up), every clock must get a date, and a preserve letter must

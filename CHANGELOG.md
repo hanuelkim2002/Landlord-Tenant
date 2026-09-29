@@ -5,6 +5,22 @@ session can see why the code is the way it is.
 
 ## 2026-09-29
 
+- Quote check on the model's replies (`citations.quoted_passages`, `check_quoted`; `agent.given_text`;
+  `check_reply` now takes the thread's messages and runs both checks). Every passage of 20 or more
+  characters in quote marks is checked. With a ch. 83 cite next to it (after it on the same line, or in a
+  heading just before it), the words must be in that section and, when one is named, that subsection; the
+  caution names where they really are ("is in 83.49(3)(a), not 83.49(3)(b)"). With no cite, the words must
+  be in the statutes or in what the model was given (its prompt, the lease quotes, the tenant's
+  description, updates, and messages, the tool results). A failure gets the same "[Check: ...]" line and a
+  new `quote_flagged` event (`timeline full`). Before this, rule 1 was only a prompt rule for replies;
+  quotes were checked only in letters (`quote_is_real`) and playbooks. The comparison ignores spacing,
+  curly versus straight quote marks, dash variants, and punctuation at a quote's ends, since a replay over
+  the `t-test` transcripts showed each of these in quotes that were correct (straight apostrophes, the lease
+  PDF's "confir mation", a closing period added). After those fixes the replay flags 1 of 33 quotes:
+  "repair within 5 days" in m-007, words put in the tenant's mouth (they wrote "Give them 5 days to
+  reply"). Covers TODO items 5 and 6 when the words are in quote marks; a paraphrase is still unchecked.
+  The caution's last sentence now says "Check it against the source yourself" (was "Read it in the
+  statute yourself"), since a quote's source may be the lease or the tenant's words.
 - Cite check on the model's replies (new `citations.py`; `agent.check_reply` and `sections_shown`). After each
   reply, every ch. 83 cite in it is checked: the section must be in `statutes/`, must have been in the
   prompt's STATUTE SECTIONS or fetched with `get_statute_section` in the chat (rule 8), and a subsection

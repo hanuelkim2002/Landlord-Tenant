@@ -34,10 +34,13 @@ and some may go away with a more capable model.
     failure mode (2026-09-27, resume run on `t-test/test-002`). The clock's quote no longer reaches the
     model since only `guidance` is pasted.
 5. In the same run the model summarized 83.49 in its own words instead of quoting it (rule 1), and
-    added words the sentence does not have ("objects in writing within 15 days").
+    added words the sentence does not have ("objects in writing within 15 days"). Since 2026-09-29
+    `citations.check_quoted` flags the added words when they are inside quote marks; a paraphrase is not
+    checked.
 6. Since only `guidance` is pasted, the model mis-cited the forfeiture sentence as 83.49(3)(b) when
     explaining the escalate posture (it is 83.49(3)(a)). The escalate line in `guidance.postures` names no
-    cite.
+    cite. Since 2026-09-29 `citations.check_quoted` flags this when the sentence is quoted next to the wrong
+    cite, naming the right subsection; described in the model's own words it is not caught.
 7. The model compared dates itself when confirming `early_or_periodic` ("Does that mean you moved out one
     day before the lease ended?"). A rule 2 slip, seen once.
 8. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that

@@ -9,12 +9,12 @@ from langchain_core.utils.uuid import uuid7
 from langgraph.checkpoint.memory import InMemorySaver
 
 import record
-from citations import caution, check_cites
+from citations import caution, check_cites, check_quoted, quote_label
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
 from record import (active_playbooks, add_issues, add_related_issues, append_event, candidate_playbooks,
-                    element_status, prune_proposals, reject_issue, save)
+                    element_status, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet
 from timeline import render_timeline
 from tools import tools
@@ -176,16 +176,33 @@ def sections_shown(messages):
     return {s for pb in active_playbooks() for s in pb.sections} | fetched
 
 
-def check_reply(text, shown):
-    """Check the cites in one reply (citations.check_cites). Each failed cite gets a caution printed under the
-    reply, a line in the transcript, and a cite_flagged event. The reply itself was already shown."""
-    problems = check_cites(text, shown)
-    for cite, problem in problems:
-        line = caution(cite, problem)
+def given_text(messages):
+    """Everything the model was given, as one string, for citations.check_quoted: the system prompt, the lease
+    quotes as plain text (the prompt holds them as JSON, with quote marks escaped), the tenant's description
+    and updates, and every message in the thread the model did not write (the tenant's messages, program
+    notes, tool results)."""
+    lease_quotes = ([getattr(record.profile, f).quote or "" for f in type(record.profile).model_fields]
+                    if record.profile else [])
+    updates = [ev["text"] for ev in read_events() if ev["kind"] == "tenant_update"]
+    thread = [str(m.content) for m in messages if m.type != "ai"]
+    return "\n".join([system_prompt(), record.matter.get("description", ""), *lease_quotes, *updates, *thread])
+
+
+def check_reply(text, messages):
+    """Check the cites and the quotes in one reply (citations.check_cites and check_quoted), against the chat's
+    thread so far. Each one that fails gets a caution printed under the reply, a line in the transcript, and a
+    cite_flagged or quote_flagged event. The reply itself was already shown."""
+    flagged = []
+    for cite, problem in check_cites(text, sections_shown(messages)):
+        flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
+    for quote, cite, problem in check_quoted(text, given_text(messages)):
+        flagged.append((caution(quote_label(quote, cite), problem), "quote_flagged",
+                        {"quote": quote, "cite": cite, "problem": problem}))
+    for line, kind, data in flagged:
         print(line)
         record.append_transcript({"role": "check", "text": line})
-        append_event("cite_flagged", cite=cite, problem=problem)
-    if problems:
+        append_event(kind, **data)
+    if flagged:
         print()
 
 
@@ -237,13 +254,12 @@ def chat(agent):
         new = result["messages"][seen + 1:]              # everything new this turn, minus the tenant's message
         for m in new:
             record.append_transcript(transcript_entry(m))
-        shown = sections_shown(result["messages"])       # what the model had to cite from, for check_reply
         for m in new:                                    # print the replies, and a letter if one was drafted
             if m.type == "tool" and m.name == "draft_letter":
                 print(m.content, "\n")
             elif m.type == "ai" and m.content:
                 print(m.content, "\n")
-                check_reply(m.content, shown)
+                check_reply(m.content, result["messages"])   # its cites and quotes, against what it was given
         seen = len(result["messages"])
         # The model suggested facts: the tenant confirms them on the sheet now, with code, not with the model.
         # The model learns the result with the tenant's next message, since the sheet runs between its turns.
