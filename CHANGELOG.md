@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- Two model slips from the live claim run (`t-test/m-015`) logged in TODO.md: item 9 seen again (unconfirmed
+  dates listed as confirmed before the sheet), and new item 13 (a lease end date, 2026-09-30, that is
+  neither the lease's nor the tenant's). No code changed. The run itself gave the expected deadlines
+  (objection 2026-10-10, remit 2026-10-22, the shared claim-notice deadline once).
 - `check_cites` skips cites inside a quoted passage (20 or more characters in quote marks, the passages
   `check_quoted` covers). Before, it read every cite in the reply, so the live claim scenario (`t-test/m-015`)
   flagged "83.505" from inside a correct quote of 83.49(3)(a) ("in accordance with s. 83.505"), a false

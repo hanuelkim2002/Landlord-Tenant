@@ -46,7 +46,9 @@ and some may go away with a more capable model.
 8. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that
     correct?"), though rule 3 says the sheet does it. Harmless: the sheet follows and is what counts.
 9. After calling `propose_facts`, the model told the tenant values were "as you just confirmed" before
-    the sheet had run (rule 9). Seen 2026-09-27; the sheet still decided.
+    the sheet had run (rule 9). Seen 2026-09-27; the sheet still decided. Seen again 2026-09-30 (claim
+    scenario, `t-test/m-015`): the reply listed the claim letter's dates (2026-09-22, 2026-09-25) under
+    "Your confirmed dates" before the sheet asked about them.
 10. Reporting the 83.56(3) court-day date, the model did not show the date the notice itself states next
     to it, as the playbook's failure modes ask, and closed with "Would you like to proceed with any action
     based on this deadline?" (live run 2026-09-27, `t-test/m-002`). The timeline shows both dates.
@@ -55,6 +57,10 @@ and some may go away with a more capable model.
     (2026-09-28, repair scenario).
 12. In the claim scenario the model suggested the letter's printed date (2026-09-22) as the date it was
     received; the sheet asked and the tenant's typed 2026-09-25 replaced it (logged as corrected).
+13. In the same reply as item 9's second sighting, the model wrote "Lease term ended: 2026-09-30" next to
+    the lease quote "ending at 11:59 p.m. on September 30, 2027": a date that is neither the lease's nor the
+    tenant's (7/31/2026), in the list it called confirmed (2026-09-30, `t-test/m-015`). Not caught: the
+    quote beside it is real, and a date outside quote marks is not checked.
 
 ## Open questions
 
