@@ -3,6 +3,15 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-09-30
+
+- deposit_claim_received: `sections` is now ["83.49", "83.505"], was ["83.49"]. Its open questions
+  (`receipt_date`, `email_notice_conditions`) quote 83.505, but 83.505's text never reached the prompt, so a
+  reply mentioning it broke rule 8 and was flagged by the new cite check (m-001 twice in the replay). Now
+  loaded while the issue is active. Playbook checks all OK. The replay's one remaining flag is m-009, a
+  lease_ending matter, whose playbook does not mention 83.505. deposit_not_returned names 83.505 only in a
+  clock's `delivery`, which the model never sees, so it is unchanged.
+
 ## 2026-09-29
 
 - Quote check on the model's replies (`citations.quoted_passages`, `check_quoted`; `agent.given_text`;
