@@ -140,6 +140,10 @@ check("a section not shown or fetched is flagged", check_cites("Under 83.64 the 
 check("a subsection the section lacks is flagged", "does not have" in check_cites("83.49(3)(f)", {"83.49"})[0][1])
 check("a section not in the corpus is flagged", "is not a section" in check_cites("83.99", {"83.49"})[0][1])
 check("the same cite twice is flagged once", len(check_cites("83.64 and again 83.64", set())) == 1)
+check("a cite inside a quoted passage is the quote's own, not the reply's (live run 2026-09-30)", check_cites(
+      '"by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his '
+      'or her intention" (Fla. Stat. 83.49(3)(a))', {"83.49"}) == [])
+check("a short quoted cite is still checked", check_cites('"cite": "83.64"', {"83.49"})[0][0] == "83.64")
 check("item 11's wrong claim passes this check (its cite is real and shown)",
       check_cites("you may terminate the lease under Fla. Stat. 83.56(1)", set(playbooks["repair_not_made"].sections)) == [])
 

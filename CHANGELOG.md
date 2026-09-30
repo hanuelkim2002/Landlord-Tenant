@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- `check_cites` skips cites inside a quoted passage (20 or more characters in quote marks, the passages
+  `check_quoted` covers). Before, it read every cite in the reply, so the live claim scenario (`t-test/m-015`)
+  flagged "83.505" from inside a correct quote of 83.49(3)(a) ("in accordance with s. 83.505"), a false
+  alarm; the replay had missed it because 83.505 is now loaded while deposit_claim_received is active, and
+  in m-015 only deposit_not_returned was. A short quoted cite ("cite": "83.64") is still checked. Two smoke
+  checks added. The replay now flags only m-009's 83.505, which is outside any quote.
 - deposit_claim_received: `sections` is now ["83.49", "83.505"], was ["83.49"]. Its open questions
   (`receipt_date`, `email_notice_conditions`) quote 83.505, but 83.505's text never reached the prompt, so a
   reply mentioning it broke rule 8 and was flagged by the new cite check (m-001 twice in the replay). Now

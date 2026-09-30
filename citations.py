@@ -57,9 +57,11 @@ def check_cites(text, shown):
     it fetched with get_statute_section). Returns [(cite, problem)], empty when every cite passes:
     - the section is not in the stored statutes;
     - it was not shown or fetched (rule 8: fetch a section before mentioning it);
-    - the section has no such subsection."""
+    - the section has no such subsection.
+    Cites inside a quoted passage are skipped: they are the quoted text's own ("in accordance with s. 83.505"
+    inside a quote of 83.49), and check_quoted checks those words against their source."""
     problems = []
-    for cite in cites_in(text):
+    for cite in cites_in(QUOTED.sub(" ", text)):
         section, _, rest = cite.partition("(")
         if section not in statute:
             problems.append((cite, "is not a section in this tool's copy of ch. 83 part II"))
