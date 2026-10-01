@@ -243,6 +243,13 @@ try:
     check("propose_facts refuses a how other than stated or inferred", "objected: how must be" in reply)
     check("propose_facts refuses a value already confirmed", "claim_notice_received: already confirmed" in reply)
     check("propose_facts never confirms", "vacated" not in record.matter["facts"])
+    # "said" shortened with "...": each piece must be the tenant's words. "already confirmed" means the words passed.
+    joined = propose_facts.invoke({"facts_json": json.dumps({"claim_notice_received": {
+        "value": False, "how": "stated", "said": "Actually I moved out on July 29... I never got any letter..."}})})
+    check("propose_facts takes the tenant's words joined by an ellipsis (gpt-oss run, m-023)", "already confirmed" in joined)
+    invented = propose_facts.invoke({"facts_json": json.dumps({"claim_notice_received": {
+        "value": False, "how": "stated", "said": "Actually I moved out ... I got a letter"}})})
+    check("propose_facts refuses an ellipsis joining words the tenant never typed", "said must be" in invented)
     check("get_deadlines waits while facts are open", get_deadlines.invoke({}).startswith("Not yet"))
     check("printed deadlines say none yet, and what is waiting",
           render_deadlines(get_deadlines.invoke({})).startswith("No deadlines yet")

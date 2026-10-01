@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- `propose_facts` takes a `said` shortened with "...": each piece must be the tenant's words (now
+  `citations.is_in`, the quote check's comparison; was a whole-string substring after `squash`). In the
+  gpt-oss-120b claim run (m-023) the model wrote "I just got a letter from the landlord..." and the
+  refusal of claim_notice_received cost the scenario deposit_claim_received and two deadlines. The
+  docstring says shortening is allowed only that way, and the refusal says so. Two smoke checks: pieces of
+  the tenant's words pass, a piece the tenant never typed is refused.
 - Deadlines are printed by code: the chat loop prints the turn's last `get_deadlines` result through the new
   `timeline.render_deadlines` (date, actor, clock, issues, status, rule and start date, cite, counting line;
   a clock with no date shows why; waiting issues with their open facts), as `draft_letter`'s result already

@@ -310,7 +310,9 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
 - `propose_facts(facts_json)`: JSON object keyed by element id, each `{"value", "how", "said"}`. Puts a
   suggestion in `proposed` only if the id is a user-sourced element of an active playbook, the value fits
   the element's type (`sheet.parse_answer`, and it is stored as parsed), `how` is stated or inferred, and
-  `said` appears in what the tenant typed this session (`record.tenant_words`, substring after `squash`).
+  `said` appears in what the tenant typed this session (`record.tenant_words`, by `citations.is_in`: an
+  ellipsis may join pieces, each of which must appear; spacing, quote-mark style, and end punctuation are
+  ignored).
   A value equal to the confirmed one is refused. Saves `matter.json`; returns what was taken and why
   anything was refused. Never confirms: the chat loop runs the sheet after the turn.
 - `get_deadlines()`: works issue by issue. An issue is ready when none of its rows is proposed, changed, or

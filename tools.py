@@ -13,6 +13,7 @@ from pathlib import Path
 from langchain.tools import tool
 
 import record
+from citations import is_in
 from config import squash
 from corpus import playbooks, statute
 from deterministic import matter_deadlines
@@ -50,14 +51,15 @@ def propose_facts(facts_json: str) -> str:
     """Suggest facts the tenant stated or implied in this chat. You cannot confirm or record a fact: the tenant
     confirms each suggestion on a sheet the program shows right after your reply. Do not ask them to confirm
     it in the chat. Input: JSON object keyed by element id, each {"value": ..., "how": "stated" or "inferred",
-    "said": "the tenant's exact words the value rests on"}. Dates as YYYY-MM-DD, yes/no as true/false, money
-    as a number. Returns which suggestions were taken and why any were refused."""
+    "said": "the tenant's exact words the value rests on", shortened only with "..." between exact pieces}.
+    Dates as YYYY-MM-DD, yes/no as true/false, money as a number. Returns which suggestions were taken and why
+    any were refused."""
     try:
         proposals = json.loads(facts_json)
     except json.JSONDecodeError:
         return "facts_json is not valid JSON."
     kinds = {e.id: e.type for pb in active_playbooks() for e in pb.spec.elements if "user" in e.source}
-    said_by_tenant = squash(" ".join(record.tenant_words()))
+    said_by_tenant = " ".join(record.tenant_words())
     taken, refused = [], []
     for fact_id, p in proposals.items():
         if fact_id not in kinds:
@@ -71,8 +73,9 @@ def propose_facts(facts_json: str) -> str:
             refused.append(f"{fact_id}: value must be {expected}")
         elif p.get("how") not in ("stated", "inferred"):
             refused.append(f"{fact_id}: how must be stated or inferred")
-        elif not p.get("said") or squash(p["said"]) not in said_by_tenant:
-            refused.append(f"{fact_id}: said must be the tenant's exact words from this chat")
+        elif not p.get("said") or not is_in(p["said"], said_by_tenant):   # each piece around "..." exact
+            refused.append(f"{fact_id}: said must be the tenant's exact words from this chat (\"...\" may join "
+                           "exact pieces)")
         elif fact_id in record.matter["facts"] and record.matter["facts"][fact_id] == value:
             refused.append(f"{fact_id}: already confirmed with that value")
         else:
