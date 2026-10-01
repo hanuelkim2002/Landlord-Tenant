@@ -128,6 +128,9 @@ def render_timeline(issue=None, full=False):
             words = ev["quote"].split()
             rows.append((day, "a reply's quote flagged: \"" + " ".join(words[:5]) + ("...\"" if len(words) > 5 else "\""),
                          "tool, citations.check_quoted", ""))
+        elif full and ev["kind"] == "cases_shown":
+            rows.append((day, f"showed cases on {ev['topic']} ({len(ev['cases'])})" + (", unverified pages" if ev.get("unverified") else ""),
+                         "tool, get_cases", ""))
         elif full and ev["kind"] == "deadlines_computed":
             rows.append((day, "computed deadlines: " + ", ".join(label(c) for c in ev["clocks"]), "tool", ""))
 

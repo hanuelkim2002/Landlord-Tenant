@@ -5,6 +5,27 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Cases in the chat (TODO item 25, done). Was: the plan to load verified wiki pages into the prompt for the
+  model to quote. Now, like the deadlines, the program prints and the model only asks: the prompt lists
+  CASE TOPICS (topics of verified, tagged pages for the active issues' sections; "none for these issues"
+  until the author verifies pages), and the new tool `get_cases(topic)` prints every eligible case on the
+  topic, oldest first, in the courts' quoted words with pin pages and the statute version read, ending
+  "These are what courts said in other people's cases. This tool does not decide whether any of them
+  applies to you." The tool returns content and artifact: the model gets only the names and cites printed;
+  `show_turn` prints the artifact. A topic is printed once per session. New rule 8 (cases only through
+  `get_cases`, only when asked, then only "The cases appear above. ..."); old rule 8 is now 9. Eligible:
+  verified pages with a part II tag; untagged pages never load, so the author decides what loads by
+  verifying and untagging (this answers the commercial-lease question). `WIKI_UNVERIFIED=1` loads unverified
+  pages for development runs, marked "[not verified]". New event `cases_shown` (timeline full),
+  `citations.check_case_cites` (a reporter cite in a reply must be one shown), transcript field `shown`,
+  scenario `deposit_cases.json`, seven smoke checks. README: the cases are code output, like the timeline.
+  Live runs with `WIKI_UNVERIFIED=1`: the first, with the full text returned to the model, printed the same
+  topic four times and then twice, and on the fees question the model retyped the case quotes itself (one
+  quote's marks changed, caught by the quote check); after the receipt fix and the once-per-session stop,
+  three runs printed each topic once, replied only with the fixed line every time, and never named,
+  quoted, or applied a case (expected results 8 of 9; the miss was a legality answer without "This tool does
+  not decide that.", TODO 30). Not done: a reply check for applying language (the model no longer sees case
+  text; no application in four runs). New TODO 29: the topic choice varies between runs.
 - 50 So. 3d 503 (In re Revisions to Simplified Forms, Fla. 2010) added to `cases/` and the wiki, from a
   Southern Reporter PDF the author supplied. Was: not in `cases/`, because the Westlaw print marks its added
   and deleted words by formatting. The PDF shows the marks on the page (struck and underlined words) but

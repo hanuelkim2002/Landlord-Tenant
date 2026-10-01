@@ -155,6 +155,18 @@ def check_quoted(text, given):
     return problems
 
 
+# A reporter cite of a court opinion: "448 So. 2d 1208", "448 So.2d 1208", "103 Fla. 892", "946 F. Supp. 962".
+REPORTER = re.compile(r"\b\d{1,4} (?:So\.\s?[23]d|So\.|Fla\.|F\.\s?Supp\.(?:\s?[23]d)?) \d{1,5}\b")
+
+
+def check_case_cites(text, given):
+    """Each reporter cite in a reply, outside quote marks, must be one the model was shown in this chat (a
+    get_cases result, which the program printed). Returns [(cite, problem)]."""
+    return [(cite, "is not a case this tool showed in this chat")
+            for cite in dict.fromkeys(m.group() for m in REPORTER.finditer(QUOTED.sub(" ", text)))
+            if compact(cite) not in compact(given)]
+
+
 def caution(what, problem):
     """The line printed under a reply for one failed cite or quote. Written to the tenant."""
     return f"[Check: {what} {problem}. Check it against the source yourself before relying on it.]"

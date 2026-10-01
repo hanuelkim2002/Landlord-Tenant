@@ -37,17 +37,14 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
 24. The case wiki and its checks: a schema page, an index built by code, a log, and code checks run like
     the playbook checks. Done 2026-10-01: every opinion in `cases/`, 81 case pages and 40 topics (28 case
     pages untagged, with scope notes). Next: the author reads each page against its opinion and verifies it
-    (`python wiki.py verify`); only verified pages go further. While verifying, check each case's status in
+    (`python wiki.py verify`); only verified pages go further, and only tagged ones ever load for a tenant,
+    so untag a page that should not (a commercial lease, e.g. Multach v. Adams). While verifying, check each case's status in
     Westlaw (the print flags 27 opinions; one red-striped, Charlemagne v. Francis), and look at the questions
     the ingest left in `wiki/log.md` (2026-10-01, the remaining 65).
-25. Verified wiki pages for the active playbooks' sections loaded into the prompt, chosen in code by their
-    section tags, never by the model; only the court's quoted words go to the tenant, with court, year, and
-    the statute version read; one rule for the neutral framing ("This tool does not decide whether it
-    applies to you"); `citations.py` learns reporter cites (a cite not in `cases/` gets a caution, and case
-    quotes are checked like statute quotes). Consider a reply check for applying language ("applies to
-    you", "your case", "you should"), like the cite checks. Decide too whether a tagged page about a
-    commercial lease (e.g. Multach v. Adams, which reads 83.41 to say part II does not apply) loads for a
-    tenant.
+29. Which topic the tenant sees is still the model's choice. Asked about lawyers' fees in a deposit case,
+    one run of `deposit_cases` called Fees and costs in a suit over the deposit and two called Prevailing
+    party fees under 83.48, so the tenant saw different sets of cases. Consider printing every offered topic
+    a question could fall under, or a chat command `cases` that lists the topics so the tenant picks.
 26. `search_cases(phrase)`, like `search_statute`, for a tenant whose situation fits no playbook ("other").
     Reconsider before building: here the model, not code, decides what to look for from the tenant's
     story, which is selection by judgment, the unlicensed-practice risk discussed 2026-10-01 (Brumbaugh:
@@ -72,6 +69,8 @@ reused, so older references (smoke check names, the changelog) still point to th
     printed date is `claim_notice_dated`). Still seen with the current rules: 1 of 3 claim runs in the trial
     (the old rules also 1 of 3). The sheet shows the suggestion and the tenant corrects it, logged as
     corrected. (Item 21 was the same slip.)
+30. Asked whether a provision means the deposit comes back, the model quoted the statute but left out "This
+    tool does not decide that." (rule 1): 1 of 3 `deposit_cases` runs on 2026-10-01 after the cases fix.
 19. The model repeats a line of the printed deadlines, or says "The deadlines appear above." when the line
     above says there are none (rule 3). Harmless. In the trial the current rules repeated a line in 4 of 18
     replies; after rule 3 named the echo, none of the 6 reruns did (entry, rent: no dates), and one live

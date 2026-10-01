@@ -18,6 +18,7 @@ from datetime import date
 import yaml
 
 from citations import compact, is_in, where_in
+import config
 from config import CASES, WIKI
 from corpus import statute
 
@@ -228,6 +229,81 @@ def verify(name, by, root=WIKI):
              for line in path.read_text().split("\n")]
     path.write_text("\n".join(lines))
     write_index(root)
+
+
+# ---- In the chat: what a tenant may be shown. Only case pages the author verified, and only ones with a part II
+# section tag (an untagged page is for research: part I, before the Act, commercial, criminal, or not landlord
+# and tenant). The model sees the topic names; the program prints the cases (agent.show_turn), so no case
+# reaches the tenant through the model's own words.
+
+ROOT = WIKI          # the wiki the chat reads; smoke.py points it at a throwaway copy
+
+
+def eligible(page):
+    """A case page the chat may show: verified (or WIKI_UNVERIFIED set, for a development run) and tagged."""
+    meta = page["meta"]
+    return (meta.get("kind") == "case" and bool(meta.get("sections"))
+            and (verified(page) or config.WIKI_UNVERIFIED))
+
+
+def issues_on(page, topic):
+    """The issue sections of a case page whose Topic: line names the topic, each as (question, body)."""
+    found = []
+    for section in page["body"].split("\n## ")[1:]:
+        question, _, rest = section.partition("\n")
+        topics_line = next((l for l in rest.split("\n") if l.startswith("Topic: ")), "")
+        if f"[[{topic}]]" in topics_line:
+            found.append((question.strip(), rest))
+    return found
+
+
+def case_topics(sections, root=None):
+    """Topics the chat can offer for these statute sections: each topic that an eligible case page tagged
+    with one of them names on an issue. {topic: number of eligible cases on the topic, any tag}."""
+    pages = read_pages(root or ROOT)
+    shown = [p for p in pages.values() if eligible(p)]
+    offered = {t for p in shown if set(p["meta"]["sections"]) & set(sections)
+               for t in linked(p["meta"].get("topics")) if issues_on(p, t)}
+    return {t: sum(1 for p in shown if issues_on(p, t)) for t in sorted(offered)}
+
+
+def citation(meta):
+    """'448 So. 2d 1208 (Fla. 3d DCA 1984)'"""
+    return f"{meta['cite']} ({meta['court']} {str(meta['decided'])[:4]})"
+
+
+def plain_links(line):
+    """[[Durene v. Alcime]] -> Durene v. Alcime, for what the tenant reads."""
+    return re.sub(r"\[\[([^\]|]+)(?:\|[^\]]*)?\]\]", r"\1", line)
+
+
+def render_cases(topic, root=None):
+    """Every eligible case on a topic, oldest first, as the tenant reads it: the case, the statute version it
+    read, then for each of its issues on the topic the question, the rule, the reasoning, and any dissent,
+    in the court's quoted words with pin pages. Ends with the line that the tool does not decide whether
+    any of them applies. Returns "" when no eligible case is on the topic."""
+    pages = read_pages(root or ROOT)
+    cases = sorted((p for p in pages.values() if eligible(p) and issues_on(p, topic)),
+                   key=lambda p: str(p["meta"]["decided"]))
+    if not cases:
+        return ""
+    lines = [f'Cases on "{topic}", in the courts\' own words, oldest first:']
+    if config.WIKI_UNVERIFIED and not all(verified(p) for p in cases):
+        lines.append("[Development run: some of these pages are not yet verified by the author.]")
+    for p in cases:
+        meta = p["meta"]
+        lines += ["", f"{p['name']}, {citation(meta)}" + ("" if verified(p) else " [not verified]"),
+                  "  The court read: " + "; ".join(meta.get("statute_read") or []) + "."]
+        for question, body in issues_on(p, topic):
+            lines.append(f"  Question: {question}")
+            for line in body.split("\n"):
+                if line.startswith(("Rule:", "Reasoning:", "Dissent:", "The issue in the court's words:")):
+                    lines.append("  " + plain_links(line))
+                elif line.startswith("- "):
+                    lines.append("    " + plain_links(line[2:]))
+    lines += ["", "These are what courts said in other people's cases. This tool does not decide whether any of "
+                  "them applies to you."]
+    return "\n".join(lines)
 
 
 def check_wiki(root=WIKI):

@@ -32,8 +32,9 @@ whether a case applies to the tenant, or what the tenant should do.
 
 1. The chatbot: a LangChain agent with a small set of tools and a rules-based system prompt.
 2. The data bank: one folder per tenant and per matter, so a returning tenant resumes where they left off.
-3. Skills: the guidance half of each playbook, the statute sections it rests on, and the case wiki pages
-   for those sections, loaded into the prompt when its issue becomes active instead of pasted for every issue, so the context window holds only what
+3. Skills: the guidance half of each playbook, the statute sections it rests on, and the topics of the
+   case wiki's verified pages for those sections, loaded into the prompt when its issue becomes active (the
+   cases themselves are printed by the program when the tenant asks) instead of pasted for every issue, so the context window holds only what
    the matter's issues need.
 
 ## Non-negotiables
@@ -49,7 +50,8 @@ whether a case applies to the tenant, or what the tenant should do.
 - A fact enters the record only after the tenant confirms it. Proposed facts carry how they were proposed
   (stated or inferred) and the tenant's own words as basis.
 - The record is append-only. Current state is a snapshot; history is never edited or deleted.
-- Letters are a code template, not model text. The timeline is code output, never relayed by the model.
+- Letters are a code template, not model text. The timeline and the cases are code output, never relayed
+  by the model.
 - `statutes/` and `cases/` are read-only corpora. Playbook and case wiki quotes are verified against them
   after every edit. `cases/` holds the court's text only: no publisher's headnotes, synopses, or citator
   flags.

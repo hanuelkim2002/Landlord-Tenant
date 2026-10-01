@@ -14,11 +14,13 @@ from langchain.tools import tool
 
 import record
 from citations import is_in
+import config
 from config import squash
 from corpus import playbooks, statute
 from deterministic import matter_deadlines
 from record import active_playbooks, append_event, element_status, matter_dir, read_events, save
 from sheet import parse_answer, shown
+import wiki
 
 
 # ---- Statute Lookup
@@ -116,6 +118,39 @@ def get_deadlines() -> str:
     if waiting:
         result["waiting"] = waiting            # these issues' dates come once their facts are confirmed
     return json.dumps(result, indent=2, default=str)
+
+
+# ---- Cases: what courts said, from the case wiki's verified pages. The program prints the result to the tenant
+# (agent.show_turn), so the model never retells a case.
+
+def offered_topics():
+    """The case topics for the active issues' statute sections (wiki.case_topics)."""
+    return wiki.case_topics(sorted({s for pb in active_playbooks() for s in pb.sections}))
+
+
+@tool(response_format="content_and_artifact")
+def get_cases(topic: str) -> tuple[str, str]:
+    """What courts have said on one topic listed in CASE TOPICS: the program prints every case the tool holds
+    on it, oldest first, in the courts' own quoted words. Use only when the tenant asks what courts or cases
+    say. Pass the topic exactly as CASE TOPICS lists it. You get back only the names of the cases printed,
+    not their text: never quote, summarize, rank, or reword a case, and never say whether one applies to the
+    tenant."""
+    topics = offered_topics()
+    if topic not in topics:
+        return f"No case topic named {topic!r} for this matter. CASE TOPICS: {sorted(topics)}", ""
+    shown_before = record.session and any(ev["kind"] == "cases_shown" and ev.get("topic") == topic
+                                          and ev.get("session") == record.session for ev in read_events())
+    if shown_before:                                       # printed once per session: the tenant can scroll up
+        return f"[The cases on {topic!r} were already printed above in this chat. Nothing new was printed.]", ""
+    pages = wiki.read_pages(wiki.ROOT)
+    cases = sorted((p for p in pages.values() if wiki.eligible(p) and wiki.issues_on(p, topic)),
+                   key=lambda p: str(p["meta"]["decided"]))
+    append_event("cases_shown", topic=topic, cases=[str(p["meta"]["cite"]) for p in cases],
+                 **({"unverified": True} if config.WIKI_UNVERIFIED else {}))
+    printed = "; ".join(f"{p['name']}, {wiki.citation(p['meta'])}" for p in cases)
+    return (f"The program printed the cases on {topic!r} for the tenant, oldest first: {printed}. Reply only: "
+            f"The cases appear above. This tool does not decide whether any of them applies to you."), \
+        wiki.render_cases(topic)
 
 
 # ---- Draft Letter: a template filled from the record. No model call, so there is nothing to validate:
@@ -232,4 +267,5 @@ def add_communication(sent_on: str, sender: str, recipient: str, channel: str, t
 
 # ---- Tools List: what the agent may call. A new tool goes here after it is defined above.
 
-tools = [get_statute_section, search_statute, propose_facts, get_deadlines, draft_letter, add_artifact, add_communication]
+tools = [get_statute_section, search_statute, propose_facts, get_deadlines, get_cases, draft_letter, add_artifact,
+         add_communication]

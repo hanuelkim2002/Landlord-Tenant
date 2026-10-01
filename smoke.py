@@ -15,23 +15,24 @@ from datetime import date
 from pathlib import Path
 
 import PyPDF2
-from langchain.messages import AIMessage, HumanMessage
+from langchain.messages import AIMessage, HumanMessage, ToolMessage
 
 import record
 from calendars import court_calendars
 from checks import check, make_scratch, remove_scratch, summary
-from citations import SUBSECTION_START, check_cites, check_quoted, quoted_passages, subsections
+from citations import SUBSECTION_START, check_case_cites, check_cites, check_quoted, quoted_passages, subsections
 from config import CASES, MATTERS, WIKI
 from corpus import check_all_playbooks, load_playbook, playbooks, statute
 from deterministic import check_elements, compute_deadlines, lease_value
 from dev.build_cases import court_text
+import wiki
 from wiki import lint, read_pages, verified, verify
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
 from timeline import render_deadlines, render_timeline
 from agent import check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
-from tools import build_letter, draft_letter, get_deadlines, get_statute_section, propose_facts
+from tools import build_letter, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
 pb = playbooks["deposit_not_returned"]
@@ -409,6 +410,41 @@ try:
     check("a flagged cite and quote are printed and logged, a good cite is not",
           "[Check: 83.64" in printed.getvalue() and "[Check: 83.49" not in printed.getvalue()
           and [(e["kind"], e.get("cite")) for e in flagged] == [("cite_flagged", "83.64"), ("quote_flagged", "83.49(3)(b)")])
+    # cases (wiki.py, get_cases): nothing is offered until a page is verified; a verified, tagged page offers its
+    # topics, prints by code, and is logged; an untagged page never shows; a case cite must be one shown
+    check("no case topic is offered while no page is verified, and the prompt says so",
+          offered_topics() == {} and "CASE TOPICS (for get_cases; number of cases on each):\nnone for these issues" in system_prompt())
+    verified_copy = Path(tempfile.mkdtemp()) / "wiki"
+    shutil.copytree(WIKI, verified_copy)
+    verify("Durene v. Alcime", "Smoke", verified_copy)
+    verify("Hankins v. Smith", "Smoke", verified_copy)          # untagged: for research only
+    wiki.ROOT = verified_copy
+    try:
+        offered = offered_topics()
+        check("a verified, tagged page offers its topics for the active sections; an untagged one does not",
+              offered.get("Landlord's notice of claim on the deposit") == 1 and "Constructive eviction" not in offered)
+        topic = "Landlord's notice of claim on the deposit"
+        call = AIMessage(content="", tool_calls=[{"name": "get_cases", "args": {"topic": topic}, "id": "k1"}])
+        shown_msg = get_cases.invoke({"type": "tool_call", "id": "k1", "name": "get_cases", "args": {"topic": topic}})
+        with contextlib.redirect_stdout(io.StringIO()) as printed:
+            show_turn([call, shown_msg, AIMessage(content="The cases appear above.")], [call, shown_msg])
+        out = printed.getvalue()
+        check("get_cases prints every verified case on the topic in the courts' words with the closing line, and logs it",
+              "Durene v. Alcime, 448 So. 2d 1208 (Fla. 3d DCA 1984)" in out and "readily available fund" in out
+              and "Casey" not in out and "does not decide whether any of them applies to you" in out
+              and read_events()[-1]["kind"] == "cases_shown" and read_events()[-1]["cases"] == ["448 So. 2d 1208"])
+        check("the model gets only the names of the cases printed, not their words",
+              "Durene v. Alcime, 448 So. 2d 1208" in shown_msg.content and "readily available fund" not in shown_msg.content)
+        again = get_cases.invoke({"type": "tool_call", "id": "k2", "name": "get_cases", "args": {"topic": topic}})
+        check("the same topic asked again in the session prints nothing new and logs nothing",
+              not again.artifact and "already printed above" in again.content and read_events()[-1]["kind"] == "cases_shown"
+              and sum(e["kind"] == "cases_shown" for e in read_events()) == 1)
+        check("get_cases refuses a topic that is not offered", get_cases.invoke({"topic": "Constructive eviction"}).startswith("No case topic"))
+        check("a case cite in a reply must be one the tool showed in the chat",
+              check_case_cites("See 448 So. 2d 1208 and 573 So. 2d 76.", shown_msg.content) == [("573 So. 2d 76", "is not a case this tool showed in this chat")])
+    finally:
+        wiki.ROOT = WIKI
+        shutil.rmtree(verified_copy.parent)
     said = " ".join(record.matter["description"].split()[:8])          # the first words of the description
     check("the tenant's description counts as what the model was given", len(said) >= 20
           and check_quoted(f'You said "{said}"', given_text([])) == [] and check_quoted(f'"{said}"', "") != [])

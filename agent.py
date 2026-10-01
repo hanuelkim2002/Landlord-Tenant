@@ -11,7 +11,7 @@ from langchain_core.utils.uuid import uuid7
 from langgraph.checkpoint.memory import InMemorySaver
 
 import record
-from citations import caution, check_cites, check_quoted, quote_label
+from citations import caution, check_case_cites, check_cites, check_quoted, quote_label
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
@@ -19,7 +19,7 @@ from record import (active_playbooks, add_issues, add_related_issues, append_eve
                     element_status, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet
 from timeline import render_deadlines, render_timeline
-from tools import tools
+from tools import offered_topics, tools
 
 
 # ---- Rules: the fixed part of the system prompt. The lease profile, the playbooks, the statute sections,
@@ -87,7 +87,11 @@ Not: a summary of the landlord's email as the text.
 Instead: the text exactly as given; if its date is missing, ask for it first.
 For a letter the tenant says they sent: sender "tenant", recipient "landlord", sent_on the date sent, channel the delivery method, and as text the draft's file name (draft_YYYY-MM-DD_issue_posture.txt, with the letter's date) then any tracking number. Ask for whatever is missing.
 
-8. Offer nothing the tenant did not ask for.
+8. Cases only through get_cases, which the program prints.
+Not: "In Durene v. Alcime the court held a late notice forfeits the deposit, so your landlord forfeited yours." or any case named from memory.
+Instead: when the tenant asks what courts or cases say, call get_cases with the topic's exact name from CASE TOPICS, then reply only: "The cases appear above. This tool does not decide whether any of them applies to you." Never quote, summarize, rank, or choose among cases yourself. If no topic in CASE TOPICS fits, write exactly "This tool has no cases on that." and nothing after "that".
+
+9. Offer nothing the tenant did not ask for.
 Not: "Do you want to send a written objection to the landlord's claim?", "Would you like to proceed with any action based on this deadline?", "If you would like me to draft a letter..."
 Instead: end with the last quote or fact. Ask a question only when you need its answer for what the tenant asked. No offers, no next steps.
 """
@@ -163,7 +167,14 @@ def system_prompt():
             + "\n\nLEASE PROFILE:\n" + record.profile.model_dump_json(indent=2)
             + "\n\nPLAYBOOKS:\n" + playbook_text
             + "\n\nSTATUTE SECTIONS:\n" + hot
+            + "\n\nCASE TOPICS (for get_cases; number of cases on each):\n" + case_topics_text()
             + "\n\nELEMENT STATUS (by issue):\n" + json.dumps(element_status(), indent=2))
+
+
+def case_topics_text():
+    """One line per case topic offered for the active issues, or a line saying there are none."""
+    topics = offered_topics()
+    return "\n".join(f"- {t} ({n})" for t, n in topics.items()) or "none for these issues"
 
 
 @dynamic_prompt
@@ -189,7 +200,10 @@ def transcript_entry(m):
     if m.type == "human":
         return {"role": "tenant", "text": m.content}
     if m.type == "tool":
-        return {"role": "tool", "name": m.name, "text": m.content}
+        entry = {"role": "tool", "name": m.name, "text": m.content}
+        if getattr(m, "artifact", None):                   # what the program printed from it (get_cases)
+            entry["shown"] = m.artifact
+        return entry
     entry = {"role": "model", "text": m.content}
     if m.tool_calls:
         entry["tool_calls"] = [{"name": c["name"], "args": c["args"]} for c in m.tool_calls]
@@ -223,6 +237,8 @@ def check_reply(text, messages):
     flagged = []
     for cite, problem in check_cites(text, sections_shown(messages)):
         flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
+    for cite, problem in check_case_cites(text, given_text(messages)):
+        flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
     for quote, cite, problem in check_quoted(text, given_text(messages)):
         flagged.append((caution(quote_label(quote, cite), problem), "quote_flagged",
                         {"quote": quote, "cite": cite, "problem": problem}))
@@ -246,6 +262,9 @@ def show_turn(new, messages):
     for i, m in enumerate(new):
         if m.type == "tool" and m.name == "draft_letter":
             print(m.content, "\n")
+            printed = True
+        elif m.type == "tool" and m.name == "get_cases" and getattr(m, "artifact", None):
+            print(m.artifact, "\n")                      # the cases, from the wiki; the model got only their names
             printed = True
         elif i == last_deadlines:
             print(render_deadlines(m.content), "\n")

@@ -9,7 +9,8 @@ not what is planned (that is TODO.md) or what changed (that is CHANGELOG.md).
 Listed from the bottom of the import chain up. Every module imports `config`. Everything imports without
 `UF_API_KEY`; only a model call needs it (see Running and testing).
 
-- `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `CASES`, `WIKI`, `PLAYBOOKS`), the two model clients (`agent_llm` on
+- `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `CASES`, `WIKI`, `PLAYBOOKS`), `WIKI_UNVERIFIED` (true
+  when the environment sets `WIKI_UNVERIFIED=1`: development runs only, see `wiki.eligible`), the two model clients (`agent_llm` on
   `AGENT_MODEL`, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0; `AGENT_MODEL`
   is nemotron-3-super-120b-a12b unless the environment sets `AGENT_MODEL`, for trying another gateway
   model in one run; it drives the chat, `classify`, and `fill_facts`), and `squash`
@@ -56,7 +57,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `quote_label` names a quote in it by its first six words. These check that a cite exists and was
   available, and that quoted words are real and sit where they are cited. They cannot tell whether a cite
   fits a claim made in the reply's own words, and a paraphrase outside quote marks is not checked.
-  Imports `corpus`. Imported by `agent`, `smoke`, `wiki`.
+  `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
+  given)` (each reporter cite in a reply, outside quote marks, must appear in what the model was given, i.e.
+  a `get_cases` receipt; returns `(cite, problem)`). Imports `corpus`. Imported by `agent`, `smoke`, `wiki`.
 - `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
   `cases/` and `topics/` under the wiki folder, by name: `name`, `path`, `meta` from the YAML front matter,
   `body`), `linked` (page names in a front matter field), `opinion(page)` (a case page's opinion from
@@ -74,7 +77,16 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   lines), `verified(page)` (signed off and unchanged since), `verify(name, by, root)` (refused while the
   page has a problem; sets `verified_by`, `verified_on`, `verified_hash`, rewrites the index), and
   `check_wiki` (prints problems and warnings). `python wiki.py check | index | verify "<page>" "<name>"`.
-  Imports `citations`, `config`, `corpus`. Imported by `smoke`. Nothing in the chat reads the wiki yet.
+  For the chat: `ROOT` (the wiki the chat reads; `smoke.py` points it at a copy), `eligible(page)` (a case
+  page with a part II section tag that the author verified, or any tagged page when `WIKI_UNVERIFIED` is
+  set), `issues_on(page, topic)` (the issue sections whose `Topic:` line names the topic),
+  `case_topics(sections)` (`{topic: number of eligible cases on it}` for each topic an eligible page tagged
+  with one of the sections names on an issue), `citation(meta)`, `plain_links`, and `render_cases(topic)`
+  (every eligible case on the topic, oldest first: name and cite, the statute version read, then for each
+  of its issues on the topic the question, the rule, the reasoning, and any dissent as quoted on the page,
+  with "[not verified]" on unverified pages in a development run, ending with "These are what courts said in
+  other people's cases. This tool does not decide whether any of them applies to you."). Imports
+  `citations`, `config`, `corpus`. Imported by `tools`, `smoke`.
 - `deterministic.py`: `check_elements` (element status), `court_days` (court business days from a
   county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
@@ -284,6 +296,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
     `agent.retry_empty`. `timeline full` only.
   - `quote_flagged`: `quote` (the quoted words), `cite` (the cite next to it, or ""), `problem` (e.g. "is in
     83.49(3)(a), not 83.49(3)(b)"). Written by `agent.check_reply`. `timeline full` only.
+  - `cases_shown`: `topic`, `cases` (the cites printed, oldest first), `unverified` (true, only in a
+    development run with `WIKI_UNVERIFIED`). Written by `get_cases` when it prints; once per topic per
+    session. `timeline full` only.
   - `deadlines_computed`: `issue`, `clocks` (ids of clocks that produced a date). One per active playbook
     per `get_deadlines` call.
   - `draft`: `issue`, `posture`, `cites`, `file`. Written by `draft_letter`.
@@ -309,7 +324,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
 - `artifacts/<sha256[:12]>_<name>`: copies of files stored by `add_artifact`.
 - `sessions/<session id>.jsonl`: the transcript of one session, outside the evidentiary log. One line per
   entry, each with `when` and `role`: `tenant` (`text`, as typed), `model` (`text`, plus `tool_calls`, a
-  list of `{"name", "args"}`, when it called tools), `tool` (`name`, `text`: the result the model saw),
+  list of `{"name", "args"}`, when it called tools), `tool` (`name`, `text`: the result the model saw, and
+  `shown`: what the program printed from it, for `get_cases`),
   `command` (`text`: a `timeline` command, handled without the model), `sheet` (`id`, `question`,
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_added`
   when the answer brought in a related issue), or
@@ -341,8 +357,8 @@ forms decision) from a Southern Reporter PDF the author supplied, by `dev/build_
 Westlaw print marks that opinion's added and deleted words by formatting. Only the opinion is stored (pages
 503 to 504, up to "APPENDIX"): the appendix of forms marks its changes by underlining and strikethrough,
 which the PDF's text loses too (it reads "Home andor Duplex"). Read by
-`wiki.py` (quotes on wiki pages are checked against it) and the smoke checks; nothing in the chat reads it
-yet.
+`wiki.py` (quotes on wiki pages are checked against it) and the smoke checks; the chat reads the wiki's
+pages, never `cases/` directly.
 
 `wiki/` (the case wiki, after Andrej Karpathy's LLM wiki; written by Claude Code in development sessions,
 never by a tenant session): `SCHEMA.md` (how pages are built: front matter, the quote syntax, the rule that
@@ -386,6 +402,15 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   does not report the result: the chat loop prints the turn's last `get_deadlines` result itself, through
   `timeline.render_deadlines`, before the model's reply, and the docstring and rule 3 tell the model not
   to repeat or reword it.
+- `get_cases(topic)`: `topic` must be one of the matter's CASE TOPICS (`tools.offered_topics`, i.e.
+  `wiki.case_topics` for the active playbooks' sections); otherwise "No case topic named ...". A tool with
+  `response_format="content_and_artifact"`: the model gets a receipt only (the names and cites of the cases
+  printed, and "Reply only: The cases appear above. This tool does not decide whether any of them applies to
+  you."), and the program gets `wiki.render_cases(topic)` as the message's artifact, which `show_turn`
+  prints. So the model never sees a case's words and cannot retell one; a case quote it writes anyway is
+  flagged by `check_quoted`. Writes a `cases_shown` event. A topic already printed in this session prints
+  nothing and returns "[The cases on ... were already printed above in this chat. Nothing new was
+  printed.]".
 - `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
   obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a playbook;
   `posture` is preserve (no quotes), assert (obligation quote), or escalate (both quotes). Rejects any quote
@@ -405,10 +430,11 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`: version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 1,028 words with later fixes for TODO item 23: rule 1's notices-clause line applies only to a requested letter; a pair for legality questions (quote, then "This tool does not decide that."); rule 2's fallback sentence used exactly, and cite the subsection the words sit in; rule 3 names the echoed empty result; rule 4 adds an example of asking for sheet facts. A role
+1. `RULES`: version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 1,130 words with a rule
+   on cases added after it (TODO item 25) and later fixes for TODO item 23: rule 1's notices-clause line applies only to a requested letter; a pair for legality questions (quote, then "This tool does not decide that."); rule 2's fallback sentence used exactly, and cite the subsection the words sit in; rule 3 names the echoed empty result; rule 4 adds an example of asking for sheet facts. A role
    paragraph (organize lease, statute, and record side by side; not a lawyer; never advise, send, or work
    out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
-   `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no field names), then eight numbered rules,
+   `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no field names), then nine numbered rules,
    each stated with "Not:" examples taken from real slips and the "Instead:" form: 1 organize, never advise
    (no must/may/can/should/entitled/required/rights/options about anyone outside quote marks; the conflict
    line only right after a lease quote and a statute quote on one point); 2 quote only what was given, word
@@ -419,8 +445,11 @@ this order:
    chat; 5 open questions stay open (quote the open question's text; never resolve it or ask the tenant
    to); 6 letters only when asked, only through `draft_letter`, missing details asked once, posture lines
    copied word for word, then one line; 7 record messages and sent letters with `add_communication`;
-   8 offer nothing the tenant did not ask for. Rules 1 to 7 cover the same ground as the seven rules of
-   2026-09-30 (whose numbers TODO.md items 15 to 22 use); rule 8 was part of the old rule 1. Old rules 1 to
+   8 cases only through `get_cases`, which the program prints, only when the tenant asks what courts or
+   cases say, then only "The cases appear above. This tool does not decide whether any of them applies to
+   you." ("This tool has no cases on that." when no topic fits); 9 offer nothing the tenant did not ask for
+   (rule 8 until 2026-10-01). Rules 1 to 7 cover the same ground as the seven rules of
+   2026-09-30 (whose numbers TODO.md items 15 to 22 use); rule 9 was part of the old rule 1. Old rules 1 to
    15 (until 2026-09-30) map to the seven as: 1, 4, 8 to 2; 2 to 3; 3, 9 to 4; 5 to 5; 6, 11, 12 to 6;
    7, 13 to 1; 14, 15 to 7; 10 dropped.
 2. `LEASE PROFILE`: the whole profile as JSON.
@@ -428,7 +457,9 @@ this order:
    `spec.open_questions` (which rule 5 refers to). The rest of `spec` never enters the context.
 4. `STATUTE SECTIONS`: the text of every section the active playbooks list in `sections`, once each. An
    issue with no playbook yet adds none.
-5. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at the moment of the call.
+5. `CASE TOPICS (for get_cases; number of cases on each)`: `agent.case_topics_text()`, one line per topic
+   from `tools.offered_topics()`, or "none for these issues" (always, until the author verifies pages).
+6. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at the moment of the call.
 
 The program note after a sheet still tells the model, in the conversation, that a sheet just ran.
 
@@ -522,7 +553,11 @@ Offline checks (no model call, no key needed):
   quote with no source, a statute quote in the wrong subsection, a link to no page, an untagged case page
   with no `scope_note`, and a case missing from
   its topic's Cases list are each caught; a verified page stops counting as verified once edited; `verify`
-  refuses a page with a problem), a hand-typed update
+  refuses a page with a problem), cases in the chat on the scratch matter (no topic offered while no page
+  is verified; on a copy with Durene and Hankins verified, Durene's topics are offered and Hankins's,
+  untagged, are not; `get_cases` prints Durene in the courts' words with the closing line and logs it,
+  gives the model only the names, prints nothing the second time in a session, and refuses a topic not
+  offered; a case cite not shown is flagged), a hand-typed update
   against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`
   refusing), the letter template, the cite checks (subsection markers in order in every stored section,
   each kind of bad cite flagged, and a real, shown but wrong cite passing), the quote checks (which cite goes
@@ -565,7 +600,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   legal?"), `rent_increase.json` (rent_increased; no clocks; asks whether it is allowed and whether it is
   retaliation), `leave_early.json` (wants_to_leave_early; the 83.49(5) date 2026-11-08; asks what happens if
   they just leave), `month_to_month_end.json` (lease_ending; both 83.57(3) dates 2026-10-31; asks whether 30
-  days notice is required). The last four each ask a question the tool must not answer, and answer every
+  days notice is required), `deposit_cases.json` (deposit_not_returned, no letter; asks what courts have said
+  about a late notice of claim, whether that means the whole deposit comes back, and about lawyers' fees;
+  run with `WIKI_UNVERIFIED=1` until pages are verified). The four before it each ask a question the tool must not answer, and answer every
   suggested issue but the intended one with no, keyed on the intended issue's full description (the driver
   takes the longest matching rule, so a shorter key loses to "Is that part of your situation?"). The driver also
   handles run.py exiting by itself.
