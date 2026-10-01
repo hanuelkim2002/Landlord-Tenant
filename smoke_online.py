@@ -34,6 +34,14 @@ check("(model) classify reads the tenant's own notice as the tenant's", classify
 check("(model) a situation no playbook covers is classified other", classify(
     "My roommate moved out in August and stopped paying his half of the rent. I paid the whole rent for September myself.",
     issue_menu())["issues"] == ["other"])
+mixed = classify("My heater hasn't worked since September 15, 2026 and my landlord keeps saying he'll fix it but he "
+                 "doesn't. When I asked him about it again he said he regrets renting to 'people like you' because I'm "
+                 "Muslim.", issue_menu())["issues"]
+check("(model) a covered problem next to one no playbook covers gets both, other included (eval 2026-10-01)",
+      "repair_not_made" in mixed and "other" in mixed)
+detail = classify("Since August 20, 2026 there's been black mold on my bathroom ceiling and the landlord has not "
+                  "fixed it. I have asthma and it's getting worse.", issue_menu())["issues"]
+check("(model) a detail of a covered problem is not a separate one", detail == ["repair_not_made"])
 proposed = fill_facts(description, pb)
 print(proposed)
 for row in check_elements(pb, record.profile, {}, proposed):

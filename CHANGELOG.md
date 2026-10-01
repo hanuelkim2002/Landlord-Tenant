@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Classify flags a separate problem no playbook covers even when another one is covered. Was: its prompt said
+  'Use "other" only if none of the situations fits', so a mixed story never got "other" and `run.py`'s
+  "Part of what you described may not be covered" note (`NOT_COVERED`, which needs "other" next to a covered
+  issue) could not print: in the eval baseline, a broken heater plus a landlord's remark about the tenant's
+  religion was classified repair_not_made and lease_ending only. Now the prompt adds "other" for a separate
+  uncovered problem, and says a detail of a covered problem (its effect on the tenant) is not one. Tried
+  twice each on four stories: the mixed one gets other, a mold story with asthma does not, the roommate story
+  is other alone, a nonpayment story is unchanged. Two `smoke_online` checks.
 - Rules that can apply only sometimes go in only then (`agent.rules_for`). Was: all nine rules in every
   prompt (1,130 words); a rule about a letter nobody asked for was copied out of context in the trial ("How
   will you send it?", month-to-month story). Now rule 6 (letters) joins once a letter is in play (the
