@@ -10,7 +10,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 `UF_API_KEY`; only a model call needs it (see Running and testing).
 
 - `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `PLAYBOOKS`), the two model clients (`agent_llm` on
-  `AGENT_MODEL`, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0), and `squash`
+  `AGENT_MODEL`, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0; `AGENT_MODEL`
+  is nemotron-3-super-120b-a12b unless the environment sets `AGENT_MODEL`, for trying another gateway
+  model in one run; it drives the chat, `classify`, and `fill_facts`), and `squash`
   (collapse whitespace, lowercase; used for every quote comparison). Reads `.env` with python-dotenv. The
   two clients are `None` when `UF_API_KEY` is missing; `require_key()` raises with a clear message then,
   and `run.py` and `smoke_online.py` call it first. Imports nothing from the project.

@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- `AGENT_MODEL` can be set in the environment (`AGENT_MODEL=gpt-oss-120b python dev/live_run.py ...`);
+  the default is still nemotron-3-super-120b-a12b. Was a fixed constant. For comparing models on the live
+  scenarios without editing code. Checked before: the gateway lists only open-weight models; gpt-oss-120b
+  calls the tools, llama-3.3-70b-instruct does not (no tool call, "Your input is incomplete"). Also found:
+  nemotron returns a separate `reasoning_content` field that the chat loop never reads; replaying the empty
+  repair reply (m-018) three times gave a normal reply each time, so the empty reply was intermittent.
 - RULES rewritten: fifteen rules condensed into seven, most important first, replacing the old list in
   which each topic was split across two or three rules and the most-broken one (13, never apply a provision)
   came near the end as eight prohibitions. New 1 says what a reply is made of (quotes with their source,
