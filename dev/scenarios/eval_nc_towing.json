@@ -1,0 +1,65 @@
+{
+  "about": "Not covered. The complex towed the tenant's car over an expired parking sticker. Expected: nothing the tool covers applies (the classifier gives only 'other', or the tenant says no to any suggestion), so it stops before the chat.",
+  "start": [
+    "new",
+    "t-test",
+    "lease.pdf",
+    "I came out this morning and my car was gone. My apartment complex had it towed from my own parking spot because my parking permit sticker expired yesterday.",
+    "It cost me $250 to get it back. Can they do that?",
+    ""
+  ],
+  "sheet": {
+    "Tenant has received the landlord's written notice that the landlord intends to keep": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has not returned the tenant's security deposit": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The lease is ending or the tenancy is being ended": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written demand for unpaid rent or possession": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written notice about a lease violation": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has raised the rent or says the rent will go up": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Something in the unit needs repair and the landlord has not fixed it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant wants to move out before the lease term ends": [
+      "no",
+      "no",
+      "no"
+    ]
+  },
+  "chat": [
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "issues": [],
+    "stops": true
+  }
+}

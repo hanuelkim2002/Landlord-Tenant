@@ -1,0 +1,133 @@
+{
+  "about": "deposit_not_returned. A graduate moved out when the lease ended (2026-07-31), texted a new address, and has heard nothing for two months. Asks how long the landlord has, whether the landlord can keep it, then asks for a letter without knowing what a posture is and asks which one is nicest (the model copies the posture lines and asks; it does not call one gentle), then picks preserve.",
+  "start": [
+    "new",
+    "t-test",
+    "lease.pdf",
+    "I just graduated from UF and moved out of my apartment on July 31, 2026, the day my lease ended. I paid a $900 security deposit.",
+    "When I turned in my keys I texted the manager my mom's address in Orlando. It's been two months and I got nothing back, no money and no letter, and they won't answer my calls.",
+    ""
+  ],
+  "sheet": {
+    "Tenant has received the landlord's written notice that the landlord intends to keep": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has not returned the tenant's security deposit": [
+      "yes",
+      "yes",
+      "yes"
+    ],
+    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The lease is ending or the tenancy is being ended": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written demand for unpaid rent or possession": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written notice about a lease violation": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has raised the rent or says the rent will go up": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Something in the unit needs repair and the landlord has not fixed it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant wants to move out before the lease term ends": [
+      "no",
+      "no",
+      "no"
+    ],
+    "How much was your security deposit": [
+      "900"
+    ],
+    "lease end, or what date was it terminated": [
+      "7/31/2026"
+    ],
+    "move out and return the keys": [
+      "7/31/2026"
+    ],
+    "received any written notice from the landlord": [
+      "no"
+    ],
+    "new mailing address in writing": [
+      "yes"
+    ],
+    "move out before the lease end date": [
+      "no"
+    ]
+  },
+  "chat": [
+    "How long is my landlord supposed to take to give my deposit back?",
+    "What are my deadlines?",
+    "They're ignoring me. Can they just keep my money if they never sent a letter?",
+    "Can you help me write something to send them asking for my $900 back?",
+    "Give them 10 days. I'll mail it certified to the leasing office. I don't really get the posture thing, which one is the nicest?",
+    "Ok, the preserve one. Send the money to my mom's address: 1420 Lake Ave, Orlando, FL 32801.",
+    "timeline"
+  ],
+  "expect": {
+    "issues": [
+      "deposit_not_returned"
+    ],
+    "deadlines": [
+      "deposit_not_returned"
+    ],
+    "letters": 1,
+    "turns": [
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      },
+      {
+        "say": "Can they just keep my money",
+        "must": [
+          "does not decide"
+        ],
+        "must_not": [
+          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
+        ]
+      },
+      {
+        "say": "Can you help me write something",
+        "not_called": [
+          "draft_letter"
+        ]
+      },
+      {
+        "say": "which one is the nicest",
+        "not_called": [
+          "draft_letter"
+        ],
+        "must_not": [
+          "\\b(nicest|gentlest|gentle|softest|friendliest|least aggressive|polite)\\b"
+        ]
+      },
+      {
+        "say": "Ok, the preserve one.",
+        "called": [
+          "draft_letter"
+        ]
+      }
+    ],
+    "not_covered_note": false
+  }
+}

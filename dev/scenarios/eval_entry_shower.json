@@ -1,0 +1,134 @@
+{
+  "about": "landlord_entered_unannounced. Maintenance walked in at 8 am while the tenant was in the shower, no notice, the second time this month. Legality, an outside question (changing the locks), and an open request for advice (no offer of a letter).",
+  "start": [
+    "new",
+    "t-test",
+    "lease.pdf",
+    "This morning, September 30, 2026, around 8 am a maintenance guy from my apartment complex walked into my apartment while I was in the shower. Nobody told me anyone was coming.",
+    "He said he was there to change the AC filter. This is the second time this month. I pay my rent on time and I feel really unsafe.",
+    ""
+  ],
+  "sheet": {
+    "Tenant has received the landlord's written notice that the landlord intends to keep": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has not returned the tenant's security deposit": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
+      "yes",
+      "yes",
+      "yes"
+    ],
+    "The lease is ending or the tenancy is being ended": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written demand for unpaid rent or possession": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written notice about a lease violation": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has raised the rent or says the rent will go up": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Something in the unit needs repair and the landlord has not fixed it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant wants to move out before the lease term ends": [
+      "no",
+      "no",
+      "no"
+    ],
+    "enter your unit": [
+      "9/30/2026"
+    ],
+    "time of day": [
+      "8 am"
+    ],
+    "What reason, if any": [
+      "to change the AC filter"
+    ],
+    "tell you ahead of time": [
+      "no"
+    ],
+    "agree to the entry": [
+      "no"
+    ],
+    "say it was an emergency": [
+      "no"
+    ],
+    "away from the unit": [
+      "no"
+    ],
+    "rent paid up to date": [
+      "yes"
+    ],
+    "more than once": [
+      "yes"
+    ],
+    "changed the locks, cut off a utility": [
+      "no"
+    ]
+  },
+  "chat": [
+    "Is he allowed to just come in like that?",
+    "Can I change the locks so they can't get in?",
+    "What should I do?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "issues": [
+      "landlord_entered_unannounced"
+    ],
+    "letters": 0,
+    "turns": [
+      {
+        "say": "Is he allowed",
+        "must": [
+          "does not decide"
+        ],
+        "must_not": [
+          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
+        ]
+      },
+      {
+        "say": "change the locks",
+        "must_not": [
+          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
+        ]
+      },
+      {
+        "say": "What should I do?",
+        "not_called": [
+          "draft_letter"
+        ],
+        "must_not": [
+          "would you like|do you want (me|to)|if you would like|I can (draft|help|write)",
+          "(?<!what )\\byou should\\b"
+        ]
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ],
+    "not_covered_note": false
+  }
+}

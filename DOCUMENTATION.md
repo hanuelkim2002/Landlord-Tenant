@@ -204,6 +204,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   checks on a scratch matter.
 - `dev/live_run.py`: entry point for live tests. Starts `run.py` itself and drives a whole session from a
   scenario file in `dev/scenarios/` (see Running and testing). Imports nothing from the project.
+- `dev/eval.py`: entry point for measuring. Runs `dev/live_run.py` on scenarios several times each and
+  scores the runs from their matters by code (see Running and testing). Imports `corpus` only to score.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
 
 ## Data flow
@@ -628,6 +630,27 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   suggested issue but the intended one with no, keyed on the intended issue's full description (the driver
   takes the longest matching rule, so a shorter key loses to "Is that part of your situation?"). The driver also
   handles run.py exiting by itself.
+- `python dev/eval.py run <out dir> <repeats> [scenario ...]`: runs scenarios several times each, several
+  sessions at once (`--parallel N`, default 8), and scores every run by code (`python dev/eval.py score <out
+  dir>` scores again). With no scenario named, every scenario with an `expect` block. Each run is
+  `dev/live_run.py` under its own scratch tenant `matters/t-eval-<out dir name>-<scenario>-<k>`, seeded with an
+  `m-000` copy of the test matter so the id exists; the run's matter is the one its screen names.
+  `--project <folder>` runs another copy of the project, e.g. a git worktree at an older commit, to compare
+  (the scenarios and the seed still come from this copy). The `expect` block: `issues` (the playbook issues
+  active at the end), `stops` (the tool stops before the chat), `not_covered_note`, `deadlines` (issues with a
+  `deadlines_computed` event naming a clock), `letters` (`draft` events), `turns` (per chat line, found by a
+  piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
+  outside quote marks, the `topics` allowed for `get_cases`), and `screen_must_not`. Every reply is also
+  measured: empty turns, program cautions, field names, a printed deadline date repeated, and two word screens
+  (`LAW_WORDS`, `OFFER_WORDS`) that only mark a reply for a person to read. Writes `runs/` (screens),
+  `runs.json`, `transcripts/` (each run as text marking who produced each part), `scores.json`, and
+  `summary.json`, and prints a table per scenario. The eval scenarios are `dev/scenarios/eval_*.json`:
+  one realistic lay-tenant story per playbook (`deposit_ghosted`, `claim_carpet`, `entry_shower`,
+  `lease_end_renewal`, `nonpayment_taped`, `violation_dog`, `rent_hike_duplex`, `repair_mold_apt`,
+  `leave_early_family`), three stories no playbook covers (`nc_roommate`, `nc_noise`, `nc_towing`), one
+  covered problem next to an uncovered one (`nc_mixed_heater`), and three with facts like a case in the wiki
+  and plain questions about judges (`cases_late_claim`, `cases_3day_cash`, `cases_retaliation`); run with
+  `WIKI_UNVERIFIED=1` until pages are verified. Each scenario's `about` says what it tests.
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
   and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).
   Then the intake sheet asks every open fact (no model), and the chat starts. Chat commands, handled by the loop without the

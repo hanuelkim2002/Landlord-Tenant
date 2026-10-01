@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Eval runner `dev/eval.py` and 16 eval scenarios (`dev/scenarios/eval_*.json`). Was: one live run per
+  scenario, read by eye, or the rules trial's one-off scripts and scorer agents; two runs of the same setup
+  had scored 0.50 and 1.00 slips per reply, so one run could not show whether a change helped. Now each
+  scenario carries an `expect` block and runs several times, several at once, each under its own scratch
+  tenant; code scores every run (expected results, tools called per turn, required and forbidden words,
+  case topics, the not-covered note, cautions, empty turns, ids, deadline echo, two word screens) and writes
+  readable transcripts. `--project` runs an older commit's worktree for a before-and-after comparison. The
+  scenarios: one lay-tenant story per playbook, three not covered, one mixed, three with facts like a case in
+  the wiki.
 - Rules: four "Not:" / "Instead:" pairs from the eval baseline's slips (16 new scenarios, run on the code
   before today's changes). Rule 3: a lay question about time ("How long do I have to tell them I disagree?",
   "When do I have to tell them?") goes to `get_deadlines`; was answered with statute quotes alone in 3 of

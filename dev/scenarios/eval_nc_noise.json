@@ -1,0 +1,65 @@
+{
+  "about": "Not covered. Neighbors' parties every night; the office says it can do nothing. Expected: nothing the tool covers applies (the classifier gives only 'other', or the tenant says no to any suggestion), so it stops before the chat.",
+  "start": [
+    "new",
+    "t-test",
+    "lease.pdf",
+    "My upstairs neighbors throw parties until 3 or 4 am almost every night and I can't sleep before my exams.",
+    "I've complained to the front office three times and they say there's nothing they can do. Can I do anything?",
+    ""
+  ],
+  "sheet": {
+    "Tenant has received the landlord's written notice that the landlord intends to keep": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has not returned the tenant's security deposit": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The lease is ending or the tenancy is being ended": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written demand for unpaid rent or possession": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written notice about a lease violation": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has raised the rent or says the rent will go up": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Something in the unit needs repair and the landlord has not fixed it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant wants to move out before the lease term ends": [
+      "no",
+      "no",
+      "no"
+    ]
+  },
+  "chat": [
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "issues": [],
+    "stops": true
+  }
+}
