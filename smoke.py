@@ -9,7 +9,9 @@ import contextlib
 import io
 import json
 import re
+import tempfile
 from datetime import date
+from pathlib import Path
 
 import PyPDF2
 from langchain.messages import AIMessage, HumanMessage
@@ -19,7 +21,7 @@ from calendars import court_calendars
 from checks import check, make_scratch, remove_scratch, summary
 from citations import SUBSECTION_START, check_cites, check_quoted, quoted_passages, subsections
 from config import MATTERS
-from corpus import check_all_playbooks, playbooks, statute
+from corpus import check_all_playbooks, load_playbook, playbooks, statute
 from deterministic import check_elements, compute_deadlines, lease_value
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
@@ -90,6 +92,21 @@ check("a court-day date carries its counting line", "Eighth Judicial Circuit" in
 refused = {**three_day("2026-11-24", "Miami-Dade")[1], "issues": ["notice_received_nonpayment"]}
 check("a refused court-day count is printed with its reason and no date", render_deadlines(json.dumps(
       {"deadlines": [refused]})).splitlines()[1].startswith("  (no date)   three day demand period [notice_received_nonpayment]: not computed"))
+stated = {"nonpayment_notice_delivered": "2026-09-18", "premises_county": "Alachua", "notice_stated_payment_date": "2026-09-21"}
+row = next(d for d in compute_deadlines(nonpayment, stated, today=date(2026, 9, 27)) if d["clock"] == "three_day_demand_period")
+check("the notice's stated date is printed beside the 83.56(3) date once confirmed, not before (item 10)",
+      "beside it, from your record: notice stated payment date 2026-09-21" in render_deadlines(json.dumps(
+      {"deadlines": [{**row, "issues": ["notice_received_nonpayment"]}]}, default=str))
+      and "shown_with" not in three_day("2026-09-18", "Alachua")[1])
+with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as bad:
+    bad.write(Path("playbooks/notice_received_nonpayment.yaml").read_text().replace(
+        "shown_with: notice_stated_payment_date", "shown_with: amount_demanded"))
+try:
+    load_playbook(bad.name)
+    refused = False
+except ValueError as e:
+    refused = "is not a date element" in str(e)
+check("a shown_with that is not a date element is refused when the playbook loads", refused)
 check("no deadline at all is said in one line, not an empty heading (an issue with no clocks)",
       render_deadlines(json.dumps({"deadlines": []})) == "No deadlines: none of the deadlines this tool computes "
       "applies to your confirmed facts." and "waiting [rent_increased]" in render_deadlines(

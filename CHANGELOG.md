@@ -5,6 +5,13 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- The printed 83.56(3) deadline now shows the date the notice itself states beside it (TODO item 10). New
+  optional clock field `shown_with` (a date element; `load_playbook` refuses anything else):
+  `compute_deadlines` adds it to the row once that fact is confirmed, and `render_deadlines` prints
+  "beside it, from your record: notice stated payment date 2026-09-21". Set on notice_received_nonpayment's
+  three_day_demand_period, whose own open question already said the tool shows the notice's date next to
+  the computed one; the playbook's failure modes asked for it too. Before, only the timeline showed both,
+  and reporting it was left to the model, which did not. Playbook checks OK; two smoke checks.
 - TODO.md, Model behavior tidied: items 4 to 23 were logged under the fifteen rules and the seven, and
   most are handled now. Taken off: 4, 11, 16 (saying what the law means), 7, 13 (dates the model worked out),
   8, 9 (confirming in the chat, calling facts confirmed), 15 (terse replies under the seven rules' wording),

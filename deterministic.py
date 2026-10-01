@@ -145,7 +145,7 @@ def compute_deadlines(playbook, facts, today):
 
         # One result per clock, carrying the cite and the counting assumption
         # so whoever reads it can see where the number came from.
-        out.append({
+        row = {
             "clock": c.id,
             "actor": c.actor,
             "from": f"{c.trigger} {start}",
@@ -154,7 +154,10 @@ def compute_deadlines(playbook, facts, today):
             "status": "passed" if deadline < today else "upcoming",
             "cite": c.cite,
             "counting": counting,
-        })
+        }
+        if c.shown_with and c.shown_with in facts:          # e.g. the date the notice itself states, beside ours
+            row["shown_with"] = f"{c.shown_with} {facts[c.shown_with]}"
+        out.append(row)
     return out
 
 

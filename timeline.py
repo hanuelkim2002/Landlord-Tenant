@@ -54,6 +54,8 @@ def render_deadlines(result):
             lines.append(f"  {d['deadline']}  {d['actor']} deadline: {label(d['clock'])} [{issues}], {d['status']}")
             lines.append(f"              {d['rule']} {label(d['from'])}, Fla. Stat. {d['cite']}")
             lines.append(f"              counting: {d['counting']}")
+            if "shown_with" in d:                          # a confirmed date shown beside the computed one
+                lines.append(f"              beside it, from your record: {label(d['shown_with'])}")
     for issue, fact_ids in waiting.items():
         lines.append(f"  waiting [{issue}]: {', '.join(label(f) for f in fact_ids)}")
     return "\n".join(lines)

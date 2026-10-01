@@ -95,7 +95,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `smoke`, `smoke_online`.
 - `timeline.py`: `render_deadlines(result)` (a `get_deadlines` result as the tenant reads it: per deadline
   its date, actor, clock, issues, status, rule and start, cite, and counting line; a clock with no date
-  shows why; with no deadline at all, one line saying so; then each waiting issue with its open facts; also the "Not yet." refusal), and
+  shows why; a clock's `shown_with` fact, when confirmed, on a line "beside it, from your record: ..."; with no deadline at all, one line saying so; then each waiting issue with its open facts; also the "Not yet." refusal), and
   `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
   `label`, `corrected` (the tenant confirmed a different value from the suggestion, compared as shown),
   and `confirmation_of`. A confirmed date's SOURCE reads "tenant (corrected, ...)" when corrected, and in
@@ -414,7 +414,9 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     `check_elements`, `fill_facts` (only elements with `user` in `source`), `build_letter` and
     `render_timeline` (date elements).
   - `clocks`: `id`, `actor` (landlord, tenant), `trigger` (a date element id), `days`, `direction`
-    (before, after), `cite`, `quote`, optional `consequence`, `delivery`, `applies_if`, `count`
+    (before, after), `cite`, `quote`, optional `consequence`, `delivery`, `applies_if`, `shown_with` (a
+    date element shown beside the computed date once confirmed, e.g. the date a notice itself states;
+    checked by `load_playbook`), `count`
     (`calendar_days`, the default, or `court_business_days`; a playbook with a court-day clock must have a
     `premises_county` element, checked by `load_playbook`). Read by
     `compute_deadlines`; `quote` and `consequence` checked by `check_playbook`; `smoke.py` uses

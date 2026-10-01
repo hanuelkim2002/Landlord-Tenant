@@ -34,7 +34,9 @@ class Element(BaseModel):
 class Clock(BaseModel):
     """One statutory deadline: whose it is, which date it counts from, how many
     days, and the sentence it comes from. compute_deadlines reads these. count: calendar days (the default)
-    or court business days, which skip Saturdays, Sundays, and the county's court holidays (calendars.py)."""
+    or court business days, which skip Saturdays, Sundays, and the county's court holidays (calendars.py).
+    shown_with names a date element printed next to the computed date once confirmed, such as the date the
+    notice itself states, so the tenant sees both."""
     id: str
     actor: Literal["landlord", "tenant"]
     trigger: str
@@ -46,6 +48,7 @@ class Clock(BaseModel):
     delivery: Optional[List[str]] = None
     applies_if: Optional[str] = None
     count: Literal["calendar_days", "court_business_days"] = "calendar_days"
+    shown_with: Optional[str] = None
 
 
 class Condition(BaseModel):
@@ -89,8 +92,8 @@ class Playbook(BaseModel):
 # ---- Load and Check Playbook
 
 def load_playbook(path):
-    """Validate the shape, confirm every section is in statutes/, every clock counts from a date element,
-    and every compare_to names a real lease field."""
+    """Validate the shape, confirm every section is in statutes/, every clock counts from a date element
+    (and any shown_with names one), and every compare_to names a real lease field."""
     pb = Playbook.model_validate(yaml.safe_load(open(path)))
     for s in pb.sections:
         if s not in statute:
@@ -102,6 +105,8 @@ def load_playbook(path):
     for c in pb.spec.clocks:
         if c.trigger not in date_ids:
             raise ValueError(f"clock {c.id}: trigger {c.trigger} is not a date element")
+        if c.shown_with and c.shown_with not in date_ids:
+            raise ValueError(f"clock {c.id}: shown_with {c.shown_with} is not a date element")
         if c.count == "court_business_days" and "premises_county" not in [e.id for e in pb.spec.elements]:
             raise ValueError(f"clock {c.id}: court business days need a premises_county element")
     return pb

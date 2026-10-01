@@ -63,6 +63,7 @@ spec:
       days: 3
       direction: after
       count: court_business_days
+      shown_with: notice_stated_payment_date   # printed beside the computed date, as the open question below says
       delivery: [mailing, delivering a true copy, e-mail per 83.505, leaving a copy at the residence if the tenant is absent]
       cite: "83.56(3)"
       quote: "If the tenant fails to pay rent when due and the default continues for 3 days, excluding Saturday, Sunday, and legal holidays, after delivery of written demand by the landlord for payment of the rent or possession of the premises, the landlord may terminate the rental agreement."

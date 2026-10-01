@@ -37,9 +37,6 @@ quote and cite checks) or by the current rules, which showed none of those slips
 (`docs/trials/2026-10-01-rules/`). CHANGELOG.md (2026-10-01) says where each went. Item numbers are never
 reused, so older references (smoke check names, the changelog) still point to the right slip.
 
-10. The printed 83.56(3) deadline does not show the date the notice itself states (`notice_stated_payment_date`)
-    next to it, which the nonpayment playbook's failure modes ask for; the timeline shows both. Now that the
-    program prints deadlines, this belongs in `render_deadlines` rather than with the model.
 12. The model suggests a claim letter's printed date as the date it was received (`claim_notice_date`; the
     printed date is `claim_notice_dated`). Still seen with the current rules: 1 of 3 claim runs in the trial
     (the old rules also 1 of 3). The sheet shows the suggestion and the tenant corrects it, logged as
