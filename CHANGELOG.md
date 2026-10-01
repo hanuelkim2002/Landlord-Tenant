@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- Live runs after the harness fixes logged in TODO.md (items 19 to 21; m-025 to m-028, nemotron). With the
+  same rubric: 0.50 slips per reply, was 1.00 with the new rules alone and 0.91 with the old; every
+  scenario as expected; deadlines printed in full by code each time; postures copied word for word. No
+  code changed.
 - An empty reply is asked for again (`agent.show_turn`, `retry_empty`, `EMPTY_REPLY`, `NO_REPLY`; new event
   `reply_empty`). When a turn shows the tenant nothing (no reply text, letter, or deadlines; seen in m-018),
   the program sends the model a note asking it to reply and shows the second turn; if that is empty too, it

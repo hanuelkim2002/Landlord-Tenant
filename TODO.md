@@ -85,6 +85,17 @@ the seven.
     deposit if no claim", rule 2); printed ELEMENT STATUS values as a column of quoted "true"/"false"; asked
     again for letter details the tenant had already given. It copied the posture lines word for word,
     showed the notice's stated date next to the 83.56(3) date (item 10), and never left a reply empty.
+19. After the harness fixes (2026-09-30, nemotron, m-025 to m-028): 3 slips in 6 replies, all scenarios as
+    expected, no cautions, no empty replies. Left: a statute quote with no source (m-026) and a lease quote
+    with neither quote marks nor source, next to the tenant's own words also unquoted (m-027), so the quote
+    check could not see them (rule 2); a next step pointing to a legal action, "Do you want to send a written
+    objection to the landlord's claim?" (m-027, rule 1); and in all three chat runs a line of the printed
+    deadlines repeated (`"deadline": "2026-09-24"`), harmless but against rule 3.
+20. Letter steps out of order (m-026): the model drafted at once from the tenant's full request, then showed
+    the postures and asked which one, then drafted the same letter again. The second, identical draft is
+    stopped in code from 2026-09-30; the order of the steps is still the model's (rule 6).
+21. Item 12 again (m-027): the letter's printed date (2026-09-22) suggested as the date it was received; the
+    tenant typed 2026-09-25 on the sheet, logged as corrected.
 
 ## Open questions
 
