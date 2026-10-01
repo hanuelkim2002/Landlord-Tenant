@@ -28,6 +28,26 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 3. Counting convention is a stated assumption in each playbook. Check the time-computation rule in the
     corpus before relying on it. Do not settle this from memory.
 
+## Case law
+
+The casebook (README, The unit of legal knowledge). Organized by section, then by the question a court
+answered, then by case, each with its rule and reasoning in the court's words. `cases/` (the opinions) comes
+first; then these, in order.
+
+24. Casebook files (`casebook/<section>.yaml`) and their check, run like the playbook checks: every quote
+    in its stored opinion, pin pages computed from the opinion's star pages, a warning for a section the
+    opinion never cites, the statute year suggested where the court states it. Start with 83.49 and 83.48
+    (17 opinions cite one or both): entries drafted with `verified_by` empty, then the author reads each
+    case, words its question, sets its status, and verifies it. Only verified entries go further. The two
+    forms decisions (50 So. 3d 503, 591 So. 2d 594) are filed as forms.
+25. Verified casebook entries for the active playbooks' sections loaded into the prompt, like STATUTE
+    SECTIONS; one rule for the neutral framing; `citations.py` learns reporter cites (a cite not in
+    `cases/` gets a caution, and case quotes are checked like statute quotes).
+26. `search_cases(phrase)`, like `search_statute`, for a tenant whose situation fits no playbook ("other").
+27. For the author's research: no appellate case on the 83.42(1) exclusion for residence incidental to
+    educational services turned up in the candidate list's sources; it decides whether ch. 83 applies to
+    on-campus housing at all.
+
 ## Model behavior (later)
 
 Slips seen in live runs and not fixed yet. Rule numbers are the current rules (version F, adopted

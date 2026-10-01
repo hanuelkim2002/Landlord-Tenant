@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- README: case law joins the plan (was listed under "Beyond the current plan": a case pool by section, no
+  code). Purpose and the output framing add what courts that read the statute said; goal 3 and Skills add
+  the court decisions for each issue's sections; the non-negotiables add case quotes from `cases/`, the
+  neutral showing of cases (every case on a question, whichever side it favors, with court, year, and the
+  statute version read; only author-verified entries reach the tenant; never whether a case applies), and
+  `cases/` as a read-only corpus of the court's text only. The unit of legal knowledge adds the casebook:
+  one file per section, organized by the question a court answered, each case's rule and reasoning quoted
+  from the opinion. Decided with the author: the neutral framing, organization by rule and reasoning, and
+  `cases/` committed. TODO.md gains a Case law section (items 24 to 27). No code changed.
 - Live check of the notice's stated date (item 10's fix): `nonpayment_3day` (`t-test/m-001`) printed
   "beside it, from your record: notice stated payment date 2026-09-21" under the 2026-09-24 deadline; the
   model replied only "The deadlines appear above." (noted under TODO item 19). No code changed.
