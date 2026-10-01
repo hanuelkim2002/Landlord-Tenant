@@ -95,13 +95,17 @@ def propose_facts(facts_json: str) -> str:
 
 # ---- Deadlines
 
-@tool
+# get_deadlines and get_cases end the model's turn (return_direct): when every tool the model called in a step
+# is one of them, the agent stops after the tool, the chat loop prints what the program made, and the model
+# writes no reply after it, so it cannot repeat or reword a printed line (TODO item 19).
+
+@tool(return_direct=True)
 def get_deadlines() -> str:
     """Compute every deadline from the CONFIRMED facts. This is the ONLY way to get a date. Never count or
     calculate days yourself. Works issue by issue: returns the deadlines of every issue whose facts are all
     confirmed or n/a, and under "waiting" the issues whose facts are still open, with those facts. A deadline
-    two issues share appears once. The program shows the result to the tenant itself, every field included;
-    do not repeat or reword it."""
+    two issues share appears once. The program prints the result to the tenant itself, every field included,
+    and your turn ends there: call it alone, and never repeat or reword it later."""
     waiting = {}
     for issue, rows in element_status().items():
         open_ids = sorted({r["id"] for r in rows if r["status"] in ("proposed", "changed", "missing")})
@@ -128,29 +132,31 @@ def offered_topics():
     return wiki.case_topics(sorted({s for pb in active_playbooks() for s in pb.sections}))
 
 
-@tool(response_format="content_and_artifact")
+@tool(response_format="content_and_artifact", return_direct=True)
 def get_cases(topic: str) -> tuple[str, str]:
     """What courts have said on one topic listed in CASE TOPICS: the program prints every case the tool holds
-    on it, oldest first, in the courts' own quoted words. Use only when the tenant asks what courts or cases
-    say. Pass the topic exactly as CASE TOPICS lists it. You get back only the names of the cases printed,
-    not their text: never quote, summarize, rank, or reword a case, and never say whether one applies to the
-    tenant."""
+    on it, oldest first, in the courts' own quoted words, and your turn ends there. Use only when the tenant
+    asks what courts or cases say, and call it alone. Pass the topic exactly as CASE TOPICS lists it. You get
+    back only the names of the cases printed, not their text: never quote, summarize, rank, or reword a case,
+    and never say whether one applies to the tenant."""
     topics = offered_topics()
-    if topic not in topics:
-        return f"No case topic named {topic!r} for this matter. CASE TOPICS: {sorted(topics)}", ""
+    if topic not in topics:                                # the tenant sees the topics and can ask for one
+        listed = "; ".join(sorted(topics)) or "none for these issues"
+        return (f"No case topic named {topic!r} for this matter. The program printed the CASE TOPICS for the tenant.",
+                f"This tool has no case topic named \"{topic}\". Its case topics for your issues: {listed}.")
     shown_before = record.session and any(ev["kind"] == "cases_shown" and ev.get("topic") == topic
                                           and ev.get("session") == record.session for ev in read_events())
     if shown_before:                                       # printed once per session: the tenant can scroll up
-        return f"[The cases on {topic!r} were already printed above in this chat. Nothing new was printed.]", ""
+        return (f"[The cases on {topic!r} were already printed above in this chat. Nothing new was printed.]",
+                f"The cases on \"{topic}\" are printed above in this chat.")
     pages = wiki.read_pages(wiki.ROOT)
     cases = sorted((p for p in pages.values() if wiki.eligible(p) and wiki.issues_on(p, topic)),
                    key=lambda p: str(p["meta"]["decided"]))
     append_event("cases_shown", topic=topic, cases=[str(p["meta"]["cite"]) for p in cases],
                  **({"unverified": True} if config.WIKI_UNVERIFIED else {}))
     printed = "; ".join(f"{p['name']}, {wiki.citation(p['meta'])}" for p in cases)
-    return (f"The program printed the cases on {topic!r} for the tenant, oldest first: {printed}. Reply only: "
-            f"The cases appear above. This tool does not decide whether any of them applies to you."), \
-        wiki.render_cases(topic)
+    return (f"The program printed the cases on {topic!r} for the tenant, oldest first: {printed}. Its last line "
+            f"says this tool does not decide whether any of them applies to the tenant."), wiki.render_cases(topic)
 
 
 # ---- Draft Letter: a template filled from the record. No model call, so there is nothing to validate:

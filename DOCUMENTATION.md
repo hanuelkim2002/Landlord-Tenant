@@ -401,17 +401,21 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   if any, the issues still waiting with their open facts. Refuses ("Not yet. ...", with the open facts by
   issue) only when no issue is ready. Writes a `deadlines_computed` event per ready playbook. The model
   does not report the result: the chat loop prints the turn's last `get_deadlines` result itself, through
-  `timeline.render_deadlines`, before the model's reply, and the docstring and rule 3 tell the model not
-  to repeat or reword it.
+  `timeline.render_deadlines`. A turn-ending tool (`return_direct=True`): when every tool the model called
+  in a step is `get_deadlines` or `get_cases`, the agent stops after the tool and the model writes no reply,
+  so it cannot repeat a printed line (TODO item 19); called with another tool, the turn goes on and rule 3
+  still tells the model not to repeat or reword it.
 - `get_cases(topic)`: `topic` must be one of the matter's CASE TOPICS (`tools.offered_topics`, i.e.
   `wiki.case_topics` for the active playbooks' sections); otherwise "No case topic named ...". A tool with
   `response_format="content_and_artifact"`: the model gets a receipt only (the names and cites of the cases
-  printed, and "Reply only: The cases appear above. This tool does not decide whether any of them applies to
-  you."), and the program gets `wiki.render_cases(topic)` as the message's artifact, which `show_turn`
+  printed), and the program gets `wiki.render_cases(topic)` as the message's artifact, which `show_turn`
   prints. So the model never sees a case's words and cannot retell one; a case quote it writes anyway is
-  flagged by `check_quoted`. Writes a `cases_shown` event. A topic already printed in this session prints
-  nothing and returns "[The cases on ... were already printed above in this chat. Nothing new was
-  printed.]".
+  flagged by `check_quoted`. Writes a `cases_shown` event. Turn-ending, like `get_deadlines`: the printed
+  cases end with "This tool does not decide whether any of them applies to you." and the model writes
+  nothing after them. Every call prints something: a topic already printed in this session prints one line
+  ("The cases on ... are printed above in this chat."; the model gets "[... Nothing new was printed.]"), and
+  a topic not offered prints "This tool has no case topic named ..." with the matter's CASE TOPICS, so the
+  tenant sees the topics there are.
 - `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
   obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a playbook;
   `posture` is preserve (no quotes), assert (obligation quote), or escalate (both quotes). Rejects any quote
@@ -441,14 +445,14 @@ this order:
    line only right after a lease quote and a statute quote on one point); 2 quote only what was given, word
    for word, fetch a section before citing one not in STATUTE SECTIONS, say plainly when nothing answers;
    3 dates only from ELEMENT STATUS, a lease quote, the tenant's words, or a tool result, deadlines only
-   from `get_deadlines`, which the program prints ("The deadlines appear above."); 4 the model proposes
+   from `get_deadlines`, called alone, which the program prints, ending the turn; 4 the model proposes
    facts with `propose_facts`, the tenant confirms them on the sheet, nothing asked or confirmed in the
    chat; 5 open questions stay open (quote the open question's text; never resolve it or ask the tenant
    to); 6 letters only when asked, only through `draft_letter`, missing details asked once, posture lines
    copied word for word, then one line; 7 record messages and sent letters with `add_communication`;
-   8 cases only through `get_cases`, which the program prints, only when the tenant asks what courts or
-   cases say, then only "The cases appear above. This tool does not decide whether any of them applies to
-   you." ("This tool has no cases on that." when no topic fits); 9 offer nothing the tenant did not ask for
+   8 cases only through `get_cases`, called alone, which the program prints, ending the turn, only when the
+   tenant asks what courts or cases say ("This tool has no cases on that." when no topic fits); 9 offer
+   nothing the tenant did not ask for
    (rule 8 until 2026-10-01). Rules 1 to 7 cover the same ground as the seven rules of
    2026-09-30 (whose numbers TODO.md items 15 to 22 use); rule 9 was part of the old rule 1. Old rules 1 to
    15 (until 2026-09-30) map to the seven as: 1, 4, 8 to 2; 2 to 3; 3, 9 to 4; 5 to 5; 6, 11, 12 to 6;

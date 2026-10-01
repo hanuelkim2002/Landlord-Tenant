@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Printing tools end the model's turn (TODO item 19, done). Was: after `get_deadlines` or `get_cases` the
+  model wrote a reply, which rule 3 and rule 8 limited to "The deadlines appear above." and "The cases appear
+  above. This tool does not decide ...", and which sometimes repeated a printed deadline line (4 of 18
+  replies in the rules trial). Now both tools are `return_direct`: when every tool the model calls in a step
+  is one of them, the agent stops after the tool and the chat loop prints what the program made, with no
+  model reply after it. `get_cases` now prints something on every call: one line pointing up for a topic
+  already printed, and, for a topic not offered, "This tool has no case topic named ..." with the matter's
+  CASE TOPICS (was: nothing printed, a note to the model). Its receipt no longer tells the model what to
+  reply. Rules 3 and 8: call the tool alone; the program prints and the turn ends. Smoke: a stand-in model
+  that calls `get_deadlines` and would then reply is stopped after the tool; the get_cases checks updated.
 - Quote check: an id alone in quote marks ("claim_notice_deadline") and an example right after "e.g." are no
   longer checked as quotes (TODO item 14, done). Was: both were flagged as misquotes in the gpt-oss runs of
   2026-09-30 (m-023, m-022), a caution the tenant saw for nothing. `citations.quoted_passages` skips them

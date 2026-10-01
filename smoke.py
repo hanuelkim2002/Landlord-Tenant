@@ -15,7 +15,9 @@ from datetime import date
 from pathlib import Path
 
 import PyPDF2
+from langchain.agents import create_agent
 from langchain.messages import AIMessage, HumanMessage, ToolMessage
+from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
 
 import record
 from calendars import court_calendars
@@ -33,6 +35,7 @@ from sheet import pending_rows, run_sheet
 from timeline import render_deadlines, render_timeline
 from agent import check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
 from tools import build_letter, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts
+from tools import tools as model_tools
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
 pb = playbooks["deposit_not_returned"]
@@ -433,7 +436,7 @@ try:
         call = AIMessage(content="", tool_calls=[{"name": "get_cases", "args": {"topic": topic}, "id": "k1"}])
         shown_msg = get_cases.invoke({"type": "tool_call", "id": "k1", "name": "get_cases", "args": {"topic": topic}})
         with contextlib.redirect_stdout(io.StringIO()) as printed:
-            show_turn([call, shown_msg, AIMessage(content="The cases appear above.")], [call, shown_msg])
+            show_turn([call, shown_msg], [call, shown_msg])        # get_cases ends the turn: no reply follows
         out = printed.getvalue()
         check("get_cases prints every verified case on the topic in the courts' words with the closing line, and logs it",
               "Durene v. Alcime, 448 So. 2d 1208 (Fla. 3d DCA 1984)" in out and "readily available fund" in out
@@ -442,10 +445,14 @@ try:
         check("the model gets only the names of the cases printed, not their words",
               "Durene v. Alcime, 448 So. 2d 1208" in shown_msg.content and "readily available fund" not in shown_msg.content)
         again = get_cases.invoke({"type": "tool_call", "id": "k2", "name": "get_cases", "args": {"topic": topic}})
-        check("the same topic asked again in the session prints nothing new and logs nothing",
-              not again.artifact and "already printed above" in again.content and read_events()[-1]["kind"] == "cases_shown"
+        check("the same topic asked again in the session prints one line pointing up and logs nothing",
+              again.artifact == f'The cases on "{topic}" are printed above in this chat.'
+              and "already printed above" in again.content and read_events()[-1]["kind"] == "cases_shown"
               and sum(e["kind"] == "cases_shown" for e in read_events()) == 1)
-        check("get_cases refuses a topic that is not offered", get_cases.invoke({"topic": "Constructive eviction"}).startswith("No case topic"))
+        refused = get_cases.invoke({"type": "tool_call", "id": "k3", "name": "get_cases", "args": {"topic": "Constructive eviction"}})
+        check("get_cases refuses a topic that is not offered, and the tenant sees the topics there are",
+              refused.content.startswith("No case topic") and topic in refused.artifact
+              and refused.artifact.startswith('This tool has no case topic named "Constructive eviction"'))
         check("a case cite in a reply must be one the tool showed in the chat",
               check_case_cites("See 448 So. 2d 1208 and 573 So. 2d 76.", shown_msg.content) == [("573 So. 2d 76", "is not a case this tool showed in this chat")])
     finally:
@@ -583,6 +590,18 @@ try:
         retry_empty(Again(""), {}, first)
     check("a second empty reply tells the tenant and is logged", "[Check: no reply came back" in printed.getvalue()
           and read_events()[-1]["recovered"] is False)
+
+    # get_deadlines and get_cases end the model's turn (return_direct, TODO item 19): a stand-in model calls
+    # get_deadlines alone, then would reply; the agent stops after the tool, so the reply never comes
+    class StandIn(GenericFakeChatModel):
+        def bind_tools(self, tools, **kwargs):
+            return self
+    stand_in = StandIn(messages=iter([AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "d1"}]),
+                                      AIMessage(content="Your deadline is 2026-08-30.")]))
+    ended = create_agent(stand_in, tools=model_tools).invoke({"messages": [HumanMessage(content="What are my deadlines?")]})
+    check("get_deadlines and get_cases end the turn: nothing from the model after the printed result",
+          get_deadlines.return_direct and get_cases.return_direct and ended["messages"][-1].type == "tool"
+          and not any(m.type == "ai" and "2026-08-30" in m.content for m in ended["messages"]))
 
     # the same letter twice in one session (m-026): drafted once; a changed letter is drafted again
     letter_args = {"issue": "deposit_not_returned", "posture": "preserve", "ask": "Return the deposit",
