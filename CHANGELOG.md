@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- `draft_letter` does not draft the same letter twice in one session: if this session already drafted the
+  file and the new text is identical, nothing is written or logged and the tool says so (the chat loop
+  prints that line). Before, the repair run (m-026) wrote the same letter twice with two `draft` events,
+  after the model asked for a posture it had already used. A changed letter, or one in a later session, is
+  drafted as before. One smoke check: same letter twice gives one draft, a changed reply period gives a new one.
 - Live runs after the harness fixes logged in TODO.md (items 19 to 21; m-025 to m-028, nemotron). With the
   same rubric: 0.50 slips per reply, was 1.00 with the new rules alone and 0.91 with the old; every
   scenario as expected; deadlines printed in full by code each time; postures copied word for word. No

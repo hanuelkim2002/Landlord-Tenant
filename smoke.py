@@ -444,6 +444,16 @@ try:
         retry_empty(Again(""), {}, first)
     check("a second empty reply tells the tenant and is logged", "[Check: no reply came back" in printed.getvalue()
           and read_events()[-1]["recovered"] is False)
+
+    # the same letter twice in one session (m-026): drafted once; a changed letter is drafted again
+    letter_args = {"issue": "deposit_not_returned", "posture": "preserve", "ask": "Return the deposit",
+                   "respond_within_days": 10, "delivery_method": "certified mail"}
+    draft_letter.invoke(letter_args)
+    again = draft_letter.invoke(letter_args)
+    changed = draft_letter.invoke({**letter_args, "respond_within_days": 14})
+    drafts = [e for e in read_events() if e["kind"] == "draft" and e.get("session") == record.session]
+    check("the same letter twice in a session is drafted once", again.startswith("[The same letter was already drafted")
+          and len(drafts) == 2 and "Please respond by" in changed)
     end_session()
 finally:
     remove_scratch("t-smoke-related")

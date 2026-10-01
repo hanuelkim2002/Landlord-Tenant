@@ -17,7 +17,7 @@ from citations import is_in
 from config import squash
 from corpus import playbooks, statute
 from deterministic import matter_deadlines
-from record import active_playbooks, append_event, element_status, matter_dir, save
+from record import active_playbooks, append_event, element_status, matter_dir, read_events, save
 from sheet import parse_answer, shown
 
 
@@ -186,6 +186,13 @@ def draft_letter(issue: str, posture: str, ask: str, respond_within_days: int, d
 
     letter = build_letter(ask, respond_within_days, delivery_method, quotes)
     filename = f"draft_{date.today()}_{issue}_{posture}.txt"
+    # The same letter again in the same session (seen in m-026) is already on the tenant's screen: nothing is
+    # written or logged. Same means this session drafted this file and the text has not changed.
+    drafted_here = record.session and any(ev["kind"] == "draft" and ev.get("file") == filename
+                                          and ev.get("session") == record.session for ev in read_events())
+    if drafted_here and (matter_dir() / filename).read_text() == letter:
+        return (f"[The same letter was already drafted in this session ({filename}) and appears above. Nothing "
+                "new was drafted.]")
     (matter_dir() / filename).write_text(letter)
     append_event("draft", issue=issue, posture=posture, cites=[q["cite"] for q in quotes], file=filename)
     note = playbooks[issue].guidance["postures"]["notice_sufficiency"]

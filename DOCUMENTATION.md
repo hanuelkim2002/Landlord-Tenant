@@ -285,7 +285,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `session_ended`: no other fields. Written by `end_session` on a normal exit. A session with a start and
     no end was cut off. `timeline full` only.
 - `draft_<YYYY-MM-DD>_<issue>_<posture>.txt`: each drafted letter. A second draft on the same day with the
-  same issue and posture overwrites the file; the earlier `draft` event remains.
+  same issue and posture overwrites the file; the earlier `draft` event remains. An identical redraft in the
+  same session writes nothing (see `draft_letter`).
 - `artifacts/<sha256[:12]>_<name>`: copies of files stored by `add_artifact`.
 - `sessions/<session id>.jsonl`: the transcript of one session, outside the evidentiary log. One line per
   entry, each with `when` and `role`: `tenant` (`text`, as typed), `model` (`text`, plus `tool_calls`, a
@@ -335,8 +336,10 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a playbook;
   `posture` is preserve (no quotes), assert (obligation quote), or escalate (both quotes). Rejects any quote
   `quote_is_real` does not find. Returns the letter plus a "NOTE TO TENANT" line from the playbook's
-  `guidance.postures.notice_sufficiency`. Writes the draft file and a `draft` event. The chat loop prints
-  this tool's output directly.
+  `guidance.postures.notice_sufficiency`. Writes the draft file and a `draft` event. If this session already
+  drafted the same file and the new text is identical, it writes nothing and returns "[The same letter was
+  already drafted in this session (<file>) and appears above. Nothing new was drafted.]". The chat loop
+  prints this tool's output directly.
 - `add_artifact(path, note)`: copies a file into `artifacts/` under its hash. Writes an `artifact` event.
 - `add_communication(sent_on, sender, recipient, channel, text)`: rejects a `sent_on` that is not
   YYYY-MM-DD. Writes a `communication` event. Also used for a letter the tenant reports sending (rule 7).
