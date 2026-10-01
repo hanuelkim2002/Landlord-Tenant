@@ -27,7 +27,9 @@ Every reply is also measured, whatever the scenario: empty turns (reply_empty ev
 (quote_flagged and cite_flagged events), field names (a snake_case id outside quote marks), deadline echo (a
 date the program printed in the same turn, repeated in the reply), and two word screens that mark a reply for
 a person to read: LAW_WORDS (a party and must, may, can, entitled ... outside quote marks) and OFFER_WORDS
-(would you like me to ...). The screens find candidates; they are not verdicts.
+(would you like me to ...). The screens find candidates; they are not verdicts. A turn's "must" patterns
+are matched against what the tenant read, the replies and any line the program printed under them (footer);
+"footers" counts those lines, so the model's own lines and the program's can be told apart.
 
 Output in <out dir>: runs/ (each run's screen and its scenario with the tenant filled in), runs.json,
 transcripts/ (each run as text: who produced each part), scores.json (per run), summary.json (per scenario).
@@ -141,6 +143,7 @@ def measure_turn(turn):
     return {
         "say": turn["say"],
         "replies": replies,
+        "footers": [e["text"] for e in turn["entries"] if e["role"] == "footer"],   # lines the program printed under a reply
         "called": [c["name"] for c in calls],
         "topics": [c["args"].get("topic") for c in calls if c["name"] == "get_cases"],
         "cautions": [e["text"] for e in turn["entries"] if e["role"] == "check" and "no reply came back" not in e["text"]],
@@ -176,7 +179,7 @@ def check_expect(expect, matter, events, turns, screen):
             results.append((f"turn '{want['say'][:40]}'", False, "the line was never sent"))
             continue
         t = found[0]
-        text = "\n".join(t["replies"])
+        text = "\n".join(t["replies"] + t["footers"])     # what the tenant read: the replies and the program's lines
         for tool in want.get("called", []):
             results.append((f"'{want['say'][:30]}' calls {tool}", tool in t["called"], t["called"]))
         for tool in want.get("not_called", []):
@@ -210,6 +213,8 @@ def transcript_text(entries):
             lines.append(f"[PROGRAM NOTE to the model] {e['text'].strip()}")
         elif role == "check":
             lines.append(f"[PROGRAM CAUTION shown to the tenant] {e['text']}")
+        elif role == "footer":
+            lines.append(f"[PROGRAM LINE printed under the reply] {e['text']}")
         elif role == "tool":
             if e["name"] in ("get_deadlines", "draft_letter"):
                 lines.append(f"[PROGRAM PRINTED, from {e['name']}]\n{e['text']}")
@@ -251,6 +256,7 @@ def score_run(entry, scenario, out):
         "offer_screen": sum(bool(t["offer_words"]) for t in measured),
         "field_names": sum(bool(t["field_names"]) for t in measured),
         "echo": sum(bool(t["echo"]) for t in measured),
+        "footers": sum(len(t["footers"]) for t in measured),
         "turns": measured,
     }
 
@@ -264,21 +270,22 @@ def score(out):
     for s in scores:
         row = summary.setdefault(s["scenario"], {"runs": 0, "crashed": 0, "expected_ok": 0, "replies": 0,
                                                  "empty_turns": 0, "cautions": 0, "law_screen": 0,
-                                                 "offer_screen": 0, "field_names": 0, "echo": 0, "failed": {}})
+                                                 "offer_screen": 0, "field_names": 0, "echo": 0, "footers": 0,
+                                                 "failed": {}})
         row["runs"] += 1
         for key in ("crashed", "expected_ok", "replies", "empty_turns", "cautions", "law_screen", "offer_screen",
-                    "field_names", "echo"):
+                    "field_names", "echo", "footers"):
             row[key] += int(s[key])
         for x in s["expect"]:
             if not x["ok"]:
                 row["failed"][x["what"]] = row["failed"].get(x["what"], 0) + 1
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
     print(f"\n{'scenario':<28}{'runs':>5}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'law?':>5}"
-          f"{'offer?':>7}{'field':>6}{'echo':>5}")
+          f"{'offer?':>7}{'field':>6}{'echo':>5}{'footer':>7}")
     for name, row in summary.items():
         print(f"{name:<28}{row['runs']:>5}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
               f"{row['cautions']:>5}{row['law_screen']:>5}{row['offer_screen']:>7}{row['field_names']:>6}"
-              f"{row['echo']:>5}")
+              f"{row['echo']:>5}{row['footers']:>7}")
         for what, n in row["failed"].items():
             print(f"    failed {n}x: {what}")
 
