@@ -35,14 +35,17 @@ def render_deadlines(result):
     """get_deadlines' result as the tenant reads it. The chat loop prints this itself after a turn in which the
     model called get_deadlines, so no part of a deadline depends on the model reporting it: each row shows its
     date, whose deadline, the rule and what it counts from, the cite, the status, the counting line, and its
-    issues; a clock with no date shows why. Then the issues still waiting, with the facts they wait for."""
+    issues; a clock with no date shows why. With no deadline at all (an issue with no clocks, or none that
+    applies), it says so in one line instead of printing an empty heading. Then the issues still waiting,
+    with the facts they wait for."""
     if result.startswith("Not yet."):                      # no issue ready: the waiting list is JSON at the end
         waiting = json.loads(result.split(": ", 1)[1])
         lines = ["No deadlines yet: no issue has all its facts confirmed."]
     else:
         data = json.loads(result)
         waiting = data.get("waiting", {})
-        lines = ["Deadlines, computed by the tool from your confirmed facts:"]
+        lines = ["Deadlines, computed by the tool from your confirmed facts:" if data["deadlines"] else
+                 "No deadlines: none of the deadlines this tool computes applies to your confirmed facts."]
         for d in data["deadlines"]:
             issues = ", ".join(d["issues"])
             if "deadline" not in d:

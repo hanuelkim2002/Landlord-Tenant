@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- `render_deadlines` says "No deadlines: none of the deadlines this tool computes applies to your confirmed
+  facts." when there are none (an issue with no clocks, such as landlord_entered_unannounced and
+  rent_increased, or clocks whose conditions do not apply). Was: the heading "Deadlines, computed by the
+  tool from your confirmed facts:" with nothing under it, after which the model echoed `{ "deadlines": [] }`
+  in the 2026-10-01 trial (TODO item 23). One smoke check.
 - Rules, rule 1: the "Instead:" line under "You must choose from the lease's notice methods" now applies
   only to a letter the tenant asked for, and says nothing about sending anything otherwise. Was: "quote the
   notices clause from LEASE PROFILE, then ask: How will you send it?", which the model asked in 2 of 3

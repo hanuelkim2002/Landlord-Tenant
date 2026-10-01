@@ -90,6 +90,10 @@ check("a court-day date carries its counting line", "Eighth Judicial Circuit" in
 refused = {**three_day("2026-11-24", "Miami-Dade")[1], "issues": ["notice_received_nonpayment"]}
 check("a refused court-day count is printed with its reason and no date", render_deadlines(json.dumps(
       {"deadlines": [refused]})).splitlines()[1].startswith("  (no date)   three day demand period [notice_received_nonpayment]: not computed"))
+check("no deadline at all is said in one line, not an empty heading (an issue with no clocks)",
+      render_deadlines(json.dumps({"deadlines": []})) == "No deadlines: none of the deadlines this tool computes "
+      "applies to your confirmed facts." and "waiting [rent_increased]" in render_deadlines(
+      json.dumps({"deadlines": [], "waiting": {"rent_increased": ["new_rent"]}})))
 print()
 
 # a tenant fact next to the lease field its playbook names (compare_to): shown only when they differ
