@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Quote check: an id alone in quote marks ("claim_notice_deadline") and an example right after "e.g." are no
+  longer checked as quotes (TODO item 14, done). Was: both were flagged as misquotes in the gpt-oss runs of
+  2026-09-30 (m-023, m-022), a caution the tenant saw for nothing. `citations.quoted_passages` skips them
+  (`FIELD_ID`, `EXAMPLE`); only "e.g." counts as an example, so a real quote after "for example" is still
+  checked. Three smoke checks.
 - TODO: new item 31 (Interface), a Claude-style web page in place of the terminal, Streamlit recommended,
   starting with the chat's output returned as blocks instead of printed. Planning only; no code changed.
 - Cases in the chat (TODO item 25, done). Was: the plan to load verified wiki pages into the prompt for the

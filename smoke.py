@@ -272,6 +272,12 @@ check("a quote with no cite passes when it is in what the model was given",
       check_quoted('You wrote "I will not pay rent until it is fixed."', "saying I will not pay rent until it is fixed") == [])
 check("a quote with no cite is flagged when it is nowhere",
       "not word for word" in check_quoted('You asked for "repair within 5 days".', "Give them 5 days to reply.")[0][2])
+check("item 14: an id in quote marks is not a quote (m-023)",
+      check_quoted('"claim_notice_deadline" (83.49(3)(a))', "") == [])
+check("item 14: an example after e.g. is not a quote (m-022)",
+      check_quoted('what to fix (e.g., "repair the air-conditioning unit")', "") == [])
+check("item 14: the same words without e.g. are still checked",
+      check_quoted('You asked: "repair the air-conditioning unit"', "") != [])
 print()
 
 # the record as the tenant sees it, then with the tool's bookkeeping included

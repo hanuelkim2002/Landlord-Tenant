@@ -80,14 +80,22 @@ def check_cites(text, shown):
 QUOTED = re.compile(r'"([^"\n]{20,}?)"|“([^”\n]{20,}?)”')
 
 
+FIELD_ID = re.compile(r"[a-z0-9]+(?:_[a-z0-9]+)+")      # a fact or clock id: "claim_notice_deadline"
+EXAMPLE = re.compile(r"\be\.g\.,?\s*$", re.I)           # the model's own example follows: e.g., "..."
+
+
 def quoted_passages(text):
     """Every quoted passage in a reply with the cite next to it, or "" when none: [(quote, cite)]. The cite is
     the first one after the closing quote mark on the same line, or else the last one in the 80 characters
-    before the opening mark. A cite already used after one quote is never taken again for the next."""
+    before the opening mark. A cite already used after one quote is never taken again for the next.
+    Two things in quote marks are not quotes and are left out (TODO item 14, seen 2026-09-30): an id alone
+    ("claim_notice_deadline"), and an example right after "e.g." (e.g., "repair the air-conditioning unit")."""
     found = []
     used_up_to = 0                                   # nothing before this point can be the next quote's cite
     for m in QUOTED.finditer(text):
         quote = m.group(1) or m.group(2)
+        if FIELD_ID.fullmatch(quote.strip()) or EXAMPLE.search(text[max(0, m.start() - 12):m.start()]):
+            continue
         after = CITE.search(text[m.end():m.end() + 60].split("\n")[0])
         window = text[max(used_up_to, m.start() - 80):m.start()]
         # a cite before the quote counts only with no quote mark between them: in a tool result the model

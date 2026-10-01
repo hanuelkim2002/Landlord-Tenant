@@ -13,10 +13,6 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
    publishes it (the 2028 one is needed for any count reaching January 2028); 83.60(2) waits on the open
    question below; (b) periods the lease sets (83.575(1)-(2), 83.595(4)); needs a clock whose length is a
    confirmed fact; (c) hours (83.53(2)); (d) months (83.56(2), 12 months). Decide which to support.
-14. `citations.check_quoted` noise seen 2026-09-30 (gpt-oss-120b runs): a clock id in quote marks
-   ("claim_notice_deadline" (83.49(3)(a)), m-023) was checked as a statute quote, and an example the model
-   offered ("e.g., "repair the air-conditioning unit"", m-022) as a quote of the tenant. Both flagged,
-   neither a misquote. Decide whether ids (no spaces, underscores) and "e.g." examples are skipped.
 
 ## Playbooks
 

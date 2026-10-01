@@ -46,7 +46,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   belong to the quoted text and `check_quoted` checks those words). Quotes: `quoted_passages(text)` (every passage of 20
   or more characters in straight or curly quote marks, with its cite: the first cite after the closing mark
   on the same line, or else the last cite in the 80 characters before the opening mark with no quote mark
-  in between, never one already used by the previous quote; "" when none), `compact` (lowercase, curly
+  in between, never one already used by the previous quote; "" when none; an id alone in quote marks,
+  `FIELD_ID`, and an example right after "e.g.", `EXAMPLE`, are not quotes and are left out), `compact` (lowercase, curly
   quote marks and dash variants made plain, all whitespace removed; looser than `squash` because the model
   writes "tenant's" for "tenant’s" and the lease PDF text has broken words like "confir mation"), `is_in`
   (a quote in a text by `compact`, split at an ellipsis into pieces that must each appear, punctuation at
