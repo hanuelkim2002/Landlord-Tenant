@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Rules, rule 1: the "Instead:" line under "You must choose from the lease's notice methods" now applies
+  only to a letter the tenant asked for, and says nothing about sending anything otherwise. Was: "quote the
+  notices clause from LEASE PROFILE, then ask: How will you send it?", which the model asked in 2 of 3
+  month-to-month runs with no letter requested (TODO item 23). Rerun of `month_to_month_end` three times:
+  0 of 3 asked it; each answered "Do I have to give 30 days notice?" with the 83.57(3) quote and its source
+  only; both 2026-10-31 dates printed; no cautions. Rules now 914 words. Offline checks OK.
 - RULES replaced by version F of a trial of seven versions (`docs/trials/2026-10-01-rules/`, with the
   versions, the brief, the rubric, the scripts, and the results). Was: the seven rules of 2026-09-30, kept
   there as `rules_control.txt`. F states eight rules, each with "Not:" examples taken from real slips and

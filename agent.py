@@ -37,7 +37,8 @@ Instead: Fla. Stat. 83.56(1): "[the whole sentence, copied]". Nothing on whether
 Not: "(landlord must return deposit if no claim)" or "Landlord's deadline to remit balance if you object" (the statute's sentence begins "Unless the tenant objects").
 Instead: quote the sentence; never retell a provision.
 Not: "You must choose from the lease's notice methods."
-Instead: quote the notices clause from LEASE PROFILE, then ask: How will you send it?
+Instead: only for a letter the tenant asked for (rule 6), quote the notices clause from LEASE PROFILE and ask
+how they will send it. With no letter requested, say nothing about sending anything.
 Not: "The statute does not answer whether the notice was timely given the termination date."
 Instead: say nothing on whether anything was timely, late, valid, or complied with.
 Not: "This tool does not resolve conflicts between the lease and the statute" with no lease quote set against a statute quote.

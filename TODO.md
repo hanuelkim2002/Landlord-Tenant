@@ -108,7 +108,8 @@ to 22 use the seven, whose rules 1 to 7 cover the same ground as the current rul
     parts literally. The duplicate-draft stop worked live (m-030: one draft event).
 23. Left with the current rules (version F) in the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`):
     "How will you send it?" asked when no letter was requested (month-to-month story, 2 of 3 runs), copied
-    from rule 1's "Instead:" line about the notices clause, which should be tied to letters; "The lease and
+    from rule 1's "Instead:" line about the notices clause (fixed 2026-10-01: the line now applies only to a
+    requested letter; 0 of 3 reruns asked it); "The lease and
     statute text I have do not answer whether the entry was legal." (rule 2's fallback sentence with the
     legal question attached, rule 1); a request for several sheet facts in the chat (rent story, rule 4);
     three statute quotes cited to the wrong subsection (83.64(1) text as 83.64(4) twice, 83.53(2) text as
