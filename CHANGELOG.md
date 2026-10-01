@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Intake no longer crashes on a model answer that is not valid JSON. Was: `deterministic.ask_json` parsed
+  the first answer, and `run.py` stopped with a traceback when `fill_facts` (or `classify`) got malformed
+  JSON: 3 of 51 intake attempts in the eval baseline, one run lost after two tries. Now `ask_json` asks again
+  with `NOT_JSON` ("Your last answer was not valid JSON. Return ONLY the JSON object, nothing else."), up to
+  three answers, and raises the last error only then. Two smoke checks with a stand-in model.
 - Eval runner `dev/eval.py` and 16 eval scenarios (`dev/scenarios/eval_*.json`). Was: one live run per
   scenario, read by eye, or the rules trial's one-off scripts and scorer agents; two runs of the same setup
   had scored 0.50 and 1.00 slips per reply, so one run could not show whether a change helped. Now each

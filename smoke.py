@@ -25,7 +25,7 @@ from checks import check, make_scratch, remove_scratch, summary
 from citations import SUBSECTION_START, check_case_cites, check_cites, check_quoted, quoted_passages, subsections
 from config import CASES, MATTERS, WIKI
 from corpus import check_all_playbooks, load_playbook, playbooks, statute
-from deterministic import check_elements, compute_deadlines, lease_value
+from deterministic import NOT_JSON, ask_json, check_elements, compute_deadlines, lease_value
 from dev.build_cases import court_text
 import wiki
 from wiki import lint, read_pages, verified, verify
@@ -250,6 +250,26 @@ check("a cite inside a quoted passage is the quote's own, not the reply's (live 
 check("a short quoted cite is still checked", check_cites('"cite": "83.64"', {"83.49"})[0][0] == "83.64")
 check("item 11's wrong claim passes this check (its cite is real and shown)",
       check_cites("you may terminate the lease under Fla. Stat. 83.56(1)", set(playbooks["repair_not_made"].sections)) == [])
+
+# a model answer that is not valid JSON at intake is asked for again (deterministic.ask_json; 3 of 51 intakes
+# crashed on one in the eval of 2026-10-01): a stand-in model answers badly once, then well
+class Answers:
+    def __init__(self, *texts):
+        self.texts, self.prompts = list(texts), []
+    def invoke(self, prompt):
+        self.prompts.append(prompt)
+        return AIMessage(content=self.texts.pop(0))
+flaky = Answers('{"issues": ["other"] "reason": "x"}', '```json\n{"issues": ["other"], "reason": "x"}\n```')
+check("ask_json asks again after an answer that is not JSON, saying so",
+      ask_json(flaky, "Classify.") == {"issues": ["other"], "reason": "x"} and len(flaky.prompts) == 2
+      and flaky.prompts[1].endswith(NOT_JSON))
+broken = Answers("no", "still no", "never")
+try:
+    ask_json(broken, "Classify.")
+    gave_up = False
+except json.JSONDecodeError:
+    gave_up = len(broken.prompts) == 3
+check("ask_json gives up after three answers that are not JSON", gave_up)
 
 # quotes in a reply (citations.check_quoted): which cite goes with which quote, then what each is checked against
 FORFEIT = "he or she forfeits the right to impose a claim upon the security deposit"     # in 83.49(3)(a)
