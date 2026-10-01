@@ -5,6 +5,8 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- TODO: new item 31 (Interface), a Claude-style web page in place of the terminal, Streamlit recommended,
+  starting with the chat's output returned as blocks instead of printed. Planning only; no code changed.
 - Cases in the chat (TODO item 25, done). Was: the plan to load verified wiki pages into the prompt for the
   model to quote. Now, like the deadlines, the program prints and the model only asks: the prompt lists
   CASE TOPICS (topics of verified, tagged pages for the active issues' sections; "none for these issues"
