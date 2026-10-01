@@ -9,7 +9,7 @@ not what is planned (that is TODO.md) or what changed (that is CHANGELOG.md).
 Listed from the bottom of the import chain up. Every module imports `config`. Everything imports without
 `UF_API_KEY`; only a model call needs it (see Running and testing).
 
-- `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `PLAYBOOKS`), the two model clients (`agent_llm` on
+- `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `CASES`, `PLAYBOOKS`), the two model clients (`agent_llm` on
   `AGENT_MODEL`, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0; `AGENT_MODEL`
   is nemotron-3-super-120b-a12b unless the environment sets `AGENT_MODEL`, for trying another gateway
   model in one run; it drives the chat, `classify`, and `fill_facts`), and `squash`
@@ -309,6 +309,19 @@ name, the date as printed, and its marker in the memorandum, plus the memorandum
 fetch date) and `sources/`, the memoranda PDFs. A new year or circuit is added from its official memorandum,
 checked against the PDF, never typed from memory.
 
+`cases/` (read-only, like `statutes/`): `<volume>_<reporter>_<page>.txt`, one Florida appellate or federal
+opinion per file, e.g. `448_So2d_1208.txt`, built by `dev/build_cases.py` from the author's Westlaw Find and
+Print file of 2026-09-09 (82 opinions, the reporter cites of the case-pool candidate list; the print itself
+stays outside the repo). Each file is the court's text only: the caption (the cite on the first line, as
+Westlaw prints it, then court, parties, docket, dates), "Attorneys and Law Firms" and the panel, the opinion
+with any concurrence, dissent, and footnotes, the star pages (`*1209`) that give pin cites, and "All
+Citations" (parallel cites, e.g. Hankins v. Smith is `103_Fla_892.txt`, also 138 So. 494). Left out:
+Westlaw's KeyCite flag, synopsis and holdings, West headnotes and their `[n]` markers in the opinion (only
+numbers up to the opinion's headnote count; a bracketed number beyond it is the court's own), the copyright
+line, and the negative-treatment table. 81 files: 50 So. 3d 503 (the 2010 forms decision) is not built,
+because the print marks its added and deleted words by formatting, which plain text loses. Nothing reads
+`cases/` yet except the smoke checks.
+
 ## Tools the model can call
 
 All in `tools.py`, in the `tools` list. The docstring is what the model reads; `python schemas.py` shows it.
@@ -443,10 +456,21 @@ Offline checks (no model call, no key needed):
     python smoke.py                                                              # the offline smoke tests
     python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook checks: every line OK
     python schemas.py                                                            # what the model sees per tool
+    python dev/build_cases.py "<Westlaw print>"                                  # once: builds cases/
+
+- `python dev/build_cases.py <print>`: the print is the Westlaw Find and Print file (Rich Text, turned into
+  plain text by macOS's `textutil`; a `.txt` is read as is). `split_print` finds each opinion (a cite on its
+  own line with a court named below it; a bare cite in a negative-treatment table has a summary instead) up
+  to Westlaw's "End of Document"; `court_text` keeps the caption and everything from "Attorneys and Law
+  Firms" on, minus the headnote markers; `file_name` names the file from the cite. An opinion whose print
+  carries Westlaw's note "Additions are indicated by ... and deletions by ..." is skipped and listed.
+  Rerunning on the same print writes the same files.
 
 - `python smoke.py`: needs the saved test matter `matters/t-test/test-001/` with its lease profile. Opens it
   with `load_matter` and prints `list_matters()`, then runs the playbook checks (one named check, "every
-  playbook check is OK", fails if any line of `check_all_playbooks` does), element status and deadlines on hand-typed facts with today fixed at 2026-09-08, a hand-typed update
+  playbook check is OK", fails if any line of `check_all_playbooks` does), element status and deadlines on hand-typed facts with today fixed at 2026-09-08, the case corpus (every file in `cases/`
+  named for the cite on its first line, none of Westlaw's material, no headnote marker opening a line,
+  attorneys and parallel cites present, and `court_text` on a hand-typed opinion), a hand-typed update
   against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`
   refusing), the letter template, the cite checks (subsection markers in order in every stored section,
   each kind of bad cite flagged, and a real, shown but wrong cite passing), the quote checks (which cite goes

@@ -1,0 +1,27 @@
+633 So.2d 561
+District Court of Appeal of Florida,
+Fourth District.
+Sheila WALSH, Appellant,
+v.
+CAS, INC., a Florida Corporation, ADA Sandolo, President of CAS, Inc., and ADA Sandolo, individually, Appellees.
+No. 93–1524.
+|
+March 16, 1994.
+Attorneys and Law Firms
+*562 Ruby Winston–Jarvis of Ruby Winston–Jarvis, P.A., Oakland Park, for appellant.
+Robert D. Lettman of Robert D. Lettman, P.A., Tamarac, for appellees.
+Opinion
+
+PER CURIAM.
+
+At issue in this appeal is whether Count V of appellant’s (tenant’s) counterclaim entitled “wrongful eviction” was properly dismissed because of the res judicata effect of a prior judgment of eviction, entered against the tenant in a county court eviction proceeding. In Count V, the tenant has interwoven several theories under the rubric of wrongful eviction. To the extent that a portion of the count contains allegations of constructive eviction based on code violations which preceded the appellee’s (landlord’s) initiation of the county court eviction action, the action is not barred by the subsequent lawful eviction. Farm Maid Inc. v. Giller, 474 So.2d 1278 (Fla. 3d DCA 1985).
+
+However, to the extent that the counterclaim contains allegations attacking the propriety of the county court eviction proceeding for nonpayment of rent, the lawful judgment of eviction bars the claim of wrongful eviction arising from the actual eviction. A tenant who has been lawfully evicted pursuant to statutory procedure is precluded, in a separate action, from attacking that eviction as wrongful. An eviction, whether actual or constructive, must be wrongful or unlawful in order to be actionable. McCready v. Booth, 398 So.2d 1000 (Fla. 5th DCA 1981); Sentry Water Systems, Inc. v. ADCA Corp., 355 So.2d 1255 (Fla. 2d DCA 1978).
+
+Accordingly, we reverse the order of the trial court dismissing Count V of the supplemental counterclaim with prejudice. We remand with directions to dismiss Count V without prejudice and with leave to amend only with respect to a claim for wrongful constructive eviction resulting from code violations.
+
+REVERSED AND REMANDED.
+
+GLICKSTEIN, FARMER and PARIENTE, JJ., concur.
+All Citations
+633 So.2d 561, 19 Fla. L. Weekly D608

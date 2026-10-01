@@ -5,6 +5,21 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- `cases/`: 81 Florida appellate and federal opinions, the court's text only, one file per opinion
+  (`448_So2d_1208.txt`), committed. Built by the new `dev/build_cases.py` from the author's Westlaw Find and
+  Print file (82 opinions, the reporter cites of the case-pool candidate list), which stays outside the repo.
+  The build leaves out Westlaw's own material (KeyCite flags, synopsis and holdings, West headnotes and
+  their `[n]` markers, the copyright line, the negative-treatment table) and keeps the caption, attorneys
+  and panel, the opinion with concurrences, dissents, and footnotes, star pages for pin cites, and parallel
+  cites. A bracketed number beyond an opinion's headnote count is kept as the court's own (Malagon v.
+  Solari's "[1116]"). Skipped: 50 So. 3d 503, the 2010 forms decision, whose print marks deletions by
+  strikethrough (391 runs, the only opinion with any), which plain text would keep as current words; noted
+  under TODO item 24. Checked against the print: every opinion's court text is in its file. New path
+  `config.CASES`; CLAUDE.md lists `cases/` as read-only; six smoke checks (files present, each named for its cite, no
+  Westlaw material, no headnote marker opening a line, attorneys and parallel cites present, the build on a
+  hand-typed opinion). The print also confirmed Casey v. Picinich (573 So. 2d 76), marked unverified in the
+  candidate list, and that Lucite Center begins at 492, not 493. Nothing reads `cases/` yet. Smoke: all
+  checks OK.
 - README: case law joins the plan (was listed under "Beyond the current plan": a case pool by section, no
   code). Purpose and the output framing add what courts that read the statute said; goal 3 and Skills add
   the court decisions for each issue's sections; the non-negotiables add case quotes from `cases/`, the

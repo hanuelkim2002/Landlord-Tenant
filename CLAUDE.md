@@ -39,6 +39,10 @@ student, not admitted.
 
 - `calendars/` is read-only too: each court holiday comes from the circuit's official memorandum (PDF kept in
   `calendars/sources/`) and is checked against it by `smoke.py`. Never add or change a holiday from memory.
+- `cases/` is read-only too: one file per opinion, the court's text only, built by `dev/build_cases.py` from
+  the author's Westlaw print with Westlaw's own material (headnotes, synopsis, KeyCite, negative treatment)
+  left out, and checked by `smoke.py`. Never edit a case file by hand, and never write a case's words, cite,
+  or holding from memory.
 - `statutes/` is a read-only corpus. Never edit it. Never write statutory text, a section number, or a
   deadline into a playbook, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
 - After any edit to a playbook YAML, run the playbook checks (`check_all_playbooks`, also run by `smoke.py`)
@@ -60,6 +64,7 @@ student, not admitted.
 
     bash setup.sh            # once: venv, pip install, .env from template, matters/
     source venv/bin/activate
+    python dev/build_cases.py "<Westlaw print>"   # once: cases/ from the author's Westlaw Find and Print file
     python run.py            # new matter (lease, intake) or existing (what is new, resume), then the sheet, then chat
     python smoke.py          # offline checks, no key needed
     python smoke_online.py   # classify, fill_facts, resume; calls the model

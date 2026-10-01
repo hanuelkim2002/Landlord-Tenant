@@ -14,6 +14,7 @@ load_dotenv()                                   # reads .env in the current fold
 ROOT = Path(__file__).resolve().parent          # the project folder, wherever it lives
 MATTERS = ROOT / "matters"
 STATUTES = ROOT / "statutes"
+CASES = ROOT / "cases"                          # court opinions, the court's text only (dev/build_cases.py)
 PLAYBOOKS = ROOT / "playbooks"
 
 UF_BASE_URL = "https://api.ai.it.ufl.edu"

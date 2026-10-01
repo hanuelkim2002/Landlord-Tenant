@@ -20,9 +20,10 @@ import record
 from calendars import court_calendars
 from checks import check, make_scratch, remove_scratch, summary
 from citations import SUBSECTION_START, check_cites, check_quoted, quoted_passages, subsections
-from config import MATTERS
+from config import CASES, MATTERS
 from corpus import check_all_playbooks, load_playbook, playbooks, statute
 from deterministic import check_elements, compute_deadlines, lease_value
+from dev.build_cases import court_text
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
@@ -111,6 +112,30 @@ check("no deadline at all is said in one line, not an empty heading (an issue wi
       render_deadlines(json.dumps({"deadlines": []})) == "No deadlines: none of the deadlines this tool computes "
       "applies to your confirmed facts." and "waiting [rent_increased]" in render_deadlines(
       json.dumps({"deadlines": [], "waiting": {"rent_increased": ["new_rent"]}})))
+print()
+
+# cases/ (dev/build_cases.py): the court's text only. Every file is named for the cite on its first line and
+# carries none of Westlaw's material; the build drops headnote markers but keeps the court's own brackets.
+WESTLAW_MARKS = ("West Headnotes", "Synopsis", "KeyCite", "Thomson Reuters", "Negative Treatment",
+                 "End of Document", "cite this headnote", "More cases on this issue", "Procedural Posture")
+case_texts = {f.name: f.read_text() for f in sorted(CASES.glob("*.txt"))}
+check("cases/ holds opinions", len(case_texts) > 0)
+check("every case file is named for the cite on its first line", all(
+    name == re.sub(r"[^A-Za-z0-9 ]", "", text.split("\n")[0].removesuffix(" (Mem)")).replace(" ", "_") + ".txt"
+    for name, text in case_texts.items()))
+check("no case file carries Westlaw's material (headnotes, synopsis, KeyCite, copyright, negative treatment)",
+      not any(mark in text for text in case_texts.values() for mark in WESTLAW_MARKS))
+check("no headnote marker opens a line in a case file", not any(
+    re.match(r"\s*\[\d+\]", line) for text in case_texts.values() for line in text.split("\n")))
+check("every case file has its attorneys and its parallel cites", all(
+    "Attorneys and Law Firms" in text and "All Citations" in text for text in case_texts.values()))
+built = court_text(["448 So.2d 1208", "District Court of Appeal of Florida,", "Synopsis", "Tenant sued.",
+                    "West Headnotes (2)", "[1]", "Attorneys and Law Firms", "*1209 Counsel, for petitioner.",
+                    "Opinion", "[1] [2] We agree. See 13 Fla. Law Weekly [1116] 1117.", "All Citations", "448 So.2d 1208"])
+check("the build keeps the caption and the court's text, drops the synopsis and headnotes, and keeps a bracket "
+      "beyond the headnote count", built.startswith("448 So.2d 1208\nDistrict Court of Appeal of Florida,\n"
+      "Attorneys and Law Firms") and "\nWe agree. See 13 Fla. Law Weekly [1116] 1117.\n" in built
+      and "Tenant sued." not in built and "West Headnotes" not in built)
 print()
 
 # a tenant fact next to the lease field its playbook names (compare_to): shown only when they differ
