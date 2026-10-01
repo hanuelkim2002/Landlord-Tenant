@@ -95,7 +95,8 @@ def get_deadlines() -> str:
     """Compute every deadline from the CONFIRMED facts. This is the ONLY way to get a date. Never count or
     calculate days yourself. Works issue by issue: returns the deadlines of every issue whose facts are all
     confirmed or n/a, and under "waiting" the issues whose facts are still open, with those facts. A deadline
-    two issues share appears once. Report both parts."""
+    two issues share appears once. The program shows the result to the tenant itself, every field included;
+    do not repeat or reword it."""
     waiting = {}
     for issue, rows in element_status().items():
         open_ids = sorted({r["id"] for r in rows if r["status"] in ("proposed", "changed", "missing")})

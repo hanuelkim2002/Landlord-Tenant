@@ -93,7 +93,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   transcript.
   Imports `config`, `corpus`, `deterministic`, `lease`. Imported by `timeline`, `tools`, `agent`, `run`,
   `smoke`, `smoke_online`.
-- `timeline.py`: `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
+- `timeline.py`: `render_deadlines(result)` (a `get_deadlines` result as the tenant reads it: per deadline
+  its date, actor, clock, issues, status, rule and start, cite, and counting line; a clock with no date
+  shows why; then each waiting issue with its open facts; also the "Not yet." refusal), and
+  `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
   `label`, `corrected` (the tenant confirmed a different value from the suggestion, compared as shown),
   and `confirmation_of`. A confirmed date's SOURCE reads "tenant (corrected, ...)" when corrected, and in
   `timeline full` a corrected fact reads "corrected from <how> <suggested value>". Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
@@ -111,7 +114,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   model call), `transcript_entry` (one thread message as a transcript line), and `chat` (the terminal loop; its
   thread id is the session id when one is open). Each turn, `chat` writes the tenant's message to the
   transcript before the model runs (so `propose_facts` can check the tenant's words), then every new message
-  of the turn. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
+  of the turn. It prints the model's replies, a `draft_letter` result as is, and the turn's last
+  `get_deadlines` result through `render_deadlines`; other tool results are not shown. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
   tenant confirmed there is sent to the model as a "[Program note: ...]" line at the front of the tenant's
   next message, and logged as a `program` transcript line. `timeline` commands go to the transcript too.
   After printing each reply, `chat` calls `check_reply(text, messages)` with the thread so far. It runs
@@ -313,7 +317,10 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   missing. Returns JSON `{"deadlines": [...], "waiting": {issue: [open fact ids]}}`: the clocks of the ready
   issues from `matter_deadlines`, each with `issues` (a list; a deadline two issues share appears once), and,
   if any, the issues still waiting with their open facts. Refuses ("Not yet. ...", with the open facts by
-  issue) only when no issue is ready. Writes a `deadlines_computed` event per ready playbook.
+  issue) only when no issue is ready. Writes a `deadlines_computed` event per ready playbook. The model
+  does not report the result: the chat loop prints the turn's last `get_deadlines` result itself, through
+  `timeline.render_deadlines`, before the model's reply, and the docstring and rule 3 tell the model not
+  to repeat or reword it.
 - `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
   obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a playbook;
   `posture` is preserve (no quotes), assert (obligation quote), or escalate (both quotes). Rejects any quote
@@ -338,7 +345,8 @@ this order:
    quote on the same point appear together, no letter offers or next steps unless asked; 2 quote only text
    given (profile, stored statute, `get_statute_section`, the tenant's words), never a provision in the
    model's own words, fetch a section before mentioning it; 3 every date must come from ELEMENT STATUS, a
-   lease quote, or a tool result, never computed or compared, and `get_deadlines` reported in full; 4 only
+   lease quote, or a tool result, never computed or compared; `get_deadlines`' result is printed by the
+   program, so the model only says the deadlines appear above; 4 only
    the tenant confirms facts, on the sheet: propose with `propose_facts`, call a fact confirmed only when
    ELEMENT STATUS shows it as known, otherwise "you said"; 5 open questions are unsettled; 6 letters only
    from `draft_letter` and only when asked: the questions (issue, ask, reply days, delivery method with the

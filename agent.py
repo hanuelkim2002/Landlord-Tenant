@@ -16,7 +16,7 @@ from deterministic import classify, fill_facts
 from record import (active_playbooks, add_issues, add_related_issues, append_event, candidate_playbooks,
                     element_status, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet
-from timeline import render_timeline
+from timeline import render_deadlines, render_timeline
 from tools import tools
 
 
@@ -44,8 +44,9 @@ Rules:
    (search_statute finds which section has a phrase). If nothing you have or can fetch answers a question,
    say so plainly and add nothing of your own.
 3. Every date you write must appear in ELEMENT STATUS, a lease quote, or a tool's result. Never count, add,
-   compare, or work out days or dates. For deadlines, call get_deadlines and report what it returns: each
-   deadline with its "counting" line, and the issues still waiting with their open facts.
+   compare, or work out days or dates. For deadlines, call get_deadlines. The program shows its result to
+   the tenant, every field included; do not repeat or reword it, and say only that the deadlines appear
+   above.
 4. Only the tenant confirms facts, on a sheet the program shows after your reply. When the tenant says
    something that answers a missing fact or differs from a known one, call propose_facts, and do not ask
    them to confirm it in the chat. A fact is confirmed only when ELEMENT STATUS shows it as known. For
@@ -147,7 +148,8 @@ def build_agent():
 
 
 # ---- Chat: read a line, run a turn, print the reply. Tool output is hidden except draft_letter, whose
-# result is printed directly. The word `timeline` prints the record without the model. After a turn in which
+# result is printed directly, and get_deadlines, printed by render_deadlines. The word `timeline` prints the
+# record without the model. After a turn in which
 # the model proposed facts, the intake sheet asks the tenant to confirm them. Everything said, every tool
 # call, every command, and every sheet answer goes to the session's transcript.
 
@@ -249,9 +251,14 @@ def chat(agent):
         new = result["messages"][seen + 1:]              # everything new this turn, minus the tenant's message
         for m in new:
             record.append_transcript(transcript_entry(m))
-        for m in new:                                    # print the replies, and a letter if one was drafted
+        # The deadlines are printed by code, from the turn's last get_deadlines result, before the reply.
+        last_deadlines = max((i for i, m in enumerate(new) if m.type == "tool" and m.name == "get_deadlines"),
+                             default=None)
+        for i, m in enumerate(new):                      # print the replies, a letter, and the deadlines
             if m.type == "tool" and m.name == "draft_letter":
                 print(m.content, "\n")
+            elif i == last_deadlines:
+                print(render_deadlines(m.content), "\n")
             elif m.type == "ai" and m.content:
                 print(m.content, "\n")
                 check_reply(m.content, result["messages"])   # its cites and quotes, against what it was given

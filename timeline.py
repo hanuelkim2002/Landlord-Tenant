@@ -1,5 +1,7 @@
 """Timeline: the record as the tenant sees it. Not a tool. The chat loop prints this directly when the
-tenant asks for a timeline, so the record never passes through the model."""
+tenant asks for a timeline, and prints get_deadlines' result with render_deadlines, so the record never
+passes through the model."""
+import json
 import re
 from datetime import date
 
@@ -27,6 +29,31 @@ def confirmation_of(fact_id, events):
             how = "corrected" if corrected(ev) else ev["how"]
             return f"tenant ({how}, confirmed {ev['when'][:10]})"
     return "tenant"
+
+
+def render_deadlines(result):
+    """get_deadlines' result as the tenant reads it. The chat loop prints this itself after a turn in which the
+    model called get_deadlines, so no part of a deadline depends on the model reporting it: each row shows its
+    date, whose deadline, the rule and what it counts from, the cite, the status, the counting line, and its
+    issues; a clock with no date shows why. Then the issues still waiting, with the facts they wait for."""
+    if result.startswith("Not yet."):                      # no issue ready: the waiting list is JSON at the end
+        waiting = json.loads(result.split(": ", 1)[1])
+        lines = ["No deadlines yet: no issue has all its facts confirmed."]
+    else:
+        data = json.loads(result)
+        waiting = data.get("waiting", {})
+        lines = ["Deadlines, computed by the tool from your confirmed facts:"]
+        for d in data["deadlines"]:
+            issues = ", ".join(d["issues"])
+            if "deadline" not in d:
+                lines.append(f"  (no date)   {label(d['clock'])} [{issues}]: {d['status']}")
+                continue
+            lines.append(f"  {d['deadline']}  {d['actor']} deadline: {label(d['clock'])} [{issues}], {d['status']}")
+            lines.append(f"              {d['rule']} {label(d['from'])}, Fla. Stat. {d['cite']}")
+            lines.append(f"              counting: {d['counting']}")
+    for issue, fact_ids in waiting.items():
+        lines.append(f"  waiting [{issue}]: {', '.join(label(f) for f in fact_ids)}")
+    return "\n".join(lines)
 
 
 def render_timeline(issue=None, full=False):

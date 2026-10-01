@@ -24,7 +24,7 @@ from deterministic import check_elements, compute_deadlines, lease_value
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
-from timeline import render_timeline
+from timeline import render_deadlines, render_timeline
 from agent import check_reply, given_text, sections_shown, system_prompt
 from tools import build_letter, draft_letter, get_deadlines, get_statute_section, propose_facts
 
@@ -87,6 +87,9 @@ check("court days cross into the next year's memorandum", three_day("2026-12-30"
 check("court days refuse a year with no memorandum loaded", three_day("2027-12-29", "Alachua")[1]["status"].startswith("not computed"))
 check("court days refuse a county with no calendar", three_day("2026-11-24", "Miami-Dade")[1]["status"].startswith("not computed"))
 check("a court-day date carries its counting line", "Eighth Judicial Circuit" in three_day("2026-11-24", "Alachua")[1]["counting"])
+refused = {**three_day("2026-11-24", "Miami-Dade")[1], "issues": ["notice_received_nonpayment"]}
+check("a refused court-day count is printed with its reason and no date", render_deadlines(json.dumps(
+      {"deadlines": [refused]})).splitlines()[1].startswith("  (no date)   three day demand period [notice_received_nonpayment]: not computed"))
 print()
 
 # a tenant fact next to the lease field its playbook names (compare_to): shown only when they differ
@@ -241,6 +244,9 @@ try:
     check("propose_facts refuses a value already confirmed", "claim_notice_received: already confirmed" in reply)
     check("propose_facts never confirms", "vacated" not in record.matter["facts"])
     check("get_deadlines waits while facts are open", get_deadlines.invoke({}).startswith("Not yet"))
+    check("printed deadlines say none yet, and what is waiting",
+          render_deadlines(get_deadlines.invoke({})).startswith("No deadlines yet")
+          and "waiting [deposit_not_returned]: " in render_deadlines(get_deadlines.invoke({})))
 
     # the intake sheet: accept, correct, bad input asked again, a changed fact, an applies_if fact, a skip
     prompt_before_sheet = system_prompt()
@@ -272,6 +278,11 @@ try:
     shared = [d for d in listed if d["clock"] == "claim_notice_deadline"]
     check("a deadline two issues share is listed once, with both issues", len(shared) == 1
           and shared[0]["issues"] == ["deposit_not_returned", "deposit_claim_received"])
+    printed = render_deadlines(get_deadlines.invoke({}))
+    check("printed deadlines carry every field: date, actor, rule, start, cite, status, counting, issues",
+          all(f"  {d['deadline']}  {d['actor']} deadline: " in printed for d in listed)
+          and printed.count("counting: ") == len(listed) and "Fla. Stat. 83.49(3)(b)" in printed
+          and "[deposit_not_returned, deposit_claim_received], passed" in printed and "tenancy terminated 2026-07-31" in printed)
     timeline_now = render_timeline()
     check("the timeline shows a shared deadline once, tagged with both issues",
           timeline_now.count("claim notice deadline") == 1
@@ -387,6 +398,9 @@ try:
           {d["clock"] for d in per_issue["deadlines"]} == {"return_if_no_claim", "claim_notice_deadline"}
           and all(d["issues"] == ["deposit_not_returned"] for d in per_issue["deadlines"])
           and "deposit_claim_received" in per_issue["waiting"] and "deposit_not_returned" not in per_issue["waiting"])
+    check("printed deadlines show one issue's dates and the other issue waiting",
+          "return if no claim" in render_deadlines(json.dumps(per_issue, default=str))
+          and "waiting [deposit_claim_received]: " in render_deadlines(json.dumps(per_issue, default=str)))
     # dropping, rejecting, and asking again
     record.matter["proposed"]["claim_amount"] = stated(400, "keeping $400")
     record.reject_issue("deposit_claim_received", "issue_dropped")

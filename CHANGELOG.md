@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- Deadlines are printed by code: the chat loop prints the turn's last `get_deadlines` result through the new
+  `timeline.render_deadlines` (date, actor, clock, issues, status, rule and start date, cite, counting line;
+  a clock with no date shows why; waiting issues with their open facts), as `draft_letter`'s result already
+  was. Before, the model reported the result itself, and dropped parts of it: the counting line, status,
+  and actor (m-017, m-022, m-023) or the whole reply (m-018). Rule 3 and `get_deadlines`' docstring now say
+  the program shows the result and the model is not to repeat or reword it (was: report what it returns,
+  "Report both parts"). Four smoke checks: none ready, all fields, one issue ready and one waiting, a
+  refused court-day count.
 - Live runs of the new rules logged in TODO.md: on nemotron (m-017 to m-020) and on gpt-oss-120b (m-021 to
   m-024), scored against 22 replies from the old-rules runs with one rubric. Slips per reply: 0.91 old
   rules, 1.00 new rules, 1.17 new rules on gpt-oss-120b; the kinds changed more than the rate. Model items
