@@ -13,7 +13,8 @@ session can see why the code is the way it is.
   case topics, the not-covered note, cautions, empty turns, ids, deadline echo, two word screens) and writes
   readable transcripts. `--project` runs an older commit's worktree for a before-and-after comparison. The
   scenarios: one lay-tenant story per playbook, three not covered, one mixed, three with facts like a case in
-  the wiki.
+  the wiki. A turn's required words are matched against what the tenant read, the program's footer line
+  included, and footers are counted apart so the model's own lines can be told from the program's.
 - Rules: four "Not:" / "Instead:" pairs from the eval baseline's slips (16 new scenarios, run on the code
   before today's changes). Rule 3: a lay question about time ("How long do I have to tell them I disagree?",
   "When do I have to tell them?") goes to `get_deadlines`; was answered with statute quotes alone in 3 of
