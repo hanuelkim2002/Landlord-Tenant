@@ -301,6 +301,13 @@ check("item 14: an example after e.g. is not a quote (m-022)",
       check_quoted('what to fix (e.g., "repair the air-conditioning unit")', "") == [])
 check("item 14: the same words without e.g. are still checked",
       check_quoted('You asked: "repair the air-conditioning unit"', "") != [])
+check("a short quote keeps its two marks, so the words after it are not read as a quote (eval, 2026-10-01)",
+      quoted_passages(f'If you choose "assert," the letter will quote: Fla. Stat. 83.49(3)(a): "{FORFEIT}"')
+      == [(FORFEIT, "83.49(3)(a)")]
+      and check_quoted(f'If you choose "assert," the letter will quote: Fla. Stat. 83.49(3)(a): "{FORFEIT}"', "") == [])
+check("a quote that runs over two lines is one passage",
+      [q for q, c in quoted_passages('Lease Section 4.3: "Tenant shall notify Landlord in writing\nof a forwarding address" and "x"')]
+      == ["Tenant shall notify Landlord in writing\nof a forwarding address"])
 print()
 
 # the record as the tenant sees it, then with the tool's bookkeeping included

@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Quote marks in a reply pair in order (`citations.quote_spans`, `unquoted`). Was: `QUOTED` needed 20
+  characters between two marks, so after a short quote ("assert,") it paired the short quote's closing mark
+  with the next quote's opening one and checked the words between them as a quote: three false cautions in
+  one reply of the eval after-runs (2026-10-01), and a quote running over two lines (a lease clause with a
+  blank line in it) did the same. Short quotes are still left out of the check. Two smoke checks.
 - Intake no longer crashes on a model answer that is not valid JSON. Was: `deterministic.ask_json` parsed
   the first answer, and `run.py` stopped with a traceback when `fill_facts` (or `classify`) got malformed
   JSON: 3 of 51 intake attempts in the eval baseline, one run lost after two tries. Now `ask_json` asks again

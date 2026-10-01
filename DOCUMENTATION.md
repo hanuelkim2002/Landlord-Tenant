@@ -43,7 +43,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   text), `cites_in(text)` (every `83.x` cite with its parenthesized parts, spaces removed, each once),
   `check_cites(text, shown)` (returns `(cite, problem)` for a section not in `statutes/`, a section not in
   `shown`, or a subsection the section does not have; cites inside a quoted passage are skipped, since they
-  belong to the quoted text and `check_quoted` checks those words). Quotes: `quoted_passages(text)` (every passage of 20
+  belong to the quoted text and `check_quoted` checks those words). Quotes: `quote_spans(text)` (quote marks paired in order, as a reader pairs
+  them, so a short quote keeps its two marks and a quote may run over lines; the passages of `MIN_QUOTE`, 20,
+  characters or more), `unquoted(text)` (the text with those passages blanked, for `check_cites` and
+  `check_case_cites`), `quoted_passages(text)` (every passage of 20
   or more characters in straight or curly quote marks, with its cite: the first cite after the closing mark
   on the same line, or else the last cite in the 80 characters before the opening mark with no quote mark
   in between, never one already used by the previous quote; "" when none; an id alone in quote marks,
