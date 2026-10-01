@@ -148,7 +148,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   transcript before the model runs (so `propose_facts` can check the tenant's words), then every new message
   of the turn. `show_turn(new, messages)` transcribes the turn and prints the model's replies, a
   `draft_letter` result as is, and the turn's last `get_deadlines` result through `render_deadlines`; other
-  tool results are not shown. It returns whether anything was printed. When nothing was (the reply was empty
+  tool results are not shown. Under a reply that quotes the statute (a quoted passage with a ch. 83 cite,
+  `citations.quoted_passages`) and nowhere says "does not decide", it prints `NOT_DECIDED` ("This tool does
+  not decide whether any of this applies to you.", from `not_decided_line`) and writes it to the transcript
+  as a `footer` line (TODO item 30). It returns whether anything was printed. When nothing was (the reply was empty
   or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and shows that
   second turn; if it is empty too, it prints `NO_REPLY` ("[Check: no reply came back from the model. Please
   ask again.]"). Either way it logs `reply_empty`. The model's `reasoning_content` is never shown in its
@@ -330,6 +333,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   `command` (`text`: a `timeline` command, handled without the model), `sheet` (`id`, `question`,
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_added`
   when the answer brought in a related issue), or
+  `footer` (`text`: `NOT_DECIDED`, printed by the program under a reply that quotes the statute without
+  saying the tool does not decide), or
   `program` (`text`: a note sent to the model: ahead of the tenant's message after a sheet, or
   `EMPTY_REPLY` after an empty reply), or `check` (`text`: a "[Check: ...]" line printed to the tenant: a
   caution about a cite or a quote from `check_reply`, or `NO_REPLY` from `retry_empty`). Only the chat is transcribed; the

@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- The program prints "This tool does not decide whether any of this applies to you." under a reply that
+  quotes the statute without saying the tool does not decide (TODO item 30, done). Was: only rule 1 asked the
+  model to end a legality answer with "This tool does not decide that."; it left the line out in 1 of 3
+  `deposit_cases` runs, and in 8 of the first 16 runs of the eval baseline (2026-10-01). `agent.show_turn`
+  prints `NOT_DECIDED` (`not_decided_line`) and writes a `footer` transcript line. Rule 1 is unchanged, so a
+  reply that has the model's own line gets no second one. Smoke check.
 - Printing tools end the model's turn (TODO item 19, done). Was: after `get_deadlines` or `get_cases` the
   model wrote a reply, which rule 3 and rule 8 limited to "The deadlines appear above." and "The cases appear
   above. This tool does not decide ...", and which sometimes repeated a printed deadline line (4 of 18

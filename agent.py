@@ -11,7 +11,7 @@ from langchain_core.utils.uuid import uuid7
 from langgraph.checkpoint.memory import InMemorySaver
 
 import record
-from citations import caution, check_case_cites, check_cites, check_quoted, quote_label
+from citations import caution, check_case_cites, check_cites, check_quoted, quote_label, quoted_passages
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
@@ -250,10 +250,24 @@ def check_reply(text, messages):
         print()
 
 
+# A reply that quotes the statute gets the tool's own line under it unless the model wrote one (rule 1 asks
+# for "This tool does not decide that."; it was left out in 1 of 3 deposit_cases runs, TODO item 30). The
+# program prints it, so the tenant always reads it under a statute quote, whatever the model wrote.
+NOT_DECIDED = "This tool does not decide whether any of this applies to you."
+
+
+def not_decided_line(text):
+    """NOT_DECIDED if the reply quotes the statute (a quoted passage with a cite to ch. 83) and says nowhere
+    that the tool does not decide; None otherwise."""
+    quotes_statute = any(cite.startswith("83.") for _, cite in quoted_passages(text))
+    return NOT_DECIDED if quotes_statute and "does not decide" not in text else None
+
+
 def show_turn(new, messages):
     """Transcribe a turn's new messages and print what the tenant sees: a drafted letter as is, the turn's last
     get_deadlines result through render_deadlines (printed by code, before the reply), and each reply with
-    text, checked by check_reply. Returns True if anything was printed."""
+    text, checked by check_reply, with NOT_DECIDED under it when it quotes the statute without saying the
+    tool does not decide. Returns True if anything was printed."""
     for m in new:
         record.append_transcript(transcript_entry(m))
     last_deadlines = max((i for i, m in enumerate(new) if m.type == "tool" and m.name == "get_deadlines"),
@@ -272,6 +286,10 @@ def show_turn(new, messages):
         elif m.type == "ai" and m.content.strip():
             print(m.content, "\n")
             check_reply(m.content, messages)             # its cites and quotes, against what it was given
+            line = not_decided_line(m.content)
+            if line:
+                print(line, "\n")
+                record.append_transcript({"role": "footer", "text": line})
             printed = True
     return printed
 

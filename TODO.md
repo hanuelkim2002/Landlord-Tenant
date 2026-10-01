@@ -80,8 +80,6 @@ reused, so older references (smoke check names, the changelog) still point to th
     printed date is `claim_notice_dated`). Still seen with the current rules: 1 of 3 claim runs in the trial
     (the old rules also 1 of 3). The sheet shows the suggestion and the tenant corrects it, logged as
     corrected. (Item 21 was the same slip.)
-30. Asked whether a provision means the deposit comes back, the model quoted the statute but left out "This
-    tool does not decide that." (rule 1): 1 of 3 `deposit_cases` runs on 2026-10-01 after the cases fix.
 
 ## Open questions
 

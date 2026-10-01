@@ -33,7 +33,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
 from timeline import render_deadlines, render_timeline
-from agent import check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
+from agent import NOT_DECIDED, check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
 from tools import build_letter, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts
 from tools import tools as model_tools
 
@@ -590,6 +590,18 @@ try:
         retry_empty(Again(""), {}, first)
     check("a second empty reply tells the tenant and is logged", "[Check: no reply came back" in printed.getvalue()
           and read_events()[-1]["recovered"] is False)
+
+    # the tool's own line under a reply that quotes the statute without it (TODO item 30): printed by the program
+    # and kept in the transcript; not under a reply that has it, nor under one quoting only the tenant
+    bare = AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"')
+    with contextlib.redirect_stdout(io.StringIO()) as printed:
+        show_turn([bare], [bare])
+        show_turn([AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nThis tool does not decide that.')], [])
+        show_turn([AIMessage(content='You said: "I paid the whole rent for September myself."')], [])
+    session_lines = (record.matter_dir() / "sessions" / f"{record.session}.jsonl").read_text().splitlines()
+    footers = [json.loads(line) for line in session_lines if json.loads(line)["role"] == "footer"]
+    check("item 30: a statute quote with no 'does not decide' line gets the program's line, once, in the transcript",
+          printed.getvalue().count(NOT_DECIDED) == 1 and [f["text"] for f in footers] == [NOT_DECIDED])
 
     # get_deadlines and get_cases end the model's turn (return_direct, TODO item 19): a stand-in model calls
     # get_deadlines alone, then would reply; the agent stops after the tool, so the reply never comes
