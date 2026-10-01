@@ -96,6 +96,15 @@ the seven.
     stopped in code from 2026-09-30; the order of the steps is still the model's (rule 6).
 21. Item 12 again (m-027): the letter's printed date (2026-09-22) suggested as the date it was received; the
     tenant typed 2026-09-25 on the sheet, logged as corrected.
+22. Second run of the harness setup (2026-09-30, nemotron, m-029 to m-032): 6 slips in 6 replies, against 3
+    in 6 the first time, so one run per scenario cannot measure a prompt change. Repeats: item 16 twice
+    ("The statute does not answer whether the notice was timely given the termination date"); item 19's
+    quotes without a source (m-029, m-031), the objection nudge (m-031), and the repeated deadline line in
+    all three runs; item 21, this time shown as "Fact: claim_notice_date: 2026-09-22" before the sheet (rule
+    4). New: the model asked the tenant to choose which date is "the termination of the rental agreement",
+    the playbook's open question `termination_date_meaning` (rule 5 says only that the statute does not
+    settle it). It also labelled its lines "Quote:", "Fact:", "Statement:", "Question:", reading rule 1's
+    parts literally. The duplicate-draft stop worked live (m-030: one draft event).
 
 ## Open questions
 

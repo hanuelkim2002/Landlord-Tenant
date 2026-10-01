@@ -5,6 +5,8 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- Second run of the harness setup logged in TODO.md (item 22; m-029 to m-032): 1.00 slips per reply against
+  0.50 in the first run, 0.75 over both. The duplicate-draft stop worked live. No code changed.
 - `draft_letter` does not draft the same letter twice in one session: if this session already drafted the
   file and the new text is identical, nothing is written or logged and the tool says so (the chat loop
   prints that line). Before, the repair run (m-026) wrote the same letter twice with two `draft` events,
