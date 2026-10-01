@@ -5,6 +5,9 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Live check of the notice's stated date (item 10's fix): `nonpayment_3day` (`t-test/m-001`) printed
+  "beside it, from your record: notice stated payment date 2026-09-21" under the 2026-09-24 deadline; the
+  model replied only "The deadlines appear above." (noted under TODO item 19). No code changed.
 - The printed 83.56(3) deadline now shows the date the notice itself states beside it (TODO item 10). New
   optional clock field `shown_with` (a date element; `load_playbook` refuses anything else):
   `compute_deadlines` adds it to the row once that fact is confirmed, and `render_deadlines` prints

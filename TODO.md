@@ -43,8 +43,9 @@ reused, so older references (smoke check names, the changelog) still point to th
     corrected. (Item 21 was the same slip.)
 19. The model repeats a line of the printed deadlines, or says "The deadlines appear above." when the line
     above says there are none (rule 3). Harmless. In the trial the current rules repeated a line in 4 of 18
-    replies; after rule 3 named the echo, none of the 6 reruns did, but those stories have no dates
-    (entry, rent), so the stories with dates were not rerun.
+    replies; after rule 3 named the echo, none of the 6 reruns did (entry, rent: no dates), and one live
+    nonpayment run on 2026-10-01 (a dated story, `t-test/m-001`) replied only "The deadlines appear above."
+    One dated run is not enough to close this.
 
 ## Open questions
 
