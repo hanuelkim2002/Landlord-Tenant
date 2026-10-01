@@ -336,8 +336,11 @@ with any concurrence, dissent, and footnotes, the star pages (`*1209`) that give
 Citations" (parallel cites, e.g. Hankins v. Smith is `103_Fla_892.txt`, also 138 So. 494). Left out:
 Westlaw's KeyCite flag, synopsis and holdings, West headnotes and their `[n]` markers in the opinion (only
 numbers up to the opinion's headnote count; a bracketed number beyond it is the court's own), the copyright
-line, and the negative-treatment table. 81 files: 50 So. 3d 503 (the 2010 forms decision) is not built,
-because the print marks its added and deleted words by formatting, which plain text loses. Read by
+line, and the negative-treatment table. 82 files: 81 from the print, and `50_So3d_503.txt` (the 2010
+forms decision) from a Southern Reporter PDF the author supplied, by `dev/build_case_pdf.py`, because the
+Westlaw print marks that opinion's added and deleted words by formatting. Only the opinion is stored (pages
+503 to 504, up to "APPENDIX"): the appendix of forms marks its changes by underlining and strikethrough,
+which the PDF's text loses too (it reads "Home andor Duplex"). Read by
 `wiki.py` (quotes on wiki pages are checked against it) and the smoke checks; nothing in the chat reads it
 yet.
 
@@ -355,7 +358,7 @@ that names it with its issue as a question, "## How they relate"), `index.md` (b
 pages by section tag, topics with their cases, every case with its verification), and `log.md` (one entry
 per ingest or change, newest last). Quotes are written `"words" (at 1210)` for the page's own opinion,
 `"words" ([[Plakhov v. Serova]] at 1223)` for another case's, `"words" (Fla. Stat. 83.49(3)(a))` for the
-statute. As of 2026-10-01: 81 case pages (every opinion in `cases/`; 28 untagged, each with a
+statute. As of 2026-10-01: 82 case pages (every opinion in `cases/`; 29 untagged, each with a
 `scope_note`) and 40 topic pages; none verified yet. A decision approving forms has "What did the court approve?" and "Forms"
 in place of issues; a statement outside the issues decided goes under "Also said". The folder opens in Obsidian as a vault; `.obsidian/` is gitignored.
 
@@ -503,6 +506,12 @@ Offline checks (no model call, no key needed):
   Firms" on, minus the headnote markers; `file_name` names the file from the cite. An opinion whose print
   carries Westlaw's note "Additions are indicated by ... and deletions by ..." is skipped and listed.
   Rerunning on the same print writes the same files.
+- `python dev/build_case_pdf.py <key> <pdf>`: one opinion from a reporter PDF, for an opinion listed in its
+  `OPINIONS` (where it stops, where the attorneys and the opinion start). Drops the running heads, marks
+  each new reporter page with a star page, removes hyphens between lowercase letters (in the listed
+  opinions, each is a line-break hyphen; real compounds there use dashes), and adds the labels the
+  Westlaw-built files carry, so the case-file smoke checks hold for it. Spaces the PDF loses where lines
+  join ("outlegal") stay lost; quote checks ignore spaces.
 
 - `python smoke.py`: needs the saved test matter `matters/t-test/test-001/` with its lease profile. Opens it
   with `load_matter` and prints `list_matters()`, then runs the playbook checks (one named check, "every

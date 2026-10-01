@@ -52,7 +52,7 @@ Reasoning:
 - Quotes the contemporaneous instrument rule from Citicorp Real Estate, Inc. v. Ameripalms 6B GP, Inc., 633 So. 2d 47 (not in `cases/`): "The law is well established that two or more documents executed by the same parties, at or near the same time, and concerning the same transaction or subject matter are generally construed together as a single contract." (at 1124)
 - Cites for the name of the rule Popwell v. Abel, 226 So. 2d 418 (not in `cases/`): "This rule bears the moniker “contemporaneous instrument rule,” Popwell v. Abel, 226 So.2d 418, 421 (Fla. 4th DCA 1969)" (at 1124)
 - Quotes, on reading a lease with related agreements as one document Mnemonics, Inc. v. Max Davis Associates, Inc., 808 So. 2d 1278 (not in `cases/`): "In reviewing the ... transaction, we view the lease agreement, maintenance agreement, and equipment acquisition agreement as one integrated document because they were executed by the same parties at or about the same time and concern the same transaction or subject matter." (at 1125)
-- Cites, in a footnote, for the form lease the parties used In re Revisions to Simplified Forms Pursuant to Rule 10-2.1(A) of Rules Regulating The Florida Bar, 50 So. 3d 503 (not in `cases/`): "See In Re Revisions to Simplified Forms Pursuant to Rule 10–2.1(A) of Rules Regulating The Fla. Bar, 50 So.3d 503, 503–11, 523–24 (Fla.2010)" (at 1123)
+- Cites, in a footnote, for the form lease the parties used, [[In re Revisions to Simplified Forms (2010)]]: "See In Re Revisions to Simplified Forms Pursuant to Rule 10–2.1(A) of Rules Regulating The Fla. Bar, 50 So.3d 503, 503–11, 523–24 (Fla.2010)" (at 1123)
 
 ## Disposition
 

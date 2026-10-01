@@ -72,3 +72,10 @@ What was added or changed in the wiki, newest last. Entries are added, never rew
   83.48, and Solomon (83.42, 83.43) under Landlord's maintenance duties under 83.51; Crocker (51.011
   summary procedure) has no tag though today's 83.59 points to that procedure.
 - `python wiki.py check`: 121 pages, 0 problems, 0 warnings. No page verified yet.
+
+## 2026-10-01 the 2010 forms decision
+
+- In re Revisions to Simplified Forms (2010) (50 So. 3d 503), from a Southern Reporter PDF: the opinion
+  only; the appendix of forms is not stored (its changes are marked by formatting the text loses). Linked
+  with Wilson v. Terwillinger, which cites it, and with the 1991 forms decision. Every opinion in `cases/`
+  now has a page: 82.

@@ -39,9 +39,7 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     pages untagged, with scope notes). Next: the author reads each page against its opinion and verifies it
     (`python wiki.py verify`); only verified pages go further. While verifying, check each case's status in
     Westlaw (the print flags 27 opinions; one red-striped, Charlemagne v. Francis), and look at the questions
-    the ingest left in `wiki/log.md` (2026-10-01, the remaining 65). 50 So. 3d 503 (the 2010 forms decision)
-    is not in `cases/`: the Westlaw print marks its added and deleted words by formatting, which plain text
-    loses; it needs a source that keeps the marks (the court's own opinion) before it can be filed.
+    the ingest left in `wiki/log.md` (2026-10-01, the remaining 65).
 25. Verified wiki pages for the active playbooks' sections loaded into the prompt, chosen in code by their
     section tags, never by the model; only the court's quoted words go to the tenant, with court, year, and
     the statute version read; one rule for the neutral framing ("This tool does not decide whether it

@@ -40,7 +40,7 @@ student, not admitted.
 - `calendars/` is read-only too: each court holiday comes from the circuit's official memorandum (PDF kept in
   `calendars/sources/`) and is checked against it by `smoke.py`. Never add or change a holiday from memory.
 - `cases/` is read-only too: one file per opinion, the court's text only, built by `dev/build_cases.py` from
-  the author's Westlaw print with Westlaw's own material (headnotes, synopsis, KeyCite, negative treatment)
+  the author's Westlaw print (or by `dev/build_case_pdf.py` from a reporter PDF, for an opinion listed there) with Westlaw's own material (headnotes, synopsis, KeyCite, negative treatment)
   left out, and checked by `smoke.py`. Never edit a case file by hand, and never write a case's words, cite,
   or holding from memory.
 - `wiki/` pages are written from `cases/` and `statutes/` only, following `wiki/SCHEMA.md`: the court's and the

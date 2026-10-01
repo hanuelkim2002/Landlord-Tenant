@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- 50 So. 3d 503 (In re Revisions to Simplified Forms, Fla. 2010) added to `cases/` and the wiki, from a
+  Southern Reporter PDF the author supplied. Was: not in `cases/`, because the Westlaw print marks its added
+  and deleted words by formatting. The PDF shows the marks on the page (struck and underlined words) but
+  its text layer merges them too ("Home andor Duplex"), so only the opinion (503 to 504, up to the
+  appendix) is stored; the appendix of forms is not. New `dev/build_case_pdf.py` (one listed opinion from a
+  reporter PDF: running heads dropped, star pages added, line-break hyphens joined, the Westlaw files'
+  labels added). Wiki: a forms-decision page (untagged, with a scope note), linked both ways to Wilson v.
+  Terwillinger (which cites it) and to the 1991 forms decision; the forms topic quotes the 2010 court's
+  "We express no opinion as to whether the approved lease forms comport with current law." TODO item 24's
+  note on 50 So. 3d 503 removed. Smoke all checks OK; wiki check 122 pages, 0 problems.
 - Case wiki: the remaining 65 opinions ingested, so every opinion in `cases/` has a page (81 case pages,
   40 topics; TODO item 24). Run as two workflows, with the author's go-ahead: nine agents read the
   opinions in full and wrote JSON drafts, each checked by code before hand-back (every quote word for word

@@ -134,7 +134,7 @@ Cases: [[Badaraco v. Suncoast Towers V Associates]], [[Grant v. GHG014, LLC]]
 
 Topics: [[Appeals in eviction cases]], [[Interpreting the lease]], [[Landlord and tenant law in criminal cases]], [[Landlord's notice of a dangerous condition]], [[Pleading a claim for fees]], [[Points not raised in the trial court]], [[Proximate cause of injuries on the premises]], [[Punitive damages against a landlord]], [[Tenants suing as a class]]
 
-Cases (never loaded for a tenant): [[Anglia Jacs & Co. v. Dubin]], [[Berwick Corp. v. Kleinginna Investment Corp.]], [[Bodden v. Carbonell]], [[Caso v. Stanley Nelson, Inc]], [[Clark v. Hiett]], [[Clemente v. Horne]], [[Colonial Promenade v. Juhas]], [[Crocker v. Diland Corporation]], [[Cupeiro v. Baron]], [[Hankins v. Smith]], [[Jacobs v. Westgate]], [[John's Pass Seafood Co. v. Weber]], [[Kaplan v. McCabe]], [[Kendall East Estates, Inc. v. Banks]], [[Lefemine v. Baron]], [[Lockamy v. Byrne]], [[Lucite Center, Inc. v. Mercede]], [[Malt v. R.J. Mueller Enterprises]], [[Mann v. Hillsborough County Sheriff's Office]], [[Moritz v. Hoyt Enterprises]], [[Moskos v. Hand]], [[Philpot v. Bouchelle]], [[Prosperi v. Code]], [[Purcell v. Williams]], [[Ralston, Inc. v. Miller]], [[Stegeman v. Burger Chef Systems]], [[Torres v. Garcia]], [[Walsh v. CAS, Inc]], [[Wolf v. State]], [[Zhang v. D.B.R. Asset Management]]
+Cases (never loaded for a tenant): [[Anglia Jacs & Co. v. Dubin]], [[Berwick Corp. v. Kleinginna Investment Corp.]], [[Bodden v. Carbonell]], [[Caso v. Stanley Nelson, Inc]], [[Clark v. Hiett]], [[Clemente v. Horne]], [[Colonial Promenade v. Juhas]], [[Crocker v. Diland Corporation]], [[Cupeiro v. Baron]], [[Hankins v. Smith]], [[In re Revisions to Simplified Forms (2010)]], [[Jacobs v. Westgate]], [[John's Pass Seafood Co. v. Weber]], [[Kaplan v. McCabe]], [[Kendall East Estates, Inc. v. Banks]], [[Lefemine v. Baron]], [[Lockamy v. Byrne]], [[Lucite Center, Inc. v. Mercede]], [[Malt v. R.J. Mueller Enterprises]], [[Mann v. Hillsborough County Sheriff's Office]], [[Moritz v. Hoyt Enterprises]], [[Moskos v. Hand]], [[Philpot v. Bouchelle]], [[Prosperi v. Code]], [[Purcell v. Williams]], [[Ralston, Inc. v. Miller]], [[Stegeman v. Burger Chef Systems]], [[Torres v. Garcia]], [[Walsh v. CAS, Inc]], [[Wolf v. State]], [[Zhang v. D.B.R. Asset Management]]
 
 ## Topics
 
@@ -144,7 +144,7 @@ Cases (never loaded for a tenant): [[Anglia Jacs & Co. v. Dubin]], [[Berwick Cor
 - [[Applying an amended statute]]: [[Department of Business Regulation v. Stein]], [[Fuentes v. Owen]], [[Xanadu of Cocoa Beach, Inc. v. Lenz]]
 - [[Conditions caused by the tenant under 83.51(4)]]: [[Charlemagne v. Francis]]
 - [[Constructive eviction]]: [[Berwick Corp. v. Kleinginna Investment Corp.]], [[Caso v. Stanley Nelson, Inc]], [[Hankins v. Smith]], [[Kaplan v. McCabe]], [[Lakeway Management Co. of Florida v. Stolowilsky]], [[Plakhov v. Serova]], [[Ralston, Inc. v. Miller]], [[Walsh v. CAS, Inc]]
-- [[Court-approved landlord and tenant forms]]: [[Florida Bar re Approval of Forms (1991)]], [[Wilson v. Terwillinger]]
+- [[Court-approved landlord and tenant forms]]: [[Florida Bar re Approval of Forms (1991)]], [[In re Revisions to Simplified Forms (2010)]], [[Wilson v. Terwillinger]]
 - [[Determining the prevailing party]]: [[Anglia Jacs & Co. v. Dubin]], [[Kendall East Estates, Inc. v. Banks]], [[Lucite Center, Inc. v. Mercede]], [[Moritz v. Hoyt Enterprises]], [[Prosperi v. Code]], [[Zhang v. D.B.R. Asset Management]]
 - [[Ending a tenancy]]: [[Morse v. State]], [[Wolf v. State]]
 - [[Eviction procedure]]: [[Crocker v. Diland Corporation]], [[Malt v. R.J. Mueller Enterprises]], [[Noimbie v. Harvey]]
@@ -213,6 +213,7 @@ Cases (never loaded for a tenant): [[Anglia Jacs & Co. v. Dubin]], [[Berwick Cor
 | [[Guthartz v. Lewis]] | 408 So. 2d 600 | Fla. 3d DCA | 1981-12-08 | 83.48, 83.49 | no |
 | [[Hankins v. Smith]] | 103 Fla. 892 | Fla. | 1931-12-15 |  | no |
 | [[Haynes v. Lloyd]] | 533 So. 2d 944 | Fla. 5th DCA | 1988-11-23 | 83.51 | no |
+| [[In re Revisions to Simplified Forms (2010)]] | 50 So. 3d 503 | Fla. | 2010-04-15 |  | no |
 | [[Investment & Income Realty, Inc. v. Bentley]] | 480 So. 2d 219 | Fla. 5th DCA | 1985-12-26 | 83.56 | no |
 | [[Jacobs v. Westgate]] | 766 So. 2d 1175 | Fla. 3d DCA | 2000-09-13 |  | no |
 | [[John's Pass Seafood Co. v. Weber]] | 369 So. 2d 616 | Fla. 2d DCA | 1979-03-02 |  | no |

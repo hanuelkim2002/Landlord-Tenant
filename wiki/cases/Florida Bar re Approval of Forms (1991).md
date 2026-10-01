@@ -40,8 +40,8 @@ The forms that bear on ch. 83, with the source line each prints:
 
 ## Related
 
-- The 2010 decision revising these forms, In re Revisions to Simplified Forms, 50 So. 3d 503 (Fla. 2010),
-  is not in `cases/`: its print marks the changes by formatting that plain text loses.
+- [[In re Revisions to Simplified Forms (2010)]] later amended residential lease forms under a rule it
+  numbers 10–2.1(a); it does not cite this decision. Its appended forms are not stored.
 
 ## Disposition
 
