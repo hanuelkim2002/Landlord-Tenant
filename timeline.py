@@ -114,6 +114,9 @@ def render_timeline(issue=None, full=False):
                          f"sessions/{ev['session']}.jsonl"))            # the transcript of this session
         elif full and ev["kind"] == "session_ended":
             rows.append((day, f"session {ev['session'][:8]} ended", "tool", ""))
+        elif full and ev["kind"] == "reply_empty":
+            rows.append((day, "the model's reply was empty; asked again" + ("" if ev["recovered"] else ", still empty"),
+                         "tool, agent.retry_empty", ""))
         elif full and ev["kind"] == "cite_flagged":
             rows.append((day, f"a reply's cite flagged: {ev['cite']}", "tool, citations.check_cites", ""))
         elif full and ev["kind"] == "quote_flagged":

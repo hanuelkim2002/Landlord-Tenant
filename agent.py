@@ -203,6 +203,49 @@ def check_reply(text, messages):
         print()
 
 
+def show_turn(new, messages):
+    """Transcribe a turn's new messages and print what the tenant sees: a drafted letter as is, the turn's last
+    get_deadlines result through render_deadlines (printed by code, before the reply), and each reply with
+    text, checked by check_reply. Returns True if anything was printed."""
+    for m in new:
+        record.append_transcript(transcript_entry(m))
+    last_deadlines = max((i for i, m in enumerate(new) if m.type == "tool" and m.name == "get_deadlines"),
+                         default=None)
+    printed = False
+    for i, m in enumerate(new):
+        if m.type == "tool" and m.name == "draft_letter":
+            print(m.content, "\n")
+            printed = True
+        elif i == last_deadlines:
+            print(render_deadlines(m.content), "\n")
+            printed = True
+        elif m.type == "ai" and m.content.strip():
+            print(m.content, "\n")
+            check_reply(m.content, messages)             # its cites and quotes, against what it was given
+            printed = True
+    return printed
+
+
+EMPTY_REPLY = ("[Program note: your last turn ended without a reply to the tenant. Reply to the tenant's last "
+               "message now.]")
+NO_REPLY = "[Check: no reply came back from the model. Please ask again.]"
+
+
+def retry_empty(agent, config, result):
+    """The model's turn showed the tenant nothing (seen once, m-018). Ask it once more with a program note, and
+    if that turn shows nothing either, tell the tenant. The model's private reasoning is never shown instead.
+    Logs a reply_empty event. Returns the new result and the messages the second turn added."""
+    record.append_transcript({"role": "program", "text": EMPTY_REPLY})
+    again = agent.invoke({"messages": [HumanMessage(content=EMPTY_REPLY)]}, config=config)
+    more = again["messages"][len(result["messages"]) + 1:]
+    recovered = show_turn(more, again["messages"])
+    if not recovered:
+        print(NO_REPLY, "\n")
+        record.append_transcript({"role": "check", "text": NO_REPLY})
+    append_event("reply_empty", recovered=recovered)
+    return again, more
+
+
 def chat(agent):
     # The chat thread takes the session's id, so the conversation and the record's events share one id.
     config = {"configurable": {"thread_id": record.session or str(uuid7())}}
@@ -249,19 +292,9 @@ def chat(agent):
         result = agent.invoke({"messages": [HumanMessage(content=note + q)]}, config=config)
         note = ""
         new = result["messages"][seen + 1:]              # everything new this turn, minus the tenant's message
-        for m in new:
-            record.append_transcript(transcript_entry(m))
-        # The deadlines are printed by code, from the turn's last get_deadlines result, before the reply.
-        last_deadlines = max((i for i, m in enumerate(new) if m.type == "tool" and m.name == "get_deadlines"),
-                             default=None)
-        for i, m in enumerate(new):                      # print the replies, a letter, and the deadlines
-            if m.type == "tool" and m.name == "draft_letter":
-                print(m.content, "\n")
-            elif i == last_deadlines:
-                print(render_deadlines(m.content), "\n")
-            elif m.type == "ai" and m.content:
-                print(m.content, "\n")
-                check_reply(m.content, result["messages"])   # its cites and quotes, against what it was given
+        if not show_turn(new, result["messages"]):       # nothing for the tenant: ask the model once more
+            result, more = retry_empty(agent, config, result)
+            new = new + more
         seen = len(result["messages"])
         # The model suggested facts: the tenant confirms them on the sheet now, with code, not with the model.
         # The model learns the result with the tenant's next message, since the sheet runs between its turns.

@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- An empty reply is asked for again (`agent.show_turn`, `retry_empty`, `EMPTY_REPLY`, `NO_REPLY`; new event
+  `reply_empty`). When a turn shows the tenant nothing (no reply text, letter, or deadlines; seen in m-018),
+  the program sends the model a note asking it to reply and shows the second turn; if that is empty too, it
+  prints "[Check: no reply came back from the model. Please ask again.]". Before, the tenant saw a blank
+  prompt. The printing part of `chat` moved into `show_turn`, unchanged except that a reply of only blank
+  lines now counts as empty. Planned as "show the model's reasoning_content instead"; not done that way,
+  since LangChain drops that field and it is the model's unchecked working, which would bypass rule 1.
+  Two smoke checks with a stand-in agent: a recovered reply, and a second empty one.
 - `propose_facts` takes a `said` shortened with "...": each piece must be the tenant's words (now
   `citations.is_in`, the quote check's comparison; was a whole-string substring after `squash`). In the
   gpt-oss-120b claim run (m-023) the model wrote "I just got a letter from the landlord..." and the

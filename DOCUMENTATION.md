@@ -114,8 +114,13 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   model call), `transcript_entry` (one thread message as a transcript line), and `chat` (the terminal loop; its
   thread id is the session id when one is open). Each turn, `chat` writes the tenant's message to the
   transcript before the model runs (so `propose_facts` can check the tenant's words), then every new message
-  of the turn. It prints the model's replies, a `draft_letter` result as is, and the turn's last
-  `get_deadlines` result through `render_deadlines`; other tool results are not shown. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
+  of the turn. `show_turn(new, messages)` transcribes the turn and prints the model's replies, a
+  `draft_letter` result as is, and the turn's last `get_deadlines` result through `render_deadlines`; other
+  tool results are not shown. It returns whether anything was printed. When nothing was (the reply was empty
+  or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and shows that
+  second turn; if it is empty too, it prints `NO_REPLY` ("[Check: no reply came back from the model. Please
+  ask again.]"). Either way it logs `reply_empty`. The model's `reasoning_content` is never shown in its
+  place: LangChain drops it, and it is the model's unchecked working, not a reply. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
   tenant confirmed there is sent to the model as a "[Program note: ...]" line at the front of the tenant's
   next message, and logged as a `program` transcript line. `timeline` commands go to the transcript too.
   After printing each reply, `chat` calls `check_reply(text, messages)` with the thread so far. It runs
@@ -224,7 +229,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    issue by `timeline <issue>`),
    and events (see Files on disk). Sorted by date only; rows on the same day keep the order they were
    added (confirmed dates and deadlines first, then events in log order). `issue` filters deadlines and
-   issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`, `cite_flagged`, `quote_flagged`,
+   issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`, `cite_flagged`, `quote_flagged`, `reply_empty`,
    `deadlines_computed`, the issue events, `session_started`, and `session_ended` events.
 7. Letter assembly (`draft_letter`, then `build_letter`). Checks the issue and posture, checks each quote
    with `quote_is_real` (substring of a present lease clause quote or any stored statute section), then
@@ -256,6 +261,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `fetch`: `section` (from `get_statute_section`) or `search` (from `search_statute`).
   - `cite_flagged`: `cite` (e.g. "83.64"), `problem` (not a stored section, not shown or fetched in this
     chat, or no such subsection). Written by `agent.check_reply` after a reply. `timeline full` only.
+  - `reply_empty`: `recovered` (true if the model's second turn showed the tenant something). Written by
+    `agent.retry_empty`. `timeline full` only.
   - `quote_flagged`: `quote` (the quoted words), `cite` (the cite next to it, or ""), `problem` (e.g. "is in
     83.49(3)(a), not 83.49(3)(b)"). Written by `agent.check_reply`. `timeline full` only.
   - `deadlines_computed`: `issue`, `clocks` (ids of clocks that produced a date). One per active playbook
@@ -286,8 +293,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   `command` (`text`: a `timeline` command, handled without the model), `sheet` (`id`, `question`,
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_added`
   when the answer brought in a related issue), or
-  `program` (`text`: the note sent to the model ahead of the tenant's message after a sheet), or `check`
-  (`text`: a "[Check: ...]" caution about a cite or a quote, printed under a reply by `check_reply`). Only the chat is transcribed; the
+  `program` (`text`: a note sent to the model: ahead of the tenant's message after a sheet, or
+  `EMPTY_REPLY` after an empty reply), or `check` (`text`: a "[Check: ...]" line printed to the tenant: a
+  caution about a cite or a quote from `check_reply`, or `NO_REPLY` from `retry_empty`). Only the chat is transcribed; the
   intake or resume calls before it are not.
 
 Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `statutes/83.*.txt` and `.html` (the

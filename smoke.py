@@ -12,7 +12,7 @@ import re
 from datetime import date
 
 import PyPDF2
-from langchain.messages import AIMessage
+from langchain.messages import AIMessage, HumanMessage
 
 import record
 from calendars import court_calendars
@@ -25,7 +25,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
 from timeline import render_deadlines, render_timeline
-from agent import check_reply, given_text, sections_shown, system_prompt
+from agent import check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
 from tools import build_letter, draft_letter, get_deadlines, get_statute_section, propose_facts
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
@@ -426,6 +426,24 @@ try:
     check("a later classification suggests a rejected issue again",
           [p["issue"] for p in record.matter["proposed_issues"]] == ["deposit_claim_received"]
           and "deposit_claim_received" not in record.matter["rejected_issues"])
+
+    # an empty reply (m-018): the model is asked once more; a stand-in agent plays the model's second turn
+    class Again:
+        def __init__(self, reply):
+            self.reply = reply
+        def invoke(self, inputs, config):
+            return {"messages": first["messages"] + inputs["messages"] + [AIMessage(content=self.reply)]}
+    first = {"messages": [HumanMessage(content="What are my deadlines?"), AIMessage(content="\n")]}
+    with contextlib.redirect_stdout(io.StringIO()) as printed:
+        shown_first = show_turn(first["messages"][1:], first["messages"])
+        retry_empty(Again("The deadlines appear above."), {}, first)
+    check("a turn with only blank text shows nothing, and the model's second reply is shown", not shown_first
+          and "The deadlines appear above." in printed.getvalue() and read_events()[-1]["kind"] == "reply_empty"
+          and read_events()[-1]["recovered"] is True)
+    with contextlib.redirect_stdout(io.StringIO()) as printed:
+        retry_empty(Again(""), {}, first)
+    check("a second empty reply tells the tenant and is logged", "[Check: no reply came back" in printed.getvalue()
+          and read_events()[-1]["recovered"] is False)
     end_session()
 finally:
     remove_scratch("t-smoke-related")
