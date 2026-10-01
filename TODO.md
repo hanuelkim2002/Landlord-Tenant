@@ -106,15 +106,16 @@ to 22 use the seven, whose rules 1 to 7 cover the same ground as the current rul
     the playbook's open question `termination_date_meaning` (rule 5 says only that the statute does not
     settle it). It also labelled its lines "Quote:", "Fact:", "Statement:", "Question:", reading rule 1's
     parts literally. The duplicate-draft stop worked live (m-030: one draft event).
-23. Left with the current rules (version F) in the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`):
-    "How will you send it?" asked when no letter was requested (month-to-month story, 2 of 3 runs), copied
-    from rule 1's "Instead:" line about the notices clause (fixed 2026-10-01: the line now applies only to a
-    requested letter; 0 of 3 reruns asked it); "The lease and
-    statute text I have do not answer whether the entry was legal." (rule 2's fallback sentence with the
-    legal question attached, rule 1); a request for several sheet facts in the chat (rent story, rule 4);
-    three statute quotes cited to the wrong subsection (83.64(1) text as 83.64(4) twice, 83.53(2) text as
-    83.53(1)), caught by `check_quoted`; and the printed deadlines echoed as `{ "deadlines": [] }` when
-    there are none (rule 3).
+23. Left with the current rules (version F) in the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), all
+    fixed 2026-10-01 and checked on reruns: "How will you send it?" with no letter requested (rule 1's
+    notices-clause line now applies only to a requested letter; 0 of 3 month-to-month reruns); "The lease and
+    statute text I have do not answer whether the entry was legal." (rule 1 now has a pair for legality
+    questions: quote, then "This tool does not decide that."; rule 2's fallback is used exactly); sheet facts
+    asked in the chat (rule 4 has the rent example); statute quotes cited to the wrong subsection (rule 2 has
+    the 83.64 example; `check_quoted` still catches any); `{ "deadlines": [] }` echoed (the program now
+    prints "No deadlines: ..." and rule 3 names the echo). Six reruns of the entry and rent stories showed
+    none of these. Still seen there, harmless: "The deadlines appear above." when the line above says there
+    are none.
 
 ## Open questions
 

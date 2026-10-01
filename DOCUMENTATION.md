@@ -352,7 +352,7 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`: version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 914 words with one later fix (rule 1's notices-clause line applies only to a requested letter). A role
+1. `RULES`: version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 1,028 words with later fixes for TODO item 23: rule 1's notices-clause line applies only to a requested letter; a pair for legality questions (quote, then "This tool does not decide that."); rule 2's fallback sentence used exactly, and cite the subsection the words sit in; rule 3 names the echoed empty result; rule 4 adds an example of asking for sheet facts. A role
    paragraph (organize lease, statute, and record side by side; not a lawyer; never advise, send, or work
    out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
    `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no field names), then eight numbered rules,

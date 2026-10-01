@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Rules: the rest of TODO item 23. Rule 1 gains a pair for questions about whether something was legal,
+  allowed, timely, or valid ("Not:" the fallback sentence with "whether the entry was legal" attached;
+  "Instead:" quote the text on the point with its source, then only "This tool does not decide that.").
+  Rule 2: the fallback "The lease and statute text I have do not answer that." is written exactly, with
+  nothing after "that" (was "Add nothing."), and a pair on citing the subsection the words sit in (83.64(1)
+  words were cited as 83.64(4)). Rule 3 names the echo `{ "deadlines": [] }`. Rule 4 adds "Please tell me:
+  your monthly rent, the new rent, and the date you got the notice." as a "Not:" and says to read facts in
+  ELEMENT STATUS. Rules now 1,028 words. Reruns of `entry_unannounced` and `rent_increase`, three each: all
+  expected results; every legality question answered with sourced quotes and "This tool does not decide
+  that." (9 of 9); no sheet facts asked in the chat; no cautions; no echoed deadlines. Offline checks OK.
 - `render_deadlines` says "No deadlines: none of the deadlines this tool computes applies to your confirmed
   facts." when there are none (an issue with no clocks, such as landlord_entered_unannounced and
   rent_increased, or clocks whose conditions do not apply). Was: the heading "Deadlines, computed by the
