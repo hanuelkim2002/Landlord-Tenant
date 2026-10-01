@@ -27,7 +27,8 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 ## Model behavior (later)
 
 Slips seen in live runs. Logged, not fixed yet: rules and prompts get tuned after the structure is right,
-and some may go away with a more capable model.
+and some may go away with a more capable model. Rule numbers below are the old fifteen rules (until
+2026-09-30); DOCUMENTATION.md, The system prompt, maps them to the current seven.
 
 4. The model stated the remit clock's condition backwards: "Landlord's deadline to remit balance if you
     object." 83.49(3)(b) begins "Unless the tenant objects." A rule 13 breach close to the playbook's own

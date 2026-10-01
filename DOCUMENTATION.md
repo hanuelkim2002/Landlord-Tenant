@@ -320,7 +320,7 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   this tool's output directly.
 - `add_artifact(path, note)`: copies a file into `artifacts/` under its hash. Writes an `artifact` event.
 - `add_communication(sent_on, sender, recipient, channel, text)`: rejects a `sent_on` that is not
-  YYYY-MM-DD. Writes a `communication` event. Also used for a letter the tenant reports sending (rule 15).
+  YYYY-MM-DD. Writes a `communication` event. Also used for a letter the tenant reports sending (rule 7).
 
 ## The system prompt
 
@@ -329,15 +329,21 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, fifteen numbered rules. In short: 1 quote only from the profile or stored statute; 2 never
-   compute dates, use `get_deadlines`; 3 facts are confirmed on the sheet, not in chat: propose with `propose_facts`, read ELEMENT
-   STATUS (current as of each reply), `get_deadlines` gives dates for ready issues and names the waiting ones;
-   4 look up the statute when the preloaded text does not answer, otherwise say so; 5 open questions are
-   unsettled; 6 draft only when asked, never send; 7 never say which of lease or statute controls; 8 fetch a
-   section before mentioning it; 9 the model cannot confirm a fact and never says one is recorded unless ELEMENT STATUS shows it; 10 ask whose notice is meant;
-   11 the letter questions (issue, ask, reply days, delivery method, the sentence relied on, posture), then
-   `draft_letter` and one sentence; 12 never write a letter yourself; 13 never apply a provision to the
-   facts; 14 record pasted messages with `add_communication`; 15 record a sent letter the same way.
+1. `RULES`, a two-line role (not a lawyer, no advice or recommendations, never sends) and seven numbered
+   rules, most important first. In short: 1 what a reply is made of (quotes with their source, facts from
+   ELEMENT STATUS and lines from tool results, "the statute does not answer or settle this", questions),
+   never what a provision means for the tenant, the conflict line only when a lease quote and a statute
+   quote on the same point appear together, no letter offers or next steps unless asked; 2 quote only text
+   given (profile, stored statute, `get_statute_section`, the tenant's words), never a provision in the
+   model's own words, fetch a section before mentioning it; 3 every date must come from ELEMENT STATUS, a
+   lease quote, or a tool result, never computed or compared, and `get_deadlines` reported in full; 4 only
+   the tenant confirms facts, on the sheet: propose with `propose_facts`, call a fact confirmed only when
+   ELEMENT STATUS shows it as known, otherwise "you said"; 5 open questions are unsettled; 6 letters only
+   from `draft_letter` and only when asked: the questions (issue, ask, reply days, delivery method with the
+   notices clause quoted but no method chosen), the playbook's posture lines copied word for word, then one
+   sentence; 7 record pasted messages and sent letters with `add_communication`. Old rules 1 to 15 (until
+   2026-09-30) map as: 1, 4, 8 to 2; 2 to 3; 3, 9 to 4; 5 to 5; 6, 11, 12 to 6; 7, 13 to 1; 14, 15 to 7;
+   10 (ask whose notice is meant) dropped.
 2. `LEASE PROFILE`: the whole profile as JSON.
 3. `PLAYBOOKS`: for each active playbook, YAML of its `issue`, its `guidance`, and its
    `spec.open_questions` (which rule 5 refers to). The rest of `spec` never enters the context.

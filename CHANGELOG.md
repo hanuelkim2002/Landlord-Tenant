@@ -5,6 +5,18 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- RULES rewritten: fifteen rules condensed into seven, most important first, replacing the old list in
+  which each topic was split across two or three rules and the most-broken one (13, never apply a provision)
+  came near the end as eight prohibitions. New 1 says what a reply is made of (quotes with their source,
+  record entries, "the statute does not answer or settle this", questions) and keeps one sentence of
+  prohibitions; 2 sources (old 1, 4, 8); 3 dates (old 2 plus the get_deadlines part of 3); 4 facts (old 3,
+  9); 5 open questions; 6 letters (old 6, 11, 12); 7 messages (old 14, 15). Old 10 (ask whose notice is
+  meant) dropped: the classifier fix and the sheet's questions cover it. Behavior changes, approved by the
+  author: no letter offers or next steps unless asked; posture lines copied word for word from the playbook
+  (paraphrasing them is where TODO items 6 and 11 came from); the notices clause quoted without choosing a
+  delivery method; every date must come from the record; no provision in the model's own words; "you said"
+  for anything unconfirmed. 620 words, was 676. The mapping from old numbers is in DOCUMENTATION.md, and
+  TODO.md's mistake log keeps the old numbers. Offline checks OK; live scenarios follow.
 - Two model slips from the live claim run (`t-test/m-015`) logged in TODO.md: item 9 seen again (unconfirmed
   dates listed as confirmed before the sheet), and new item 13 (a lease end date, 2026-09-30, that is
   neither the lease's nor the tenant's). No code changed. The run itself gave the expected deadlines
