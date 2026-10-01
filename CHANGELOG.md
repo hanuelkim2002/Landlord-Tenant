@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Rules: four "Not:" / "Instead:" pairs from the eval baseline's slips (16 new scenarios, run on the code
+  before today's changes). Rule 3: a lay question about time ("How long do I have to tell them I disagree?",
+  "When do I have to tell them?") goes to `get_deadlines`; was answered with statute quotes alone in 3 of
+  the 9 playbook stories. Rule 8: asked about courts, the model calls the topic on the same notice, deposit,
+  repair, entry, rent, fee, or lease term even if it does not name the exact point; was "This tool has no
+  cases on that." to "a notice that says cash only" with the three-day notice topic offered (2 of 3 runs).
+  Rule 6: the tenant's words are the ask (was: "What exactly do you want the landlord to do?" after "asking
+  for my $900 back"), and the posture lines are never retold without quote marks. Format line: no issue ids
+  like deposit_not_returned. RULES 932 words, rule 6 156, rule 8 153.
 - Classify flags a separate problem no playbook covers even when another one is covered. Was: its prompt said
   'Use "other" only if none of the situations fits', so a mixed story never got "other" and `run.py`'s
   "Part of what you described may not be covered" note (`NOT_COVERED`, which needs "other" next to a covered

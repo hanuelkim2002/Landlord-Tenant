@@ -446,10 +446,13 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 884 words always, plus rule 6 on letters (129 words) once a letter is in
-   play, and rule 8 on cases in full (94 words) when there is a case topic, otherwise one line (since
+1. `RULES`, through `rules_for`: 932 words always, plus rule 6 on letters (156 words) once a letter is in
+   play, and rule 8 on cases in full (153 words) when there is a case topic, otherwise one line (since
    2026-10-01; rule 1's line on asking how a requested letter will be sent moved into rule 6, which already
-   asked it). Version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 1,130 words with a rule
+   asked it). Pairs added from the eval baseline of 2026-10-01: the format line names issue ids; rule 3, a
+   question about when or how long goes to `get_deadlines`; rule 6, the tenant's words are the ask, and the
+   posture lines are never retold without quote marks; rule 8, the topic on the same notice, deposit,
+   repair, entry, rent, fee, or lease term is called even if it does not name the exact point. Version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 1,130 words with a rule
    on cases added after it (TODO item 25) and later fixes for TODO item 23: rule 1's notices-clause line applies only to a requested letter; a pair for legality questions (quote, then "This tool does not decide that."); rule 2's fallback sentence used exactly, and cite the subsection the words sit in; rule 3 names the echoed empty result; rule 4 adds an example of asking for sheet facts. A role
    paragraph (organize lease, statute, and record side by side; not a lawyer; never advise, send, or work
    out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
