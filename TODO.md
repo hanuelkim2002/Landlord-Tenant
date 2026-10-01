@@ -37,11 +37,14 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
 24. The case wiki and its checks: a schema page, an index built by code, a log, and code checks run like
     the playbook checks (every quote in its source and at its pin page, every link resolving, every case
     that names a topic listed on that topic's page, a warning for a section the opinion never cites, a
-    verification undone by a later edit). Pilot done 2026-10-01 (Durene, Casey, Plakhov, five topics):
-    the author reviews it in Obsidian; then the other 14 opinions that cite 83.49 or 83.48. The author verifies each page; only verified pages go further. The two forms decisions
-    (50 So. 3d 503, 591 So. 2d 594) are filed as forms. 50 So. 3d 503 is not in `cases/`: the Westlaw
-    print marks its added and deleted words by formatting, which plain text loses; it needs a source that
-    keeps the marks (the court's own opinion) before it can be filed.
+    verification undone by a later edit). Done 2026-10-01: the 16 opinions in `cases/` that cite 83.49 or
+    83.48 (pilot of three, then thirteen), 13 topics. Next: the author reads each page against its opinion
+    and verifies it (`python wiki.py verify`); only verified pages go further. While verifying, check each
+    case's status in Westlaw; the print flags Malagon v. Solari, Guthartz v. Lewis, Durene v. Alcime, and
+    Florida Patient's Compensation Fund v. Rowe. Then the other sections' opinions. 50 So. 3d 503 (the
+    2010 forms decision) is not in `cases/`: the Westlaw print marks its added and deleted words by
+    formatting, which plain text loses; it needs a source that keeps the marks (the court's own opinion)
+    before it can be filed.
 25. Verified wiki pages for the active playbooks' sections loaded into the prompt, chosen in code by their
     section tags, never by the model; only the court's quoted words go to the tenant, with court, year, and
     the statute version read; one rule for the neutral framing ("This tool does not decide whether it

@@ -5,6 +5,23 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Case wiki: the other thirteen deposit opinions ingested (TODO item 24), each read in full: Atlantis
+  Estate Acquisitions v. DePierro, Lewis v. Guthartz, Guthartz v. Lewis, Malagon v. Solari, Nardi v.
+  Continental National Bank, Florida RS v. Nelson, Florida Bar re Approval of Forms (1991), Department of
+  Business Regulation v. Stein, Florida Patient's Compensation Fund v. Rowe, Meli Investment Corp. v. O.R.,
+  Xanadu of Cocoa Beach v. Lenz, Gilbert v. Jabour, Scruggs v. Sutton. With the pilot, every opinion in
+  `cases/` citing 83.49 or 83.48 (the candidate list's 17, less 50 So. 3d 503, not in `cases/`). One topic
+  renamed (Notice of how the deposit is held, now How the landlord holds the deposit and advance rent, since
+  two new cases are about holding the money), eight new topics (Prevailing party fees under 83.48; How a fee
+  award is computed; Interest on the deposit; Advance rent; Landlord's remedies after a tenant's breach;
+  Applying an amended statute; Punitive damages against a landlord; Court-approved landlord and tenant
+  forms). SCHEMA gains a layout for a forms decision and an "Also said" section. Topic pages record, in the
+  courts' words, the changes in 83.48's wording (1977, 1983, today), the moves of the interest and advance
+  rent provisions, Xanadu's footnote beside Scruggs on fees as costs, and Rowe on the "derogation of the
+  common law" phrase Guthartz used. `python wiki.py check` caught one misquote of mine while writing (Meli's
+  disposition), fixed; three prose lines that went beyond the opinions were reworded on reading. Noted for
+  the author: Gilbert v. Jabour, listed under 83.51 in the candidate list, is a fee case. 29 pages, 0
+  problems, 0 warnings; smoke all checks OK. No page verified.
 - Case wiki pilot (TODO item 24, first part): `wiki/` with `SCHEMA.md`, `index.md` (built by code),
   `log.md`, three case pages (Durene v. Alcime, Casey v. Picinich, Plakhov v. Serova, each read in full from
   `cases/`), and five topic pages made as the cases raised them (Landlord's notice of claim on the deposit;

@@ -353,8 +353,9 @@ that names it with its issue as a question, "## How they relate"), `index.md` (b
 pages by section tag, topics with their cases, every case with its verification), and `log.md` (one entry
 per ingest or change, newest last). Quotes are written `"words" (at 1210)` for the page's own opinion,
 `"words" ([[Plakhov v. Serova]] at 1223)` for another case's, `"words" (Fla. Stat. 83.49(3)(a))` for the
-statute. Pilot of 2026-10-01: Durene v. Alcime, Casey v. Picinich, Plakhov v. Serova, and five topics; none
-verified yet. The folder opens in Obsidian as a vault; `.obsidian/` is gitignored.
+statute. As of 2026-10-01: 16 case pages (every opinion in `cases/` that cites 83.49 or 83.48) and 13
+topic pages; none verified yet. A decision approving forms has "What did the court approve?" and "Forms"
+in place of issues; a statement outside the issues decided goes under "Also said". The folder opens in Obsidian as a vault; `.obsidian/` is gitignored.
 
 ## Tools the model can call
 

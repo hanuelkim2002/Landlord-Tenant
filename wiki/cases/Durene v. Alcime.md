@@ -55,6 +55,7 @@ The court quoted the 1981 text: "If the landlord fails to give the required noti
 
 - Distinguished by [[Plakhov v. Serova]]: "The Tenant's reliance on Durene v. Alcime, 448 So.2d 1208 (Fla. 3d DCA 1984), is unavailing, since that case involved a situation where the landlord's obligation to give the section 83.49(3)(a) notice was not excused by the Tenant's failure to give the notice required by section 83.49(5)." ([[Plakhov v. Serova]] at 1223)
 - [[Casey v. Picinich]] also reads 83.49(3)(a) on a late notice. It does not cite Durene.
+- Followed by [[Malagon v. Solari]]: "As discussed in Durene v. Alcime, 448 So.2d 1208 (Fla. 3d DCA 1984), failure to give the required notice penalizes a landlord by forfeiting his access to the security deposit in an independent action for damages, and by making the landlord liable for attorney's fees and costs under section 83.49(3)(c)." ([[Malagon v. Solari]] at 354)
 - Disagrees with In re Hasty, 25 B.R. 429 (Bankr. M.D. Fla. 1982), a bankruptcy decision not in `cases/`, on a set-off: "We disagree, however, with the court's decision to allow even the $215 as a set-off against the security deposit, whether the damages were admitted or not." (at 1210)
 
 ## Disposition

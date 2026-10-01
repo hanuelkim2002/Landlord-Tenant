@@ -74,6 +74,10 @@ written as questions.
     Reasoning:   quotes, or "none stated" when the court gave none
     Dissent:     quotes, when there is one
 
+    ## Also said                                       (when there is something)
+    A statement outside the issues the court decided, such as a footnote or a remark on another statute;
+    quotes only, never labeled Rule.
+
     ## Statute read
     The court's own quote of the statute, when it gives one.
 
@@ -83,6 +87,11 @@ written as questions.
 
     ## Disposition
     A quote.
+
+A decision approving forms is a case page with `## What did the court approve?` in place of the issues
+(Rule: the approval and any limit the court put on it; Reasoning: why), then `## Forms`: each form that
+bears on ch. 83, by its title, with the statute source line it prints, quoted. A form's printed notes are
+the Bar's wording, not the court's; quote them only as the form's.
 
 ## A topic page
 

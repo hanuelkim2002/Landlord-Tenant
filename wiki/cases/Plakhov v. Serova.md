@@ -6,7 +6,7 @@ court: Fla. 4th DCA
 decided: 2012-10-24
 statute_read: ["83.49(2), Florida Statutes (2008)", "83.49(3)(a), Florida Statutes (2009)", "83.49(5), Fla. Stat. (2009)", "83.56(1), Fla. Stat. (2009)"]
 sections: ["83.49", "83.56"]
-topics: ["[[Landlord's notice of claim on the deposit]]", "[[Notice of how the deposit is held]]", "[[Constructive eviction]]", "[[Points not raised in the trial court]]"]
+topics: ["[[Landlord's notice of claim on the deposit]]", "[[How the landlord holds the deposit and advance rent]]", "[[Constructive eviction]]", "[[Points not raised in the trial court]]"]
 verified_by:
 verified_on:
 verified_hash:
@@ -37,7 +37,7 @@ Reasoning:
 
 ## Did the landlord's failure to give notice of how the deposit was held excuse the rent?
 
-Topic: [[Notice of how the deposit is held]]
+Topic: [[How the landlord holds the deposit and advance rent]]
 
 Rule:
 - "The Landlord owned but one rental unit in Florida, so she was excused from the subsection's notice requirements." (at 1223)
