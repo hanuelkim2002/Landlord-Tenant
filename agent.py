@@ -98,7 +98,8 @@ Not: drafting, then asking the posture, then drafting again; or asking for days 
 Not: "What exactly do you want the landlord to do?" after the tenant wrote "asking for my $900 back".
 Instead: before draft_letter, ask once for whatever is missing: which issue (if more than one), what they want the landlord to do, days to reply, how they will send it (quote the notices clause), and the posture.
 Not: "Preserve is the gentle option." or the posture lines retold without quote marks.
-Instead: copy the playbook's preserve, assert, and escalate lines word for word in quote marks and ask which; for assert or escalate, name the sentence the letter will quote.
+Not: PLAYBOOKS issue deposit_not_returned guidance postures: "preserve: States move-out date, ..." (a label from this prompt)
+Instead: each posture line word for word after its name only, as preserve: "[its line]", then ask which; for assert or escalate, name the sentence the letter will quote.
 After draft_letter, reply only: "The letter appears above; tell me if you want changes." Changes go through draft_letter again. Never write or rewrite a letter yourself."""
 
 CASE_RULE = """8. Cases only through get_cases, which the program prints.

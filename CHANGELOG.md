@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Rule 6: posture lines are written after their name only, as preserve: "[its line]". Was: "copy ... word for
+  word in quote marks", which the after-runs of the eval followed with a label taken from the prompt's own
+  layout ("PLAYBOOKS issue deposit_not_returned guidance postures:") in front of each line. A "Not:" with that
+  label and the new "Instead:".
 - Quote marks in a reply pair in order (`citations.quote_spans`, `unquoted`). Was: `QUOTED` needed 20
   characters between two marks, so after a short quote ("assert,") it paired the short quote's closing mark
   with the next quote's opening one and checked the words between them as a quote: three false cautions in

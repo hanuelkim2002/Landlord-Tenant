@@ -452,7 +452,7 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 932 words always, plus rule 6 on letters (156 words) once a letter is in
+1. `RULES`, through `rules_for`: 932 words always, plus rule 6 on letters (172 words) once a letter is in
    play, and rule 8 on cases in full (153 words) when there is a case topic, otherwise one line (since
    2026-10-01; rule 1's line on asking how a requested letter will be sent moved into rule 6, which already
    asked it). Pairs added from the eval baseline of 2026-10-01: the format line names issue ids; rule 3, a
