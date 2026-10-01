@@ -104,7 +104,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `tools.py`: the seven `@tool` functions and the `tools` list (see Tools the model can call), plus the
   plain helpers `pretty`, `quote_is_real`, and `build_letter`. Imports `record`, `config`, `corpus`,
   `deterministic`, `sheet`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
-- `agent.py`: `RULES` (the fixed part of the system prompt), `intake` (classify, propose facts, save; for a
+- `agent.py`: `RULES` (the fixed part of the system prompt; if the environment sets `RULES_FILE`, that
+  file's text replaces it for the run, for trying versions of the rules), `intake` (classify, propose facts, save; for a
   new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
   add new issues, propose facts from the update, save; returns the issues it added). Neither builds the agent: `run.py` runs the intake
   sheet first, then `build_agent`.

@@ -1,5 +1,7 @@
 """Agent: the rules, intake (builds the system prompt and returns an agent), and the chat loop."""
 import json
+import os
+from pathlib import Path
 
 import yaml
 from langchain.agents import create_agent
@@ -65,6 +67,11 @@ Rules:
    channel, and as text the draft's file name (e.g. "draft_2026-09-15_deposit_not_returned_assert.txt")
    followed by any tracking or receipt number. Ask for whichever of those they did not give.
 """
+
+# RULES_FILE in the environment swaps in another rules text for one run, for trying versions of the rules,
+# e.g. RULES_FILE=/path/rules_b.txt python dev/live_run.py ... The text above stays the default.
+if os.environ.get("RULES_FILE"):
+    RULES = Path(os.environ["RULES_FILE"]).read_text()
 
 
 # ---- Intake: classify the description and propose facts. The sheet and the agent come after, in run.py.

@@ -5,6 +5,9 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- `RULES_FILE` in the environment replaces `RULES` with that file's text for one run, like `AGENT_MODEL` for
+  the model; the rules in `agent.py` stay the default. For a trial of several versions of the rules on the
+  live scenarios without editing code. Was: the rules could only be changed by editing `agent.py`.
 - Second run of the harness setup logged in TODO.md (item 22; m-029 to m-032): 1.00 slips per reply against
   0.50 in the first run, 0.75 over both. The duplicate-draft stop worked live. No code changed.
 - `draft_letter` does not draft the same letter twice in one session: if this session already drafted the
