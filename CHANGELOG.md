@@ -5,6 +5,18 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- README and TODO: the casebook becomes a case wiki (after Andrej Karpathy's LLM wiki). Was: one YAML file
+  per statute section, each holding predefined questions with the cases that answered them; the author
+  found fixed questions too rigid, and a question can rest on two sections (deposit fees: 83.49(3)(c) and
+  83.48), while no playbook lists 83.48, so a file of its own would never load. Now: linked markdown pages
+  in `wiki/`, one per case and one per topic, topics made as they emerge; statute sections are tags on a
+  page. The wiki's prose describes and connects and never states the law; the tenant sees only the court's
+  quoted words; a page reaches the chat only once the author verifies it, and an edit undoes that; tenant
+  sessions never write to it. TODO items 24 to 26 rewritten for the wiki; 26 (`search_cases`) now says to
+  reconsider it first, since there the model chooses what to look for (the unlicensed-practice line in
+  Florida Bar v. Brumbaugh, discussed with the author); new item 28, whether computing a tenant's own
+  deadline is closer to applying law to facts, for the author's professional responsibility professor.
+  No code changed.
 - `cases/`: 81 Florida appellate and federal opinions, the court's text only, one file per opinion
   (`448_So2d_1208.txt`), committed. Built by the new `dev/build_cases.py` from the author's Westlaw Find and
   Print file (82 opinions, the reporter cites of the case-pool candidate list), which stays outside the repo.

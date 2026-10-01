@@ -30,25 +30,35 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 
 ## Case law
 
-The casebook (README, The unit of legal knowledge). Organized by section, then by the question a court
-answered, then by case, each with its rule and reasoning in the court's words. `cases/` (the opinions) comes
-first (built 2026-10-01, 81 opinions); then these, in order.
+The case wiki (README, The unit of legal knowledge): linked markdown pages in `wiki/`, one per case and one
+per topic, with topics made as they emerge from the cases, not fixed in advance. `cases/` (the opinions,
+built 2026-10-01, 81 opinions) comes first; then these, in order.
 
-24. Casebook files (`casebook/<section>.yaml`) and their check, run like the playbook checks: every quote
-    in its stored opinion, pin pages computed from the opinion's star pages, a warning for a section the
-    opinion never cites, the statute year suggested where the court states it. Start with 83.49 and 83.48
-    (17 opinions cite one or both): entries drafted with `verified_by` empty, then the author reads each
-    case, words its question, sets its status, and verifies it. Only verified entries go further. The two
-    forms decisions (50 So. 3d 503, 591 So. 2d 594) are filed as forms. 50 So. 3d 503 is not in `cases/`:
-    the Westlaw print marks its added and deleted words by formatting, which plain text loses; it needs a
-    source that keeps the marks (the court's own opinion) before it can be filed.
-25. Verified casebook entries for the active playbooks' sections loaded into the prompt, like STATUTE
-    SECTIONS; one rule for the neutral framing; `citations.py` learns reporter cites (a cite not in
-    `cases/` gets a caution, and case quotes are checked like statute quotes).
+24. The case wiki and its checks: a schema page, an index built by code, a log, and code checks run like
+    the playbook checks (every quote in its source and at its pin page, every link resolving, every case
+    that names a topic listed on that topic's page, a warning for a section the opinion never cites, a
+    verification undone by a later edit). Pilot first, three cases on the landlord's notice of claim
+    (Durene, Casey, Plakhov), for the author to review in Obsidian; then the other 14 opinions that cite
+    83.49 or 83.48. The author verifies each page; only verified pages go further. The two forms decisions
+    (50 So. 3d 503, 591 So. 2d 594) are filed as forms. 50 So. 3d 503 is not in `cases/`: the Westlaw
+    print marks its added and deleted words by formatting, which plain text loses; it needs a source that
+    keeps the marks (the court's own opinion) before it can be filed.
+25. Verified wiki pages for the active playbooks' sections loaded into the prompt, chosen in code by their
+    section tags, never by the model; only the court's quoted words go to the tenant, with court, year, and
+    the statute version read; one rule for the neutral framing ("This tool does not decide whether it
+    applies to you"); `citations.py` learns reporter cites (a cite not in `cases/` gets a caution, and case
+    quotes are checked like statute quotes). Consider a reply check for applying language ("applies to
+    you", "your case", "you should"), like the cite checks.
 26. `search_cases(phrase)`, like `search_statute`, for a tenant whose situation fits no playbook ("other").
+    Reconsider before building: here the model, not code, decides what to look for from the tenant's
+    story, which is selection by judgment, the unlicensed-practice risk discussed 2026-10-01 (Brumbaugh:
+    general information is allowed, applying law to one person's facts is not).
 27. For the author's research: no appellate case on the 83.42(1) exclusion for residence incidental to
     educational services turned up in the candidate list's sources; it decides whether ch. 83 applies to
     on-campus housing at all.
+28. For the author's professional responsibility professor: computing a tenant's own deadline from their
+    facts (`compute_deadlines`) is arguably closer to applying law to facts than anything in the case
+    plan. The tool shows the counting rule and labels it an assumption; whether that is enough is open.
 
 ## Model behavior (later)
 

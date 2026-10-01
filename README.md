@@ -32,7 +32,7 @@ whether a case applies to the tenant, or what the tenant should do.
 
 1. The chatbot: a LangChain agent with a small set of tools and a rules-based system prompt.
 2. The data bank: one folder per tenant and per matter, so a returning tenant resumes where they left off.
-3. Skills: the guidance half of each playbook, the statute sections it rests on, and the casebook entries
+3. Skills: the guidance half of each playbook, the statute sections it rests on, and the case wiki pages
    for those sections, loaded into the prompt when its issue becomes active instead of pasted for every issue, so the context window holds only what
    the matter's issues need.
 
@@ -50,7 +50,7 @@ whether a case applies to the tenant, or what the tenant should do.
   (stated or inferred) and the tenant's own words as basis.
 - The record is append-only. Current state is a snapshot; history is never edited or deleted.
 - Letters are a code template, not model text. The timeline is code output, never relayed by the model.
-- `statutes/` and `cases/` are read-only corpora. Playbook and casebook quotes are verified against them
+- `statutes/` and `cases/` are read-only corpora. Playbook and case wiki quotes are verified against them
   after every edit. `cases/` holds the court's text only: no publisher's headnotes, synopses, or citator
   flags.
 
@@ -63,21 +63,25 @@ deposit_not_returned, deposit_claim_received, repair_not_made, notice_received_v
 lease_ending, notice_received_nonpayment, landlord_entered_unannounced, wants_to_leave_early. That is one
 per issue label the classifier can pick, except "other", which means none of them fits.
 
-Beside the playbooks, a casebook: one YAML file per statute section. It holds the questions courts have
-answered about the section, and under each question the cases that answered it, each with its rule and its
-reasoning quoted from the opinion with pin pages, the statute version it read, and the author's
-verification. The question is the author's wording; the rule and the reasoning are the court's. Decisions
-approving forms are filed as forms, not rules. Cases are published opinions of Florida's appellate courts
+Beside the playbooks, a case wiki (`wiki/`), after Andrej Karpathy's LLM wiki: linked markdown pages that
+Claude Code writes from `cases/` in development sessions and the author reviews. One page per case (its
+issue, rule, and reasoning quoted from the opinion with pin pages, the statute version it read, and how it
+relates to other cases) and one page per topic, made as topics emerge from the cases, never fixed in
+advance. Pages link to each other by topic, rule, reasoning, and how later courts treated earlier ones, and
+carry the statute sections they read as tags. The wiki's own prose describes and connects; it never states
+the law, which reaches the tenant only as the court's quoted words. A page reaches the chat only after the
+author verifies it, and an edit afterwards undoes the verification. Tenant sessions read the wiki and never
+write to it. Decisions approving forms are filed as forms, not rules. Cases are published opinions of Florida's appellate courts
 and of federal courts applying ch. 83, each shown with its court; county and circuit court decisions stay
 out.
 
 ## Beyond the current plan
 
-A chatbot front end in place of the terminal loop. It waits until the data bank, skills, and casebook work
+A chatbot front end in place of the terminal loop. It waits until the data bank, skills, and case wiki work
 is done.
 
 ## Stack
 
 Python, LangChain agent with `@tool` functions, Pydantic for every structured shape, PyPDF2 for the lease,
-YAML playbooks and casebook, two models on the UF gateway (an agent model and an extraction model). Built first as a
+YAML playbooks, a markdown case wiki, two models on the UF gateway (an agent model and an extraction model). Built first as a
 Colab notebook, moved to this folder as modules on 2026-09-25.
