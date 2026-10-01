@@ -1,0 +1,25 @@
+---
+kind: topic
+sections: []
+verified_by:
+verified_on:
+verified_hash:
+---
+# Proximate cause of injuries on the premises
+
+Cases on whether the link between a landlord's breach and an injury on the premises, including an act of a
+third person, a family member, or the tenant in between, was for the jury or for the court. Each case arises
+from a duty under 83.51 or a county housing code; none reads a part II provision on causation.
+
+## Cases
+
+- [[Paterson v. Deeb]], Fla. 1st DCA 1985, reading the 1973 and 1981 statutes: Was the criminal attack an independent intervening cause that cut off the landlord's liability as a matter of law?
+- [[Bennett M. Lifter, Inc. v. Varnado]], Fla. 3d DCA 1985, reading the 1983 statute: Should proximate cause have been taken from the jury and decided for the landlord as a matter of law? Was it error to give a concurring cause instruction?
+- [[Smith v. Grove Apartments, LLC]], Fla. 3d DCA 2007, reading the 2007 statute: Was it for the trier of fact to decide whether the tenant's injury, suffered while trimming the trees himself after the landlord allegedly refused, was a foreseeable result of the landlord's alleged failure to maintain the parking lot?
+
+## How they relate
+
+- Smith follows Lifter: "In fact, this case is virtually indistinguishable from our Bennett M. Lifter, Inc. decision." ([[Smith v. Grove Apartments, LLC]] at 588) Lifter: "It cannot be said in this case that the harm which resulted from the defendant’s action or omission is so bizarre or has happened so infrequently that “in the field of human experience” it could not have been reasonably anticipated." ([[Bennett M. Lifter, Inc. v. Varnado]] at 1339) Smith repeats it: "As we observed in Bennett M. Lifter, Inc., it cannot be said in this case that the harm that resulted from the defendant’s action or omission is so bizarre or has happened so infrequently that “in the field of human experience it could not have been reasonably anticipated.”" ([[Smith v. Grove Apartments, LLC]] at 588) Paterson, decided earlier the same year, uses the same phrase about criminal entry: "We conclude, however, that the type harm suffered by the plaintiff in this case has so frequently resulted from the same type negligence, to wit, not providing security locks on doors and windows to prevent unauthorized entry by criminals, that in the field of human experience the same type of result may be expected again." ([[Paterson v. Deeb]] at 1218) Neither Lifter nor Smith cites Paterson; Paterson and Lifter both cite Gibson v. Avis Rent-A-Car Systems, 386 So. 2d 520, which is not in `cases/`.
+- Whose act came in between. In Paterson, an intruder: "Likewise, where the duty breached by a landlord has as one of its principal purposes the prevention of entry by unauthorized persons, the deliberate act of such person in committing sexual battery upon a tenant does not constitute an “independent intervening cause” that cuts off the chain of legal causation and insulates the landlord from liability." ([[Paterson v. Deeb]] at 1218) In Lifter, a grandmother carrying boiling water while the heater was out, and the child who collided with her: "Further the jury may have found, by its general verdict, that those acts were forces stimulated as a natural and ordinary response to the defendant’s omission, and as such were not intervening causes independent of defendant’s original tortious act." ([[Bennett M. Lifter, Inc. v. Varnado]] at 1340) In Smith, the tenant himself: "Moreover, the question of whether the tenant’s own actions was an intervening and independent cause of his injuries so as to relieve the landlord of any liability are also factual issues for the trier of fact." ([[Smith v. Grove Apartments, LLC]] at 589)
+- Duty or causation. Paterson places foreseeability on the causation side in its case: "We conclude, therefore, that the issue of foreseeability in this case is not a question of law essential to the element of the landlord’s duty, but is a question of fact for the jury on the element of causation." ([[Paterson v. Deeb]] at 1220) Lifter quotes a federal case that treats the protected class and the kind of injury as matters of proximate cause: "[I]n personal injury cases where liability is grounded in a statute or ordinance violation, questions of whether a plaintiff comes within the class of persons intended to be protected by the statute or ordinance and whether the injury is of the kind generally intended to be prevented have been dealt with in terms of proximate cause and, as such, are subject to the determinations of the triers of fact." ([[Bennett M. Lifter, Inc. v. Varnado]] at 1338) The Smith dissent puts its disagreement on duty instead: "My view, however, is not based on the lack of proximate cause, as that is generally for the jury to decide. It is based on the lack of duty, which is a legal issue." ([[Smith v. Grove Apartments, LLC]] at 589)
+- Related topics. The duties whose breach is at issue: [[Landlord's maintenance duties under 83.51]] and [[Landlord's liability for injuries on the premises]]. Paterson's attack: [[Landlord's liability for criminal attacks on tenants]].

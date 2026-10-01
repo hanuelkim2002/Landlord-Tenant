@@ -15,8 +15,8 @@ Today's stored text, on a deposit kept in an interest-bearing account:
 
 ## Cases
 
-- [[Department of Business Regulation v. Stein]], Fla. 3d DCA 1976, reading the statute effective July 1, 1973: did the interest requirement reach deposits under leases signed before October 1, 1972?
-- [[Florida RS, Inc. v. Nelson]], Fla. 5th DCA 1998, reading the 1995 statute: a tenant's suit for interest, decided on the fee.
+- [[Department of Business Regulation v. Stein]], Fla. 3d DCA 1976, reading the 1973 statute: Did the interest requirement reach deposits under leases signed before October 1, 1972?
+- [[Florida RS, Inc. v. Nelson]], Fla. 5th DCA 1998, reading the 1995 statute: on this topic outside the issues it decided; see the case page.
 
 ## How they relate
 

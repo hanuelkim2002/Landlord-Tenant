@@ -6,7 +6,7 @@ court: Fla. 3d DCA
 decided: 2007-11-14
 statute_read: ["83.48, Florida Statutes (2004)"]
 sections: ["83.48"]
-topics: ["[[Prevailing party fees under 83.48]]"]
+topics: ["[[Prevailing party fees under 83.48]]", "[[Pleading a claim for fees]]"]
 verified_by:
 verified_on:
 verified_hash:
@@ -18,7 +18,7 @@ eviction claim and won a resulting trust in the property.
 
 ## Must a party plead entitlement to fees under 83.48, which treats fees as costs?
 
-Topic: [[Prevailing party fees under 83.48]]
+Topic: [[Prevailing party fees under 83.48]], [[Pleading a claim for fees]]
 
 Rule:
 - "As we interpret Stockman, the claim must be pled, even if the applicable statute treats attorney's fees as costs." (at 854)

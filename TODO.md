@@ -35,22 +35,21 @@ per topic, with topics made as they emerge from the cases, not fixed in advance.
 built 2026-10-01, 81 opinions) comes first; then these, in order.
 
 24. The case wiki and its checks: a schema page, an index built by code, a log, and code checks run like
-    the playbook checks (every quote in its source and at its pin page, every link resolving, every case
-    that names a topic listed on that topic's page, a warning for a section the opinion never cites, a
-    verification undone by a later edit). Done 2026-10-01: the 16 opinions in `cases/` that cite 83.49 or
-    83.48 (pilot of three, then thirteen), 13 topics. Next: the author reads each page against its opinion
-    and verifies it (`python wiki.py verify`); only verified pages go further. While verifying, check each
-    case's status in Westlaw; the print flags Malagon v. Solari, Guthartz v. Lewis, Durene v. Alcime, and
-    Florida Patient's Compensation Fund v. Rowe. Then the other sections' opinions. 50 So. 3d 503 (the
-    2010 forms decision) is not in `cases/`: the Westlaw print marks its added and deleted words by
-    formatting, which plain text loses; it needs a source that keeps the marks (the court's own opinion)
-    before it can be filed.
+    the playbook checks. Done 2026-10-01: every opinion in `cases/`, 81 case pages and 40 topics (28 case
+    pages untagged, with scope notes). Next: the author reads each page against its opinion and verifies it
+    (`python wiki.py verify`); only verified pages go further. While verifying, check each case's status in
+    Westlaw (the print flags 27 opinions; one red-striped, Charlemagne v. Francis), and look at the questions
+    the ingest left in `wiki/log.md` (2026-10-01, the remaining 65). 50 So. 3d 503 (the 2010 forms decision)
+    is not in `cases/`: the Westlaw print marks its added and deleted words by formatting, which plain text
+    loses; it needs a source that keeps the marks (the court's own opinion) before it can be filed.
 25. Verified wiki pages for the active playbooks' sections loaded into the prompt, chosen in code by their
     section tags, never by the model; only the court's quoted words go to the tenant, with court, year, and
     the statute version read; one rule for the neutral framing ("This tool does not decide whether it
     applies to you"); `citations.py` learns reporter cites (a cite not in `cases/` gets a caution, and case
     quotes are checked like statute quotes). Consider a reply check for applying language ("applies to
-    you", "your case", "you should"), like the cite checks.
+    you", "your case", "you should"), like the cite checks. Decide too whether a tagged page about a
+    commercial lease (e.g. Multach v. Adams, which reads 83.41 to say part II does not apply) loads for a
+    tenant.
 26. `search_cases(phrase)`, like `search_statute`, for a tenant whose situation fits no playbook ("other").
     Reconsider before building: here the model, not code, decides what to look for from the tenant's
     story, which is selection by judgment, the unlicensed-practice risk discussed 2026-10-01 (Brumbaugh:

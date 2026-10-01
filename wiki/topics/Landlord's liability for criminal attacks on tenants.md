@@ -1,0 +1,29 @@
+---
+kind: topic
+sections: ["83.51"]
+verified_by:
+verified_on:
+verified_hash:
+---
+# Landlord's liability for criminal attacks on tenants
+
+Cases on whether a residential landlord can be liable in negligence when a third person attacks a tenant on
+the premises: what a tenant must show about earlier crimes, and the part the 83.51 duties on locks and common
+areas play.
+
+Today's stored text:
+- "Unless otherwise agreed in writing, in addition to the requirements of subsection (1), the landlord of a dwelling unit other than a single-family home or duplex shall, at all times during the tenancy, make reasonable provisions for: ... 2. Locks and keys. 3. The clean and safe condition of common areas." (Fla. Stat. 83.51(2)(a))
+
+## Cases
+
+- [[Paterson v. Deeb]], Fla. 1st DCA 1985, reading the 1973 and 1981 statutes: Did the amended complaint state a cause of action in negligence for the attack, though it alleged no prior similar crime on the premises? Was the criminal attack an independent intervening cause that cut off the landlord's liability as a matter of law?
+- [[Ray v. Tampa Windridge Associates]], Fla. 2d DCA 1991, reading the 1985 statute: Did the tenant's signed security release dispense with the landlord's duty under 83.51(2)(a) to make reasonable provisions for locks?
+- [[Menendez v. Palms West Condo. Ass'n]], Fla. 1st DCA 1999, no statute year stated: Did the landlord and owners owe the tenant a duty to protect him from a criminal attack by a third person, given the crime rate at and near the complex? Was the absence of a doorscope a defect or dangerous condition that the landlord had a duty to correct? Did the Residential Landlord and Tenant Act impose a duty to install a doorscope?
+
+## How they relate
+
+- Prior similar crimes. Paterson sets out the general rule for a landowner and an invitee, then says of the landlord and tenant: "Because there are often additional considerations incident to the contractual and statutory obligations found in the usual landlord/tenant relationship, we do not perceive the foreseeability premise of the general rule governing landowner/invitee liability to be the exclusive basis for the landlord’s liability to the tenant regarding criminal attacks committed on the leased premises." ([[Paterson v. Deeb]] at 1215) On its complaint: "In view of the obvious purpose of the statutory duty to provide locks and security to prevent potential damages caused by the acts of unwarranted trespassers on the leased premises, we expressly decline to require as the essential predicate to liability allegation and proof that the landlord had actual or constructive knowledge of prior similar criminal acts committed on the premises." ([[Paterson v. Deeb]] at 1218) Menendez, fourteen years later in the same court, writes, citing Paterson: "To impose such a duty, the tenant must allege and prove that the landlord had actual or constructive knowledge of prior similar acts committed on invitees on the premises." ([[Menendez v. Palms West Condo. Ass'n]] at 61) and "As we explained in Paterson, a “landowner should not be required to take precautions against a sudden attack which the landowner has no reason to anticipate.”" ([[Menendez v. Palms West Condo. Ass'n]] at 61)
+- The statute in each case. Paterson: "Since the purpose of the statutory duty to provide locks is the prevention of criminal acts by unauthorized persons having unrestrained access to the premises, we conclude that the landlord’s duty to reasonably provide protection from criminal attack does not have to be implied from prior similar occurrences on the leased premises." ([[Paterson v. Deeb]] at 1217) Menendez distinguishes it: "The duty in Paterson was based on a violation of an express provision of the statute. No such violation occurred here." ([[Menendez v. Palms West Condo. Ass'n]] at 62) and, on the doorscope: "This argument must fail, however, because the “Residential Landlord and Tenant Act”, Chapter 83, Florida Statutes, Part II, does not require a landlord to assume such a duty." ([[Menendez v. Palms West Condo. Ass'n]] at 62)
+- Crime in the area. Paterson, in a footnote: "While the evidence need not relate to offenses occurring on the premises or within the block where the apartment is located, we do not venture any opinion on the admissibility of specific evidence that may be offered at trial." ([[Paterson v. Deeb]] at 1218) Menendez, on its record: "While that may be true, the general incidence of crime in the area was not sufficient to put the defendants on constructive notice of a particular risk." ([[Menendez v. Palms West Condo. Ass'n]] at 61)
+- The statute's wording. Paterson quoted the 1981 text of 83.51(2)(a) in pieces: "landlord of a dwelling unit ... shall, at all times during the tenancy, make reasonable provision for ... locks and keys [and] the clean and safe condition of common areas." ([[Paterson v. Deeb]] at 1216) [[Ray v. Tampa Windridge Associates]], not listed on this topic, quoted the 1985 text: "Unless otherwise agreed in writing ... the landlord ... shall ... make reasonable provisions for: .... 2. Locks and keys. 3. The ... safe condition of common areas." ([[Ray v. Tampa Windridge Associates]] at 677) Menendez cites 83.51(2)(a) with no year. Paterson's quote reads provision where Ray's and today's text, above, read provisions.
+- Another attack case not listed on this topic. Ray, on a tenant's claim after an intruder's attack, whose issues concern her signed security release; it cites neither case: "The injuries are alleged to have been from a rape of plaintiff which was allegedly the proximate result of, among other things, inadequate locks provided on plaintiff’s apartment" ([[Ray v. Tampa Windridge Associates]] at 677) The release: [[Exculpatory clauses in a lease]]. Causation in Paterson: [[Proximate cause of injuries on the premises]]. Punitive damages in Paterson: [[Punitive damages against a landlord]].

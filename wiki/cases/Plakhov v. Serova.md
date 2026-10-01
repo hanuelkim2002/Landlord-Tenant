@@ -80,7 +80,7 @@ Reasoning:
 ## Related
 
 - Distinguishes [[Durene v. Alcime]]: "The Tenant's reliance on Durene v. Alcime, 448 So.2d 1208 (Fla. 3d DCA 1984), is unavailing, since that case involved a situation where the landlord's obligation to give the section 83.49(3)(a) notice was not excused by the Tenant's failure to give the notice required by section 83.49(5)." (at 1223)
-- Quotes the constructive eviction definition from Hankins v. Smith, 103 Fla. 892, 138 So. 494 (1931), which is in `cases/` (`103_Fla_892.txt`) and has no page yet.
+- Quotes the constructive eviction definition from [[Hankins v. Smith]] (Fla. 1931).
 
 ## Disposition
 

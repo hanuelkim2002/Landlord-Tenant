@@ -7,7 +7,7 @@ verified_hash:
 ---
 # Fees and costs in a suit over the deposit
 
-Cases on court costs and attorney's fees under the deposit section's own fee sentence, 83.49(3)(c). Fees
+Cases on court costs and attorney's fees in a suit over the deposit, and on the deposit section's own fee sentence, 83.49(3)(c). Fees
 under the general fee section have their own page: [[Prevailing party fees under 83.48]].
 
 Today's stored text:
@@ -15,11 +15,11 @@ Today's stored text:
 
 ## Cases
 
-- [[Guthartz v. Lewis]], Fla. 3d DCA 1981, reading the 1977 statute: did 83.49(3)(c) authorize fees in a suit over deposits larger than an FHA agreement allowed?
-- [[Lewis v. Guthartz]], Fla. 1982, reading the 1977 statute: the same question, on review.
-- [[Durene v. Alcime]], Fla. 3d DCA 1984, reading the 1981 statute: is the tenant who recovered the deposit entitled to fees?
-- [[Malagon v. Solari]], Fla. 4th DCA 1990, reading the 1989 statute: is the tenant who recovers the deposit the prevailing party when the landlord also recovers on a counterclaim?
-- [[Casey v. Picinich]], Fla. 4th DCA 1990, reading the 1987 statute: is the tenant entitled to costs? One judge dissented on costs.
+- [[Guthartz v. Lewis]], Fla. 3d DCA 1981, reading the 1977 statute: Did 83.49(3)(c) authorize fees?
+- [[Lewis v. Guthartz]], Fla. 1982, reading the 1977 statute: Were fees recoverable under 83.49(3)(c) when the dispute was over how large a deposit could be required?
+- [[Durene v. Alcime]], Fla. 3d DCA 1984, reading the 1981 statute: Is the tenant who recovered the deposit entitled to fees?
+- [[Malagon v. Solari]], Fla. 4th DCA 1990, reading the 1989 statute: Is the tenant who recovers the deposit the prevailing party when the landlord also recovers on a counterclaim?
+- [[Casey v. Picinich]], Fla. 4th DCA 1990, reading the 1987 statute: Is the tenant entitled to costs?
 
 ## How they relate
 

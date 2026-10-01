@@ -42,3 +42,33 @@ What was added or changed in the wiki, newest last. Entries are added, never rew
   Standard Guar. Ins. Co. v. Quanstrom, Stockman v. Downs, In re Revisions to Simplified Forms (2010).
 - One misquote caught by `python wiki.py check` while writing (Meli's disposition) and fixed. Then: 29
   pages, 0 problems, 0 warnings. No page verified yet.
+
+## 2026-10-01 the remaining 65 opinions ingested
+
+- Method: a workflow of nine agents read the 65 opinions in full (related opinions together) and wrote one
+  JSON draft per case; each draft was checked by code before it was handed back (every quote word for word
+  in its opinion). Topics were then settled by hand from the 77 names the agents proposed: synonyms merged
+  (for example eviction or ejectment, contract for sale, contract for deed, lease or license, and transient
+  occupancy into Whether there is a tenancy), procedural one-offs dropped. Pages were rendered by code from
+  the drafts, with pins computed from the star pages and links added both ways. A second workflow wrote the
+  27 new topic pages and extended 8 existing ones (six writers), and three reviewers read the prose of the
+  65 new case pages and all 40 topic pages for anything that states the law, says which side a case
+  favors, or is not supported by the opinion: 39 case-page lines and 12 topic-page lines reworded.
+- Now: 81 case pages (every opinion in `cases/`) and 40 topics. 28 case pages have no section tag, each
+  with a scope note: opinions decided under part I, before the 1973 Act, on commercial leases, in criminal
+  or federal court, or on matters that are not landlord and tenant.
+- Found while reading: many candidate-list entries are not residential landlord-tenant cases. Not landlord
+  and tenant at all: Moritz (buying a lot), Prosperi (mechanic's lien), Kendall East (a house sale), Lefemine
+  (buying a residence), Cupeiro (an aircraft lease), Purcell (contract for deed). Commercial leases:
+  Berwick, Ralston, Bodden, Multach, Kaplan, Clark v. Hiett (638 acres for sod), Malt, Zhang, Colonial
+  Promenade, John's Pass. Criminal: Morse, Wolf. Federal district court: Mann.
+- Tags set by the court's own reading: Lockamy (only the dissent reads part II) and Wolf (the majority names
+  part II only as the basis of counsel's instruction) have no tag.
+- Questions for the author, from the writers and reviewers: Stephens-Williams cites 83.56(5)(a)(3) (2014)
+  for the three-day notice, a number that falls in today's partial-rent sentences; whether to tag 83.45 on
+  Exculpatory clauses in a lease, 83.505 on Three-day notice for nonpayment of rent, and 83.55 on Proximate
+  cause of injuries on the premises; whether Mansur, Torres, Lockamy, and Smith should also name Landlord's
+  notice of a dangerous condition; Salmonte (fees with no stated basis) under Prevailing party fees under
+  83.48, and Solomon (83.42, 83.43) under Landlord's maintenance duties under 83.51; Crocker (51.011
+  summary procedure) has no tag though today's 83.59 points to that procedure.
+- `python wiki.py check`: 121 pages, 0 problems, 0 warnings. No page verified yet.

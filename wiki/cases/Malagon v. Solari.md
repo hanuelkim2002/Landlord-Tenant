@@ -60,7 +60,7 @@ Reasoning:
 
 - Follows [[Durene v. Alcime]]; the sentence is quoted under the set-off issue above.
 - Cites [[Florida Patient's Compensation Fund v. Rowe]] on reducing a fee for lack of success, noting a later change: "modified on other grounds, Standard Guar. Ins. Co. v. Quanstrom, 555 So.2d 828 (Fla.1990)." (at 354)
-- Cites Kendall East Estates, Inc. v. Banks, 386 So. 2d 1245 (Fla. 3d DCA 1980), which is in `cases/` and has no page yet.
+- Cites [[Kendall East Estates, Inc. v. Banks]] (Fla. 3d DCA 1980).
 
 ## Disposition
 

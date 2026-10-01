@@ -16,11 +16,11 @@ Today's stored text:
 
 ## Cases
 
-- [[Durene v. Alcime]], Fla. 3d DCA 1984, reading the 1981 statute: does a late notice bar all of the landlord's damage claims, or only claims against the deposit?
-- [[Casey v. Picinich]], Fla. 4th DCA 1990, reading the 1987 statute: what follows from an untimely notice?
-- [[Malagon v. Solari]], Fla. 4th DCA 1990, reading the 1989 statute: could the landlord's counterclaim damages be set off against the deposit?
-- [[Florida Bar re Approval of Forms (1991)]], Fla. 1991: the approved form for the notice, citing the 1990 statute.
-- [[Plakhov v. Serova]], Fla. 4th DCA 2012, reading the 2009 statute: was the notice required when the tenant moved out early without the 83.49(5) notice?
+- [[Durene v. Alcime]], Fla. 3d DCA 1984, reading the 1981 statute: Does a late notice of claim bar all of the landlord's damage claims, or only claims against the deposit?
+- [[Malagon v. Solari]], Fla. 4th DCA 1990, reading the 1989 statute: Could the landlord's counterclaim damages be set off against the deposit?
+- [[Casey v. Picinich]], Fla. 4th DCA 1990, reading the 1987 statute: What follows from the landlord's untimely notice of claim?
+- [[Florida Bar re Approval of Forms (1991)]], Fla. 1991, reading the 1990 statute: on this topic outside the issues it decided; see the case page.
+- [[Plakhov v. Serova]], Fla. 4th DCA 2012, reading the 2008 and 2009 statutes: Was the landlord's notice of claim required when the tenant moved out early without notice?
 
 ## How they relate
 

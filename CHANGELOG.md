@@ -5,6 +5,19 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Case wiki: the remaining 65 opinions ingested, so every opinion in `cases/` has a page (81 case pages,
+  40 topics; TODO item 24). Run as two workflows, with the author's go-ahead: nine agents read the
+  opinions in full and wrote JSON drafts, each checked by code before hand-back (every quote word for word
+  in its opinion); topics were settled by hand from the 77 proposed names (synonyms merged, one-offs
+  dropped); the pages were rendered by code from the drafts (pins computed from star pages, links added both
+  ways, each topic's Cases list built from the case pages); then six agents wrote the 27 new topic pages and
+  extended 8 existing ones, and three reviewers read all new prose (39 case-page and 12 topic-page lines
+  reworded). By hand after: duplicate topic links removed, Lockamy and Wolf untagged (their part II
+  sections come only from a dissent or from counsel's requested instruction), Ray added to Landlord's
+  liability for criminal attacks on tenants, a statute year no longer read from "§ 1983". 28 pages are
+  untagged with scope notes. Found: many candidate-list entries are commercial leases, criminal cases, or
+  not landlord and tenant at all (listed in `wiki/log.md`). `python wiki.py check`: 121 pages, 0 problems,
+  0 warnings. No page verified.
 - Case wiki: a case page may have no section tag (`sections: []`) if it carries a `scope_note` saying why
   (part I, before the Act, a federal case, or a general case citing no section of ch. 83). Was: every case
   page needed a part II tag, so the 24 remaining opinions that read none could not be ingested honestly

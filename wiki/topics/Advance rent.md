@@ -14,7 +14,7 @@ Today's stored text:
 
 ## Cases
 
-- [[Atlantis Estate Acquisitions, Inc. v. DePierro]], Fla. 4th DCA 2013: was a year's rent paid in one lump sum advance rent? Even if it were, did the landlord have to return the unused part? Could the tenants recover it as unjust enrichment?
+- [[Atlantis Estate Acquisitions, Inc. v. DePierro]], Fla. 4th DCA 2013, no statute year stated: Was a year's rent paid in one lump sum advance rent that had to be held separately? Even if it were advance rent, did the landlord have to return the unused part after ending the lease? Could the tenants recover the rent as unjust enrichment?
 
 ## How they relate
 

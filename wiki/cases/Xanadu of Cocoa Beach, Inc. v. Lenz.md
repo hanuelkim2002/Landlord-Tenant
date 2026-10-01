@@ -43,7 +43,7 @@ Reasoning:
 
 ## Related
 
-- Cites none of the other case pages.
+- [[Lakeway Management Co. of Florida v. Stolowilsky]] cites this case: "See & compare, Xanadu of Cocoa Beach, Inc. v. Lenz, 504 So.2d 518 (Fla. 5th DCA 1987)" ([[Lakeway Management Co. of Florida v. Stolowilsky]] at 951)
 
 ## Disposition
 
