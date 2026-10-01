@@ -136,13 +136,17 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   plain helpers `pretty`, `quote_is_real`, and `build_letter`. Imports `record`, `config`, `corpus`,
   `deterministic`, `sheet`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
 - `agent.py`: `RULES` (the fixed part of the system prompt; if the environment sets `RULES_FILE`, that
-  file's text replaces it for the run, for trying versions of the rules), `intake` (classify, propose facts, save; for a
+  file's text replaces it for the run, for trying versions of the rules), `rules_for(messages)` (`RULES`
+  with its two markers filled: `[RULE 6]` with `LETTER_RULE` once a letter is in play, i.e. a tenant
+  message in the chat matches `LETTER_WORDS` (letter, draft, write, writing) or the matter has a `draft`
+  event, else nothing; `[RULE 8]` with `CASE_RULE` when CASE TOPICS has a topic, else `NO_CASES_RULE`, one
+  line saying there are none; a `RULES_FILE` without the markers is used as is), `intake` (classify, propose facts, save; for a
   new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
   add new issues, propose facts from the update, save; returns the issues it added). Neither builds the agent: `run.py` runs the intake
   sheet first, then `build_agent`.
-  `system_prompt()` (the whole system prompt, built from the record as it stands),
-  `prompt_from_record` (LangChain `dynamic_prompt` middleware that calls `system_prompt()` before every
-  model call), `build_agent` (a LangChain agent with that middleware and an in-memory checkpointer; no
+  `system_prompt(messages=())` (the whole system prompt, built from the record as it stands and, for the
+  rules, the chat's messages so far), `prompt_from_record` (LangChain `dynamic_prompt` middleware that
+  calls `system_prompt(request.messages)` before every model call), `build_agent` (a LangChain agent with that middleware and an in-memory checkpointer; no
   model call), `transcript_entry` (one thread message as a transcript line), and `chat` (the terminal loop; its
   thread id is the session id when one is open). Each turn, `chat` writes the tenant's message to the
   transcript before the model runs (so `propose_facts` can check the tenant's words), then every new message
@@ -440,7 +444,10 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`: version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 1,130 words with a rule
+1. `RULES`, through `rules_for`: 884 words always, plus rule 6 on letters (129 words) once a letter is in
+   play, and rule 8 on cases in full (94 words) when there is a case topic, otherwise one line (since
+   2026-10-01; rule 1's line on asking how a requested letter will be sent moved into rule 6, which already
+   asked it). Version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 1,130 words with a rule
    on cases added after it (TODO item 25) and later fixes for TODO item 23: rule 1's notices-clause line applies only to a requested letter; a pair for legality questions (quote, then "This tool does not decide that."); rule 2's fallback sentence used exactly, and cite the subsection the words sit in; rule 3 names the echoed empty result; rule 4 adds an example of asking for sheet facts. A role
    paragraph (organize lease, statute, and record side by side; not a lawyer; never advise, send, or work
    out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.

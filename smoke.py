@@ -33,7 +33,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
 from timeline import render_deadlines, render_timeline
-from agent import NOT_DECIDED, check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
+from agent import CASE_RULE, LETTER_RULE, NO_CASES_RULE, NOT_DECIDED, check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
 from tools import build_letter, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts
 from tools import tools as model_tools
 
@@ -423,6 +423,13 @@ try:
     # topics, prints by code, and is logged; an untagged page never shows; a case cite must be one shown
     check("no case topic is offered while no page is verified, and the prompt says so",
           offered_topics() == {} and "CASE TOPICS (for get_cases; number of cases on each):\nnone for these issues" in system_prompt())
+    # rules that can apply only sometimes (agent.rules_for): letters once a letter is in play, cases in full
+    # only with a topic to offer
+    check("the letter rule is in when a letter is in play: a letter drafted (this matter has one), or asked for",
+          any(ev["kind"] == "draft" for ev in read_events()) and LETTER_RULE in system_prompt()
+          and LETTER_RULE in system_prompt([HumanMessage(content="Can you write a letter to my landlord?")]))
+    check("with no case topic, rule 8 is one line saying there are none",
+          NO_CASES_RULE in system_prompt() and CASE_RULE not in system_prompt())
     verified_copy = Path(tempfile.mkdtemp()) / "wiki"
     shutil.copytree(WIKI, verified_copy)
     verify("Durene v. Alcime", "Smoke", verified_copy)
@@ -432,6 +439,7 @@ try:
         offered = offered_topics()
         check("a verified, tagged page offers its topics for the active sections; an untagged one does not",
               offered.get("Landlord's notice of claim on the deposit") == 1 and "Constructive eviction" not in offered)
+        check("with a case topic offered, rule 8 is the full rule", CASE_RULE in system_prompt())
         topic = "Landlord's notice of claim on the deposit"
         call = AIMessage(content="", tool_calls=[{"name": "get_cases", "args": {"topic": topic}, "id": "k1"}])
         shown_msg = get_cases.invoke({"type": "tool_call", "id": "k1", "name": "get_cases", "args": {"topic": topic}})
@@ -646,6 +654,17 @@ def answer_by_type(shown_so_far):
                 return answer
         return "?"
     return ask
+
+# the letter rule on a matter with no letter drafted (the test matter's history has one, so it is emptied)
+make_scratch("t-smoke-rules")
+try:
+    (MATTERS / "t-smoke-rules" / "m-001" / "events.jsonl").write_text("")
+    load_matter("t-smoke-rules", "m-001")
+    check("the letter rule is left out while no letter is in play",
+          LETTER_RULE not in system_prompt([HumanMessage(content="What are my deadlines?")])
+          and LETTER_RULE in system_prompt([HumanMessage(content="Can you help me write something to send them?")]))
+finally:
+    remove_scratch("t-smoke-rules")
 
 make_scratch("t-smoke-playbooks")
 try:

@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Rules that can apply only sometimes go in only then (`agent.rules_for`). Was: all nine rules in every
+  prompt (1,130 words); a rule about a letter nobody asked for was copied out of context in the trial ("How
+  will you send it?", month-to-month story). Now rule 6 (letters) joins once a letter is in play (the
+  tenant's words in the chat mention a letter or writing one, `LETTER_WORDS`, or the matter has a drafted
+  letter), and rule 8 (cases) is in full only when CASE TOPICS has a topic, otherwise one line: no cases for
+  these issues, never name one from memory, and the fixed reply. Rule 1's line on asking how a requested
+  letter will be sent moved into rule 6, which already asked it. Rule numbers stay as they were.
+  `system_prompt` takes the chat's messages (`prompt_from_record` passes them; `given_text` too).
+  `RULES_FILE` still replaces the whole text. Three smoke checks, one on a scratch matter with no letter.
 - The program prints "This tool does not decide whether any of this applies to you." under a reply that
   quotes the statute without saying the tool does not decide (TODO item 30, done). Was: only rule 1 asked the
   model to end a legality answer with "This tool does not decide that."; it left the line out in 1 of 3

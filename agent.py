@@ -1,6 +1,7 @@
 """Agent: the rules, intake (builds the system prompt and returns an agent), and the chat loop."""
 import json
 import os
+import re
 from pathlib import Path
 
 import yaml
@@ -37,8 +38,7 @@ Instead: Fla. Stat. 83.56(1): "[the whole sentence, copied]". Nothing on whether
 Not: "(landlord must return deposit if no claim)" or "Landlord's deadline to remit balance if you object" (the statute's sentence begins "Unless the tenant objects").
 Instead: quote the sentence; never retell a provision.
 Not: "You must choose from the lease's notice methods."
-Instead: only for a letter the tenant asked for (rule 6), quote the notices clause from LEASE PROFILE and ask
-how they will send it. With no letter requested, say nothing about sending anything.
+Instead: with no letter requested, say nothing about sending anything.
 Not: "The statute does not answer whether the notice was timely given the termination date."
 Instead: say nothing on whether anything was timely, late, valid, or complied with.
 Not: "The lease and statute text I have do not answer whether the entry was legal."
@@ -75,26 +75,49 @@ Instead: read facts in ELEMENT STATUS; for anything the tenant states, call prop
 Not: "Which date do you consider the termination of the rental agreement: the date you moved out or the date the tenancy terminated?"
 Instead: "The statute does not settle this:" then the open question's text. Never resolve one or ask the tenant to.
 
-6. Letters only when the tenant asks, only through draft_letter.
-Not: drafting, then asking the posture, then drafting again; or asking for days after the tenant wrote "Give them 5 days".
-Instead: before draft_letter, ask once for whatever is missing: which issue (if more than one), what they want the landlord to do, days to reply, how they will send it (quote the notices clause), and the posture.
-Not: "Preserve is the gentle option."
-Instead: copy the playbook's preserve, assert, and escalate lines word for word in quote marks and ask which; for assert or escalate, name the sentence the letter will quote.
-After draft_letter, reply only: "The letter appears above; tell me if you want changes." Changes go through draft_letter again. Never write or rewrite a letter yourself.
+[RULE 6]
 
 7. Record each message the tenant pastes or describes with add_communication.
 Not: a summary of the landlord's email as the text.
 Instead: the text exactly as given; if its date is missing, ask for it first.
 For a letter the tenant says they sent: sender "tenant", recipient "landlord", sent_on the date sent, channel the delivery method, and as text the draft's file name (draft_YYYY-MM-DD_issue_posture.txt, with the letter's date) then any tracking number. Ask for whatever is missing.
 
-8. Cases only through get_cases, which the program prints.
-Not: "In Durene v. Alcime the court held a late notice forfeits the deposit, so your landlord forfeited yours." or any case named from memory.
-Instead: when the tenant asks what courts or cases say, call get_cases alone, with the topic's exact name from CASE TOPICS; the program prints the cases and your turn ends there. Never quote, summarize, rank, or choose among cases yourself. If no topic in CASE TOPICS fits, write exactly "This tool has no cases on that." and nothing after "that".
+[RULE 8]
 
 9. Offer nothing the tenant did not ask for.
 Not: "Do you want to send a written objection to the landlord's claim?", "Would you like to proceed with any action based on this deadline?", "If you would like me to draft a letter..."
 Instead: end with the last quote or fact. Ask a question only when you need its answer for what the tenant asked. No offers, no next steps.
 """
+
+# Rules 6 and 8 go in only when they can apply (rules_for): a rule about something that is not happening was
+# copied out of context in the trial ("How will you send it?" with no letter asked for, month-to-month story).
+LETTER_RULE = """6. Letters only when the tenant asks, only through draft_letter.
+Not: drafting, then asking the posture, then drafting again; or asking for days after the tenant wrote "Give them 5 days".
+Instead: before draft_letter, ask once for whatever is missing: which issue (if more than one), what they want the landlord to do, days to reply, how they will send it (quote the notices clause), and the posture.
+Not: "Preserve is the gentle option."
+Instead: copy the playbook's preserve, assert, and escalate lines word for word in quote marks and ask which; for assert or escalate, name the sentence the letter will quote.
+After draft_letter, reply only: "The letter appears above; tell me if you want changes." Changes go through draft_letter again. Never write or rewrite a letter yourself."""
+
+CASE_RULE = """8. Cases only through get_cases, which the program prints.
+Not: "In Durene v. Alcime the court held a late notice forfeits the deposit, so your landlord forfeited yours." or any case named from memory.
+Instead: when the tenant asks what courts or cases say, call get_cases alone, with the topic's exact name from CASE TOPICS; the program prints the cases and your turn ends there. Never quote, summarize, rank, or choose among cases yourself. If no topic in CASE TOPICS fits, write exactly "This tool has no cases on that." and nothing after "that"."""
+
+NO_CASES_RULE = """8. This tool has no cases for these issues. Never name a case from memory. Asked what courts or cases say, write exactly "This tool has no cases on that." and nothing after "that"."""
+
+# Rule 6 joins once a letter is in play: the tenant's words in this chat mention a letter or writing one, or a
+# letter was already drafted for this matter.
+LETTER_WORDS = re.compile(r"\b(letters?|draft|write|writing)\b", re.I)
+
+
+def rules_for(messages):
+    """RULES with rule 6 (letters) only once a letter is in play, and rule 8 (cases) in full only when CASE
+    TOPICS has a topic (one line saying there are none otherwise). A RULES_FILE without the markers is used
+    as is."""
+    letters = (any(m.type == "human" and LETTER_WORDS.search(str(m.content)) for m in messages)
+               or any(ev["kind"] == "draft" for ev in read_events()))
+    return (RULES.replace("[RULE 6]\n\n", LETTER_RULE + "\n\n" if letters else "")
+                 .replace("[RULE 8]", CASE_RULE if offered_topics() else NO_CASES_RULE))
+
 
 # RULES_FILE in the environment swaps in another rules text for one run, for trying versions of the rules,
 # e.g. RULES_FILE=/path/rules_b.txt python dev/live_run.py ... The text above stays the default.
@@ -151,9 +174,9 @@ def resume(update_text):
 # ---- System Prompt and Agent: the prompt is built from whatever the record holds at the moment the model is
 # called, on every call, so facts confirmed on the sheet and issues added mid-chat reach the model at once.
 
-def system_prompt():
-    """The rules, the lease profile, each active issue's guidance and open questions, the statute sections,
-    and the element status, as the record stands now."""
+def system_prompt(messages=()):
+    """The rules (rules_for the chat so far, `messages`), the lease profile, each active issue's guidance and
+    open questions, the statute sections, and the element status, as the record stands now."""
     matter = record.matter
     sections = sorted({s for pb in active_playbooks() for s in pb.sections})   # an issue with no playbook adds none
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
@@ -163,7 +186,7 @@ def system_prompt():
         yaml.safe_dump({"issue": pb.issue, "guidance": pb.guidance, "open_questions": pb.spec.open_questions},
                        sort_keys=False, allow_unicode=True, width=110)
         for pb in active_playbooks())
-    return (RULES
+    return (rules_for(messages)
             + "\n\nLEASE PROFILE:\n" + record.profile.model_dump_json(indent=2)
             + "\n\nPLAYBOOKS:\n" + playbook_text
             + "\n\nSTATUTE SECTIONS:\n" + hot
@@ -180,7 +203,7 @@ def case_topics_text():
 @dynamic_prompt
 def prompt_from_record(request):
     """LangChain calls this before every model call and uses what it returns as the system prompt."""
-    return system_prompt()
+    return system_prompt(request.messages)
 
 
 def build_agent():
@@ -227,7 +250,7 @@ def given_text(messages):
                     if record.profile else [])
     updates = [ev["text"] for ev in read_events() if ev["kind"] == "tenant_update"]
     thread = [str(m.content) for m in messages if m.type != "ai"]
-    return "\n".join([system_prompt(), record.matter.get("description", ""), *lease_quotes, *updates, *thread])
+    return "\n".join([system_prompt(messages), record.matter.get("description", ""), *lease_quotes, *updates, *thread])
 
 
 def check_reply(text, messages):
