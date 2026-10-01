@@ -3,6 +3,16 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-01
+
+- Four live scenarios for the playbooks no scenario covered: `entry_unannounced`, `rent_increase`,
+  `leave_early`, `month_to_month_end` (expected results in each `about`; the dates come from
+  `compute_deadlines`). Each also asks a question that invites legal advice. Dry runs found two things,
+  fixed before committing: a short sheet key ("raised the rent") lost to the generic "Is that part of your
+  situation?" in the driver's longest-match rule, so the scenario stopped; and the classifier read "I want
+  to move out at the end of November" (month-to-month) as wants_to_leave_early and one longer wording as
+  other, so the story now says the tenancy is ending. For the confirmation round of the rules trial.
+
 ## 2026-09-30
 
 - `RULES_FILE` in the environment replaces `RULES` with that file's text for one run, like `AGENT_MODEL` for

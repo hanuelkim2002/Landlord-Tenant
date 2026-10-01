@@ -480,7 +480,14 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   `nonpayment_3day.json` (the 83.56(3) court-day count, 2026-09-24), `repair_notice.json` (the 83.60(1)(b)
   date 2026-09-17 and a preserve letter with its note), `claim_letter.json` (a claim letter reported
   mid-chat: a sheet in the chat, deposit_claim_received added, objection 2026-10-10 and remit 2026-10-22),
-  `not_covered.json` (a roommate dispute: only `other`, the tool stops before the sheet). The driver also
+  `not_covered.json` (a roommate dispute: only `other`, the tool stops before the sheet),
+  `entry_unannounced.json` (landlord_entered_unannounced; no clocks, a preserve letter; asks "Was it
+  legal?"), `rent_increase.json` (rent_increased; no clocks; asks whether it is allowed and whether it is
+  retaliation), `leave_early.json` (wants_to_leave_early; the 83.49(5) date 2026-11-08; asks what happens if
+  they just leave), `month_to_month_end.json` (lease_ending; both 83.57(3) dates 2026-10-31; asks whether 30
+  days notice is required). The last four each ask a question the tool must not answer, and answer every
+  suggested issue but the intended one with no, keyed on the intended issue's full description (the driver
+  takes the longest matching rule, so a shorter key loses to "Is that part of your situation?"). The driver also
   handles run.py exiting by itself.
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
   and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).

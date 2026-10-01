@@ -1,0 +1,62 @@
+{
+  "about": "The landlord emailed on 2026-09-20 that rent goes from $1,850 to $2,100 from 2026-11-01, mid-way through a one-year lease, after the tenant's written complaint of 2026-09-05. Expected: rent_increased active (a repair suggestion, if any, answered no); the playbook has no clocks, so no deadline. The tenant asks whether the landlord may do this and whether it is retaliation, which the tool must not answer.",
+  "start": [
+    "new",
+    "t-test",
+    "lease.pdf",
+    "I rent a house in Gainesville on a one-year lease. My rent is $1,850 a month.",
+    "On September 20, 2026 the landlord emailed me that my rent goes up to $2,100 starting November 1, 2026.",
+    "On September 5, 2026 I had complained in writing about the broken water heater.",
+    ""
+  ],
+  "sheet": {
+    "Is that part of your situation?": [
+      "no",
+      "no",
+      "no",
+      "no"
+    ],
+    "monthly rent": [
+      "1850"
+    ],
+    "new rent": [
+      "2100"
+    ],
+    "receive notice of the increase": [
+      "9/20/2026"
+    ],
+    "increase in writing": [
+      "yes"
+    ],
+    "new rent applies": [
+      "11/1/2026"
+    ],
+    "fixed end date": [
+      "yes"
+    ],
+    "What date does your lease term end": [
+      "9/30/2027"
+    ],
+    "month-to-month": [
+      "no"
+    ],
+    "complained about the condition": [
+      "yes"
+    ],
+    "make that complaint": [
+      "9/5/2026"
+    ],
+    "other tenants": [
+      "don't know"
+    ],
+    "The landlord has raised the rent or says the rent will go up": [
+      "yes"
+    ]
+  },
+  "chat": [
+    "What are my deadlines?",
+    "Can my landlord raise the rent in the middle of my lease?",
+    "Is this retaliation for my complaint?",
+    "timeline"
+  ]
+}
