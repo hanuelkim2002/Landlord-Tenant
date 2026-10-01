@@ -30,92 +30,24 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 
 ## Model behavior (later)
 
-Slips seen in live runs. Logged, not fixed yet: rules and prompts get tuned after the structure is right,
-and some may go away with a more capable model. Rule numbers in items 4 to 13 are the old fifteen rules
-(until 2026-09-30); DOCUMENTATION.md, The system prompt, maps them to the seven of 2026-09-30. Items 15
-to 22 use the seven, whose rules 1 to 7 cover the same ground as the current rules (version F, from
-2026-10-01); items 23 on use the current rules.
+Slips seen in live runs and not fixed yet. Rule numbers are the current rules (version F, adopted
+2026-10-01). Items 4 to 23, logged under earlier rule sets, were taken off on 2026-10-01: most are now
+handled in code (deadlines printed by the program, the empty-reply retry, the duplicate-draft stop, the
+quote and cite checks) or by the current rules, which showed none of those slips in the trial
+(`docs/trials/2026-10-01-rules/`). CHANGELOG.md (2026-10-01) says where each went. Item numbers are never
+reused, so older references (smoke check names, the changelog) still point to the right slip.
 
-4. The model stated the remit clock's condition backwards: "Landlord's deadline to remit balance if you
-    object." 83.49(3)(b) begins "Unless the tenant objects." A rule 13 breach close to the playbook's own
-    failure mode (2026-09-27, resume run on `t-test/test-002`). The clock's quote no longer reaches the
-    model since only `guidance` is pasted.
-5. In the same run the model summarized 83.49 in its own words instead of quoting it (rule 1), and
-    added words the sentence does not have ("objects in writing within 15 days"). Since 2026-09-29
-    `citations.check_quoted` flags the added words when they are inside quote marks; a paraphrase is not
-    checked.
-6. Since only `guidance` is pasted, the model mis-cited the forfeiture sentence as 83.49(3)(b) when
-    explaining the escalate posture (it is 83.49(3)(a)). The escalate line in `guidance.postures` names no
-    cite. Since 2026-09-29 `citations.check_quoted` flags this when the sentence is quoted next to the wrong
-    cite, naming the right subsection; described in the model's own words it is not caught.
-7. The model compared dates itself when confirming `early_or_periodic` ("Does that mean you moved out one
-    day before the lease ended?"). A rule 2 slip, seen once.
-8. After calling `propose_facts` the model still asks the tenant to confirm in the chat ("Is that
-    correct?"), though rule 3 says the sheet does it. Harmless: the sheet follows and is what counts.
-9. After calling `propose_facts`, the model told the tenant values were "as you just confirmed" before
-    the sheet had run (rule 9). Seen 2026-09-27; the sheet still decided. Seen again 2026-09-30 (claim
-    scenario, `t-test/m-015`): the reply listed the claim letter's dates (2026-09-22, 2026-09-25) under
-    "Your confirmed dates" before the sheet asked about them.
-10. Reporting the 83.56(3) court-day date, the model did not show the date the notice itself states next
-    to it, as the playbook's failure modes ask, and closed with "Would you like to proceed with any action
-    based on this deadline?" (live run 2026-09-27, `t-test/m-002`). The timeline shows both dates.
-11. Explaining the escalate posture for repair_not_made, the model said the tenant "may terminate the lease
-    under Fla. Stat. 83.56(1)" (rule 13); the playbook only says the posture adds the quoted sentence
-    (2026-09-28, repair scenario).
-12. In the claim scenario the model suggested the letter's printed date (2026-09-22) as the date it was
-    received; the sheet asked and the tenant's typed 2026-09-25 replaced it (logged as corrected).
-13. In the same reply as item 9's second sighting, the model wrote "Lease term ended: 2026-09-30" next to
-    the lease quote "ending at 11:59 p.m. on September 30, 2027": a date that is neither the lease's nor the
-    tenant's (7/31/2026), in the list it called confirmed (2026-09-30, `t-test/m-015`). Not caught: the
-    quote beside it is real, and a date outside quote marks is not checked.
-15. New rules on nemotron (2026-09-30, `t-test/m-017` to `m-019`): rule 1's "built only from these parts,
-    under short labels" made replies terse. A deadline without its counting line, status, or actor (m-017);
-    statute and lease quotes with no quote marks or source, and facts as raw field names (m-019), so the
-    quote check could not see the quotes and the cite check flagged 83.505 from inside one. Letter offers
-    went on in 2 of 3 runs although rule 1 now forbids them.
-16. In m-019 the model wrote "The statute does not settle the question of whether the notice was given within
-    the required time." Not one of the playbook's open questions; it frames the landlord's compliance as an
-    issue (rule 1).
-17. An empty reply after `get_deadlines` (repair scenario, m-018): the tenant saw nothing. Three replays of the
-    turn gave normal replies. nemotron returns a separate `reasoning_content` field the chat loop never reads.
-18. gpt-oss-120b on the scenarios (2026-09-30, m-021 to m-024; the default stays nemotron): shortened the
-    tenant's words with "..." in `propose_facts`, which was refused, so the claim scenario never got
-    deposit_claim_received or its two deadlines, and then asked in the chat whether a notice was received
-    (rule 4); invented a quote of the landlord's letter and cited a 83.60 quote to (1)(b) when it runs from
-    (1)(a) (both flagged by `check_quoted`); described the clocks in its own words ("landlord must return
-    deposit if no claim", rule 2); printed ELEMENT STATUS values as a column of quoted "true"/"false"; asked
-    again for letter details the tenant had already given. It copied the posture lines word for word,
-    showed the notice's stated date next to the 83.56(3) date (item 10), and never left a reply empty.
-19. After the harness fixes (2026-09-30, nemotron, m-025 to m-028): 3 slips in 6 replies, all scenarios as
-    expected, no cautions, no empty replies. Left: a statute quote with no source (m-026) and a lease quote
-    with neither quote marks nor source, next to the tenant's own words also unquoted (m-027), so the quote
-    check could not see them (rule 2); a next step pointing to a legal action, "Do you want to send a written
-    objection to the landlord's claim?" (m-027, rule 1); and in all three chat runs a line of the printed
-    deadlines repeated (`"deadline": "2026-09-24"`), harmless but against rule 3.
-20. Letter steps out of order (m-026): the model drafted at once from the tenant's full request, then showed
-    the postures and asked which one, then drafted the same letter again. The second, identical draft is
-    stopped in code from 2026-09-30; the order of the steps is still the model's (rule 6).
-21. Item 12 again (m-027): the letter's printed date (2026-09-22) suggested as the date it was received; the
-    tenant typed 2026-09-25 on the sheet, logged as corrected.
-22. Second run of the harness setup (2026-09-30, nemotron, m-029 to m-032): 6 slips in 6 replies, against 3
-    in 6 the first time, so one run per scenario cannot measure a prompt change. Repeats: item 16 twice
-    ("The statute does not answer whether the notice was timely given the termination date"); item 19's
-    quotes without a source (m-029, m-031), the objection nudge (m-031), and the repeated deadline line in
-    all three runs; item 21, this time shown as "Fact: claim_notice_date: 2026-09-22" before the sheet (rule
-    4). New: the model asked the tenant to choose which date is "the termination of the rental agreement",
-    the playbook's open question `termination_date_meaning` (rule 5 says only that the statute does not
-    settle it). It also labelled its lines "Quote:", "Fact:", "Statement:", "Question:", reading rule 1's
-    parts literally. The duplicate-draft stop worked live (m-030: one draft event).
-23. Left with the current rules (version F) in the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), all
-    fixed 2026-10-01 and checked on reruns: "How will you send it?" with no letter requested (rule 1's
-    notices-clause line now applies only to a requested letter; 0 of 3 month-to-month reruns); "The lease and
-    statute text I have do not answer whether the entry was legal." (rule 1 now has a pair for legality
-    questions: quote, then "This tool does not decide that."; rule 2's fallback is used exactly); sheet facts
-    asked in the chat (rule 4 has the rent example); statute quotes cited to the wrong subsection (rule 2 has
-    the 83.64 example; `check_quoted` still catches any); `{ "deadlines": [] }` echoed (the program now
-    prints "No deadlines: ..." and rule 3 names the echo). Six reruns of the entry and rent stories showed
-    none of these. Still seen there, harmless: "The deadlines appear above." when the line above says there
-    are none.
+10. The printed 83.56(3) deadline does not show the date the notice itself states (`notice_stated_payment_date`)
+    next to it, which the nonpayment playbook's failure modes ask for; the timeline shows both. Now that the
+    program prints deadlines, this belongs in `render_deadlines` rather than with the model.
+12. The model suggests a claim letter's printed date as the date it was received (`claim_notice_date`; the
+    printed date is `claim_notice_dated`). Still seen with the current rules: 1 of 3 claim runs in the trial
+    (the old rules also 1 of 3). The sheet shows the suggestion and the tenant corrects it, logged as
+    corrected. (Item 21 was the same slip.)
+19. The model repeats a line of the printed deadlines, or says "The deadlines appear above." when the line
+    above says there are none (rule 3). Harmless. In the trial the current rules repeated a line in 4 of 18
+    replies; after rule 3 named the echo, none of the 6 reruns did, but those stories have no dates
+    (entry, rent), so the stories with dates were not rerun.
 
 ## Open questions
 

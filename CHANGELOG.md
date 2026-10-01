@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- TODO.md, Model behavior tidied: items 4 to 23 were logged under the fifteen rules and the seven, and
+  most are handled now. Taken off: 4, 11, 16 (saying what the law means), 7, 13 (dates the model worked out),
+  8, 9 (confirming in the chat, calling facts confirmed), 15 (terse replies under the seven rules' wording),
+  22 (a run record): none of these kinds in the current rules' trial runs; 5, 6 (misquotes, wrong
+  subsections): `check_quoted` flags them when quoted; 17 (empty reply): retried in code; 20 (duplicate
+  draft): stopped in code; 18 (gpt-oss-120b): a model comparison, nemotron kept; 23: fixed. Kept, with
+  their numbers: 10 (the notice's stated date next to the 83.56(3) date, now a `render_deadlines` change),
+  12 (a claim letter's printed date suggested as the date received; seen again with the current rules, 1
+  of 3 claim runs; item 21 folded in), and 19, narrowed to the repeated deadline line. Numbers are not
+  reused, so the smoke check names that cite items 5, 6, and 11 stay accurate. No code changed.
 - Rules: the rest of TODO item 23. Rule 1 gains a pair for questions about whether something was legal,
   allowed, timely, or valid ("Not:" the fallback sentence with "whether the entry was legal" attached;
   "Instead:" quote the text on the point with its source, then only "This tool does not decide that.").
