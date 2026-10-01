@@ -9,7 +9,7 @@ not what is planned (that is TODO.md) or what changed (that is CHANGELOG.md).
 Listed from the bottom of the import chain up. Every module imports `config`. Everything imports without
 `UF_API_KEY`; only a model call needs it (see Running and testing).
 
-- `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `CASES`, `PLAYBOOKS`), the two model clients (`agent_llm` on
+- `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `CASES`, `WIKI`, `PLAYBOOKS`), the two model clients (`agent_llm` on
   `AGENT_MODEL`, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0; `AGENT_MODEL`
   is nemotron-3-super-120b-a12b unless the environment sets `AGENT_MODEL`, for trying another gateway
   model in one run; it drives the chat, `classify`, and `fill_facts`), and `squash`
@@ -56,7 +56,24 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `quote_label` names a quote in it by its first six words. These check that a cite exists and was
   available, and that quoted words are real and sit where they are cited. They cannot tell whether a cite
   fits a claim made in the reply's own words, and a paraphrase outside quote marks is not checked.
-  Imports `corpus`. Imported by `agent`, `smoke`.
+  Imports `corpus`. Imported by `agent`, `smoke`, `wiki`.
+- `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
+  `cases/` and `topics/` under the wiki folder, by name: `name`, `path`, `meta` from the YAML front matter,
+  `body`), `linked` (page names in a front matter field), `opinion(page)` (a case page's opinion from
+  `cases/` with its star pages taken out, so a quote may run across a page break, and where each page
+  starts; a star outside the opinion's own page range is the court's and stays), `pin` (the page a quote
+  starts on), `case_list(topic)` (a topic page's "## Cases" section), `check_quotes` (every quote is
+  word for word in its source, by `citations.is_in`, and starts on the page it cites; a statute quote must
+  be in the subsection it cites, by `where_in`; a straight-quoted passage of 20 or more characters with no
+  source is a problem), `lint(root)` (returns `(problems, warnings)`, lines starting with the page name:
+  also front matter fields, section tags in `statutes/`, links that go to no page, a case page's cite
+  against its file's first line, its `Rule:` and `Reasoning:` lines, every topic it names listing it in
+  "## Cases", an index out of date; warnings: a section tag the opinion never cites, a page changed since
+  it was verified), `render_index` and `write_index`, `page_hash` (the page without its three sign-off
+  lines), `verified(page)` (signed off and unchanged since), `verify(name, by, root)` (refused while the
+  page has a problem; sets `verified_by`, `verified_on`, `verified_hash`, rewrites the index), and
+  `check_wiki` (prints problems and warnings). `python wiki.py check | index | verify "<page>" "<name>"`.
+  Imports `citations`, `config`, `corpus`. Imported by `smoke`. Nothing in the chat reads the wiki yet.
 - `deterministic.py`: `check_elements` (element status), `court_days` (court business days from a
   county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
@@ -319,8 +336,25 @@ Citations" (parallel cites, e.g. Hankins v. Smith is `103_Fla_892.txt`, also 138
 Westlaw's KeyCite flag, synopsis and holdings, West headnotes and their `[n]` markers in the opinion (only
 numbers up to the opinion's headnote count; a bracketed number beyond it is the court's own), the copyright
 line, and the negative-treatment table. 81 files: 50 So. 3d 503 (the 2010 forms decision) is not built,
-because the print marks its added and deleted words by formatting, which plain text loses. Nothing reads
-`cases/` yet except the smoke checks.
+because the print marks its added and deleted words by formatting, which plain text loses. Read by
+`wiki.py` (quotes on wiki pages are checked against it) and the smoke checks; nothing in the chat reads it
+yet.
+
+`wiki/` (the case wiki, after Andrej Karpathy's LLM wiki; written by Claude Code in development sessions,
+never by a tenant session): `SCHEMA.md` (how pages are built: front matter, the quote syntax, the rule that
+prose describes and connects and never states the law, the case and topic page layouts, the ingest steps,
+what the checks cover), `cases/<Case name>.md` (one per opinion: front matter `kind`, `cite`, `file`,
+`court`, `decided`, `statute_read`, `sections` (tags), `topics` (links), and the sign-off fields
+`verified_by`, `verified_on`, `verified_hash`; then a line on court and posture, Facts, one section per
+issue as a question with `Topic:`, `Rule:`, `Reasoning:`, and any `Dissent:`, Statute read, Related,
+Disposition), `topics/<Topic>.md` (one per topic, made as cases raise them: `kind`, `sections`, the sign-off
+fields; what it covers, today's statute text when a section speaks to it, "## Cases" listing every case page
+that names it with its issue as a question, "## How they relate"), `index.md` (built by `write_index`:
+pages by section tag, topics with their cases, every case with its verification), and `log.md` (one entry
+per ingest or change, newest last). Quotes are written `"words" (at 1210)` for the page's own opinion,
+`"words" ([[Plakhov v. Serova]] at 1223)` for another case's, `"words" (Fla. Stat. 83.49(3)(a))` for the
+statute. Pilot of 2026-10-01: Durene v. Alcime, Casey v. Picinich, Plakhov v. Serova, and five topics; none
+verified yet. The folder opens in Obsidian as a vault; `.obsidian/` is gitignored.
 
 ## Tools the model can call
 
@@ -457,6 +491,7 @@ Offline checks (no model call, no key needed):
     python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook checks: every line OK
     python schemas.py                                                            # what the model sees per tool
     python dev/build_cases.py "<Westlaw print>"                                  # once: builds cases/
+    python wiki.py check                                                         # wiki checks: no problems
 
 - `python dev/build_cases.py <print>`: the print is the Westlaw Find and Print file (Rich Text, turned into
   plain text by macOS's `textutil`; a `.txt` is read as is). `split_print` finds each opinion (a cite on its
@@ -470,7 +505,11 @@ Offline checks (no model call, no key needed):
   with `load_matter` and prints `list_matters()`, then runs the playbook checks (one named check, "every
   playbook check is OK", fails if any line of `check_all_playbooks` does), element status and deadlines on hand-typed facts with today fixed at 2026-09-08, the case corpus (every file in `cases/`
   named for the cite on its first line, none of Westlaw's material, no headnote marker opening a line,
-  attorneys and parallel cites present, and `court_text` on a hand-typed opinion), a hand-typed update
+  attorneys and parallel cites present, and `court_text` on a hand-typed opinion), the case wiki (the real
+  pages pass `lint`; on a throwaway copy, a changed word, a wrong pin page also across a page break, a
+  quote with no source, a statute quote in the wrong subsection, a link to no page, and a case missing from
+  its topic's Cases list are each caught; a verified page stops counting as verified once edited; `verify`
+  refuses a page with a problem), a hand-typed update
   against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`
   refusing), the letter template, the cite checks (subsection markers in order in every stored section,
   each kind of bad cite flagged, and a real, shown but wrong cite passing), the quote checks (which cite goes

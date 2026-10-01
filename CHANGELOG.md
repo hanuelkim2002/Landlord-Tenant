@@ -5,6 +5,24 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Case wiki pilot (TODO item 24, first part): `wiki/` with `SCHEMA.md`, `index.md` (built by code),
+  `log.md`, three case pages (Durene v. Alcime, Casey v. Picinich, Plakhov v. Serova, each read in full from
+  `cases/`), and five topic pages made as the cases raised them (Landlord's notice of claim on the deposit;
+  Fees and costs in a suit over the deposit; Notice of how the deposit is held; Constructive eviction;
+  Points not raised in the trial court). Each case page has its issues as questions, each with Rule and
+  Reasoning quoted from the opinion with pin pages; topic pages quote today's stored statute beside the
+  version the courts read and record how the cases relate (Plakhov distinguishes Durene; Durene's set-off
+  sentence beside Plakhov's applying the deposit to damages; the 15-day period Durene read against today's
+  30). New module `wiki.py`: `lint` (every quote word for word in its source and on its cited page, also
+  across a page break; statute quotes in the cited subsection; no unsourced quote; links resolve; every case
+  listed on the topics it names; front matter; index current; warnings for a tag the opinion never cites and
+  a page changed since verified), `verify` (the author's sign-off, refused while a page has a problem,
+  undone by any later edit through a hash), `write_index`, and `python wiki.py check | index | verify`.
+  Before writing the smoke checks, each check was shown to catch its fault on a copy; one did not (a topic
+  "listed" a case only through a quote's source link) and now reads only the topic's Cases list. Eight
+  smoke checks; `config.WIKI`; CLAUDE.md guardrail (pages from `cases/` and `statutes/` only, run the
+  checks after an edit, only the author signs off); `.obsidian/` gitignored. No page verified. Smoke: all
+  checks OK; `python wiki.py check`: 8 pages, 0 problems, 0 warnings.
 - README and TODO: the casebook becomes a case wiki (after Andrej Karpathy's LLM wiki). Was: one YAML file
   per statute section, each holding predefined questions with the cases that answered them; the author
   found fixed questions too rigid, and a question can rest on two sections (deposit fees: 83.49(3)(c) and

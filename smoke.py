@@ -9,6 +9,7 @@ import contextlib
 import io
 import json
 import re
+import shutil
 import tempfile
 from datetime import date
 from pathlib import Path
@@ -20,10 +21,11 @@ import record
 from calendars import court_calendars
 from checks import check, make_scratch, remove_scratch, summary
 from citations import SUBSECTION_START, check_cites, check_quoted, quoted_passages, subsections
-from config import CASES, MATTERS
+from config import CASES, MATTERS, WIKI
 from corpus import check_all_playbooks, load_playbook, playbooks, statute
 from deterministic import check_elements, compute_deadlines, lease_value
 from dev.build_cases import court_text
+from wiki import lint, read_pages, verified, verify
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
 from sheet import pending_rows, run_sheet
@@ -136,6 +138,51 @@ check("the build keeps the caption and the court's text, drops the synopsis and 
       "beyond the headnote count", built.startswith("448 So.2d 1208\nDistrict Court of Appeal of Florida,\n"
       "Attorneys and Law Firms") and "\nWe agree. See 13 Fla. Law Weekly [1116] 1117.\n" in built
       and "Tenant sued." not in built and "West Headnotes" not in built)
+print()
+
+# the case wiki (wiki.py): the real pages pass every check, and on a throwaway copy each kind of fault is caught
+check("every wiki check is OK (python wiki.py check)", not lint()[0])
+wiki_copy = Path(tempfile.mkdtemp()) / "wiki"
+shutil.copytree(WIKI, wiki_copy)
+def wiki_fault(page, old, new):
+    """lint's problems with one change made to one page of the copy; the page is put back after."""
+    path = next(wiki_copy.glob(f"*/{page}.md"))
+    text = path.read_text()
+    path.write_text(text.replace(old, new, 1))
+    found = lint(wiki_copy)[0]
+    path.write_text(text)
+    return " | ".join(found)
+check("a wiki quote with a word changed is caught",
+      "is not in 448 So. 2d 1208" in wiki_fault("Durene v. Alcime", "readily available fund", "readily usable fund"))
+check("a wiki quote's wrong pin page is caught, also for a quote that runs across a page break",
+      "starts at 1210, not 1209" in wiki_fault("Durene v. Alcime", 'fund of money." (at 1210)', 'fund of money." (at 1209)')
+      and "starts at 1222, not 1223" in wiki_fault("Plakhov v. Serova", 'pretrial stipulation." (at 1222)',
+                                                   'pretrial stipulation." (at 1223)'))
+check("a wiki quote with no source is caught",
+      "a quote with no source" in wiki_fault("Casey v. Picinich", "Reasoning: none stated.",
+                                             'Reasoning: "the court gave no reasons for this at all".'))
+check("a statute quote cited to the wrong subsection is caught", "is in 83.49(3)(c), not 83.49(3)(b)" in wiki_fault(
+      "Fees and costs in a suit over the deposit", "(Fla. Stat. 83.49(3)(c))", "(Fla. Stat. 83.49(3)(b))"))
+check("a wiki link to no page is caught",
+      "goes to no page" in wiki_fault("Casey v. Picinich", "[[Durene v. Alcime]] (1984)", "[[Durene v Alcime]] (1984)"))
+check("a case missing from the Cases list of a topic it names is caught", "whose Cases list does not have it" in
+      wiki_fault("Constructive eviction", "- [[Plakhov v. Serova]], Fla. 4th DCA", "- Plakhov v. Serova, Fla. 4th DCA"))
+verify("Casey v. Picinich", "Smoke", wiki_copy)
+signed = verified(read_pages(wiki_copy)["Casey v. Picinich"])
+casey = wiki_copy / "cases" / "Casey v. Picinich.md"
+casey.write_text(casey.read_text().replace("pro se", "pro se, without a lawyer", 1))
+check("a verified wiki page counts as verified until it is edited, and the edit is a warning",
+      signed and not verified(read_pages(wiki_copy)["Casey v. Picinich"])
+      and any("changed since Smoke verified it" in w for w in lint(wiki_copy)[1]))
+durene = wiki_copy / "cases" / "Durene v. Alcime.md"
+durene.write_text(durene.read_text().replace("readily available fund", "readily usable fund"))
+try:
+    verify("Durene v. Alcime", "Smoke", wiki_copy)
+    refused = False
+except ValueError:
+    refused = True
+check("verify refuses a wiki page that has a problem", refused)
+shutil.rmtree(wiki_copy.parent)
 print()
 
 # a tenant fact next to the lease field its playbook names (compare_to): shown only when they differ

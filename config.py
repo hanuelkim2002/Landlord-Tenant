@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parent          # the project folder, wherever i
 MATTERS = ROOT / "matters"
 STATUTES = ROOT / "statutes"
 CASES = ROOT / "cases"                          # court opinions, the court's text only (dev/build_cases.py)
+WIKI = ROOT / "wiki"                            # the case wiki: case and topic pages written from cases/ (wiki.py)
 PLAYBOOKS = ROOT / "playbooks"
 
 UF_BASE_URL = "https://api.ai.it.ufl.edu"

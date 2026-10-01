@@ -43,6 +43,10 @@ student, not admitted.
   the author's Westlaw print with Westlaw's own material (headnotes, synopsis, KeyCite, negative treatment)
   left out, and checked by `smoke.py`. Never edit a case file by hand, and never write a case's words, cite,
   or holding from memory.
+- `wiki/` pages are written from `cases/` and `statutes/` only, following `wiki/SCHEMA.md`: the court's and the
+  statute's words only as sourced quotes, prose that never states the law. After any edit, run
+  `python wiki.py index` and `python wiki.py check`; no problem may remain. Never fill in a page's
+  `verified_by`; only the author signs off, with `python wiki.py verify`.
 - `statutes/` is a read-only corpus. Never edit it. Never write statutory text, a section number, or a
   deadline into a playbook, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
 - After any edit to a playbook YAML, run the playbook checks (`check_all_playbooks`, also run by `smoke.py`)
@@ -65,6 +69,7 @@ student, not admitted.
     bash setup.sh            # once: venv, pip install, .env from template, matters/
     source venv/bin/activate
     python dev/build_cases.py "<Westlaw print>"   # once: cases/ from the author's Westlaw Find and Print file
+    python wiki.py check     # the case wiki's checks; also index, and verify "<page>" "<name>" for the author
     python run.py            # new matter (lease, intake) or existing (what is new, resume), then the sheet, then chat
     python smoke.py          # offline checks, no key needed
     python smoke_online.py   # classify, fill_facts, resume; calls the model
