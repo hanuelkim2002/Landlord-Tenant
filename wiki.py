@@ -29,7 +29,7 @@ QUOTE = re.compile(r'"([^"\n]+)" \((?:at (\d+)|\[\[([^\]]+)\]\] at (\d+)|Fla\. S
 QUOTE_MARKS = re.compile(r'"[^"\n]{20,}"')      # any double-quoted passage; each must be a QUOTE with its source
 LINK = re.compile(r"\[\[([^\]|#]+)")            # [[Page name]], [[Page name|shown text]]
 STAR = re.compile(r"\*(\d+)")                   # a star page in an opinion: "*1210" starts page 1210
-REQUIRED = {"case": ["cite", "file", "court", "decided", "statute_read", "sections", "topics"],
+REQUIRED = {"case": ["cite", "file", "court", "decided", "statute_read", "topics"],
             "topic": []}
 SIGN_OFF = ("verified_by:", "verified_on:", "verified_hash:")   # set by verify, left out of the page's hash
 
@@ -147,6 +147,8 @@ def lint(root=WIKI):
         for section in meta.get("sections") or []:
             if section not in statute:
                 problems.append(f"{name}: tagged {section}, which is not in statutes/")
+        if kind == "case" and not meta.get("sections") and not meta.get("scope_note"):
+            problems.append(f"{name}: no section tag and no scope_note saying why")   # e.g. part I, or no ch. 83 cite
         for target in LINK.findall(page["path"].read_text()):
             if target.strip() not in pages:
                 problems.append(f"{name}: link [[{target}]] goes to no page")
@@ -189,8 +191,10 @@ def render_index(pages):
         lines += [f"### {section}", "", "Topics: " + (", ".join(tagged(topics, section)) or "none"),
                   "", "Cases: " + (", ".join(tagged(cases, section)) or "none"), ""]
     untagged = [f"[[{n}]]" for n, p in topics.items() if not p["meta"].get("sections")]
-    if untagged:
-        lines += ["### No section", "", "Topics: " + ", ".join(untagged), ""]
+    unread = [f"[[{n}]]" for n, p in cases.items() if not p["meta"].get("sections")]
+    if untagged or unread:
+        lines += ["### No section", "", "Topics: " + (", ".join(untagged) or "none"), "",
+                  "Cases (never loaded for a tenant): " + (", ".join(unread) or "none"), ""]
     lines += ["## Topics", ""]
     for n in topics:
         named_by = [f"[[{c}]]" for c, p in cases.items() if n in linked(p["meta"].get("topics"))]

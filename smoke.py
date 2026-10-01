@@ -165,6 +165,10 @@ check("a statute quote cited to the wrong subsection is caught", "is in 83.49(3)
       "Fees and costs in a suit over the deposit", "(Fla. Stat. 83.49(3)(c))", "(Fla. Stat. 83.49(3)(b))"))
 check("a wiki link to no page is caught",
       "goes to no page" in wiki_fault("Casey v. Picinich", "[[Durene v. Alcime]] (1984)", "[[Durene v Alcime]] (1984)"))
+check("a case page with no section tag must say why (scope_note)",
+      "no section tag and no scope_note" in wiki_fault("Casey v. Picinich", 'sections: ["83.49"]', "sections: []")
+      and "no section tag" not in wiki_fault("Casey v. Picinich", 'sections: ["83.49"]',
+                                             'sections: []\nscope_note: Reads part I only.'))
 check("a case missing from the Cases list of a topic it names is caught", "whose Cases list does not have it" in
       wiki_fault("Constructive eviction", "- [[Plakhov v. Serova]], Fla. 4th DCA", "- Plakhov v. Serova, Fla. 4th DCA"))
 verify("Casey v. Picinich", "Smoke", wiki_copy)

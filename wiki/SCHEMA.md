@@ -31,8 +31,13 @@ Case pages:
 - `file`: the opinion in `cases/`, e.g. `448_So2d_1208.txt`.
 - `court`: e.g. `Fla. 3d DCA`. `decided`: `YYYY-MM-DD`.
 - `statute_read`: each section with the year the court read, as the court states it.
-- `sections`: tags, the ch. 83 sections the opinion reads. Code loads pages by these. A tag the opinion
-  never cites is a warning.
+- `sections`: tags, the part II sections the opinion reads. Code loads pages by these. A tag the opinion
+  never cites is a warning. Empty (`[]`) for an opinion that reads no part II section: one decided under
+  part I (nonresidential), one before the Act, a federal case on other grounds, or a general case (fees,
+  contracts) that cites no section of ch. 83. Such a page is in the wiki for research and is never loaded
+  for a tenant.
+- `scope_note`: required when `sections` is empty, one line on why, e.g. `Reads 83.20, part I
+  (nonresidential), not part II.` or `Cites no section of ch. 83; a general fee case.`
 - `topics`: links to the topic pages the case speaks to.
 - `verified_by`, `verified_on`, `verified_hash`: left empty; set by `verify`.
 

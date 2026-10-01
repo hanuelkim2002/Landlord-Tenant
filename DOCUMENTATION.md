@@ -66,7 +66,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   word for word in its source, by `citations.is_in`, and starts on the page it cites; a statute quote must
   be in the subsection it cites, by `where_in`; a straight-quoted passage of 20 or more characters with no
   source is a problem), `lint(root)` (returns `(problems, warnings)`, lines starting with the page name:
-  also front matter fields, section tags in `statutes/`, links that go to no page, a case page's cite
+  also front matter fields, section tags in `statutes/`, a case page with no section tag and no
+  `scope_note`, links that go to no page, a case page's cite
   against its file's first line, its `Rule:` and `Reasoning:` lines, every topic it names listing it in
   "## Cases", an index out of date; warnings: a section tag the opinion never cites, a page changed since
   it was verified), `render_index` and `write_index`, `page_hash` (the page without its three sign-off
@@ -344,7 +345,8 @@ yet.
 never by a tenant session): `SCHEMA.md` (how pages are built: front matter, the quote syntax, the rule that
 prose describes and connects and never states the law, the case and topic page layouts, the ingest steps,
 what the checks cover), `cases/<Case name>.md` (one per opinion: front matter `kind`, `cite`, `file`,
-`court`, `decided`, `statute_read`, `sections` (tags), `topics` (links), and the sign-off fields
+`court`, `decided`, `statute_read`, `sections` (tags; empty for an opinion that reads no part II section,
+which then needs `scope_note` and is never loaded for a tenant), `topics` (links), and the sign-off fields
 `verified_by`, `verified_on`, `verified_hash`; then a line on court and posture, Facts, one section per
 issue as a question with `Topic:`, `Rule:`, `Reasoning:`, and any `Dissent:`, Statute read, Related,
 Disposition), `topics/<Topic>.md` (one per topic, made as cases raise them: `kind`, `sections`, the sign-off
@@ -508,7 +510,8 @@ Offline checks (no model call, no key needed):
   named for the cite on its first line, none of Westlaw's material, no headnote marker opening a line,
   attorneys and parallel cites present, and `court_text` on a hand-typed opinion), the case wiki (the real
   pages pass `lint`; on a throwaway copy, a changed word, a wrong pin page also across a page break, a
-  quote with no source, a statute quote in the wrong subsection, a link to no page, and a case missing from
+  quote with no source, a statute quote in the wrong subsection, a link to no page, an untagged case page
+  with no `scope_note`, and a case missing from
   its topic's Cases list are each caught; a verified page stops counting as verified once edited; `verify`
   refuses a page with a problem), a hand-typed update
   against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`

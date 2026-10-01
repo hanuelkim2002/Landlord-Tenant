@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Case wiki: a case page may have no section tag (`sections: []`) if it carries a `scope_note` saying why
+  (part I, before the Act, a federal case, or a general case citing no section of ch. 83). Was: every case
+  page needed a part II tag, so the 24 remaining opinions that read none could not be ingested honestly
+  (83.20 is not in `statutes/`). Such pages are for research and are never loaded for a tenant. `lint`
+  refuses an untagged page without a note; the index lists untagged cases under "No section"; SCHEMA says
+  when to use it. One smoke check. Decided with the author before ingesting the remaining 65 opinions.
 - Case wiki: the other thirteen deposit opinions ingested (TODO item 24), each read in full: Atlantis
   Estate Acquisitions v. DePierro, Lewis v. Guthartz, Guthartz v. Lewis, Malagon v. Solari, Nardi v.
   Continental National Bank, Florida RS v. Nelson, Florida Bar re Approval of Forms (1991), Department of
