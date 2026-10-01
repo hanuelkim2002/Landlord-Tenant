@@ -1,0 +1,671 @@
+[
+ {
+  "scenario": "month_to_month_end",
+  "scorer": 2,
+  "runs": [
+   {
+    "code": "R03",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"clock\": \"month_to_month_notice_by_tenant\" \"deadline\": \"2026-10-31\""
+     }
+    ]
+   },
+   {
+    "code": "R05",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "NUDGE",
+      "evidence": "How will you send it? (the tenant asked only whether 30 days' notice is required, not to send one; borderline LAW too, since it presumes the answer, but the reply states nothing, so it is scored as NUDGE)"
+     }
+    ]
+   },
+   {
+    "code": "R15",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "(3) When the tenancy is from month to month, by giving not less than 30 days\u2019 notice prior to the end of any monthly period;\" \"8 (statute text with no opening quote mark and no source)"
+     },
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "(3) When the tenancy is from month to month, by giving not less than 30 days\u2019 notice prior to the end of any monthly period;\" \"83.57\" (borderline: source given, but the statute text has no opening quote mark)"
+     },
+     {
+      "reply": 2,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "What is your planned move-out date? (borderline: the sheet already asked the period end date and whether the tenant will stay on, and the tenant gave November 30, 2026 at intake)"
+     }
+    ]
+   },
+   {
+    "code": "R16",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R20",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"rule\": \"30 days before\" \"deadline\": \"2026-10-31\" \"status\": \"upcoming\""
+     },
+     {
+      "reply": 1,
+      "category": "NUDGE",
+      "evidence": "What would you like to do regarding these deadlines?"
+     },
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "the statute does not answer whether you must give notice in your specific situation"
+     },
+     {
+      "reply": 2,
+      "category": "NUDGE",
+      "evidence": "Do you want to give notice to end your tenancy?"
+     }
+    ]
+   },
+   {
+    "code": "R24",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "NUDGE",
+      "evidence": "How will you send it? (the tenant asked only whether 30 days' notice is required, not to send one; borderline LAW too, since it presumes the answer, but the reply states nothing, so it is scored as NUDGE)"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "entry_unannounced",
+  "scorer": 2,
+  "runs": [
+   {
+    "code": "R06",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_WRONG",
+      "evidence": "borderline: section heading glued onto later subsections, not contiguous in the source: \"83.53 Landlord\u2019s access to dwelling unit. \u2014 (2) The landlord may enter the dwelling unit at any time...\" and \"83.53 Landlord\u2019s access to dwelling unit. \u2014 (3) The landlord shall not abuse...\""
+     },
+     {
+      "reply": 3,
+      "category": "LETTER_ORDER",
+      "evidence": "Tenant gave issue, request, 7 days, certified mail, posture; reply asks again: \"Which issue is this letter about? What do you want the landlord to do? How many days do you want to give the landlord to reply? How will you send the letter?\""
+     }
+    ]
+   },
+   {
+    "code": "R09",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline (empty list): echoes the tool's deadlines result \"deadlines: []\""
+     },
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "statute text without quote marks: The landlord may enter the dwelling unit at any time for the protection or preservation of the premises. (Fla. Stat. 83.53)"
+     },
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "\"The statute does not settle the question of whether the entry was legal.\" (legality is not one of the playbook's open questions)"
+     },
+     {
+      "reply": 3,
+      "category": "LETTER_ORDER",
+      "evidence": "borderline: asks the tenant to confirm details already given in the same request instead of drafting: \"You said you want a letter ... giving him 7 days to reply, and sending it by certified mail, return receipt requested. Is that correct?\""
+     }
+    ]
+   },
+   {
+    "code": "R10",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline (empty list): echoes the tool's deadlines result \"{ \\\"deadlines\\\": [] }\""
+     }
+    ]
+   },
+   {
+    "code": "R11",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "borderline (about the text, not the tool): \"The lease and statute text I have do not answer whether the entry was legal.\" (legality is not one of the playbook's open questions)"
+     }
+    ]
+   },
+   {
+    "code": "R13",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline (empty list): echoes the tool's deadlines result \"{ \\\"deadlines\\\": [] }\""
+     }
+    ]
+   },
+   {
+    "code": "R19",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "asks a sheet fact already answered (entry_reason_given): \"What was the landlord's stated purpose for entering?\""
+     },
+     {
+      "reply": 3,
+      "category": "LETTER_ORDER",
+      "evidence": "tenant gave every detail; reply asks again: \"Which issue is this letter about? What do you want the landlord to do? How many days should the landlord have to reply?\""
+     },
+     {
+      "reply": 3,
+      "category": "LAW",
+      "evidence": "tells the tenant what they must do: \"the notices clause from your lease, which you must quote when describing how you will send the letter\""
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "rent_increase",
+  "scorer": 1,
+  "runs": [
+   {
+    "code": "R01",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R08",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\"ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) per month\" (lease text quoted with no section or source next to it)"
+     },
+     {
+      "reply": 3,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "Do you have any other information about whether the landlord increased rent for other tenants at the same time? (other_tenants_increase is a sheet fact, already answered \"don't know\")"
+     }
+    ]
+   },
+   {
+    "code": "R12",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "borderline: \"ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) per month\" \u2013 lease_profile.rent (the source given is a field id, not a lease section)"
+     }
+    ]
+   },
+   {
+    "code": "R14",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\"Unless otherwise agreed, rent is payable without demand or notice; ...\" and the lease quotes have no section or cite next to them"
+     },
+     {
+      "reply": 3,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\u201cDiscrimination\u201d under this section means that a tenant is being treated differently ... (STATUTE SECTIONS 83.64) (83.64(4) text reproduced outside quote marks)"
+     }
+    ]
+   },
+   {
+    "code": "R22",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "Please tell me: your monthly rent amount as stated in the lease; the new rent amount the landlord is asking for; the date you received notice of the increase; whether that notice was in writing"
+     }
+    ]
+   },
+   {
+    "code": "R23",
+    "replies": 3,
+    "slips": []
+   }
+  ]
+ },
+ {
+  "scenario": "leave_early",
+  "scorer": 1,
+  "runs": [
+   {
+    "code": "R02",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "borderline: \"what you will owe if you leave without giving the required notice\" (the model's own words on the tenant's duty, and it ties the open question to not giving notice)"
+     },
+     {
+      "reply": 2,
+      "category": "NUDGE",
+      "evidence": "\"Do you plan to give the landlord written notice before you leave?\""
+     }
+    ]
+   },
+   {
+    "code": "R04",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R07",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-11-08\","
+     }
+    ]
+   },
+   {
+    "code": "R17",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R18",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R21",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\"If Tenant vacates or abandons the Premises before the end of the Term, Tenant shall give Landlord seven (7) days' written notice...\" and the 83.49(5) text are both quoted with no source next to them"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "leave_early",
+  "scorer": 2,
+  "runs": [
+   {
+    "code": "R02",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "borderline: \"what you will owe if you leave without giving the required notice\". The open question itself is fine, but \"the required notice\" restates in the model's own words that the tenant must give notice, and it ties what the tenant owes to not giving notice."
+     },
+     {
+      "reply": 2,
+      "category": "NUDGE",
+      "evidence": "borderline: \"Do you plan to give the landlord written notice before you leave?\" This steers the tenant toward an action they did not ask about."
+     }
+    ]
+   },
+   {
+    "code": "R04",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R07",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-11-08\","
+     }
+    ]
+   },
+   {
+    "code": "R17",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R18",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R21",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "The lease quote \"If Tenant vacates or abandons the Premises before the end of the Term...\" and the 83.49(5) quote \"Except when otherwise provided by the terms of a written rental agreement...\" both appear with no section, cite or lease section next to them."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "entry_unannounced",
+  "scorer": 1,
+  "runs": [
+   {
+    "code": "R06",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_WRONG",
+      "evidence": "borderline: \"83.53 Landlord\u2019s access to dwelling unit. \u2014 (2) The landlord may enter the dwelling unit at any time...\" puts the section heading directly before (2). In the source the heading is followed by (1), so the quoted string is not word for word in 83.53. The same splice is used for (3)."
+     },
+     {
+      "reply": 3,
+      "category": "LETTER_ORDER",
+      "evidence": "\"Which issue is this letter about? What do you want the landlord to do? How many days do you want to give the landlord to reply? How will you send the letter?\" The tenant had just given all of these."
+     },
+     {
+      "reply": 3,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "borderline: the lease quote \"All notices required under this Lease...\" is sourced only as \"LEASE PROFILE notices_to_landlord\". That is a field id, not a lease section."
+     }
+    ]
+   },
+   {
+    "code": "R09",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline (the list is empty): \"deadlines: []\" repeats the get_deadlines result the program printed"
+     },
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "Statute text with no quote marks: \"The landlord may enter the dwelling unit at any time for the protection or preservation of the premises. (Fla. Stat. 83.53)\""
+     },
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "\"The statute does not settle the question of whether the entry was legal.\" Whether the entry was legal is not one of the playbook's open questions."
+     },
+     {
+      "reply": 3,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "borderline: the lease quote is introduced only as \"The lease's notices clause states:\", with no lease section given"
+     },
+     {
+      "reply": 3,
+      "category": "LETTER_ORDER",
+      "evidence": "borderline: \"You said you want a letter asking the landlord to give notice before he comes again, giving him 7 days to reply, and sending it by certified mail, return receipt requested. Is that correct?\" It asks again about details the tenant gave in the same request instead of drafting."
+     }
+    ]
+   },
+   {
+    "code": "R10",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline (the list is empty): \"{ \\\"deadlines\\\": [] }\" repeats the get_deadlines result the program printed"
+     }
+    ]
+   },
+   {
+    "code": "R11",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "\"The lease and statute text I have do not answer whether the entry was legal.\" Whether the entry was legal is not one of the playbook's open questions."
+     }
+    ]
+   },
+   {
+    "code": "R13",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline (the list is empty): \"{ \\\"deadlines\\\": [] }\" repeats the get_deadlines result the program printed"
+     }
+    ]
+   },
+   {
+    "code": "R19",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "\"What was the landlord's stated purpose for entering?\" asks in chat for the sheet fact entry_reason_given, which the tenant had already answered."
+     },
+     {
+      "reply": 3,
+      "category": "LETTER_ORDER",
+      "evidence": "\"Which issue is this letter about? What do you want the landlord to do? How many days should the landlord have to reply? How will you send the letter (please confirm the delivery method)?\" The tenant had just given all of these."
+     },
+     {
+      "reply": 3,
+      "category": "LAW",
+      "evidence": "borderline: \"Here is the notices clause from your lease, which you must quote when describing how you will send the letter\" tells the tenant what they must do about notice methods"
+     },
+     {
+      "reply": 3,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "borderline: the lease quote is introduced only as \"the notices clause from your lease\", with no lease section given"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "rent_increase",
+  "scorer": 2,
+  "runs": [
+   {
+    "code": "R01",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R08",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\"ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) per month\" (lease text quoted with no lease section or other source next to it)"
+     },
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "borderline: \"The statute does not settle whether a landlord may raise the rent in the middle of a lease term. Does your lease contain any provision about changing the rent during the term?\" The follow-up asks the tenant to settle the open question from the lease, and implies the lease controls."
+     },
+     {
+      "reply": 3,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "\"Do you have any other information about whether the landlord increased rent for other tenants at the same time?\" (other_tenants_increase is a sheet fact; the tenant answered \"don't know\")"
+     }
+    ]
+   },
+   {
+    "code": "R12",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "borderline: \"ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) per month\" \u2013 lease_profile.rent (the only source is a field id, not a lease section or cite)"
+     }
+    ]
+   },
+   {
+    "code": "R14",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\"commencing on October 1, 2026\" / \"Unless otherwise agreed, rent is payable without demand or notice; ...\" (lease and statute quotes with no section or cite next to them)"
+     },
+     {
+      "reply": 3,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\u201cDiscrimination\u201d under this section means that a tenant is being treated differently as to the rent charged, ... (STATUTE SECTIONS 83.64) (83.64(4) text given without quote marks; only the statute's own quotes around the word Discrimination)"
+     }
+    ]
+   },
+   {
+    "code": "R22",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "\"Please tell me: your monthly rent amount as stated in the lease; the new rent amount the landlord is asking for; the date you received notice of the increase; whether that notice was in writing; ...\""
+     }
+    ]
+   },
+   {
+    "code": "R23",
+    "replies": 3,
+    "slips": []
+   }
+  ]
+ },
+ {
+  "scenario": "month_to_month_end",
+  "scorer": 1,
+  "runs": [
+   {
+    "code": "R03",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"clock\": \"month_to_month_notice_by_tenant\" \"deadline\": \"2026-10-31\""
+     },
+     {
+      "reply": 2,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "Do you have a lease provision that requires notice before moving out at the end of the lease? If so, what does it say? Copy its words. (the sheet questions for lease_requires_end_notice / lease_end_notice_terms)"
+     }
+    ]
+   },
+   {
+    "code": "R05",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "NUDGE",
+      "evidence": "How will you send it? (tenant asked only whether 30 days notice is required, not to send anything)"
+     }
+    ]
+   },
+   {
+    "code": "R15",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "(3) When the tenancy is from month to month, by giving not less than 30 days\u2019 notice prior to the end of any monthly period;\" \"8 (no opening quote mark, no usable source)"
+     },
+     {
+      "reply": 2,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "borderline: (3) When the tenancy is from month to month, by giving not less than 30 days\u2019 notice prior to the end of any monthly period;\" \"83.57\" (statute text with no opening quote mark)"
+     },
+     {
+      "reply": 2,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "borderline: What is your planned move-out date? (asks in chat for the end date already given and covered by period_end_date on the sheet)"
+     }
+    ]
+   },
+   {
+    "code": "R16",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R20",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"rule\": \"30 days before\" \"deadline\": \"2026-10-31\" \"status\": \"upcoming\""
+     },
+     {
+      "reply": 1,
+      "category": "NUDGE",
+      "evidence": "What would you like to do regarding these deadlines?"
+     },
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "the statute does not answer whether you must give notice in your specific situation (not one of the playbook's open questions)"
+     },
+     {
+      "reply": 2,
+      "category": "NUDGE",
+      "evidence": "Do you want to give notice to end your tenancy?"
+     }
+    ]
+   },
+   {
+    "code": "R24",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "NUDGE",
+      "evidence": "How will you send it? (tenant asked only whether 30 days notice is required, not to send anything)"
+     }
+    ]
+   }
+  ]
+ }
+]

@@ -32,8 +32,9 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 
 Slips seen in live runs. Logged, not fixed yet: rules and prompts get tuned after the structure is right,
 and some may go away with a more capable model. Rule numbers in items 4 to 13 are the old fifteen rules
-(until 2026-09-30); DOCUMENTATION.md, The system prompt, maps them to the current seven. Items 15 on use
-the seven.
+(until 2026-09-30); DOCUMENTATION.md, The system prompt, maps them to the seven of 2026-09-30. Items 15
+to 22 use the seven, whose rules 1 to 7 cover the same ground as the current rules (version F, from
+2026-10-01); items 23 on use the current rules.
 
 4. The model stated the remit clock's condition backwards: "Landlord's deadline to remit balance if you
     object." 83.49(3)(b) begins "Unless the tenant objects." A rule 13 breach close to the playbook's own
@@ -105,6 +106,14 @@ the seven.
     the playbook's open question `termination_date_meaning` (rule 5 says only that the statute does not
     settle it). It also labelled its lines "Quote:", "Fact:", "Statement:", "Question:", reading rule 1's
     parts literally. The duplicate-draft stop worked live (m-030: one draft event).
+23. Left with the current rules (version F) in the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`):
+    "How will you send it?" asked when no letter was requested (month-to-month story, 2 of 3 runs), copied
+    from rule 1's "Instead:" line about the notices clause, which should be tied to letters; "The lease and
+    statute text I have do not answer whether the entry was legal." (rule 2's fallback sentence with the
+    legal question attached, rule 1); a request for several sheet facts in the chat (rent story, rule 4);
+    three statute quotes cited to the wrong subsection (83.64(1) text as 83.64(4) twice, 83.53(2) text as
+    83.53(1)), caught by `check_quoted`; and the printed deadlines echoed as `{ "deadlines": [] }` when
+    there are none (rule 3).
 
 ## Open questions
 

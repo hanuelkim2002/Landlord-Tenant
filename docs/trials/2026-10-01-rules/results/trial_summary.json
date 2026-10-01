@@ -1,0 +1,128 @@
+{
+ "control": {
+  "replies": 17,
+  "avg": {
+   "LAW": 4.0,
+   "NUDGE": 0.0,
+   "QUOTE_UNMARKED": 1.0,
+   "QUOTE_WRONG": 0.0,
+   "UNCONFIRMED": 1.0,
+   "CONFIRM_IN_CHAT": 1.0,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 1.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 0.0,
+   "DEADLINE_REPEAT": 5.0
+  },
+  "main": 8.0,
+  "serious": 6.0
+ },
+ "A": {
+  "replies": 18,
+  "avg": {
+   "LAW": 0.0,
+   "NUDGE": 2.0,
+   "QUOTE_UNMARKED": 0.0,
+   "QUOTE_WRONG": 0.0,
+   "UNCONFIRMED": 1.0,
+   "CONFIRM_IN_CHAT": 1.0,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 0.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 0.0,
+   "DEADLINE_REPEAT": 0.0
+  },
+  "main": 4.0,
+  "serious": 3.0
+ },
+ "B": {
+  "replies": 18,
+  "avg": {
+   "LAW": 0.0,
+   "NUDGE": 0.0,
+   "QUOTE_UNMARKED": 0.0,
+   "QUOTE_WRONG": 0.0,
+   "UNCONFIRMED": 1.0,
+   "CONFIRM_IN_CHAT": 0.0,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 0.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 2.0,
+   "DEADLINE_REPEAT": 0.0
+  },
+  "main": 3.0,
+  "serious": 1.0
+ },
+ "C": {
+  "replies": 12,
+  "avg": {
+   "LAW": 1.0,
+   "NUDGE": 0.0,
+   "QUOTE_UNMARKED": 0.5,
+   "QUOTE_WRONG": 0.0,
+   "UNCONFIRMED": 1.0,
+   "CONFIRM_IN_CHAT": 0.0,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 0.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 2.0,
+   "DEADLINE_REPEAT": 0.0
+  },
+  "main": 4.5,
+  "serious": 2.0
+ },
+ "D": {
+  "replies": 18,
+  "avg": {
+   "LAW": 0.0,
+   "NUDGE": 0.0,
+   "QUOTE_UNMARKED": 0.0,
+   "QUOTE_WRONG": 0.0,
+   "UNCONFIRMED": 0.0,
+   "CONFIRM_IN_CHAT": 0.0,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 0.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 0.0,
+   "DEADLINE_REPEAT": 2.0
+  },
+  "main": 0.0,
+  "serious": 0.0
+ },
+ "E": {
+  "replies": 18,
+  "avg": {
+   "LAW": 0.0,
+   "NUDGE": 0.0,
+   "QUOTE_UNMARKED": 0.0,
+   "QUOTE_WRONG": 0.5,
+   "UNCONFIRMED": 2.0,
+   "CONFIRM_IN_CHAT": 0.0,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 0.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 1.0,
+   "DEADLINE_REPEAT": 0.0
+  },
+  "main": 3.5,
+  "serious": 2.5
+ },
+ "F": {
+  "replies": 18,
+  "avg": {
+   "LAW": 0.0,
+   "NUDGE": 0.0,
+   "QUOTE_UNMARKED": 0.0,
+   "QUOTE_WRONG": 0.0,
+   "UNCONFIRMED": 0.0,
+   "CONFIRM_IN_CHAT": 0.0,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 0.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 0.0,
+   "DEADLINE_REPEAT": 4.0
+  },
+  "main": 0.0,
+  "serious": 0.0
+ }
+}

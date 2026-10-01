@@ -1,0 +1,51 @@
+{
+ "control": {
+  "replies": 30,
+  "avg": {
+   "LAW": 4.5,
+   "NUDGE": 3.0,
+   "QUOTE_UNMARKED": 9.5,
+   "QUOTE_WRONG": 1.0,
+   "UNCONFIRMED": 0.0,
+   "CONFIRM_IN_CHAT": 3.5,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 0.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 3.0,
+   "DEADLINE_REPEAT": 4.0
+  },
+  "main": 24.5,
+  "expected": 9,
+  "flags": 11,
+  "by_scenario": {
+   "month_to_month_end": 6.5,
+   "entry_unannounced": 9.5,
+   "rent_increase": 5.5,
+   "leave_early": 3.0
+  }
+ },
+ "F": {
+  "replies": 30,
+  "avg": {
+   "LAW": 1.0,
+   "NUDGE": 2.0,
+   "QUOTE_UNMARKED": 0.0,
+   "QUOTE_WRONG": 0.0,
+   "UNCONFIRMED": 0.0,
+   "CONFIRM_IN_CHAT": 1.0,
+   "CONFLICT_ROTE": 0.0,
+   "DATE_INVENTED": 0.0,
+   "POSTURE_OWN_WORDS": 0.0,
+   "LETTER_ORDER": 0.0,
+   "DEADLINE_REPEAT": 2.0
+  },
+  "main": 4.0,
+  "expected": 12,
+  "flags": 3,
+  "by_scenario": {
+   "month_to_month_end": 2.0,
+   "entry_unannounced": 1.0,
+   "rent_increase": 1.0
+  }
+ }
+}

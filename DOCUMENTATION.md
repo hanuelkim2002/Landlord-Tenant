@@ -301,7 +301,7 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   intake or resume calls before it are not.
 
 Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `statutes/83.*.txt` and `.html` (the
-read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key), `docs/structure/` (dated snapshots of the structure: a diagram of a
+read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key), `docs/trials/` (dated records of trials, e.g. `2026-10-01-rules/`: the versions of the rules tried, the method, and the results; not kept current), `docs/structure/` (dated snapshots of the structure: a diagram of a
 session, a diagram of the storage, and the Skills history; not kept current), and `calendars/` (read-only, like `statutes/`):
 `court_holidays_circuit8.json` (Eighth Judicial Circuit: Alachua, Baker, Bradford, Gilchrist, Levy, and
 Union counties; for each of 2026 and 2027 the holidays in the Chief Judge's memorandum, each with its date,
@@ -352,22 +352,24 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, a two-line role (not a lawyer, no advice or recommendations, never sends) and seven numbered
-   rules, most important first. In short: 1 what a reply is made of (quotes with their source, facts from
-   ELEMENT STATUS and lines from tool results, "the statute does not answer or settle this", questions),
-   never what a provision means for the tenant, the conflict line only when a lease quote and a statute
-   quote on the same point appear together, no letter offers or next steps unless asked; 2 quote only text
-   given (profile, stored statute, `get_statute_section`, the tenant's words), never a provision in the
-   model's own words, fetch a section before mentioning it; 3 every date must come from ELEMENT STATUS, a
-   lease quote, or a tool result, never computed or compared; `get_deadlines`' result is printed by the
-   program, so the model only says the deadlines appear above; 4 only
-   the tenant confirms facts, on the sheet: propose with `propose_facts`, call a fact confirmed only when
-   ELEMENT STATUS shows it as known, otherwise "you said"; 5 open questions are unsettled; 6 letters only
-   from `draft_letter` and only when asked: the questions (issue, ask, reply days, delivery method with the
-   notices clause quoted but no method chosen), the playbook's posture lines copied word for word, then one
-   sentence; 7 record pasted messages and sent letters with `add_communication`. Old rules 1 to 15 (until
-   2026-09-30) map as: 1, 4, 8 to 2; 2 to 3; 3, 9 to 4; 5 to 5; 6, 11, 12 to 6; 7, 13 to 1; 14, 15 to 7;
-   10 (ask whose notice is meant) dropped.
+1. `RULES`: version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 895 words. A role
+   paragraph (organize lease, statute, and record side by side; not a lawyer; never advise, send, or work
+   out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
+   `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no field names), then eight numbered rules,
+   each stated with "Not:" examples taken from real slips and the "Instead:" form: 1 organize, never advise
+   (no must/may/can/should/entitled/required/rights/options about anyone outside quote marks; the conflict
+   line only right after a lease quote and a statute quote on one point); 2 quote only what was given, word
+   for word, fetch a section before citing one not in STATUTE SECTIONS, say plainly when nothing answers;
+   3 dates only from ELEMENT STATUS, a lease quote, the tenant's words, or a tool result, deadlines only
+   from `get_deadlines`, which the program prints ("The deadlines appear above."); 4 the model proposes
+   facts with `propose_facts`, the tenant confirms them on the sheet, nothing asked or confirmed in the
+   chat; 5 open questions stay open (quote the open question's text; never resolve it or ask the tenant
+   to); 6 letters only when asked, only through `draft_letter`, missing details asked once, posture lines
+   copied word for word, then one line; 7 record messages and sent letters with `add_communication`;
+   8 offer nothing the tenant did not ask for. Rules 1 to 7 cover the same ground as the seven rules of
+   2026-09-30 (whose numbers TODO.md items 15 to 22 use); rule 8 was part of the old rule 1. Old rules 1 to
+   15 (until 2026-09-30) map to the seven as: 1, 4, 8 to 2; 2 to 3; 3, 9 to 4; 5 to 5; 6, 11, 12 to 6;
+   7, 13 to 1; 14, 15 to 7; 10 dropped.
 2. `LEASE PROFILE`: the whole profile as JSON.
 3. `PLAYBOOKS`: for each active playbook, YAML of its `issue`, its `guidance`, and its
    `spec.open_questions` (which rule 5 refers to). The rest of `spec` never enters the context.

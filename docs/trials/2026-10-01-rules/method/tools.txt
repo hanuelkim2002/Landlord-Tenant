@@ -1,0 +1,36 @@
+- get_statute_section: Full text of one section of Fla. Stat. ch. 83 pt. II, e.g. "83.505".
+Use when the preloaded sections do not answer the question.
+
+- search_statute: Find which sections of ch. 83 pt. II contain a word or phrase. Returns section numbers with a short snippet.
+
+- propose_facts: Suggest facts the tenant stated or implied in this chat. You cannot confirm or record a fact: the tenant
+confirms each suggestion on a sheet the program shows right after your reply. Do not ask them to confirm
+it in the chat. Input: JSON object keyed by element id, each {"value": ..., "how": "stated" or "inferred",
+"said": "the tenant's exact words the value rests on", shortened only with "..." between exact pieces}.
+Dates as YYYY-MM-DD, yes/no as true/false, money as a number. Returns which suggestions were taken and why
+any were refused.
+
+- get_deadlines: Compute every deadline from the CONFIRMED facts. This is the ONLY way to get a date. Never count or
+calculate days yourself. Works issue by issue: returns the deadlines of every issue whose facts are all
+confirmed or n/a, and under "waiting" the issues whose facts are still open, with those facts. A deadline
+two issues share appears once. The program shows the result to the tenant itself, every field included;
+do not repeat or reword it.
+
+- draft_letter: Draft a letter from the tenant to the landlord. The tenant sends it; you never do.
+issue: which of the matter's issues this letter is about, e.g. "deposit_not_returned".
+posture: "preserve" (no quotes), "assert" (adds obligation_quote), "escalate" (adds consequence_quote too).
+ask: the concrete thing the tenant wants, e.g. "return the $1,850.00 deposit to 12 Elm St, Gainesville FL 32601".
+respond_within_days: how many days the tenant gives for a reply.
+delivery_method: how the TENANT will send this letter, e.g. "certified mail, return receipt requested".
+obligation_quote: the exact lease or statute sentence the ask rests on, copied word for word.
+obligation_cite: a reader-facing cite such as "Lease Section 4.3" or "Fla. Stat. 83.49(3)(a)". Never a profile field name.
+consequence_quote / consequence_cite: escalate only; the exact sentence stating what happens if the landlord does not act.
+Quotes not found in the lease profile or the stored statute are rejected.
+
+- add_artifact: Store a file the tenant provides (photo, email export, receipt) in the matter record.
+path: where the file is on this computer. note: what it is, in the tenant's words.
+
+- add_communication: Record one message between tenant and landlord in the matter record.
+sent_on: the date on the message, YYYY-MM-DD. sender / recipient: who wrote it and who received it.
+channel: email, text message, letter, or in person. text: the message copied verbatim, never summarized.
+

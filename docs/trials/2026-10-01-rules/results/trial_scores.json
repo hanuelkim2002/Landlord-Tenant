@@ -1,0 +1,1058 @@
+[
+ {
+  "scenario": "nonpayment_3day",
+  "scorer": 2,
+  "runs": [
+   {
+    "code": "R01",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R05",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "The three_day_demand_period deadline is 2026-09-24. This is calculated as 3 court business days after the nonpayment_notice_delivered date of 2026-09-18. The status is passed."
+     }
+    ]
+   },
+   {
+    "code": "R07",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R09",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R10",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-24\" (from get_deadlines result)"
+     }
+    ]
+   },
+   {
+    "code": "R14",
+    "replies": 0,
+    "slips": []
+   },
+   {
+    "code": "R16",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "borderline: On your record, how much your monthly rent is: ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) per month. (no SHEET line for monthly rent)"
+     }
+    ]
+   },
+   {
+    "code": "R20",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R23",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-24\""
+     }
+    ]
+   },
+   {
+    "code": "R29",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R35",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R36",
+    "replies": 0,
+    "slips": []
+   },
+   {
+    "code": "R39",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R40",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R42",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-24\", \"status\": \"passed\", \"cite\": \"83.56(3)\""
+     }
+    ]
+   },
+   {
+    "code": "R49",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R52",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R53",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline: (b) \"2026-09-18\" (bare date from the printed deadline line, given as the answer to the deadlines question)"
+     }
+    ]
+   },
+   {
+    "code": "R55",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R59",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R61",
+    "replies": 1,
+    "slips": []
+   }
+  ]
+ },
+ {
+  "scenario": "nonpayment_3day",
+  "scorer": 1,
+  "runs": [
+   {
+    "code": "R01",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R05",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "The three_day_demand_period deadline is 2026-09-24. This is calculated as 3 court business days after the nonpayment_notice_delivered date of 2026-09-18. The status is passed."
+     }
+    ]
+   },
+   {
+    "code": "R07",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R09",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R10",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-24\" (from get_deadlines result)"
+     }
+    ]
+   },
+   {
+    "code": "R14",
+    "replies": 0,
+    "slips": []
+   },
+   {
+    "code": "R16",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "how much your monthly rent is: ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) per month (lease 3.1 text, no quote marks, no source)"
+     },
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "borderline: \"On your record, how much your monthly rent is: ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS\" (no SHEET line for monthly rent; matches intake words but presented as recorded)"
+     }
+    ]
+   },
+   {
+    "code": "R20",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R23",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-24\""
+     }
+    ]
+   },
+   {
+    "code": "R29",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R35",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R36",
+    "replies": 0,
+    "slips": []
+   },
+   {
+    "code": "R39",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R40",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R42",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"clock\": \"three_day_demand_period\", ... \"deadline\": \"2026-09-24\", \"status\": \"passed\""
+     }
+    ]
+   },
+   {
+    "code": "R49",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R52",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R53",
+    "replies": 1,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline: (b) \"2026-09-18\" (the from-date of the printed deadline line, given as an answer item)"
+     }
+    ]
+   },
+   {
+    "code": "R55",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R59",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R61",
+    "replies": 1,
+    "slips": []
+   }
+  ]
+ },
+ {
+  "scenario": "repair_notice",
+  "scorer": 1,
+  "runs": [
+   {
+    "code": "R06",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R12",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LETTER_ORDER",
+      "evidence": "How will you send it? ... Which posture? From the playbook:"
+     }
+    ]
+   },
+   {
+    "code": "R13",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R15",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R19",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R21",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-17\", \"status\": \"passed\""
+     }
+    ]
+   },
+   {
+    "code": "R22",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R24",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 3,
+      "category": "NUDGE",
+      "evidence": "borderline: You can send it by certified mail, return receipt requested."
+     }
+    ]
+   },
+   {
+    "code": "R25",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LETTER_ORDER",
+      "evidence": "How will you send it? ... Which posture? From the playbook:"
+     }
+    ]
+   },
+   {
+    "code": "R27",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 3,
+      "category": "NUDGE",
+      "evidence": "borderline: Otherwise, you can send it as is."
+     }
+    ]
+   },
+   {
+    "code": "R28",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R31",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R34",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LETTER_ORDER",
+      "evidence": "borderline: Please quote the notices clause from your lease (tenant already gave certified mail)"
+     },
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "borderline: describes how notices to the landlord must be sent"
+     },
+     {
+      "reply": 3,
+      "category": "LETTER_ORDER",
+      "evidence": "borderline: Please quote the notices clause from your lease (asked again after 'that is everything')"
+     },
+     {
+      "reply": 3,
+      "category": "LAW",
+      "evidence": "borderline: describes how notices to the landlord must be sent"
+     }
+    ]
+   },
+   {
+    "code": "R37",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R45",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-17\""
+     }
+    ]
+   },
+   {
+    "code": "R46",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R47",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-17\", \"status\": \"passed\""
+     }
+    ]
+   },
+   {
+    "code": "R51",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R56",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R58",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LETTER_ORDER",
+      "evidence": "Which issue is this letter about?"
+     }
+    ]
+   },
+   {
+    "code": "R62",
+    "replies": 3,
+    "slips": []
+   }
+  ]
+ },
+ {
+  "scenario": "repair_notice",
+  "scorer": 2,
+  "runs": [
+   {
+    "code": "R06",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R12",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LETTER_ORDER",
+      "evidence": "How will you send it? ... Which posture? From the playbook:"
+     }
+    ]
+   },
+   {
+    "code": "R13",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R15",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R19",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R21",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-17\", \"status\": \"passed\""
+     }
+    ]
+   },
+   {
+    "code": "R22",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R24",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 3,
+      "category": "NUDGE",
+      "evidence": "borderline: You can send it by certified mail, return receipt requested."
+     }
+    ]
+   },
+   {
+    "code": "R25",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LETTER_ORDER",
+      "evidence": "How will you send it? ... Which posture? From the playbook:"
+     }
+    ]
+   },
+   {
+    "code": "R27",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 3,
+      "category": "NUDGE",
+      "evidence": "borderline: Otherwise, you can send it as is."
+     }
+    ]
+   },
+   {
+    "code": "R28",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R31",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R34",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LETTER_ORDER",
+      "evidence": "borderline: Please quote the notices clause from your lease that describes how notices to the landlord must be sent."
+     },
+     {
+      "reply": 3,
+      "category": "LETTER_ORDER",
+      "evidence": "borderline: Please quote the notices clause from your lease that describes how notices to the landlord must be sent."
+     }
+    ]
+   },
+   {
+    "code": "R37",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R45",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-17\""
+     }
+    ]
+   },
+   {
+    "code": "R46",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R47",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "\"deadline\": \"2026-09-17\", \"status\": \"passed\""
+     }
+    ]
+   },
+   {
+    "code": "R51",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R56",
+    "replies": 3,
+    "slips": []
+   },
+   {
+    "code": "R58",
+    "replies": 3,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "LETTER_ORDER",
+      "evidence": "Which issue is this letter about?"
+     }
+    ]
+   },
+   {
+    "code": "R62",
+    "replies": 3,
+    "slips": []
+   }
+  ]
+ },
+ {
+  "scenario": "claim_letter",
+  "scorer": 1,
+  "runs": [
+   {
+    "code": "R02",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R03",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R04",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\"Landlord shall have fifteen (15) days to return the Deposit, or thirty (30) days ...\" (no lease section given)"
+     },
+     {
+      "reply": 1,
+      "category": "LAW",
+      "evidence": "What date do you consider the termination of the rental agreement to be?"
+     }
+    ]
+   },
+   {
+    "code": "R08",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "claim_notice_date: 2026-09-25"
+     },
+     {
+      "reply": 1,
+      "category": "LAW",
+      "evidence": "What date do you consider the termination of the rental agreement?"
+     }
+    ]
+   },
+   {
+    "code": "R11",
+    "replies": 0,
+    "slips": []
+   },
+   {
+    "code": "R17",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "QUOTE_WRONG",
+      "evidence": "borderline: \"You said: \"I just got a letter from the landlord. ...\"\" (the attribution \"You said:\" sits inside the quote marks)"
+     },
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "I recorded the landlord's letter dated September 22, 2026."
+     }
+    ]
+   },
+   {
+    "code": "R18",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "to confirm, you said the letter arrived by certified mail on September 25, 2026\u2014is that the date you consider the receipt date for this notice?"
+     },
+     {
+      "reply": 1,
+      "category": "LAW",
+      "evidence": "borderline: is that the date you consider the receipt date for this notice? (asks the tenant to settle the receipt_date open question)"
+     },
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "Do you consider the termination of the rental agreement to be the lease end date (September 30, 2026) or your move-out date (July 30, 2026)?"
+     },
+     {
+      "reply": 2,
+      "category": "DATE_INVENTED",
+      "evidence": "the lease end date (September 30, 2026)"
+     },
+     {
+      "reply": 2,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "Not yet. No issue has all its facts confirmed. Still open, by issue: {\"deposit_not_returned\": [\"claim_notice_received\"]}"
+     }
+    ]
+   },
+   {
+    "code": "R26",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "I have recorded the landlord's letter dated September 22, 2026, received by certified mail on September 25, 2026, stating they are keeping $400"
+     }
+    ]
+   },
+   {
+    "code": "R30",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R32",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "The tool shows: Not yet. No issue has all its facts confirmed. Still open, by issue: {\"deposit_not_returned\": [\"claim_notice_received\"]}."
+     }
+    ]
+   },
+   {
+    "code": "R33",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R38",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "borderline: The letter is recorded and the facts are updated. (no value named, but facts presented as updated before the sheet)"
+     }
+    ]
+   },
+   {
+    "code": "R41",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "**Have you received any written notice from the landlord about keeping part of the deposit?** Once you confirm this"
+     }
+    ]
+   },
+   {
+    "code": "R43",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R44",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "claim_notice_received: true\nclaim_notice_date: 2026-09-25"
+     }
+    ]
+   },
+   {
+    "code": "R48",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R50",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R54",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R57",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R60",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R63",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline: The tool can compute deadlines only when all facts for an issue are confirmed. At present, the fact of whether you received written notice ... is not yet confirmed"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "claim_letter",
+  "scorer": 2,
+  "runs": [
+   {
+    "code": "R02",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R03",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R04",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "QUOTE_UNMARKED",
+      "evidence": "\"Landlord shall have fifteen (15) days to return the Deposit, or thirty (30) days ...\" (no source given)"
+     },
+     {
+      "reply": 1,
+      "category": "LAW",
+      "evidence": "What date do you consider the termination of the rental agreement to be?"
+     }
+    ]
+   },
+   {
+    "code": "R08",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "claim_notice_date: 2026-09-25"
+     },
+     {
+      "reply": 1,
+      "category": "LAW",
+      "evidence": "What date do you consider the termination of the rental agreement?"
+     }
+    ]
+   },
+   {
+    "code": "R11",
+    "replies": 0,
+    "slips": []
+   },
+   {
+    "code": "R17",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "borderline: I recorded the landlord's letter dated September 22, 2026."
+     }
+    ]
+   },
+   {
+    "code": "R18",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "to confirm, you said the letter arrived by certified mail on September 25, 2026"
+     },
+     {
+      "reply": 1,
+      "category": "LAW",
+      "evidence": "borderline: is that the date you consider the receipt date for this notice?"
+     },
+     {
+      "reply": 2,
+      "category": "LAW",
+      "evidence": "Do you consider the termination of the rental agreement to be the lease end date (September 30, 2026) or your move-out date (July 30, 2026)?"
+     },
+     {
+      "reply": 2,
+      "category": "DATE_INVENTED",
+      "evidence": "the lease end date (September 30, 2026)"
+     },
+     {
+      "reply": 2,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "Not yet. No issue has all its facts confirmed. Still open, by issue: {\"deposit_not_returned\": [\"claim_notice_received\"]}"
+     }
+    ]
+   },
+   {
+    "code": "R26",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "borderline: I have recorded the landlord's letter dated September 22, 2026, received by certified mail on September 25, 2026"
+     }
+    ]
+   },
+   {
+    "code": "R30",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R32",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "The tool shows: Not yet. No issue has all its facts confirmed. Still open, by issue: {\"deposit_not_returned\": [\"claim_notice_received\"]}."
+     }
+    ]
+   },
+   {
+    "code": "R33",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R38",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "borderline: The letter is recorded and the facts are updated."
+     }
+    ]
+   },
+   {
+    "code": "R41",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "CONFIRM_IN_CHAT",
+      "evidence": "Have you received any written notice from the landlord about keeping part of the deposit?"
+     }
+    ]
+   },
+   {
+    "code": "R43",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R44",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 1,
+      "category": "UNCONFIRMED",
+      "evidence": "claim_notice_received: true / claim_notice_date: 2026-09-25"
+     }
+    ]
+   },
+   {
+    "code": "R48",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R50",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R54",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R57",
+    "replies": 1,
+    "slips": []
+   },
+   {
+    "code": "R60",
+    "replies": 2,
+    "slips": []
+   },
+   {
+    "code": "R63",
+    "replies": 2,
+    "slips": [
+     {
+      "reply": 2,
+      "category": "DEADLINE_REPEAT",
+      "evidence": "borderline: At present, the fact of whether you received written notice from the landlord about keeping part of the deposit is not yet confirmed in the record."
+     }
+    ]
+   }
+  ]
+ }
+]

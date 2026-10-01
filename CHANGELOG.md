@@ -5,6 +5,18 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- RULES replaced by version F of a trial of seven versions (`docs/trials/2026-10-01-rules/`, with the
+  versions, the brief, the rubric, the scripts, and the results). Was: the seven rules of 2026-09-30, kept
+  there as `rules_control.txt`. F states eight rules, each with "Not:" examples taken from real slips and
+  the "Instead:" form, after a role paragraph and a format line (source first, no labels or field names).
+  Trial: six designer agents wrote one version each under assigned strategies; each version and the
+  control ran the three original stories 3 times (63 runs) and were scored blind by two scorer agents per
+  story: control 0.47 slips per reply, F 0.00, with every expected result; D also scored 0.00 but missed
+  the deposit-claim deadlines in 2 of 9 runs, and C left 3 replies empty. Confirmation round on the four
+  new stories (24 runs): control 0.82 slips per reply and 9 of 12 expected results, F 0.13 (0.23 with three
+  wrong-subsection quotes the program caught) and 12 of 12. F's remaining slips are TODO.md item 23. Rule
+  numbers 1 to 7 keep their topics, so the references in `citations.py` and DOCUMENTATION.md hold; rule 8
+  (offer nothing unasked) is new as its own rule. Offline checks OK.
 - Four live scenarios for the playbooks no scenario covered: `entry_unannounced`, `rent_increase`,
   `leave_early`, `month_to_month_end` (expected results in each `about`; the dates come from
   `compute_deadlines`). Each also asks a question that invites legal advice. Dry runs found two things,

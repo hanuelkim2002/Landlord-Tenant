@@ -1,0 +1,209 @@
+=== PLAYBOOKS section as the model sees it (claim scenario, two issues) ===
+
+
+PLAYBOOKS:
+issue: deposit_not_returned
+guidance:
+  questions:
+    deposit_amount: How much was your security deposit?
+    tenancy_terminated: What date did the lease end, or what date was it terminated?
+    vacated: What date did you move out and return the keys?
+    claim_notice_received: Have you received any written notice from the landlord about keeping part of the deposit?
+    claim_notice_date: What date did you receive the landlord's written notice about keeping part of the deposit?
+    forwarding_address_given: Did you give the landlord your new mailing address in writing?
+    early_or_periodic: Did you move out before the lease end date, or was this a month-to-month arrangement?
+    seven_day_notice_given: Before moving out, did you send the landlord written notice at least 7 days ahead, by
+      certified mail or in person, with your new address?
+  lease_checks:
+    security_deposit: Confirms the amount and that it was called a deposit.
+    nonrefundable_fees: Money labeled nonrefundable may fall under 83.491 instead. Do not treat it as outside 83.49
+      without reading 83.491.
+    forwarding_address_requirement: The landlord's notice goes to the "last known mailing address".
+    move_out_requirements: Cleaning and carpet clauses are the usual basis of a claim.
+    notices_to_landlord: Where the tenant's letter must be sent.
+    joint_and_several_liability: Whether one roommate's damage can be charged against the whole deposit.
+  evidence:
+  - proof of deposit payment
+  - move-out date (key receipt, walkthrough form, last utility bill)
+  - move-in and move-out photos
+  - forwarding-address notice with delivery proof
+  - any landlord letters or emails, with envelope or full headers
+  postures:
+    core:
+    - today's date
+    - obligation identified
+    - amount and return address
+    - response deadline computed by the tool
+    - delivery method
+    preserve: States move-out date, amount, forwarding address. Asks for return. Cites nothing.
+    assert: Adds the 83.49(3)(a) obligation, quoted.
+    escalate: Adds the forfeiture consequence, quoted, and 83.49(3)(c) fee-shifting.
+    notice_sufficiency: Sending this letter does not start any deadline that this tool computes for this issue.
+      The only notice from a tenant that this tool tracks here is in Fla. Stat. 83.49(5), which says that "any tenant
+      who vacates or abandons the premises before the expiration of the term specified in the rental agreement"
+      "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating
+      or abandoning the premises". The same sentence also covers week-to-week, month-to-month, and other periodic
+      tenancies. Whether it applies to you is not something this tool decides.
+  failure_modes:
+  - Using the lease end date as the termination date without also recording move-out.
+  - Treating a "nonrefundable fee" as outside 83.49 without reading 83.491.
+  - Skipping the 7-day notice question on an early move-out.
+  - Computing any date outside compute_deadlines.
+open_questions:
+- id: termination_date_meaning
+  sections:
+  - '83.49'
+  text: The clocks run from "termination of the rental agreement." The text does not say whether that is the lease
+    end date or the move-out date. Record both; no cases loaded yet.
+
+
+issue: deposit_claim_received
+guidance:
+  questions:
+    deposit_amount: How much was your security deposit?
+    tenancy_terminated: What date did the lease end, or what date was it terminated?
+    claim_notice_dated: What date is printed on the landlord's notice?
+    claim_notice_date: What date did you receive the landlord's written notice about keeping part of the deposit?
+    claim_delivery: How did the notice reach you (certified mail, regular mail, e-mail, hand delivery, something
+      else)?
+    claim_amount: How much does the notice say the landlord is claiming from the deposit?
+    claim_reason: What reason does the notice give for the claim? Copy the words from the notice.
+    notice_states_objection_window: Does the notice tell you that you must object in writing within 15 days, and
+      give an address to send the objection to?
+    objected: Have you already sent the landlord a written objection to the claim?
+    objection_date: What date did you send the objection?
+    objection_delivery: How did you send the objection, and to what address?
+  lease_checks:
+    security_deposit: Confirms the amount and that it was called a deposit.
+    deposit_deductions: What the lease says the landlord may deduct for. Compare against the reason in the notice.
+    move_out_requirements: Cleaning and carpet clauses are the usual basis of a claim.
+    nonrefundable_fees: Money labeled nonrefundable may fall under 83.491 instead. Do not treat it as outside 83.49
+      without reading 83.491.
+    notices_to_landlord: Where the tenant's objection must be sent under the lease, alongside the address given
+      in the notice.
+    joint_and_several_liability: Whether one roommate's damage can be charged against the whole deposit.
+  evidence:
+  - the notice itself, with the envelope or the full e-mail headers
+  - the date the notice arrived (postmark, delivery scan, e-mail timestamp)
+  - move-in and move-out photos
+  - move-out walkthrough form, if any
+  - receipts for cleaning or repairs the tenant paid for
+  - the objection letter with proof of how and when it was sent
+  postures:
+    core:
+    - today's date
+    - the claim amount and reason as stated in the notice
+    - the tenant's objection
+    - the deposit amount
+    - a return address
+    - response deadline computed by the tool
+    - delivery method
+    preserve: States that the tenant objects to the claim, the amount, and the reason. Asks for return of the full
+      deposit. Cites nothing.
+    assert: Adds the 83.49(3)(b) sentence on the 15-day objection, quoted.
+    escalate: Adds the 83.49(3)(c) sentence on court costs and attorney fees, quoted.
+    notice_sufficiency: For this issue your letter is the objection itself. The statute sentence on objections is
+      quoted above, and the tool has computed the 15-day date from the day you said you received the notice. Whether
+      a letter sent after that date has any effect is not something this tool decides.
+  failure_modes:
+  - Computing the objection window from the date on the notice instead of the date of receipt, or the remit window
+    from receipt instead of the date on the notice.
+  - Treating the remit clock as unconditional. It comes from a sentence that begins "Unless the tenant objects".
+  - Skipping the question of how the notice was delivered when it came by e-mail.
+  - Computing any date outside compute_deadlines.
+open_questions:
+- id: receipt_date
+  sections:
+  - '83.49'
+  - '83.505'
+  text: The objection clock runs from "receipt of the landlord’s notice" while the remit clock runs from "the date
+    of the notice". Record both dates. For e-mail, 83.505(4) says a notice "is deemed delivered at the time it is
+    sent, unless the e-mail is returned to the sender as undeliverable"; the tool records how the notice arrived
+    and does not decide which date counts.
+- id: email_notice_conditions
+  sections:
+  - '83.505'
+  text: 83.505(1) allows e-mail delivery only "if the parties have signed an addendum to the rental agreement".
+    The tool records whether the tenant recalls such an addendum and does not decide whether the notice was validly
+    delivered.
+- id: objection_form
+  sections:
+  - '83.49'
+  text: The statute's model notice says the tenant "must object in writing" and that the objection "must be sent
+    to (landlord’s address)". No other delivery method or content requirement appears in the text. No cases loaded
+    yet.
+
+
+=== STATUTE SECTIONS: full text of each section the playbooks list (here 83.49 and 83.505), about 16,000 characters, omitted ===
+
+=== ELEMENT STATUS section, excerpt ===
+
+
+ELEMENT STATUS (by issue):
+{
+  "deposit_not_returned": [
+    {
+      "id": "deposit_amount",
+      "status": "known",
+      "value": "ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00)",
+      "from": "lease_profile.security_deposit"
+    },
+    {
+      "id": "tenancy_terminated",
+      "status": "known",
+      "value": "2026-07-31",
+      "from": "user"
+    },
+    {
+      "id": "vacated",
+      "status": "known",
+      "value": "2026-07-30",
+      "from": "user"
+    },
+    {
+      "id": "claim_notice_received",
+      "status": "known",
+      "value": true,
+      "from": "user"
+    },
+    {
+      "id": "claim_notice_date",
+      "status": "known",
+      "value": "2026-09-25",
+      "from": "user"
+    },
+    {
+      "id": "forwarding_address_given",
+      "status": "known",
+      "value": true,
+      "from": "user"
+    },
+    {
+      "id": "early_or_periodic",
+      "status": "known",
+      "value": false,
+      "from": "user"
+    },
+    {
+      "id": "seven_day_notice_given",
+      "status": "n/a"
+    }
+  ],
+  "deposit_claim_received": [
+    {
+      "id": "deposit_amount",
+      "status": "known",
+      "value": "ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00)",
+      "from": "lease_profile.security_deposit"
+    },
+    {
+      "id": "tenancy_terminated",
+      "status": "known",
+      "value": "2026-07-31",
+      "from": "user"
+    },
+    {
+      "id": "claim_notice_dated",
+      "status": "known",
+      "value": "2026-09-22",
+      "from": "user
