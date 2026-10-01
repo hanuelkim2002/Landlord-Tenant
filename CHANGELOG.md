@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-09-30
 
+- Live runs of the new rules logged in TODO.md: on nemotron (m-017 to m-020) and on gpt-oss-120b (m-021 to
+  m-024), scored against 22 replies from the old-rules runs with one rubric. Slips per reply: 0.91 old
+  rules, 1.00 new rules, 1.17 new rules on gpt-oss-120b; the kinds changed more than the rate. Model items
+  15 to 18, and harness item 14 (quote-check noise). No code changed.
 - `AGENT_MODEL` can be set in the environment (`AGENT_MODEL=gpt-oss-120b python dev/live_run.py ...`);
   the default is still nemotron-3-super-120b-a12b. Was a fixed constant. For comparing models on the live
   scenarios without editing code. Checked before: the gateway lists only open-weight models; gpt-oss-120b
