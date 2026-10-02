@@ -206,7 +206,7 @@ def ask_json(llm, prompt, tries=3):
         raw = llm.invoke(prompt + (NOT_JSON if attempt else "")).content.strip()
         raw = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
         try:
-            return json.loads(raw)
+            return json.loads(raw, strict=False)          # a line break inside a quoted string is kept, not refused
         except json.JSONDecodeError:
             if attempt == tries - 1:
                 raise

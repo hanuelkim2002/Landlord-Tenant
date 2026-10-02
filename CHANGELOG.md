@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- `ask_json` parses with `strict=False`: a line break inside a quoted string is kept. Was: refused as an
+  "Invalid control character", which crashed intake whenever the classifier's reason quoted a story typed on
+  two lines; the mixed story (a heater and a remark about religion) crashed on 3 of 3 first attempts in the
+  eval reruns, once the classifier began quoting its second line. Smoke check.
 - The eval keeps a crashed first attempt's screen (`<scenario>_r<k>_attempt1.out`). Was: the retry wrote over
   it, so three crashes in the eval reruns could not be traced.
 - The program's "does not decide" line also goes under a reply that quotes only the lease. Was: statute quotes

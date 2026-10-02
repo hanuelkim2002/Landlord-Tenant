@@ -97,7 +97,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   deadlines, with one that two playbooks share listed once, tagged with both issues),
   `ISSUE_LABELS` (the labels `classify` can pick), and the two one-shot intake calls `classify` and
   `fill_facts`, both through `ask_json` on `agent_llm` (an answer that is not valid JSON is asked for again
-  with `NOT_JSON` added, three answers at most, then the error is raised). `classify` adds "other" next to the covered labels
+  with `NOT_JSON` added, three answers at most, then the error is raised; parsed with `strict=False`, so a line
+  break inside a quoted string is kept). `classify` adds "other" next to the covered labels
   when a separate problem fits none of them (so `run.py` prints `NOT_COVERED`), and gives "other" alone
   when nothing fits. Imports `config`. Imported by `record`,
   `timeline`, `tools`, `agent`, `smoke`.

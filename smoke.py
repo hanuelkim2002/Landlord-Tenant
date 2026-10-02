@@ -270,6 +270,10 @@ try:
 except json.JSONDecodeError:
     gave_up = len(broken.prompts) == 3
 check("ask_json gives up after three answers that are not JSON", gave_up)
+two_lines = Answers('{"issues": ["other"], "reason": "he said he regrets\nrenting to people like you"}')
+check("ask_json keeps a line break inside a quoted string (the mixed story's crash, eval 2026-10-01)",
+      ask_json(two_lines, "Classify.")["reason"] == "he said he regrets\nrenting to people like you"
+      and len(two_lines.prompts) == 1)
 
 # quotes in a reply (citations.check_quoted): which cite goes with which quote, then what each is checked against
 FORFEIT = "he or she forfeits the right to impose a claim upon the security deposit"     # in 83.49(3)(a)
