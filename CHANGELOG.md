@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- `reply_empty` events carry `finish`, the gateway's `finish_reason` for each empty answer. Was: only
+  `recovered`, so an empty reply from the model could not be told from a gateway failure; the eval's first
+  after-runs (2026-10-01) hit eight minutes in which nearly every call came back empty, and only the clock
+  times showed it was the gateway. Smoke check extended.
 - Rule 6: posture lines are written after their name only, as preserve: "[its line]". Was: "copy ... word for
   word in quote marks", which the after-runs of the eval followed with a label taken from the prompt's own
   layout ("PLAYBOOKS issue deposit_not_returned guidance postures:") in front of each line. A "Not:" with that

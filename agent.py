@@ -338,7 +338,11 @@ def retry_empty(agent, config, result):
     if not recovered:
         print(NO_REPLY, "\n")
         record.append_transcript({"role": "check", "text": NO_REPLY})
-    append_event("reply_empty", recovered=recovered)
+    # why each empty answer stopped, as the gateway reports it ("stop", "length", or none): an empty "stop" is
+    # the model's, a run of them with no reason looks like the gateway (the eval of 2026-10-01 hit one)
+    finish = [(m.response_metadata or {}).get("finish_reason") for m in (result["messages"][-1], again["messages"][-1])
+              if m.type == "ai"]
+    append_event("reply_empty", recovered=recovered, finish=finish)
     return again, more
 
 

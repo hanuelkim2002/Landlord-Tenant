@@ -623,8 +623,9 @@ try:
           and read_events()[-1]["recovered"] is True)
     with contextlib.redirect_stdout(io.StringIO()) as printed:
         retry_empty(Again(""), {}, first)
-    check("a second empty reply tells the tenant and is logged", "[Check: no reply came back" in printed.getvalue()
-          and read_events()[-1]["recovered"] is False)
+    check("a second empty reply tells the tenant and is logged, with why each answer stopped",
+          "[Check: no reply came back" in printed.getvalue() and read_events()[-1]["recovered"] is False
+          and read_events()[-1]["finish"] == [None, None])
 
     # the tool's own line under a reply that quotes the statute without it (TODO item 30): printed by the program
     # and kept in the transcript; not under a reply that has it, nor under one quoting only the tenant

@@ -164,7 +164,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   as a `footer` line (TODO item 30). It returns whether anything was printed. When nothing was (the reply was empty
   or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and shows that
   second turn; if it is empty too, it prints `NO_REPLY` ("[Check: no reply came back from the model. Please
-  ask again.]"). Either way it logs `reply_empty`. The model's `reasoning_content` is never shown in its
+  ask again.]"). Either way it logs `reply_empty`, with `finish`: the `finish_reason` the gateway gave for each
+  empty answer ("stop", "length", or none). The model's `reasoning_content` is never shown in its
   place: LangChain drops it, and it is the model's unchecked working, not a reply. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
   tenant confirmed there is sent to the model as a "[Program note: ...]" line at the front of the tenant's
   next message, and logged as a `program` transcript line. `timeline` commands go to the transcript too.
@@ -308,7 +309,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `fetch`: `section` (from `get_statute_section`) or `search` (from `search_statute`).
   - `cite_flagged`: `cite` (e.g. "83.64"), `problem` (not a stored section, not shown or fetched in this
     chat, or no such subsection). Written by `agent.check_reply` after a reply. `timeline full` only.
-  - `reply_empty`: `recovered` (true if the model's second turn showed the tenant something). Written by
+  - `reply_empty`: `recovered` (true if the model's second turn showed the tenant something), `finish`
+    (the gateway's `finish_reason` for each empty answer). Written by
     `agent.retry_empty`. `timeline full` only.
   - `quote_flagged`: `quote` (the quoted words), `cite` (the cite next to it, or ""), `problem` (e.g. "is in
     83.49(3)(a), not 83.49(3)(b)"). Written by `agent.check_reply`. `timeline full` only.
