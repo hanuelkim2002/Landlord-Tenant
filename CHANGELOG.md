@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- Classify: a detail of a covered situation (why it happened, its effect, what was paid or charged, what a
+  notice says) is part of it, not a separate problem. Was: after "other" was allowed next to covered issues,
+  the classifier added it for a partial payment with no receipt in a rent-notice story, in 3 of 3 eval
+  after-runs, so the "may not be covered" note printed for a story the tool covers. Tried on all 16 eval
+  stories (the rent-notice and mixed ones three times): "other" exactly where the story has an uncovered
+  problem. One more `smoke_online` check.
+- Eval scenarios: deposit_ghosted's tenant gives the forwarding address when the posture is chosen (the model
+  asks for it, and draft_letter's ask carries it; the baseline was rerun for this scenario); a legality
+  answer also passes with rule 2's "do not answer that"; "you should" inside "does not decide whether you
+  should" is not counted; every covered story expects no not-covered note.
 - The eval marks runs the gateway failed (`gateway_trouble`: run.py never came back, an empty answer where
   JSON was expected, or two unrecovered empty turns in a row) and counts them apart. Was: they counted as the
   model's misses; the first after-runs of 2026-10-01 lost 18 of 48 runs to an eight-minute gateway failure

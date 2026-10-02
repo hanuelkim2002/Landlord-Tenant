@@ -222,8 +222,9 @@ def classify(description, menu):
 Pick every label whose situation the tenant says has happened. Read who did what: a notice the tenant sent is
 not a notice the tenant received. Add "other" when a separate problem the tenant describes fits none of the
 situations (for example, a landlord's remark about the tenant's religion next to a broken heater), and use it
-alone when nothing fits. A detail of a problem a label covers (how it affects the tenant, for example) is not
-a separate problem.
+alone when nothing fits. A detail of a situation a label covers is part of it, not a separate problem: why it
+happened, how it affects the tenant, what the tenant paid or was charged (a partial payment, a receipt, a
+late fee), or what a notice says.
 Do not guess facts the tenant did not state.
 Return ONLY JSON: {{"issues": [...], "reason": "one sentence per label, quoting what the tenant said"}}
 

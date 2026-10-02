@@ -42,6 +42,10 @@ check("(model) a covered problem next to one no playbook covers gets both, other
 detail = classify("Since August 20, 2026 there's been black mold on my bathroom ceiling and the landlord has not "
                   "fixed it. I have asthma and it's getting worse.", issue_menu())["issues"]
 check("(model) a detail of a covered problem is not a separate one", detail == ["repair_not_made"])
+paid = classify("On September 28, 2026 I found a notice taped to my door saying I owe $1,175, rent plus a $75 late fee, "
+                "or move out. I paid $550 through Zelle the next day and the landlord took it but gave me no receipt.",
+                issue_menu())["issues"]
+check("(model) a partial payment and a late fee are part of a rent notice, not a separate problem", paid == ["notice_received_nonpayment"])
 proposed = fill_facts(description, pb)
 print(proposed)
 for row in check_elements(pb, record.profile, {}, proposed):
