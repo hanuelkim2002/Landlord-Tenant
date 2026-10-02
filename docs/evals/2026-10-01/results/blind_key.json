@@ -1,0 +1,464 @@
+[
+  {
+    "code": "R001",
+    "arm": "base",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 1
+  },
+  {
+    "code": "R002",
+    "arm": "after",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 2
+  },
+  {
+    "code": "R003",
+    "arm": "after",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 2
+  },
+  {
+    "code": "R004",
+    "arm": "after",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 3
+  },
+  {
+    "code": "R005",
+    "arm": "base",
+    "scenario": "eval_cases_late_claim",
+    "rep": 3
+  },
+  {
+    "code": "R006",
+    "arm": "base",
+    "scenario": "eval_leave_early_family",
+    "rep": 3
+  },
+  {
+    "code": "R007",
+    "arm": "base",
+    "scenario": "eval_claim_carpet",
+    "rep": 3
+  },
+  {
+    "code": "R008",
+    "arm": "base",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 3
+  },
+  {
+    "code": "R009",
+    "arm": "base",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 1
+  },
+  {
+    "code": "R010",
+    "arm": "base",
+    "scenario": "eval_violation_dog",
+    "rep": 3
+  },
+  {
+    "code": "R011",
+    "arm": "after",
+    "scenario": "eval_cases_retaliation",
+    "rep": 2
+  },
+  {
+    "code": "R012",
+    "arm": "after",
+    "scenario": "eval_cases_retaliation",
+    "rep": 3
+  },
+  {
+    "code": "R013",
+    "arm": "after",
+    "scenario": "eval_claim_carpet",
+    "rep": 1
+  },
+  {
+    "code": "R014",
+    "arm": "after",
+    "scenario": "eval_entry_shower",
+    "rep": 2
+  },
+  {
+    "code": "R015",
+    "arm": "base",
+    "scenario": "eval_cases_retaliation",
+    "rep": 1
+  },
+  {
+    "code": "R016",
+    "arm": "after",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 1
+  },
+  {
+    "code": "R017",
+    "arm": "base",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 3
+  },
+  {
+    "code": "R018",
+    "arm": "base",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 3
+  },
+  {
+    "code": "R019",
+    "arm": "base",
+    "scenario": "eval_entry_shower",
+    "rep": 2
+  },
+  {
+    "code": "R020",
+    "arm": "base",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 1
+  },
+  {
+    "code": "R021",
+    "arm": "after",
+    "scenario": "eval_claim_carpet",
+    "rep": 2
+  },
+  {
+    "code": "R022",
+    "arm": "after",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 3
+  },
+  {
+    "code": "R023",
+    "arm": "after",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 1
+  },
+  {
+    "code": "R024",
+    "arm": "after",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 3
+  },
+  {
+    "code": "R025",
+    "arm": "after",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 1
+  },
+  {
+    "code": "R026",
+    "arm": "after",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 3
+  },
+  {
+    "code": "R027",
+    "arm": "after",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 3
+  },
+  {
+    "code": "R028",
+    "arm": "after",
+    "scenario": "eval_entry_shower",
+    "rep": 1
+  },
+  {
+    "code": "R029",
+    "arm": "base",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 2
+  },
+  {
+    "code": "R030",
+    "arm": "after",
+    "scenario": "eval_cases_late_claim",
+    "rep": 2
+  },
+  {
+    "code": "R031",
+    "arm": "base",
+    "scenario": "eval_entry_shower",
+    "rep": 1
+  },
+  {
+    "code": "R032",
+    "arm": "after",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 3
+  },
+  {
+    "code": "R033",
+    "arm": "after",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 1
+  },
+  {
+    "code": "R034",
+    "arm": "base",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 1
+  },
+  {
+    "code": "R035",
+    "arm": "base",
+    "scenario": "eval_leave_early_family",
+    "rep": 1
+  },
+  {
+    "code": "R036",
+    "arm": "base",
+    "scenario": "eval_entry_shower",
+    "rep": 3
+  },
+  {
+    "code": "R037",
+    "arm": "after",
+    "scenario": "eval_cases_late_claim",
+    "rep": 1
+  },
+  {
+    "code": "R038",
+    "arm": "after",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 1
+  },
+  {
+    "code": "R039",
+    "arm": "base",
+    "scenario": "eval_claim_carpet",
+    "rep": 1
+  },
+  {
+    "code": "R040",
+    "arm": "base",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 3
+  },
+  {
+    "code": "R041",
+    "arm": "after",
+    "scenario": "eval_entry_shower",
+    "rep": 3
+  },
+  {
+    "code": "R042",
+    "arm": "after",
+    "scenario": "eval_cases_late_claim",
+    "rep": 3
+  },
+  {
+    "code": "R043",
+    "arm": "base",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 1
+  },
+  {
+    "code": "R044",
+    "arm": "base",
+    "scenario": "eval_cases_retaliation",
+    "rep": 3
+  },
+  {
+    "code": "R045",
+    "arm": "after",
+    "scenario": "eval_violation_dog",
+    "rep": 3
+  },
+  {
+    "code": "R046",
+    "arm": "after",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 2
+  },
+  {
+    "code": "R047",
+    "arm": "after",
+    "scenario": "eval_leave_early_family",
+    "rep": 3
+  },
+  {
+    "code": "R048",
+    "arm": "base",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 3
+  },
+  {
+    "code": "R049",
+    "arm": "base",
+    "scenario": "eval_cases_late_claim",
+    "rep": 2
+  },
+  {
+    "code": "R050",
+    "arm": "base",
+    "scenario": "eval_cases_late_claim",
+    "rep": 1
+  },
+  {
+    "code": "R051",
+    "arm": "base",
+    "scenario": "eval_leave_early_family",
+    "rep": 2
+  },
+  {
+    "code": "R052",
+    "arm": "after",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 2
+  },
+  {
+    "code": "R053",
+    "arm": "after",
+    "scenario": "eval_violation_dog",
+    "rep": 2
+  },
+  {
+    "code": "R054",
+    "arm": "after",
+    "scenario": "eval_violation_dog",
+    "rep": 1
+  },
+  {
+    "code": "R055",
+    "arm": "base",
+    "scenario": "eval_violation_dog",
+    "rep": 2
+  },
+  {
+    "code": "R056",
+    "arm": "after",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 2
+  },
+  {
+    "code": "R057",
+    "arm": "base",
+    "scenario": "eval_claim_carpet",
+    "rep": 2
+  },
+  {
+    "code": "R058",
+    "arm": "after",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 3
+  },
+  {
+    "code": "R059",
+    "arm": "after",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 2
+  },
+  {
+    "code": "R060",
+    "arm": "base",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 3
+  },
+  {
+    "code": "R061",
+    "arm": "base",
+    "scenario": "eval_violation_dog",
+    "rep": 1
+  },
+  {
+    "code": "R062",
+    "arm": "base",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 2
+  },
+  {
+    "code": "R063",
+    "arm": "base",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 2
+  },
+  {
+    "code": "R064",
+    "arm": "after",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 1
+  },
+  {
+    "code": "R065",
+    "arm": "after",
+    "scenario": "eval_leave_early_family",
+    "rep": 2
+  },
+  {
+    "code": "R066",
+    "arm": "base",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 2
+  },
+  {
+    "code": "R067",
+    "arm": "base",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 1
+  },
+  {
+    "code": "R068",
+    "arm": "base",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 2
+  },
+  {
+    "code": "R069",
+    "arm": "base",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 1
+  },
+  {
+    "code": "R070",
+    "arm": "base",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 2
+  },
+  {
+    "code": "R071",
+    "arm": "base",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 2
+  },
+  {
+    "code": "R072",
+    "arm": "base",
+    "scenario": "eval_cases_retaliation",
+    "rep": 2
+  },
+  {
+    "code": "R073",
+    "arm": "after",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 1
+  },
+  {
+    "code": "R074",
+    "arm": "after",
+    "scenario": "eval_claim_carpet",
+    "rep": 3
+  },
+  {
+    "code": "R075",
+    "arm": "after",
+    "scenario": "eval_leave_early_family",
+    "rep": 1
+  },
+  {
+    "code": "R076",
+    "arm": "after",
+    "scenario": "eval_cases_retaliation",
+    "rep": 1
+  },
+  {
+    "code": "R077",
+    "arm": "base",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 3
+  }
+]

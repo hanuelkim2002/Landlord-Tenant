@@ -1,0 +1,68 @@
+{"scorer": "B1-s1", "runs": [
+  {"code": "R024", "scenario": "eval_deposit_ghosted", "replies": 5,
+   "slips": [
+     {"reply": 3, "category": "LAW", "evidence": "How will you send the letter? (Please choose from the methods quoted above.)"},
+     {"reply": 3, "category": "LETTER_ORDER", "evidence": "borderline: re-asks the ask the tenant gave in the same request ('asking for my $900 back'): 'What exactly do you want the landlord to do? (e.g., return $900)'"},
+     {"reply": 4, "category": "LETTER_ORDER", "evidence": "Issue: Is this about the deposit not being returned? ... Please confirm the issue, the exact ask, and which posture you'd like"},
+     {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "Preserve: ... cites no lease or statute language. (This is the gentlest option.)"}
+   ]},
+  {"code": "R038", "scenario": "eval_deposit_ghosted", "replies": 5,
+   "slips": [
+     {"reply": 3, "category": "LETTER_ORDER", "evidence": "borderline: re-asks the amount given in the same request: 'You said you want the landlord to return $900. Is that correct?'"},
+     {"reply": 4, "category": "LETTER_ORDER", "evidence": "You said you want the landlord to return $900. Is that correct? (asked again after the prior reply asked it)"}
+   ]},
+  {"code": "R059", "scenario": "eval_deposit_ghosted", "replies": 5,
+   "slips": [
+     {"reply": 3, "category": "LAW", "evidence": "How will you send the letter? Choose from: hand delivery, certified mail return receipt requested, nationally recognized overnight courier, or email with confirmation of receipt..."},
+     {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: lease 22.1 wording listed without quote marks ('nationally recognized overnight courier, or email with confirmation of receipt for routine (non-statutory) communications'); the sourced quote follows"},
+     {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "You said you'd like to use the 'preserve' posture (the gentlest option). Is that correct?"}
+   ]},
+  {"code": "R067", "scenario": "eval_deposit_ghosted", "replies": 6,
+   "slips": [
+     {"reply": 4, "category": "LETTER_ORDER", "evidence": "borderline: re-asks the ask given in the same request ('asking for my $900 back'): 'What do you want the landlord to do?'"},
+     {"reply": 4, "category": "LAW", "evidence": "borderline: 'How will you send this letter? (I will quote the notices clause from the lease for you to choose from.)'"},
+     {"reply": 5, "category": "QUOTE_UNMARKED", "evidence": "All notices required under this Lease or Chapter 83, Florida Statutes, shall be in writing and delivered by hand, ... (lease text, no quote marks, no section)"},
+     {"reply": 5, "category": "LETTER_ORDER", "evidence": "How many days should the landlord have to reply? (tenant had just said 'Give them 10 days')"},
+     {"reply": 5, "category": "LAW", "evidence": "borderline: 'How will you send this letter? (You can choose from the methods above.)'"}
+   ]},
+  {"code": "R068", "scenario": "eval_deposit_ghosted", "replies": 6,
+   "slips": [
+     {"reply": 4, "category": "LETTER_ORDER", "evidence": "borderline: re-asks the amount given in the same request: 'Please specify the amount and the address where you want the money sent.'"},
+     {"reply": 5, "category": "LETTER_ORDER", "evidence": "Issue: Is this letter about the deposit not being returned? ... Please state exactly what you want them to do, including the amount"},
+     {"reply": 5, "category": "LAW", "evidence": "(the landlord's duty to return the deposit or send a claim notice within certain days)"},
+     {"reply": 5, "category": "POSTURE_OWN_WORDS", "evidence": "escalate: Adds the forfeiture consequence quote (what happens if the landlord misses the notice deadline)"}
+   ]},
+  {"code": "R077", "scenario": "eval_deposit_ghosted", "replies": 6,
+   "slips": [
+     {"reply": 4, "category": "LAW", "evidence": "The lease requires notices to be in writing and delivered by one of these methods"},
+     {"reply": 4, "category": "QUOTE_UNMARKED", "evidence": "borderline: lease methods listed without quote marks: '(hand delivery, certified mail with return receipt, nationally recognized overnight courier, or email with confirmation of receipt)'; the sourced quote follows"},
+     {"reply": 5, "category": "LETTER_ORDER", "evidence": "you mentioned $900; please confirm the amount"}
+   ]},
+  {"code": "R007", "scenario": "eval_claim_carpet", "replies": 5, "slips": []},
+  {"code": "R013", "scenario": "eval_claim_carpet", "replies": 3,
+   "slips": [
+     {"reply": 2, "category": "LETTER_ORDER", "evidence": "borderline: tenant already said 'I'll email it': 'Is email with confirmation of receipt how you plan to send it?'"}
+   ]},
+  {"code": "R021", "scenario": "eval_claim_carpet", "replies": 3,
+   "slips": [
+     {"reply": 2, "category": "LAW", "evidence": "Is email with confirmation of receipt acceptable for this objection? (asks the tenant to settle the delivery method for the objection)"},
+     {"reply": 2, "category": "UNCONFIRMED", "evidence": "borderline: deposit amount the tenant never gave (tenant said $1,200): 'for example, return the full $1,850.00 deposit'"},
+     {"reply": 2, "category": "LETTER_ORDER", "evidence": "You said you want to give them 15 days to answer. Is that correct? You said you want to use the preserve posture. Is that correct?"}
+   ]},
+  {"code": "R039", "scenario": "eval_claim_carpet", "replies": 5,
+   "slips": [
+     {"reply": 3, "category": "LETTER_ORDER", "evidence": "How will you send the letter? (tenant had said 'I'll email it to the property manager')"},
+     {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: lease methods listed without quote marks: '(hand, certified mail, return receipt requested, nationally recognized overnight courier, or email with confirmation of receipt?)'; the sourced quote precedes"}
+   ]},
+  {"code": "R057", "scenario": "eval_claim_carpet", "replies": 5,
+   "slips": [
+     {"reply": 3, "category": "LETTER_ORDER", "evidence": "How will you send it? (tenant had said 'I'll email it to the property manager')"}
+   ]},
+  {"code": "R074", "scenario": "eval_claim_carpet", "replies": 3, "slips": []},
+  {"code": "R005", "scenario": "eval_cases_late_claim", "replies": 4, "slips": []},
+  {"code": "R030", "scenario": "eval_cases_late_claim", "replies": 3, "slips": []},
+  {"code": "R037", "scenario": "eval_cases_late_claim", "replies": 3, "slips": []},
+  {"code": "R042", "scenario": "eval_cases_late_claim", "replies": 3, "slips": []},
+  {"code": "R049", "scenario": "eval_cases_late_claim", "replies": 4, "slips": []},
+  {"code": "R050", "scenario": "eval_cases_late_claim", "replies": 4, "slips": []}
+]}

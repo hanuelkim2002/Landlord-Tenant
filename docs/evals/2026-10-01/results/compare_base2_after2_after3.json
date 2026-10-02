@@ -1,0 +1,377 @@
+{
+ "base": {
+  "totals": {
+   "crashed": 0,
+   "expected_ok": 32,
+   "replies": 155,
+   "empty_turns": 2,
+   "cautions": 2,
+   "field_names": 4,
+   "echo": 1,
+   "footers": 0,
+   "runs": 48
+  },
+  "kinds": {
+   "Legality question: 'does not decide' shown": [
+    49,
+    57
+   ],
+   "'What are my deadlines?': get_deadlines called": [
+    27,
+    27
+   ],
+   "Time question in plain words: get_deadlines called": [
+    2,
+    9
+   ],
+   "Court question: get_cases on a right topic": [
+    36,
+    36
+   ],
+   "Letter asked for: drafted": [
+    17,
+    21
+   ],
+   "No draft when not asked": [
+    15,
+    15
+   ],
+   "Issues right at the end": [
+    48,
+    48
+   ],
+   "Not-covered note / stop right": [
+    45,
+    48
+   ],
+   "Deadlines computed": [
+    10,
+    15
+   ],
+   "Forbidden words absent": [
+    129,
+    129
+   ],
+   "Sheet suggestion right (TODO 12)": [
+    3,
+    3
+   ]
+  },
+  "by_scenario": {
+   "eval_cases_3day_cash": [
+    3,
+    3
+   ],
+   "eval_cases_late_claim": [
+    3,
+    3
+   ],
+   "eval_cases_retaliation": [
+    2,
+    3
+   ],
+   "eval_claim_carpet": [
+    1,
+    3
+   ],
+   "eval_deposit_ghosted": [
+    2,
+    3
+   ],
+   "eval_entry_shower": [
+    3,
+    3
+   ],
+   "eval_lease_end_renewal": [
+    1,
+    3
+   ],
+   "eval_leave_early_family": [
+    0,
+    3
+   ],
+   "eval_nc_mixed_heater": [
+    0,
+    3
+   ],
+   "eval_nc_noise": [
+    3,
+    3
+   ],
+   "eval_nc_roommate": [
+    3,
+    3
+   ],
+   "eval_nc_towing": [
+    3,
+    3
+   ],
+   "eval_nonpayment_taped": [
+    2,
+    3
+   ],
+   "eval_rent_hike_duplex": [
+    3,
+    3
+   ],
+   "eval_repair_mold_apt": [
+    0,
+    3
+   ],
+   "eval_violation_dog": [
+    3,
+    3
+   ]
+  }
+ },
+ "after": {
+  "totals": {
+   "crashed": 1,
+   "expected_ok": 37,
+   "replies": 99,
+   "empty_turns": 3,
+   "cautions": 2,
+   "field_names": 1,
+   "echo": 0,
+   "footers": 18,
+   "runs": 48
+  },
+  "kinds": {
+   "Legality question: 'does not decide' shown": [
+    55,
+    56
+   ],
+   "'What are my deadlines?': get_deadlines called": [
+    26,
+    26
+   ],
+   "Time question in plain words: get_deadlines called": [
+    8,
+    9
+   ],
+   "Court question: get_cases on a right topic": [
+    33,
+    36
+   ],
+   "Letter asked for: drafted": [
+    20,
+    21
+   ],
+   "No draft when not asked": [
+    15,
+    15
+   ],
+   "Issues right at the end": [
+    47,
+    48
+   ],
+   "Not-covered note / stop right": [
+    44,
+    48
+   ],
+   "Deadlines computed": [
+    15,
+    15
+   ],
+   "Forbidden words absent": [
+    124,
+    126
+   ],
+   "Sheet suggestion right (TODO 12)": [
+    3,
+    3
+   ]
+  },
+  "by_scenario": {
+   "eval_cases_3day_cash": [
+    3,
+    3
+   ],
+   "eval_cases_late_claim": [
+    3,
+    3
+   ],
+   "eval_cases_retaliation": [
+    2,
+    3
+   ],
+   "eval_claim_carpet": [
+    1,
+    3
+   ],
+   "eval_deposit_ghosted": [
+    1,
+    3
+   ],
+   "eval_entry_shower": [
+    3,
+    3
+   ],
+   "eval_lease_end_renewal": [
+    2,
+    3
+   ],
+   "eval_leave_early_family": [
+    3,
+    3
+   ],
+   "eval_nc_mixed_heater": [
+    2,
+    3
+   ],
+   "eval_nc_noise": [
+    3,
+    3
+   ],
+   "eval_nc_roommate": [
+    3,
+    3
+   ],
+   "eval_nc_towing": [
+    3,
+    3
+   ],
+   "eval_nonpayment_taped": [
+    0,
+    3
+   ],
+   "eval_rent_hike_duplex": [
+    3,
+    3
+   ],
+   "eval_repair_mold_apt": [
+    2,
+    3
+   ],
+   "eval_violation_dog": [
+    3,
+    3
+   ]
+  }
+ },
+ "final": {
+  "totals": {
+   "crashed": 0,
+   "expected_ok": 39,
+   "replies": 103,
+   "empty_turns": 1,
+   "cautions": 0,
+   "field_names": 3,
+   "echo": 0,
+   "footers": 25,
+   "runs": 48
+  },
+  "kinds": {
+   "Legality question: 'does not decide' shown": [
+    55,
+    57
+   ],
+   "'What are my deadlines?': get_deadlines called": [
+    25,
+    27
+   ],
+   "Time question in plain words: get_deadlines called": [
+    6,
+    9
+   ],
+   "Court question: get_cases on a right topic": [
+    36,
+    36
+   ],
+   "Letter asked for: drafted": [
+    15,
+    21
+   ],
+   "No draft when not asked": [
+    15,
+    15
+   ],
+   "Issues right at the end": [
+    48,
+    48
+   ],
+   "Not-covered note / stop right": [
+    46,
+    48
+   ],
+   "Deadlines computed": [
+    12,
+    15
+   ],
+   "Forbidden words absent": [
+    129,
+    129
+   ],
+   "Sheet suggestion right (TODO 12)": [
+    3,
+    3
+   ]
+  },
+  "by_scenario": {
+   "eval_cases_3day_cash": [
+    3,
+    3
+   ],
+   "eval_cases_late_claim": [
+    3,
+    3
+   ],
+   "eval_cases_retaliation": [
+    3,
+    3
+   ],
+   "eval_claim_carpet": [
+    1,
+    3
+   ],
+   "eval_deposit_ghosted": [
+    1,
+    3
+   ],
+   "eval_entry_shower": [
+    3,
+    3
+   ],
+   "eval_lease_end_renewal": [
+    3,
+    3
+   ],
+   "eval_leave_early_family": [
+    1,
+    3
+   ],
+   "eval_nc_mixed_heater": [
+    3,
+    3
+   ],
+   "eval_nc_noise": [
+    3,
+    3
+   ],
+   "eval_nc_roommate": [
+    3,
+    3
+   ],
+   "eval_nc_towing": [
+    3,
+    3
+   ],
+   "eval_nonpayment_taped": [
+    1,
+    3
+   ],
+   "eval_rent_hike_duplex": [
+    3,
+    3
+   ],
+   "eval_repair_mold_apt": [
+    3,
+    3
+   ],
+   "eval_violation_dog": [
+    2,
+    3
+   ]
+  }
+ }
+}

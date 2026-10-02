@@ -14,6 +14,17 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
    question below; (b) periods the lease sets (83.575(1)-(2), 83.595(4)); needs a clock whose length is a
    confirmed fact; (c) hours (83.53(2)); (d) months (83.56(2), 12 months). Decide which to support.
 
+32. The stop for a story the tool does not cover (`run.py`: "None of the situations this tool covers applies,
+    so it stops here.") says nothing else. Checked in the eval of 2026-10-01: a roommate dispute, neighbors'
+    noise, and a towed car each stop cleanly, 6 of 6 runs per side. Consider listing the nine situations the
+    tool covers, so a tenant who described a covered problem in other words can try again; whether to point
+    to legal aid or the Bar's referral service is the author's call.
+33. Some live sessions crash on their first attempt and pass on the second: 6 of 48 runs on the code before
+    the eval changes and 3 of 48 after (2026-10-01), three of them one mixed story. Two causes found: malformed
+    JSON (now asked for again) and a line break inside a quoted JSON string (the mixed story; now accepted,
+    `strict=False`). The other screens were written over; the eval now keeps a crashed first attempt's screen.
+    Read the next ones before changing anything.
+
 ## Playbooks
 
 2. Hand check of the seven playbooks written 2026-09-27 (repair_not_made, notice_received_nonpayment,
@@ -23,6 +34,11 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
    playbooks carry.
 3. Counting convention is a stated assumption in each playbook. Check the time-computation rule in the
     corpus before relying on it. Do not settle this from memory.
+
+34. For the author: `notice_received_violation` does not list 83.64 (retaliatory conduct) in `sections`. A
+    violation notice that follows a tenant's complaint is the setting of Salmonte v. Eilertson; in the eval
+    (cases_retaliation) its case topic was offered only because the story also confirmed repair_not_made.
+    Adding the section is a playbook change for the author to check against `statutes/`.
 
 ## Case law
 
@@ -37,10 +53,27 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     so untag a page that should not (a commercial lease, e.g. Multach v. Adams). While verifying, check each case's status in
     Westlaw (the print flags 27 opinions; one red-striped, Charlemagne v. Francis), and look at the questions
     the ingest left in `wiki/log.md` (2026-10-01, the remaining 65).
-29. Which topic the tenant sees is still the model's choice. Asked about lawyers' fees in a deposit case,
+29. Which topic the tenant sees is still the model's choice (in the eval of 2026-10-01 each court question
+    got the same topic in every run, item 36). Asked about lawyers' fees in a deposit case,
     one run of `deposit_cases` called Fees and costs in a suit over the deposit and two called Prevailing
     party fees under 83.48, so the tenant saw different sets of cases. Consider printing every offered topic
     a question could fall under, or a chat command `cases` that lists the topics so the tenant picks.
+35. Case topics per playbook are many and mixed: 13 for the deposit playbooks, 27 for repair_not_made, among
+    them procedural topics (Points not raised in the trial court, Applying an amended statute) and deposit
+    topics under the rent-notice playbooks, because a topic is offered when any page tagged with one of the
+    playbook's sections is on it. Consider sections on the topic pages (or a topic list per playbook) before
+    any topic list is shown to a tenant (item 36).
+36. Cases reach a tenant only when the tenant asks what courts or judges said (rule 8). In the eval
+    (2026-10-01) plain questions ("Has this happened to other people? Did a judge ever ...") reached
+    `get_cases` on a topic whose cases include the one with facts like the tenant's in 17 of 18 runs before
+    the changes and 16 of 18 after (one count copied into the topic name, since accepted by
+    `tools.topic_named`; one statute answer). A tenant who never asks never sees them. If that matters, a line
+    the program prints, listing the case topics for the confirmed issues, keeps the choice with the tenant;
+    do it after item 35. Not built: the model saying a case supports or fits the tenant (Brumbaugh, discussed
+    2026-10-01).
+37. No case page speaks to damage that was already there at move-in (the claim_carpet story). Asked "Did a
+    judge ever make a landlord give back money for damage that was already there?", the model printed the
+    notice-of-claim topic, the nearest deposit topic. A gap for the author's research, not a code change.
 26. `search_cases(phrase)`, like `search_statute`, for a tenant whose situation fits no playbook ("other").
     Reconsider before building: here the model, not code, decides what to look for from the tenant's
     story, which is selection by judgment, the unlicensed-practice risk discussed 2026-10-01 (Brumbaugh:
@@ -79,7 +112,29 @@ reused, so older references (smoke check names, the changelog) still point to th
 12. The model suggests a claim letter's printed date as the date it was received (`claim_notice_date`; the
     printed date is `claim_notice_dated`). Still seen with the current rules: 1 of 3 claim runs in the trial
     (the old rules also 1 of 3). The sheet shows the suggestion and the tenant corrects it, logged as
-    corrected. (Item 21 was the same slip.)
+    corrected. (Item 21 was the same slip.) Not seen in the eval of 2026-10-01: claim_carpet, whose letter is
+    dated three days before it arrived, got the right suggestion in all 9 runs (3 per side, and the first baseline).
+
+38. Asked which posture is "the nicest", the model calls preserve "the gentlest option" (2 of 3
+    deposit_ghosted after-runs, 2026-10-01), though rule 6 has that "Not:". Scored POSTURE_OWN_WORDS.
+39. Letter requests: the model still asks again for something the tenant said (the amount, the days, the
+    delivery) in about 1 in 3 letter runs (blind scorers: 9 slips before the changes, 6.5 after, 2026-10-01),
+    and in the confirmation run it asked "is that correct?" until the scripted tenant ran out of lines (15 of
+    21 letters drafted, against 20 of 21 the run before). A code-side option: fill the ask from confirmed
+    facts (the deposit amount, the forwarding address) so fewer details are left to ask.
+40. "The lease and statute text I have do not answer that." to a legal question the playbook does not list
+    as open (whether the renewal must be signed by October 15; changing the locks): the blind scorers count
+    it as LAW under the rubric's literal rule (12 of 38 after-runs' LAW calls, most marked borderline). Decide
+    whether this line is the wanted answer there or the quote-then-"does not decide" form is.
+41. Empty replies remain rare (2 and 3 turns in 48 runs before and after, 2026-10-01); `reply_empty` now logs
+    the gateway's finish_reason, so the next ones show whether the model or the gateway left them empty.
+
+42. Classify adds "other" next to a covered issue for a detail of it: after the wording fix, still 2 of 3
+    rent-notice runs (a partial payment with no receipt read as a separate problem), while the mixed story
+    (a heater and a remark about religion) now gets "other" in 3 of 3 (was 0 of 6). The note it triggers is
+    mild ("may not be covered ... continues with what it does cover"). Options: keep it; ask the classifier
+    to quote the separate problem and check the quote is not a fact a playbook asks for; or drop "other"
+    beside covered issues again.
 
 ## Open questions
 

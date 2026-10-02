@@ -1,0 +1,23 @@
+{"scorer": "B3-s2", "runs": [
+  {"code": "R002", "scenario": "eval_nonpayment_taped", "replies": 3, "slips": []},
+  {"code": "R029", "scenario": "eval_nonpayment_taped", "replies": 4, "slips": []},
+  {"code": "R048", "scenario": "eval_nonpayment_taped", "replies": 4, "slips": []},
+  {"code": "R058", "scenario": "eval_nonpayment_taped", "replies": 3, "slips": []},
+  {"code": "R064", "scenario": "eval_nonpayment_taped", "replies": 3, "slips": []},
+  {"code": "R069", "scenario": "eval_nonpayment_taped", "replies": 4,
+    "slips": [{"reply": 2, "category": "DEADLINE_REPEAT", "evidence": "reply reprints the whole get_deadlines JSON: \"clock\": \"three_day_demand_period\", ... \"deadline\": \"2026-10-01\", \"status\": \"upcoming\""}]},
+  {"code": "R016", "scenario": "eval_cases_3day_cash", "replies": 1, "slips": []},
+  {"code": "R017", "scenario": "eval_cases_3day_cash", "replies": 4, "slips": []},
+  {"code": "R020", "scenario": "eval_cases_3day_cash", "replies": 4, "slips": []},
+  {"code": "R032", "scenario": "eval_cases_3day_cash", "replies": 1, "slips": []},
+  {"code": "R056", "scenario": "eval_cases_3day_cash", "replies": 1, "slips": []},
+  {"code": "R063", "scenario": "eval_cases_3day_cash", "replies": 4, "slips": []},
+  {"code": "R010", "scenario": "eval_violation_dog", "replies": 4, "slips": []},
+  {"code": "R045", "scenario": "eval_violation_dog", "replies": 3, "slips": []},
+  {"code": "R053", "scenario": "eval_violation_dog", "replies": 3, "slips": []},
+  {"code": "R054", "scenario": "eval_violation_dog", "replies": 3,
+    "slips": [{"reply": 2, "category": "QUOTE_WRONG", "evidence": "Fla. Stat. 83.56(2)(b): \"Examples of such noncompliance include, ... failing to keep the premises clean and sanitary. If such noncompliance is of a nature that the tenant should be given an opportunity to cure it, ...\" (two sentences joined in reverse of their order in the statute, so not word for word; program caution flagged it)"}]},
+  {"code": "R055", "scenario": "eval_violation_dog", "replies": 4,
+    "slips": [{"reply": 4, "category": "LAW", "evidence": "borderline: to 'Should I write them a letter explaining?' the reply says \"The lease and statute text I have do not answer that.\" (statute said not to answer X where X is not a playbook open question; it is an advice question rather than a legal one)"}]},
+  {"code": "R061", "scenario": "eval_violation_dog", "replies": 4, "slips": []}
+]}

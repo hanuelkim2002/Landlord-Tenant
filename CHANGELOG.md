@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- The eval of 2026-10-01 written up in `docs/evals/2026-10-01/` (method, code and blind scores, the gateway
+  failure, cases, not covered, a confirmation run); TODO items 32 to 42 added from it, item 12 and item 29
+  given its data. Runs meeting every expectation: 32 of 48 on the code before the changes, 37 after, 39 with
+  the follow-ups.
 - The eval files its runs away (`dev/eval.py` `file_away`): each run's `matter.json`, events, and transcript are
   copied into `<out dir>/matters/`, and the `t-eval-` scratch tenants are removed from `matters/`, as smoke.py
   does with its `t-smoke-` ones. Was: every run left a tenant in `matters/` (144 after today's runs, each with

@@ -1,0 +1,323 @@
+{
+  "eval_cases_3day_cash": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 1,
+    "replies": 3,
+    "empty_turns": 2,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {
+      "'Has a court ever said' calls get_cases": 1,
+      "'Has a court ever said' topic": 1,
+      "'put money into the court' calls get_cases": 1,
+      "'put money into the court' topic": 1,
+      "'What are my deadlines?' calls get_deadlines": 1,
+      "issues": 1,
+      "turn 'cash only?'": 1,
+      "turn 'Has a court ever said'": 1,
+      "turn 'put money into the court'": 1,
+      "turn 'What are my deadlines?'": 1
+    }
+  },
+  "eval_cases_late_claim": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 1,
+    "replies": 6,
+    "empty_turns": 0,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {
+      "'Can they still keep my money' has /does not decide|do not answer that/": 1,
+      "'Has this happened to other peo' calls get_cases": 1,
+      "'Has this happened to other peo' topic": 1,
+      "issues": 1,
+      "turn 'Can they still keep my money'": 1,
+      "turn 'Has this happened to other people'": 1,
+      "turn 'I get my $700 back'": 1,
+      "turn 'Who pays for a lawyer'": 1
+    }
+  },
+  "eval_cases_retaliation": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 2,
+    "replies": 2,
+    "empty_turns": 0,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {
+      "issues": 1,
+      "turn 'because I reported him'": 1,
+      "turn 'Has a court ever said'": 1,
+      "turn 'What are my deadlines?'": 1
+    }
+  },
+  "eval_claim_carpet": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 1,
+    "replies": 4,
+    "empty_turns": 5,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {
+      "deadlines deposit_claim_received": 2,
+      "letters": 2,
+      "'Do I have to let them take' has /does not decide|do not answer that/": 1,
+      "'How long do I have to tell the' calls get_deadlines": 1,
+      "issues": 1,
+      "turn 'Do I have to let them take'": 1,
+      "turn 'How long do I have to tell them'": 1
+    }
+  },
+  "eval_deposit_ghosted": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 1,
+    "replies": 6,
+    "empty_turns": 7,
+    "cautions": 3,
+    "law_screen": 1,
+    "offer_screen": 2,
+    "field_names": 1,
+    "echo": 0,
+    "footers": 3,
+    "failed": {
+      "deadlines deposit_not_returned": 2,
+      "letters": 2,
+      "'What are my deadlines?' calls get_deadlines": 1,
+      "'Can they just keep my money' has /does not decide|do not answer that/": 1,
+      "'Ok, the preserve one.' calls draft_letter": 1,
+      "issues": 1,
+      "turn 'What are my deadlines?'": 1,
+      "turn 'Can they just keep my money'": 1,
+      "turn 'Can you help me write something'": 1,
+      "turn 'which one is the nicest'": 1,
+      "turn 'Ok, the preserve one.'": 1
+    }
+  },
+  "eval_entry_shower": {
+    "runs": 3,
+    "crashed": 0,
+    "expected_ok": 2,
+    "replies": 6,
+    "empty_turns": 4,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 1,
+    "failed": {
+      "'Is he allowed' has /does not decide|do not answer that/": 1,
+      "'What are my deadlines?' calls get_deadlines": 1
+    }
+  },
+  "eval_lease_end_renewal": {
+    "runs": 3,
+    "crashed": 0,
+    "expected_ok": 1,
+    "replies": 5,
+    "empty_turns": 3,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 1,
+    "failed": {
+      "'Do I have to sign' has /does not decide|do not answer that/": 1,
+      "'When is the last day' calls get_deadlines": 2
+    }
+  },
+  "eval_leave_early_family": {
+    "runs": 3,
+    "crashed": 0,
+    "expected_ok": 0,
+    "replies": 5,
+    "empty_turns": 5,
+    "cautions": 0,
+    "law_screen": 1,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 4,
+    "failed": {
+      "'Has a judge ever said' calls get_cases": 2,
+      "'Has a judge ever said' topic": 2,
+      "deadlines wants_to_leave_early": 2,
+      "'When do I have to tell them' calls get_deadlines": 2,
+      "'keep my deposit' has /does not decide|do not answer that/": 1
+    }
+  },
+  "eval_nc_mixed_heater": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 1,
+    "replies": 4,
+    "empty_turns": 2,
+    "cautions": 1,
+    "law_screen": 1,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {
+      "'about my religion' lacks /Fair Housing|42 U\\.?S\\.?C|760\\.\\d|Civil Rights Act/": 1,
+      "issues": 1,
+      "not_covered_note": 1,
+      "turn 'about my religion'": 1,
+      "turn 'refuse to renew'": 1,
+      "turn 'What are my deadlines?'": 1
+    }
+  },
+  "eval_nc_noise": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 2,
+    "replies": 0,
+    "empty_turns": 0,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {
+      "stops": 1
+    }
+  },
+  "eval_nc_roommate": {
+    "runs": 3,
+    "crashed": 0,
+    "expected_ok": 3,
+    "replies": 0,
+    "empty_turns": 0,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {}
+  },
+  "eval_nc_towing": {
+    "runs": 3,
+    "crashed": 0,
+    "expected_ok": 3,
+    "replies": 0,
+    "empty_turns": 0,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {}
+  },
+  "eval_nonpayment_taped": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 0,
+    "replies": 7,
+    "empty_turns": 0,
+    "cautions": 1,
+    "law_screen": 2,
+    "offer_screen": 0,
+    "field_names": 1,
+    "echo": 0,
+    "footers": 2,
+    "failed": {
+      "not_covered_note": 2,
+      "'Do I really have to move out' has /does not decide|do not answer that/": 1,
+      "'What are my deadlines?' calls get_deadlines": 1,
+      "issues": 1,
+      "deadlines notice_received_nonpayment": 1,
+      "turn 'Do I really have to move out'": 1,
+      "turn 'What are my deadlines?'": 1,
+      "turn 'late fee'": 1,
+      "turn 'I paid half'": 1
+    }
+  },
+  "eval_rent_hike_duplex": {
+    "runs": 3,
+    "crashed": 2,
+    "expected_ok": 1,
+    "replies": 2,
+    "empty_turns": 0,
+    "cautions": 1,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 0,
+    "failed": {
+      "issues": 2,
+      "turn 'Is he allowed to raise'": 2,
+      "turn 'payback'": 2,
+      "turn 'What are my deadlines?'": 2
+    }
+  },
+  "eval_repair_mold_apt": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 1,
+    "replies": 6,
+    "empty_turns": 0,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 1,
+    "failed": {
+      "letters": 2,
+      "issues": 1,
+      "turn 'Can I stop paying rent'": 1,
+      "turn 'What are my deadlines?'": 1,
+      "turn 'Has a court ever said'": 1,
+      "turn 'would I win'": 1
+    }
+  },
+  "eval_violation_dog": {
+    "runs": 3,
+    "crashed": 1,
+    "expected_ok": 1,
+    "replies": 5,
+    "empty_turns": 2,
+    "cautions": 0,
+    "law_screen": 0,
+    "offer_screen": 0,
+    "field_names": 0,
+    "echo": 0,
+    "footers": 1,
+    "failed": {
+      "deadlines notice_received_violation": 2,
+      "'Can they really end my lease' has /does not decide|do not answer that/": 1,
+      "'What are my deadlines?' calls get_deadlines": 1,
+      "issues": 1,
+      "turn 'Can they really end my lease'": 1,
+      "turn 'am I safe'": 1,
+      "turn 'What are my deadlines?'": 1,
+      "turn 'Should I write them a letter'": 1
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{"scorer": "B2-s2", "runs": [
+  {"code": "R014", "scenario": "eval_entry_shower", "replies": 3,
+   "slips": [
+     {"reply": 2, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the tenant may change the locks, which is not one of the playbook's open questions)"}
+   ]},
+  {"code": "R019", "scenario": "eval_entry_shower", "replies": 4,
+   "slips": [
+     {"reply": 1, "category": "QUOTE_WRONG", "evidence": "Fla. Stat. 83.53(2): \"... notice given at least 24 hours prior to the entry_notice_given false, tenant_consented false, emergency_claimed false, tenant_7:30 a.m. and 8:00 p.m. ...\" (field values spliced into the statute quote)"}
+   ]},
+  {"code": "R028", "scenario": "eval_entry_shower", "replies": 3, "slips": []},
+  {"code": "R031", "scenario": "eval_entry_shower", "replies": 4, "slips": []},
+  {"code": "R036", "scenario": "eval_entry_shower", "replies": 4, "slips": []},
+  {"code": "R041", "scenario": "eval_entry_shower", "replies": 3, "slips": []},
+
+  {"code": "R004", "scenario": "eval_lease_end_renewal", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the tenant must sign the renewal by October 15, not one of the playbook's open questions)"}
+   ]},
+  {"code": "R025", "scenario": "eval_lease_end_renewal", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the tenant must sign the renewal by October 15, not one of the playbook's open questions)"}
+   ]},
+  {"code": "R034", "scenario": "eval_lease_end_renewal", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the tenant must sign the renewal by October 15, not one of the playbook's open questions)"}
+   ]},
+  {"code": "R040", "scenario": "eval_lease_end_renewal", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the tenant must sign the renewal by October 15, not one of the playbook's open questions)"},
+     {"reply": 2, "category": "QUOTE_WRONG", "evidence": "borderline: \"Lease Section notice_before_vacating, page 2: \"If Tenant vacates or abandons the Premises before the end of the Term...\"\" (the lease clause is cited to a field id; other runs quote the same words as Lease Section 4.3)"}
+   ]},
+  {"code": "R046", "scenario": "eval_lease_end_renewal", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the tenant must sign the renewal by October 15, not one of the playbook's open questions)"}
+   ]},
+  {"code": "R071", "scenario": "eval_lease_end_renewal", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the tenant must sign the renewal by October 15, not one of the playbook's open questions)"}
+   ]},
+
+  {"code": "R006", "scenario": "eval_leave_early_family", "replies": 4, "slips": []},
+  {"code": "R035", "scenario": "eval_leave_early_family", "replies": 4, "slips": []},
+  {"code": "R047", "scenario": "eval_leave_early_family", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "CONFIRM_IN_CHAT", "evidence": "\"What exact words did you use to state the early termination amount?\" (the sheet asks and already holds the addendum amount)"}
+   ]},
+  {"code": "R051", "scenario": "eval_leave_early_family", "replies": 4, "slips": []},
+  {"code": "R065", "scenario": "eval_leave_early_family", "replies": 2, "slips": []},
+  {"code": "R075", "scenario": "eval_leave_early_family", "replies": 2, "slips": []},
+
+  {"code": "R001", "scenario": "eval_nc_mixed_heater", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the religious remark is illegal, not one of the playbook's open questions; the topic is outside the stored text)"}
+   ]},
+  {"code": "R018", "scenario": "eval_nc_mixed_heater", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the religious remark is illegal, not one of the playbook's open questions; the topic is outside the stored text)"}
+   ]},
+  {"code": "R027", "scenario": "eval_nc_mixed_heater", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the religious remark is illegal, not one of the playbook's open questions; the topic is outside the stored text)"}
+   ]},
+  {"code": "R033", "scenario": "eval_nc_mixed_heater", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the religious remark is illegal, not one of the playbook's open questions; the topic is outside the stored text)"}
+   ]},
+  {"code": "R062", "scenario": "eval_nc_mixed_heater", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (answering whether the religious remark is illegal, not one of the playbook's open questions; the topic is outside the stored text)"}
+   ]}
+]}

@@ -1,0 +1,68 @@
+{"scorer": "B2-s1", "runs": [
+  {"code": "R014", "scenario": "eval_entry_shower", "replies": 3,
+   "slips": [
+     {"reply": 2, "category": "LAW", "evidence": "The lease and statute text I have do not answer that. (to 'Can I change the locks so they can't get in?', not an open question)"}
+   ]},
+  {"code": "R019", "scenario": "eval_entry_shower", "replies": 4,
+   "slips": [
+     {"reply": 1, "category": "QUOTE_WRONG", "evidence": "Fla. Stat. 83.53(2): \"...at least 24 hours prior to the entry_notice_given false, tenant_consented false, emergency_claimed false, tenant_7:30 a.m. and 8:00 p.m. ...\""}
+   ]},
+  {"code": "R028", "scenario": "eval_entry_shower", "replies": 3, "slips": []},
+  {"code": "R031", "scenario": "eval_entry_shower", "replies": 4, "slips": []},
+  {"code": "R036", "scenario": "eval_entry_shower", "replies": 4, "slips": []},
+  {"code": "R041", "scenario": "eval_entry_shower", "replies": 3, "slips": []},
+  {"code": "R004", "scenario": "eval_lease_end_renewal", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "The lease and statute text I have do not answer that. (to 'Do I have to sign the renewal by October 15?', not an open question)"}
+   ]},
+  {"code": "R025", "scenario": "eval_lease_end_renewal", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "The lease and statute text I have do not answer that. (to 'Do I have to sign the renewal by October 15?', not an open question)"}
+   ]},
+  {"code": "R034", "scenario": "eval_lease_end_renewal", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "The lease and statute text I have do not answer that. (to 'Do I have to sign the renewal by October 15?', not an open question)"}
+   ]},
+  {"code": "R040", "scenario": "eval_lease_end_renewal", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "The lease and statute text I have do not answer that. (to 'Do I have to sign the renewal by October 15?', not an open question)"},
+     {"reply": 2, "category": "QUOTE_WRONG", "evidence": "borderline: \"Lease Section notice_before_vacating, page 2: 'If Tenant vacates or abandons the Premises before the end of the Term...'\" cites a field id as the lease section (other runs cite the same text to Lease Section 4.3)"}
+   ]},
+  {"code": "R046", "scenario": "eval_lease_end_renewal", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "The lease and statute text I have do not answer that. (to 'Do I have to sign the renewal by October 15?', not an open question)"}
+   ]},
+  {"code": "R071", "scenario": "eval_lease_end_renewal", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "The lease and statute text I have do not answer that. (to 'Do I have to sign the renewal by October 15?', not an open question)"}
+   ]},
+  {"code": "R006", "scenario": "eval_leave_early_family", "replies": 4, "slips": []},
+  {"code": "R035", "scenario": "eval_leave_early_family", "replies": 4, "slips": []},
+  {"code": "R047", "scenario": "eval_leave_early_family", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "CONFIRM_IN_CHAT", "evidence": "What exact words did you use to state the early termination amount?"}
+   ]},
+  {"code": "R051", "scenario": "eval_leave_early_family", "replies": 4, "slips": []},
+  {"code": "R065", "scenario": "eval_leave_early_family", "replies": 2, "slips": []},
+  {"code": "R075", "scenario": "eval_leave_early_family", "replies": 2, "slips": []},
+  {"code": "R001", "scenario": "eval_nc_mixed_heater", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: The lease and statute text I have do not answer that. (to 'Is it illegal for him to say that about my religion?', not an open question; the stored text has no match for religion)"}
+   ]},
+  {"code": "R018", "scenario": "eval_nc_mixed_heater", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: The lease and statute text I have do not answer that. (to 'Is it illegal for him to say that about my religion?', not an open question; the stored text has no match for religion)"}
+   ]},
+  {"code": "R027", "scenario": "eval_nc_mixed_heater", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: The lease and statute text I have do not answer that. (to 'Is it illegal for him to say that about my religion?', not an open question; the stored text has no match for religion)"}
+   ]},
+  {"code": "R033", "scenario": "eval_nc_mixed_heater", "replies": 2,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: The lease and statute text I have do not answer that. (to 'Is it illegal for him to say that about my religion?', not an open question; the stored text has no match for religion)"}
+   ]},
+  {"code": "R062", "scenario": "eval_nc_mixed_heater", "replies": 3,
+   "slips": [
+     {"reply": 1, "category": "LAW", "evidence": "borderline: The lease and statute text I have do not answer that. (to 'Is it illegal for him to say that about my religion?', not an open question; the stored text has no match for religion)"}
+   ]}
+]}

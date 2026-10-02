@@ -1,0 +1,23 @@
+{"scorer": "B4-s1", "runs": [
+  {"code": "R003", "scenario": "eval_rent_hike_duplex", "replies": 2, "slips": []},
+  {"code": "R009", "scenario": "eval_rent_hike_duplex", "replies": 3, "slips": []},
+  {"code": "R022", "scenario": "eval_rent_hike_duplex", "replies": 2,
+   "slips": [{"reply": 2, "category": "QUOTE_WRONG", "evidence": "Fla. Stat. 83.64(1): \"Examples of conduct for which the landlord may not retaliate include, but are not limited to, situations where: (c) The tenant has complained to the landlord pursuant to s. 83.56 (1);\" (splices the lead-in directly onto (c), skipping (a) and (b); not word for word)"}]},
+  {"code": "R023", "scenario": "eval_rent_hike_duplex", "replies": 2, "slips": []},
+  {"code": "R060", "scenario": "eval_rent_hike_duplex", "replies": 3, "slips": []},
+  {"code": "R066", "scenario": "eval_rent_hike_duplex", "replies": 3, "slips": []},
+  {"code": "R008", "scenario": "eval_repair_mold_apt", "replies": 5,
+   "slips": [{"reply": 3, "category": "LETTER_ORDER", "evidence": "How will you send the letter? (tenant had already said \"I'll hand-deliver it to the leasing office\" in the same request)"}]},
+  {"code": "R026", "scenario": "eval_repair_mold_apt", "replies": 3, "slips": []},
+  {"code": "R043", "scenario": "eval_repair_mold_apt", "replies": 5,
+   "slips": [{"reply": 3, "category": "LETTER_ORDER", "evidence": "How will you send it? (tenant had already said \"I'll hand-deliver it to the leasing office\" in the same request)"}]},
+  {"code": "R052", "scenario": "eval_repair_mold_apt", "replies": 3, "slips": []},
+  {"code": "R070", "scenario": "eval_repair_mold_apt", "replies": 5, "slips": []},
+  {"code": "R073", "scenario": "eval_repair_mold_apt", "replies": 3, "slips": []},
+  {"code": "R011", "scenario": "eval_cases_retaliation", "replies": 2, "slips": []},
+  {"code": "R012", "scenario": "eval_cases_retaliation", "replies": 1, "slips": []},
+  {"code": "R015", "scenario": "eval_cases_retaliation", "replies": 3, "slips": []},
+  {"code": "R044", "scenario": "eval_cases_retaliation", "replies": 3, "slips": []},
+  {"code": "R072", "scenario": "eval_cases_retaliation", "replies": 3, "slips": []},
+  {"code": "R076", "scenario": "eval_cases_retaliation", "replies": 1, "slips": []}
+]}
