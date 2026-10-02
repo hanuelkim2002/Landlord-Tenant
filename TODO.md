@@ -87,17 +87,11 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
 
 ## Interface
 
-31. A web page in place of the terminal, Claude-style (discussed 2026-10-01): the matters and issues in a
-    sidebar, the chat in the middle, the timeline and a drafted letter in a side panel. Streamlit
-    recommended (one language; chat, file upload, forms, and a sidebar built in); Chainlit the runner-up
-    (closest to Claude's look, but chat-only, so the intake sheet would become yes/no prompts). Not an
-    off-the-shelf chat UI (Open WebUI, LibreChat): they connect the tenant to the model directly and skip
-    what the program does itself (the sheet, the printed timeline and cases). The first step is done
-    (2026-10-02): the chat returns blocks (`agent.turn`, `agent.command`) and the sheet is in pieces
-    (`sheet.row_notes`, `value_of`, `save_answer`). Left: the page draws the same blocks, with program output styled apart from
-    the model's replies, each reply shown only after `check_reply` (no word-by-word streaming), and the page
-    on localhost only until deployment is decided (logins, where `matters/` data lives, the unlicensed-practice
-    review).
+45. The web page (`app.py`), limits seen while building it (2026-10-02): reopening a matter does not show
+    earlier sessions' chats (the terminal does not either; the transcripts are in `sessions/`); one browser
+    tab at a time, since every tab of the one Streamlit program shares `record.matter`; closing the tab
+    leaves the session with no `session_ended`, as a crash does in the terminal; a file the tenant wants
+    stored goes in only by its path, through the model's `add_artifact`, not by upload on the page.
 
 ## Model behavior (later)
 
@@ -123,7 +117,9 @@ reused, so older references (smoke check names, the changelog) still point to th
     facts (the deposit amount, the forwarding address) so fewer details are left to ask. On 2026-10-02 the
     carpet story's letter was drafted in 0 of 3 runs: asked again "What do you want the landlord to do?", asked
     for today's date (the letter fills it in), and once asked the tenant to quote the lease's notices clause
-    (rule 6's "quote the notices clause" read as an instruction to the tenant). Now the most common miss.
+    (rule 6's "quote the notices clause" read as an instruction to the tenant). Now the most common miss. Seen
+    again in the web page's live check (2026-10-02): asked for the forwarding address (fair: the ask needs it),
+    then for today's date.
 40. "The lease and statute text I have do not answer that." to a legal question the playbook does not list
     as open (whether the renewal must be signed by October 15; changing the locks): the blind scorers count
     it as LAW under the rubric's literal rule (12 of 38 after-runs' LAW calls, most marked borderline). Decide

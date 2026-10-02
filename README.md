@@ -80,11 +80,14 @@ out.
 
 ## Beyond the current plan
 
-A chatbot front end in place of the terminal loop. It waits until the data bank, skills, and case wiki work
-is done.
+A chatbot front end in place of the terminal loop: `app.py`, a web page on this computer only (2026-10-02),
+draws what the terminal prints, with the model's words apart from the program's. Putting it in front of
+tenants waits until the data bank, skills, and case wiki work is done, and on logins, where `matters/` data
+lives, and the unlicensed-practice review.
 
 ## Stack
 
 Python, LangChain agent with `@tool` functions, Pydantic for every structured shape, PyPDF2 for the lease,
-YAML playbooks, a markdown case wiki, two models on the UF gateway (an agent model and an extraction model). Built first as a
+YAML playbooks, a markdown case wiki, two models on the UF gateway (an agent model and an extraction model), Streamlit for
+the web page. Built first as a
 Colab notebook, moved to this folder as modules on 2026-09-25.

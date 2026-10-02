@@ -5,6 +5,25 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- The web page, `app.py` (TODO item 31, done): `streamlit run app.py`, on http://localhost:8501 only. The same
+  steps as `run.py` on one page: the sidebar holds New matter, the saved matters, and the open matter's issues
+  with Drop and End session; the middle holds the front door (tenant, lease PDF, description; or what is new),
+  then the intake sheet as a form, one row at a time with a date picker, yes/no, an amount, or words, filled in
+  with the suggestion, then the chat; the right holds the timeline (all issues or one, full or not, with a wide
+  window) and the last letter drafted, with a download button. It draws the blocks of `agent.turn` and
+  `agent.command`: the model's replies in speech bubbles, the program's output (deadlines, letters, cases, the
+  timeline, the stop) in boxes labeled as printed by the program, cautions as warnings, the "does not decide"
+  line as a note; each reply is shown whole, after `check_reply`, never word by word. Text is shown as written
+  (`plain`: a "$" in "$1,850" would otherwise start math). A gateway error during a turn becomes a caution and
+  the page goes on. `.streamlit/config.toml`: localhost only, no usage statistics sent to Streamlit, no
+  first-run prompt, no Deploy button. `streamlit` added to `requirements.txt`. Was: the terminal only. Checked
+  three ways: headless with Streamlit's `AppTest` (now ten smoke checks on `matters/t-smoke-app`, with a
+  stand-in model); a live session in the browser pane on a scratch tenant (`t-ui-test`, moved to the Trash
+  after): the lease uploaded and read, the issues and facts confirmed on the page's sheet, "What are my
+  deadlines?" printed by the program, a legality question answered with the lease and statute quotes, a
+  letter request (not drafted: the model asked for the address, then today's date, TODO item 39), End session;
+  the record held one session from start to end. Known limits are TODO item 45. README: the front end is no
+  longer only planned; Stack names Streamlit. CLAUDE.md and `setup.sh` name the new command.
 - The chat returns blocks instead of printing, so a web page can show what the terminal shows (TODO item 31,
   first step). A block is `{"kind", "text"}`: `reply` is the model's words, every other kind the program's
   (`letter`, `cases`, `deadlines`, `caution`, `footer`, `timeline`, `notice`, `stop`). Was: `show_turn`,

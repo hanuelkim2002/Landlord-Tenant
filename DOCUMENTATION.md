@@ -165,7 +165,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   rules, the chat's messages so far), `prompt_from_record` (LangChain `dynamic_prompt` middleware that
   calls `system_prompt(request.messages)` before every model call), `build_agent` (a LangChain agent with that middleware and an in-memory checkpointer; no
   model call), `transcript_entry` (one thread message as a transcript line).
-  The chat is in pieces a front end calls (the terminal's `chat` is one). Each returns
+  The chat is in pieces both front ends call (the terminal's `chat`, the web page `app.py`). Each returns
   blocks, the parts the tenant sees in order, each `{"kind", "text"}` made by `block`: `reply` is the model's
   words; every other kind is the program's: `letter` (a `draft_letter` result as is), `cases` (a `get_cases`
   listing), `deadlines` (the turn's last `get_deadlines` listing through `render_deadlines`), `caution` (failed
@@ -204,7 +204,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   command or runs a turn, prints the blocks, ends after a drop leaves no covered issue, and after a turn that
   proposed facts runs `sheet.run_sheet` if `pending_rows()` has anything, keeping its `sheet_note` for the
   next message.
-  Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `sheet`, `timeline`, `tools`. Imported by `run`, `smoke`.
+  Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `lease`, `sheet`, `timeline`, `tools`. Imported by `run`, `app`, `smoke`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
   (`new_tenant_id`), calls `new_matter` and `start_session("new")`, asks for the lease path (`ask_path`, which accepts a path dragged
   into the terminal), reads the lease (`agent.read_lease`), asks for the description (`ask_text`, several lines
@@ -218,6 +218,38 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   prints `agent.stop_block()` (`sheet.stop_text()`, written to the transcript as a `printed` line) and stops: no chat; what was
   described and decided stays in the record for a later pipeline. Otherwise `chat(build_agent())`. Then `end_session()` on a
   normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
+- `app.py`: entry point, the same steps as `run.py` as a web page (`streamlit run app.py`, on
+  http://localhost:8501; `.streamlit/config.toml` keeps it on this computer, `address = "localhost"`, turns
+  off Streamlit's usage statistics and its first-run prompt, and hides the Deploy button). Streamlit runs the
+  whole file again on every click, so what must last is in `st.session_state`, one browser tab's memory:
+  `stage` (door, new, update, sheet, chat, ended), `ids` (the open matter's tenant and matter id), `session`,
+  `agent` and `config` (built when the first sheet is done, as in `run.py`), `history` (everything shown in
+  the middle column, as blocks, plus the page's own `tenant` and `sheet` entries), `pending` (a message
+  waiting for the model's turn), `note` (`agent.sheet_note` of the last sheet), `skipped` and `saved` (this
+  sheet's). `open_record()` loads the tab's matter into `record` at the top of every run, since every tab
+  shares the record module, and sets `record.session`. Sidebar: New matter, the saved matters
+  (`list_matters`) with Open, and for the open matter its issues, Drop (in the chat; it goes through
+  `agent.command` as `drop <issue>`), and End session (`end_session`). Middle: `new_matter_form` (tenant, an
+  existing one or a new id; the lease PDF, written to a temporary folder for `agent.read_lease`, which keeps
+  its own copy under its hash; the description; then `intake`, and `sheet.NOT_COVERED` when it applies),
+  `update_form` (what is new, through `resume`), `sheet_form` (one row at a time from `pending_rows`: the
+  question, `row_notes`, an input by type, a date picker, yes/no, an amount, words, filled in with the
+  suggestion; Save goes through `value_of` and `save_answer`, an accepted suggestion logged as typed ""; Skip
+  for now), `finish_sheet` (mid-chat: back to the chat with the note; after the first sheet: the agent is
+  built, or `agent.stop_block()` and the session ends when no covered issue is left), then the chat:
+  `take_message` (`bye` ends the session; a command's blocks show at once; anything else waits as
+  `pending`, so the message shows before the model starts) and `run_pending_turn` (`agent.turn`; a sheet
+  follows when the model proposed facts and rows are pending; an error from the gateway becomes a caution and
+  the page goes on, with the traceback printed in the terminal running Streamlit). `show(b)` draws a block:
+  the tenant's words and the model's `reply` in speech bubbles; `caution` as a warning; `footer` and
+  `notice` as notes; `deadlines`, `letter`, `cases`, `timeline`, `stop` in a box labeled by `PRINTED_BY` as
+  printed by the program (listings in fixed-width text, only a letter wrapped). `plain(text)` shows text as
+  written: markdown signs escaped (a `$` would start math) and line breaks kept. Right: `record_panel`, the
+  timeline (`render_timeline` for all issues or one, full or not, redrawn from the record on every run and not
+  transcribed, unlike the `timeline` command; Show wide opens it in a wide window, `wide_timeline`) and the
+  last letter drafted (from the last `draft` event's file, with a download button). `need_key()` stops a run
+  that would call a model without the key. Imports `record`, `agent`, `config`, `corpus`, `sheet`,
+  `timeline`.
 - `sheet.py`: the intake sheet, asked and saved by code with no model. `stop_text()` (what the tenant reads
   when nothing the tool covers is left: `STOP_LINE`, every playbook's description with how to come back to one
   (open the matter again and describe that part), then up to three lease clauses `lease.clauses_about` finds
@@ -240,7 +272,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   line; returns the pair for the model's note and the lines to show). `run_sheet(ask=input)` is the
   terminal's sheet: asks one row at a time with those pieces, rebuilding the list after each answer so an
   `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; returns the saved pairs.
-  Imports `record`, `corpus`, `lease`. Imported by `run`, `agent`, `tools` (for `parse_answer` and `shown`).
+  Imports `record`, `corpus`, `lease`. Imported by `run`, `app`, `agent`, `tools` (for `parse_answer` and `shown`).
 - `checks.py`: helpers for the smoke scripts. `check(name, condition)` prints `OK` or `FAIL` and keeps the
   failures, `summary()` prints the last line, `make_scratch(tenant_id, **changes)` copies the test matter
   (without its transcripts) to `matters/<tenant_id>/m-001` and changes `matter.json` keys, and
@@ -653,7 +685,12 @@ Offline checks (no model call, no key needed):
   timeline. Then related issues on `matters/t-smoke-related/m-001`, and every playbook through the real
   code path on `matters/t-smoke-playbooks/m-001`: for each, the sheet is answered by type ("yes" to every
   yes/no, so every `applies_if` question comes up), every clock must get a date, and a preserve letter must
-  carry the playbook's `notice_sufficiency` note. A new playbook is covered without a new check. Every line
+  carry the playbook's `notice_sufficiency` note. A new playbook is covered without a new check. Last, the
+  web page, run headless by Streamlit's `AppTest` on `matters/t-smoke-app/m-001` with a stand-in model: a
+  saved matter opened from the list, nothing new, a reply in a speech bubble with the program's caution and
+  line outside it and its `$` and `*` shown as written, a command, a proposed fact asked on the page's
+  sheet with its related issue next, the note with the next message, deadlines in a program box, a model
+  error shown as a caution, End session. Every line
   must be OK; the last line says "all checks OK" or lists the failures. The test matter itself is not
   changed by a smoke run.
 
@@ -714,6 +751,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   covered problem next to an uncovered one (`nc_mixed_heater`), and three with facts like a case in the wiki
   and plain questions about judges (`cases_late_claim`, `cases_3day_cash`, `cases_retaliation`); run with
   `WIKI_UNVERIFIED=1` until pages are verified. Each scenario's `about` says what it tests.
+- `streamlit run app.py`: the web page (see `app.py` in Modules), on http://localhost:8501 only. The same
+  model calls as `run.py`. Stop it with Ctrl-C in its terminal.
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call)
   and runs intake (two calls). An existing matter asks what is new: an update runs `resume` (two calls).
   Then the intake sheet asks every open fact (no model), and the chat starts. Chat commands, handled by the loop without the

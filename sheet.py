@@ -1,6 +1,6 @@
 """Intake Sheet: the facts a matter still needs, asked by code and saved by code. No model is involved.
 
-In pieces, so the terminal and any other front end ask the same rows the same way:
+In pieces, so the terminal and the web page (app.py) ask the same rows the same way:
   pending_rows()  which issues and facts need the tenant now, with the question, the type, and any suggestion
   row_notes(r)    the lines shown under a row's question
   value_of(r, a)  the tenant's answer checked against the row's type (an empty answer takes the suggestion)

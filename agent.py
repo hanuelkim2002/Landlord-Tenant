@@ -2,8 +2,8 @@
 
 The chat is in pieces any front end can call: turn (one model turn) and command (a chat command) return
 blocks, the parts the tenant sees, each {"kind", "text"}. "reply" is the model's words; every other kind is the
-program's (see BLOCK KINDS below). The terminal loop, chat, prints them with print_blocks; another front end
-can draw the same blocks.
+program's (see BLOCK KINDS below). The terminal loop, chat, prints them with print_blocks; the web page,
+app.py, draws the same blocks.
 """
 import json
 import os

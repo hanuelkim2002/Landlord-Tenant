@@ -52,7 +52,7 @@ student, not admitted.
 - After any edit to a playbook YAML, run the playbook checks (`check_all_playbooks`, also run by `smoke.py`)
   and every line must be OK. They check quotes in the prose too, not only in `spec`.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
-- `run.py` is interactive and calls the UF gateway. `smoke_online.py` calls the model for classify,
+- `run.py` and `app.py` are interactive and call the UF gateway. `smoke_online.py` calls the model for classify,
   fill_facts, and resume. Everything else, including `smoke.py`, runs without the key.
 - Smoke runs write only to scratch matters under `matters/t-smoke*`, which they remove; never to `t-test`.
 
@@ -71,6 +71,7 @@ student, not admitted.
     python dev/build_cases.py "<Westlaw print>"   # once: cases/ from the author's Westlaw Find and Print file
     python wiki.py check     # the case wiki's checks; also index, and verify "<page>" "<name>" for the author
     python run.py            # new matter (lease, intake) or existing (what is new, resume), then the sheet, then chat
+    streamlit run app.py     # the same as a web page on this computer: http://localhost:8501
     python smoke.py          # offline checks, no key needed
     python smoke_online.py   # classify, fill_facts, resume; calls the model
     python schemas.py        # what the model sees per tool
