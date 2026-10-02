@@ -13,15 +13,10 @@ from config import require_key
 require_key()                   # this script calls the models; stop here if the key is missing
 
 import record
-from agent import build_agent, chat, intake, resume
-from lease import check_quotes, extract_profile, ingest_pdf
-from sheet import pending_rows, run_sheet, stop_text
-from record import (active_playbooks, candidate_playbooks, end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id,
+from agent import build_agent, chat, intake, read_lease, resume, stop_block
+from sheet import NOT_COVERED, pending_rows, run_sheet
+from record import (active_playbooks, candidate_playbooks, end_session, list_matters, load_matter, new_matter, new_tenant_id,
                     start_session)
-
-
-NOT_COVERED = ("\nPart of what you described may not be covered by this tool yet (it has no playbook for it). The\n"
-               "tool continues with what it does cover.")
 
 
 def ask_path(prompt):
@@ -45,14 +40,6 @@ def ask_text(prompt):
         lines.append(line)
 
 
-def read_lease(pdf_path):
-    """Store the PDF, read it with Gemma into the lease profile, check every quote, save the profile."""
-    pages = ingest_pdf(pdf_path, matter_dir())
-    record.profile = extract_profile(pages)
-    check_quotes(record.profile, pages)
-    (matter_dir() / "lease_profile.json").write_text(record.profile.model_dump_json(indent=2))
-
-
 def start_new():
     """New matter: tenant, lease, description, intake. Returns True: a matter is open."""
     tenants = sorted({m["tenant"] for m in list_matters()})
@@ -68,7 +55,7 @@ def start_new():
     read_lease(ask_path("Path to the lease PDF: "))
     intake(ask_text("Describe the problem in your own words. Press Enter on an empty line when done."))
     if "other" in record.matter["issues"] and candidate_playbooks():
-        print(NOT_COVERED)
+        print("\n" + NOT_COVERED)
     return True
 
 
@@ -96,7 +83,7 @@ def start_existing():
                       "line when done. Press Enter right away if nothing is new.")
     if update:
         if "other" in resume(update) and candidate_playbooks():   # logs the update, suggests issues and facts
-            print(NOT_COVERED)
+            print("\n" + NOT_COVERED)
     return True
 
 
@@ -117,9 +104,7 @@ if start():
         # Nothing the tool covers is left: every issue found was "other", or the tenant turned the suggestions
         # down. Stop before the chat, showing what the tool covers and the lease's own clauses on the subject;
         # what was described and decided is in the record for a later pipeline.
-        shown = stop_text()
-        print("\n" + shown)
-        record.append_transcript({"role": "printed", "text": shown})
+        print("\n" + stop_block()["text"])
     else:
         chat(build_agent())                    # built after the sheet, so the prompt holds the confirmed facts
     end_session()                              # only on a normal exit; a crash leaves the start without an end

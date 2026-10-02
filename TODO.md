@@ -92,10 +92,9 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     recommended (one language; chat, file upload, forms, and a sidebar built in); Chainlit the runner-up
     (closest to Claude's look, but chat-only, so the intake sheet would become yes/no prompts). Not an
     off-the-shelf chat UI (Open WebUI, LibreChat): they connect the tenant to the model directly and skip
-    what the program does itself (the sheet, the printed timeline and cases). First, without changing what
-    the terminal shows: `sheet.run_sheet`, `agent.show_turn`, and the command loop in `agent.chat` return
-    blocks (from program or model; kind: timeline, cases, letter, reply, caution; text) instead of printing,
-    and `run.py` prints them. Then the page draws the same blocks, with program output styled apart from
+    what the program does itself (the sheet, the printed timeline and cases). The first step is done
+    (2026-10-02): the chat returns blocks (`agent.turn`, `agent.command`) and the sheet is in pieces
+    (`sheet.row_notes`, `value_of`, `save_answer`). Left: the page draws the same blocks, with program output styled apart from
     the model's replies, each reply shown only after `check_reply` (no word-by-word streaming), and the page
     on localhost only until deployment is decided (logins, where `matters/` data lives, the unlicensed-practice
     review).

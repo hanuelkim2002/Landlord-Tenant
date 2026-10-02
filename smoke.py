@@ -18,6 +18,7 @@ import PyPDF2
 from langchain.agents import create_agent
 from langchain.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
+from langgraph.checkpoint.memory import InMemorySaver
 
 import record
 from calendars import court_calendars
@@ -34,7 +35,8 @@ from record import (append_event, append_transcript, end_session, list_matters, 
 from lease import FOOTER, lease_clauses
 from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from agent import CASE_RULE, LETTER_RULE, NO_CASES_RULE, NOT_DECIDED, check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
+from agent import (CASE_RULE, LETTER_RULE, NO_CASES_RULE, NOT_DECIDED, check_reply, command, given_text, print_blocks,
+                   retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn, turn_blocks)
 from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
 
@@ -338,6 +340,11 @@ def stated(value, words):
     return {"value": value, "how": "stated", "basis": words}
 
 
+def screen(blocks):
+    """The blocks' texts as one string, to look for what the tenant would read."""
+    return "\n".join(b["text"] for b in blocks)
+
+
 make_scratch("t-smoke",
              issues=["deposit_not_returned", "deposit_claim_received"],
              facts={"claim_notice_received": False},
@@ -430,11 +437,11 @@ try:
           json.loads(receipt.artifact)["deadlines"] == listed and not re.search(r"\b20\d\d-\d\d-\d\d\b", receipt.content)
           and "printed the tenant's deadlines" in receipt.content and "call get_deadlines again" in receipt.content)
     call = AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "d0"}])
-    with contextlib.redirect_stdout(io.StringIO()) as shown_now:
-        show_turn([call, receipt], [call, receipt])
+    shown_now = turn_blocks([call, receipt], [call, receipt])
     check("the chat loop prints the listing, dates included, not the model's receipt",
-          all(d["deadline"] in shown_now.getvalue() for d in listed if "deadline" in d)
-          and "You are not shown the dates" not in shown_now.getvalue())
+          [b["kind"] for b in shown_now] == ["deadlines"]
+          and all(d["deadline"] in screen(shown_now) for d in listed if "deadline" in d)
+          and "You are not shown the dates" not in screen(shown_now))
     check("printed deadlines carry every field: date, actor, rule, start, cite, status, counting, issues",
           all(f"  {d['deadline']}  {d['actor']} deadline: " in printed for d in listed)
           and printed.count("counting: ") == len(listed) and "Fla. Stat. 83.49(3)(b)" in printed
@@ -455,11 +462,10 @@ try:
     # a reply's cites: a fetched section counts as shown; a failed cite is printed, transcribed, and logged
     fetch_call = AIMessage(content="", tool_calls=[{"name": "get_statute_section", "args": {"section": "83.505"}, "id": "c1"}])
     check("a section the model fetched counts as shown", "83.505" in sections_shown([fetch_call]))
-    with contextlib.redirect_stdout(io.StringIO()) as printed:
-        check_reply(f'See Fla. Stat. 83.49(3)(a) and 83.64. Under 83.49(3)(b): "{FORFEIT}"', [])
+    cautions = "\n".join(check_reply(f'See Fla. Stat. 83.49(3)(a) and 83.64. Under 83.49(3)(b): "{FORFEIT}"', []))
     flagged = [e for e in read_events()[events_before:] if e["kind"] in ("cite_flagged", "quote_flagged")]
     check("a flagged cite and quote are printed and logged, a good cite is not",
-          "[Check: 83.64" in printed.getvalue() and "[Check: 83.49" not in printed.getvalue()
+          "[Check: 83.64" in cautions and "[Check: 83.49" not in cautions
           and [(e["kind"], e.get("cite")) for e in flagged] == [("cite_flagged", "83.64"), ("quote_flagged", "83.49(3)(b)")])
     # cases (wiki.py, get_cases): nothing is offered until a page is verified; a verified, tagged page offers its
     # topics, prints by code, and is logged; an untagged page never shows; a case cite must be one shown
@@ -485,9 +491,7 @@ try:
         topic = "Landlord's notice of claim on the deposit"
         call = AIMessage(content="", tool_calls=[{"name": "get_cases", "args": {"topic": topic}, "id": "k1"}])
         shown_msg = get_cases.invoke({"type": "tool_call", "id": "k1", "name": "get_cases", "args": {"topic": topic}})
-        with contextlib.redirect_stdout(io.StringIO()) as printed:
-            show_turn([call, shown_msg], [call, shown_msg])        # get_cases ends the turn: no reply follows
-        out = printed.getvalue()
+        out = screen(turn_blocks([call, shown_msg], [call, shown_msg]))   # get_cases ends the turn: no reply follows
         check("get_cases prints every verified case on the topic in the courts' words with the closing line, and logs it",
               "Durene v. Alcime, 448 So. 2d 1208 (Fla. 3d DCA 1984)" in out and "readily available fund" in out
               and "Casey" not in out and "does not decide whether any of them applies to you" in out
@@ -634,34 +638,73 @@ try:
         def invoke(self, inputs, config):
             return {"messages": first["messages"] + inputs["messages"] + [AIMessage(content=self.reply)]}
     first = {"messages": [HumanMessage(content="What are my deadlines?"), AIMessage(content="\n")]}
-    with contextlib.redirect_stdout(io.StringIO()) as printed:
-        shown_first = show_turn(first["messages"][1:], first["messages"])
-        retry_empty(Again("The deadlines appear above."), {}, first)
-    check("a turn with only blank text shows nothing, and the model's second reply is shown", not shown_first
-          and "The deadlines appear above." in printed.getvalue() and read_events()[-1]["kind"] == "reply_empty"
-          and read_events()[-1]["recovered"] is True)
-    with contextlib.redirect_stdout(io.StringIO()) as printed:
-        retry_empty(Again(""), {}, first)
+    shown_first = turn_blocks(first["messages"][1:], first["messages"])
+    _, _, shown_again = retry_empty(Again("The deadlines appear above."), {}, first)
+    check("a turn with only blank text shows nothing, and the model's second reply is shown", shown_first == []
+          and shown_again == [{"kind": "reply", "text": "The deadlines appear above."}]
+          and read_events()[-1]["kind"] == "reply_empty" and read_events()[-1]["recovered"] is True)
+    _, _, shown_again = retry_empty(Again(""), {}, first)
     check("a second empty reply tells the tenant and is logged, with why each answer stopped",
-          "[Check: no reply came back" in printed.getvalue() and read_events()[-1]["recovered"] is False
+          [b["kind"] for b in shown_again] == ["caution"] and "[Check: no reply came back" in screen(shown_again)
+          and read_events()[-1]["recovered"] is False
           and read_events()[-1]["finish"] == [None, None])
 
     # the tool's own line under a reply that quotes the statute without it (TODO item 30): printed by the program
     # and kept in the transcript; not under a reply that has it, nor under one quoting only the tenant
     bare = AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"')
-    with contextlib.redirect_stdout(io.StringIO()) as printed:
-        show_turn([bare], [bare])
-        show_turn([AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nThis tool does not decide that.')], [])
-        show_turn([AIMessage(content='You said: "I paid the whole rent for September myself."')], [])
+    shown_bare = turn_blocks([bare], [bare])
+    shown_others = (turn_blocks([AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nThis tool does not decide that.')], [])
+                    + turn_blocks([AIMessage(content='You said: "I paid the whole rent for September myself."')], []))
     session_lines = (record.matter_dir() / "sessions" / f"{record.session}.jsonl").read_text().splitlines()
     footers = [json.loads(line) for line in session_lines if json.loads(line)["role"] == "footer"]
     check("item 30: a statute quote with no 'does not decide' line gets the program's line, once, in the transcript",
-          printed.getvalue().count(NOT_DECIDED) == 1 and [f["text"] for f in footers] == [NOT_DECIDED])
+          shown_bare[-1] == {"kind": "footer", "text": NOT_DECIDED} and NOT_DECIDED not in screen(shown_others)
+          and [f["text"] for f in footers] == [NOT_DECIDED])
     lease_words = next(c.quote for _, c in record.profile if c.present and c.quote and len(c.quote) > 60)[:60]
-    with contextlib.redirect_stdout(io.StringIO()) as printed:
-        show_turn([AIMessage(content=f'Lease Section 4.3, page 2: "{lease_words}"')], [])
     check("a lease quote with no 'does not decide' line gets the program's line too (eval, 2026-10-01)",
-          printed.getvalue().count(NOT_DECIDED) == 1)
+          screen(turn_blocks([AIMessage(content=f'Lease Section 4.3, page 2: "{lease_words}"')], [])).count(NOT_DECIDED) == 1)
+
+    # blocks (TODO item 31): what the tenant sees from a turn or a command, the model's words apart from the
+    # program's, for the terminal and the web page alike
+    bad_cite = AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nSee also 83.64.')
+    check("a reply's blocks: the model's words, then the program's cautions, then its line",
+          [b["kind"] for b in turn_blocks([bad_cite], [bad_cite])] == ["reply", "caution", "footer"])
+    with contextlib.redirect_stdout(io.StringIO()) as printed:
+        print_blocks([{"kind": "reply", "text": "One."}, {"kind": "footer", "text": "Two."}])
+    check("the terminal prints each block's text with an empty line after it", printed.getvalue() == "One.\n\nTwo.\n\n")
+    commands_before = [json.loads(line)["role"] for line in
+                       (record.matter_dir() / "sessions" / f"{record.session}.jsonl").read_text().splitlines()].count("command")
+    issues_shown, timeline_shown = command("issues"), command("timeline full")
+    check("chat commands come back as the program's blocks, and words that are not one go to the model",
+          [b["kind"] for b in issues_shown] == ["notice"] and "deposit_not_returned: " in screen(issues_shown)
+          and [b["kind"] for b in timeline_shown] == ["timeline"] and "DATE" in screen(timeline_shown)
+          and command("timeline nonsense")[0]["text"].startswith("No issue named nonsense")
+          and command("What issues do I have?") is None and command("drop") is None)
+    check("each command goes to the transcript", [json.loads(line)["role"] for line in
+          (record.matter_dir() / "sessions" / f"{record.session}.jsonl").read_text().splitlines()].count("command")
+          == commands_before + 3)
+    check("what the tenant confirmed on a sheet goes to the model with the next message",
+          sheet_note([("vacated", "2026-07-28"), ("issue deposit_claim_received", "confirmed")])
+          == "[Program note: the tenant confirmed on the sheet: vacated = 2026-07-28, issue deposit_claim_received = confirmed]\n"
+          and sheet_note([]) == "")
+    # one whole turn through an agent: a stand-in model proposes a fact, then replies; the turn's blocks are the
+    # reply only, it says facts were proposed, and a second turn starts after the first one's messages
+    class Proposes(GenericFakeChatModel):
+        def bind_tools(self, tools, **kwargs):
+            return self
+    said = "I got a letter from the landlord"
+    proposes = Proposes(messages=iter([
+        AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": "p1", "args": {"facts_json": json.dumps(
+            {"claim_notice_received": {"value": True, "how": "stated", "said": said}})}}]),
+        AIMessage(content=f'You said: "{said}"'), AIMessage(content="Second turn.")]))
+    agent_now = create_agent(proposes, tools=model_tools, checkpointer=InMemorySaver())
+    config_now = thread_config()
+    first_blocks, first_proposed = turn(agent_now, config_now, said)
+    second_blocks, second_proposed = turn(agent_now, config_now, "And?", note="[Program note: x]\n")
+    check("turn: the reply is shown, the proposal noted, and the next turn shows only its own reply",
+          first_blocks == [{"kind": "reply", "text": f'You said: "{said}"'}] and first_proposed
+          and second_blocks == [{"kind": "reply", "text": "Second turn."}] and not second_proposed
+          and config_now["configurable"]["thread_id"] == record.session)
 
     # get_deadlines and get_cases end the model's turn (return_direct, TODO item 19): a stand-in model calls
     # get_deadlines alone, then would reply; the agent stops after the tool, so the reply never comes
@@ -684,6 +727,12 @@ try:
     drafts = [e for e in read_events() if e["kind"] == "draft" and e.get("session") == record.session]
     check("the same letter twice in a session is drafted once", again.startswith("[The same letter was already drafted")
           and len(drafts) == 2 and "Please respond by" in changed)
+    dropped = command("drop deposit_not_returned")                 # the last covered issue: the chat ends
+    check("drop as a command takes the issue out, logs it, and says the chat ends when no covered issue is left",
+          [b["text"] for b in dropped] == ["Dropped deposit_not_returned from this matter. It is logged, and it can be "
+                                           "suggested again later.", "No issue this tool covers is left in this matter, "
+                                           "so the chat ends here."]
+          and read_events()[-1]["kind"] == "issue_dropped" and not record.active_playbooks())
     end_session()
 finally:
     remove_scratch("t-smoke-related")

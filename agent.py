@@ -1,4 +1,10 @@
-"""Agent: the rules, intake (builds the system prompt and returns an agent), and the chat loop."""
+"""Agent: the rules, reading the lease, intake, the system prompt and the agent, and the chat.
+
+The chat is in pieces any front end can call: turn (one model turn) and command (a chat command) return
+blocks, the parts the tenant sees, each {"kind", "text"}. "reply" is the model's words; every other kind is the
+program's (see BLOCK KINDS below). The terminal loop, chat, prints them with print_blocks; another front end
+can draw the same blocks.
+"""
 import json
 import os
 import re
@@ -16,9 +22,10 @@ from citations import caution, check_case_cites, check_cites, check_quoted, is_i
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
+from lease import check_quotes, extract_profile, ingest_pdf
 from record import (active_playbooks, add_issues, add_related_issues, append_event, candidate_playbooks,
-                    element_status, prune_proposals, read_events, reject_issue, save)
-from sheet import pending_rows, run_sheet
+                    element_status, matter_dir, prune_proposals, read_events, reject_issue, save)
+from sheet import pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
 from tools import offered_topics, tools
 
@@ -130,7 +137,16 @@ if os.environ.get("RULES_FILE"):
     RULES = Path(os.environ["RULES_FILE"]).read_text()
 
 
-# ---- Intake: classify the description and propose facts. The sheet and the agent come after, in run.py.
+# ---- The lease and intake: read the lease into its profile, then classify the description and propose facts.
+# The sheet and the agent come after, in run.py or app.py.
+
+def read_lease(pdf_path):
+    """Store the PDF, read it with Gemma into the lease profile, check every quote, save the profile."""
+    pages = ingest_pdf(pdf_path, matter_dir())
+    record.profile = extract_profile(pages)
+    check_quotes(record.profile, pages)
+    (matter_dir() / "lease_profile.json").write_text(record.profile.model_dump_json(indent=2))
+
 
 def intake(description):
     """Classify, fill facts for every matching playbook, save. For a new matter only. The agent is built
@@ -217,11 +233,27 @@ def build_agent():
     return create_agent(agent_llm, tools=tools, middleware=[prompt_from_record], checkpointer=InMemorySaver())
 
 
-# ---- Chat: read a line, run a turn, print the reply. Tool output is hidden except draft_letter, whose
-# result is printed directly, and get_deadlines, printed by render_deadlines. The word `timeline` prints the
-# record without the model. After a turn in which
-# the model proposed facts, the intake sheet asks the tenant to confirm them. Everything said, every tool
-# call, every command, and every sheet answer goes to the session's transcript.
+# ---- Chat: a turn of the model, or a chat command the program answers itself. Both return blocks, the parts
+# the tenant sees, in order. Tool output is hidden except draft_letter, whose result is shown as is, and
+# get_deadlines and get_cases, whose listings the program shows. After a turn in which the model proposed facts,
+# the intake sheet asks the tenant to confirm them. Everything said, every tool call, every command, and every
+# sheet answer goes to the session's transcript.
+#
+# BLOCK KINDS. From the model: "reply". From the program: "letter" (draft_letter's result), "cases" (get_cases'
+# listing), "deadlines" (get_deadlines' listing, through render_deadlines), "caution" (a failed cite or quote
+# check, or no reply), "footer" (NOT_DECIDED under a reply), "timeline", "notice" (a command's answer), "stop"
+# (nothing the tool covers is left).
+
+def block(kind, text):
+    """One part of what the tenant sees: its kind (BLOCK KINDS above) and its text."""
+    return {"kind": kind, "text": text}
+
+
+def print_blocks(blocks):
+    """The terminal's way of showing blocks: each block's text, then an empty line."""
+    for b in blocks:
+        print(b["text"] + "\n")
+
 
 def transcript_entry(m):
     """One message from the thread as a transcript line: who said it, what, and any tool calls with arguments."""
@@ -260,8 +292,8 @@ def given_text(messages):
 
 def check_reply(text, messages):
     """Check the cites and the quotes in one reply (citations.check_cites and check_quoted), against the chat's
-    thread so far. Each one that fails gets a caution printed under the reply, a line in the transcript, and a
-    cite_flagged or quote_flagged event. The reply itself was already shown."""
+    thread so far. Each one that fails gets a caution line, shown under the reply, a line in the transcript, and
+    a cite_flagged or quote_flagged event. Returns the caution lines. The reply itself is not changed."""
     flagged = []
     for cite, problem in check_cites(text, sections_shown(messages)):
         flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
@@ -271,11 +303,9 @@ def check_reply(text, messages):
         flagged.append((caution(quote_label(quote, cite), problem), "quote_flagged",
                         {"quote": quote, "cite": cite, "problem": problem}))
     for line, kind, data in flagged:
-        print(line)
         record.append_transcript({"role": "check", "text": line})
         append_event(kind, **data)
-    if flagged:
-        print()
+    return [line for line, _, _ in flagged]
 
 
 # A reply that quotes the statute or the lease gets the tool's own line under it unless the model wrote one
@@ -294,35 +324,34 @@ def not_decided_line(text):
     return NOT_DECIDED if quotes_source and "does not decide" not in text else None
 
 
-def show_turn(new, messages):
-    """Transcribe a turn's new messages and print what the tenant sees: a drafted letter as is, the turn's last
-    get_deadlines result through render_deadlines (printed by code, before the reply), and each reply with
-    text, checked by check_reply, with NOT_DECIDED under it when it quotes the statute or the lease without
-    saying the tool does not decide. Returns True if anything was printed."""
+def turn_blocks(new, messages):
+    """Transcribe a turn's new messages and return what the tenant sees, as blocks: a drafted letter as is, the
+    cases get_cases printed, the turn's last get_deadlines result through render_deadlines (shown by code,
+    before any reply), and each reply with text, then the cautions check_reply finds in it, then NOT_DECIDED
+    when it quotes the statute or the lease without saying the tool does not decide. Empty when the turn
+    showed the tenant nothing."""
     for m in new:
         record.append_transcript(transcript_entry(m))
     last_deadlines = max((i for i, m in enumerate(new) if m.type == "tool" and m.name == "get_deadlines"),
                          default=None)
-    printed = False
+    blocks = []
     for i, m in enumerate(new):
         if m.type == "tool" and m.name == "draft_letter":
-            print(m.content, "\n")
-            printed = True
+            blocks.append(block("letter", m.content))
         elif m.type == "tool" and m.name == "get_cases" and getattr(m, "artifact", None):
-            print(m.artifact, "\n")                      # the cases, from the wiki; the model got only their names
-            printed = True
+            blocks.append(block("cases", m.artifact))       # the cases, from the wiki; the model got only their names
         elif i == last_deadlines:
-            print(render_deadlines(getattr(m, "artifact", None) or m.content), "\n")   # the program's listing
-            printed = True
+            blocks.append(block("deadlines", render_deadlines(getattr(m, "artifact", None) or m.content)))
         elif m.type == "ai" and m.content.strip():
-            print(m.content, "\n")
-            check_reply(m.content, messages)             # its cites and quotes, against what it was given
+            blocks.append(block("reply", m.content))
+            cautions = check_reply(m.content, messages)     # its cites and quotes, against what it was given
+            if cautions:
+                blocks.append(block("caution", "\n".join(cautions)))
             line = not_decided_line(m.content)
             if line:
-                print(line, "\n")
+                blocks.append(block("footer", line))
                 record.append_transcript({"role": "footer", "text": line})
-            printed = True
-    return printed
+    return blocks
 
 
 EMPTY_REPLY = ("[Program note: your last turn ended without a reply to the tenant. Reply to the tenant's last "
@@ -333,77 +362,118 @@ NO_REPLY = "[Check: no reply came back from the model. Please ask again.]"
 def retry_empty(agent, config, result):
     """The model's turn showed the tenant nothing (seen once, m-018). Ask it once more with a program note, and
     if that turn shows nothing either, tell the tenant. The model's private reasoning is never shown instead.
-    Logs a reply_empty event. Returns the new result and the messages the second turn added."""
+    Logs a reply_empty event. Returns the new result, the messages the second turn added, and its blocks."""
     record.append_transcript({"role": "program", "text": EMPTY_REPLY})
     again = agent.invoke({"messages": [HumanMessage(content=EMPTY_REPLY)]}, config=config)
     more = again["messages"][len(result["messages"]) + 1:]
-    recovered = show_turn(more, again["messages"])
+    blocks = turn_blocks(more, again["messages"])
+    recovered = bool(blocks)
     if not recovered:
-        print(NO_REPLY, "\n")
+        blocks = [block("caution", NO_REPLY)]
         record.append_transcript({"role": "check", "text": NO_REPLY})
     # why each empty answer stopped, as the gateway reports it ("stop", "length", or none): an empty "stop" is
     # the model's, a run of them with no reason looks like the gateway (the eval of 2026-10-01 hit one)
     finish = [(m.response_metadata or {}).get("finish_reason") for m in (result["messages"][-1], again["messages"][-1])
               if m.type == "ai"]
     append_event("reply_empty", recovered=recovered, finish=finish)
-    return again, more
+    return again, more, blocks
+
+
+def thread_config():
+    """The chat thread's config. The thread takes the session's id, so the conversation and the record's events
+    share one id."""
+    return {"configurable": {"thread_id": record.session or str(uuid7())}}
+
+
+def turn(agent, config, text, note=""):
+    """One turn of the model on the tenant's message, with any note from the sheet in front of it. The message
+    goes to the transcript before the model runs (propose_facts checks the tenant's words against it). A turn
+    that shows the tenant nothing is asked once more (retry_empty). Returns the turn's blocks, and whether the
+    model proposed facts, so the sheet comes next."""
+    record.append_transcript({"role": "tenant", "text": text})
+    if note:
+        record.append_transcript({"role": "program", "text": note})
+    seen = len(agent.get_state(config).values.get("messages", []))     # the thread before this turn
+    result = agent.invoke({"messages": [HumanMessage(content=note + text)]}, config=config)
+    new = result["messages"][seen + 1:]                  # everything new this turn, minus the tenant's message
+    blocks = turn_blocks(new, result["messages"])
+    if not blocks:                                       # nothing for the tenant: ask the model once more
+        result, more, blocks = retry_empty(agent, config, result)
+        new = new + more
+    return blocks, any(m.type == "tool" and m.name == "propose_facts" for m in new)
+
+
+def sheet_note(confirmed):
+    """What the tenant confirmed on a sheet between two turns, sent to the model at the front of the tenant's
+    next message, since the sheet runs between the model's turns. "" when nothing was confirmed."""
+    if not confirmed:
+        return ""
+    return "[Program note: the tenant confirmed on the sheet: " + ", ".join(f"{i} = {v}" for i, v in confirmed) + "]\n"
+
+
+def command(text):
+    """A chat command, answered by the program without the model: issues (the active and suggested issues),
+    drop <issue> (takes an active issue out, logged), timeline [full] [<issue>]. Returns its blocks, or None
+    when the text is not a command. After a drop, no covered issue may be left (active_playbooks): the chat
+    ends there."""
+    lowered = text.strip().lower()
+    if lowered == "issues":                             # the matter's issues, from the record
+        record.append_transcript({"role": "command", "text": text})
+        lines = [f"  {i}: {playbooks[i].description if i in playbooks else 'not covered by this tool'}"
+                 for i in record.matter["issues"]]
+        lines += [f"  {p['issue']}: suggested, not yet confirmed" for p in record.matter["proposed_issues"]]
+        return [block("notice", "\n".join(lines))]
+    if lowered.startswith("drop "):                     # the tenant takes an issue out of the matter
+        record.append_transcript({"role": "command", "text": text})
+        issue = text.split(maxsplit=1)[1].strip()
+        if issue not in record.matter["issues"] or issue not in playbooks:
+            return [block("notice", f"No active issue named {issue}. Type issues to see them.")]
+        reject_issue(issue, "issue_dropped")
+        save(record.matter)
+        blocks = [block("notice", f"Dropped {issue} from this matter. It is logged, and it can be suggested again later.")]
+        if not active_playbooks():
+            blocks.append(block("notice", "No issue this tool covers is left in this matter, so the chat ends here."))
+        return blocks
+    if lowered.startswith("timeline"):
+        record.append_transcript({"role": "command", "text": text})
+        words = text.split()[1:]
+        full = "full" in words
+        issue = next((w for w in words if w != "full"), None)
+        if issue and issue not in record.matter["issues"]:
+            return [block("notice", f"No issue named {issue} in this matter. Active issues: {record.matter['issues']}")]
+        return [block("timeline", render_timeline(issue, full))]
+    return None
+
+
+def stop_block():
+    """What the tenant reads when nothing the tool covers is left (sheet.stop_text), as a block, written to the
+    transcript as printed."""
+    shown = stop_text()
+    record.append_transcript({"role": "printed", "text": shown})
+    return block("stop", shown)
 
 
 def chat(agent):
-    # The chat thread takes the session's id, so the conversation and the record's events share one id.
-    config = {"configurable": {"thread_id": record.session or str(uuid7())}}
-    seen = 0            # result holds the whole thread; seen marks how much we already printed
+    """The terminal chat: read a line, answer a command or run a turn, print the blocks, and run the intake
+    sheet after a turn in which the model proposed facts. An empty line or bye ends it."""
+    config = thread_config()
     note = ""           # what the tenant confirmed on a sheet since the model last ran; goes with the next message
     while True:
         q = input(">> ")
         if q in ("", "bye"):
             break
-        if q.strip().lower() == "issues":                   # the matter's issues, from the record
-            record.append_transcript({"role": "command", "text": q})
-            for i in record.matter["issues"]:
-                print(f"  {i}: {playbooks[i].description if i in playbooks else 'not covered by this tool'}")
-            for p in record.matter["proposed_issues"]:
-                print(f"  {p['issue']}: suggested, not yet confirmed")
-            print()
-            continue
-        if q.strip().lower().startswith("drop "):           # the tenant takes an issue out of the matter
-            record.append_transcript({"role": "command", "text": q})
-            issue = q.split(maxsplit=1)[1].strip()
-            if issue not in record.matter["issues"] or issue not in playbooks:
-                print(f"No active issue named {issue}. Type issues to see them.\n")
-                continue
-            reject_issue(issue, "issue_dropped")
-            save(record.matter)
-            print(f"Dropped {issue} from this matter. It is logged, and it can be suggested again later.\n")
-            if not active_playbooks():
-                print("No issue this tool covers is left in this matter, so the chat ends here.\n")
+        blocks = command(q)
+        if blocks is not None:
+            print_blocks(blocks)
+            if not active_playbooks():                  # a drop took out the last covered issue
                 break
             continue
-        if q.strip().lower().startswith("timeline"):
-            record.append_transcript({"role": "command", "text": q})
-            words = q.split()[1:]
-            full = "full" in words
-            issue = next((w for w in words if w != "full"), None)
-            if issue and issue not in record.matter["issues"]:
-                print(f"No issue named {issue} in this matter. Active issues: {record.matter['issues']}\n")
-                continue
-            print(render_timeline(issue, full), "\n")
-            continue
-        record.append_transcript({"role": "tenant", "text": q})   # before the model runs: propose_facts checks it
-        if note:
-            record.append_transcript({"role": "program", "text": note})
-        result = agent.invoke({"messages": [HumanMessage(content=note + q)]}, config=config)
+        blocks, proposed = turn(agent, config, q, note)
+        print_blocks(blocks)
         note = ""
-        new = result["messages"][seen + 1:]              # everything new this turn, minus the tenant's message
-        if not show_turn(new, result["messages"]):       # nothing for the tenant: ask the model once more
-            result, more = retry_empty(agent, config, result)
-            new = new + more
-        seen = len(result["messages"])
         # The model suggested facts: the tenant confirms them on the sheet now, with code, not with the model.
         # The model learns the result with the tenant's next message, since the sheet runs between its turns.
-        if any(m.type == "tool" and m.name == "propose_facts" for m in new) and pending_rows():
+        if proposed and pending_rows():
             confirmed = run_sheet()
             print()
-            if confirmed:
-                note = ("[Program note: the tenant confirmed on the sheet: "
-                        + ", ".join(f"{i} = {v}" for i, v in confirmed) + "]\n")
+            note = sheet_note(confirmed)

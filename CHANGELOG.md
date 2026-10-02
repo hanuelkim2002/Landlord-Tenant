@@ -5,6 +5,24 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- The chat returns blocks instead of printing, so a web page can show what the terminal shows (TODO item 31,
+  first step). A block is `{"kind", "text"}`: `reply` is the model's words, every other kind the program's
+  (`letter`, `cases`, `deadlines`, `caution`, `footer`, `timeline`, `notice`, `stop`). Was: `show_turn`,
+  `check_reply`, `retry_empty`, and the command branches of `chat` printed as they went, and `run_sheet` was one
+  loop of input and print. Now `agent.turn` runs one model turn and returns its blocks (built by `turn_blocks`,
+  which replaces `show_turn`) and whether facts were proposed; it finds the turn's new messages from the
+  checkpointer, so no caller keeps a count. `agent.command` answers `issues`, `drop`, and `timeline`, parsed as
+  before; `check_reply` returns its caution lines; `retry_empty` returns blocks; `sheet_note`, `thread_config`,
+  and `stop_block` hold what both front ends need; `chat` is the terminal loop over them, printing with
+  `print_blocks`. The sheet is in pieces: `suggestion`, `row_notes`, `value_of`, `save_answer`, with `run_sheet`
+  the terminal's loop over them. `read_lease` moved from `run.py` to `agent.py` and `NOT_COVERED` to `sheet.py`,
+  so a second front end need not import the terminal script. A stand-in model drove the old and the new chat
+  through the same scripted session (deadlines, a flagged reply with its line, every command, a letter, a sheet
+  with a changed fact and a related issue, an empty reply twice, a drop): the screen, the transcript, and the
+  events were identical, except a trailing space the old code printed after some blocks. Smoke: the smoke checks
+  that read printed output read blocks now, and seven new ones (a reply's blocks in order, `print_blocks`, the
+  commands and their transcript lines, `sheet_note`, a whole turn through a stand-in model, a drop that leaves
+  no covered issue). DOCUMENTATION: the sheet's transcript field is `issues_suggested` (it said `issues_added`).
 - Live check of the deadline receipt (`dev/eval_runs/2026-10-02-deadlines`, five deadline-heavy stories, 3 runs
   each, against the day before's final runs of the same stories): "What are my deadlines?" called the tool 6 of
   6 (was 4 of 6), a time question in plain words 9 of 9 (was 6 of 9), deadlines computed 12 of 12 (was 9 of 12),

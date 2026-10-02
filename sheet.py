@@ -1,8 +1,11 @@
 """Intake Sheet: the facts a matter still needs, asked by code and saved by code. No model is involved.
 
-Two halves, so a front end can later draw the same rows as a form:
-  pending_rows()  which facts need the tenant now, with the question, the type, and any suggested answer
-  run_sheet()     asks them in the terminal, one at a time, and saves each answer with record.confirm_fact
+In pieces, so the terminal and any other front end ask the same rows the same way:
+  pending_rows()  which issues and facts need the tenant now, with the question, the type, and any suggestion
+  row_notes(r)    the lines shown under a row's question
+  value_of(r, a)  the tenant's answer checked against the row's type (an empty answer takes the suggestion)
+  save_answer()   saves one answer with record.confirm_fact (or confirm_issue, reject_issue) and transcribes it
+  run_sheet()     the terminal's sheet: asks the rows one at a time with the pieces above
 
 Every answer is checked against the element's type before it is saved. A suggestion (from fill_facts) is
 shown with the tenant's own words and accepted with Enter. "?" skips a fact for now; it stays missing.
@@ -86,17 +89,67 @@ def shown(value):
     return str(value)
 
 
-# ---- Asking: one fact at a time. The list is rebuilt after each answer, so a fact that only applies once
+# ---- Asking: one row at a time. The list is rebuilt after each answer, so a fact that only applies once
 # another is confirmed (applies_if) appears as soon as it does.
 
 HINT = {"date": "YYYY-MM-DD", "bool": "yes/no", "money": "amount", "text": "words"}
 
 
+def suggestion(r):
+    """A row's suggested value, offered only if it fits the type; a malformed one counts as no suggestion."""
+    if r["suggested"] is None:
+        return None
+    return parse_answer(r["type"], shown(r["suggested"]))[0]
+
+
+def row_notes(r):
+    """The lines shown under a row's question: a confirmed value next to the update's, the suggestion with the
+    tenant's words it came from, the lease's words where they differ, and why an issue was suggested."""
+    notes = []
+    if r["status"] == "changed":
+        notes.append(f"you confirmed: {shown(r['confirmed'])}   your update says: {shown(r['suggested'])}")
+    if suggestion(r) is not None:
+        notes.append(f"suggested: {shown(suggestion(r))}, from your words: \"{r['basis']}\"")
+    if r["lease_says"]:
+        notes.append(f"your lease says: \"{r['lease_says']}\" (shown for comparison; this tool does not decide which is right)")
+    if r["kind"] == "issue":
+        notes.append(f"suggested because of: {r['basis']}")
+    return notes
+
+
+def value_of(r, answer):
+    """The value of the tenant's answer to a row: the suggestion for an empty answer when there is one, else the
+    answer parsed by the row's type. Returns (value, None), or (None, what is expected) if it does not fit."""
+    if answer == "" and suggestion(r) is not None:
+        return suggestion(r), None
+    return parse_answer(r["type"], answer)
+
+
+def save_answer(r, answer, value):
+    """Save the answer to one row and write it to the transcript. An issue: yes makes it active (its questions
+    follow), no rejects it (logged). A fact: confirmed with record.confirm_fact, which may suggest a related
+    issue, asked next. Returns the pair to tell the model ((fact id, value), or ("issue <name>", "confirmed" or
+    "rejected")) and the lines to show the tenant."""
+    if r["kind"] == "issue":                           # yes: active, its questions follow; no: logged, gone
+        (confirm_issue if value else reject_issue)(r["issue"])
+        save(record.matter)
+        record.append_transcript({"role": "sheet", "id": r["id"], "question": r["question"],
+                                  "typed": answer, "value": value})
+        return (f"issue {r['issue']}", "confirmed" if value else "rejected"), \
+               ["Its questions follow." if value else "Taken out of your matter; logged."]
+    suggested_before = [p["issue"] for p in record.matter["proposed_issues"]]
+    confirm_fact(r["id"], value, "sheet")              # may suggest a related issue; it is asked next
+    save(record.matter)
+    added = [p["issue"] for p in record.matter["proposed_issues"] if p["issue"] not in suggested_before]
+    record.append_transcript({"role": "sheet", "id": r["id"], "question": r["question"],
+                              "typed": answer, "value": value, **({"issues_suggested": added} if added else {})})
+    return (r["id"], value), [f"Suggested for your matter: {issue}. It is asked next." for issue in added]
+
+
 def run_sheet(ask=input):
-    """Ask every suggested issue and pending fact until none is left or the tenant has skipped the rest.
-    Returns what was saved as (id, value) pairs (an issue as ("issue <name>", "confirmed" or "rejected")), so
-    the chat loop can tell the model what the tenant decided.
-    ask is the function that reads one answer; input by default, a list's iterator in tests."""
+    """The terminal's sheet: ask every suggested issue and pending fact until none is left or the tenant has
+    skipped the rest. Returns what was saved as save_answer's pairs, so the chat loop can tell the model what
+    the tenant decided. ask is the function that reads one answer; input by default, a list's iterator in tests."""
     print("\nFacts for your matter. Enter accepts a suggested answer, or type the right one. ? skips for now.\n")
     skipped, saved, last_issue = set(), [], None
     while True:
@@ -107,61 +160,35 @@ def run_sheet(ask=input):
         if r["issue"] != last_issue:
             print(f"[{r['issue']}]")
             last_issue = r["issue"]
-
-        # A suggestion is offered only if it fits the type; a malformed one is treated as no suggestion.
-        suggested = None
-        if r["suggested"] is not None:
-            suggested, _ = parse_answer(r["type"], shown(r["suggested"]))
         print(f"  {r['question']} ({HINT[r['type']]})")
-        if r["status"] == "changed":
-            print(f"    you confirmed: {shown(r['confirmed'])}   your update says: {shown(r['suggested'])}")
-        if suggested is not None:
-            print(f"    suggested: {shown(suggested)}, from your words: \"{r['basis']}\"")
-        if r["lease_says"]:
-            print(f"    your lease says: \"{r['lease_says']}\" (shown for comparison; this tool does not decide which is right)")
-        if r["kind"] == "issue":
-            print(f"    suggested because of: {r['basis']}")
+        for line in row_notes(r):
+            print("    " + line)
 
         answer = ask("    > ").strip()
         if answer == "?":
             skipped.add(r["id"])
             continue
-        if answer == "" and suggested is not None:
-            value = suggested
-        else:
-            value, expected = parse_answer(r["type"], answer)
-            if expected:
-                print(f"    Please type {expected}, or ? to skip.")
-                continue
-
-        if r["kind"] == "issue":                           # yes: active, its questions follow; no: logged, gone
-            (confirm_issue if value else reject_issue)(r["issue"])
-            save(record.matter)
-            print(f"    {'Its questions follow.' if value else 'Taken out of your matter; logged.'}")
-            record.append_transcript({"role": "sheet", "id": r["id"], "question": r["question"],
-                                      "typed": answer, "value": value})
-            saved.append((f"issue {r['issue']}", "confirmed" if value else "rejected"))
+        value, expected = value_of(r, answer)
+        if expected:
+            print(f"    Please type {expected}, or ? to skip.")
             continue
-
-        suggested_before = [p["issue"] for p in record.matter["proposed_issues"]]
-        confirm_fact(r["id"], value, "sheet")              # may suggest a related issue; it is asked next
-        save(record.matter)
-        added = [p["issue"] for p in record.matter["proposed_issues"] if p["issue"] not in suggested_before]
-        for issue in added:
-            print(f"    Suggested for your matter: {issue}. It is asked next.")
-        record.append_transcript({"role": "sheet", "id": r["id"], "question": r["question"],
-                                  "typed": answer, "value": value, **({"issues_suggested": added} if added else {})})
-        saved.append((r["id"], value))
+        pair, lines = save_answer(r, answer, value)
+        for line in lines:
+            print("    " + line)
+        saved.append(pair)
 
     if skipped:
         print(f"\nSkipped for now: {', '.join(sorted(skipped))}. Deadlines wait until these are answered.")
     return saved
 
 
-# ---- When nothing the tool covers is left: what it does cover, and the parts of the tenant's lease on the
-# subject of what they wrote, as printed. No model involved.
+# ---- When part or all of it is not covered: what the tool does cover, and the parts of the tenant's lease on
+# the subject of what they wrote, as printed. No model involved.
 
 STOP_LINE = "None of the situations this tool covers applies, so it stops here. What you described is saved in your matter's record."
+# Shown after intake or an update when "other" came in next to a covered issue (active or suggested).
+NOT_COVERED = ("Part of what you described may not be covered by this tool yet (it has no playbook for it). The\n"
+               "tool continues with what it does cover.")
 CLAUSE_CHARS = 600                                       # a longer clause is cut, marked with "..."
 
 

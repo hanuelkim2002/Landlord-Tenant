@@ -28,7 +28,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   the tenant's words or a `LEASE_WORDS` word, everyday words mapped to lease words such as roommate to joint
   and several, or a text using two `LEASE_WORDS` words; ranked by how few clauses use each word, a title match
   counted double; `STOP` lists words too common to count, `stem` and `matches` compare words). Imports
-  `config`. Imported by `record`, `run.py`, and `sheet`.
+  `config`. Imported by `record`, `agent`, and `sheet`.
 - `calendars.py`: the court holiday calendars, loaded once at import from `calendars/*.json` into
   `court_calendars`. `load_calendar` (raises if a holiday is filed under the wrong year or its printed
   weekday is not the date's weekday), `court_calendar(county)` (the calendar of the circuit that includes
@@ -155,48 +155,67 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   with its two markers filled: `[RULE 6]` with `LETTER_RULE` once a letter is in play, i.e. a tenant
   message in the chat matches `LETTER_WORDS` (letter, draft, write, writing) or the matter has a `draft`
   event, else nothing; `[RULE 8]` with `CASE_RULE` when CASE TOPICS has a topic, else `NO_CASES_RULE`, one
-  line saying there are none; a `RULES_FILE` without the markers is used as is), `intake` (classify, propose facts, save; for a
+  line saying there are none; a `RULES_FILE` without the markers is used as is), `read_lease(pdf_path)` (store
+  the PDF, read it into the lease profile with the extraction model, check every quote, save the profile; for a
+  new matter), `intake` (classify, propose facts, save; for a
   new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
   add new issues, propose facts from the update, save; returns the issues it added). Neither builds the agent: `run.py` runs the intake
   sheet first, then `build_agent`.
   `system_prompt(messages=())` (the whole system prompt, built from the record as it stands and, for the
   rules, the chat's messages so far), `prompt_from_record` (LangChain `dynamic_prompt` middleware that
   calls `system_prompt(request.messages)` before every model call), `build_agent` (a LangChain agent with that middleware and an in-memory checkpointer; no
-  model call), `transcript_entry` (one thread message as a transcript line), and `chat` (the terminal loop; its
-  thread id is the session id when one is open). Each turn, `chat` writes the tenant's message to the
-  transcript before the model runs (so `propose_facts` can check the tenant's words), then every new message
-  of the turn. `show_turn(new, messages)` transcribes the turn and prints the model's replies, a
-  `draft_letter` result as is, and the turn's last `get_deadlines` result through `render_deadlines`; other
-  tool results are not shown. Under a reply that quotes the statute (a quoted passage with a ch. 83 cite,
+  model call), `transcript_entry` (one thread message as a transcript line).
+  The chat is in pieces a front end calls (the terminal's `chat` is one). Each returns
+  blocks, the parts the tenant sees in order, each `{"kind", "text"}` made by `block`: `reply` is the model's
+  words; every other kind is the program's: `letter` (a `draft_letter` result as is), `cases` (a `get_cases`
+  listing), `deadlines` (the turn's last `get_deadlines` listing through `render_deadlines`), `caution` (failed
+  cite or quote checks, or `NO_REPLY`), `footer` (`NOT_DECIDED`), `timeline`, `notice` (a command's answer), and
+  `stop`. `turn(agent, config, text, note="")` is one turn of the model: the tenant's message goes to the
+  transcript before the model runs (so `propose_facts` can check the tenant's words), then the note, if any; the
+  turn's new messages are the thread after what the checkpointer held before it; it returns the blocks and
+  whether the model called `propose_facts`, so the sheet comes next. `turn_blocks(new, messages)` transcribes a
+  turn's new messages and builds its blocks; other tool results are not shown. Under each reply come its
+  cautions, then, if the reply quotes the statute (a quoted passage with a ch. 83 cite,
   `citations.quoted_passages`) or the lease (a quoted passage found in a lease profile quote) and nowhere
-  says "does not decide", it prints `NOT_DECIDED` ("This tool does
-  not decide whether any of this applies to you.", from `not_decided_line`) and writes it to the transcript
-  as a `footer` line (TODO item 30). It returns whether anything was printed. When nothing was (the reply was empty
-  or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and shows that
-  second turn; if it is empty too, it prints `NO_REPLY` ("[Check: no reply came back from the model. Please
+  says "does not decide", `NOT_DECIDED` ("This tool does
+  not decide whether any of this applies to you.", from `not_decided_line`), also written to the transcript
+  as a `footer` line (TODO item 30). When a turn has no blocks (the reply was empty
+  or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and returns that
+  second turn's blocks; if it is empty too, a `NO_REPLY` caution ("[Check: no reply came back from the model. Please
   ask again.]"). Either way it logs `reply_empty`, with `finish`: the `finish_reason` the gateway gave for each
   empty answer ("stop", "length", or none). The model's `reasoning_content` is never shown in its
-  place: LangChain drops it, and it is the model's unchecked working, not a reply. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
-  tenant confirmed there is sent to the model as a "[Program note: ...]" line at the front of the tenant's
-  next message, and logged as a `program` transcript line. `timeline` commands go to the transcript too.
-  After printing each reply, `chat` calls `check_reply(text, messages)` with the thread so far. It runs
+  place: LangChain drops it, and it is the model's unchecked working, not a reply.
+  `check_reply(text, messages)` runs
   `citations.check_cites` against `sections_shown(messages)` (the active playbooks' `sections` plus every
   section fetched with `get_statute_section` in the thread) and `citations.check_quoted` against
   `given_text(messages)` (the system prompt, the lease quotes as plain text, the tenant's description and
-  updates, and every thread message the model did not write). Each failure gets a "[Check: ...]" line
-  printed under the reply, a `check` transcript line, and a `cite_flagged` or `quote_flagged` event. The
+  updates, and every thread message the model did not write). Each failure gets a "[Check: ...]" line, a
+  `check` transcript line, and a `cite_flagged` or `quote_flagged` event; it returns the lines. The
   reply is not held back or changed, and the model is not told.
+  `command(text)` answers a chat command without the model and returns its blocks, or `None` when the text is
+  not one: `issues` (the active and suggested issues), `drop <issue>` (`reject_issue` with `issue_dropped`;
+  when no covered issue is left, a second notice says the chat ends), `timeline`, `timeline full`, `timeline
+  <issue>`; each goes to the transcript as a `command` line. `sheet_note(confirmed)` is the "[Program note:
+  the tenant confirmed on the sheet: ...]" line sent to the model at the front of the tenant's next message
+  after a sheet ("" when nothing was confirmed). `thread_config()` is the chat thread's config; the thread id
+  is the session id when one is open. `stop_block()` is `sheet.stop_text()` as a `stop` block, written to the
+  transcript as a `printed` line. `print_blocks(blocks)` is the terminal's way of showing blocks: each text,
+  then an empty line. `chat(agent)` is the terminal loop: reads a line (empty or `bye` ends it), answers a
+  command or runs a turn, prints the blocks, ends after a drop leaves no covered issue, and after a turn that
+  proposed facts runs `sheet.run_sheet` if `pending_rows()` has anything, keeping its `sheet_note` for the
+  next message.
   Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `sheet`, `timeline`, `tools`. Imported by `run`, `smoke`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
   (`new_tenant_id`), calls `new_matter` and `start_session("new")`, asks for the lease path (`ask_path`, which accepts a path dragged
-  into the terminal), reads the lease (`read_lease`), asks for the description (`ask_text`, several lines
+  into the terminal), reads the lease (`agent.read_lease`), asks for the description (`ask_text`, several lines
   ended by an empty line), then `intake`. `start_existing` lists matters, `load_matter` on the one picked
   (it stops if the matter has no lease profile), `start_session("existing")`, then asks "Anything new since last time?" with `ask_text`:
   text goes to `resume`, an empty answer goes on. Both return True when a matter is open. If `other` came in
-  alongside a covered issue (active or suggested), the tenant is told part of it may not be covered. Then,
+  alongside a covered issue (active or suggested), the tenant is told part of it may not be covered
+  (`sheet.NOT_COVERED`). Then,
   if `pending_rows()` has anything, `run_sheet()`, which asks the suggested issues and the facts. If no
   active playbook is left after it (every issue was `other`, or the tenant turned the suggestions down), it
-  prints `sheet.stop_text()` and stops: no chat; the text goes to the transcript as a `printed` line; what was
+  prints `agent.stop_block()` (`sheet.stop_text()`, written to the transcript as a `printed` line) and stops: no chat; what was
   described and decided stays in the record for a later pipeline. Otherwise `chat(build_agent())`. Then `end_session()` on a
   normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
 - `sheet.py`: the intake sheet, asked and saved by code with no model. `stop_text()` (what the tenant reads
@@ -204,17 +223,24 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   (open the matter again and describe that part), then up to three lease clauses `lease.clauses_about` finds
   for the description and any updates, each as "Lease Section <number>, <title>, page <n>:" and its words in
   quote marks, cut at `CLAUSE_CHARS` with "...", and "This tool does not decide what they mean for you.").
+  `NOT_COVERED` (the note shown after intake or an update when `other` came in next to a covered issue).
   `pending_rows()` (first every
   suggested issue as a yes/no row, "This looks like: <description> Is that part of your situation?", with
   why it was suggested; then every changed, proposed, or missing fact of the active issues, once per fact
   id, with its question, type, and any suggestion; a yes to an issue calls `confirm_issue` and its
   questions follow, a no calls `reject_issue`), `parse_answer(kind, text)` (checks an answer against the element's type: dates as
-  `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and commas, non-empty text), `shown`,
-  and `run_sheet(ask=input)` (asks one fact at a time, rebuilding the list after each answer so an
-  `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; shows "your lease
-  says" next to a row carrying `lease_says`; saves each answer with
-  `record.confirm_fact` and a transcript line; returns the saved facts as `(id, value)` pairs). Imports
-  `record`, `corpus`. Imported by `run`, `agent`, `tools` (for `parse_answer` and `shown`).
+  `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and commas, non-empty text), `shown`.
+  The sheet's pieces, so the terminal and the web page ask a row the same way: `suggestion(r)` (a row's
+  suggested value if it fits the type, else `None`), `row_notes(r)` (the lines under a row's question: the
+  confirmed value next to the update's, the suggestion with the tenant's words, "your lease says" for a row
+  carrying `lease_says`, why an issue was suggested), `value_of(r, answer)` (an empty answer takes the
+  suggestion, otherwise `parse_answer`; returns `(value, None)` or `(None, what is expected)`), and
+  `save_answer(r, answer, value)` (an issue row: `confirm_issue` or `reject_issue`; a fact row:
+  `record.confirm_fact`, which may suggest a related issue; saves `matter.json`, writes a `sheet` transcript
+  line; returns the pair for the model's note and the lines to show). `run_sheet(ask=input)` is the
+  terminal's sheet: asks one row at a time with those pieces, rebuilding the list after each answer so an
+  `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; returns the saved pairs.
+  Imports `record`, `corpus`, `lease`. Imported by `run`, `agent`, `tools` (for `parse_answer` and `shown`).
 - `checks.py`: helpers for the smoke scripts. `check(name, condition)` prints `OK` or `FAIL` and keeps the
   failures, `summary()` prints the last line, `make_scratch(tenant_id, **changes)` copies the test matter
   (without its transcripts) to `matters/<tenant_id>/m-001` and changes `matter.json` keys, and
@@ -230,7 +256,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 
 ## Data flow
 
-1. Lease PDF to profile (`read_lease` in `run.py`, new matters only; an existing matter's profile comes
+1. Lease PDF to profile (`agent.read_lease`, new matters only; an existing matter's profile comes
    from `load_matter`). `ingest_pdf` stores the PDF and page text in `matter_dir()`, `extract_profile` asks the extraction model for a JSON `LeaseProfile`, `check_quotes` prints OK or FAIL
    for every clause, and the profile is saved. A FAIL is printed, not enforced: the profile is saved anyway.
 2. Description to issues and proposed facts (`intake`). `classify` reads each label with its situation
@@ -359,8 +385,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   entry, each with `when` and `role`: `tenant` (`text`, as typed), `model` (`text`, plus `tool_calls`, a
   list of `{"name", "args"}`, when it called tools), `tool` (`name`, `text`: the result the model saw, and
   `shown`: what the program printed from it, for `get_cases` and `get_deadlines`),
-  `command` (`text`: a `timeline` command, handled without the model), `sheet` (`id`, `question`,
-  `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_added`
+  `command` (`text`: a chat command, `timeline`, `issues`, or `drop`, handled without the model), `sheet` (`id`, `question`,
+  `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_suggested`
   when the answer brought in a related issue), or
   `printed` (`text`: what the program printed outside the chat, the stop text), or
   `footer` (`text`: `NOT_DECIDED`, printed by the program under a reply that quotes the statute or the lease without
@@ -446,8 +472,8 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   aside quote marks, curly apostrophes, letter case, and a trailing case count (`tools.offered_topics`, i.e.
   `wiki.case_topics` for the active playbooks' sections); otherwise "No case topic named ...". A tool with
   `response_format="content_and_artifact"`: the model gets a receipt only (the names and cites of the cases
-  printed), and the program gets `wiki.render_cases(topic)` as the message's artifact, which `show_turn`
-  prints. So the model never sees a case's words and cannot retell one; a case quote it writes anyway is
+  printed), and the program gets `wiki.render_cases(topic)` as the message's artifact, which the chat
+  shows as a `cases` block (`agent.turn_blocks`). So the model never sees a case's words and cannot retell one; a case quote it writes anyway is
   flagged by `check_quoted`. Writes a `cases_shown` event. Turn-ending, like `get_deadlines`: the printed
   cases end with "This tool does not decide whether any of them applies to you." and the model writes
   nothing after them. Every call prints something: a topic already printed in this session prints one line
@@ -622,7 +648,8 @@ Offline checks (no model call, no key needed):
   ids, sessions and their tags, `propose_facts` taking one suggestion and refusing five for five reasons,
   the sheet with scripted answers (accept, correct, bad input, a changed fact, an `applies_if` fact, a
   skip), `get_deadlines` waiting and then answering, the prompt following the record, a flagged cite and
-  quote printed and logged, the tenant's description counting as given, events, the transcript, and the
+  quote printed and logged, a turn's blocks (the model's reply apart from the program's cautions and line), the
+  chat commands as blocks, one whole turn through a stand-in model, the tenant's description counting as given, events, the transcript, and the
   timeline. Then related issues on `matters/t-smoke-related/m-001`, and every playbook through the real
   code path on `matters/t-smoke-playbooks/m-001`: for each, the sheet is answered by type ("yes" to every
   yes/no, so every `applies_if` question comes up), every clock must get a date, and a preserve letter must
