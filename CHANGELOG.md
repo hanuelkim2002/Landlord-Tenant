@@ -5,6 +5,28 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- The eval marks runs the gateway failed (`gateway_trouble`: run.py never came back, an empty answer where
+  JSON was expected, or two unrecovered empty turns in a row) and counts them apart. Was: they counted as the
+  model's misses; the first after-runs of 2026-10-01 lost 18 of 48 runs to an eight-minute gateway failure
+  and looked far worse than the baseline for that reason alone. Both sides were run again at the same time.
+- `reply_empty` events carry `finish`, the gateway's `finish_reason` for each empty answer. Was: only
+  `recovered`, so an empty reply from the model could not be told from a gateway failure; the eval's first
+  after-runs (2026-10-01) hit eight minutes in which nearly every call came back empty, and only the clock
+  times showed it was the gateway. Smoke check extended.
+- Rule 6: posture lines are written after their name only, as preserve: "[its line]". Was: "copy ... word for
+  word in quote marks", which the after-runs of the eval followed with a label taken from the prompt's own
+  layout ("PLAYBOOKS issue deposit_not_returned guidance postures:") in front of each line. A "Not:" with that
+  label and the new "Instead:".
+- Quote marks in a reply pair in order (`citations.quote_spans`, `unquoted`). Was: `QUOTED` needed 20
+  characters between two marks, so after a short quote ("assert,") it paired the short quote's closing mark
+  with the next quote's opening one and checked the words between them as a quote: three false cautions in
+  one reply of the eval after-runs (2026-10-01), and a quote running over two lines (a lease clause with a
+  blank line in it) did the same. Short quotes are still left out of the check. Two smoke checks.
+- Intake no longer crashes on a model answer that is not valid JSON. Was: `deterministic.ask_json` parsed
+  the first answer, and `run.py` stopped with a traceback when `fill_facts` (or `classify`) got malformed
+  JSON: 3 of 51 intake attempts in the eval baseline, one run lost after two tries. Now `ask_json` asks again
+  with `NOT_JSON` ("Your last answer was not valid JSON. Return ONLY the JSON object, nothing else."), up to
+  three answers, and raises the last error only then. Two smoke checks with a stand-in model.
 - Eval runner `dev/eval.py` and 16 eval scenarios (`dev/scenarios/eval_*.json`). Was: one live run per
   scenario, read by eye, or the rules trial's one-off scripts and scorer agents; two runs of the same setup
   had scored 0.50 and 1.00 slips per reply, so one run could not show whether a change helped. Now each

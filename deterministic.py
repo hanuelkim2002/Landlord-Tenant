@@ -195,11 +195,21 @@ ISSUE_LABELS = [
 ]
 
 
-def ask_json(llm, prompt):
-    """Send a prompt, strip any markdown fences, return parsed JSON."""
-    raw = llm.invoke(prompt).content.strip()
-    raw = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-    return json.loads(raw)
+NOT_JSON = "\n\nYour last answer was not valid JSON. Return ONLY the JSON object, nothing else."
+
+
+def ask_json(llm, prompt, tries=3):
+    """Send a prompt, strip any markdown fences, return parsed JSON. An answer that is not valid JSON is asked
+    for again with NOT_JSON added, up to `tries` answers in all (in the eval of 2026-10-01, 3 of 51 intakes
+    crashed run.py on one); the last failure is raised."""
+    for attempt in range(tries):
+        raw = llm.invoke(prompt + (NOT_JSON if attempt else "")).content.strip()
+        raw = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError:
+            if attempt == tries - 1:
+                raise
 
 
 def classify(description, menu):

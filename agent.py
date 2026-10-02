@@ -98,7 +98,8 @@ Not: drafting, then asking the posture, then drafting again; or asking for days 
 Not: "What exactly do you want the landlord to do?" after the tenant wrote "asking for my $900 back".
 Instead: before draft_letter, ask once for whatever is missing: which issue (if more than one), what they want the landlord to do, days to reply, how they will send it (quote the notices clause), and the posture.
 Not: "Preserve is the gentle option." or the posture lines retold without quote marks.
-Instead: copy the playbook's preserve, assert, and escalate lines word for word in quote marks and ask which; for assert or escalate, name the sentence the letter will quote.
+Not: PLAYBOOKS issue deposit_not_returned guidance postures: "preserve: States move-out date, ..." (a label from this prompt)
+Instead: each posture line word for word after its name only, as preserve: "[its line]", then ask which; for assert or escalate, name the sentence the letter will quote.
 After draft_letter, reply only: "The letter appears above; tell me if you want changes." Changes go through draft_letter again. Never write or rewrite a letter yourself."""
 
 CASE_RULE = """8. Cases only through get_cases, which the program prints.
@@ -337,7 +338,11 @@ def retry_empty(agent, config, result):
     if not recovered:
         print(NO_REPLY, "\n")
         record.append_transcript({"role": "check", "text": NO_REPLY})
-    append_event("reply_empty", recovered=recovered)
+    # why each empty answer stopped, as the gateway reports it ("stop", "length", or none): an empty "stop" is
+    # the model's, a run of them with no reason looks like the gateway (the eval of 2026-10-01 hit one)
+    finish = [(m.response_metadata or {}).get("finish_reason") for m in (result["messages"][-1], again["messages"][-1])
+              if m.type == "ai"]
+    append_event("reply_empty", recovered=recovered, finish=finish)
     return again, more
 
 

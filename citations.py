@@ -61,7 +61,7 @@ def check_cites(text, shown):
     Cites inside a quoted passage are skipped: they are the quoted text's own ("in accordance with s. 83.505"
     inside a quote of 83.49), and check_quoted checks those words against their source."""
     problems = []
-    for cite in cites_in(QUOTED.sub(" ", text)):
+    for cite in cites_in(unquoted(text)):
         section, _, rest = cite.partition("(")
         if section not in statute:
             problems.append((cite, "is not a section in this tool's copy of ch. 83 part II"))
@@ -77,7 +77,31 @@ def check_cites(text, shown):
 # after the quote on the same line ("..." (83.49(3)(a))) or in a heading just before it
 # (**Statute quote (Fla. Stat. 83.49(3)(b)):** "...").
 
-QUOTED = re.compile(r'"([^"\n]{20,}?)"|“([^”\n]{20,}?)”')
+# Quote marks pair in order, as a reader pairs them: a straight mark opens, the next one closes (curly marks
+# pair by their shape), and a quote may run over lines. A short quote ("assert,") still takes its two marks;
+# it is only left out of the passages checked. Was: a pattern needing 20 characters inside skipped a short
+# quote and paired its closing mark with the next quote's opening one, so the words between two quotes were
+# checked as a quote (three false cautions in one reply, eval of 2026-10-01), and a quote running over two
+# lines did the same.
+QUOTE_PAIR = re.compile(r'"([^"]*)"|“([^”]*)”')
+MIN_QUOTE = 20
+
+
+def quote_spans(text):
+    """Every quoted passage of MIN_QUOTE characters or more: [(start, end, words)], marks paired in order."""
+    spans = []
+    for m in QUOTE_PAIR.finditer(text):
+        words = m.group(1) if m.group(1) is not None else m.group(2)
+        if len(words) >= MIN_QUOTE:
+            spans.append((m.start(), m.end(), words))
+    return spans
+
+
+def unquoted(text):
+    """The text with each quoted passage (quote_spans) blanked out."""
+    for start, end, _ in reversed(quote_spans(text)):
+        text = text[:start] + " " + text[end:]
+    return text
 
 
 FIELD_ID = re.compile(r"[a-z0-9]+(?:_[a-z0-9]+)+")      # a fact or clock id: "claim_notice_deadline"
@@ -92,21 +116,20 @@ def quoted_passages(text):
     ("claim_notice_deadline"), and an example right after "e.g." (e.g., "repair the air-conditioning unit")."""
     found = []
     used_up_to = 0                                   # nothing before this point can be the next quote's cite
-    for m in QUOTED.finditer(text):
-        quote = m.group(1) or m.group(2)
-        if FIELD_ID.fullmatch(quote.strip()) or EXAMPLE.search(text[max(0, m.start() - 12):m.start()]):
+    for start, end, quote in quote_spans(text):
+        if FIELD_ID.fullmatch(quote.strip()) or EXAMPLE.search(text[max(0, start - 12):start]):
             continue
-        after = CITE.search(text[m.end():m.end() + 60].split("\n")[0])
-        window = text[max(used_up_to, m.start() - 80):m.start()]
+        after = CITE.search(text[end:end + 60].split("\n")[0])
+        window = text[max(used_up_to, start - 80):start]
         # a cite before the quote counts only with no quote mark between them: in a tool result the model
         # repeats ("cite": "83.56(3)", "counting": "..."), the cite belongs to another field
         before = [c for c in CITE.finditer(window) if not re.search(r'["“”]', window[c.end():])]
         if after:
             cite = after.group(0)
-            used_up_to = m.end() + after.end()
+            used_up_to = end + after.end()
         else:
             cite = before[-1].group(0) if before else ""
-            used_up_to = m.end()
+            used_up_to = end
         found.append((quote, cite.replace(" ", "")))
     return found
 
@@ -171,7 +194,7 @@ def check_case_cites(text, given):
     """Each reporter cite in a reply, outside quote marks, must be one the model was shown in this chat (a
     get_cases result, which the program printed). Returns [(cite, problem)]."""
     return [(cite, "is not a case this tool showed in this chat")
-            for cite in dict.fromkeys(m.group() for m in REPORTER.finditer(QUOTED.sub(" ", text)))
+            for cite in dict.fromkeys(m.group() for m in REPORTER.finditer(unquoted(text)))
             if compact(cite) not in compact(given)]
 
 

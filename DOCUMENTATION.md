@@ -43,7 +43,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   text), `cites_in(text)` (every `83.x` cite with its parenthesized parts, spaces removed, each once),
   `check_cites(text, shown)` (returns `(cite, problem)` for a section not in `statutes/`, a section not in
   `shown`, or a subsection the section does not have; cites inside a quoted passage are skipped, since they
-  belong to the quoted text and `check_quoted` checks those words). Quotes: `quoted_passages(text)` (every passage of 20
+  belong to the quoted text and `check_quoted` checks those words). Quotes: `quote_spans(text)` (quote marks paired in order, as a reader pairs
+  them, so a short quote keeps its two marks and a quote may run over lines; the passages of `MIN_QUOTE`, 20,
+  characters or more), `unquoted(text)` (the text with those passages blanked, for `check_cites` and
+  `check_case_cites`), `quoted_passages(text)` (every passage of 20
   or more characters in straight or curly quote marks, with its cite: the first cite after the closing mark
   on the same line, or else the last cite in the 80 characters before the opening mark with no quote mark
   in between, never one already used by the previous quote; "" when none; an id alone in quote marks,
@@ -93,7 +96,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
   deadlines, with one that two playbooks share listed once, tagged with both issues),
   `ISSUE_LABELS` (the labels `classify` can pick), and the two one-shot intake calls `classify` and
-  `fill_facts`, both through `ask_json` on `agent_llm`. `classify` adds "other" next to the covered labels
+  `fill_facts`, both through `ask_json` on `agent_llm` (an answer that is not valid JSON is asked for again
+  with `NOT_JSON` added, three answers at most, then the error is raised). `classify` adds "other" next to the covered labels
   when a separate problem fits none of them (so `run.py` prints `NOT_COVERED`), and gives "other" alone
   when nothing fits. Imports `config`. Imported by `record`,
   `timeline`, `tools`, `agent`, `smoke`.
@@ -160,7 +164,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   as a `footer` line (TODO item 30). It returns whether anything was printed. When nothing was (the reply was empty
   or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and shows that
   second turn; if it is empty too, it prints `NO_REPLY` ("[Check: no reply came back from the model. Please
-  ask again.]"). Either way it logs `reply_empty`. The model's `reasoning_content` is never shown in its
+  ask again.]"). Either way it logs `reply_empty`, with `finish`: the `finish_reason` the gateway gave for each
+  empty answer ("stop", "length", or none). The model's `reasoning_content` is never shown in its
   place: LangChain drops it, and it is the model's unchecked working, not a reply. After a turn in which the model called `propose_facts`, it runs the intake sheet; what the
   tenant confirmed there is sent to the model as a "[Program note: ...]" line at the front of the tenant's
   next message, and logged as a `program` transcript line. `timeline` commands go to the transcript too.
@@ -304,7 +309,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `fetch`: `section` (from `get_statute_section`) or `search` (from `search_statute`).
   - `cite_flagged`: `cite` (e.g. "83.64"), `problem` (not a stored section, not shown or fetched in this
     chat, or no such subsection). Written by `agent.check_reply` after a reply. `timeline full` only.
-  - `reply_empty`: `recovered` (true if the model's second turn showed the tenant something). Written by
+  - `reply_empty`: `recovered` (true if the model's second turn showed the tenant something), `finish`
+    (the gateway's `finish_reason` for each empty answer). Written by
     `agent.retry_empty`. `timeline full` only.
   - `quote_flagged`: `quote` (the quoted words), `cite` (the cite next to it, or ""), `problem` (e.g. "is in
     83.49(3)(a), not 83.49(3)(b)"). Written by `agent.check_reply`. `timeline full` only.
@@ -448,7 +454,7 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 932 words always, plus rule 6 on letters (156 words) once a letter is in
+1. `RULES`, through `rules_for`: 932 words always, plus rule 6 on letters (172 words) once a letter is in
    play, and rule 8 on cases in full (153 words) when there is a case topic, otherwise one line (since
    2026-10-01; rule 1's line on asking how a requested letter will be sent moved into rule 6, which already
    asked it). Pairs added from the eval baseline of 2026-10-01: the format line names issue ids; rule 3, a
@@ -642,7 +648,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
   outside quote marks, the `topics` allowed for `get_cases`), and `screen_must_not`. Every reply is also
   measured: empty turns, program cautions, field names, a printed deadline date repeated, and two word screens
-  (`LAW_WORDS`, `OFFER_WORDS`) that only mark a reply for a person to read. Writes `runs/` (screens),
+  (`LAW_WORDS`, `OFFER_WORDS`) that only mark a reply for a person to read. A run with signs that the gateway failed
+  (the driver's timeout, an empty answer where JSON was expected, or two unrecovered empty turns in a row) is
+  marked `gateway_trouble` and counted apart. Writes `runs/` (screens),
   `runs.json`, `transcripts/` (each run as text marking who produced each part), `scores.json`, and
   `summary.json`, and prints a table per scenario. The eval scenarios are `dev/scenarios/eval_*.json`:
   one realistic lay-tenant story per playbook (`deposit_ghosted`, `claim_carpet`, `entry_shower`,

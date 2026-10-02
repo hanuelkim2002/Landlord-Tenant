@@ -25,7 +25,7 @@ from checks import check, make_scratch, remove_scratch, summary
 from citations import SUBSECTION_START, check_case_cites, check_cites, check_quoted, quoted_passages, subsections
 from config import CASES, MATTERS, WIKI
 from corpus import check_all_playbooks, load_playbook, playbooks, statute
-from deterministic import check_elements, compute_deadlines, lease_value
+from deterministic import NOT_JSON, ask_json, check_elements, compute_deadlines, lease_value
 from dev.build_cases import court_text
 import wiki
 from wiki import lint, read_pages, verified, verify
@@ -251,6 +251,26 @@ check("a short quoted cite is still checked", check_cites('"cite": "83.64"', {"8
 check("item 11's wrong claim passes this check (its cite is real and shown)",
       check_cites("you may terminate the lease under Fla. Stat. 83.56(1)", set(playbooks["repair_not_made"].sections)) == [])
 
+# a model answer that is not valid JSON at intake is asked for again (deterministic.ask_json; 3 of 51 intakes
+# crashed on one in the eval of 2026-10-01): a stand-in model answers badly once, then well
+class Answers:
+    def __init__(self, *texts):
+        self.texts, self.prompts = list(texts), []
+    def invoke(self, prompt):
+        self.prompts.append(prompt)
+        return AIMessage(content=self.texts.pop(0))
+flaky = Answers('{"issues": ["other"] "reason": "x"}', '```json\n{"issues": ["other"], "reason": "x"}\n```')
+check("ask_json asks again after an answer that is not JSON, saying so",
+      ask_json(flaky, "Classify.") == {"issues": ["other"], "reason": "x"} and len(flaky.prompts) == 2
+      and flaky.prompts[1].endswith(NOT_JSON))
+broken = Answers("no", "still no", "never")
+try:
+    ask_json(broken, "Classify.")
+    gave_up = False
+except json.JSONDecodeError:
+    gave_up = len(broken.prompts) == 3
+check("ask_json gives up after three answers that are not JSON", gave_up)
+
 # quotes in a reply (citations.check_quoted): which cite goes with which quote, then what each is checked against
 FORFEIT = "he or she forfeits the right to impose a claim upon the security deposit"     # in 83.49(3)(a)
 OBJECTS = "Unless the tenant objects to the imposition of the landlord’s claim"          # in 83.49(3)(b)
@@ -281,6 +301,13 @@ check("item 14: an example after e.g. is not a quote (m-022)",
       check_quoted('what to fix (e.g., "repair the air-conditioning unit")', "") == [])
 check("item 14: the same words without e.g. are still checked",
       check_quoted('You asked: "repair the air-conditioning unit"', "") != [])
+check("a short quote keeps its two marks, so the words after it are not read as a quote (eval, 2026-10-01)",
+      quoted_passages(f'If you choose "assert," the letter will quote: Fla. Stat. 83.49(3)(a): "{FORFEIT}"')
+      == [(FORFEIT, "83.49(3)(a)")]
+      and check_quoted(f'If you choose "assert," the letter will quote: Fla. Stat. 83.49(3)(a): "{FORFEIT}"', "") == [])
+check("a quote that runs over two lines is one passage",
+      [q for q, c in quoted_passages('Lease Section 4.3: "Tenant shall notify Landlord in writing\nof a forwarding address" and "x"')]
+      == ["Tenant shall notify Landlord in writing\nof a forwarding address"])
 print()
 
 # the record as the tenant sees it, then with the tool's bookkeeping included
@@ -596,8 +623,9 @@ try:
           and read_events()[-1]["recovered"] is True)
     with contextlib.redirect_stdout(io.StringIO()) as printed:
         retry_empty(Again(""), {}, first)
-    check("a second empty reply tells the tenant and is logged", "[Check: no reply came back" in printed.getvalue()
-          and read_events()[-1]["recovered"] is False)
+    check("a second empty reply tells the tenant and is logged, with why each answer stopped",
+          "[Check: no reply came back" in printed.getvalue() and read_events()[-1]["recovered"] is False
+          and read_events()[-1]["finish"] == [None, None])
 
     # the tool's own line under a reply that quotes the statute without it (TODO item 30): printed by the program
     # and kept in the transcript; not under a reply that has it, nor under one quoting only the tenant

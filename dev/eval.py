@@ -27,7 +27,8 @@ Every reply is also measured, whatever the scenario: empty turns (reply_empty ev
 (quote_flagged and cite_flagged events), field names (a snake_case id outside quote marks), deadline echo (a
 date the program printed in the same turn, repeated in the reply), and two word screens that mark a reply for
 a person to read: LAW_WORDS (a party and must, may, can, entitled ... outside quote marks) and OFFER_WORDS
-(would you like me to ...). The screens find candidates; they are not verdicts. A turn's "must" patterns
+(would you like me to ...). The screens find candidates; they are not verdicts. A run with signs that the
+gateway failed (GATEWAY_SIGNS, or two unrecovered empty turns in a row) is marked gateway_trouble ("gw"). A turn's "must" patterns
 are matched against what the tenant read, the replies and any line the program printed under them (footer);
 "footers" counts those lines, so the model's own lines and the program's can be told apart.
 
@@ -56,6 +57,10 @@ OFFER_WORDS = re.compile(r"\b(would you like|do you want me|if you(?:'d| would) 
                          r"prepare|write)|next steps?|you (?:could|might) (?:consider|want))\b", re.I)
 FIELD_NAME = re.compile(r"\b[a-z]+(?:_[a-z]+)+\b")          # forwarding_address_given; file names have digits
 ISO_DATE = re.compile(r"\b20\d\d-\d\d-\d\d\b")
+# Signs that the gateway, not the model, failed a run: run.py never came back (the driver's timeout), an empty
+# answer where JSON was expected, or two turns in a row the model left empty even after the retry. The eval of
+# 2026-10-01 hit an eight-minute stretch of these; such runs are counted apart, not as the model's slips.
+GATEWAY_SIGNS = ("run.py did not come back to a prompt", "Expecting value: line 1 column 1 (char 0)")
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
           "November", "December"]
 
@@ -241,12 +246,16 @@ def score_run(entry, scenario, out):
         if (matter_dir / "sessions").exists() else []
     turns = turns_of(entries)
     measured = [measure_turn(t) for t in turns]
+    unrecovered = [not t["replies"] and any(e["role"] == "check" and "no reply came back" in e["text"]
+                                            for e in turn["entries"]) for t, turn in zip(measured, turns)]
+    gateway = any(sign in screen for sign in GATEWAY_SIGNS) or any(a and b for a, b in zip(unrecovered, unrecovered[1:]))
     expect = check_expect(scenario.get("expect", {}), matter, events, measured, screen)
     (out / "transcripts").mkdir(exist_ok=True)
     (out / "transcripts" / f"{entry['scenario']}_r{entry['rep']}.txt").write_text(transcript_text(entries))
     return {
         **entry,
         "crashed": entry["exit"] != 0 or "Traceback" in screen,
+        "gateway_trouble": gateway,
         "expect": [{"what": w, "ok": ok, "got": str(got)[:200]} for w, ok, got in expect],
         "expected_ok": all(ok for _, ok, _ in expect),
         "replies": sum(len(t["replies"]) for t in measured),
@@ -268,22 +277,22 @@ def score(out):
     (out / "scores.json").write_text(json.dumps(scores, indent=2))
     summary = {}
     for s in scores:
-        row = summary.setdefault(s["scenario"], {"runs": 0, "crashed": 0, "expected_ok": 0, "replies": 0,
+        row = summary.setdefault(s["scenario"], {"runs": 0, "crashed": 0, "gateway_trouble": 0, "expected_ok": 0, "replies": 0,
                                                  "empty_turns": 0, "cautions": 0, "law_screen": 0,
                                                  "offer_screen": 0, "field_names": 0, "echo": 0, "footers": 0,
                                                  "failed": {}})
         row["runs"] += 1
-        for key in ("crashed", "expected_ok", "replies", "empty_turns", "cautions", "law_screen", "offer_screen",
-                    "field_names", "echo", "footers"):
+        for key in ("crashed", "gateway_trouble", "expected_ok", "replies", "empty_turns", "cautions", "law_screen",
+                    "offer_screen", "field_names", "echo", "footers"):
             row[key] += int(s[key])
         for x in s["expect"]:
             if not x["ok"]:
                 row["failed"][x["what"]] = row["failed"].get(x["what"], 0) + 1
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
-    print(f"\n{'scenario':<28}{'runs':>5}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'law?':>5}"
+    print(f"\n{'scenario':<28}{'runs':>5}{'gw':>4}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'law?':>5}"
           f"{'offer?':>7}{'field':>6}{'echo':>5}{'footer':>7}")
     for name, row in summary.items():
-        print(f"{name:<28}{row['runs']:>5}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
+        print(f"{name:<28}{row['runs']:>5}{row['gateway_trouble']:>4}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
               f"{row['cautions']:>5}{row['law_screen']:>5}{row['offer_screen']:>7}{row['field_names']:>6}"
               f"{row['echo']:>5}{row['footers']:>7}")
         for what, n in row["failed"].items():
