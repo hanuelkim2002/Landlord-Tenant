@@ -121,7 +121,10 @@ reused, so older references (smoke check names, the changelog) still point to th
     delivery) in about 1 in 3 letter runs (blind scorers: 9 slips before the changes, 6.5 after, 2026-10-01),
     and in the confirmation run it asked "is that correct?" until the scripted tenant ran out of lines (15 of
     21 letters drafted, against 20 of 21 the run before). A code-side option: fill the ask from confirmed
-    facts (the deposit amount, the forwarding address) so fewer details are left to ask.
+    facts (the deposit amount, the forwarding address) so fewer details are left to ask. On 2026-10-02 the
+    carpet story's letter was drafted in 0 of 3 runs: asked again "What do you want the landlord to do?", asked
+    for today's date (the letter fills it in), and once asked the tenant to quote the lease's notices clause
+    (rule 6's "quote the notices clause" read as an instruction to the tenant). Now the most common miss.
 40. "The lease and statute text I have do not answer that." to a legal question the playbook does not list
     as open (whether the renewal must be signed by October 15; changing the locks): the blind scorers count
     it as LAW under the rubric's literal rule (12 of 38 after-runs' LAW calls, most marked borderline). Decide
@@ -130,7 +133,7 @@ reused, so older references (smoke check names, the changelog) still point to th
     the gateway's finish_reason, so the next ones show whether the model or the gateway left them empty.
 
 42. Classify adds "other" next to a covered issue for a detail of it: after the wording fix, still 2 of 3
-    rent-notice runs (a partial payment with no receipt read as a separate problem), while the mixed story
+    rent-notice runs (3 of 3 on 2026-10-02; a partial payment with no receipt read as a separate problem), while the mixed story
     (a heater and a remark about religion) now gets "other" in 3 of 3 (was 0 of 6). The note it triggers is
     mild ("may not be covered ... continues with what it does cover"). Options: keep it; ask the classifier
     to quote the separate problem and check the quote is not a fact a playbook asks for; or drop "other"

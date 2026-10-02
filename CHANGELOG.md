@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- Live check of the deadline receipt (`dev/eval_runs/2026-10-02-deadlines`, five deadline-heavy stories, 3 runs
+  each, against the day before's final runs of the same stories): "What are my deadlines?" called the tool 6 of
+  6 (was 4 of 6), a time question in plain words 9 of 9 (was 6 of 9), deadlines computed 12 of 12 (was 9 of 12),
+  no copied deadline, no id in a reply, no empty turn. Runs meeting every expectation stayed 8 of 15: the misses
+  are now letters (TODO item 39) and the classifier's not-covered note on the rent-notice story (item 42).
 - `get_deadlines` gives the model a receipt with no dates; the program prints the listing (TODO item 44, done).
   Was: the model got the whole JSON, and once the tool ended the turn (item 19) that JSON stayed in the thread
   with no reply after it, so asked "What are my deadlines?" a second time the model copied it, or reworded a date
