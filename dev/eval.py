@@ -32,7 +32,7 @@ gateway failed (GATEWAY_SIGNS, or two unrecovered empty turns in a row) is marke
 are matched against what the tenant read, the replies and any line the program printed under them (footer);
 "footers" counts those lines, so the model's own lines and the program's can be told apart.
 
-Output in <out dir>: runs/ (each run's screen and its scenario with the tenant filled in), runs.json,
+Output in <out dir>: runs/ (each run's screen, a crashed first attempt's too, and its scenario with the tenant filled in), runs.json,
 transcripts/ (each run as text: who produced each part), scores.json (per run), summary.json (per scenario).
 """
 import json
@@ -93,6 +93,8 @@ def run_one(project, out, name, rep):
                                   cwd=project, stdout=f, stderr=subprocess.STDOUT).returncode
         if code == 0 and "Traceback" not in screen.read_text():
             break
+        if attempt == 1:                                  # kept, so the cause of a crash can be read later
+            screen.rename(screen.with_name(screen.stem + "_attempt1.out"))
     print(f"  {name} r{rep}: exit {code}, attempt {attempt}", flush=True)
     opened = re.search(r"New matter (\S+) (m-\d+)", screen.read_text())
     matter = project / "matters" / tenant / (opened.group(2) if opened else "none")

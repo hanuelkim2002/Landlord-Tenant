@@ -5,6 +5,8 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- The eval keeps a crashed first attempt's screen (`<scenario>_r<k>_attempt1.out`). Was: the retry wrote over
+  it, so three crashes in the eval reruns could not be traced.
 - The program's "does not decide" line also goes under a reply that quotes only the lease. Was: statute quotes
   only; in the eval after-runs, "Do I have to let them take that money?" was answered with a lease quote and
   no line. `agent.not_decided_line` now also counts a quoted passage found in a lease profile quote. Smoke
