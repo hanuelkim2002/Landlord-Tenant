@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- The eval marks runs the gateway failed (`gateway_trouble`: run.py never came back, an empty answer where
+  JSON was expected, or two unrecovered empty turns in a row) and counts them apart. Was: they counted as the
+  model's misses; the first after-runs of 2026-10-01 lost 18 of 48 runs to an eight-minute gateway failure
+  and looked far worse than the baseline for that reason alone. Both sides were run again at the same time.
 - `reply_empty` events carry `finish`, the gateway's `finish_reason` for each empty answer. Was: only
   `recovered`, so an empty reply from the model could not be told from a gateway failure; the eval's first
   after-runs (2026-10-01) hit eight minutes in which nearly every call came back empty, and only the clock

@@ -648,7 +648,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
   outside quote marks, the `topics` allowed for `get_cases`), and `screen_must_not`. Every reply is also
   measured: empty turns, program cautions, field names, a printed deadline date repeated, and two word screens
-  (`LAW_WORDS`, `OFFER_WORDS`) that only mark a reply for a person to read. Writes `runs/` (screens),
+  (`LAW_WORDS`, `OFFER_WORDS`) that only mark a reply for a person to read. A run with signs that the gateway failed
+  (the driver's timeout, an empty answer where JSON was expected, or two unrecovered empty turns in a row) is
+  marked `gateway_trouble` and counted apart. Writes `runs/` (screens),
   `runs.json`, `transcripts/` (each run as text marking who produced each part), `scores.json`, and
   `summary.json`, and prints a table per scenario. The eval scenarios are `dev/scenarios/eval_*.json`:
   one realistic lay-tenant story per playbook (`deposit_ghosted`, `claim_carpet`, `entry_shower`,
