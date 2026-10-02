@@ -1,0 +1,135 @@
+issue: neighbor_disturbance
+description: A neighbor or another tenant keeps disturbing the tenant (noise, parties, or similar), and the tenant wants the landlord to deal with it.
+sections: ["83.52", "83.56", "83.64", "83.42"]   # the statute sections this playbook rests on; loaded into the prompt
+
+provenance:
+  statute_year: 2026
+  verified_against: statutes/83.52.txt, statutes/83.56.txt, statutes/83.64.txt, statutes/83.42.txt
+  verified_by: null          # your name, once you've read each quote against the file
+  verified_on: null
+  version: 0.1
+
+counting:
+  convention: calendar days, trigger day not counted, no weekend or holiday adjustment
+  status: ASSUMPTION. Florida's court rule for counting days has not been checked against statutory deadlines outside litigation. Show this line with every computed date.
+  note: This playbook has no clocks. Ch. 83 part II sets no deadline for a landlord to act on one tenant's complaint about another.
+
+# ---------- read by code ----------
+spec:
+  elements:
+    - id: disturbance_description
+      type: text
+      source: [user]
+    - id: disturbance_source
+      type: text
+      source: [user]
+    - id: source_rents_from_landlord
+      type: bool
+      source: [user]
+    - id: disturbance_started
+      type: date
+      source: [user]
+    - id: disturbance_frequency
+      type: text
+      source: [user]
+    - id: complained_to_landlord
+      type: bool
+      source: [user]
+    - id: complaint_in_writing
+      type: bool
+      source: [user]
+      applies_if: complained_to_landlord
+    - id: first_complaint_date
+      type: date
+      source: [user]
+      applies_if: complained_to_landlord
+    - id: landlord_response
+      type: text
+      source: [user]
+      applies_if: complained_to_landlord
+    - id: reported_elsewhere
+      type: text
+      source: [user]
+
+  clocks: []
+
+  lease_overrides: []
+
+  exclusions:
+    - cite: "83.42(1)"
+      quote: "Residency or detention in a facility, whether public or private, when residence or detention is incidental to the provision of medical, geriatric, educational, counseling, religious, or similar services."
+      note: College housing. The tool records the facts and does not decide whether this exclusion applies.
+
+  related_issues: []
+
+  open_questions:
+    - id: whose_duty
+      sections: ["83.52"]
+      text: >-
+        83.52(7) says the tenant shall "Conduct himself or herself, and require other persons on the premises with
+        his or her consent to conduct themselves, in a manner that does not unreasonably disturb the tenant’s
+        neighbors or constitute a breach of the peace." It states each tenant's own duty. The stored text does not
+        say what a landlord must do when one tenant disturbs another, or whether the duty reaches a neighbor who
+        does not rent from the same landlord. The tool records who is causing the disturbance and does not decide.
+    - id: remedy_not_duty
+      sections: ["83.56"]
+      text: >-
+        83.56(2)(a) names "a subsequent or continued unreasonable disturbance" among the noncompliance a landlord
+        may end a tenancy for. The stored text gives the landlord that remedy against the tenant who disturbs; it
+        does not say the landlord must use it. Whether the lease promises the tenant more is a question about the
+        lease. No cases loaded yet.
+    - id: what_is_unreasonable
+      sections: ["83.52", "83.56"]
+      text: >-
+        Neither 83.52(7) nor 83.56(2)(a) says when a disturbance is unreasonable. The tool records what the tenant
+        describes and how often it happens.
+    - id: ending_own_lease
+      sections: ["83.56"]
+      text: >-
+        83.56(1) lets a tenant end the lease when the landlord "materially fails to comply with s. 83.51 (1) or
+        material provisions of the rental agreement within 7 days after delivery of written notice by the tenant
+        specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement
+        by reason thereof". Whether a landlord's not acting on a neighbor's disturbance is such a failure is not
+        settled by the stored text. No cases loaded yet.
+
+# ---------- read by the model ----------
+guidance:
+  questions:
+    disturbance_description: What is the disturbance? Describe it in your own words.
+    disturbance_source: Who is causing it, as far as you know (for example, the people in the unit above you)?
+    source_rents_from_landlord: Does the person causing it rent from the same landlord as you (for example, another unit in your building or complex)?
+    disturbance_started: What date did it start, or when did you first notice it?
+    disturbance_frequency: How often does it happen, and at what times?
+    complained_to_landlord: Have you complained to the landlord or the leasing office about it?
+    complaint_in_writing: Was any of your complaints in writing (a letter, an e-mail, the resident portal)?
+    first_complaint_date: What date did you first complain to the landlord or the office?
+    landlord_response: What has the landlord said or done about the problem so far?
+    reported_elsewhere: Have you reported it to anyone else, such as the police or the city? Type "no" if not.
+
+  lease_checks:
+    notices_to_landlord: Where the tenant's letter must be sent under the lease.
+
+  evidence:
+    - a log of each disturbance, with the date, the times it started and stopped, and what it was
+    - recordings or videos, with dates and times
+    - every complaint to the landlord or the office, with its date, how it was sent, and any reply
+    - names of other neighbors who were disturbed
+    - any report to the police or the city, with its number
+
+  postures:
+    core: [today's date, what the disturbance is and when it happens, the dates of earlier complaints, what the tenant asks the landlord to do, delivery method]
+    preserve: Describes the disturbance, with dates, and the earlier complaints, and asks the landlord to address it. Cites nothing.
+    assert: Adds the 83.52(7) sentence on not disturbing neighbors, quoted.
+    escalate: Adds the 83.56(2)(a) words on "a subsequent or continued unreasonable disturbance", quoted, as the statute's example of noncompliance a landlord may act on.
+    notice_sufficiency: >-
+      No deadline in Fla. Stat. ch. 83 part II runs from a letter about a neighbor's disturbance, and this tool
+      computes none for this issue. A letter saying you intend to end your own lease is a different notice:
+      83.56(1) describes "written notice by the tenant specifying the noncompliance and indicating the intention
+      of the tenant to terminate the rental agreement by reason thereof", and whether it fits a neighbor's
+      disturbance is not settled by the stored text.
+
+  failure_modes:
+    - Saying the landlord must stop the disturbance or must evict the neighbor; the stored text gives the landlord a remedy, not a duty.
+    - Calling the disturbance unreasonable or a breach of the peace; the tool records what the tenant says.
+    - Suggesting the tenant may end the lease or hold back rent over it; 83.56(1) and 83.60 are not settled for a neighbor's disturbance.
+    - Treating a neighbor who rents from someone else as covered by 83.52(7) without the open question.

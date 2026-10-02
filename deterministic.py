@@ -191,6 +191,7 @@ ISSUE_LABELS = [
     "rent_increased",
     "wants_to_leave_early",
     "lease_ending",
+    "neighbor_disturbance",
     "other",
 ]
 

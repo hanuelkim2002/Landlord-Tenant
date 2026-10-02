@@ -5,6 +5,21 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- New playbook `neighbor_disturbance` (a neighbor or another tenant keeps disturbing the tenant, and the tenant
+  wants the landlord to deal with it), with its label in `ISSUE_LABELS`. Was: a noise story was "other" and
+  stopped (the eval's nc_noise, 12 of 12 runs). Sections 83.52, 83.56, 83.64, 83.42. Ten facts (what, who,
+  whether that person rents from the same landlord, since when, how often, complaints, in writing, first
+  complaint date, the landlord's response, shared with repair_not_made, reports elsewhere); no clocks, since
+  ch. 83 part II sets no deadline for a landlord to act on one tenant's complaint about another. Four open
+  questions, quoting the stored text: whose duty 83.52(7) states and whether it reaches a neighbor who rents
+  from someone else; 83.56(2)(a)'s "a subsequent or continued unreasonable disturbance" as a remedy the landlord
+  has, not a duty; what is unreasonable; whether 83.56(1) lets the tenant leave over it. Postures: preserve
+  (the facts), assert (83.52(7) quoted), escalate (83.56(2)(a)'s words quoted). Version 0.1, verified_by null
+  until the author's check. No lease profile field holds a conduct or nuisance clause, so the model cannot
+  quote the lease's own rule on it (TODO item 43). Classify sends two noise stories to it and keeps roommate,
+  towing, a repair, and a violation notice for the tenant's own parties where they were. Eval: nc_noise became
+  noise_neighbors, a covered scenario. Playbook checks 0 failures; smoke runs it through the sheet and a
+  letter; one `smoke_online` check. README's list of playbooks in scope gains it.
 - The stop for a story the tool does not cover shows what the tool covers and the tenant's own lease on the
   subject (TODO item 32, done). Was: one line, "None of the situations this tool covers applies, so it stops
   here." Now `sheet.stop_text()` adds every playbook's description with how to come back to one (open the

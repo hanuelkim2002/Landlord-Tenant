@@ -62,8 +62,9 @@ A playbook: one YAML file per issue. Its `spec` half is typed and read by code (
 statutory clocks, exclusions, related issues, open questions). Its `guidance` half is prose for the model
 (questions to ask, letter postures, what the statute leaves unsettled). Playbooks in scope, in order:
 deposit_not_returned, deposit_claim_received, repair_not_made, notice_received_violation, rent_increased,
-lease_ending, notice_received_nonpayment, landlord_entered_unannounced, wants_to_leave_early. That is one
-per issue label the classifier can pick, except "other", which means none of them fits.
+lease_ending, notice_received_nonpayment, landlord_entered_unannounced, wants_to_leave_early,
+neighbor_disturbance. That is one per issue label the classifier can pick, except "other", which means none
+of them fits.
 
 Beside the playbooks, a case wiki (`wiki/`), after Andrej Karpathy's LLM wiki: linked markdown pages that
 Claude Code writes from `cases/` in development sessions and the author reviews. One page per case (its

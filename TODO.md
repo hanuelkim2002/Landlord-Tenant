@@ -35,6 +35,11 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     (cases_retaliation) its case topic was offered only because the story also confirmed repair_not_made.
     Adding the section is a playbook change for the author to check against `statutes/`.
 
+43. No lease profile field holds a conduct, nuisance, or vehicle clause (the test lease has them at 5.2 and
+    5.4), so the model cannot quote the lease's own rule in a neighbor_disturbance chat or letter; only the
+    stop text shows such clauses, by code. Consider a `conduct_and_use` field in `lease.LeaseProfile` (a
+    change to extraction: every lease would be read again).
+
 ## Case law
 
 The case wiki (README, The unit of legal knowledge): linked markdown pages in `wiki/`, one per case and one

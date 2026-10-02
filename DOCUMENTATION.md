@@ -512,12 +512,15 @@ The program note after a sheet still tells the model, in the conversation, that 
 
 ## Playbook schema
 
-Nine playbooks, one per label in `ISSUE_LABELS` except `other`: deposit_not_returned,
+Ten playbooks, one per label in `ISSUE_LABELS` except `other`: deposit_not_returned,
 deposit_claim_received, repair_not_made, notice_received_nonpayment, notice_received_violation,
-landlord_entered_unannounced, rent_increased, wants_to_leave_early, lease_ending. The seven written
-2026-09-27 are version 0.1 with `verified_by: null` until the author's hand check. Two have no clocks,
-and say why in `counting.note`: landlord_entered_unannounced (83.53(2) is in hours), rent_increased (no
-section on notice of a rent increase). notice_received_nonpayment computes 83.56(3) in court business days
+landlord_entered_unannounced, rent_increased, wants_to_leave_early, lease_ending, neighbor_disturbance. The
+seven written 2026-09-27 and neighbor_disturbance (2026-10-02) are version 0.1 with `verified_by: null` until
+the author's hand check. Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
+(83.53(2) is in hours), rent_increased (no section on notice of a rent increase), neighbor_disturbance (no
+deadline for a landlord to act on one tenant's complaint about another; its open questions: whose duty
+83.52(7) states, 83.56(2)(a) as a remedy not a duty, what is unreasonable, and whether 83.56(1) lets the
+tenant leave over it). notice_received_nonpayment computes 83.56(3) in court business days
 and leaves 83.60(2) uncomputed. Facts shared across playbooks by id: `claim_notice_date`,
 `tenancy_terminated`, `deposit_amount`, `eviction_action_filed`, `fixed_term_lease`, `term_end_date`,
 `month_to_month`, `monthly_rent`.
@@ -676,7 +679,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   `summary.json`, and prints a table per scenario. The eval scenarios are `dev/scenarios/eval_*.json`:
   one realistic lay-tenant story per playbook (`deposit_ghosted`, `claim_carpet`, `entry_shower`,
   `lease_end_renewal`, `nonpayment_taped`, `violation_dog`, `rent_hike_duplex`, `repair_mold_apt`,
-  `leave_early_family`), three stories no playbook covers (`nc_roommate`, `nc_noise`, `nc_towing`), one
+  `leave_early_family`, and `noise_neighbors` since neighbor_disturbance was added; it was `nc_noise`), two
+  stories no playbook covers (`nc_roommate`, `nc_towing`, each expecting its lease clause at the stop), one
   covered problem next to an uncovered one (`nc_mixed_heater`), and three with facts like a case in the wiki
   and plain questions about judges (`cases_late_claim`, `cases_3day_cash`, `cases_retaliation`); run with
   `WIKI_UNVERIFIED=1` until pages are verified. Each scenario's `about` says what it tests.

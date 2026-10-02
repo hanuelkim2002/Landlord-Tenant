@@ -46,6 +46,9 @@ paid = classify("On September 28, 2026 I found a notice taped to my door saying 
                 "or move out. I paid $550 through Zelle the next day and the landlord took it but gave me no receipt.",
                 issue_menu())["issues"]
 check("(model) a partial payment and a late fee are part of a rent notice, not a separate problem", paid == ["notice_received_nonpayment"])
+noise = classify("My upstairs neighbors throw parties until 3 am almost every night. I've complained to the office "
+                 "three times and they say there's nothing they can do.", issue_menu())["issues"]
+check("(model) a neighbor's noise is neighbor_disturbance, not other", noise == ["neighbor_disturbance"])
 proposed = fill_facts(description, pb)
 print(proposed)
 for row in check_elements(pb, record.profile, {}, proposed):
