@@ -32,7 +32,8 @@ gateway failed (GATEWAY_SIGNS, or two unrecovered empty turns in a row) is marke
 are matched against what the tenant read, the replies and any line the program printed under them (footer);
 "footers" counts those lines, so the model's own lines and the program's can be told apart.
 
-Output in <out dir>: runs/ (each run's screen, a crashed first attempt's too, and its scenario with the tenant filled in), runs.json,
+Output in <out dir> (dev/eval_runs/<name> is ignored by git): matters/ (each run's matter.json, events, and
+transcript, copied out; the scratch tenant is then removed from the project's matters/), runs/ (each run's screen, a crashed first attempt's too, and its scenario with the tenant filled in), runs.json,
 transcripts/ (each run as text: who produced each part), scores.json (per run), summary.json (per scenario).
 """
 import json
@@ -101,11 +102,33 @@ def run_one(project, out, name, rep):
     return {"scenario": name, "rep": rep, "tenant": tenant, "matter": str(matter), "screen": str(screen), "exit": code}
 
 
+KEPT = ("matter.json", "events.jsonl", "sessions")        # what scoring reads; the lease copy stays behind
+
+
+def file_away(project, out, runs):
+    """Copy what scoring reads from each run's matter into <out dir>/matters/, then remove the scratch tenant
+    from the project's matters/ (only a t-eval- tenant, like smoke.py's t-smoke- ones), so run.py's list of
+    tenants is as it was before the eval. Points each run at its copy."""
+    for r in runs:
+        src = Path(r["matter"])
+        dest = out / "matters" / r["tenant"] / src.name
+        dest.mkdir(parents=True, exist_ok=True)
+        for name in KEPT:
+            if (src / name).is_dir():
+                shutil.copytree(src / name, dest / name, dirs_exist_ok=True)
+            elif (src / name).exists():
+                shutil.copy(src / name, dest / name)
+        if r["tenant"].startswith("t-eval-"):
+            shutil.rmtree(project / "matters" / r["tenant"], ignore_errors=True)
+        r["matter"] = str(dest)
+
+
 def run(out, repeats, names, project, parallel):
     (out / "runs").mkdir(parents=True, exist_ok=True)
     jobs = [(name, rep) for rep in range(1, repeats + 1) for name in names]
     with ThreadPoolExecutor(max_workers=parallel) as pool:
         runs = list(pool.map(lambda job: run_one(project, out, *job), jobs))
+    file_away(project, out, runs)
     (out / "runs.json").write_text(json.dumps(runs, indent=2))
     score(out)
 

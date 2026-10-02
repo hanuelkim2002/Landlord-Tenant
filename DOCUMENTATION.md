@@ -639,11 +639,14 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   suggested issue but the intended one with no, keyed on the intended issue's full description (the driver
   takes the longest matching rule, so a shorter key loses to "Is that part of your situation?"). The driver also
   handles run.py exiting by itself.
-- `python dev/eval.py run <out dir> <repeats> [scenario ...]`: runs scenarios several times each, several
+- `python dev/eval.py run <out dir> <repeats> [scenario ...]` (out dir: `dev/eval_runs/<name>`, ignored by git):
+  runs scenarios several times each, several
   sessions at once (`--parallel N`, default 8), and scores every run by code (`python dev/eval.py score <out
   dir>` scores again). With no scenario named, every scenario with an `expect` block. Each run is
   `dev/live_run.py` under its own scratch tenant `matters/t-eval-<out dir name>-<scenario>-<k>`, seeded with an
-  `m-000` copy of the test matter so the id exists; the run's matter is the one its screen names.
+  `m-000` copy of the test matter so the id exists; the run's matter is the one its screen names. When the
+  runs end, `file_away` copies each run's `matter.json`, events, and transcript into `<out dir>/matters/` and
+  removes the `t-eval-` scratch tenants from `matters/`, so `run.py`'s tenant list is as it was.
   `--project <folder>` runs another copy of the project, e.g. a git worktree at an older commit, to compare
   (the scenarios and the seed still come from this copy). The `expect` block: `issues` (the playbook issues
   active at the end), `stops` (the tool stops before the chat), `not_covered_note`, `deadlines` (issues with a

@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- The eval files its runs away (`dev/eval.py` `file_away`): each run's `matter.json`, events, and transcript are
+  copied into `<out dir>/matters/`, and the `t-eval-` scratch tenants are removed from `matters/`, as smoke.py
+  does with its `t-smoke-` ones. Was: every run left a tenant in `matters/` (144 after today's runs, each with
+  a copy of the lease), and `run.py` lists every tenant id when a new matter starts. `dev/eval_runs/` is
+  ignored by git; today's runs are kept there (`dev/eval_runs/2026-10-01/`), and their scratch tenants went
+  to the Trash.
 - `ask_json` parses with `strict=False`: a line break inside a quoted string is kept. Was: refused as an
   "Invalid control character", which crashed intake whenever the classifier's reason quoted a story typed on
   two lines; the mixed story (a heater and a remark about religion) crashed on 3 of 3 first attempts in the
