@@ -5,6 +5,19 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- The plan: the tool applies the law to the tenant's confirmed facts (the author's decision). Was: an
+  organizer that set the lease, the statute, and the cases beside the facts and never said what they meant for
+  the tenant; on the web page, "what can I to sue the landlord" got three statute quotes and "This tool does
+  not decide that.", which does not help. README: Purpose (the shape of an applied answer: the rule quoted, the
+  facts from the record, each condition met, failed, or not known, the options and what each requires, the
+  unsettled points with both readings; no choice made for the tenant; development on test matters only until
+  the unlicensed-practice question is settled), goal 3, the skills part (cases reach the model), the
+  non-negotiables (application only on confirmed facts and stored text; open points stay open; cases used whole
+  and fairly, including those against the tenant; the cases' text still printed by code), and the wiki
+  paragraph (case pages quote the facts the decision turned on; the application is in the chat). CLAUDE.md's
+  description. TODO: a new section, items 46 to 50 (rules, cases to the model, case pages' facts, the eval,
+  the playbooks' failure modes); items 26, 28, 36, and 40 updated. No code changed: the rules still organize
+  only until item 46.
 - The web page, `app.py` (TODO item 31, done): `streamlit run app.py`, on http://localhost:8501 only. The same
   steps as `run.py` on one page: the sidebar holds New matter, the saved matters, and the open matter's issues
   with Drop and End session; the middle holds the front door (tenant, lease PDF, description; or what is new),

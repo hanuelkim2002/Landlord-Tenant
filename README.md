@@ -6,15 +6,28 @@ TODO.md (what is next), DOCUMENTATION.md (how the code works now), and CHANGELOG
 
 ## Purpose
 
-An organizer and information tool for a Florida college-housing tenant in a dispute with a landlord, under
-Fla. Stat. ch. 83, pt. II. It reads the tenant's lease, works out which issues they have, lines up the lease
-terms, the statute text, and what Florida courts have said about that text next to the tenant's facts,
-keeps an evidentiary record over the life of the dispute, and drafts letters the tenant sends themselves.
+A tool for a Florida college-housing tenant in a dispute with a landlord, under Fla. Stat. ch. 83, pt. II.
+It reads the tenant's lease, works out which issues they have, applies the lease terms, the statute text,
+and what Florida courts have said about that text to the tenant's confirmed facts, keeps an evidentiary
+record over the life of the dispute, and drafts letters the tenant sends themselves.
 
-The author is a law student, not admitted. The tool gives no advice. Every output is framed as: here is what
-your lease says, here is what the statute says, here is what courts that read the statute said, here are
-your dates. It never says what a provision means for the tenant, which of the lease or statute controls,
-whether a case applies to the tenant, or what the tenant should do.
+The author is a law student, not admitted. Until 2026-10-02 the tool only set the lease, the statute, and
+the cases beside the tenant's facts and never said what they meant for the tenant. A list of quotes does not
+help a tenant who asks what they can do, so the tool now applies the law. An answer to a question about the
+law has this shape:
+
+- the rule, quoted from the lease, the statute, or a court, with its source;
+- the tenant's facts it turns on, each from the record;
+- for each condition of the rule, whether those facts meet it, fail it, or are not known yet;
+- what follows on those facts: the options the statute gives the tenant and what each requires first;
+- any point the stored text and the cases leave unsettled, with the readings on each side.
+
+The tool does not choose among the options for the tenant, and it says that its answer is its reading of
+the stored law, not a lawyer's advice.
+
+Applying the law to one person's facts is legal advice. The tool is in development: it runs on test matters
+only, and no tenant uses it until the unlicensed-practice question is settled (an attorney's supervision or
+a review).
 
 ## The four goals
 
@@ -22,9 +35,9 @@ whether a case applies to the tenant, or what the tenant should do.
    against the page it cites.
 2. Match the dispute with the contract: classify the tenant's description into issues, work out which facts
    each issue needs, and confirm each one with the tenant before it is recorded.
-3. Match the dispute with the law: preload the statute sections for each issue and the court decisions
-   that read them, compute every statutory deadline from confirmed facts in code, and let the model quote
-   only stored text.
+3. Apply the law to the dispute: preload the statute sections for each issue and the court decisions
+   that read them, compute every statutory deadline from confirmed facts in code, and answer the tenant's
+   questions by applying stored text, quoted, to the confirmed facts.
 4. Keep a coherent evidentiary record: one append-only event log per matter holding facts as confirmed,
    messages as pasted, files as provided, letters as drafted and as sent, and a timeline built from it.
 
@@ -33,25 +46,33 @@ whether a case applies to the tenant, or what the tenant should do.
 1. The chatbot: a LangChain agent with a small set of tools and a rules-based system prompt.
 2. The data bank: one folder per tenant and per matter, so a returning tenant resumes where they left off.
 3. Skills: the guidance half of each playbook, the statute sections it rests on, and the topics of the
-   case wiki's verified pages for those sections, loaded into the prompt when its issue becomes active (the
-   cases themselves are printed by the program when the tenant asks) instead of pasted for every issue, so the context window holds only what
-   the matter's issues need.
+   case wiki's verified pages for those sections, loaded into the prompt when its issue becomes active (a
+   topic's cases, with their facts and rules as quoted on their pages, reach the model when it asks for them,
+   so it can set them beside the tenant's facts) instead of pasted for every issue, so the context window
+   holds only what the matter's issues need.
 
 ## Non-negotiables
 
+- An application rests only on confirmed facts and stored text. A fact the record does not hold is named as
+  missing, never assumed, and the step that needs it is left open. Every rule in an answer is quoted with its
+  source, and every fact carries where it came from.
+- An open point stays open. Where the statute's words and the cases do not settle a question (a playbook's
+  open questions), the answer says so and gives the readings on each side; it never presents one as settled.
 - The model never computes a date. All date arithmetic is in one function, from confirmed facts only.
 - The model never sends anything. Letters are drafted; the tenant sends them and reports the sending.
 - The model never quotes from memory. Lease quotes come from the verified profile; statute quotes come from
   the stored text in `statutes/`; case quotes come from the stored opinions in `cases/`; every quote is
   checked by substring against its source before use.
-- Cases are shown neutrally: every case on a question, whichever side it favors, each with its court, year,
-  and the statute version it read. A case reaches the tenant only after the author has read it and
-  verified its entry. The tool never says whether a case applies to the tenant.
+- Cases are used whole and fairly: an answer that relies on a case shows every case on the question,
+  whichever side it favors, each with its court, year, and the statute version it read; it sets the tenant's
+  facts beside the case's facts as the court states them and says where they differ; and it names a case
+  that cuts against the tenant. A case reaches the tenant only after the author has read it and verified
+  its entry.
 - A fact enters the record only after the tenant confirms it. Proposed facts carry how they were proposed
   (stated or inferred) and the tenant's own words as basis.
 - The record is append-only. Current state is a snapshot; history is never edited or deleted.
-- Letters are a code template, not model text. The timeline and the cases are code output, never relayed
-  by the model.
+- Letters are a code template, not model text. The timeline and the cases' text are printed by code; the
+  model's answer applies and quotes them, never retells them in its own words.
 - `statutes/` and `cases/` are read-only corpora. Playbook and case wiki quotes are verified against them
   after every edit. `cases/` holds the court's text only: no publisher's headnotes, synopses, or citator
   flags.
@@ -72,7 +93,9 @@ issue, rule, and reasoning quoted from the opinion with pin pages, the statute v
 relates to other cases) and one page per topic, made as topics emerge from the cases, never fixed in
 advance. Pages link to each other by topic, rule, reasoning, and how later courts treated earlier ones, and
 carry the statute sections they read as tags. The wiki's own prose describes and connects; it never states
-the law, which reaches the tenant only as the court's quoted words. A page reaches the chat only after the
+the law. Each case page quotes the facts the decision turned on, as well as its rule and reasoning, so the
+chat can set a tenant's facts beside them; the application happens in the chat, from those quotes, never on
+the page. A page reaches the chat only after the
 author verifies it, and an edit afterwards undoes the verification. Tenant sessions read the wiki and never
 write to it. Decisions approving forms are filed as forms, not rules. Cases are published opinions of Florida's appellate courts
 and of federal courts applying ch. 83, each shown with its court; county and circuit court decisions stay

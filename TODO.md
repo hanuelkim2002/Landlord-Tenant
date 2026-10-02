@@ -3,6 +3,46 @@
 The working list. Move an item to CHANGELOG.md when it is done, with the date. Reorder freely. Keep the
 "Open questions" section for things that need a decision before code is written.
 
+## Applying the law
+
+The author's decision of 2026-10-02 (README, Purpose): an answer applies the stored statute and cases to the
+tenant's confirmed facts instead of listing quotes. Seen on the web page that day: "what can I to sue the
+landlord" got three statute quotes (83.56(1), 83.60(1)(b), 83.64(1)) and "This tool does not decide that."
+In development, on test matters only. Until item 46 is done the code still organizes only: the rules, the
+program's "does not decide" lines, and the page's sidebar say so. In this order, each its own change.
+
+46. Rules for applying. Rule 1 (organize, never advise) becomes the application rule, in the README's
+    shape: the rule quoted with its source; the confirmed facts it turns on, from ELEMENT STATUS with where
+    each came from; for each condition, met, failed, or not known yet (a missing fact named, never assumed);
+    what follows on those facts, the options the statute gives and what each requires first; no choice made
+    for the tenant. Rule 5: an open question is named with the readings on each side. Rule 9: a step the
+    statute requires before an option (a written notice first, e.g.) is part of the answer, not an offer; an
+    unasked letter is still an offer. Rule 3 stays: no date arithmetic, and whether a deadline has passed comes
+    from get_deadlines. `NOT_DECIDED` becomes a line saying the answer is the tool's reading of the stored law
+    and the confirmed facts, not a lawyer's advice; decide the other "does not decide" lines the program prints
+    (the cases' closing line in `wiki.render_cases`, `sheet.stop_text`, the sheet's lease comparison, which is
+    a conflict of facts and may stay) and the page's sidebar line. Keep today's rules as a file for
+    `RULES_FILE`, so the eval can compare the two. "Not:" / "Instead:" pairs come from real slips once seen.
+47. Cases to the model. `get_cases` gives the model each case's page (quoted facts, issues, rules, reasoning),
+    not only the names, and still prints them for the tenant. Rule 8: set the tenant's facts beside each
+    case's, say where they match and where they differ, and name a case that cuts against the tenant. The model
+    may call `get_cases` when a topic is on the question, not only when the tenant asks about courts (item 36).
+    `check_quoted` already checks a quote with no cite against what the model was given, which will then
+    include the pages. Needs item 48 for facts worth comparing.
+48. Case pages' facts (`wiki/SCHEMA.md`, A case page): "A few quotes, as background" becomes the facts the
+    decision turned on, quoted (who, the lease or notice, what was done and when). An edit undoes a page's
+    verification, so the author verifies again. The prose rule stays: a page never applies itself to anyone.
+49. The eval for applying. Rubric categories in place of LAW and the offer screen: UNCONFIRMED_FACT (a fact
+    used that the record does not hold), CONDITION_MISSED (a condition of the quoted rule not addressed),
+    CONDITION_WRONG (a condition called met or failed against the record), OPEN_CLOSED (a playbook open
+    question presented as settled), CASE_MISREAD (a case's facts or holding misstated against its page),
+    ONE_SIDED (a case on the question against the tenant left out), QUOTES_ONLY (quotes and no application).
+    The scenarios' `must_not` patterns ("you should", the legality line) are rewritten. Whether an
+    application is right needs a law reader: the author scores a sample beside the blind scorers.
+50. Playbooks, for the author: `guidance.failure_modes` were written for organizing ("Saying the landlord
+    must stop the disturbance or must evict the neighbor"); rewrite them as application slips, and give each
+    open question its readings. `check_all_playbooks` as always.
+
 ## Harness and code
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.
@@ -69,21 +109,23 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     the changes and 16 of 18 after (one count copied into the topic name, since accepted by
     `tools.topic_named`; one statute answer). A tenant who never asks never sees them. If that matters, a line
     the program prints, listing the case topics for the confirmed issues, keeps the choice with the tenant;
-    do it after item 35. Not built: the model saying a case supports or fits the tenant (Brumbaugh, discussed
-    2026-10-01).
+    do it after item 35. The model comparing a case with the tenant's facts is now planned: item 47.
 37. No case page speaks to damage that was already there at move-in (the claim_carpet story). Asked "Did a
     judge ever make a landlord give back money for damage that was already there?", the model printed the
     notice-of-claim topic, the nearest deposit topic. A gap for the author's research, not a code change.
 26. `search_cases(phrase)`, like `search_statute`, for a tenant whose situation fits no playbook ("other").
     Reconsider before building: here the model, not code, decides what to look for from the tenant's
     story, which is selection by judgment, the unlicensed-practice risk discussed 2026-10-01 (Brumbaugh:
-    general information is allowed, applying law to one person's facts is not).
+    general information is allowed, applying law to one person's facts is not). Since 2026-10-02 applying
+    the law is the plan (items 46, 47), so in development that reason is gone; what remains is whether the
+    model's search finds the right cases.
 27. For the author's research: no appellate case on the 83.42(1) exclusion for residence incidental to
     educational services turned up in the candidate list's sources; it decides whether ch. 83 applies to
     on-campus housing at all.
-28. For the author's professional responsibility professor: computing a tenant's own deadline from their
-    facts (`compute_deadlines`) is arguably closer to applying law to facts than anything in the case
-    plan. The tool shows the counting rule and labels it an assumption; whether that is enough is open.
+28. For the author's professional responsibility professor: since 2026-10-02 the tool applies the law to a
+    tenant's facts (README, Purpose), so the question to bring is what supervision or review it needs before
+    any tenant uses it. (Was: whether computing a tenant's own deadline, `compute_deadlines`, came close to
+    applying law to facts.)
 
 ## Interface
 
@@ -123,7 +165,8 @@ reused, so older references (smoke check names, the changelog) still point to th
 40. "The lease and statute text I have do not answer that." to a legal question the playbook does not list
     as open (whether the renewal must be signed by October 15; changing the locks): the blind scorers count
     it as LAW under the rubric's literal rule (12 of 38 after-runs' LAW calls, most marked borderline). Decide
-    whether this line is the wanted answer there or the quote-then-"does not decide" form is.
+    whether this line is the wanted answer there or the quote-then-"does not decide" form is. Superseded by
+    item 46: an answer applies what is stored, and this line is left for a question nothing stored speaks to.
 41. Empty replies remain rare (2 and 3 turns in 48 runs before and after, 2026-10-01); `reply_empty` now logs
     the gateway's finish_reason, so the next ones show whether the model or the gateway left them empty.
 
