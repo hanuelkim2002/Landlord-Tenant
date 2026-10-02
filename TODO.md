@@ -20,6 +20,14 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     `strict=False`). The other screens were written over; the eval now keeps a crashed first attempt's screen.
     Read the next ones before changing anything.
 
+44. A deadline question asked a second time gets the model's retyping, not the program's printout. Since
+    `get_deadlines` ends the turn, its JSON result stays in the thread with no reply after it; asked "What are
+    my deadlines?" again, the model copies that JSON (or rewords a date from it) instead of calling the tool:
+    violation_dog, where "am I safe this weekend?" had already printed them, 3 of 3 runs on 2026-10-02 (1 of 3
+    the day before). Proposed: `get_deadlines` returns content and artifact, like `get_cases`: the program
+    prints the artifact, and the model gets a receipt with no dates, so there is nothing to copy and the only
+    way to show deadlines again is to call the tool.
+
 ## Playbooks
 
 2. Hand check of the seven playbooks written 2026-09-27 (repair_not_made, notice_received_nonpayment,

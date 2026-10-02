@@ -5,6 +5,11 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- Eval of the two changes above (`dev/eval_runs/2026-10-02-nc`, six stories, 3 runs each, no crash or gateway
+  trouble): runs meeting every expectation 11 of 18 on the day before's code, scored by today's expectations,
+  14 of 18 now. The roommate and towing stops showed their lease clause in 6 of 6; the noise story ran as
+  neighbor_disturbance in 3 of 3 (one letter not drafted: the model asked to confirm). The dog-notice story fell
+  to 0 of 3 on a weakness already seen once the day before, logged as TODO item 44.
 - New playbook `neighbor_disturbance` (a neighbor or another tenant keeps disturbing the tenant, and the tenant
   wants the landlord to deal with it), with its label in `ISSUE_LABELS`. Was: a noise story was "other" and
   stopped (the eval's nc_noise, 12 of 12 runs). Sections 83.52, 83.56, 83.64, 83.42. Ten facts (what, who,
