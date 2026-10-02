@@ -642,6 +642,11 @@ try:
     footers = [json.loads(line) for line in session_lines if json.loads(line)["role"] == "footer"]
     check("item 30: a statute quote with no 'does not decide' line gets the program's line, once, in the transcript",
           printed.getvalue().count(NOT_DECIDED) == 1 and [f["text"] for f in footers] == [NOT_DECIDED])
+    lease_words = next(c.quote for _, c in record.profile if c.present and c.quote and len(c.quote) > 60)[:60]
+    with contextlib.redirect_stdout(io.StringIO()) as printed:
+        show_turn([AIMessage(content=f'Lease Section 4.3, page 2: "{lease_words}"')], [])
+    check("a lease quote with no 'does not decide' line gets the program's line too (eval, 2026-10-01)",
+          printed.getvalue().count(NOT_DECIDED) == 1)
 
     # get_deadlines and get_cases end the model's turn (return_direct, TODO item 19): a stand-in model calls
     # get_deadlines alone, then would reply; the agent stops after the tool, so the reply never comes
