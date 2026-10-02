@@ -34,7 +34,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
 from sheet import pending_rows, run_sheet
 from timeline import render_deadlines, render_timeline
 from agent import CASE_RULE, LETTER_RULE, NO_CASES_RULE, NOT_DECIDED, check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
-from tools import build_letter, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts
+from tools import build_letter, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
@@ -488,6 +488,10 @@ try:
         check("get_cases refuses a topic that is not offered, and the tenant sees the topics there are",
               refused.content.startswith("No case topic") and topic in refused.artifact
               and refused.artifact.startswith('This tool has no case topic named "Constructive eviction"'))
+        check("a topic written with its case count or in other letter case is the topic (eval, 2026-10-01)",
+              topic_named("Landlord's notice of claim on the deposit (1)", offered) == topic
+              and topic_named("landlord’s notice of claim on the deposit", offered) == topic
+              and topic_named("Notice of claim", offered) is None)
         check("a case cite in a reply must be one the tool showed in the chat",
               check_case_cites("See 448 So. 2d 1208 and 573 So. 2d 76.", shown_msg.content) == [("573 So. 2d 76", "is not a case this tool showed in this chat")])
     finally:

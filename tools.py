@@ -7,6 +7,7 @@ model sees.
 """
 import hashlib
 import json
+import re
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -132,6 +133,17 @@ def offered_topics():
     return wiki.case_topics(sorted({s for pb in active_playbooks() for s in pb.sections}))
 
 
+def topic_named(topic, topics):
+    """The CASE TOPICS name the model meant, or None: the name as given, or the same name once quote marks,
+    curly apostrophes, letter case, and a trailing case count are set aside (the model once copied
+    "Landlord's maintenance duties under 83.51 (9)" from the prompt's list, eval of 2026-10-01)."""
+    if topic in topics:
+        return topic
+    plain = topic.strip().strip('"“”').replace("’", "'").lower()
+    keys = {plain, re.sub(r"\s+\(\d+\)$", "", plain)}
+    return next((t for t in topics if t.replace("’", "'").lower() in keys), None)
+
+
 @tool(response_format="content_and_artifact", return_direct=True)
 def get_cases(topic: str) -> tuple[str, str]:
     """What courts have said on one topic listed in CASE TOPICS: the program prints every case the tool holds
@@ -140,6 +152,7 @@ def get_cases(topic: str) -> tuple[str, str]:
     back only the names of the cases printed, not their text: never quote, summarize, rank, or reword a case,
     and never say whether one applies to the tenant."""
     topics = offered_topics()
+    topic = topic_named(topic, topics) or topic
     if topic not in topics:                                # the tenant sees the topics and can ask for one
         listed = "; ".join(sorted(topics)) or "none for these issues"
         return (f"No case topic named {topic!r} for this matter. The program printed the CASE TOPICS for the tenant.",

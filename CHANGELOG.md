@@ -5,6 +5,10 @@ session can see why the code is the way it is.
 
 ## 2026-10-01
 
+- `get_cases` takes a topic written with its case count or in other letter case (`tools.topic_named`). Was:
+  only the exact name; in the eval after-runs the model once sent "Landlord's maintenance duties under 83.51
+  (9)", copying the count from the prompt's CASE TOPICS list, and the tenant got the topic list instead of
+  the cases. Smoke check.
 - Classify: a detail of a covered situation (why it happened, its effect, what was paid or charged, what a
   notice says) is part of it, not a separate problem. Was: after "other" was allowed next to covered issues,
   the classifier added it for a partial payment with no receipt in a rent-notice story, in 3 of 3 eval

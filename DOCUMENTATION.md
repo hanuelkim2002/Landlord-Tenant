@@ -424,7 +424,8 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   in a step is `get_deadlines` or `get_cases`, the agent stops after the tool and the model writes no reply,
   so it cannot repeat a printed line (TODO item 19); called with another tool, the turn goes on and rule 3
   still tells the model not to repeat or reword it.
-- `get_cases(topic)`: `topic` must be one of the matter's CASE TOPICS (`tools.offered_topics`, i.e.
+- `get_cases(topic)`: `topic` must name one of the matter's CASE TOPICS, as given or once `topic_named` sets
+  aside quote marks, curly apostrophes, letter case, and a trailing case count (`tools.offered_topics`, i.e.
   `wiki.case_topics` for the active playbooks' sections); otherwise "No case topic named ...". A tool with
   `response_format="content_and_artifact"`: the model gets a receipt only (the names and cites of the cases
   printed), and the program gets `wiki.render_cases(topic)` as the message's artifact, which `show_turn`
