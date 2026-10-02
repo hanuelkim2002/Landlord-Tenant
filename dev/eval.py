@@ -168,7 +168,7 @@ def measure_turn(turn):
     replies = [e["text"].strip() for e in turn["entries"] if e["role"] == "model" and (e.get("text") or "").strip()]
     calls = [c for e in turn["entries"] if e["role"] == "model" for c in e.get("tool_calls", [])]
     printed = [d for e in turn["entries"] if e["role"] == "tool" and e["name"] == "get_deadlines"
-               for d in ISO_DATE.findall(e["text"])]
+               for d in ISO_DATE.findall(e.get("shown") or e["text"])]
     text = "\n".join(replies)
     bare = QUOTED.sub("", text)                       # outside quote marks
     return {
@@ -252,7 +252,7 @@ def transcript_text(entries):
             lines.append(f"[PROGRAM PRINTED, outside the chat]\n{e['text']}")
         elif role == "tool":
             if e["name"] in ("get_deadlines", "draft_letter"):
-                lines.append(f"[PROGRAM PRINTED, from {e['name']}]\n{e['text']}")
+                lines.append(f"[PROGRAM PRINTED, from {e['name']}]\n{e.get('shown') or e['text']}")
             elif e.get("shown"):
                 lines.append(f"[PROGRAM PRINTED, from {e['name']}]\n{e['shown']}")
             else:

@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- `get_deadlines` gives the model a receipt with no dates; the program prints the listing (TODO item 44, done).
+  Was: the model got the whole JSON, and once the tool ended the turn (item 19) that JSON stayed in the thread
+  with no reply after it, so asked "What are my deadlines?" a second time the model copied it, or reworded a date
+  from it, instead of calling the tool (violation_dog, 3 of 3 runs on 2026-10-02). Now the computation is
+  `tools.deadline_listing()`, the tool returns content and artifact like `get_cases`, `show_turn` prints the
+  artifact through `render_deadlines`, and the model's receipt (`deadline_receipt`) says how many dated deadlines
+  were printed for which issues and which issues wait, and to call the tool again to show them. Rule 3: call
+  get_deadlines alone every time, never answer from an earlier one, never write a deadline. The eval reads
+  printed dates from the transcript's `shown`. Two smoke checks; the deadline checks use `deadline_listing`.
 - Eval of the two changes above (`dev/eval_runs/2026-10-02-nc`, six stories, 3 runs each, no crash or gateway
   trouble): runs meeting every expectation 11 of 18 on the day before's code, scored by today's expectations,
   14 of 18 now. The roommate and towing stops showed their lease clause in 6 of 6; the noise story ran as

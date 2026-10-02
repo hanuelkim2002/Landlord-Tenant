@@ -35,7 +35,7 @@ from lease import FOOTER, lease_clauses
 from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
 from agent import CASE_RULE, LETTER_RULE, NO_CASES_RULE, NOT_DECIDED, check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
-from tools import build_letter, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
+from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
@@ -78,7 +78,7 @@ for row in check_elements(pb, record.profile, test_facts, update):
 record.matter["issues"] = ["deposit_not_returned"]
 record.matter["facts"] = dict(test_facts)
 record.matter["proposed"] = update
-print(get_deadlines.invoke({}))
+print(deadline_listing())
 record.matter["proposed"] = {}
 print()
 
@@ -389,10 +389,10 @@ try:
     invented = propose_facts.invoke({"facts_json": json.dumps({"claim_notice_received": {
         "value": False, "how": "stated", "said": "Actually I moved out ... I got a letter"}})})
     check("propose_facts refuses an ellipsis joining words the tenant never typed", "said must be" in invented)
-    check("get_deadlines waits while facts are open", get_deadlines.invoke({}).startswith("Not yet"))
+    check("get_deadlines waits while facts are open", deadline_listing().startswith("Not yet"))
     check("printed deadlines say none yet, and what is waiting",
-          render_deadlines(get_deadlines.invoke({})).startswith("No deadlines yet")
-          and "waiting [deposit_not_returned]: " in render_deadlines(get_deadlines.invoke({})))
+          render_deadlines(deadline_listing()).startswith("No deadlines yet")
+          and "waiting [deposit_not_returned]: " in render_deadlines(deadline_listing()))
 
     # the intake sheet: accept, correct, bad input asked again, a changed fact, an applies_if fact, a skip
     prompt_before_sheet = system_prompt()
@@ -418,13 +418,23 @@ try:
     check("sheet: a skipped fact stays open", [r["id"] for r in pending_rows()] == ["notice_states_objection_window"])
     with contextlib.redirect_stdout(io.StringIO()):
         run_sheet(scripted(["yes"]))
-    deadlines = {d["clock"]: str(d.get("deadline")) for d in json.loads(get_deadlines.invoke({}))["deadlines"]}
+    deadlines = {d["clock"]: str(d.get("deadline")) for d in json.loads(deadline_listing())["deadlines"]}
     check("get_deadlines answers once every fact is confirmed", deadlines.get("tenant_objection_deadline") == "2026-10-10")
-    listed = json.loads(get_deadlines.invoke({}))["deadlines"]
+    listed = json.loads(deadline_listing())["deadlines"]
     shared = [d for d in listed if d["clock"] == "claim_notice_deadline"]
     check("a deadline two issues share is listed once, with both issues", len(shared) == 1
           and shared[0]["issues"] == ["deposit_not_returned", "deposit_claim_received"])
-    printed = render_deadlines(get_deadlines.invoke({}))
+    printed = render_deadlines(deadline_listing())
+    receipt = get_deadlines.invoke({"type": "tool_call", "id": "d0", "name": "get_deadlines", "args": {}})
+    check("item 44: get_deadlines prints the listing and gives the model a receipt with no date in it",
+          json.loads(receipt.artifact)["deadlines"] == listed and not re.search(r"\b20\d\d-\d\d-\d\d\b", receipt.content)
+          and "printed the tenant's deadlines" in receipt.content and "call get_deadlines again" in receipt.content)
+    call = AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "d0"}])
+    with contextlib.redirect_stdout(io.StringIO()) as shown_now:
+        show_turn([call, receipt], [call, receipt])
+    check("the chat loop prints the listing, dates included, not the model's receipt",
+          all(d["deadline"] in shown_now.getvalue() for d in listed if "deadline" in d)
+          and "You are not shown the dates" not in shown_now.getvalue())
     check("printed deadlines carry every field: date, actor, rule, start, cite, status, counting, issues",
           all(f"  {d['deadline']}  {d['actor']} deadline: " in printed for d in listed)
           and printed.count("counting: ") == len(listed) and "Fla. Stat. 83.49(3)(b)" in printed
@@ -590,7 +600,7 @@ try:
     # deadlines per issue: deposit_not_returned complete, deposit_claim_received still open (its facts skipped)
     record.matter["facts"].update(tenancy_terminated="2026-07-31", vacated="2026-07-30", claim_notice_date="2026-09-25",
                                   forwarding_address_given=True, early_or_periodic=False)
-    per_issue = json.loads(get_deadlines.invoke({}))
+    per_issue = json.loads(deadline_listing())
     check("an issue with open facts does not block another issue's deadlines",
           {d["clock"] for d in per_issue["deadlines"]} == {"return_if_no_claim", "claim_notice_deadline"}
           and all(d["issues"] == ["deposit_not_returned"] for d in per_issue["deadlines"])
@@ -746,7 +756,7 @@ try:
         shown_sheet = io.StringIO()
         with contextlib.redirect_stdout(shown_sheet):
             run_sheet(answer_by_type(shown_sheet))
-        listed = get_deadlines.invoke({})
+        listed = deadline_listing()
         clocks = [c.id for i in record.matter["issues"] if i in playbooks for c in playbooks[i].spec.clocks]
         dated = [d["clock"] for d in json.loads(listed)["deadlines"] if "deadline" in d] if not listed.startswith("Not yet") else []
         letter = draft_letter.invoke({"issue": issue, "posture": "preserve", "ask": "Confirm receipt of this letter",

@@ -358,7 +358,7 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
 - `sessions/<session id>.jsonl`: the transcript of one session, outside the evidentiary log. One line per
   entry, each with `when` and `role`: `tenant` (`text`, as typed), `model` (`text`, plus `tool_calls`, a
   list of `{"name", "args"}`, when it called tools), `tool` (`name`, `text`: the result the model saw, and
-  `shown`: what the program printed from it, for `get_cases`),
+  `shown`: what the program printed from it, for `get_cases` and `get_deadlines`),
   `command` (`text`: a `timeline` command, handled without the model), `sheet` (`id`, `question`,
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_added`
   when the answer brought in a related issue), or
@@ -430,16 +430,18 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   ignored).
   A value equal to the confirmed one is refused. Saves `matter.json`; returns what was taken and why
   anything was refused. Never confirms: the chat loop runs the sheet after the turn.
-- `get_deadlines()`: works issue by issue. An issue is ready when none of its rows is proposed, changed, or
-  missing. Returns JSON `{"deadlines": [...], "waiting": {issue: [open fact ids]}}`: the clocks of the ready
-  issues from `matter_deadlines`, each with `issues` (a list; a deadline two issues share appears once), and,
-  if any, the issues still waiting with their open facts. Refuses ("Not yet. ...", with the open facts by
-  issue) only when no issue is ready. Writes a `deadlines_computed` event per ready playbook. The model
-  does not report the result: the chat loop prints the turn's last `get_deadlines` result itself, through
-  `timeline.render_deadlines`. A turn-ending tool (`return_direct=True`): when every tool the model called
-  in a step is `get_deadlines` or `get_cases`, the agent stops after the tool and the model writes no reply,
-  so it cannot repeat a printed line (TODO item 19); called with another tool, the turn goes on and rule 3
-  still tells the model not to repeat or reword it.
+- `get_deadlines()`: the listing comes from `tools.deadline_listing()`, which works issue by issue. An issue is
+  ready when none of its rows is proposed, changed, or missing. It returns JSON `{"deadlines": [...],
+  "waiting": {issue: [open fact ids]}}`: the clocks of the ready issues from `matter_deadlines`, each with
+  `issues` (a list; a deadline two issues share appears once), and, if any, the issues still waiting with
+  their open facts; or "Not yet. ...", with the open facts by issue, when no issue is ready. Writes a
+  `deadlines_computed` event per ready playbook. A tool with `response_format="content_and_artifact"`: the
+  program gets the listing as the artifact, and the chat loop prints the turn's last one through
+  `timeline.render_deadlines`; the model gets `deadline_receipt(listing)`, how many dated deadlines for which
+  issues and which issues wait, with no date in it, so it cannot retype a deadline from earlier in the chat
+  and must call the tool to show them again (TODO item 44). A turn-ending tool (`return_direct=True`): when
+  every tool the model called in a step is `get_deadlines` or `get_cases`, the agent stops after the tool and
+  the model writes no reply (TODO item 19).
 - `get_cases(topic)`: `topic` must name one of the matter's CASE TOPICS, as given or once `topic_named` sets
   aside quote marks, curly apostrophes, letter case, and a trailing case count (`tools.offered_topics`, i.e.
   `wiki.case_topics` for the active playbooks' sections); otherwise "No case topic named ...". A tool with
@@ -487,7 +489,8 @@ this order:
    line only right after a lease quote and a statute quote on one point); 2 quote only what was given, word
    for word, fetch a section before citing one not in STATUTE SECTIONS, say plainly when nothing answers;
    3 dates only from ELEMENT STATUS, a lease quote, the tenant's words, or a tool result, deadlines only
-   from `get_deadlines`, called alone, which the program prints, ending the turn; 4 the model proposes
+   from `get_deadlines`, called alone every time, which the program prints, ending the turn, the model never
+   seeing the dates; 4 the model proposes
    facts with `propose_facts`, the tenant confirms them on the sheet, nothing asked or confirmed in the
    chat; 5 open questions stay open (quote the open question's text; never resolve it or ask the tenant
    to); 6 letters only when asked, only through `draft_letter`, missing details asked once, posture lines

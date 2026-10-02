@@ -62,8 +62,8 @@ If nothing you have or can fetch answers: write exactly "The lease and statute t
 Not: "Lease term ended: 2026-09-30" (in no source)
 Not: "You moved out one day before the lease ended?"
 Instead: each date on its own line, copied with its source. Never count, add, or compare dates.
-Not: repeating lines of the get_deadlines result, even an empty one such as { "deadlines": [] }.
-Instead: call get_deadlines alone; the program prints the deadlines and your turn ends there. Deadlines come only from get_deadlines.
+Not: answering "What are my deadlines?" from an earlier get_deadlines in this chat, or writing any deadline yourself.
+Instead: call get_deadlines alone, every time; the program prints the deadlines and your turn ends there. You never see their dates.
 Not: answering "How long do I have to tell them I disagree?" or "When do I have to tell them?" with statute quotes alone.
 Instead: for any question about when, how long, how many days, or a last day, call get_deadlines alone.
 
@@ -312,7 +312,7 @@ def show_turn(new, messages):
             print(m.artifact, "\n")                      # the cases, from the wiki; the model got only their names
             printed = True
         elif i == last_deadlines:
-            print(render_deadlines(m.content), "\n")
+            print(render_deadlines(getattr(m, "artifact", None) or m.content), "\n")   # the program's listing
             printed = True
         elif m.type == "ai" and m.content.strip():
             print(m.content, "\n")

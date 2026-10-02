@@ -100,13 +100,11 @@ def propose_facts(facts_json: str) -> str:
 # is one of them, the agent stops after the tool, the chat loop prints what the program made, and the model
 # writes no reply after it, so it cannot repeat or reword a printed line (TODO item 19).
 
-@tool(return_direct=True)
-def get_deadlines() -> str:
-    """Compute every deadline from the CONFIRMED facts. This is the ONLY way to get a date. Never count or
-    calculate days yourself. Works issue by issue: returns the deadlines of every issue whose facts are all
-    confirmed or n/a, and under "waiting" the issues whose facts are still open, with those facts. A deadline
-    two issues share appears once. The program prints the result to the tenant itself, every field included,
-    and your turn ends there: call it alone, and never repeat or reword it later."""
+def deadline_listing():
+    """Every deadline the confirmed facts give, as JSON: {"deadlines": [...], "waiting": {issue: [open facts]}},
+    issue by issue (an issue is ready when none of its facts is proposed, changed, or missing; a deadline two
+    issues share appears once), or "Not yet. ..." with the open facts when no issue is ready. Writes a
+    deadlines_computed event per ready issue. What the program prints, through render_deadlines."""
     waiting = {}
     for issue, rows in element_status().items():
         open_ids = sorted({r["id"] for r in rows if r["status"] in ("proposed", "changed", "missing")})
@@ -123,6 +121,31 @@ def get_deadlines() -> str:
     if waiting:
         result["waiting"] = waiting            # these issues' dates come once their facts are confirmed
     return json.dumps(result, indent=2, default=str)
+
+
+def deadline_receipt(listing):
+    """What the model gets back from get_deadlines: what was printed, with no date in it (TODO item 44: given
+    the dates, the model retyped them when asked again instead of calling the tool)."""
+    if listing.startswith("Not yet"):
+        return ("The program printed for the tenant that no issue has all its facts confirmed yet. ELEMENT STATUS "
+                "shows the open facts.")
+    data = json.loads(listing)
+    dated = [d for d in data["deadlines"] if "deadline" in d]
+    issues = sorted({i for d in data["deadlines"] for i in d["issues"]})
+    waiting = sorted(data.get("waiting", {}))
+    return (f"The program printed the tenant's deadlines: {len(dated)} dated, for {issues or 'no issue'}"
+            + (f"; still waiting for facts: {waiting}" if waiting else "")
+            + ". You are not shown the dates. To show the deadlines again, call get_deadlines again.")
+
+
+@tool(response_format="content_and_artifact", return_direct=True)
+def get_deadlines() -> tuple[str, str]:
+    """Compute every deadline from the CONFIRMED facts. This is the ONLY way to get a date. Never count or
+    calculate days yourself. The program prints the deadlines to the tenant, every field included, and your
+    turn ends there: call it alone. You get back only a receipt, with no dates: never write a deadline
+    yourself, and to show the deadlines again, call get_deadlines again."""
+    listing = deadline_listing()
+    return deadline_receipt(listing), listing
 
 
 # ---- Cases: what courts said, from the case wiki's verified pages. The program prints the result to the tenant
