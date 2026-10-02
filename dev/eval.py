@@ -22,6 +22,7 @@ A scenario's "expect" block (every key optional):
                      "called" / "not_called" (tool names), "must" / "must_not" (regexes on the turn's replies;
                      must_not looks only outside quote marks),
                      "topics" (the get_cases topics allowed in that turn; any other topic fails)
+  "screen_must"      regexes the whole screen must match (a lease clause shown at the stop, e.g.)
   "screen_must_not"  regexes the whole screen must not match (a wrong suggestion on the sheet, e.g.)
 Every reply is also measured, whatever the scenario: empty turns (reply_empty events), program cautions
 (quote_flagged and cite_flagged events), field names (a snake_case id outside quote marks), deadline echo (a
@@ -222,6 +223,8 @@ def check_expect(expect, matter, events, turns, screen):
         if "topics" in want:
             wrong = [x for x in t["topics"] if x not in want["topics"]]
             results.append((f"'{want['say'][:30]}' topic", bool(t["topics"]) and not wrong, t["topics"]))
+    for pattern in expect.get("screen_must", []):
+        results.append((f"screen has /{pattern}/", bool(re.search(pattern, screen)), ""))
     for pattern in expect.get("screen_must_not", []):
         hit = re.search(pattern, screen)
         results.append((f"screen lacks /{pattern}/", not hit, hit.group(0) if hit else ""))
@@ -245,6 +248,8 @@ def transcript_text(entries):
             lines.append(f"[PROGRAM CAUTION shown to the tenant] {e['text']}")
         elif role == "footer":
             lines.append(f"[PROGRAM LINE printed under the reply] {e['text']}")
+        elif role == "printed":
+            lines.append(f"[PROGRAM PRINTED, outside the chat]\n{e['text']}")
         elif role == "tool":
             if e["name"] in ("get_deadlines", "draft_letter"):
                 lines.append(f"[PROGRAM PRINTED, from {e['name']}]\n{e['text']}")

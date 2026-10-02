@@ -14,11 +14,6 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
    question below; (b) periods the lease sets (83.575(1)-(2), 83.595(4)); needs a clock whose length is a
    confirmed fact; (c) hours (83.53(2)); (d) months (83.56(2), 12 months). Decide which to support.
 
-32. The stop for a story the tool does not cover (`run.py`: "None of the situations this tool covers applies,
-    so it stops here.") says nothing else. Checked in the eval of 2026-10-01: a roommate dispute, neighbors'
-    noise, and a towed car each stop cleanly, 6 of 6 runs per side. Consider listing the nine situations the
-    tool covers, so a tenant who described a covered problem in other words can try again; whether to point
-    to legal aid or the Bar's referral service is the author's call.
 33. Some live sessions crash on their first attempt and pass on the second: 6 of 48 runs on the code before
     the eval changes and 3 of 48 after (2026-10-01), three of them one mixed story. Two causes found: malformed
     JSON (now asked for again) and a line break inside a quoted JSON string (the mixed story; now accepted,

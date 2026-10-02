@@ -7,11 +7,13 @@ Two halves, so a front end can later draw the same rows as a form:
 Every answer is checked against the element's type before it is saved. A suggestion (from fill_facts) is
 shown with the tenant's own words and accepted with Enter. "?" skips a fact for now; it stays missing.
 """
+import json
 from datetime import datetime
 
 import record
 from corpus import playbooks
-from record import confirm_fact, confirm_issue, element_status, reject_issue, save
+from lease import clauses_about
+from record import confirm_fact, confirm_issue, element_status, read_events, reject_issue, save
 
 
 # ---- Which rows: every changed, proposed, or missing fact across the matter's issues, once per fact id.
@@ -154,3 +156,31 @@ def run_sheet(ask=input):
     if skipped:
         print(f"\nSkipped for now: {', '.join(sorted(skipped))}. Deadlines wait until these are answered.")
     return saved
+
+
+# ---- When nothing the tool covers is left: what it does cover, and the parts of the tenant's lease on the
+# subject of what they wrote, as printed. No model involved.
+
+STOP_LINE = "None of the situations this tool covers applies, so it stops here. What you described is saved in your matter's record."
+CLAUSE_CHARS = 600                                       # a longer clause is cut, marked with "..."
+
+
+def stop_text():
+    """What run.py prints when no covered issue is active: STOP_LINE, the situations the tool covers (each
+    playbook's description) and how to come back to one, then the lease clauses lease.clauses_about finds for
+    the tenant's description and updates, each with its section, title, and page, word for word."""
+    lines = [STOP_LINE, "", "This tool covers these situations:"]
+    lines += [f"  - {pb.description}" for pb in playbooks.values()]
+    lines += ["If one of them is part of what happened, open this matter again (choose existing) and describe that part."]
+    told = " ".join([record.matter.get("description", "")]
+                    + [ev["text"] for ev in read_events() if ev["kind"] == "tenant_update"])
+    pages = record.matter_dir() / "pages.json"
+    found = clauses_about(told, json.loads(pages.read_text())) if pages.exists() else []
+    if found:
+        lines += ["", "Parts of your lease that may be on the subject, as printed in the lease:"]
+        for c in found:
+            words = c["text"] if len(c["text"]) <= CLAUSE_CHARS else c["text"][:CLAUSE_CHARS].rsplit(" ", 1)[0] + " ..."
+            lines.append(f'  Lease Section {c["number"]}, {c["title"]}, page {c["page"]}: "{words}"')
+        lines.append("This tool does not decide what they mean for you.")
+    return "\n".join(lines)
+

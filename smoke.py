@@ -31,7 +31,8 @@ import wiki
 from wiki import lint, read_pages, verified, verify
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
-from sheet import pending_rows, run_sheet
+from lease import FOOTER, lease_clauses
+from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
 from agent import CASE_RULE, LETTER_RULE, NO_CASES_RULE, NOT_DECIDED, check_reply, given_text, retry_empty, sections_shown, show_turn, system_prompt
 from tools import build_letter, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
@@ -706,6 +707,35 @@ try:
           and LETTER_RULE in system_prompt([HumanMessage(content="Can you help me write something to send them?")]))
 finally:
     remove_scratch("t-smoke-rules")
+
+# a story no playbook covers (sheet.stop_text, lease.clauses_about): the stop lists what the tool covers and shows
+# the lease's own clauses on the subject, word for word; nothing from the lease when no clause is on it
+make_scratch("t-smoke-stop")
+try:
+    (MATTERS / "t-smoke-stop" / "m-001" / "events.jsonl").write_text("")
+    load_matter("t-smoke-stop", "m-001")
+    lease_pages = json.loads((record.matter_dir() / "pages.json").read_text())
+    numbers = [c["number"] for c in lease_clauses(lease_pages)]
+    check("the test lease splits into its numbered clauses, in order, a cross-reference not taken for one",
+          len(numbers) == 78 and numbers[:3] == ["1.1", "1.2", "1.3"] and numbers[-1] == "22.2"
+          and numbers.index("3.2") + 1 == numbers.index("3.3"))
+    page_words = FOOTER.sub(" ", " ".join(" ".join(p["text"] for p in lease_pages).split()))
+    def stop_for(story):
+        record.matter["description"] = story
+        return stop_text()
+    roommate = stop_for("My roommate moved out in August and stopped paying his half of the rent. We're both on the lease.")
+    printed_clauses = re.findall(r'page \d+: "(.*)"', roommate)
+    check("a roommate story: the stop lists every covered situation and shows lease 21.3, word for word",
+          roommate.startswith(STOP_LINE) and all(pb.description in roommate for pb in playbooks.values())
+          and "Lease Section 21.3, Joint and Several Liability" in roommate
+          and all(words.removesuffix(" ...") in page_words for words in printed_clauses))
+    check("a towing story: the stop shows lease 5.4, Vehicles",
+          "Lease Section 5.4, Vehicles" in stop_for("My apartment complex had my car towed from my parking spot."))
+    check("a story the lease says nothing about: no lease part is shown",
+          "Parts of your lease" not in stop_for("My landlord said he regrets renting to people like me because of my religion."))
+finally:
+    remove_scratch("t-smoke-stop")
+check("the stop scratch matter is removed", not (MATTERS / "t-smoke-stop").exists())
 
 make_scratch("t-smoke-playbooks")
 try:

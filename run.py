@@ -15,7 +15,7 @@ require_key()                   # this script calls the models; stop here if the
 import record
 from agent import build_agent, chat, intake, resume
 from lease import check_quotes, extract_profile, ingest_pdf
-from sheet import pending_rows, run_sheet
+from sheet import pending_rows, run_sheet, stop_text
 from record import (active_playbooks, candidate_playbooks, end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id,
                     start_session)
 
@@ -115,9 +115,11 @@ if start():
         run_sheet()                            # the tenant confirms issues and facts with code, before the model
     if not active_playbooks():
         # Nothing the tool covers is left: every issue found was "other", or the tenant turned the suggestions
-        # down. Stop before the chat; what was described and decided is in the record for a later pipeline.
-        print("\nNone of the situations this tool covers applies, so it stops here. What you described is saved\n"
-              "in your matter's record.")
+        # down. Stop before the chat, showing what the tool covers and the lease's own clauses on the subject;
+        # what was described and decided is in the record for a later pipeline.
+        shown = stop_text()
+        print("\n" + shown)
+        record.append_transcript({"role": "printed", "text": shown})
     else:
         chat(build_agent())                    # built after the sheet, so the prompt holds the confirmed facts
     end_session()                              # only on a normal exit; a crash leaves the start without an end

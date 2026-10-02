@@ -20,7 +20,15 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `lease.py`: lease intake. `ingest_pdf(pdf_path, matter_dir)` (store the PDF under its hash in the folder
   it is given, extract page text with PyPDF2, write `pages.json`), the `Clause` and `LeaseProfile` shapes (fifteen named clauses), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
-  or start there and run onto the next). Imports `config`. Imported by `record` and `run.py`.
+  or start there and run onto the next). Lease clauses, no model: `lease_clauses(pages)` (the lease split at
+  its numbered headings, `HEADING`, "5.4. Vehicles."; a heading counts only if its number closely follows the
+  last one's, so a cross-reference is not taken for one; each clause's number, title, page, and text, with a
+  running page footer, `FOOTER`, and a following article heading, `ARTICLE`, removed) and
+  `clauses_about(text, pages, limit=3)` (the clauses on the subject of a tenant's text: a title using one of
+  the tenant's words or a `LEASE_WORDS` word, everyday words mapped to lease words such as roommate to joint
+  and several, or a text using two `LEASE_WORDS` words; ranked by how few clauses use each word, a title match
+  counted double; `STOP` lists words too common to count, `stem` and `matches` compare words). Imports
+  `config`. Imported by `record`, `run.py`, and `sheet`.
 - `calendars.py`: the court holiday calendars, loaded once at import from `calendars/*.json` into
   `court_calendars`. `load_calendar` (raises if a holiday is filed under the wrong year or its printed
   weekday is not the date's weekday), `court_calendar(county)` (the calendar of the circuit that includes
@@ -187,11 +195,16 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   text goes to `resume`, an empty answer goes on. Both return True when a matter is open. If `other` came in
   alongside a covered issue (active or suggested), the tenant is told part of it may not be covered. Then,
   if `pending_rows()` has anything, `run_sheet()`, which asks the suggested issues and the facts. If no
-  active playbook is left after it (every issue was `other`, or the tenant turned the suggestions down), the
-  tool says none of the situations it covers applies and stops: no chat; what was described and decided
-  stays in the record for a later pipeline. Otherwise `chat(build_agent())`. Then `end_session()` on a
+  active playbook is left after it (every issue was `other`, or the tenant turned the suggestions down), it
+  prints `sheet.stop_text()` and stops: no chat; the text goes to the transcript as a `printed` line; what was
+  described and decided stays in the record for a later pipeline. Otherwise `chat(build_agent())`. Then `end_session()` on a
   normal exit. A session opens before intake or resume, so everything done in the visit carries its id.
-- `sheet.py`: the intake sheet, asked and saved by code with no model. `pending_rows()` (first every
+- `sheet.py`: the intake sheet, asked and saved by code with no model. `stop_text()` (what the tenant reads
+  when nothing the tool covers is left: `STOP_LINE`, every playbook's description with how to come back to one
+  (open the matter again and describe that part), then up to three lease clauses `lease.clauses_about` finds
+  for the description and any updates, each as "Lease Section <number>, <title>, page <n>:" and its words in
+  quote marks, cut at `CLAUSE_CHARS` with "...", and "This tool does not decide what they mean for you.").
+  `pending_rows()` (first every
   suggested issue as a yes/no row, "This looks like: <description> Is that part of your situation?", with
   why it was suggested; then every changed, proposed, or missing fact of the active issues, once per fact
   id, with its question, type, and any suggestion; a yes to an issue calls `confirm_issue` and its
@@ -349,6 +362,7 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   `command` (`text`: a `timeline` command, handled without the model), `sheet` (`id`, `question`,
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_added`
   when the answer brought in a related issue), or
+  `printed` (`text`: what the program printed outside the chat, the stop text), or
   `footer` (`text`: `NOT_DECIDED`, printed by the program under a reply that quotes the statute or the lease without
   saying the tool does not decide), or
   `program` (`text`: a note sent to the model: ahead of the tenant's message after a sheet, or
@@ -650,7 +664,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   `--project <folder>` runs another copy of the project, e.g. a git worktree at an older commit, to compare
   (the scenarios and the seed still come from this copy). The `expect` block: `issues` (the playbook issues
   active at the end), `stops` (the tool stops before the chat), `not_covered_note`, `deadlines` (issues with a
-  `deadlines_computed` event naming a clock), `letters` (`draft` events), `turns` (per chat line, found by a
+  `deadlines_computed` event naming a clock), `letters` (`draft` events), `screen_must` and `screen_must_not`
+  (regexes on the whole screen), `turns` (per chat line, found by a
   piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
   outside quote marks, the `topics` allowed for `get_cases`), and `screen_must_not`. Every reply is also
   measured: empty turns, program cautions, field names, a printed deadline date repeated, and two word screens

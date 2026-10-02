@@ -1,5 +1,5 @@
 {
-  "about": "Not covered. The complex towed the tenant's car over an expired parking sticker. Expected: nothing the tool covers applies (the classifier gives only 'other', or the tenant says no to any suggestion), so it stops before the chat.",
+  "about": "Not covered. The complex towed the tenant's car over an expired parking sticker. Expected: nothing the tool covers applies (the classifier gives only 'other', or the tenant says no to any suggestion), so it stops before the chat. Since 2026-10-02 the stop also lists the situations the tool covers and shows the lease's own clause on the subject (Lease Section 5.4, Vehicles).",
   "start": [
     "new",
     "t-test",
@@ -60,6 +60,10 @@
   ],
   "expect": {
     "issues": [],
-    "stops": true
+    "stops": true,
+    "screen_must": [
+      "This tool covers these situations:",
+      "Lease Section 5\\.4, Vehicles"
+    ]
   }
 }

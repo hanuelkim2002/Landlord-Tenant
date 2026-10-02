@@ -3,6 +3,22 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-02
+
+- The stop for a story the tool does not cover shows what the tool covers and the tenant's own lease on the
+  subject (TODO item 32, done). Was: one line, "None of the situations this tool covers applies, so it stops
+  here." Now `sheet.stop_text()` adds every playbook's description with how to come back to one (open the
+  matter again and describe that part), and up to three lease clauses on the subject of what the tenant
+  wrote, word for word with section, title, and page, and "This tool does not decide what they mean for you."
+  The clauses are found by code, not the model: `lease.lease_clauses` splits the stored lease text at its
+  numbered headings (78 clauses in the test lease), and `lease.clauses_about` matches the tenant's words
+  against clause titles, and a short list of everyday words mapped to lease words (`LEASE_WORDS`: roommate to
+  joint and several, car and towed to vehicle and park, parties to disturb and neighbor) against titles and
+  text. On the test lease: a roommate story gets 21.3 Joint and Several Liability, a towing story 5.4 Vehicles,
+  a noise story 5.2 Prohibited Uses, a cat 10.1 to 10.3, smoke 5.3; a remark about religion or stolen packages
+  gets no clause. `run.py` prints it and writes a `printed` transcript line. Eval: `screen_must`, and the
+  roommate and towing scenarios expect their clause. Four smoke checks.
+
 ## 2026-10-01
 
 - The eval of 2026-10-01 written up in `docs/evals/2026-10-01/` (method, code and blind scores, the gateway
