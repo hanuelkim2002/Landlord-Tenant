@@ -108,7 +108,7 @@
       {
         "say": "Can I stop paying rent",
         "must": [
-          "does not decide"
+          "does not decide|do not answer that"
         ],
         "must_not": [
           "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
@@ -138,7 +138,7 @@
       {
         "say": "would I win",
         "must": [
-          "does not decide"
+          "does not decide|do not answer that"
         ],
         "must_not": [
           "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit",
