@@ -35,7 +35,7 @@ from tools import deadline_status, offered_topics, tools
 # Version G (2026-10-02, TODO item 46): rules 1, 3, 5, and 9 apply the law to the tenant's facts. Version F, which
 # set the law beside the facts and never said what it meant, is in git history (commit a3b0b13).
 
-RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in LEASE PROFILE and the statute text in STATUTE SECTIONS to the tenant's record in ELEMENT STATUS and DEADLINE STATUS, and say what they mean for the tenant. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
+RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in LEASE PROFILE, the statute text in STATUTE SECTIONS, and the cases get_cases gives you to the tenant's record in ELEMENT STATUS and DEADLINE STATUS, and say what they mean for the tenant. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
 
 Write short plain sentences. Put each quote on its own line, source first: Lease Section 4.3, page 2: "..." or Fla. Stat. 83.49(3)(a): "...". Say where each fact or date came from. No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice").
 
@@ -49,6 +49,7 @@ Instead: answer a question about the law in this order, each part short:
 - Your facts: each fact the rule turns on, with where it came from (you confirmed it, the lease says it). Something the tenant said in this chat but has not confirmed: You said: "[their words]", not known yet until the sheet confirms it (rule 4).
 - Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
 - So: what follows on those facts, in plain words. Asked what they can do: each option the stored text gives and what it requires first (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in STATUTE SECTIONS, such as 83.55 on damages or 83.48 on attorney fees.
+- Cases: when a case topic is on the point, as rule 8 says.
 - Not settled: an open question in the way, with its readings (rule 5).
 Not: "No written claim notice received: claim_notice_received false (user)" or "DEADLINE STATUS shows claim_notice_deadline passed" (ids and section names from this prompt)
 Instead: "You confirmed you got no written notice from the landlord." and "The program's deadline listing shows the 30-day date has passed."
@@ -118,10 +119,15 @@ Not: PLAYBOOKS issue deposit_not_returned guidance postures: "preserve: States m
 Instead: each posture line word for word after its name only, as preserve: "[its line]", then ask which; for assert or escalate, name the sentence the letter will quote.
 After draft_letter, reply only: "The letter appears above; tell me if you want changes." Changes go through draft_letter again. Never write or rewrite a letter yourself."""
 
-CASE_RULE = """8. Cases only through get_cases, which the program prints.
-Not: "In Durene v. Alcime the court held a late notice forfeits the deposit, so your landlord forfeited yours." or any case named from memory.
+CASE_RULE = """8. Cases only through get_cases. The program prints them for the tenant, and you get their words to apply.
+Not: "In Durene v. Alcime the court held a late notice forfeits the deposit, so your landlord forfeited yours." (a case named from memory, its holding in your own words)
 Not: "This tool has no cases on that." to "Has a court ever said anything about a notice that says cash only?" while CASE TOPICS lists "Three-day notice for nonpayment of rent".
-Instead: when the tenant asks what courts, judges, or cases say, call get_cases alone, with the exact CASE TOPICS name of the topic on the same notice, deposit, repair, entry, rent, fee, or lease term, even if the topic does not name the tenant's exact point; the program prints the cases and your turn ends there. Never quote, summarize, rank, or choose among cases yourself. Only when no topic is on the same thing, write exactly "This tool has no cases on that." and nothing after "that"."""
+Instead: when the tenant asks what courts or judges said, or a CASE TOPICS topic is on the point you are applying (the same notice, deposit, repair, entry, rent, fee, or lease term), call get_cases with the exact CASE TOPICS name, even if the topic does not name the tenant's exact point. Then, for every case it gives, not only those that help:
+- its facts beside the tenant's: where they match and where they differ;
+- its rule, quoted from the result with the case name and page, and the statute version it read when that is not today's text;
+- what the rule would mean on the tenant's facts, and whether another case distinguished it.
+Say plainly when a case cuts against the tenant. Quote a case only from get_cases' result, and never say a case held anything you do not quote.
+Only when no topic is on the same thing, write exactly "This tool has no cases on that." and nothing after "that"."""
 
 NO_CASES_RULE = """8. This tool has no cases for these issues. Never name a case from memory. Asked what courts or cases say, write exactly "This tool has no cases on that." and nothing after "that"."""
 
@@ -325,6 +331,8 @@ def check_reply(text, messages):
 # write one. Was NOT_DECIDED, "This tool does not decide whether any of this applies to you." (TODO item 30),
 # from when the tool only set the law beside the facts.
 READING_LINE = "This is the tool's reading of the stored law and your confirmed facts, not a lawyer's advice."
+# A reply the gateway stopped at the length limit reads as if it were whole; the tenant is told it is not.
+CUT_OFF = "[Check: this reply was cut off at the model's length limit. Ask again for the rest.]"
 
 
 def reading_line(text):
@@ -339,8 +347,9 @@ def reading_line(text):
 def turn_blocks(new, messages):
     """Transcribe a turn's new messages and return what the tenant sees, as blocks: a drafted letter as is, the
     cases get_cases printed, the turn's last get_deadlines result through render_deadlines (shown by code,
-    before any reply), and each reply with text, then the cautions check_reply finds in it, then READING_LINE
-    when it quotes the statute or the lease. Empty when the turn showed the tenant nothing."""
+    before any reply), and each reply with text, then the cautions check_reply finds in it (and CUT_OFF when the
+    reply stopped at the length limit), then READING_LINE when it quotes the statute or the lease. Empty when the
+    turn showed the tenant nothing."""
     for m in new:
         record.append_transcript(transcript_entry(m))
     last_deadlines = max((i for i, m in enumerate(new) if m.type == "tool" and m.name == "get_deadlines"),
@@ -356,6 +365,9 @@ def turn_blocks(new, messages):
         elif m.type == "ai" and m.content.strip():
             blocks.append(block("reply", m.content))
             cautions = check_reply(m.content, messages)     # its cites and quotes, against what it was given
+            if (m.response_metadata or {}).get("finish_reason") == "length":      # stopped at max_tokens
+                cautions.append(CUT_OFF)
+                record.append_transcript({"role": "check", "text": CUT_OFF})
             if cautions:
                 blocks.append(block("caution", "\n".join(cautions)))
             line = reading_line(m.content)

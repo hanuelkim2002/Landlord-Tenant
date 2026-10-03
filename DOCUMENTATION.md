@@ -11,7 +11,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 
 - `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `CASES`, `WIKI`, `PLAYBOOKS`), `WIKI_UNVERIFIED` (true
   when the environment sets `WIKI_UNVERIFIED=1`: development runs only, see `wiki.eligible`), the two model clients (`agent_llm` on
-  `AGENT_MODEL`, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0; `AGENT_MODEL`
+  `AGENT_MODEL`, up to 8000 output tokens since applied answers run longer, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0; `AGENT_MODEL`
   is nemotron-3-super-120b-a12b unless the environment sets `AGENT_MODEL`, for trying another gateway
   model in one run; it drives the chat, `classify`, and `fill_facts`), and `squash`
   (collapse whitespace, lowercase; used for every quote comparison). Reads `.env` with python-dotenv. The
@@ -93,11 +93,14 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   page with a part II section tag that the author verified, or any tagged page when `WIKI_UNVERIFIED` is
   set), `issues_on(page, topic)` (the issue sections whose `Topic:` line names the topic),
   `case_topics(sections)` (`{topic: number of eligible cases on it}` for each topic an eligible page tagged
-  with one of the sections names on an issue), `citation(meta)`, `plain_links`, and `render_cases(topic)`
-  (every eligible case on the topic, oldest first: name and cite, the statute version read, then for each
+  with one of the sections names on an issue), `citation(meta)`, `plain_links`, `page_section(page, title)`
+  (the lines of one "## " section, such as Facts or Related), and `render_cases(topic)` (every eligible case
+  on the topic, oldest first: name and cite, the statute version read, the page's Facts quotes, then for each
   of its issues on the topic the question, the rule, the reasoning, and any dissent as quoted on the page,
-  with "[not verified]" on unverified pages in a development run, ending with "These are what courts said in
-  other people's cases. This tool does not decide whether any of them applies to you."). Imports
+  then "Other cases on it:", the page's Related lines (followed, distinguished, disagreed with), with "[not
+  verified]" on unverified pages in a development run, ending with "These are courts' words in other people's
+  cases, each with the statute version it read. How far one reaches your situation turns on how alike its
+  facts are to yours."; the tenant and the model get this same text). Imports
   `citations`, `config`, `corpus`. Imported by `tools`, `smoke`.
 - `deterministic.py`: `check_elements` (element status), `court_days` (court business days from a
   county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
@@ -177,7 +180,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   turn's new messages and builds its blocks; other tool results are not shown. Under each reply come its
   cautions, then, if the reply quotes the statute (a quoted passage with a ch. 83 cite,
   `citations.quoted_passages`) or the lease (a quoted passage found in a lease profile quote) and does not
-  already carry it, `READING_LINE` ("This is the tool's reading of the stored law and your confirmed
+  already carry it (after `CUT_OFF`, "[Check: this reply was cut off at the model's length limit. Ask again for
+  the rest.]", when the gateway's `finish_reason` was "length"), `READING_LINE` ("This is the tool's reading of the stored law and your confirmed
   facts, not a lawyer's advice.", from `reading_line`), also written to the transcript as a `footer` line
   (TODO item 46; was `NOT_DECIDED`, "This tool does not decide whether any of this applies to you."). When a turn has no blocks (the reply was empty
   or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and returns that
@@ -498,18 +502,19 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   `timeline.render_deadlines`; the model gets `deadline_receipt(listing)`, how many dated deadlines for which
   issues and which issues wait, with no date in it, so it cannot retype a deadline from earlier in the chat
   and must call the tool to show them again (TODO item 44). A turn-ending tool (`return_direct=True`): when
-  every tool the model called in a step is `get_deadlines` or `get_cases`, the agent stops after the tool and
-  the model writes no reply (TODO item 19).
+  it is the only tool the model called in a step, the agent stops after it and the model writes no reply
+  (TODO item 19). Whether a deadline has passed reaches the model through DEADLINE STATUS in the prompt.
 - `get_cases(topic)`: `topic` must name one of the matter's CASE TOPICS, as given or once `topic_named` sets
   aside quote marks, curly apostrophes, letter case, and a trailing case count (`tools.offered_topics`, i.e.
   `wiki.case_topics` for the active playbooks' sections); otherwise "No case topic named ...". A tool with
-  `response_format="content_and_artifact"`: the model gets a receipt only (the names and cites of the cases
-  printed), and the program gets `wiki.render_cases(topic)` as the message's artifact, which the chat
-  shows as a `cases` block (`agent.turn_blocks`). So the model never sees a case's words and cannot retell one; a case quote it writes anyway is
-  flagged by `check_quoted`. Writes a `cases_shown` event. Turn-ending, like `get_deadlines`: the printed
-  cases end with "This tool does not decide whether any of them applies to you." and the model writes
-  nothing after them. Every call prints something: a topic already printed in this session prints one line
-  ("The cases on ... are printed above in this chat."; the model gets "[... Nothing new was printed.]"), and
+  `response_format="content_and_artifact"`: the program gets `wiki.render_cases(topic)` as the message's
+  artifact, which the chat shows as a `cases` block (`agent.turn_blocks`), and the model gets the same text
+  after a line saying it was printed and to apply it as rule 8 says (TODO item 47; was the cases' names only).
+  A case quote the model writes is checked by `check_quoted` against what it was given, which now holds the
+  cases' words. Writes a `cases_shown` event. Not turn-ending since item 47: the model's answer follows the
+  printed cases in the same turn. Every call prints something: a topic already printed in this session prints
+  one line ("The cases on ... are printed above in this chat."; the model gets "[... already printed above in
+  this chat, and their words are in your earlier get_cases result. Nothing new was printed.]"), and
   a topic not offered prints "This tool has no case topic named ..." with the matter's CASE TOPICS, so the
   tenant sees the topics there are.
 - `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
@@ -531,8 +536,8 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 1,286 words always, plus rule 6 on letters (172 words) once a letter is in
-   play, and rule 8 on cases in full (153 words) when there is a case topic, otherwise one line. Version G
+1. `RULES`, through `rules_for`: 1,284 words always, plus rule 6 on letters (172 words) once a letter is in
+   play, and rule 8 on cases in full (247 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
    the statute to the record in ELEMENT STATUS and DEADLINE STATUS and say what they mean for the tenant; not
    a lawyer, and the program prints the line saying so, so the model writes none; never send anything or
@@ -553,7 +558,11 @@ this order:
    would mean on the tenant's facts, never picked, never put to the tenant; one with no readings is a limit
    of the tool; 6 letters only when asked, only through `draft_letter`, missing details asked once, posture
    lines copied word for word, then one line; 7 record messages and sent letters with `add_communication`;
-   8 cases only through `get_cases` (unchanged from version F); 9 offer nothing the tenant did not ask for,
+   8 cases only through `get_cases`, called when the tenant asks what courts said or a CASE TOPICS topic is on
+   the point being applied; then for every case it gives, its facts beside the tenant's, its rule quoted with
+   name and page (and the statute version it read when not today's), what the rule would mean on the
+   tenant's facts and whether another case distinguished it, a case against the tenant said so plainly, no
+   case quoted except from the result (247 words; TODO item 47); 9 offer nothing the tenant did not ask for,
    though a step the statute requires before an option is part of the answer. Version F (2026-10-01, the
    trial in `docs/trials/2026-10-01-rules/`), which set the lease, the statute, and the record side by side
    and never said what they meant (rule 1 "organize, never advise": no must, may, can, should, entitled,

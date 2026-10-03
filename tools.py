@@ -96,9 +96,10 @@ def propose_facts(facts_json: str) -> str:
 
 # ---- Deadlines
 
-# get_deadlines and get_cases end the model's turn (return_direct): when every tool the model called in a step
-# is one of them, the agent stops after the tool, the chat loop prints what the program made, and the model
-# writes no reply after it, so it cannot repeat or reword a printed line (TODO item 19).
+# get_deadlines ends the model's turn (return_direct): when it is the only tool the model called in a step, the
+# agent stops after it, the chat loop prints what the program made, and the model writes no reply after it, so
+# it cannot repeat or reword a printed line (TODO item 19). get_cases did too until the model was to apply the
+# cases it gets (TODO item 47).
 
 def open_facts_by_issue():
     """The facts each active issue still needs (proposed, changed, or missing), by issue. An issue with none is
@@ -176,8 +177,9 @@ def get_deadlines() -> tuple[str, str]:
     return deadline_receipt(listing), listing
 
 
-# ---- Cases: what courts said, from the case wiki's verified pages. The program prints the result to the tenant
-# (agent.show_turn), so the model never retells a case.
+# ---- Cases: what courts said, from the case wiki's verified pages. The program prints them for the tenant (a
+# "cases" block, agent.turn_blocks), and the model gets the same text to set beside the tenant's facts (rule 8);
+# it quotes the cases from it and never retells one in its own words.
 
 def offered_topics():
     """The case topics for the active issues' statute sections (wiki.case_topics)."""
@@ -195,13 +197,14 @@ def topic_named(topic, topics):
     return next((t for t in topics if t.replace("’", "'").lower() in keys), None)
 
 
-@tool(response_format="content_and_artifact", return_direct=True)
+@tool(response_format="content_and_artifact")
 def get_cases(topic: str) -> tuple[str, str]:
-    """What courts have said on one topic listed in CASE TOPICS: the program prints every case the tool holds
-    on it, oldest first, in the courts' own quoted words, and your turn ends there. Use only when the tenant
-    asks what courts or cases say, and call it alone. Pass the topic exactly as CASE TOPICS lists it. You get
-    back only the names of the cases printed, not their text: never quote, summarize, rank, or reword a case,
-    and never say whether one applies to the tenant."""
+    """What courts have said on one topic listed in CASE TOPICS: every case the tool holds on it, oldest first,
+    in the courts' own quoted words with pin pages (the statute version each read, its facts, its rule and
+    reasoning, how other cases treat it). The program prints them for the tenant above your reply, and you get
+    the same text to apply (rule 8). Call it when the tenant asks what courts said, or when a topic is on the
+    point you are applying. Pass the topic exactly as CASE TOPICS lists it. Quote a case only from this result,
+    word for word, with its name and page."""
     topics = offered_topics()
     topic = topic_named(topic, topics) or topic
     if topic not in topics:                                # the tenant sees the topics and can ask for one
@@ -211,16 +214,17 @@ def get_cases(topic: str) -> tuple[str, str]:
     shown_before = record.session and any(ev["kind"] == "cases_shown" and ev.get("topic") == topic
                                           and ev.get("session") == record.session for ev in read_events())
     if shown_before:                                       # printed once per session: the tenant can scroll up
-        return (f"[The cases on {topic!r} were already printed above in this chat. Nothing new was printed.]",
+        return (f"[The cases on {topic!r} were already printed above in this chat, and their words are in your "
+                f"earlier get_cases result. Nothing new was printed.]",
                 f"The cases on \"{topic}\" are printed above in this chat.")
     pages = wiki.read_pages(wiki.ROOT)
     cases = sorted((p for p in pages.values() if wiki.eligible(p) and wiki.issues_on(p, topic)),
                    key=lambda p: str(p["meta"]["decided"]))
     append_event("cases_shown", topic=topic, cases=[str(p["meta"]["cite"]) for p in cases],
                  **({"unverified": True} if config.WIKI_UNVERIFIED else {}))
-    printed = "; ".join(f"{p['name']}, {wiki.citation(p['meta'])}" for p in cases)
-    return (f"The program printed the cases on {topic!r} for the tenant, oldest first: {printed}. Its last line "
-            f"says this tool does not decide whether any of them applies to the tenant."), wiki.render_cases(topic)
+    printed = wiki.render_cases(topic)
+    return ("The program printed these cases for the tenant, above your reply. Apply them as rule 8 says:\n\n"
+            + printed), printed
 
 
 # ---- Draft Letter: a template filled from the record. No model call, so there is nothing to validate:

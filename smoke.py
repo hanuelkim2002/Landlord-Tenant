@@ -507,10 +507,12 @@ try:
         out = screen(turn_blocks([call, shown_msg], [call, shown_msg]))   # get_cases ends the turn: no reply follows
         check("get_cases prints every verified case on the topic in the courts' words with the closing line, and logs it",
               "Durene v. Alcime, 448 So. 2d 1208 (Fla. 3d DCA 1984)" in out and "readily available fund" in out
-              and "Casey" not in out and "does not decide whether any of them applies to you" in out
+              and "\nCasey v. Picinich, " not in out and "How far one reaches your situation turns on how alike its facts are" in out
               and read_events()[-1]["kind"] == "cases_shown" and read_events()[-1]["cases"] == ["448 So. 2d 1208"])
-        check("the model gets only the names of the cases printed, not their words",
-              "Durene v. Alcime, 448 So. 2d 1208" in shown_msg.content and "readily available fund" not in shown_msg.content)
+        check("item 47: the tenant and the model get the same cases, with their facts and how other cases treat them",
+              shown_msg.artifact in shown_msg.content and "readily available fund" in shown_msg.content
+              and "Petitioner vacated the subject residential property" in out and "Distinguished by Plakhov v. Serova" in out
+              and "[[" not in out)
         again = get_cases.invoke({"type": "tool_call", "id": "k2", "name": "get_cases", "args": {"topic": topic}})
         check("the same topic asked again in the session prints one line pointing up and logs nothing",
               again.artifact == f'The cases on "{topic}" are printed above in this chat.'
@@ -675,6 +677,10 @@ try:
           shown_bare[-1] == {"kind": "footer", "text": READING_LINE} and screen(shown_others).count(READING_LINE) == 1
           and [f["text"] for f in footers] == [READING_LINE])
     lease_words = next(c.quote for _, c in record.profile if c.present and c.quote and len(c.quote) > 60)[:60]
+    cut = AIMessage(content="You confirmed you moved out on", response_metadata={"finish_reason": "length"})
+    check("item 47: a reply stopped at the length limit gets a caution saying it was cut off",
+          [b["kind"] for b in turn_blocks([cut], [cut])] == ["reply", "caution"]
+          and "cut off at the model's length limit" in screen(turn_blocks([cut], [cut])))
     check("a lease quote gets the program's reading line too (eval, 2026-10-01)",
           screen(turn_blocks([AIMessage(content=f'Lease Section 4.3, page 2: "{lease_words}"')], [])).count(READING_LINE) == 1)
 
@@ -720,7 +726,7 @@ try:
           and second_blocks == [{"kind": "reply", "text": "Second turn."}] and not second_proposed
           and config_now["configurable"]["thread_id"] == record.session)
 
-    # get_deadlines and get_cases end the model's turn (return_direct, TODO item 19): a stand-in model calls
+    # get_deadlines ends the model's turn (return_direct, TODO item 19); get_cases no longer does (item 47): a stand-in model calls
     # get_deadlines alone, then would reply; the agent stops after the tool, so the reply never comes
     class StandIn(GenericFakeChatModel):
         def bind_tools(self, tools, **kwargs):
@@ -728,8 +734,8 @@ try:
     stand_in = StandIn(messages=iter([AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "d1"}]),
                                       AIMessage(content="Your deadline is 2026-08-30.")]))
     ended = create_agent(stand_in, tools=model_tools).invoke({"messages": [HumanMessage(content="What are my deadlines?")]})
-    check("get_deadlines and get_cases end the turn: nothing from the model after the printed result",
-          get_deadlines.return_direct and get_cases.return_direct and ended["messages"][-1].type == "tool"
+    check("get_deadlines ends the turn, nothing from the model after it; get_cases does not, so the model can apply the cases",
+          get_deadlines.return_direct and not get_cases.return_direct and ended["messages"][-1].type == "tool"
           and not any(m.type == "ai" and "2026-08-30" in m.content for m in ended["messages"]))
 
     # the same letter twice in one session (m-026): drafted once; a changed letter is drafted again

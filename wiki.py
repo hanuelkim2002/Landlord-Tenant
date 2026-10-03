@@ -257,6 +257,15 @@ def issues_on(page, topic):
     return found
 
 
+def page_section(page, title):
+    """The lines under one "## <title>" section of a page ("Facts", "Related"), or [] when it has none."""
+    for section in page["body"].split("\n## ")[1:]:
+        heading, _, rest = section.partition("\n")
+        if heading.strip() == title:
+            return [line for line in rest.strip().split("\n") if line.strip()]
+    return []
+
+
 def case_topics(sections, root=None):
     """Topics the chat can offer for these statute sections: each topic that an eligible case page tagged
     with one of them names on an issue. {topic: number of eligible cases on the topic, any tag}."""
@@ -278,10 +287,11 @@ def plain_links(line):
 
 
 def render_cases(topic, root=None):
-    """Every eligible case on a topic, oldest first, as the tenant reads it: the case, the statute version it
-    read, then for each of its issues on the topic the question, the rule, the reasoning, and any dissent,
-    in the court's quoted words with pin pages. Ends with the line that the tool does not decide whether
-    any of them applies. Returns "" when no eligible case is on the topic."""
+    """Every eligible case on a topic, oldest first, as the tenant reads it and the model gets it (TODO item
+    47): the case, the statute version it read, its facts, then for each of its issues on the topic the
+    question, the rule, the reasoning, and any dissent, then how later or related cases treat it, all in the
+    courts' quoted words with pin pages. Ends with a line on what these are. Returns "" when no eligible case
+    is on the topic."""
     pages = read_pages(root or ROOT)
     cases = sorted((p for p in pages.values() if eligible(p) and issues_on(p, topic)),
                    key=lambda p: str(p["meta"]["decided"]))
@@ -294,6 +304,10 @@ def render_cases(topic, root=None):
         meta = p["meta"]
         lines += ["", f"{p['name']}, {citation(meta)}" + ("" if verified(p) else " [not verified]"),
                   "  The court read: " + "; ".join(meta.get("statute_read") or []) + "."]
+        facts = [line[2:] for line in page_section(p, "Facts") if line.startswith("- ")]
+        if facts:                                          # what the case was about, to set beside the tenant's facts
+            lines.append("  Facts:")
+            lines += ["    " + plain_links(f) for f in facts]
         for question, body in issues_on(p, topic):
             lines.append(f"  Question: {question}")
             for line in body.split("\n"):
@@ -301,8 +315,12 @@ def render_cases(topic, root=None):
                     lines.append("  " + plain_links(line))
                 elif line.startswith("- "):
                     lines.append("    " + plain_links(line[2:]))
-    lines += ["", "These are what courts said in other people's cases. This tool does not decide whether any of "
-                  "them applies to you."]
+        related = [line[2:] for line in page_section(p, "Related") if line.startswith("- ")]
+        if related:                                        # later courts following or distinguishing it
+            lines.append("  Other cases on it:")
+            lines += ["    " + plain_links(r) for r in related]
+    lines += ["", "These are courts' words in other people's cases, each with the statute version it read. How far "
+                  "one reaches your situation turns on how alike its facts are to yours."]
     return "\n".join(lines)
 
 

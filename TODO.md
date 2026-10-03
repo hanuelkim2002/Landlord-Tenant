@@ -11,12 +11,6 @@ landlord" got three statute quotes (83.56(1), 83.60(1)(b), 83.64(1)) and "This t
 In development, on test matters only. Until item 46 is done the code still organizes only: the rules, the
 program's "does not decide" lines, and the page's sidebar say so. In this order, each its own change.
 
-47. Cases to the model. `get_cases` gives the model each case's page (quoted facts, issues, rules, reasoning),
-    not only the names, and still prints them for the tenant. Rule 8: set the tenant's facts beside each
-    case's, say where they match and where they differ, and name a case that cuts against the tenant. The model
-    may call `get_cases` when a topic is on the question, not only when the tenant asks about courts (item 36).
-    `check_quoted` already checks a quote with no cite against what the model was given, which will then
-    include the pages. Needs item 48 for facts worth comparing.
 48. Case pages' facts (`wiki/SCHEMA.md`, A case page): "A few quotes, as background" becomes the facts the
     decision turned on, quoted (who, the lease or notice, what was done and when). An edit undoes a page's
     verification, so the author verifies again. The prose rule stays: a page never applies itself to anyone.
@@ -93,7 +87,8 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     the changes and 16 of 18 after (one count copied into the topic name, since accepted by
     `tools.topic_named`; one statute answer). A tenant who never asks never sees them. If that matters, a line
     the program prints, listing the case topics for the confirmed issues, keeps the choice with the tenant;
-    do it after item 35. The model comparing a case with the tenant's facts is now planned: item 47.
+    do it after item 35. Since 2026-10-02 (item 47) the model also calls `get_cases` when a topic is on the point
+    it is applying, and compares each case's facts with the tenant's.
 37. No case page speaks to damage that was already there at move-in (the claim_carpet story). Asked "Did a
     judge ever make a landlord give back money for damage that was already there?", the model printed the
     notice-of-claim topic, the nearest deposit topic. A gap for the author's research, not a code change.

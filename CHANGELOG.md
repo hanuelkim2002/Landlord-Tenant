@@ -5,6 +5,24 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- Cases go to the model, which applies them (TODO item 47, done). Was: `get_cases` gave the model only the
+  names of the cases it printed and ended the turn, and rule 8 said never quote, summarize, or choose among
+  cases. Now `wiki.render_cases` also prints each case's Facts quotes and its Related lines ("Other cases on
+  it": followed, distinguished, disagreed with; `wiki.page_section`), the model gets that same text, and
+  `get_cases` no longer ends the turn (`return_direct` off; `get_deadlines` keeps it), so the answer comes after
+  the printed cases. Rule 8: call `get_cases` when the tenant asks what courts said or a topic is on the point
+  being applied; for every case given, its facts beside the tenant's, its rule quoted with name and page, the
+  statute version it read when not today's, what it would mean on the tenant's facts, whether another case
+  distinguished it, and a case against the tenant said so plainly. The cases' closing line says how far a case
+  reaches turns on how alike its facts are (was "This tool does not decide whether any of them applies to
+  you."). The chat model's output limit is 8000 tokens (was 4000): in a live probe a four-case answer stopped
+  mid-sentence, likely at the limit (a second run finished normally at about 1,000 tokens), and a reply the
+  gateway still stops at the limit now gets `CUT_OFF`, a caution saying it was cut off. The live probe (a
+  late claim notice, "Has a judge ever ruled ...? Does that help me?", development run): each of Durene,
+  Malagon, Casey, and Plakhov quoted from the result and set beside the tenant's facts, and Plakhov named as
+  excusing the landlord's notice when the tenant gave no 7-day notice, a fact marked not known yet. It also
+  showed an id in a reply ("early_or_periodic false"), for the eval to count. Smoke: three checks (the same
+  cases for tenant and model, with facts and treatment; get_cases not turn-ending; the cut-off caution).
 - Rules version G: the model applies the law (TODO item 46, done). Was version F, "organize, never advise":
   quotes set beside the facts and "This tool does not decide that."; a question like "what can I do to sue the
   landlord" got three quotes. Rule 1 now answers in order: the rule quoted; the facts it turns on, in plain words
@@ -24,8 +42,8 @@ session can see why the code is the way it is.
   says the tool has no playbook for the situation, so it does not apply the clauses. The page's sidebar says
   the tool applies the stored statute, in development. Not done as the item said: today's rules were not kept
   as a `RULES_FILE`; the eval compares with the whole code before the change (a git worktree, `--project`),
-  which also keeps the old footer and case tool. Two live probes on a scratch copy of the test matter (your
-  question from the page, and "Was it legal for them to keep my deposit?"): the first answers applied the rule
+  which also keeps the old footer and case tool. Two live probes on a scratch copy of the test matter (the
+  author's question from the page, and "Was it legal for them to keep my deposit?"): the first answers applied the rule
   to the facts, gave both readings of the termination date, and listed suing for the deposit and 83.49(3)(c)'s
   costs and fees; they also showed field names in the facts and a date worked out for a reading, both now
   "Not:" pairs; the second probe showed neither. Smoke: five checks on the reading line, DEADLINE STATUS

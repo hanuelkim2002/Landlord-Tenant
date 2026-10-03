@@ -33,7 +33,9 @@ EXTRACT_MODEL = "gemma-4-31b-it"               # LOCAL, text + image
 # (smoke.py, the playbook quote check, schemas.py) still import and run. Anything that calls a model
 # calls require_key() first.
 if uf_api_key:
-    agent_llm   = ChatOpenAI(model=AGENT_MODEL,   base_url=UF_BASE_URL, api_key=uf_api_key, temperature=0, max_tokens=4000)
+    # 8000 since applied answers (rules version G, cases set beside the facts) run longer; at 4000 one stopped
+    # mid-sentence (TODO item 47). agent.turn_blocks warns the tenant when a reply still stops at the limit.
+    agent_llm   = ChatOpenAI(model=AGENT_MODEL,   base_url=UF_BASE_URL, api_key=uf_api_key, temperature=0, max_tokens=8000)
     extract_llm = ChatOpenAI(model=EXTRACT_MODEL, base_url=UF_BASE_URL, api_key=uf_api_key, temperature=0, max_tokens=8000)
 else:
     agent_llm = extract_llm = None
