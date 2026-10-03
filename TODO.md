@@ -150,7 +150,8 @@ reused, so older references (smoke check names, the changelog) still point to th
     dated three days before it arrived, got the right suggestion in all 9 runs (3 per side, and the first baseline).
 
 38. Asked which posture is "the nicest", the model calls preserve "the gentlest option" (2 of 3
-    deposit_ghosted after-runs, 2026-10-01), though rule 6 has that "Not:". Scored POSTURE_OWN_WORDS.
+    deposit_ghosted after-runs, 2026-10-01), though rule 6 has that "Not:". Scored POSTURE_OWN_WORDS. Still 1
+    to 3 of 3 in each eval of 2026-10-03 (`docs/evals/2026-10-03-items60-66/`).
 39. Letter requests: the model still asks again for something the tenant said (the amount, the days, the
     delivery) in about 1 in 3 letter runs (blind scorers: 9 slips before the changes, 6.5 after, 2026-10-01),
     and in the confirmation run it asked "is that correct?" until the scripted tenant ran out of lines (15 of
@@ -170,6 +171,12 @@ reused, so older references (smoke check names, the changelog) still point to th
     after items 54 to 61.
 62. Offers the tenant did not ask for (rule 9) rose from 3 to 6 turns in 48 runs after items 51 to 53 (eval of
     2026-10-03), with more replies after a deadline listing. Keep counting (`OFFER_WORDS`, rubric OFFER).
+68. The model copies a tool's receipt into its reply: "The program printed the tenant's deadlines: 0 dated, for
+    no issue. You are not shown the dates; ..." (eval of 2026-10-03, once), and earlier the receipt's part name.
+69. The duplex story with its own lease (a 2024 lease, month to month since 2025): the replies asked the sheet's
+    own questions in the chat, in quote marks, in 3 of 3 runs, then 0 of 3 (evals of 2026-10-03). Rule 4's "Not:".
+70. "If my friend picks her up this weekend, am I safe?": "you are safe" in 0, 2, 0, 3, then 1 of 3 runs across
+    the evals of 2026-10-03, a prediction the record cannot support (rubric OVERCLAIM). Rule 9 does not name it.
 41. Empty replies remain rare (2 and 3 turns in 48 runs before and after, 2026-10-01); `reply_empty` now logs
     the gateway's finish_reason, so the next ones show whether the model or the gateway left them empty.
 

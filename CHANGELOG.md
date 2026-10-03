@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Eval of items 60, 66, and 65 (`docs/evals/2026-10-03-items60-66/`; three runs: the old shared lease, each
+  story's own lease, and own leases with items 66 and 65; code-scored). Questions about when with their
+  deadlines printed 35, 36, 39 of 39 (the program printed 4); section-retold cautions 45 in 170 replies; runs
+  meeting every expectation 40, 37, 33, the last two differing by chance alone, since items 66 and 65 change
+  nothing the model reads. Left to TODO: items 68 to 70, a note on item 38. `method/compare.py` adds the
+  program's deadline listings and the new caution kind. Chart shown in the session. The own-leases run came from
+  a git worktree, moved to the Trash afterwards.
+
 - The program prints the deadlines when the tenant asks when and the model did not call `get_deadlines` (TODO
   item 65, done). Was: rule 3 asks the model to call it for every question about when, how long, how many days,
   or a last day, and in the evals of 2026-10-03 it did not on 1, 4, then 5 of 39 such questions ("the deadline

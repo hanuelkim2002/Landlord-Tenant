@@ -1,0 +1,508 @@
+{
+ "old": {
+  "kinds": {
+   "Legal question: answer applies the law": [
+    72,
+    75
+   ],
+   "Open point: readings given": [
+    6,
+    6
+   ],
+   "Court question: get_cases called": [
+    18,
+    18
+   ],
+   "Court question: its cases used in the answer": [
+    18,
+    18
+   ],
+   "Deadline question: get_deadlines called": [
+    35,
+    39
+   ],
+   "Deadlines computed": [
+    15,
+    15
+   ],
+   "Letters as asked": [
+    41,
+    42
+   ],
+   "Not-covered stop or note right": [
+    47,
+    48
+   ],
+   "Forbidden words absent": [
+    31,
+    33
+   ]
+  },
+  "totals": {
+   "replies": 171,
+   "quotes_only": 0,
+   "field_names": 14,
+   "prompt_names": 5,
+   "cites_unquoted": 49,
+   "dates_made": 3,
+   "echo": 0,
+   "choose_screen": 1,
+   "offer_screen": 4,
+   "cases_not_given": 3,
+   "empty_turns": 0,
+   "footers": 99,
+   "deadlines_by_program": 0,
+   "crashed": 0,
+   "gateway_trouble": 0,
+   "runs": 48,
+   "expected_ok": 40
+  },
+  "per_100_replies": {
+   "quotes_only": 0,
+   "field_names": 8,
+   "prompt_names": 3,
+   "cites_unquoted": 29,
+   "dates_made": 2,
+   "echo": 0,
+   "choose_screen": 1,
+   "offer_screen": 2,
+   "cases_not_given": 2,
+   "empty_turns": 0,
+   "footers": 58,
+   "deadlines_by_program": 0,
+   "crashed": 0,
+   "gateway_trouble": 0
+  },
+  "cautions": {
+   "case left out": 24,
+   "quote": 28,
+   "cite": 9
+  },
+  "turns": {
+   "Mixed deadline and law question applied (item 51)": [
+    3,
+    3
+   ],
+   "Cash-only notice applied (item 52)": [
+    3,
+    3
+   ],
+   "Renewal question applied (items 52, 61)": [
+    0,
+    3
+   ],
+   "Dog story: no 'you are safe'": [
+    3,
+    3
+   ],
+   "Question about when: deadlines printed (model or program)": [
+    35,
+    39
+   ]
+  },
+  "by_scenario": {
+   "eval_cases_3day_cash": [
+    3,
+    3
+   ],
+   "eval_cases_late_claim": [
+    3,
+    3
+   ],
+   "eval_cases_retaliation": [
+    3,
+    3
+   ],
+   "eval_claim_carpet": [
+    2,
+    3
+   ],
+   "eval_deposit_ghosted": [
+    1,
+    3
+   ],
+   "eval_entry_shower": [
+    3,
+    3
+   ],
+   "eval_lease_end_renewal": [
+    0,
+    3
+   ],
+   "eval_leave_early_family": [
+    2,
+    3
+   ],
+   "eval_nc_mixed_heater": [
+    3,
+    3
+   ],
+   "eval_nc_roommate": [
+    3,
+    3
+   ],
+   "eval_nc_towing": [
+    3,
+    3
+   ],
+   "eval_noise_neighbors": [
+    3,
+    3
+   ],
+   "eval_nonpayment_taped": [
+    2,
+    3
+   ],
+   "eval_rent_hike_duplex": [
+    3,
+    3
+   ],
+   "eval_repair_mold_apt": [
+    3,
+    3
+   ],
+   "eval_violation_dog": [
+    3,
+    3
+   ]
+  }
+ },
+ "leases": {
+  "kinds": {
+   "Legal question: answer applies the law": [
+    71,
+    75
+   ],
+   "Open point: readings given": [
+    6,
+    6
+   ],
+   "Court question: get_cases called": [
+    18,
+    18
+   ],
+   "Court question: its cases used in the answer": [
+    18,
+    18
+   ],
+   "Deadline question: get_deadlines called": [
+    36,
+    39
+   ],
+   "Deadlines computed": [
+    14,
+    15
+   ],
+   "Letters as asked": [
+    42,
+    42
+   ],
+   "Not-covered stop or note right": [
+    46,
+    48
+   ],
+   "Forbidden words absent": [
+    29,
+    33
+   ]
+  },
+  "totals": {
+   "replies": 172,
+   "quotes_only": 0,
+   "field_names": 13,
+   "prompt_names": 4,
+   "cites_unquoted": 47,
+   "dates_made": 2,
+   "echo": 0,
+   "choose_screen": 4,
+   "offer_screen": 5,
+   "cases_not_given": 1,
+   "empty_turns": 0,
+   "footers": 102,
+   "deadlines_by_program": 0,
+   "crashed": 0,
+   "gateway_trouble": 0,
+   "runs": 48,
+   "expected_ok": 37
+  },
+  "per_100_replies": {
+   "quotes_only": 0,
+   "field_names": 8,
+   "prompt_names": 2,
+   "cites_unquoted": 27,
+   "dates_made": 1,
+   "echo": 0,
+   "choose_screen": 2,
+   "offer_screen": 3,
+   "cases_not_given": 1,
+   "empty_turns": 0,
+   "footers": 59,
+   "deadlines_by_program": 0,
+   "crashed": 0,
+   "gateway_trouble": 0
+  },
+  "cautions": {
+   "case left out": 24,
+   "quote": 62,
+   "cite": 18,
+   "cut off": 1
+  },
+  "turns": {
+   "Mixed deadline and law question applied (item 51)": [
+    3,
+    3
+   ],
+   "Cash-only notice applied (item 52)": [
+    3,
+    3
+   ],
+   "Renewal question applied (items 52, 61)": [
+    0,
+    3
+   ],
+   "Dog story: no 'you are safe'": [
+    0,
+    3
+   ],
+   "Question about when: deadlines printed (model or program)": [
+    36,
+    39
+   ]
+  },
+  "by_scenario": {
+   "eval_cases_3day_cash": [
+    3,
+    3
+   ],
+   "eval_cases_late_claim": [
+    3,
+    3
+   ],
+   "eval_cases_retaliation": [
+    3,
+    3
+   ],
+   "eval_claim_carpet": [
+    3,
+    3
+   ],
+   "eval_deposit_ghosted": [
+    2,
+    3
+   ],
+   "eval_entry_shower": [
+    3,
+    3
+   ],
+   "eval_lease_end_renewal": [
+    0,
+    3
+   ],
+   "eval_leave_early_family": [
+    1,
+    3
+   ],
+   "eval_nc_mixed_heater": [
+    3,
+    3
+   ],
+   "eval_nc_roommate": [
+    3,
+    3
+   ],
+   "eval_nc_towing": [
+    3,
+    3
+   ],
+   "eval_noise_neighbors": [
+    3,
+    3
+   ],
+   "eval_nonpayment_taped": [
+    1,
+    3
+   ],
+   "eval_rent_hike_duplex": [
+    3,
+    3
+   ],
+   "eval_repair_mold_apt": [
+    3,
+    3
+   ],
+   "eval_violation_dog": [
+    0,
+    3
+   ]
+  }
+ },
+ "after": {
+  "kinds": {
+   "Legal question: answer applies the law": [
+    71,
+    75
+   ],
+   "Open point: readings given": [
+    6,
+    6
+   ],
+   "Court question: get_cases called": [
+    18,
+    18
+   ],
+   "Court question: its cases used in the answer": [
+    18,
+    18
+   ],
+   "Deadline question: get_deadlines called": [
+    35,
+    39
+   ],
+   "Deadlines computed": [
+    14,
+    15
+   ],
+   "Letters as asked": [
+    40,
+    42
+   ],
+   "Not-covered stop or note right": [
+    46,
+    48
+   ],
+   "Forbidden words absent": [
+    29,
+    33
+   ]
+  },
+  "totals": {
+   "replies": 170,
+   "quotes_only": 1,
+   "field_names": 10,
+   "prompt_names": 6,
+   "cites_unquoted": 50,
+   "dates_made": 4,
+   "echo": 0,
+   "choose_screen": 2,
+   "offer_screen": 5,
+   "cases_not_given": 1,
+   "empty_turns": 0,
+   "footers": 100,
+   "deadlines_by_program": 7,
+   "crashed": 0,
+   "gateway_trouble": 0,
+   "runs": 48,
+   "expected_ok": 33
+  },
+  "per_100_replies": {
+   "quotes_only": 1,
+   "field_names": 6,
+   "prompt_names": 4,
+   "cites_unquoted": 29,
+   "dates_made": 2,
+   "echo": 0,
+   "choose_screen": 1,
+   "offer_screen": 3,
+   "cases_not_given": 1,
+   "empty_turns": 0,
+   "footers": 59,
+   "deadlines_by_program": 4,
+   "crashed": 0,
+   "gateway_trouble": 0
+  },
+  "cautions": {
+   "quote": 18,
+   "case left out": 21,
+   "section retold": 45,
+   "cite": 9
+  },
+  "turns": {
+   "Mixed deadline and law question applied (item 51)": [
+    3,
+    3
+   ],
+   "Cash-only notice applied (item 52)": [
+    3,
+    3
+   ],
+   "Renewal question applied (items 52, 61)": [
+    0,
+    3
+   ],
+   "Dog story: no 'you are safe'": [
+    2,
+    3
+   ],
+   "Question about when: deadlines printed (model or program)": [
+    39,
+    39
+   ]
+  },
+  "by_scenario": {
+   "eval_cases_3day_cash": [
+    3,
+    3
+   ],
+   "eval_cases_late_claim": [
+    3,
+    3
+   ],
+   "eval_cases_retaliation": [
+    3,
+    3
+   ],
+   "eval_claim_carpet": [
+    0,
+    3
+   ],
+   "eval_deposit_ghosted": [
+    0,
+    3
+   ],
+   "eval_entry_shower": [
+    3,
+    3
+   ],
+   "eval_lease_end_renewal": [
+    0,
+    3
+   ],
+   "eval_leave_early_family": [
+    3,
+    3
+   ],
+   "eval_nc_mixed_heater": [
+    3,
+    3
+   ],
+   "eval_nc_roommate": [
+    3,
+    3
+   ],
+   "eval_nc_towing": [
+    3,
+    3
+   ],
+   "eval_noise_neighbors": [
+    2,
+    3
+   ],
+   "eval_nonpayment_taped": [
+    1,
+    3
+   ],
+   "eval_rent_hike_duplex": [
+    3,
+    3
+   ],
+   "eval_repair_mold_apt": [
+    1,
+    3
+   ],
+   "eval_violation_dog": [
+    2,
+    3
+   ]
+  }
+ }
+}
