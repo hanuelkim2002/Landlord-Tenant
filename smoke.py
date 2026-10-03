@@ -803,7 +803,7 @@ try:
     check("item 51: neither get_deadlines nor get_cases ends the turn; the model's answer follows the printed listing",
           not get_deadlines.return_direct and not get_cases.return_direct
           and [m.type for m in ended["messages"][-2:]] == ["tool", "ai"] and ended["messages"][-1].content == applies
-          and "THE PROGRAM'S DEADLINES" in ended["messages"][-2].content)
+          and "your instructions say which have passed" in ended["messages"][-2].content)
 
     # the same letter twice in one session (m-026): drafted once; a changed letter is drafted again
     letter_args = {"issue": "deposit_not_returned", "posture": "preserve", "ask": "Return the deposit",

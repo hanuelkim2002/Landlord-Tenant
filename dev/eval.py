@@ -79,7 +79,8 @@ FIELD_NAME = re.compile(r"\b[a-z]+(?:_[a-z]+)+\b")          # forwarding_address
 # and a rule's number ("rule 8"; not a court rule's "Rule 1.070")
 PROMPT_NAME = re.compile(r"\b(LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS|"
                          r"YOUR LEASE|THE TOOL['’]S NOTES|WHAT THE STATUTE DOES NOT SETTLE|THE STATUTE|"
-                         r"COURT CASES THIS TOOL HAS|YOUR FACTS|THE PROGRAM['’]S DEADLINES|[Rr]ule [1-9](?![.\d]))\b")
+                         r"COURT CASES THIS TOOL HAS|YOUR FACTS|THE PROGRAM['’]S DEADLINES|WHICH DEADLINES HAVE PASSED|"
+                         r"[Rr]ule [1-9](?![.\d]))\b")
 ISO_DATE = re.compile(r"\b20\d\d-\d\d-\d\d\b")
 SPOKEN_DATE = re.compile(r"\b(January|February|March|April|May|June|July|August|September|October|November|December)"
                          r" (\d{1,2}),? (20\d\d)\b")

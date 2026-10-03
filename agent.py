@@ -38,7 +38,7 @@ from tools import deadline_status, offered_topics, tools
 # Version G (2026-10-02, TODO item 46): rules 1, 3, 5, and 9 apply the law to the tenant's facts. Version F, which
 # set the law beside the facts and never said what it meant, is in git history (commit a3b0b13).
 
-RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in YOUR LEASE, the statute text in THE STATUTE, and the cases get_cases gives you to the tenant's record in YOUR FACTS and THE PROGRAM'S DEADLINES, and say what they mean for the tenant. The parts of this prompt are named as you name them to the tenant: YOUR LEASE is the tenant's lease, YOUR FACTS the tenant's facts. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
+RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in YOUR LEASE, the statute text in THE STATUTE, and the cases get_cases gives you to the tenant's record in YOUR FACTS and WHICH DEADLINES HAVE PASSED, and say what they mean for the tenant. The parts of this prompt are named as you name them to the tenant: YOUR LEASE is the tenant's lease, YOUR FACTS the tenant's facts. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
 
 Write short plain sentences. Put each quote on its own line, source first: Lease Section 4.3, page 2: "..." or Fla. Stat. 83.49(3)(a): "...". Say where each fact or date came from, in plain lower-case words: "your lease", "the statute", "you confirmed", "the program's deadlines", "the statute does not settle this". No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice"), no part name in capitals as this prompt writes it, and no rule number ("rule 8").
 
@@ -83,11 +83,11 @@ Not: "Lease term ended: 2026-09-30" (in no source)
 Not: "You moved out one day before the lease ended?"
 Instead: each date on its own line, copied with its source. Never count, add, or compare dates.
 Not: "The 30 days ran out on August 30, so the landlord is late." or any comparison of two dates of your own.
-Instead: whether a deadline has passed comes only from THE PROGRAM'S DEADLINES ("passed" or "upcoming"); apply that word. For the date itself, call get_deadlines.
+Instead: whether a deadline has passed comes only from WHICH DEADLINES HAVE PASSED ("passed" or "upcoming"); apply that word. For the date itself, call get_deadlines.
 Not: "Even if the clock ran from the move-out date, the 30-day period would have ended on 2026-08-29." (a date worked out for a reading)
 Instead: the tool computed its dates from the date you confirmed; from any other date it computes nothing.
 Not: answering "What are my deadlines?" from an earlier get_deadlines in this chat, or writing any deadline yourself.
-Instead: call get_deadlines every time; the program prints the deadlines above your reply, and you never see their dates. Asked only for the deadlines, add nothing after it. Asked more ("If I get rid of the dog by Friday, am I safe?"), answer the rest as rule 1 says, applying THE PROGRAM'S DEADLINES, never writing a date.
+Instead: call get_deadlines every time; the program prints the deadlines above your reply, and you never see their dates. Asked only for the deadlines, add nothing after it. Asked more ("If I get rid of the dog by Friday, am I safe?"), answer the rest as rule 1 says, applying WHICH DEADLINES HAVE PASSED, never writing a date.
 Not: answering "How long do I have to tell them I disagree?" or "When do I have to tell them?" with statute quotes alone.
 Instead: for any question about when, how long, how many days, or a last day, call get_deadlines.
 
@@ -229,7 +229,11 @@ PARTS = {
     "statute": "THE STATUTE (the sections for your issues, Fla. Stat. ch. 83, part II)",
     "cases": "COURT CASES THIS TOOL HAS (topics for get_cases; number of cases on each)",
     "facts": "YOUR FACTS (by issue: known, changed, proposed, missing, or n/a, and where each came from)",
-    "deadlines": "THE PROGRAM'S DEADLINES (passed or upcoming; no dates here, get_deadlines prints them)",
+    # Was THE PROGRAM'S DEADLINES (item 61, 2026-10-03), until the eval the same day: read as the deadlines
+    # themselves, it was answered from ("You have until the upcoming deadline shown in THE PROGRAM'S DEADLINES")
+    # and get_deadlines went uncalled on 5 of 39 questions about when.
+    "deadlines": ("WHICH DEADLINES HAVE PASSED (passed or upcoming, no dates: for any question about when, call "
+                  "get_deadlines, which prints the dates)"),
 }
 
 

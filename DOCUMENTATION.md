@@ -523,8 +523,8 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   program gets the listing as the artifact, and the chat loop prints the turn's last one through
   `timeline.render_deadlines`; the model gets `deadline_receipt(listing)`, how many dated deadlines for which
   issues and which issues wait, with no date in it, so it cannot retype a deadline from earlier in the chat
-  and must call the tool to show them again (TODO item 44); the receipt also says whether each has passed is in
-  THE PROGRAM'S DEADLINES, to add nothing when the tenant asked only for the deadlines, and otherwise to answer the
+  and must call the tool to show them again (TODO item 44); the receipt also says the model's instructions say
+  which have passed (in lower case: the model copied the receipt into replies, and with it a part's name), to add nothing when the tenant asked only for the deadlines, and otherwise to answer the
   rest without writing a date. Not turn-ending since TODO item 51 (it was `return_direct` from item 19, so the
   model could not retype printed dates; since items 44 and 46 it gets none): the model's answer follows the
   printed listing in the same turn, so a question that mixes a deadline with the law gets both.
@@ -563,7 +563,7 @@ this order:
 1. `RULES`, through `rules_for`: 1,635 words always, plus rule 6 on letters (174 words) once a letter is in
    play, and rule 8 on cases in full (255 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
-   the statute to the record in YOUR FACTS and THE PROGRAM'S DEADLINES and say what they mean for the tenant,
+   the statute to the record in YOUR FACTS and WHICH DEADLINES HAVE PASSED and say what they mean for the tenant,
    the parts being named as the model names them to the tenant; not
    a lawyer, and the program prints the line saying so, so the model writes none; never send anything or
    work out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
@@ -583,10 +583,10 @@ this order:
    stored section (83.47). 2 quote only what was given, word for word, fetch a section before citing one
    not in THE STATUTE, say plainly when nothing answers, but never with the fallback line when an open
    question or a case topic is on the point, even in other words than the tenant's (TODO item 52); 3 dates only from YOUR FACTS, a lease quote,
-   the tenant's words, or a tool result; whether a deadline has passed only from THE PROGRAM'S DEADLINES ("passed" or
+   the tenant's words, or a tool result; whether a deadline has passed only from WHICH DEADLINES HAVE PASSED ("passed" or
    "upcoming"), never a comparison of the model's own, nor a date worked out for an open question's reading; the dates only from `get_deadlines`, called every
    time, which the program prints above the reply; asked only for the deadlines the model adds nothing, asked
-   more it answers the rest applying THE PROGRAM'S DEADLINES (TODO item 51); 4 the model proposes facts with `propose_facts`, the
+   more it answers the rest applying WHICH DEADLINES HAVE PASSED (TODO item 51); 4 the model proposes facts with `propose_facts`, the
    tenant confirms them on the sheet; 5 open questions stay open, given with their readings and what each
    would mean on the tenant's facts, never picked, never put to the tenant; one with no readings is a limit
    of the tool; 6 letters only when asked, only through `draft_letter`, missing details asked once, posture
@@ -622,7 +622,9 @@ rules forbade it.
 6. `COURT CASES THIS TOOL HAS`: `agent.case_topics_text()`, one line per topic with its number of cases,
    from `tools.offered_topics()`, or "none for these issues" (always, until the author verifies pages).
 7. `YOUR FACTS`: `element_status()` as JSON at the moment of the call.
-8. `THE PROGRAM'S DEADLINES`: `tools.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
+8. `WHICH DEADLINES HAVE PASSED`, whose name line says it has no dates and that any question about when calls
+   `get_deadlines` (named THE PROGRAM'S DEADLINES for a few hours on 2026-10-03, which the model read as the
+   deadlines themselves and answered from): `tools.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
    notice deadline", not the clock's id) with its issues, whose it is, what it counts from (the fact's label,
    not its date), its cite, and "passed" or "upcoming" (or why it has
    no date); then each issue still waiting, with the facts it waits for. Logs nothing. So the model can apply a

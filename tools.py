@@ -133,7 +133,7 @@ def deadline_listing():
 
 
 def deadline_status():
-    """THE PROGRAM'S DEADLINES, for the system prompt (agent.PARTS): each deadline of the ready issues, whose it is, what it counts
+    """WHICH DEADLINES HAVE PASSED, for the system prompt (agent.PARTS): each deadline of the ready issues, whose it is, what it counts
     from, its cite, and whether it has passed, with no date in it, then the issues still waiting and what for.
     So the model can apply a condition such as "within the 30-day period" from the program's "passed" or
     "upcoming", never from dates of its own (TODO item 46). Logs nothing: the prompt is rebuilt on every call."""
@@ -158,15 +158,15 @@ def deadline_receipt(listing):
     """What the model gets back from get_deadlines: what was printed, with no date in it (TODO item 44: given
     the dates, the model retyped them when asked again instead of calling the tool)."""
     if listing.startswith("Not yet"):
-        return ("The program printed for the tenant that no issue has all its facts confirmed yet. YOUR FACTS "
-                "shows the open facts.")
+        return ("The program printed for the tenant that no issue has all its facts confirmed yet. Your instructions "
+                "show the open facts.")
     data = json.loads(listing)
     dated = [d for d in data["deadlines"] if "deadline" in d]
     issues = sorted({i for d in data["deadlines"] for i in d["issues"]})
     waiting = sorted(data.get("waiting", {}))
     return (f"The program printed the tenant's deadlines: {len(dated)} dated, for {issues or 'no issue'}"
             + (f"; still waiting for facts: {waiting}" if waiting else "")
-            + ". You are not shown the dates; whether each has passed is in THE PROGRAM'S DEADLINES. If the tenant asked only "
+            + ". You are not shown the dates; your instructions say which have passed. If the tenant asked only "
             "for the deadlines, add nothing; otherwise answer the rest of the question without writing a date. To "
             "show the deadlines again, call get_deadlines again.")
 
@@ -176,7 +176,7 @@ def get_deadlines() -> tuple[str, str]:
     """Compute every deadline from the CONFIRMED facts; the program prints them to the tenant, every field
     included, above your reply. This is the ONLY way to get a date: never count or calculate days yourself.
     You get back only a receipt, with no dates: never write a deadline yourself. Whether one has passed is in
-    THE PROGRAM'S DEADLINES. To show the deadlines again, call get_deadlines again."""
+    WHICH DEADLINES HAVE PASSED. To show the deadlines again, call get_deadlines again."""
     listing = deadline_listing()
     return deadline_receipt(listing), listing
 

@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- The deadline part of the prompt renamed again, WHICH DEADLINES HAVE PASSED (a fix to TODO item 61). Was, since
+  item 61 that morning: THE PROGRAM'S DEADLINES. The eval of items 54 to 61 found the model reading it as the
+  deadlines themselves: "You have until the upcoming deadline shown in THE PROGRAM'S DEADLINES", "the deadline is
+  seven days before your planned move-out date", and `get_deadlines` uncalled on 5 of 39 questions about when (1
+  of 39 before item 61), so a question like "When is the last day I can tell them I'm leaving?" got no dates and
+  "If my friend picks her up this weekend, am I safe?" got "you are safe" in 2 of 3 runs. The new name says the
+  part has no dates and that a question about when calls `get_deadlines`. The `get_deadlines` receipt no longer
+  names a part in capitals ("your instructions say which have passed"), since the model copied the receipt into
+  replies with the name in it. The eval's `PROMPT_NAME` adds the new name. Smoke: the receipt's words.
+
 - False quote cautions from a quote's inner marks (TODO item 58, done). Was: program cautions rose from 6 to 48
   in the eval of 2026-10-02, and the item guessed that inner quote marks broke `citations.quote_spans`' pairing.
   Replayed on the 168 replies of 2026-10-03, the cause was elsewhere: `compact` made curly marks straight but
