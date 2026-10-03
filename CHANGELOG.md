@@ -5,6 +5,19 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Rules restated without their quote (TODO item 54, done). Was: the blind scorers' second most common slip,
+  LAW_UNSOURCED (42, 34.5 firm, eval of 2026-10-02): a section cited and retold ("Fla. Stat. 83.56(5)(a) states
+  that if the landlord accepts rent ..."), the second half of a quoted rule in the model's own words, or a
+  remedy nothing quoted gives ("you may seek injunctive relief"). Rule 1 gets a pair, with those three as its
+  "Not:" lines (the model's own words from the eval): quote every rule the answer turns on, each condition and
+  each consequence relied on, then say it plainly beside its quote; a rule that cannot be quoted stays out.
+  New: `citations.cites_without_quote` finds a cite outside quote marks with none of its words quoted in the
+  same reply, and `dev/eval.py` counts turns with one ("retold", `cites_unquoted`), so the next eval measures
+  the slip without the blind scorers. Rescored, the runs of 2026-10-03 have 48 such turns in 168 replies;
+  some are false alarms from item 58 (a quote whose inner quote marks broke the pairing, or were changed from
+  double to single). Not shown to the tenant: as a caution it would add to the cautions already printed.
+  Smoke: the finder, and the pair in the prompt.
+
 - The system prompt's parts renamed in words a tenant can read (TODO item 61, done). Was: LEASE PROFILE,
   PLAYBOOKS, STATUTE SECTIONS, CASE TOPICS, ELEMENT STATUS, DEADLINE STATUS, and after item 53 the model still
   wrote them in 17 replies per 100 ("(ELEMENT STATUS shows eviction_action_filed: true)", "the open question in

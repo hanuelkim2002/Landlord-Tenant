@@ -25,7 +25,8 @@ from streamlit.testing.v1 import AppTest
 import record
 from calendars import court_calendars
 from checks import TEST_MATTER, check, make_scratch, remove_scratch, summary
-from citations import SUBSECTION_START, check_case_cites, check_cites, check_quoted, quoted_passages, subsections
+from citations import (SUBSECTION_START, check_case_cites, check_cites, check_quoted, cites_without_quote,
+                       quoted_passages, subsections)
 from config import CASES, MATTERS, WIKI
 from corpus import check_all_playbooks, load_playbook, playbooks, statute
 from deterministic import NOT_JSON, ask_json, check_elements, compute_deadlines, lease_value
@@ -317,6 +318,11 @@ check("a short quote keeps its two marks, so the words after it are not read as 
 check("a quote that runs over two lines is one passage",
       [q for q, c in quoted_passages('Lease Section 4.3: "Tenant shall notify Landlord in writing\nof a forwarding address" and "x"')]
       == ["Tenant shall notify Landlord in writing\nof a forwarding address"])
+check("item 54: a cite retold with none of its words quoted is found; one whose words are quoted, or whose "
+      "subsection holds the quote, is not",
+      cites_without_quote(f'Fla. Stat. 83.49(3)(a): "{FORFEIT}". Under 83.49(3) that is so. Under Fla. Stat. '
+                          f'83.49(3)(b), if you do not object within 15 days, they may deduct.') == ["83.49(3)(b)"]
+      and cites_without_quote(f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"') == [])
 print()
 
 # the record as the tenant sees it, then with the tool's bookkeeping included
@@ -462,6 +468,8 @@ try:
     check("item 52: the fallback line is ruled out where an open question or a case topic is on the point",
           "the fallback line only when no stored sentence, no open question in WHAT THE STATUTE DOES NOT SETTLE, and no "
           "topic in COURT CASES THIS TOOL HAS" in system_prompt())
+    check("item 54: rule 1 asks for every rule the answer turns on to be quoted",
+          "Instead: quote every rule the answer turns on, each condition and each consequence you rely on" in system_prompt())
     check("item 46: the rules apply the law, and open questions reach the model with their readings",
           "1. Apply the law to the tenant's facts." in system_prompt() and "stay open, with their readings" in system_prompt()
           and "readings:" in prompt_part("open"))

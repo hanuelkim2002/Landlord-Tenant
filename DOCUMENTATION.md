@@ -71,9 +71,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `quote_label` names a quote in it by its first six words. These check that a cite exists and was
   available, and that quoted words are real and sit where they are cited. They cannot tell whether a cite
   fits a claim made in the reply's own words, and a paraphrase outside quote marks is not checked.
-  `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
+  `cites_without_quote(text)` (each cite outside quote marks whose words no quoted passage in the same text
+  holds: a section or subsection retold instead of quoted; a quote in a narrower subsection counts for the
+  wider cite; measured by `dev/eval.py`, never shown to the tenant; TODO item 54). `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
   given)` (each reporter cite in a reply, outside quote marks, must appear in what the model was given, i.e.
-  a `get_cases` receipt; returns `(cite, problem)`). Imports `corpus`. Imported by `agent`, `smoke`, `wiki`.
+  a `get_cases` receipt; returns `(cite, problem)`). Imports `corpus`. Imported by `agent`, `smoke`, `wiki`, `dev/eval.py`.
 - `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
   `cases/` and `topics/` under the wiki folder, by name: `name`, `path`, `meta` from the YAML front matter,
   `body`), `linked` (page names in a front matter field), `opinion(page)` (a case page's opinion from
@@ -541,7 +543,7 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 1,499 words always, plus rule 6 on letters (174 words) once a letter is in
+1. `RULES`, through `rules_for`: 1,614 words always, plus rule 6 on letters (174 words) once a letter is in
    play, and rule 8 on cases in full (255 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
    the statute to the record in YOUR FACTS and THE PROGRAM'S DEADLINES and say what they mean for the tenant,
@@ -553,7 +555,9 @@ this order:
    ids, no part name in capitals as the prompt writes it, and no rule number such as "rule 8"; TODO items 53 and
    61), then nine numbered rules, each with
    "Not:" examples and the "Instead:" form: 1 apply the law to the tenant's facts, in order: the rule quoted;
-   the facts it turns on in plain words with where each came from, never an id or a prompt section's name (a
+   every rule the answer turns on quoted, each condition and consequence relied on, never a section retold
+   in the model's own words or a rule nothing quoted gives (TODO item 54); the facts it turns on in plain
+   words with where each came from, never an id or a prompt section's name (a
    fact said in the chat but not confirmed is "not known yet until the sheet confirms it"); for each condition, met, failed, or not known; what follows, and when
    asked what they can do, each option the stored text gives and what it requires first (fetching a section
    such as 83.55 or 83.48 when it is not in THE STATUTE); the open question in the way. Never assume a
@@ -788,7 +792,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   and fewer than 40 words of its own), dates made (a date with a year outside quote marks that no fact, tenant
   line, sheet answer, or the test lease's own text, `LEASE_DATES` from the seed's
   `pages.json`, holds), cases not given (a "Name v. Name" no `get_cases` result in
-  the session holds), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
+  the session holds), retold cites (`citations.cites_without_quote`: a cite outside quote marks with none of
+  its words quoted in the same reply; TODO item 54), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
   `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: a prompt
   part's name as the prompt writes it, before TODO item 61 or since, in capitals, or a rule's number such as
   "rule 8"; TODO items 53 and 61). Since 2026-10-02 (TODO item 49) a legal question's

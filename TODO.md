@@ -17,9 +17,6 @@ structural ones first.
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on
     the law? Mark the rubric's categories (`dev/eval_rubric.md`) and right, wrong, or partly; the scorers'
     calls on the same transcripts are in `results/blind_score_*.json` (codes in `blind_key.json`).
-54. A rule restated without its quote (LAW_UNSOURCED, 42, 34.5 firm): applied answers paraphrase sections, or
-    parts of a quoted one, that they do not quote. A pair for rule 1: every rule the answer turns on is quoted,
-    including a second condition.
 55. Conditions applied wrong or missed (28 and 16.5): 83.53(1) read as forbidding the tenant to change the locks;
     83.575(3)'s extra month without its second condition; the 7-day cure not yet run on a violation notice;
     83.60(2)'s motion to determine rent left out; 83.56(5)(a)'s steps after partial rent read as settled. For

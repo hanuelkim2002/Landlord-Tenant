@@ -186,6 +186,24 @@ def check_quoted(text, given):
     return problems
 
 
+def cites_without_quote(text):
+    """Each ch. 83 cite outside quote marks whose words no quoted passage in the same reply holds: a section or
+    subsection named and retold instead of quoted ("Fla. Stat. 83.56(5)(a) states that if ...", TODO item 54).
+    "Under 83.49(3)" counts as quoted when a quote from 83.49(3)(a) is in the reply. A cite to a section or
+    subsection that does not exist is left to check_cites. Measured by dev/eval.py; nothing is shown to the
+    tenant."""
+    quotes = [words for _, _, words in quote_spans(text)]
+    found = []
+    for cite in cites_in(unquoted(text)):
+        section, _, rest = cite.partition("(")
+        if section not in statute or (rest and "(" + rest not in subsections(section)):
+            continue
+        span = statute[section][slice(*subsections(section)["(" + rest])] if rest else statute[section]
+        if not any(is_in(q, span) for q in quotes):
+            found.append(cite)
+    return found
+
+
 # A reporter cite of a court opinion: "448 So. 2d 1208", "448 So.2d 1208", "103 Fla. 892", "946 F. Supp. 962".
 REPORTER = re.compile(r"\b\d{1,4} (?:So\.\s?[23]d|So\.|Fla\.|F\.\s?Supp\.(?:\s?[23]d)?) \d{1,5}\b")
 

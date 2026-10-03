@@ -33,7 +33,9 @@ computed deadline the program printed in the same turn, in the reply: since the 
 counted it), quotes only (a reply with a quote and fewer
 than APPLIED_WORDS words outside quote marks: the law set out and not applied), dates made (a date with a year,
 outside quote marks, that is in no fact, no tenant line, no printed deadline, and is not the session's day),
-cases not given (a "Name v. Name" in a reply that no get_cases result in the session holds), and two word
+cases not given (a "Name v. Name" in a reply that no get_cases result in the session holds), retold cites (a
+ch. 83 cite outside quote marks whose words no quote in the same reply holds, citations.cites_without_quote:
+a rule retold instead of quoted, TODO item 54), and two word
 screens that mark a reply for a person to read: CHOOSE_WORDS (you should, your best option, I recommend ...)
 and OFFER_WORDS (would you like me to ...). The screens find candidates; they are not verdicts. Since
 2026-10-02 (TODO item 49) the tool applies the law, so the old LAW_WORDS screen (a party and must, may, can,
@@ -244,6 +246,7 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
                for d in deadline_dates(e.get("shown") or e["text"])]
     text = "\n".join(replies)
     bare = QUOTED.sub("", text)                       # outside quote marks
+    from citations import cites_without_quote          # the scored copy's checks (score puts it on sys.path)
     return {
         "say": turn["say"],
         "replies": replies,
@@ -260,6 +263,8 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
         "offer_words": sorted({m.group(0) for m in OFFER_WORDS.finditer(bare)}),
         "field_names": sorted(set(FIELD_NAME.findall(bare))),
         "prompt_names": sorted(set(PROMPT_NAME.findall(text))),
+        # a section named outside quote marks with none of its words quoted in the same reply: retold (item 54)
+        "cites_unquoted": sorted({c for r in replies for c in cites_without_quote(r)}),
         # a printed deadline in the reply, unless the same date is also a fact the record holds (a deadline can fall
         # on the date the notice itself states)
         "echo": sorted({iso for iso in set(printed) - set(known_dates) if any(s in text for s in spoken_dates(iso))}),
@@ -401,6 +406,7 @@ def score_run(entry, scenario, out):
         "offer_screen": sum(bool(t["offer_words"]) for t in measured),
         "field_names": sum(bool(t["field_names"]) for t in measured),
         "prompt_names": sum(bool(t.get("prompt_names")) for t in measured),
+        "cites_unquoted": sum(bool(t["cites_unquoted"]) for t in measured),
         "echo": sum(bool(t["echo"]) for t in measured),
         "footers": sum(len(t["footers"]) for t in measured),
         "turns": measured,
@@ -419,24 +425,25 @@ def score(out):
         row = summary.setdefault(s["scenario"], {"runs": 0, "crashed": 0, "gateway_trouble": 0, "expected_ok": 0, "replies": 0,
                                                  "empty_turns": 0, "cautions": 0, "quotes_only": 0, "choose_screen": 0,
                                                  "dates_made": 0, "cases_not_given": 0,
-                                                 "offer_screen": 0, "field_names": 0, "prompt_names": 0, "echo": 0,
+                                                 "offer_screen": 0, "field_names": 0, "prompt_names": 0, "cites_unquoted": 0, "echo": 0,
                                                  "footers": 0,
                                                  "failed": {}})
         row["runs"] += 1
         for key in ("crashed", "gateway_trouble", "expected_ok", "replies", "empty_turns", "cautions", "quotes_only",
                     "choose_screen", "dates_made", "cases_not_given", "offer_screen", "field_names", "prompt_names",
-                    "echo", "footers"):
+                    "cites_unquoted", "echo", "footers"):
             row[key] += int(s[key])
         for x in s["expect"]:
             if not x["ok"]:
                 row["failed"][x["what"]] = row["failed"].get(x["what"], 0) + 1
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
     print(f"\n{'scenario':<28}{'runs':>5}{'gw':>4}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'qonly':>6}"
-          f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'prompt':>7}{'echo':>5}{'footer':>7}")
+          f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'prompt':>7}{'retold':>7}{'echo':>5}{'footer':>7}")
     for name, row in summary.items():
         print(f"{name:<28}{row['runs']:>5}{row['gateway_trouble']:>4}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
               f"{row['cautions']:>5}{row['quotes_only']:>6}{row['choose_screen']:>8}{row['dates_made']:>6}"
               f"{row['cases_not_given']:>6}{row['offer_screen']:>7}{row['field_names']:>6}{row['prompt_names']:>7}"
+              f"{row['cites_unquoted']:>7}"
               f"{row['echo']:>5}{row['footers']:>7}")
         for what, n in row["failed"].items():
             print(f"    failed {n}x: {what}")
