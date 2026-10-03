@@ -5,6 +5,19 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Open questions read as unsettled (TODO item 56, done). Was: OPEN_CLOSED 19.5 in the blind scores of
+  2026-10-02. Checked against the wording the model read, three causes: purpose_of_entry told the model to
+  "Apply the one that fits the reason in the record", and every entry run called an air-conditioning filter
+  change "repair"; the readings sit as a bare YAML list, and a reply's "So:" line gave the first one as the
+  answer before listing them under "Not settled" (remedy_not_duty, notice_form); the rule's order put "So:"
+  before "Not settled". Now: the part's name line (`agent.PARTS["open"]`) says the stored text settles none
+  of them, so every reading is given and none picked; rule 1's "So:" says that with an open question in the
+  way it gives what follows on each reading, never one as the answer; purpose_of_entry (landlord_entered_unannounced
+  0.5) applies a way in only when the reason fits one, and names a visit that could be repair or an agreed
+  service (routine maintenance, servicing equipment in the unit, pest control) as the open point, called
+  neither. The readings' own words are unchanged. wants_to_leave_early's fee_notice_period, which has no
+  readings, went to TODO item 63 for the author. Smoke: the name line and the "So:" line in the prompt.
+
 - Failure modes for conditions the model missed or misapplied (TODO item 55, done). Was: CONDITION_WRONG 28 and
   CONDITION_MISSED 16.5 in the blind scores of 2026-10-02, and item 50's failure modes named some of the
   sections but not the slips seen. Five, each quoting `statutes/` (playbook checks: every quote OK), in the

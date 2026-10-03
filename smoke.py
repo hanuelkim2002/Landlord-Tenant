@@ -468,6 +468,9 @@ try:
     check("item 52: the fallback line is ruled out where an open question or a case topic is on the point",
           "the fallback line only when no stored sentence, no open question in WHAT THE STATUTE DOES NOT SETTLE, and no "
           "topic in COURT CASES THIS TOOL HAS" in system_prompt())
+    check("item 56: the open questions' part says the stored text settles none, and rule 1's So gives each reading",
+          "settles none of them, so give every reading and pick none):\n" in system_prompt()
+          and "what follows on each of its readings, never one of them as the answer" in system_prompt())
     check("item 54: rule 1 asks for every rule the answer turns on to be quoted",
           "Instead: quote every rule the answer turns on, each condition and each consequence you rely on" in system_prompt())
     check("item 46: the rules apply the law, and open questions reach the model with their readings",

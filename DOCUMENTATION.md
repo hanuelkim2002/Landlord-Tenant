@@ -543,7 +543,7 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 1,614 words always, plus rule 6 on letters (174 words) once a letter is in
+1. `RULES`, through `rules_for`: 1,635 words always, plus rule 6 on letters (174 words) once a letter is in
    play, and rule 8 on cases in full (255 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
    the statute to the record in YOUR FACTS and THE PROGRAM'S DEADLINES and say what they mean for the tenant,
@@ -558,7 +558,8 @@ this order:
    every rule the answer turns on quoted, each condition and consequence relied on, never a section retold
    in the model's own words or a rule nothing quoted gives (TODO item 54); the facts it turns on in plain
    words with where each came from, never an id or a prompt section's name (a
-   fact said in the chat but not confirmed is "not known yet until the sheet confirms it"); for each condition, met, failed, or not known; what follows, and when
+   fact said in the chat but not confirmed is "not known yet until the sheet confirms it"); for each condition, met, failed, or not known; what follows, and with an open question in the way what
+   follows on each of its readings, never one as the answer (TODO item 56), and when
    asked what they can do, each option the stored text gives and what it requires first (fetching a section
    such as 83.55 or 83.48 when it is not in THE STATUTE); the open question in the way. Never assume a
    fact, never choose among options for the tenant, and say which of lease and statute controls only from a
@@ -594,7 +595,8 @@ rules forbade it.
 2. `YOUR LEASE`: the whole lease profile as JSON.
 3. `THE TOOL'S NOTES ON YOUR ISSUES`: for each active playbook, YAML of its `issue` and its `guidance`
    (questions, lease checks, evidence, postures, failure modes).
-4. `WHAT THE STATUTE DOES NOT SETTLE`: for each active playbook with open questions, YAML of its `issue` and
+4. `WHAT THE STATUTE DOES NOT SETTLE`, whose name line says the stored text settles none of them, so every
+   reading is given and none picked (TODO item 56): for each active playbook with open questions, YAML of its `issue` and
    its `spec.open_questions` with their readings (which rule 5 refers to), each without its `id` (no tool takes
    one, and the model copied them into replies; TODO item 53); "none listed for these issues" when no active
    playbook has one. The rest of `spec` never enters the context.
@@ -619,8 +621,8 @@ landlord_entered_unannounced, rent_increased, wants_to_leave_early, lease_ending
 playbooks have `verified_by: null` until the author's hand check. Their open questions and failure modes were
 rewritten for applying the law (2026-10-02), their prose lost its ids (2026-10-03), and four got failure modes
 for conditions the model missed or misapplied (TODO item 55, 2026-10-03): version 0.3 for most,
-deposit_not_returned, landlord_entered_unannounced, lease_ending, and notice_received_violation 0.4,
-notice_received_nonpayment 0.5. Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
+deposit_not_returned, lease_ending, and notice_received_violation 0.4, notice_received_nonpayment 0.5, and
+landlord_entered_unannounced 0.5 (its purpose_of_entry open question reworded the same day, item 56). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
 (83.53(2) is in hours), rent_increased (no section on notice of a rent increase), neighbor_disturbance (no
 deadline for a landlord to act on one tenant's complaint about another; its open questions: whose duty
 83.52(7) states, 83.56(2)(a) as a remedy not a duty, what is unreasonable, and whether 83.56(1) lets the

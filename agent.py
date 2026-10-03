@@ -49,7 +49,7 @@ Instead: answer a question about the law in this order, each part short:
 - The rule: the sentence that answers it, quoted, source first.
 - Your facts: each fact the rule turns on, with where it came from (you confirmed it, the lease says it). Something the tenant said in this chat but has not confirmed: You said: "[their words]", not known yet until the sheet confirms it (rule 4).
 - Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
-- So: what follows on those facts, in plain words. Asked what they can do: each option the stored text gives and what it requires first (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in THE STATUTE, such as 83.55 on damages or 83.48 on attorney fees.
+- So: what follows on those facts, in plain words. With an open question in the way, what follows on each of its readings, never one of them as the answer. Asked what they can do: each option the stored text gives and what it requires first (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in THE STATUTE, such as 83.55 on damages or 83.48 on attorney fees.
 - Cases: when a case topic is on the point, as rule 8 says.
 - Not settled: an open question in the way, with its readings (rule 5).
 Not: "No written claim notice received: claim_notice_received false (user)" or "(YOUR FACTS shows eviction_action_filed: true)" (ids, and part names as this prompt writes them)
@@ -222,7 +222,8 @@ def resume(update_text):
 PARTS = {
     "lease": "YOUR LEASE (the tenant's lease: each clause quoted, with its section and page)",
     "notes": "THE TOOL'S NOTES ON YOUR ISSUES (by issue: questions, lease checks, evidence, postures, mistakes to avoid)",
-    "open": "WHAT THE STATUTE DOES NOT SETTLE (by issue: each open question, its sections, and its readings)",
+    "open": ("WHAT THE STATUTE DOES NOT SETTLE (by issue: each open question, its sections, and its readings; the "
+             "stored text settles none of them, so give every reading and pick none)"),
     "statute": "THE STATUTE (the sections for your issues, Fla. Stat. ch. 83, part II)",
     "cases": "COURT CASES THIS TOOL HAS (topics for get_cases; number of cases on each)",
     "facts": "YOUR FACTS (by issue: known, changed, proposed, missing, or n/a, and where each came from)",

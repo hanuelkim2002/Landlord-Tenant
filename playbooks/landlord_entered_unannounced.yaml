@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.53.txt, statutes/83.67.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.4
+  version: 0.5
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -81,9 +81,11 @@ spec:
         83.53(2) sets three ways in: "at any time for the protection or preservation of the premises"; "upon
         reasonable notice to the tenant and at a reasonable time for the purpose of repair of the premises"; and,
         for the further purposes in 83.53(1) (inspecting, supplying agreed services, showing the unit, and the
-        others listed), only in the circumstances 83.53(2)(a)-(d) list. Apply the one that fits the reason in the
-        record; with no reason recorded, say which facts each turns on. What stays open is a
-        visit that fits more than one, such as routine maintenance or pest control.
+        others listed), only in the circumstances 83.53(2)(a)-(d) list. When the reason in the record fits only
+        one way in, apply that one; with no reason recorded, say which facts each turns on. A visit that could be
+        repair of the premises or an agreed service (routine maintenance, servicing equipment in the unit, pest
+        control) fits more than one, and which one it is stays open: give both readings and what each would mean
+        for the entry, and call it neither.
       readings:
         - >-
           Routine maintenance is repair of the premises, so reasonable notice and a reasonable time are enough.

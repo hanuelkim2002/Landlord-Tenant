@@ -17,9 +17,6 @@ structural ones first.
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on
     the law? Mark the rubric's categories (`dev/eval_rubric.md`) and right, wrong, or partly; the scorers'
     calls on the same transcripts are in `results/blind_score_*.json` (codes in `blind_key.json`).
-56. Open questions closed (19.5): the entry story's air-conditioning filter change called "repair" in every run;
-    the noise story's remedy and unreasonableness; the early-termination fee's notice period. Rule 5's pair is
-    in the prompt; the readings are in PLAYBOOKS. Check whether the readings' wording invites picking one.
 57. Cases one-sided or misread (12.5 and 16.5): the mold story's answers left out the three cases in the same
     result that went for the landlord, in all three runs; cases applied with no word on how alike the facts
     are; a quote credited to the wrong case. A code-side option: a caution when a reply after `get_cases` does
@@ -38,6 +35,8 @@ structural ones first.
     as the only protected acts; 83.51(1)(b)'s duties applied without its opening condition on codes, and a
     case's common-area duty (83.51(2)(a)) applied inside the unit (repair_not_made); 83.56(5)(a)'s waiver
     applied to the 83.60(1)(b) defense; a rent increase read as a decrease against the test lease's rent (item 60).
+    Also wants_to_leave_early's fee_notice_period, which has no readings: in 3 of 3 runs the model took the
+    lease's 7-day notice of vacating as the fee's notice period (scored borderline). Whether it needs readings.
 60. The eval's test data: every scenario uses the same test lease, whose rent ($1,850), deposit, and 2027 term
     end conflict with some stories (a rent hike read as a decrease against the lease's rent; a $1,000 deposit
     story read as $1,850; the 2027 end date against the sheet's 2026-07-31). Scenarios need stories that fit the
