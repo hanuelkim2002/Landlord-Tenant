@@ -1,0 +1,60 @@
+{
+ "transcripts": 42,
+ "scorers": {
+  "B1_a": 78,
+  "B1_b": 85,
+  "B2_a": 71,
+  "B2_b": 69,
+  "B3_a": 43,
+  "B3_b": 47,
+  "B4_a": 70,
+  "B4_b": 77
+ },
+ "slips_by_category": {
+  "ID": 48.0,
+  "LAW_UNSOURCED": 42.0,
+  "CONDITION_WRONG": 28.0,
+  "OPEN_CLOSED": 19.5,
+  "CASE_MISREAD": 16.5,
+  "CONDITION_MISSED": 16.5,
+  "QUOTE_UNMARKED": 15.0,
+  "UNCONFIRMED_FACT": 14.0,
+  "QUOTE_WRONG": 13.0,
+  "ONE_SIDED": 12.5,
+  "DATE_MADE": 12.5,
+  "POSTURE_OWN_WORDS": 11.0,
+  "QUOTES_ONLY": 6.0,
+  "LETTER_ORDER": 4.0,
+  "OVERCLAIM": 4.0,
+  "CONFIRM_IN_CHAT": 3.5,
+  "DEADLINE_REPEAT": 2.0,
+  "OFFER": 2.0
+ },
+ "firm_by_category": {
+  "ID": 46.0,
+  "LAW_UNSOURCED": 34.5,
+  "CONDITION_WRONG": 15.5,
+  "OPEN_CLOSED": 11.5,
+  "CASE_MISREAD": 11.5,
+  "DATE_MADE": 11.0,
+  "CONDITION_MISSED": 10.5,
+  "QUOTE_WRONG": 10.5,
+  "QUOTE_UNMARKED": 10.0,
+  "ONE_SIDED": 9.0,
+  "UNCONFIRMED_FACT": 6.5,
+  "POSTURE_OWN_WORDS": 4.5,
+  "OVERCLAIM": 4.0,
+  "CONFIRM_IN_CHAT": 3.0,
+  "DEADLINE_REPEAT": 2.0,
+  "LETTER_ORDER": 2.0,
+  "QUOTES_ONLY": 0.5
+ },
+ "total_slips_avg": 270.0,
+ "firm_slips_avg": 192.5,
+ "law_replies_avg": 101.5,
+ "applied_well_avg": 21.5,
+ "agreement": {
+  "found_by_both": 235,
+  "found_by_either": 305
+ }
+}

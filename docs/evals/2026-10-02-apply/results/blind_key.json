@@ -1,0 +1,212 @@
+[
+  {
+    "code": "R001",
+    "scenario": "eval_entry_shower",
+    "rep": 3
+  },
+  {
+    "code": "R002",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 3
+  },
+  {
+    "code": "R003",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 1
+  },
+  {
+    "code": "R004",
+    "scenario": "eval_violation_dog",
+    "rep": 1
+  },
+  {
+    "code": "R005",
+    "scenario": "eval_leave_early_family",
+    "rep": 1
+  },
+  {
+    "code": "R006",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 3
+  },
+  {
+    "code": "R007",
+    "scenario": "eval_noise_neighbors",
+    "rep": 3
+  },
+  {
+    "code": "R008",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 1
+  },
+  {
+    "code": "R009",
+    "scenario": "eval_leave_early_family",
+    "rep": 3
+  },
+  {
+    "code": "R010",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 3
+  },
+  {
+    "code": "R011",
+    "scenario": "eval_cases_late_claim",
+    "rep": 1
+  },
+  {
+    "code": "R012",
+    "scenario": "eval_violation_dog",
+    "rep": 3
+  },
+  {
+    "code": "R013",
+    "scenario": "eval_cases_late_claim",
+    "rep": 2
+  },
+  {
+    "code": "R014",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 2
+  },
+  {
+    "code": "R015",
+    "scenario": "eval_cases_late_claim",
+    "rep": 3
+  },
+  {
+    "code": "R016",
+    "scenario": "eval_claim_carpet",
+    "rep": 1
+  },
+  {
+    "code": "R017",
+    "scenario": "eval_cases_retaliation",
+    "rep": 1
+  },
+  {
+    "code": "R018",
+    "scenario": "eval_cases_retaliation",
+    "rep": 2
+  },
+  {
+    "code": "R019",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 1
+  },
+  {
+    "code": "R020",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 3
+  },
+  {
+    "code": "R021",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 1
+  },
+  {
+    "code": "R022",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 2
+  },
+  {
+    "code": "R023",
+    "scenario": "eval_leave_early_family",
+    "rep": 2
+  },
+  {
+    "code": "R024",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 1
+  },
+  {
+    "code": "R025",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 1
+  },
+  {
+    "code": "R026",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 2
+  },
+  {
+    "code": "R027",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 2
+  },
+  {
+    "code": "R028",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 3
+  },
+  {
+    "code": "R029",
+    "scenario": "eval_violation_dog",
+    "rep": 2
+  },
+  {
+    "code": "R030",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 3
+  },
+  {
+    "code": "R031",
+    "scenario": "eval_entry_shower",
+    "rep": 2
+  },
+  {
+    "code": "R032",
+    "scenario": "eval_cases_retaliation",
+    "rep": 3
+  },
+  {
+    "code": "R033",
+    "scenario": "eval_claim_carpet",
+    "rep": 2
+  },
+  {
+    "code": "R034",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 2
+  },
+  {
+    "code": "R035",
+    "scenario": "eval_claim_carpet",
+    "rep": 3
+  },
+  {
+    "code": "R036",
+    "scenario": "eval_entry_shower",
+    "rep": 1
+  },
+  {
+    "code": "R037",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 2
+  },
+  {
+    "code": "R038",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 2
+  },
+  {
+    "code": "R039",
+    "scenario": "eval_noise_neighbors",
+    "rep": 2
+  },
+  {
+    "code": "R040",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 3
+  },
+  {
+    "code": "R041",
+    "scenario": "eval_noise_neighbors",
+    "rep": 1
+  },
+  {
+    "code": "R042",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 1
+  }
+]

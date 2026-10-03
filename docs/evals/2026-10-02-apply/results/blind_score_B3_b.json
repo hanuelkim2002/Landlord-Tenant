@@ -1,0 +1,67 @@
+{"scorer": "B3_b", "runs": [
+  {"code": "R011", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 2, "slips": [
+    {"reply": 1, "category": "ID", "evidence": "(DEADLINE STATUS for claim_notice_deadline) -- prompt section name and clock id in the reply; also ELEMENT STATUS"},
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "The tenant's failure to object in writing does not waive any right to seek damages in a separate action. -- 83.49(3)(b)'s last sentence restated in the model's words, not quoted anywhere in the reply"},
+    {"reply": 2, "category": "ONE_SIDED", "evidence": "So: Under Durene, the landlord must return your deposit. -- Durene's own rule that the landlord 'may have an independent action for damages' (and the statute's damages half) is left out of the whole reply"},
+    {"reply": 2, "category": "ID", "evidence": "(ELEMENT STATUS shows lease term end from lease_profile.term_end) -- prompt section name and field id"},
+    {"reply": 3, "category": "ID", "evidence": "(LEASE PROFILE, security_deposit) -- prompt section name and field id; also DEADLINE STATUS, claim_notice_deadline, claim_amount"},
+    {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: The lease says your deposit is ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) -- lease words reproduced without quote marks (an amount clause)"},
+    {"reply": 3, "category": "OVERCLAIM", "evidence": "So you would get the full $1,850 back. -- outcome prediction ('you will get your money back'), stated after reply 2 left the 7-day vacating notice not known"}
+  ]},
+  {"code": "R013", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 3, "slips": [
+    {"reply": 1, "category": "DATE_MADE", "evidence": "The notice was sent about 52 days after the tenancy ended -- the model counted the days itself"},
+    {"reply": 2, "category": "ID", "evidence": "(tenancy_terminated known from user, lease says September 30, 2027) -- field ids; also claim_notice_dated, claim_delivery, ELEMENT STATUS"},
+    {"reply": 2, "category": "DATE_MADE", "evidence": "The notice was sent about 52 days after the tenancy ended -- model-counted interval"},
+    {"reply": 2, "category": "CASE_MISREAD", "evidence": "Your facts: same as above (late notice). -- Durene, Malagon and Casey each said to reach the tenant ('Applied: The landlord missed the 30-day deadline') with no word on how alike the cases' facts are"},
+    {"reply": 2, "category": "OVERCLAIM", "evidence": "So: Under Malagon, the court would award you the full deposit -- prediction of what a court would do"},
+    {"reply": 2, "category": "QUOTE_WRONG", "evidence": "Second, the Landlord's obligation to provide this notice was excused by the Tenant's failure to give the notice required by section 83.49(5). -- printed Plakhov rule reads 'failure to give the seven-day notice implicated when a tenant ... vacates'; the model spliced in words from the distinguishing sentence (program caution also flagged it)"},
+    {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You vacated before the lease end date (June 30, 2026 vs. lease end September 30, 2027) -- treated as true, while the SHEET has the lease ending/terminated 2026-06-30 and the tenant said she left when the lease ended"},
+    {"reply": 3, "category": "ID", "evidence": "(DEADLINE STATUS shows claim_notice_deadline passed) -- prompt section name and clock id"},
+    {"reply": 4, "category": "ID", "evidence": "borderline: The lease profile does not contain an attorney -- names the prompt's lease profile section in plain words"}
+  ]},
+  {"code": "R015", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 1, "slips": [
+    {"reply": 1, "category": "QUOTE_WRONG", "evidence": "You said: \"the tenancy ended on June 30, 2026\" -- words in quote marks attributed to the tenant that are not the tenant's words (same for the two lines after it; program caution flagged them)"},
+    {"reply": 1, "category": "DATE_MADE", "evidence": "ends July 30, 2026; the notice dated August 20, 2026 is after that date -- the model added 30 days and compared dates itself"},
+    {"reply": 2, "category": "DATE_MADE", "evidence": "ends July 30, 2026; the notice dated August 20, 2026 is after that date -- model-computed date"},
+    {"reply": 2, "category": "CASE_MISREAD", "evidence": "So: Under the rule in those cases, the landlord forfeits the right to impose a claim upon the deposit -- the cases' rule said to reach the tenant with no word on how alike their facts are"},
+    {"reply": 2, "category": "ONE_SIDED", "evidence": "So: Under the rule in those cases -- relies on Durene, Malagon and Casey from the get_cases result and leaves out Plakhov v. Serova, which the same result prints as distinguishing Durene against the tenant"},
+    {"reply": 3, "category": "DATE_MADE", "evidence": "ends July 30, 2026; the notice dated August 20, 2026 is after that date -- model-computed date"},
+    {"reply": 3, "category": "OVERCLAIM", "evidence": "So you receive the full deposit of $1,850.00; the $700 claim is not deducted. -- outcome prediction"},
+    {"reply": 4, "category": "QUOTE_WRONG", "evidence": "and the reason for the lease. -- lease quote altered ('the reason for the claim' in the same quote elsewhere); program caution flagged it"},
+    {"reply": 4, "category": "DATE_MADE", "evidence": "ends July 30, 2026; the notice dated August 20, 2026 is after that date -- model-computed date"},
+    {"reply": 4, "category": "OVERCLAIM", "evidence": "So you receive the full deposit of $1,850.00; the $700 claim is not deducted. -- outcome prediction, repeated"}
+  ]},
+  {"code": "R016", "scenario": "eval_claim_carpet", "replies": 3, "law_replies": 1, "applied_well": 0, "slips": [
+    {"reply": 3, "category": "QUOTES_ONLY", "evidence": "borderline: These cases address notice defects, not whether the damage was pre‑existing. -- case quotes set out, and the e-mail notice point raised as 'Those affect whether the landlord’s notice was proper.', but nothing said on whether this tenant's notice (e-mail confirmed, addendum not known) meets the rule or what follows"}
+  ]},
+  {"code": "R033", "scenario": "eval_claim_carpet", "replies": 4, "law_replies": 2, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "DATE_MADE", "evidence": "(2026-08-31 plus 30 days = 2026-09-30) -- the model added 30 days itself"},
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "The statute allows e-mail only if the parties have signed an addendum for electronic delivery (83.505(1)). -- cited but 83.505(1) is not quoted anywhere in the reply"},
+    {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "The lease requires you to return the premises in the same condition as at the commencement date, ordinary wear and tear excepted, with carpets professionally cleaned. -- Lease 15.2 wording without quote marks or section"},
+    {"reply": 1, "category": "ID", "evidence": "(see email_notice_conditions) -- open-question ids in the reply; also (see receipt_date)"},
+    {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: Cases: Casey v. Picinich, 573 So. 2d 76 (Fla. 4th DCA 1990) (quoted above) -- relies on Durene, Malagon and Casey for the forfeiture branch and leaves out Plakhov v. Serova from the same result; borderline because the cases are only listed as holdings and Plakhov's excuse turns on early vacating"},
+    {"reply": 3, "category": "LETTER_ORDER", "evidence": "borderline: What do you want the landlord to do? For example, return the full $1,850.00 deposit, withdraw the $650.00 claim, or something else? -- asked a second time after the tenant answered 'Yes, that's everything, please write it now' having chosen the preserve posture, which itself asks for the full deposit"},
+    {"reply": 4, "category": "QUOTES_ONLY", "evidence": "borderline: The lease and statute do not say what happens if the landlord's claim is for pre‑existing damage. -- the reply quotes Lease 15.2 ('in the same condition as at the Commencement Date') and does not apply it to the tenant's pre-existing stains"}
+  ]},
+  {"code": "R035", "scenario": "eval_claim_carpet", "replies": 4, "law_replies": 2, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "ID", "evidence": "(see email_notice_conditions in PLAYBOOKS) -- open-question id and prompt section name; also DEADLINE STATUS, tenant_objection_deadline"},
+    {"reply": 1, "category": "DATE_MADE", "evidence": "(2026-09-18 is within 30 days of 2026-08-31) -- the model compared the dates itself"},
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "If you serve a timely written objection, the landlord may not deduct the claim unless they sue you for damages. -- a rule not in any quoted text"},
+    {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: The objection must be sent by hand, certified mail, return receipt requested, or nationally recognized overnight courier for statutory communications. -- objection_form leaves an objection made another way (e-mail) open; the reply settles it from the lease without the readings"},
+    {"reply": 4, "category": "CASE_MISREAD", "evidence": "then under Durene and Casey the landlord has forfeited the right to impose a claim on the security deposit -- late-notice cases applied to an e-mail-delivery defect with no word on how alike the facts are"},
+    {"reply": 4, "category": "ONE_SIDED", "evidence": "under Durene and Casey -- relies on these and leaves out Plakhov v. Serova from the same get_cases result, the case that excuses the landlord's notice"},
+    {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "If you object timely, the landlord may not deduct the claim unless they sue you for damages. -- rule not in any quoted text"},
+    {"reply": 4, "category": "ID", "evidence": "(your objection deadline is upcoming per DEADLINE STATUS) -- prompt section name; also email_notice_conditions in PLAYBOOKS"}
+  ]},
+  {"code": "R017", "scenario": "eval_cases_retaliation", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": [
+    {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: The answer depends on that fact, which is not yet known. -- concludes from 83.64(1) on the report alone, leaving out the quoted good-faith and 'primarily because' conditions and the confirmed cat notice"}
+  ]},
+  {"code": "R018", "scenario": "eval_cases_retaliation", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": [
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "you may raise the defense in any action for possession -- 83.64(2) restated but not quoted (likewise 83.64(1)(a) on complaining to a governmental agency)"},
+    {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: you would need to provide evidence of retaliation and lack of good cause -- the quoted 83.64(3) puts proof of good cause on the landlord ('if the landlord proves')"}
+  ]},
+  {"code": "R032", "scenario": "eval_cases_retaliation", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": [
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "complaining to a governmental agency about code violations is protected activity under 83.64(1)(a). -- cited but 83.64(1)(a) is not quoted in the reply"},
+    {"reply": 2, "category": "QUOTES_ONLY", "evidence": "It did not say a landlord may never act after a tenant reports them to the city; it said the defense is unavailable when good cause exists. -- the case set out with nothing said about the tenant's report or cat notice"}
+  ]}
+]}

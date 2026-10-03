@@ -1,0 +1,111 @@
+{"scorer": "B1_b", "runs": [
+{"code": "R001", "scenario": "eval_entry_shower", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The purpose (changing the AC filter) is a repair or agreed service, so the rule requires reasonable notice and a reasonable time. | purpose_of_entry settled as repair; the further-purposes reading (consent, emergency) is not given"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "The statute also allows entry at any time for the protection or preservation of the premises | borderline: statute words reproduced without quote marks (that sentence of 83.53(2) is not in the quote)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "changing the locks to block the landlord’s access is an unreasonable withholding of consent under the statute, so you may not do that. | 83.53(1) does not say a tenant may not change locks; 'unreasonably' called met with no facts on it"},
+  {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "The lease does not give you a right to change the locks | borderline: a claim about the lease's content with no lease quote"},
+  {"reply": 3, "category": "OPEN_CLOSED", "evidence": "you must judge based on frequency, timing, and purpose. | tenant asked to settle abuse_of_access; readings not given"},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "If you consider the repeated unauthorized entries a material failure to comply, you may give a written notice of noncompliance and intent to terminate under Fla. Stat. 83.56(1) | 83.56(1) reaches 83.51(1) or material lease provisions, not 83.53 entries"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "You may also seek a court order to stop the entries, but that requires filing a suit. | also the 83.53(2)(a)-(d) grounds paraphrased with no quote"},
+  {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "Send a written notice to the landlord demanding that future entries comply with the notice and consent requirements, citing the lease and statute | borderline: letter content described in own words, not the posture lines"}
+]},
+{"code": "R031", "scenario": "eval_entry_shower", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "The landlord may enter the dwelling unit upon reasonable notice to the tenant and at a reasonable time for the purpose of repair of the premises. | 83.53(2) text with no quote marks"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The entry was for repair (changing the AC filter), so the landlord needed reasonable notice and a reasonable time. | purpose_of_entry settled as repair"},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "you did not unreasonably withhold consent | borderline: no SHEET line on withholding consent; an inference from no notice"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "None of the alternative circumstances in 83.53(2)(a)–(d) apply: you did not consent, there was no emergency | (a)-(d) paraphrased, never quoted"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "The aggrieved party may recover the damages caused by the noncompliance. | 83.55 text with no quote marks"},
+  {"reply": 3, "category": "OPEN_CLOSED", "evidence": "You confirmed the entry was for repair (changing the AC filter) | the sheet holds only the reason; repair is the open purpose_of_entry question"},
+  {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "You also confirmed you did not consent, there was no emergency, you did not unreasonably withhold consent | withholding consent is on no SHEET line"},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "On your facts, to seek an injunction to stop the landlord from entering without notice, you would need to show irreparable injury, no adequate remedy at law, a clear legal right to be free from unauthorized entry, and that the public interest would be served. | Grant (lock-out, no tenancy proved) applied with no word on how alike the facts are"},
+  {"reply": 3, "category": "ID", "evidence": "LEASE PROFILE, section 22.1, page 9"},
+  {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "If you choose to send the landlord a written notice demanding compliance with the notice requirement | borderline: letter content in own words"}
+]},
+{"code": "R036", "scenario": "eval_entry_shower", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "Fla. Stat. 83.53(2) says the landlord may enter the dwelling unit upon reasonable notice to the tenant and at a reasonable time for the purpose of repair of the premises. | statute text with no quote marks (also 83.53(3))"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "if it is protection or preservation, no notice is required and the entry could be allowed. | borderline: the protection-or-preservation way in offered for a routine AC filter change; the playbook's further-purposes reading (consent, emergency) is not given, and the record fails both of its readings"},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "The lease does not alter these rules. | borderline: a claim about the lease with no lease quote"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "So: You may not change the locks to exclude the landlord; doing so would violate the tenant’s duty not to unreasonably withhold consent to lawful entry. | 83.53(1) does not reach a tenant's lock change; 'unreasonably' called met with no facts"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "The rule: Fla. Stat. 83.53(3) says the landlord shall not abuse the right of access nor use it to harass the tenant. | statute text with no quote marks"},
+  {"reply": 3, "category": "ID", "evidence": "(repeated_entries true)"},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "if a court found the entries to be a violation of 83.67 (e.g., as harassment), this remedy could be available. | 83.67 does not reach entry or harassment; 83.56(1) also applied to 83.53 entries"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "Fla. Stat. 83.56(1) says if the landlord materially fails to comply with the rental agreement or this part within 7 days | paraphrase that changes the rule ('this part' for 83.51(1)), unquoted; also injunctive relief and damages glosses"},
+  {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "citing the entry without notice and repeated entries as noncompliance, demanding future compliance with the notice requirement | borderline: letter content in own words"}
+]},
+{"code": "R002", "scenario": "eval_cases_3day_cash", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "Therefore, regardless of whether your notice included a cash-only demand, the rule answers your question: a landlord may include a cash demand in a three-day notice without invalidating it. | case said to reach the tenant regardless of how alike the facts are"},
+  {"reply": 2, "category": "OPEN_CLOSED", "evidence": "but Moskowitz v. Aslam, as adopted by the court, says it is not prejudicial and does not impose greater obligation. | borderline: notice_form question closed for the tenant through the case"},
+  {"reply": 3, "category": "QUOTE_WRONG", "evidence": "The court quoted the county judge's order in this case: 'The Legislature has provided | program's framing words placed inside the quote marks; Stanley quotes also cited (at 672)/(at 673) where printed (at 673)/(at 674)"},
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "If you wish to assert any defense other than payment, you must deposit rent into the court registry to avoid waiving those defenses and facing an immediate default judgment. | borderline: leaves out the quoted alternative of a motion to determine rent within the 5 days"}
+]},
+{"code": "R022", "scenario": "eval_cases_3day_cash", "replies": 3, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 2, "category": "ID", "evidence": "The ELEMENT STATUS shows the notice demanded $1300"},
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "If you wish to assert defenses other than payment, you must pay rent into the court registry within 5 days (excluding Saturdays, Sundays, and legal holidays) after service of process, or you waive those defenses | borderline: leaves out the quoted alternative of a motion to determine rent"},
+  {"reply": 3, "category": "ID", "evidence": "The open question registry_count notes"}
+]},
+{"code": "R024", "scenario": "eval_cases_3day_cash", "replies": 3, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "If you do, you must pay rent into the registry; if you fail to do so within 5 days after service (excluding weekends and holidays), you waive those defenses | borderline: leaves out the quoted alternative of a motion to determine rent"},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "your facts involve a claimed rent arrear of $1300, so the case may not apply if the rent amount is disputed. | borderline: Olszewska turned on an undetermined rent rate, so a disputed amount is where it would reach; also K.D. Lewis 'your facts mirror this' though the tenant did not withhold rent"},
+  {"reply": 3, "category": "ID", "evidence": "The open question registry_count in PLAYBOOKS"}
+]},
+{"code": "R003", "scenario": "eval_deposit_ghosted", "replies": 5, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "the lease termination date (tenancy_terminated) | also claim_notice_received, termination_date_meaning"},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "The lease says the term ends September 30, 2027, but you moved out early. | SHEET says the lease ended 2026-07-31 and the tenant did not move out early"},
+  {"reply": 1, "category": "DATE_MADE", "evidence": "September 30, 2027 | borderline: not in a lease quote, SHEET value, tenant's words, or printed deadline in this transcript"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The tool computes from the date you confirmed as the end or termination of the lease (2026-07-31) and records the move‑out date beside it, so we use that date. | borderline: on its own premise (lease ends 2027, early move-out) it picks one reading without giving the readings"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "the landlord forfeited the right to impose a claim on the deposit | forfeiture sentence of 83.49(3)(a) not quoted in this reply"},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "you received no notice, the landlord forfeited the right to impose a claim on the deposit. The landlord therefore must return the deposit | forfeiture without 'may file an action for damages after returning the security deposit'"},
+  {"reply": 3, "category": "ID", "evidence": "This is about the deposit not being returned (deposit_not_returned)."},
+  {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "“preserve” (simply states the facts and asks for return) | borderline: preserve reworded; assert and escalate close to the lines"},
+  {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "The “preserve” posture is the simplest and most polite"}
+]},
+{"code": "R010", "scenario": "eval_deposit_ghosted", "replies": 5, "law_replies": 2, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "DEADLINE_REPEAT", "evidence": "(by August 15, 2026) | matches the program's return_if_no_claim date, printed later in the chat"},
+  {"reply": 3, "category": "LETTER_ORDER", "evidence": "Is this about the deposit not being returned? (You mentioned asking for $900 back.) | borderline: asks again for the issue the tenant gave"},
+  {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "(the landlord’s duty to return the deposit or send a claim notice within 30 days) | borderline: own-words glosses added to the posture lines"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "(prevailing party gets costs and attorney fees) | borderline: 83.49(3)(c) stated with no quote in the reply"},
+  {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "The “preserve” posture is the least confrontational."},
+  {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "(prevailing party gets costs and attorney fees) | borderline: 83.49(3)(c) stated with no quote in the reply"},
+  {"reply": 4, "category": "LETTER_ORDER", "evidence": "That you want the letter sent to the landlord at the address above | asks to confirm the delivery method the tenant just gave"}
+]},
+{"code": "R014", "scenario": "eval_deposit_ghosted", "replies": 5, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_WRONG", "evidence": "You said: \"I moved out July 31, 2026.\" | not the tenant's words"},
+  {"reply": 1, "category": "DATE_MADE", "evidence": "If the termination date is the lease end date (September 30, 2027), both periods are still in the future. | model's own comparison"},
+  {"reply": 1, "category": "DEADLINE_REPEAT", "evidence": "would have ended August 15, 2026"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "the lease itself states the term ends September 30, 2027. | borderline: SHEET confirms the lease ended 2026-07-31 and no early move-out, so termination_date_meaning does not arise; the 2027 reading is applied against the record"},
+  {"reply": 2, "category": "QUOTE_WRONG", "evidence": "You said: \"I moved out July 31, 2026.\" | not the tenant's words"},
+  {"reply": 2, "category": "DATE_MADE", "evidence": "the notice period is still running and the landlord may still send a timely notice. | model's own comparison of a 2027 date"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "If the termination date is the lease end date (September 30, 2027) | borderline: as in reply 1, against the SHEET lease end date"},
+  {"reply": 3, "category": "ID", "evidence": "Is this about the security deposit not being returned (deposit_not_returned)?"},
+  {"reply": 3, "category": "LETTER_ORDER", "evidence": "You mentioned asking for $900 back; is that the exact amount you want the landlord to return? | borderline: asks again for a detail given"},
+  {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "(states the facts and asks for return, no legal quotes)"},
+  {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "(The lease shows a $1,850 deposit; you mentioned asking for $900 back.) | borderline: no lease quote shows this"},
+  {"reply": 4, "category": "LETTER_ORDER", "evidence": "confirm that the issue is the deposit not being returned | asked again after the tenant answered"},
+  {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "(the gentlest option)"}
+]},
+{"code": "R004", "scenario": "eval_violation_dog", "replies": 2, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_WRONG", "evidence": "You said: \"The notice was handed to me on 2026-09-26.\" | not the tenant's words; Multach quote also cited (at 1256), printed (at 1255)"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "Fla. Stat. 83.56(5)(a) states that if the landlord accepts rent with actual knowledge of a noncompliance by the tenant | statute text with no quote marks"},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "Because you said the dog is still present (the violation continues), the waiver may not prevent the landlord from terminating for the continuing violation. | leaves out that termination needs the 7 days to pass uncorrected (upcoming)"},
+  {"reply": 1, "category": "CASE_MISREAD", "evidence": "This indicates that acceptance of rent after a breach does not waive the landlord’s right to enforce lease terms for continuing breaches. | Multach was a commercial lease, found 83.56(5) not applicable, and said nothing on continuing breaches"},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "it only shows a nonrefundable pet fee | borderline: lease content asserted with no lease quote"},
+  {"reply": 2, "category": "OFFER", "evidence": "Once you give me those four pieces, I can draft the letter for you. | borderline: tenant asked whether to write a letter, not for a draft"}
+]},
+{"code": "R012", "scenario": "eval_violation_dog", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "(notice_offers_cure true) | also violation_corrected, landlord_accepted_rent_after_notice"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "Because you have not cured, the landlord could proceed to terminate if the notice were otherwise valid (condition met for termination). | the 7-day period is still running"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "under Fla. Stat. 83.56(5)(a), if the landlord accepts rent with actual knowledge of a noncompliance by the tenant, the landlord waives the right to terminate for that noncompliance | statute text with no quote marks"},
+  {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "Under Fla. Stat. 83.56(5)(a), if the landlord accepts rent with actual knowledge of a noncompliance by the tenant, the landlord waives the right to terminate for that noncompliance | statute text with no quote marks"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "The landlord’s acceptance of rent after notice (known) raises the question of whether they had actual knowledge of the dog. | borderline: the landlord's own notice names the dog, so knowledge is in the record"},
+  {"reply": 2, "category": "ONE_SIDED", "evidence": "the landlord may not terminate the lease for that violation under the notice. | borderline: leaves out the 83.56(2)(b) half that a recurrence within 12 months needs no new notice"},
+  {"reply": 2, "category": "ID", "evidence": "(which_paragraph) | also delivered_or_received, twelve_months"},
+  {"reply": 2, "category": "POSTURE_OWN_WORDS", "evidence": "You may choose to write a letter to the landlord explaining that the dog is not yours and that you will have your friend pick it up this weekend, and to request that they withdraw the notice. | borderline: letter content in own words"}
+]},
+{"code": "R029", "scenario": "eval_violation_dog", "replies": 2, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "otherwise they must give a new notice to terminate. | no quote behind it; 83.56(2)(b) says a recurrence within 12 months needs no new notice"},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "the landlord can end your lease only if you do not remove the dog | leaves out the recurrence-within-12-months half that helps the landlord"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "If the landlord had actual knowledge of the dog when accepting rent, they waived the right to terminate for that noncompliance | borderline: knowledge treated as unknown though the landlord's own notice names the dog"},
+  {"reply": 2, "category": "OFFER", "evidence": "Once you provide those details, I can draft the letter for you. | borderline: tenant asked whether to write a letter, not for a draft"},
+  {"reply": 2, "category": "POSTURE_OWN_WORDS", "evidence": "preserve states your account and asks for confirmation | borderline: shortened paraphrase of the preserve line"}
+]}
+]}

@@ -758,10 +758,13 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
   outside quote marks, the `topics` allowed for `get_cases`, `applied`: a reply applies the law, a quote with
   `APPLIED_WORDS` (40) words or more of the model's own addressed to the tenant, and `cases_used`: a reply names
-  a case the turn's `get_cases` result gave), and `screen_must_not`. Every reply is also
+  a case a `get_cases` result in the session gave, `case_given` matching it with or without leading words such
+  as "In"; a court question answered from cases given earlier also counts as calling `get_cases`), and
+  `screen_must_not`. Every reply is also
   measured: empty turns, program cautions, field names, a printed deadline date repeated, quotes only (a quote
   and fewer than 40 words of its own), dates made (a date with a year outside quote marks that no fact, tenant
-  line, sheet answer, or printed deadline holds), cases not given (a "Name v. Name" no `get_cases` result in
+  line, sheet answer, printed deadline, or the test lease's own text, `LEASE_DATES` from the seed's
+  `pages.json`, holds), cases not given (a "Name v. Name" no `get_cases` result in
   the session holds), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
   `OFFER_WORDS`) that only mark a reply for a person to read. Since 2026-10-02 (TODO item 49) a legal question's
   turn expects `applied` instead of "does not decide", and the `LAW_WORDS` screen and the `must_not` patterns

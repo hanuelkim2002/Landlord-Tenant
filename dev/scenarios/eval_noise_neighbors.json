@@ -108,14 +108,14 @@
       {
         "say": "they can't do anything",
         "must": [
-          "does not settle"
+          "does not settle|not settled|readings?\\b"
         ],
         "applied": true
       },
       {
         "say": "break my lease",
         "must": [
-          "does not settle"
+          "does not settle|not settled|readings?\\b"
         ],
         "applied": true
       },

@@ -23,7 +23,8 @@ A scenario's "expect" block (every key optional):
                      must_not looks only outside quote marks),
                      "topics" (the get_cases topics allowed in that turn; any other topic fails),
                      "applied" (true: a reply in the turn applies the law, APPLIED, not quotes alone),
-                     "cases_used" (true: a reply names a case the turn's get_cases result gave)
+                     "cases_used" (true: a reply names a case a get_cases result in the session gave; a
+                     court question answered from cases given earlier also counts as calling get_cases)
   "screen_must"      regexes the whole screen must match (a lease clause shown at the stop, e.g.)
   "screen_must_not"  regexes the whole screen must not match (a wrong suggestion on the sheet, e.g.)
 Every reply is also measured, whatever the scenario: empty turns (reply_empty events), program cautions
@@ -80,6 +81,7 @@ SLASH_DATE = re.compile(r"\b(\d{1,2})/(\d{1,2})/(20\d\d)\b")
 GATEWAY_SIGNS = ("run.py did not come back to a prompt", "Expecting value: line 1 column 1 (char 0)")
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
           "November", "December"]
+LEASE_DATES = frozenset()                                    # set from the seed's lease text when scoring starts
 
 
 # ---- Running: one live session per (scenario, repeat), several at once.
@@ -186,6 +188,19 @@ def dates_in(text):
     return found
 
 
+def lease_dates():
+    """Every date the test lease prints (the seed's pages.json): a reply may quote or restate the lease's dates."""
+    pages = SEED / "pages.json"
+    return frozenset(dates_in(" ".join(p["text"] for p in json.loads(pages.read_text())))) if pages.exists() else frozenset()
+
+
+def case_given(name, fetched):
+    """A "Name v. Name" found in a reply is one the tool gave if it, or it without leading words the pattern also
+    caught ("In Olen Properties Corp. v. Moss"), is in the session's get_cases results."""
+    words = name.split()
+    return any(" ".join(words[i:]) in fetched for i in range(words.index("v.")))
+
+
 def own_words(text):
     """How many words a reply has outside quote marks and source labels: the model's own."""
     return len(SOURCE_LABEL.sub(" ", QUOTED.sub(" ", text)).split())
@@ -212,8 +227,6 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
                for d in ISO_DATE.findall(e.get("shown") or e["text"])]
     text = "\n".join(replies)
     bare = QUOTED.sub("", text)                       # outside quote marks
-    this_turn_cases = "\n".join((e.get("text") or "") for e in turn["entries"]
-                                if e["role"] == "tool" and e["name"] == "get_cases")
     return {
         "say": turn["say"],
         "replies": replies,
@@ -225,8 +238,8 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
         "quotes_only": sum(quotes_only(r) for r in replies),
         "applied": any(applied(r) for r in replies),
         "dates_made": sorted(dates_in(bare) - set(known_dates)),
-        "cases_not_given": sorted({m.group(0) for m in CASE_NAME.finditer(text) if m.group(0) not in fetched}),
-        "cases_used": sorted({m.group(0) for m in CASE_NAME.finditer(text) if m.group(0) in this_turn_cases}),
+        "cases_not_given": sorted({m.group(0) for m in CASE_NAME.finditer(text) if not case_given(m.group(0), fetched)}),
+        "cases_used": sorted({m.group(0) for m in CASE_NAME.finditer(text) if case_given(m.group(0), fetched)}),
         "offer_words": sorted({m.group(0) for m in OFFER_WORDS.finditer(bare)}),
         "field_names": sorted(set(FIELD_NAME.findall(bare))),
         "echo": sorted({iso for iso in set(printed) if any(s in text for s in spoken_dates(iso))}),
@@ -260,7 +273,10 @@ def check_expect(expect, matter, events, turns, screen):
         t = found[0]
         text = "\n".join(t["replies"] + t["footers"])     # what the tenant read: the replies and the program's lines
         for tool in want.get("called", []):
-            results.append((f"'{want['say'][:30]}' calls {tool}", tool in t["called"], t["called"]))
+            # a court question may use cases get_cases gave earlier in the chat (it is called when a topic is on
+            # the point, rule 8): that counts as getting them
+            got = tool in t["called"] or (tool == "get_cases" and bool(t["cases_used"]))
+            results.append((f"'{want['say'][:30]}' calls {tool}", got, t["called"]))
         for tool in want.get("not_called", []):
             results.append((f"'{want['say'][:30]}' no {tool}", tool not in t["called"], t["called"]))
         for pattern in want.get("must", []):
@@ -274,7 +290,8 @@ def check_expect(expect, matter, events, turns, screen):
             results.append((f"'{want['say'][:30]}' uses its cases", bool(t["cases_used"]), t["cases_used"]))
         if "topics" in want:
             wrong = [x for x in t["topics"] if x not in want["topics"]]
-            results.append((f"'{want['say'][:30]}' topic", bool(t["topics"]) and not wrong, t["topics"]))
+            right = (bool(t["topics"]) or bool(t["cases_used"])) and not wrong
+            results.append((f"'{want['say'][:30]}' topic", right, t["topics"]))
     for pattern in expect.get("screen_must", []):
         results.append((f"screen has /{pattern}/", bool(re.search(pattern, screen)), ""))
     for pattern in expect.get("screen_must_not", []):
@@ -333,6 +350,7 @@ def score_run(entry, scenario, out):
     for value in matter.get("facts", {}).values():
         known |= dates_in(str(value))
     known |= dates_in(matter.get("description", "")) | {e["when"][:10] for e in entries if e.get("when")}
+    known |= LEASE_DATES                               # every scenario reads the same test lease
     known |= set().union(*(dates_in(ev.get("text", "")) for ev in events if ev["kind"] == "tenant_update"), set())
     for e in entries:
         if e["role"] in ("tenant", "sheet") or (e["role"] == "tool" and e.get("name") == "get_deadlines"):
@@ -369,7 +387,9 @@ def score_run(entry, scenario, out):
 
 
 def score(out):
+    global LEASE_DATES
     sys.path.insert(0, str(HERE))                         # corpus, for the playbook issue names
+    LEASE_DATES = lease_dates()
     runs = json.loads((out / "runs.json").read_text())
     scores = [score_run(r, json.loads((SCENARIOS / f"{r['scenario']}.json").read_text()), out) for r in runs]
     (out / "scores.json").write_text(json.dumps(scores, indent=2))

@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- The first eval of applied answers (TODO item 49, done but for the author's sample, which stays as item 49;
+  `docs/evals/2026-10-02-apply/`). The organizing code (29df5d7, a git worktree) against the applying code
+  (8f4ae3b), 16 scenarios, 3 runs each, at the same time, no crash or gateway trouble. Code-scored: runs meeting
+  every expectation 6 to 31 of 48; legal questions applied 0 to 62 of 75; quotes-only replies 72 to 0; open
+  points with their readings 0 to 6 of 6; court questions with the cases used 0 to 18 of 18; but program
+  cautions 6 to 48, turns with ids 5 to 39, dates made 0 to 4. Blind-scored (the applying side, eight scorers,
+  77% agreement): 21.5 of 101.5 legal answers applied well; 270 slips in 128 replies, 192.5 firm, led by ids
+  and prompt names (48), rules restated without their quote (42), conditions wrong (28) or missed (16.5), open
+  questions closed (19.5), and cases misread (16.5) or one-sided (12.5). Findings are TODO items 51 to 60.
+  Scorer fixes made while reading the results, applied to both sides: the test lease's own dates count as
+  known (`dev/eval.py`, `LEASE_DATES`); the noise story's open points accept "not settled" and "readings"; a
+  court question answered from cases given earlier in the chat counts, and a case name with a leading "In" is
+  matched without it (`case_given`). Charts shown in the session: the comparison, and the blind slips by
+  category. The baseline worktree (no `.env`, no matters left) was moved to the Trash.
 - The eval measures applied answers (TODO item 49, first part). Was: a legal question's turn expected "does
   not decide" or the fallback line, `must_not` patterns failed "entitled", "allowed", "forfeit", and case
   names, and a `LAW_WORDS` screen marked must, may, can about a party. Now: 34 turn expectations rewritten; a

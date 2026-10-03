@@ -1,0 +1,95 @@
+{"scorer": "B2_b", "runs": [
+{"code": "R005", "scenario": "eval_leave_early_family", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "You told us you have an early termination addendum (ELEMENT STATUS shows early_termination_addendum true)"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "- (1) Treat the rental agreement as terminated and retake possession for his or her own account, thereby terminating any further liability of the tenant. ... - (3) Stand by and do nothing, holding the lessee liable for the rent as it comes due. (83.595 text with no quote marks)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "plus possibly rent and charges for damages through the end of the month in which the landlord retakes possession (83.595(4)(a) stated, never quoted)"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: The lease's seven-day notice requirement is no more than 60 days, so it meets the notice requirement in 83.595(4) (fee_notice_period settled, using the lease's notice of vacating, not a notice term of the fee)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: unless your addendum includes a waiver of additional rent beyond that month (the waiver reaches rent beyond the month, not the rent through it that 83.595(4)(a) grants)"},
+  {"reply": 2, "category": "ID", "evidence": "(ELEMENT STATUS does not show claim_notice_received)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "If the landlord did give proper notice and you did not object in writing within 15 days, they may deduct the claimed amount (83.49(3)(b) never quoted)"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "If the landlord did not give such notice, they forfeit the right to make a claim against the deposit and must return it (leaves out that a tenant who gives no 7-day notice relieves the landlord of that notice, which the quoted lease 4.3 says; tenant has not given notice)"},
+  {"reply": 3, "category": "ID", "evidence": "(ELEMENT STATUS shows early_termination_amount 2100)"},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "A judge has said a fee like that (exceeding two months' rent) isn't allowed (Olen struck a 3-month default provision for violating Lefemine and 83.595(1), not for exceeding a two-month cap)"}
+]},
+{"code": "R009", "scenario": "eval_leave_early_family", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: the lease's seven-day notice satisfies the \"no more than 60 days' notice\" requirement (fee_notice_period settled from the lease's notice of vacating)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "such as treating the agreement as terminated and retaking possession for their own account (no further liability), retaking possession for your account ... or standing by (83.595(1)-(3) paraphrased, not quoted)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "a lease term that waives a statutory right is void under Fla. Stat. 83.47 (83.47 never quoted or loaded)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "Your failure to give the seven-day vacate notice does not affect the landlord's statutory duty to give notice of a deposit claim (83.49(5): failure to give such notice relieves the landlord of the notice requirement of (3)(a))"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "You said the monthly rent is ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) per month (lease text without quote marks or source)"},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "The Olen Properties rule bars liquidated damages that exceed two months' rent (Olen did not rule on a two-month cap)"}
+]},
+{"code": "R023", "scenario": "eval_leave_early_family", "replies": 3, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: the lease requires seven days' notice before vacating, which is no more than 60 days (fee_notice_period settled)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: If you give the required seven days' notice, the landlord may choose to charge the early termination fee (83.595(4) turns on the notice the agreement requires, not on the tenant giving it)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "The landlord may claim damages beyond ordinary wear and tear."},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: possible costs include: the early termination fee of $2,100 ...; rent liability under options (2) or (3) (omits 83.595(4)(a) rent and charges through the month the landlord retakes possession)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "(3) if you do not object in writing within 15 days of receiving that notice, they may deduct the claim and return the balance (83.49(3)(b) not quoted)"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "(4) if they fail to send that notice within 30 days, they forfeit the right to make a claim from the deposit (quoted 83.49(5) relief for a tenant who gives no 7-day notice left out; tenant has given none)"},
+  {"reply": 3, "category": "QUOTE_WRONG", "evidence": "\"The statute does not allow for the creation of a liquidated damages remedy to bypass the statutory provisions.\" (at 560) (printed at 561)"},
+  {"reply": 3, "category": "ID", "evidence": "The program printed these cases for the tenant, above your reply. Apply them as rule 8 says."}
+]},
+{"code": "R006", "scenario": "eval_nc_mixed_heater", "replies": 2, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "ID", "evidence": "ELEMENT STATUS shows you have paid rent since you knew about the problem (rent_paid_since_known true)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "The rule's protection applies only if the complaint was made pursuant to s. 83.56(1) (83.64(1) examples \"include, but are not limited to\")"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "which requires a written notice specifying the noncompliance and indicating the intention to terminate the lease or withhold rent (83.56(1) not quoted; \"withhold rent\" not in it)"}
+]},
+{"code": "R025", "scenario": "eval_nc_mixed_heater", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "Fla. Stat. 83.64, which prohibits a landlord from discriminatorily increasing rent or decreasing services ... for exercising rights under local, state, or federal fair housing laws (no quote)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: I need to know what your landlord said about your religion to see if it may be unlawful under Fla. Stat. 83.64 (a retaliation section applied to a remark)"},
+  {"reply": 2, "category": "ID", "evidence": "(ELEMENT STATUS shows written_notice_delivered false)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "For the retaliation protection to apply, you must show your complaint was either (1) made pursuant to 83.56(1) ... or (2) an exercise of fair housing rights (examples list is not exhaustive)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "(written notice specifying noncompliance and intention to terminate) (83.56(1) not quoted)"}
+]},
+{"code": "R037", "scenario": "eval_nc_mixed_heater", "replies": 2, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "ID", "evidence": "(written_notice_delivered false) ... (notice_states_termination_intent not known)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "For the rule to protect your complaint, you must have complained to the landlord pursuant to 83.56(1). (examples list is not exhaustive)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "That requires written notice specifying the noncompliance and indicating the intention to terminate the rental agreement. (83.56(1) not quoted)"}
+]},
+{"code": "R007", "scenario": "eval_noise_neighbors", "replies": 4, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "You said: \"true\" (source_rents_from_landlord). ... open questions in the tool's playbook (whose_duty, remedy_not_duty, what_is_unreasonable)"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "the statute does not require the landlord to act, and the lease does not create a duty for them to do so (remedy_not_duty settled)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "a notice to terminate if the landlord materially fails to comply with s.83.51(1) or material lease provisions (83.56(1) not quoted)"},
+  {"reply": 2, "category": "ID", "evidence": "(disturbance_description, disturbance_source, disturbance_frequency, disturbance_started)"},
+  {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "you have not sent a notice to cure under 83.56(1) specifying noncompliance and intention to terminate (record says only that a complaint was in writing)"}
+]},
+{"code": "R039", "scenario": "eval_noise_neighbors", "replies": 4, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "ELEMENT STATUS shows source_rents_from_landlord: true (from user) ... PLAYBOOKS, remedy_not_duty"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "So: The landlord may deliver a written notice ... but is not required to act."},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: the disturbance occurs almost every night, indicating a continued disturbance (met) (\"unreasonable\" never set beside the facts)"},
+  {"reply": 2, "category": "ID", "evidence": "PLAYBOOKS, ending_own_lease:"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: not a failure to comply with s. 83.51(1) (that section concerns building maintenance) (83.51(1) not quoted)"},
+  {"reply": 4, "category": "QUOTES_ONLY", "evidence": "borderline: This tool has no cases on that. (no get_cases call; Morse, printed in this chat, speaks of a tenant \"creating a disturbance\")"}
+]},
+{"code": "R041", "scenario": "eval_noise_neighbors", "replies": 4, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The rule's condition of a \"subsequent or continued unreasonable disturbance\" is met by the nightly loud parties (what_is_unreasonable settled)"},
+  {"reply": 2, "category": "ID", "evidence": "borderline: (no such quote in the lease profile)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "The landlord's duty under s. 83.51(1) is to comply with building, housing, health codes and maintain structural components, not to control other tenants' noise."},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "borderline: Morse ... supports the notice requirement in 83.56(1) (Morse read 83.56(2)(a) and 83.57 on a landlord's termination)"},
+  {"reply": 4, "category": "QUOTES_ONLY", "evidence": "borderline: This tool has no cases on that. (no get_cases call; Morse, printed in this chat, speaks of a tenant \"creating a disturbance\")"}
+]},
+{"code": "R008", "scenario": "eval_rent_hike_duplex", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "(see open question \"no_increase_section\")"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: a rent increase from $1,850 to $1,150 ... is actually a decrease (SHEET confirms the landlord raised the rent)"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: The lease does not contain a provision allowing the landlord to raise the rent during the term, so the landlord may not unilaterally increase the rent."},
+  {"reply": 2, "category": "ID", "evidence": "\"increase_notice_received ... 2026-09-27\", \"increase_notice_written ... true\""},
+  {"reply": 2, "category": "QUOTE_WRONG", "evidence": "You said: \"complained_before_increase ... true\" and \"complaint_date ... 2026-09-12\" (not the tenant's words)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "The rent was *decreased*, so the statutory condition of an \"increase ... rent\" is not met. (SHEET confirms an increase)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you could sue for damages under Fla. Stat. 83.55 (which allows recovery when the landlord fails to comply with part II), but you would need to prove the landlord's retaliatory motive and that you suffered harm"},
+  {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: Alternatively, you could sue for damages under Fla. Stat. 83.55 (one retaliation reading given as an available option)"}
+]},
+{"code": "R028", "scenario": "eval_rent_hike_duplex", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "if the tenancy is month-to-month, a rent increase may be made on the same notice required to terminate the tenancy ... so the increase would be allowed (one reading of no_increase_section picked)"},
+  {"reply": 1, "category": "DATE_MADE", "evidence": "the notice you received (written, dated 2026-09-27) gives more than 30 days before the effective date (2026-11-01)"},
+  {"reply": 1, "category": "ID", "evidence": "(see open question \"no_increase_section\")"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "the rule prohibits a rent increase, not a rent decrease. Therefore the rent decrease you received is not prohibited (SHEET confirms an increase)"},
+  {"reply": 2, "category": "OPEN_CLOSED", "evidence": "the open question \"retaliation\" notes ... that 83.64 works only as a defense in an action for possession (one reading given as settled)"},
+  {"reply": 2, "category": "ID", "evidence": "the open question \"retaliation\""},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "it illustrates that the defense requires the tenant to have acted in good faith (Salmonte says nothing about good faith)"}
+]},
+{"code": "R038", "scenario": "eval_rent_hike_duplex", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "You confirmed the lease runs from October 1, 2026 to September 30, 2027 ... during the lease term the landlord may not change the rent (SHEET: no fixed end date, month-to-month; 83.46(1) applied to a rent change)"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The landlord is not allowed to raise (or lower) the rent to any amount during the lease term without your agreement. (no_increase_section settled, no readings)"},
+  {"reply": 2, "category": "ID", "evidence": "(written_notice_date) ... (new_rent) ... see the open question retaliation below"}
+]}
+]}

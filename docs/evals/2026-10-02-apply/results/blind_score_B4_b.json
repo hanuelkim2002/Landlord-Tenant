@@ -1,0 +1,471 @@
+{
+ "scorer": "B4_b",
+ "runs": [
+  {
+   "code": "R019",
+   "scenario": "eval_repair_mold_apt",
+   "replies": 4,
+   "law_replies": 3,
+   "applied_well": 1,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"under Fla. Stat. 83.56(5)(a), you may have waived the right to terminate or sue for that noncompliance, but not for any subsequent or continuing noncompliance\" (83.56(5)(a) stated in own words; not quoted anywhere in the reply)"
+    },
+    {
+     "reply": 3,
+     "category": "CONDITION_WRONG",
+     "evidence": "\"The rule's condition that the landlord must keep areas safe and clean is met by your facts: you notified the landlord of mold and water leak\" (Bennett's rule is the 83.51(2)(a)3 common-area duty; the reply itself says the mold and leak are inside the dwelling unit)"
+    },
+    {
+     "reply": 3,
+     "category": "CASE_MISREAD",
+     "evidence": "\"Both involve the landlord's repair attempt being inadequate (gas line not fixed leading to explosion vs mold returning after painting)\" (Mansur's printed facts show no tenant notice and no landlord repair attempt; the tenants opened the gas line and Mansur struck a match)"
+    },
+    {
+     "reply": 3,
+     "category": "ONE_SIDED",
+     "evidence": "\"The cases above address landlord maintenance duties and repair obligations under 83.51, which could apply to mold\" (relies on Bennett, Mansur, Paterson, Smith; leaves out Solomon v. Gentry (no implied warranty, reversed against landlord liability), Haynes v. Lloyd (summary judgment for landlord), Menendez (no statutory violation) from the same get_cases result)"
+    },
+    {
+     "reply": 3,
+     "category": "QUOTE_UNMARKED",
+     "evidence": "\"duty to maintain roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and plumbing in reasonable working condition\" (83.51(1)(b) text reproduced without quote marks)"
+    },
+    {
+     "reply": 3,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "borderline: \"Both involve a tenant repeatedly complaining about a defect\" (the record shows one written notice through the portal; also 'you have not waived the duty (no indication of waiver)' though the record shows rent paid with knowledge)"
+    },
+    {
+     "reply": 4,
+     "category": "QUOTE_UNMARKED",
+     "evidence": "\"The rule in 83.51(1) requires the landlord to maintain roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and all other structural components in good repair and capable of resisting normal forces and loads\" (statute text without quote marks)"
+    },
+    {
+     "reply": 4,
+     "category": "CONDITION_MISSED",
+     "evidence": "\"duty to maintain plumbing in reasonable working condition and structural components in good repair is triggered by your notice of the AC leak and mold\" (applies 83.51(1)(b)'s list without its condition 'Where there are no applicable building, housing, or health codes' (codes not stored))"
+    },
+    {
+     "reply": 4,
+     "category": "CONDITION_WRONG",
+     "evidence": "\"You said the AC leaks water on the floor (a plumbing issue)\" (an AC unit is not in 83.51(1)(b)'s words; the reply calls it plumbing and applies the plumbing duty)"
+    },
+    {
+     "reply": 4,
+     "category": "QUOTE_WRONG",
+     "evidence": "\"Bennett v. Mattison, 382 So. 2d 873 (Fla. 1st DCA 1980): \"A landlord\" (the quoted words 'A landlord's violation of the act is at least evidence of negligence' are Paterson v. Deeb at 1216, not Bennett at 875)"
+    },
+    {
+     "reply": 4,
+     "category": "ONE_SIDED",
+     "evidence": "\"Cases show that a landlord\" (relies on Bennett, Paterson, Mansur, Smith; omits Solomon v. Gentry, Haynes v. Lloyd, Menendez from the same get_cases result, which went for the landlord)"
+    },
+    {
+     "reply": 4,
+     "category": "CASE_MISREAD",
+     "evidence": "borderline: \"These cases support that the landlord had a duty to repair the mold and AC leak after your notice\" (Mansur (gas explosion) and Smith (common-area foliage) said to reach the tenant with no word in this reply on how alike the facts are)"
+    }
+   ]
+  },
+  {
+   "code": "R020",
+   "scenario": "eval_repair_mold_apt",
+   "replies": 4,
+   "law_replies": 3,
+   "applied_well": 1,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "ID",
+     "evidence": "\"(written_notice_date, written_notice_method)\" (field ids in the reply; also notice_states_withholding_intent, rent_paid_since_known)"
+    },
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"Continue paying rent and seek other remedies, such as suing for damages or requesting a rent abatement through court\" (remedies stated with no quote; 83.56(5)(a) waiver also paraphrased unquoted)"
+    },
+    {
+     "reply": 3,
+     "category": "ID",
+     "evidence": "\"(problem_description)\" (field ids; also (landlord_response), 'see open question material_noncompliance')"
+    },
+    {
+     "reply": 3,
+     "category": "CASE_MISREAD",
+     "evidence": "\"The case suggests the landlord may have breached the duty to repair defective conditions upon notice\" (Mansur's rule said to reach the tenant with no word on how alike its facts (gas explosion) are)"
+    },
+    {
+     "reply": 3,
+     "category": "ONE_SIDED",
+     "evidence": "\"Cases: Paterson v. Deeb\" (relies on Mansur, Paterson, Smith; leaves out Solomon v. Gentry, Haynes v. Lloyd, Menendez from the same get_cases result)"
+    },
+    {
+     "reply": 3,
+     "category": "QUOTE_WRONG",
+     "evidence": "borderline: \"constitute a “dangerous defective condition” under s. 83.51(1)\" (the phrase is Mansur's, cited to 83.51(1), where it does not appear)"
+    },
+    {
+     "reply": 3,
+     "category": "OPEN_CLOSED",
+     "evidence": "borderline: \"Also open: whether the failure is material turns on how serious the condition is, how long it has lasted, and how it affects living in the unit\" (states reading (b) of material_noncompliance as the test; reading (a) not given)"
+    },
+    {
+     "reply": 4,
+     "category": "ID",
+     "evidence": "\"(rent_paid_since_known true)\" (field ids; also 'see open question material_noncompliance')"
+    },
+    {
+     "reply": 4,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "\"You confirmed you are still in possession and have not terminated the lease.\" (not on any SHEET line)"
+    },
+    {
+     "reply": 4,
+     "category": "CONDITION_MISSED",
+     "evidence": "\"However, you may still pursue a claim for breach of the landlord\" (83.51(1) quoted but the mold and AC leak never set beside (a) codes (not stored) or (b)'s list before concluding a claim lies)"
+    },
+    {
+     "reply": 4,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"Sue for damages (actual, possibly consequential) or seek a court order requiring the landlord to make repairs (specific performance)\" (remedies from memory, no quote; 83.55 not quoted)"
+    },
+    {
+     "reply": 4,
+     "category": "ONE_SIDED",
+     "evidence": "\"Cases: Mansur v. Eubanks\" (relies on Mansur, Paterson, Smith; leaves out Solomon v. Gentry, Haynes v. Lloyd, Menendez)"
+    },
+    {
+     "reply": 4,
+     "category": "QUOTE_WRONG",
+     "evidence": "borderline: \"or a “dangerous defective condition” under s. 83.51(1)\" (Mansur's phrase cited to 83.51(1))"
+    },
+    {
+     "reply": 4,
+     "category": "OPEN_CLOSED",
+     "evidence": "borderline: \"Also open: whether the failure is material turns on how serious the condition is\" (reading (b) given as the test, reading (a) left out)"
+    }
+   ]
+  },
+  {
+   "code": "R027",
+   "scenario": "eval_repair_mold_apt",
+   "replies": 4,
+   "law_replies": 3,
+   "applied_well": 1,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "ID",
+     "evidence": "\"(notice_states_withholding_intent false)\" (field ids throughout; also 'see open question material_noncompliance')"
+    },
+    {
+     "reply": 1,
+     "category": "QUOTE_UNMARKED",
+     "evidence": "\"Fla. Stat. 83.56(5)(a) states that if the tenant pays rent with actual knowledge of a noncompliance by the landlord\" (statute words reproduced without quote marks)"
+    },
+    {
+     "reply": 1,
+     "category": "CONDITION_WRONG",
+     "evidence": "\"so you may have waived the right to assert this defense for the known noncompliance\" (83.56(5)(a) reaches the right to terminate or bring a civil action, not the 83.60(1)(b) defense)"
+    },
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "borderline: \"The lease does not alter the landlord\" ('The lease does not alter the landlord's duty under 83.51(1) for a unit that is not a single-family home or duplex' with 83.51(1) not quoted in the reply)"
+    },
+    {
+     "reply": 3,
+     "category": "ID",
+     "evidence": "\"(caused_by_tenant_side false)\" (field ids; also (problem_description), (landlord_response))"
+    },
+    {
+     "reply": 3,
+     "category": "CONDITION_MISSED",
+     "evidence": "\"This means the landlord has a duty to repair the mold and AC leak after your notice.\" (Mansur's rule reaches 'dangerous defective conditions'; whether the mold and leak are dangerous is left out)"
+    },
+    {
+     "reply": 3,
+     "category": "CASE_MISREAD",
+     "evidence": "\"So the landlord's duty to repair is not waived by you.\" (Mansur's rule said to reach the tenant with no word on how alike its facts (gas explosion) are)"
+    },
+    {
+     "reply": 3,
+     "category": "CONDITION_WRONG",
+     "evidence": "borderline: \"You said you did not cause the problem (caused_by_tenant_side false). So the landlord's duty to repair is not waived by you.\" (waiver turned on causation; the record shows rent paid with knowledge)"
+    },
+    {
+     "reply": 3,
+     "category": "ONE_SIDED",
+     "evidence": "\"Mansur v. Eubanks, 401 So. 2d 1328 (Fla. 1981) [not verified]\" (relies on Mansur, Bennett, Paterson, Smith; leaves out Solomon v. Gentry, Haynes v. Lloyd, Menendez)"
+    },
+    {
+     "reply": 3,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"for conditions within your unit, 83.51(1) applies\" (83.51(1) not quoted in the reply)"
+    },
+    {
+     "reply": 4,
+     "category": "ID",
+     "evidence": "\"the ELEMENT STATUS does not show any damages fact\" (prompt section name; also (rent_paid_since_known true), (open question which_code_applies))"
+    },
+    {
+     "reply": 4,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"so the duty is not waived by you under 83.51(4)\" (83.51(4) not quoted, and its words concern conditions the tenant caused, not waiver)"
+    }
+   ]
+  },
+  {
+   "code": "R021",
+   "scenario": "eval_lease_end_renewal",
+   "replies": 3,
+   "law_replies": 3,
+   "applied_well": 0,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "QUOTES_ONLY",
+     "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (the confirmed lease notice term (60 days written notice if not renewing) and 83.575(1), which the playbook says to apply to the lease's words, speak to the question)"
+    },
+    {
+     "reply": 2,
+     "category": "CONFIRM_IN_CHAT",
+     "evidence": "\"Do you plan to stay after the lease or rental period ends?\" (the sheet's planning_to_stay question asked in chat; the law question is not answered)"
+    },
+    {
+     "reply": 3,
+     "category": "CONDITION_MISSED",
+     "evidence": "\"With the landlord\" ('With the landlord's permission to stay, you may be liable to the landlord for an additional month's rent.' leaves out 83.575(3)'s 'and fails to give notice required under s. 83.57 (3)')"
+    },
+    {
+     "reply": 3,
+     "category": "DATE_MADE",
+     "evidence": "\"then staying in January 2027 is before the lease ends\" (year added and dates compared by the model)"
+    },
+    {
+     "reply": 3,
+     "category": "CONFIRM_IN_CHAT",
+     "evidence": "\"you would need to confirm the lease end date and whether the landlord has agreed to let you stay after the term\" (sheet facts asked for in chat; the end date is already on the SHEET)"
+    },
+    {
+     "reply": 3,
+     "category": "LAW_UNSOURCED",
+     "evidence": "borderline: \"You are still within the lease term and must continue to pay rent and comply with all lease terms.\" (stated as law with no quote)"
+    }
+   ]
+  },
+  {
+   "code": "R034",
+   "scenario": "eval_lease_end_renewal",
+   "replies": 2,
+   "law_replies": 2,
+   "applied_well": 0,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "QUOTES_ONLY",
+     "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (the confirmed lease notice term and 83.575(1) (fetched before the reply) speak to the question)"
+    },
+    {
+     "reply": 2,
+     "category": "QUOTE_WRONG",
+     "evidence": "\"without the permission of the landlord, the landlord may also recover double the amount of rent due\" (83.58's two sentences spliced; 'may recover possession ... s. 83.59 . The landlord' dropped without marks)"
+    },
+    {
+     "reply": 2,
+     "category": "ONE_SIDED",
+     "evidence": "borderline: \"So: If you stay in January without the landlord\" (the quote and the answer leave out 83.58's 'the landlord may recover possession of the dwelling unit')"
+    },
+    {
+     "reply": 2,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "\"You said you do not plan to stay after the lease or rental period ends (planning_to_stay false, ELEMENT STATUS)\" (planning_to_stay was only proposed; no SHEET line confirms it, and the tenant asked about staying)"
+    },
+    {
+     "reply": 2,
+     "category": "ID",
+     "evidence": "\"(end_notice_given false, ELEMENT STATUS)\" (field ids and prompt section name; also notice_before_vacating, lease_end_notice_terms)"
+    },
+    {
+     "reply": 2,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"you may also be subject to any liquidated damages the lease provides for missing that notice, if the landlord gives you the written notice described in 83.575(2)\" (83.575(2) not quoted)"
+    },
+    {
+     "reply": 2,
+     "category": "CONDITION_WRONG",
+     "evidence": "borderline: \"Because you have not given the 60\" ('Because you have not given the 60-day notice ... you may also be subject to any liquidated damages' treats the notice as missed; the record shows only that it has not been given yet)"
+    }
+   ]
+  },
+  {
+   "code": "R040",
+   "scenario": "eval_lease_end_renewal",
+   "replies": 3,
+   "law_replies": 3,
+   "applied_well": 0,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"you would need to negotiate a new lease with the landlord, but there is no statutory or lease\" (rule stated with no quote; also 'The statute does not set a deadline for signing a renewal')"
+    },
+    {
+     "reply": 2,
+     "category": "CONDITION_WRONG",
+     "evidence": "\"The lease does not contain a notice\" ('The lease does not contain a notice-of-non-renewal provision' against the SHEET: the lease requires notice before moving out at the end, '60 days written notice if I'm not renewing')"
+    },
+    {
+     "reply": 2,
+     "category": "ID",
+     "evidence": "\"until “planning_to_stay” is confirmed\" (field id)"
+    },
+    {
+     "reply": 3,
+     "category": "CONDITION_MISSED",
+     "evidence": "\"If the landlord has given you permission to stay, you could be liable for an additional month\" (leaves out 83.575(3)'s 'and fails to give notice required under s. 83.57 (3)')"
+    },
+    {
+     "reply": 3,
+     "category": "LAW_UNSOURCED",
+     "evidence": "borderline: \"the statute does not automatically create a new tenancy when you stay after the term ends\" (stated with no quote)"
+    },
+    {
+     "reply": 3,
+     "category": "CONDITION_WRONG",
+     "evidence": "borderline: \"but this has not been confirmed on the sheet\" (the end date 2026-12-31 is on a SHEET line)"
+    }
+   ]
+  },
+  {
+   "code": "R026",
+   "scenario": "eval_nonpayment_taped",
+   "replies": 3,
+   "law_replies": 3,
+   "applied_well": 1,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "borderline: \"your monthly rent is $1,850.00\" (listed among 'You confirmed' facts; no SHEET line holds it)"
+    },
+    {
+     "reply": 1,
+     "category": "CONDITION_MISSED",
+     "evidence": "\"so your partial payment does not stop the landlord from proceeding\" (leaves out the 83.56(5)(a) steps the landlord must take after accepting partial rent (receipt, registry, new notice); the record shows no receipt)"
+    },
+    {
+     "reply": 1,
+     "category": "QUOTE_UNMARKED",
+     "evidence": "\"a landlord does not waive the right to terminate the rental agreement by accepting partial rent for the period\" (83.56(5)(a) text without quote marks)"
+    },
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"(which would require paying the rent into the court registry)\" (83.60(2) not quoted)"
+    },
+    {
+     "reply": 2,
+     "category": "ID",
+     "evidence": "\"PLAYBOOKS, notice_form readings:\" (prompt section name and open-question id)"
+    },
+    {
+     "reply": 2,
+     "category": "OPEN_CLOSED",
+     "evidence": "borderline: \"Applied: The rule requires the notice to demand only rent and use of the premises.\" (reading (a) of notice_form stated as the rule before both readings are given)"
+    },
+    {
+     "reply": 2,
+     "category": "CONDITION_WRONG",
+     "evidence": "borderline: \"the landlord may have a chance to cure the defect before any eviction action proceeds\" (83.60(1)(a) gives the chance to cure 'before dismissal of the action', inside an action)"
+    }
+   ]
+  },
+  {
+   "code": "R030",
+   "scenario": "eval_nonpayment_taped",
+   "replies": 2,
+   "law_replies": 2,
+   "applied_well": 0,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "borderline: \"The demanded amount is less than the monthly rent, so it may not include a late fee.\" (whether the notice includes a late fee is not in the record; the reply leans instead of naming it not known)"
+    },
+    {
+     "reply": 1,
+     "category": "ONE_SIDED",
+     "evidence": "borderline: \"If this reading applies, the notice cannot include a late fee because it demands charges other than rent.\" (leaves out 83.60(1)(a), 'The landlord must be given an opportunity to cure a deficiency in a notice', so a defect does not end a case by itself)"
+    },
+    {
+     "reply": 2,
+     "category": "ID",
+     "evidence": "\"(partial_payment_receipt false)\" (field id)"
+    },
+    {
+     "reply": 2,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "\"nor posted a new 3-day notice\" (whether a new notice was posted is not in the record)"
+    },
+    {
+     "reply": 2,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"To raise any defense other than payment, you would then need to pay the rent into the court registry under 83.60(2).\" (83.60(2) not quoted)"
+    }
+   ]
+  },
+  {
+   "code": "R042",
+   "scenario": "eval_nonpayment_taped",
+   "replies": 2,
+   "law_replies": 2,
+   "applied_well": 0,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "ID",
+     "evidence": "\"(ELEMENT STATUS, amount_demanded)\" (prompt section names and field id; also (LEASE PROFILE, rent section))"
+    },
+    {
+     "reply": 1,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "\"The notice you received demanded an amount for rent (though less than the full rent) and did not state a late fee.\" (the record does not show what the $1,175 is made of)"
+    },
+    {
+     "reply": 1,
+     "category": "OPEN_CLOSED",
+     "evidence": "\"the notice cannot lawfully include a late fee unless the lease provides for it, which it does not\" (notice_form settled; readings not given)"
+    },
+    {
+     "reply": 1,
+     "category": "ONE_SIDED",
+     "evidence": "borderline: \"The statute\" ('The statute's required form limits the notice to rent only.' leaves out 83.60(1)(a)'s opportunity to cure a deficiency in a notice)"
+    },
+    {
+     "reply": 2,
+     "category": "ID",
+     "evidence": "\"ELEMENT STATUS shows partial_rent_accepted true\" (prompt section name and field ids)"
+    },
+    {
+     "reply": 2,
+     "category": "CASE_MISREAD",
+     "evidence": "\"We hold that the refusal of the tender did not constitute a waiver or a forgiveness of the debt.\" (Multach (commercial lease, landlord refused tender) quoted with no word on how alike its facts are; here the landlord accepted)"
+    },
+    {
+     "reply": 2,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "borderline: \"Therefore the landlord has not satisfied the statutory conditions\" (whether a new notice was posted is not known; the reply treats 'no indication' as fact)"
+    },
+    {
+     "reply": 2,
+     "category": "CONDITION_WRONG",
+     "evidence": "\"Until they do, they have not met the prerequisite for filing an action for possession after accepting partial rent.\" (the registry step is 'upon filing the action', so the steps are not all prerequisites to filing)"
+    }
+   ]
+  }
+ ]
+}

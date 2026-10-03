@@ -1,0 +1,301 @@
+{
+ "scorer": "B3_a",
+ "runs": [
+  {
+   "code": "R011",
+   "scenario": "eval_cases_late_claim",
+   "replies": 4,
+   "law_replies": 4,
+   "applied_well": 2,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "ID",
+     "evidence": "\"The program's deadline listing shows the 30-day date has passed (DEADLINE STATUS for claim_notice_deadline).\""
+    },
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"The tenant's failure to object in writing does not waive any right to seek damages in a separate action.\""
+    },
+    {
+     "reply": 2,
+     "category": "ONE_SIDED",
+     "evidence": "\"So: Under Durene, the landlord must return your deposit.\""
+    },
+    {
+     "reply": 2,
+     "category": "ID",
+     "evidence": "\"(ELEMENT STATUS shows lease term end from lease_profile.term_end)\""
+    },
+    {
+     "reply": 3,
+     "category": "OVERCLAIM",
+     "evidence": "\"So you would get the full $1,850 back.\""
+    },
+    {
+     "reply": 3,
+     "category": "ID",
+     "evidence": "\"(LEASE PROFILE, security_deposit)\""
+    },
+    {
+     "reply": 3,
+     "category": "QUOTE_UNMARKED",
+     "evidence": "borderline: lease wording of the deposit amount reproduced without quote marks; \"The lease says your deposit is ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00)\""
+    }
+   ]
+  },
+  {
+   "code": "R013",
+   "scenario": "eval_cases_late_claim",
+   "replies": 4,
+   "law_replies": 4,
+   "applied_well": 3,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "DATE_MADE",
+     "evidence": "\"The notice was sent about 52 days after the tenancy ended\""
+    },
+    {
+     "reply": 2,
+     "category": "DATE_MADE",
+     "evidence": "\"The notice was sent about 52 days after the tenancy ended\""
+    },
+    {
+     "reply": 2,
+     "category": "ID",
+     "evidence": "\"tenancy_terminated known from user\""
+    },
+    {
+     "reply": 2,
+     "category": "OVERCLAIM",
+     "evidence": "\"So: Under Malagon, the court would award you the full deposit\""
+    },
+    {
+     "reply": 2,
+     "category": "QUOTE_WRONG",
+     "evidence": "\"Second, the Landlord's obligation to provide this notice was excused by the Tenant's failure to give the notice required by section 83.49(5).\""
+    },
+    {
+     "reply": 2,
+     "category": "UNCONFIRMED_FACT",
+     "evidence": "borderline: the sheet confirms the lease ended or was terminated 2026-06-30; early vacating is taken from the lease term end and stated as fact; \"You vacated before the lease end date (June 30, 2026 vs. lease end September 30, 2027)\""
+    },
+    {
+     "reply": 2,
+     "category": "CASE_MISREAD",
+     "evidence": "borderline: the cases' rules are applied to the tenant with only '(late notice)' as a word on how alike the facts are; \"Your facts: same as above (late notice). Applied: The landlord missed the 30‑day deadline. So: Under Casey, the landlord forfeited the right\""
+    },
+    {
+     "reply": 3,
+     "category": "ID",
+     "evidence": "\"DEADLINE STATUS shows claim_notice_deadline passed\""
+    },
+    {
+     "reply": 4,
+     "category": "ID",
+     "evidence": "borderline: prompt section name in lowercase prose; \"The lease profile does not contain an attorney‑fee waiver.\""
+    }
+   ]
+  },
+  {
+   "code": "R015",
+   "scenario": "eval_cases_late_claim",
+   "replies": 4,
+   "law_replies": 4,
+   "applied_well": 1,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "QUOTE_WRONG",
+     "evidence": "\"You said: \"the tenancy ended on June 30, 2026\"\""
+    },
+    {
+     "reply": 1,
+     "category": "DATE_MADE",
+     "evidence": "\"The 30‑day period after June 30, 2026 ends July 30, 2026\""
+    },
+    {
+     "reply": 2,
+     "category": "DATE_MADE",
+     "evidence": "\"The 30‑day period after June 30, 2026 ends July 30, 2026\""
+    },
+    {
+     "reply": 2,
+     "category": "CASE_MISREAD",
+     "evidence": "borderline: the cases' rule is said to reach the tenant with no word on how alike the cases' facts are (they are alike, but the reply never says so); \"So: Under the rule in those cases, the landlord forfeits the right to impose a claim upon the deposit\""
+    },
+    {
+     "reply": 3,
+     "category": "DATE_MADE",
+     "evidence": "\"The 30‑day period after June 30, 2026 ends July 30, 2026\""
+    },
+    {
+     "reply": 3,
+     "category": "OVERCLAIM",
+     "evidence": "\"So you receive the full deposit of $1,850.00; the $700 claim is not deducted.\""
+    },
+    {
+     "reply": 4,
+     "category": "QUOTE_WRONG",
+     "evidence": "\"of Landlord's intention to impose a claim on the Deposit and the reason for the lease.\""
+    },
+    {
+     "reply": 4,
+     "category": "DATE_MADE",
+     "evidence": "\"The 30‑day period after June 30, 2026 ends July 30, 2026\""
+    },
+    {
+     "reply": 4,
+     "category": "OVERCLAIM",
+     "evidence": "\"So you receive the full deposit of $1,850.00; the $700 claim is not deducted.\""
+    }
+   ]
+  },
+  {
+   "code": "R016",
+   "scenario": "eval_claim_carpet",
+   "replies": 3,
+   "law_replies": 1,
+   "applied_well": 0,
+   "slips": [
+    {
+     "reply": 3,
+     "category": "QUOTES_ONLY",
+     "evidence": "borderline: the reply rightly says the cases do not reach pre-existing damage, but sets out the notice rule and the e-mail open questions without saying anything about the tenant's e-mailed, dated notice; \"Judges have ruled that if a landlord fails to give the required written notice within 30 days after move‑out, they forfeit the right ... These cases address notice defects, not whether the damage was pre‑existing.\""
+    }
+   ]
+  },
+  {
+   "code": "R033",
+   "scenario": "eval_claim_carpet",
+   "replies": 4,
+   "law_replies": 2,
+   "applied_well": 1,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "DATE_MADE",
+     "evidence": "\"(2026-08-31 plus 30 days = 2026-09-30)\""
+    },
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"The statute allows e-mail only if the parties have signed an addendum for electronic delivery (83.505(1)).\""
+    },
+    {
+     "reply": 1,
+     "category": "QUOTE_UNMARKED",
+     "evidence": "borderline: near-verbatim Lease 15.2 wording without quote marks or section; \"The lease requires you to return the premises in the same condition as at the commencement date, ordinary wear and tear excepted, with carpets professionally cleaned.\""
+    },
+    {
+     "reply": 1,
+     "category": "ID",
+     "evidence": "\"(see email_notice_conditions)\""
+    },
+    {
+     "reply": 3,
+     "category": "LETTER_ORDER",
+     "evidence": "borderline: asks the same question again after the tenant answered 'Yes, that's everything, please write it now' with the preserve posture already chosen; \"What do you want the landlord to do? For example, return the full $1,850.00 deposit, withdraw the $650.00 claim, or something else?\""
+    },
+    {
+     "reply": 4,
+     "category": "QUOTES_ONLY",
+     "evidence": "borderline: quotes Lease 15.2 ('same condition as at the Commencement Date') and does not apply it to the tenant's pre-existing stains; \"The lease and statute do not say what happens if the landlord's claim is for pre‑existing damage.\""
+    }
+   ]
+  },
+  {
+   "code": "R035",
+   "scenario": "eval_claim_carpet",
+   "replies": 4,
+   "law_replies": 2,
+   "applied_well": 0,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "ID",
+     "evidence": "\"(DEADLINE STATUS shows tenant_objection_deadline upcoming)\""
+    },
+    {
+     "reply": 1,
+     "category": "DATE_MADE",
+     "evidence": "\"(2026-09-18 is within 30 days of 2026-08-31)\""
+    },
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"If you serve a timely written objection, the landlord may not deduct the claim unless they sue you for damages.\""
+    },
+    {
+     "reply": 1,
+     "category": "OPEN_CLOSED",
+     "evidence": "borderline: objection_form leaves open an objection made another way; the reply settles the method from Lease 22.1; \"The objection must be sent by hand, certified mail, return receipt requested, or nationally recognized overnight courier for statutory communications.\""
+    },
+    {
+     "reply": 4,
+     "category": "CASE_MISREAD",
+     "evidence": "\"then under Durene and Casey the landlord has forfeited the right to impose a claim on the security deposit and may not use the deposit as a set‑off for any damages, including pre‑existing stains.\""
+    },
+    {
+     "reply": 4,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"If you object timely, the landlord may not deduct the claim unless they sue you for damages.\""
+    },
+    {
+     "reply": 4,
+     "category": "ID",
+     "evidence": "\"(see email_notice_conditions in PLAYBOOKS)\""
+    }
+   ]
+  },
+  {
+   "code": "R017",
+   "scenario": "eval_cases_retaliation",
+   "replies": 2,
+   "law_replies": 2,
+   "applied_well": 0,
+   "slips": [
+    {
+     "reply": 2,
+     "category": "CONDITION_MISSED",
+     "evidence": "borderline: hedged, but leaves out the 'good faith' in 83.64(3)'s good-cause examples (and the tenant's good faith under 83.64(1)), which the facts turn on; \"If the landlord proceeds with an eviction based on that cat violation, the landlord may be able to prove good cause, which would defeat a retaliatory defense.\""
+    }
+   ]
+  },
+  {
+   "code": "R018",
+   "scenario": "eval_cases_retaliation",
+   "replies": 2,
+   "law_replies": 2,
+   "applied_well": 1,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "borderline: burden on good cause stated with no quote behind it, against the quoted 83.64(3) 'if the landlord proves'; \"you would need to provide evidence of retaliation and lack of good cause.\""
+    }
+   ]
+  },
+  {
+   "code": "R032",
+   "scenario": "eval_cases_retaliation",
+   "replies": 2,
+   "law_replies": 2,
+   "applied_well": 1,
+   "slips": [
+    {
+     "reply": 1,
+     "category": "LAW_UNSOURCED",
+     "evidence": "\"If confirmed, complaining to a governmental agency about code violations is protected activity under 83.64(1)(a).\""
+    },
+    {
+     "reply": 2,
+     "category": "QUOTES_ONLY",
+     "evidence": "borderline: a question about what courts have said; the case is set out with nothing about the tenant's facts (the report, the cat notice); \"Applied: The court said a tenant’s retaliatory‑conduct defense fails if the landlord proves the eviction is for good cause, such as a genuine lease violation.\""
+    }
+   ]
+  }
+ ]
+}

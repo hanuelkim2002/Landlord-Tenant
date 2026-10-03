@@ -8,16 +8,57 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 The author's decision of 2026-10-02 (README, Purpose): an answer applies the stored statute and cases to the
 tenant's confirmed facts instead of listing quotes. Seen on the web page that day: "what can I to sue the
 landlord" got three statute quotes (83.56(1), 83.60(1)(b), 83.64(1)) and "This tool does not decide that."
-In development, on test matters only. Until item 46 is done the code still organizes only: the rules, the
-program's "does not decide" lines, and the page's sidebar say so. In this order, each its own change.
+In development, on test matters only. Items 46 to 50 were done the same day (CHANGELOG, 2026-10-02); the first
+eval of applied answers (`docs/evals/2026-10-02-apply/`) left the author's sample (49) and items 51 to 60, the
+structural ones first.
 
-49. The eval for applying. Rubric categories in place of LAW and the offer screen: UNCONFIRMED_FACT (a fact
-    used that the record does not hold), CONDITION_MISSED (a condition of the quoted rule not addressed),
-    CONDITION_WRONG (a condition called met or failed against the record), OPEN_CLOSED (a playbook open
-    question presented as settled), CASE_MISREAD (a case's facts or holding misstated against its page),
-    ONE_SIDED (a case on the question against the tenant left out), QUOTES_ONLY (quotes and no application).
-    The scenarios' `must_not` patterns ("you should", the legality line) are rewritten. Whether an
-    application is right needs a law reader: the author scores a sample beside the blind scorers.
+49. The author's sample of the first applying eval (`docs/evals/2026-10-02-apply/`): six transcripts, their
+    contexts, and a scoring sheet in `dev/eval_runs/2026-10-02-apply-after/author_sample/` (not committed: they
+    quote the test lease). The question code and the blind scorers cannot settle: is each application right on
+    the law? Mark the rubric's categories (`dev/eval_rubric.md`) and right, wrong, or partly; the scorers'
+    calls on the same transcripts are in `results/blind_score_*.json` (codes in `blind_key.json`).
+51. `get_deadlines` still ends the turn (`return_direct`, item 19), so a question that mixes a deadline with the
+    law gets the listing and no applied answer: 6 of the 13 legal questions not applied in the eval ("If I get
+    rid of the dog by Friday, am I safe?" 3 of 3). The reason for ending the turn, the model retyping printed
+    dates, is gone: since item 44 the model gets no dates, and since item 46 DEADLINE STATUS gives it "passed"
+    or "upcoming". Option: `return_direct` off, the receipt saying the dates are printed above and to apply
+    their status without writing one.
+52. The fallback line where an open question or a case is on the point: 6 of the 13 (a cash-only 3-day notice
+    3 of 3, though the notice-form open question and Moskowitz v. Aslam speak to it; the renewal deadline 2 of
+    3). Rule 2's "If nothing you have or can fetch answers" is read literally when no stored sentence uses the
+    tenant's word ("cash"). A Not / Instead pair: when an open question or a CASE TOPICS topic is on the point,
+    its readings or cases, never the fallback line.
+53. Ids and prompt names in replies: turns with a field id 5 before, 39 after; the blind scorers' most common
+    slip (48, nearly all firm): "ELEMENT STATUS", "PLAYBOOKS", "DEADLINE STATUS", fact ids, open question ids.
+    Part of it is item 50's own prose, which names ids in parentheses ("(rent_paid_since_known)",
+    "(termination_date_meaning)"), and DEADLINE STATUS's clock ids. Options: plain words in the playbooks'
+    model-facing prose and labels in DEADLINE STATUS; a program check that flags an id in a reply, like the
+    quote cautions.
+54. A rule restated without its quote (LAW_UNSOURCED, 42, 34.5 firm): applied answers paraphrase sections, or
+    parts of a quoted one, that they do not quote. A pair for rule 1: every rule the answer turns on is quoted,
+    including a second condition.
+55. Conditions applied wrong or missed (28 and 16.5): 83.53(1) read as forbidding the tenant to change the locks;
+    83.575(3)'s extra month without its second condition; the 7-day cure not yet run on a violation notice;
+    83.60(2)'s motion to determine rent left out; 83.56(5)(a)'s steps after partial rent read as settled. For
+    the author: which of these belong in the playbooks' failure modes (item 50 named some).
+56. Open questions closed (19.5): the entry story's air-conditioning filter change called "repair" in every run;
+    the noise story's remedy and unreasonableness; the early-termination fee's notice period. Rule 5's pair is
+    in the prompt; the readings are in PLAYBOOKS. Check whether the readings' wording invites picking one.
+57. Cases one-sided or misread (12.5 and 16.5): the mold story's answers left out the three cases in the same
+    result that went for the landlord, in all three runs; cases applied with no word on how alike the facts
+    are; a quote credited to the wrong case. A code-side option: a caution when a reply after `get_cases` does
+    not name every case it printed.
+58. Program cautions rose from 6 to 48. Two kinds: real ones (the tenant's words reworded inside quote marks,
+    "I moved out July 31, 2026."), and false alarms where a reply quotes a case or a reading whole and its inner
+    quote marks, made straight, break `citations.quote_spans`' pairing. Fix the pairing for nested quotes first,
+    then count again.
+59. Dates the model made (blind 12.5; code 4): 30 days counted from a move-out ("2026-07-30"), "about 52 days",
+    "whichever date controls, the 30-day period has passed". Rule 3's pairs are in the prompt; keep counting.
+60. The eval's test data: every scenario uses the same test lease, whose rent ($1,850), deposit, and 2027 term
+    end conflict with some stories (a rent hike read as a decrease against the lease's rent; a $1,000 deposit
+    story read as $1,850; the 2027 end date against the sheet's 2026-07-31). Scenarios need stories that fit the
+    lease, or leases that fit the stories, before their answers can be judged on those facts.
+
 ## Harness and code
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.
