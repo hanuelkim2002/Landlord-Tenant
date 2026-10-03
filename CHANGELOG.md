@@ -5,6 +5,19 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Failure modes for conditions the model missed or misapplied (TODO item 55, done). Was: CONDITION_WRONG 28 and
+  CONDITION_MISSED 16.5 in the blind scores of 2026-10-02, and item 50's failure modes named some of the
+  sections but not the slips seen. Five, each quoting `statutes/` (playbook checks: every quote OK), in the
+  guidance the model reads under THE TOOL'S NOTES ON YOUR ISSUES:
+  landlord_entered_unannounced 0.4, 83.53(1) read as forbidding the tenant to change the locks (its words are a
+  duty not to withhold consent to enter unreasonably; 83.67(2) on locks binds the landlord); lease_ending 0.4,
+  83.575(3)'s extra month now with both conditions, permission to stay and no 83.57(3) notice (was: only
+  permission); notice_received_violation 0.4, termination or a failed cure said while a curable notice's 7 days
+  have not run; notice_received_nonpayment 0.5, 83.60(2) given without the motion to determine rent (the old
+  failure mode quoted only the waiver, which the replies copied), and 83.56(5)(a)'s steps after partial rent
+  read as settled or as all due before filing. The other condition slips the scorers found went to TODO item 63
+  for the author. These failure modes, like the rest of the playbooks, wait for the author's hand check (item 2).
+
 - Rules restated without their quote (TODO item 54, done). Was: the blind scorers' second most common slip,
   LAW_UNSOURCED (42, 34.5 firm, eval of 2026-10-02): a section cited and retold ("Fla. Stat. 83.56(5)(a) states
   that if the landlord accepts rent ..."), the second half of a quoted rule in the model's own words, or a

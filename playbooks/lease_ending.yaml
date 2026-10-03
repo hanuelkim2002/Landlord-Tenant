@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.575.txt, statutes/83.57.txt, statutes/83.58.txt, statutes/83.46.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.3
+  version: 0.4
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -178,6 +178,6 @@ guidance:
     - Computing a notice date from a period the lease sets; the tool computes only the month-to-month dates.
     - Saying a lease's end-of-term notice clause binds the tenant without the condition in 83.575(1), that it also requires the landlord to notify the tenant "within such notice period if the rental agreement will not be renewed".
     - Saying the tenant owes liquidated damages for missing the lease's notice without 83.575(2)'s condition, the landlord's written notice "specifying the tenant’s obligations under the notification provision".
-    - Applying 83.575(3)'s extra month's rent or 83.58's double rent while the record does not show whether the landlord gave permission to stay.
+    - Applying 83.575(3)'s extra month's rent without both its conditions, that the tenant "remains on the premises with the permission of the landlord" and "fails to give notice required under s. 83.57 (3)"; or 83.58's double rent while the record does not show whether the landlord gave permission to stay.
     - Applying 83.57 to a lease with a specific duration, or 83.575 to a month-to-month tenancy; when the agreement says nothing on duration, 83.46(2) sets it by how often rent is paid.
     - Computing any date outside compute_deadlines.

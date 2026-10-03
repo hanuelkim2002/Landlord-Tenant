@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.56.txt, statutes/83.60.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.4
+  version: 0.5
 
 counting:
   convention: court business days, trigger day not counted, Saturdays, Sundays, and the circuit's court holidays skipped (calendars/)
@@ -179,8 +179,9 @@ guidance:
   failure_modes:
     - Counting the 3 days yourself, in calendar days or with holidays; only get_deadlines computes the date, and whether it has passed comes from its listing.
     - Giving the computed date without its counting line, or without the date the notice itself states.
-    - Saying the tenant has a defense in court without 83.60(2), under which not paying the rent into the registry "constitutes an absolute waiver of the tenant’s defenses other than payment".
+    - Saying the tenant has a defense in court without 83.60(2), or giving 83.60(2)'s registry payment without its other step. What waives the defenses other than payment is failing to pay the rent into the registry "or to file a motion to determine the amount of rent to be paid into the registry", which "constitutes an absolute waiver of the tenant’s defenses other than payment".
     - Treating an accepted partial payment as ending the notice; 83.56(5)(a) says the landlord does not waive "by accepting partial rent for the period".
+    - Reading 83.56(5)(a)'s steps after partial rent as settled on the record, or as all due before filing. The receipt comes "before filing an action for possession", the partial rent goes into the registry "upon filing the action for possession", and the list ends "or 3. Post a new 3-day notice reflecting the new amount due". Which step the landlord took is a fact the record must show.
     - Saying a defective notice ends the case; 83.60(1)(a) gives the landlord "an opportunity to cure a deficiency in a notice" first.
     - Applying the repair defense in 83.60(1)(b) without the written notice it requires, "indicating the intention of the tenant not to pay rent by reason thereof"; the repair issue's facts hold it.
     - Not asking whether court papers have been served.

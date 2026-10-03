@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.53.txt, statutes/83.67.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.3
+  version: 0.4
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -144,5 +144,6 @@ guidance:
     - Applying the 24-hour notice rule to an entry that was not for repair, or requiring notice for an entry "for the protection or preservation of the premises".
     - Saying an entry broke 83.53 while the record lacks the reason given, whether notice was given, or whether the tenant consented; name the missing fact.
     - Counting the hours between notice and entry yourself; the tool records the times and counts nothing.
+    - Reading 83.53(1) as forbidding the tenant to change the locks. It is a duty not to "unreasonably withhold consent to the landlord to enter the dwelling unit" for the purposes it lists; whether a lock change does that turns on facts the record must show (an entry asked for, its purpose, the tenant's answer). The stored sentence on changing locks, 83.67(2), binds the landlord, who "shall not prevent the tenant from gaining reasonable access to the dwelling unit by any means".
     - Skipping 83.67 when the tenant mentions locks, utilities, or belongings. 83.67(6) makes a landlord who violates it "liable to the tenant for actual and consequential damages or 3 months’ rent, whichever is greater".
     - Promising an amount of damages. 83.55 (fetch it first) lets the aggrieved party "recover the damages caused by the noncompliance"; how much is for a court.

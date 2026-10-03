@@ -616,9 +616,11 @@ The program note after a sheet still tells the model, in the conversation, that 
 Ten playbooks, one per label in `ISSUE_LABELS` except `other`: deposit_not_returned,
 deposit_claim_received, repair_not_made, notice_received_nonpayment, notice_received_violation,
 landlord_entered_unannounced, rent_increased, wants_to_leave_early, lease_ending, neighbor_disturbance. The
-playbooks have `verified_by: null` until the author's hand check; all are version 0.3 (deposit_not_returned
-and notice_received_nonpayment 0.4) since their open questions and failure modes were rewritten for applying
-the law (2026-10-02) and their prose lost its ids (2026-10-03). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
+playbooks have `verified_by: null` until the author's hand check. Their open questions and failure modes were
+rewritten for applying the law (2026-10-02), their prose lost its ids (2026-10-03), and four got failure modes
+for conditions the model missed or misapplied (TODO item 55, 2026-10-03): version 0.3 for most,
+deposit_not_returned, landlord_entered_unannounced, lease_ending, and notice_received_violation 0.4,
+notice_received_nonpayment 0.5. Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
 (83.53(2) is in hours), rent_increased (no section on notice of a rent increase), neighbor_disturbance (no
 deadline for a landlord to act on one tenant's complaint about another; its open questions: whose duty
 83.52(7) states, 83.56(2)(a) as a remedy not a duty, what is unreasonable, and whether 83.56(1) lets the

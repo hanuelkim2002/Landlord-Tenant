@@ -17,10 +17,6 @@ structural ones first.
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on
     the law? Mark the rubric's categories (`dev/eval_rubric.md`) and right, wrong, or partly; the scorers'
     calls on the same transcripts are in `results/blind_score_*.json` (codes in `blind_key.json`).
-55. Conditions applied wrong or missed (28 and 16.5): 83.53(1) read as forbidding the tenant to change the locks;
-    83.575(3)'s extra month without its second condition; the 7-day cure not yet run on a violation notice;
-    83.60(2)'s motion to determine rent left out; 83.56(5)(a)'s steps after partial rent read as settled. For
-    the author: which of these belong in the playbooks' failure modes (item 50 named some).
 56. Open questions closed (19.5): the entry story's air-conditioning filter change called "repair" in every run;
     the noise story's remedy and unreasonableness; the early-termination fee's notice period. Rule 5's pair is
     in the prompt; the readings are in PLAYBOOKS. Check whether the readings' wording invites picking one.
@@ -36,6 +32,12 @@ structural ones first.
     "whichever date controls, the 30-day period has passed". Rule 3's pairs are in the prompt; keep counting. After
     items 51 to 53 (2026-10-03): 4 turns, all counts like "Thirty days after June 30, 2026 is July 30, 2026.",
     now caught by the eval's echo measure (a computed deadline in a reply).
+63. Condition slips the blind scorers found on 2026-10-02 that no failure mode names yet (item 55 added five).
+    For the author: which belong in the playbooks, each quoted from `statutes/`: 83.49(5) left out where the
+    record shows no 7-day vacate notice (wants_to_leave_early, the deposit playbooks); 83.64(1)'s examples read
+    as the only protected acts; 83.51(1)(b)'s duties applied without its opening condition on codes, and a
+    case's common-area duty (83.51(2)(a)) applied inside the unit (repair_not_made); 83.56(5)(a)'s waiver
+    applied to the 83.60(1)(b) defense; a rent increase read as a decrease against the test lease's rent (item 60).
 60. The eval's test data: every scenario uses the same test lease, whose rent ($1,850), deposit, and 2027 term
     end conflict with some stories (a rent hike read as a decrease against the lease's rent; a $1,000 deposit
     story read as $1,850; the 2027 end date against the sheet's 2026-07-31). Scenarios need stories that fit the
