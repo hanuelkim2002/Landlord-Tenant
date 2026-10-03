@@ -39,10 +39,6 @@ program's "does not decide" lines, and the page's sidebar say so. In this order,
     ONE_SIDED (a case on the question against the tenant left out), QUOTES_ONLY (quotes and no application).
     The scenarios' `must_not` patterns ("you should", the legality line) are rewritten. Whether an
     application is right needs a law reader: the author scores a sample beside the blind scorers.
-50. Playbooks, for the author: `guidance.failure_modes` were written for organizing ("Saying the landlord
-    must stop the disturbance or must evict the neighbor"); rewrite them as application slips, and give each
-    open question its readings. `check_all_playbooks` as always.
-
 ## Harness and code
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.

@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.53.txt, statutes/83.67.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.1
+  version: 0.2
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -71,20 +71,39 @@ spec:
     - id: notice_in_hours
       sections: ["83.53"]
       text: >-
-        83.53(2) says "“Reasonable notice” for the purpose of repair is notice given at least 24 hours prior
-        to the entry". This tool counts in days and does not compute a time in hours. It records when the tenant
-        says notice was given and when the entry happened.
+        83.53(2) says "“Reasonable notice” for the purpose of repair is notice given at least 24 hours prior to the
+        entry". This tool counts in days and does not compute a time in hours. When the record says no notice was
+        given, the 24-hour condition is not met on those facts; when notice was given, set the time the tenant gives
+        beside the time of entry and say the tool does not count the hours between them.
     - id: purpose_of_entry
       sections: ["83.53"]
       text: >-
-        The 24-hour rule is stated "for the purpose of repair". For the other purposes in 83.53(1), 83.53(2) lists
-        circumstances instead ("With the consent of the tenant", "In case of emergency", and others). The tool
-        records the reason the landlord gave and does not decide which rule applies.
+        83.53(2) sets three ways in: "at any time for the protection or preservation of the premises"; "upon
+        reasonable notice to the tenant and at a reasonable time for the purpose of repair of the premises"; and,
+        for the further purposes in 83.53(1) (inspecting, supplying agreed services, showing the unit, and the
+        others listed), only in the circumstances 83.53(2)(a)-(d) list. Apply the one that fits the reason in the
+        record (entry_reason_given); with no reason recorded, say which facts each turns on. What stays open is a
+        visit that fits more than one, such as routine maintenance or pest control.
+      readings:
+        - >-
+          Routine maintenance is repair of the premises, so reasonable notice and a reasonable time are enough.
+        - >-
+          Routine maintenance or a service visit is one of the further purposes in 83.53(1), "supply agreed services"
+          among them, so it needs the tenant's consent, an emergency, or another circumstance in 83.53(2)(a)-(d), and
+          notice alone is not enough.
     - id: abuse_of_access
       sections: ["83.53"]
       text: >-
-        83.53(3) says "The landlord shall not abuse the right of access nor use it to harass the tenant." The
-        stored text does not define abuse or harassment. No cases loaded yet.
+        83.53(3) says "The landlord shall not abuse the right of access nor use it to harass the tenant." The stored
+        text does not define abuse or harassment. Set the record's entries beside it (how often, at what times, with
+        what notice, repeated_entries).
+      readings:
+        - >-
+          Abuse means entering outside the ways 83.53(2) allows, so entries the statute allows are not abuse however
+          often they happen.
+        - >-
+          Entries each allowed on its own can still abuse the right, or harass, by their number, timing, or purpose,
+          since 83.53(3) is a sentence of its own after the ways in.
 
 # ---------- read by the model ----------
 guidance:
@@ -123,7 +142,8 @@ guidance:
       this tool records as you report it and does not compute.
 
   failure_modes:
-    - Computing a 24-hour window; the tool records times and computes nothing.
-    - Treating an entry "for the protection or preservation of the premises" the same as an entry for repair without showing both texts.
-    - Skipping the 83.67 question when the tenant mentions locks, utilities, or belongings.
-    - Deciding whether an entry was an abuse of access or harassment.
+    - Applying the 24-hour notice rule to an entry that was not for repair, or requiring notice for an entry "for the protection or preservation of the premises".
+    - Saying an entry broke 83.53 while the record lacks the reason given, whether notice was given, or whether the tenant consented; name the missing fact.
+    - Counting the hours between notice and entry yourself; the tool records the times and counts nothing.
+    - Skipping 83.67 when the tenant mentions locks, utilities, or belongings. 83.67(6) makes a landlord who violates it "liable to the tenant for actual and consequential damages or 3 months’ rent, whichever is greater".
+    - Promising an amount of damages. 83.55 (fetch it first) lets the aggrieved party "recover the damages caused by the noncompliance"; how much is for a court.

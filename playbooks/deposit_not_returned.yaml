@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.49.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.2
+  version: 0.3
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -94,7 +94,20 @@ spec:
   open_questions:
     - id: termination_date_meaning
       sections: ["83.49"]
-      text: The clocks run from "termination of the rental agreement." The text does not say whether that is the lease end date or the move-out date. Record both; no cases loaded yet.
+      text: >-
+        The 15-day and 30-day clocks run from "termination of the rental agreement." The text does not say whether
+        that is the lease end date or the move-out date when the two differ; when they are the same day the
+        question does not arise. The tool computes from the date the tenant confirmed as the end or termination of
+        the lease and records the move-out date beside it.
+      readings:
+        - >-
+          The lease end date: 83.49(3)(a) begins "Upon the vacating of the premises for termination of the rental
+          agreement", naming vacating and termination as two things, and 83.49(5) speaks of a tenant who "vacates or
+          abandons the premises before the expiration of the term", so leaving early does not by itself end the
+          agreement.
+        - >-
+          The move-out date: the disclosure 83.49(2)(d) requires tells the tenant that the landlord must give notice
+          "WITHIN 30 DAYS AFTER YOU MOVE OUT", which reads the same clock as running from the day the tenant leaves.
 
 # ---------- read by the model ----------
 guidance:
@@ -128,10 +141,13 @@ guidance:
     preserve: States move-out date, amount, forwarding address. Asks for return. Cites nothing.
     assert: Adds the 83.49(3)(a) obligation, quoted.
     escalate: Adds the forfeiture consequence, quoted, and 83.49(3)(c) fee-shifting.
-    notice_sufficiency: 'Sending this letter does not start any deadline that this tool computes for this issue. The only notice from a tenant that this tool tracks here is in Fla. Stat. 83.49(5), which says that "any tenant who vacates or abandons the premises before the expiration of the term specified in the rental agreement" "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises". The same sentence also covers week-to-week, month-to-month, and other periodic tenancies. Whether it applies to you is not something this tool decides.'
+    notice_sufficiency: 'Sending this letter does not start any deadline that this tool computes for this issue. The only notice from a tenant that this tool tracks here is in Fla. Stat. 83.49(5), which says that "any tenant who vacates or abandons the premises before the expiration of the term specified in the rental agreement" "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises". The same sentence also covers week-to-week, month-to-month, and other periodic tenancies. Whether it applies to you turns on when you moved out and on your lease (the sentence begins "Except when otherwise provided by the terms of a written rental agreement"); ask in the chat to have it applied to your confirmed facts.'
 
   failure_modes:
-    - Using the lease end date as the termination date without also recording move-out.
+    - Applying either clock without saying which date it counts from, or using the lease end date without the move-out date beside it (termination_date_meaning).
+    - Saying the landlord "forfeits the right to impose a claim upon the security deposit" unless the record shows both conditions, that the tenant confirmed no notice of claim arrived and that get_deadlines lists the 30-day notice date as passed; never your own count.
+    - Stopping at the forfeiture. The same sentence lets the landlord "file an action for damages after returning the security deposit to the tenant".
+    - Applying 83.49(3)(a) to an early move-out or a periodic tenancy without 83.49(5), whose missing 7-day notice "relieves the landlord of the notice requirement of paragraph (3)(a)".
+    - Promising fees and costs without the condition in 83.49(3)(c), which applies when "either party institutes an action in a court of competent jurisdiction to adjudicate the party’s right to the security deposit", and then to the prevailing party.
     - Treating a "nonrefundable fee" as outside 83.49 without reading 83.491.
-    - Skipping the 7-day notice question on an early move-out.
     - Computing any date outside compute_deadlines.

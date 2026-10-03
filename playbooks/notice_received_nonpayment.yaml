@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.56.txt, statutes/83.60.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.1
+  version: 0.2
 
 counting:
   convention: court business days, trigger day not counted, Saturdays, Sundays, and the circuit's court holidays skipped (calendars/)
@@ -89,37 +89,51 @@ spec:
     - id: counting_rule
       sections: ["83.56"]
       text: >-
-        83.56(3) counts "3 days, excluding Saturday, Sunday, and legal holidays, after delivery of written demand
-        by the landlord for payment of the rent or possession of the premises". The tool counts forward from the
-        delivery date, the delivery day not counted, and shows the date the notice itself states next to it. How
-        the days are counted (the delivery day, delivery on a weekend or holiday, when the last day ends) is an
-        open question the author is researching. Show the counting line with the date and do not settle it.
+        83.56(3) counts "3 days, excluding Saturday, Sunday, and legal holidays, after delivery of written demand by
+        the landlord for payment of the rent or possession of the premises". The tool counts forward from the delivery
+        date, the delivery day not counted, and shows the date the notice itself states next to it. How the days are
+        counted (the delivery day, delivery on a weekend or holiday, when the last day ends) is an open question the
+        author is researching. Show the counting line with the date and do not settle it.
     - id: court_observed_holidays
       sections: ["83.56"]
       text: >-
-        83.56(3) says "Legal holidays for the purpose of this section shall be court-observed holidays only." The
-        tool skips every holiday in the circuit Chief Judge's memorandum for the year, including those marked as
-        designated by the Chief Judge and those it marks as additional discretionary holidays. Whether each of those is a
-        court-observed holiday in the statute's sense is an open question. Calendars are stored only for the
-        counties in calendars/; for any other county, or a year with no memorandum, the date is not computed.
+        83.56(3) says "Legal holidays for the purpose of this section shall be court-observed holidays only." The tool
+        skips every holiday in the circuit Chief Judge's memorandum for the year, including those marked as designated
+        by the Chief Judge and those it marks as additional discretionary holidays. Whether each of those is a
+        court-observed holiday in the statute's sense is an open question. Calendars are stored only for the counties
+        in calendars/; for any other county, or a year with no memorandum, the date is not computed.
     - id: registry_count
       sections: ["83.60"]
       text: >-
-        Once an eviction case is served, 83.60(2) sets "5 days, excluding Saturdays, Sundays, and legal holidays,
-        after the date of service of process". The definition of legal holidays in 83.56(3) is stated "for the
-        purpose of this section", and whether 83.60(2) uses the same list is an open question. The tool does not
-        compute this date.
+        Once an eviction case is served, 83.60(2) requires a tenant who raises "any defense other than payment" to pay
+        the rent into the registry of the court, within "5 days, excluding Saturdays, Sundays, and legal holidays,
+        after the date of service of process". Apply the requirement itself when the record shows court papers were
+        served. The definition of legal holidays in 83.56(3) is stated "for the purpose of this section", and whether
+        83.60(2) uses the same list is an open question, so the tool does not compute this date.
     - id: notice_form
-      sections: ["83.56"]
+      sections: ["83.56", "83.60"]
       text: >-
-        83.56(3) says the notice "shall contain a statement in substantially the following form". The tool does
-        not decide whether a notice meets that form.
+        83.56(3) says the notice "shall contain a statement in substantially the following form". Set what the record
+        says the notice states (the amount demanded, the date to pay by, how it was delivered) beside the form's
+        parts. A defect does not end a case by itself: 83.60(1)(a) says "The landlord must be given an opportunity to
+        cure a deficiency in a notice or in the pleadings before dismissal of the action." What stays open is how far a
+        notice may differ and still be in substantially that form, and whether it may demand more than rent.
+      readings:
+        - >-
+          A notice that leaves out a part of the form (the county, the excluded days, the date to pay by) or demands
+          charges other than rent is not in substantially the form, since the form demands only "the sum of dollars
+          for the rent and use of the premises".
+        - >-
+          Substantially allows differences that do not mislead the tenant about how much, by when, and to whom, and
+          charges the lease itself calls rent may be demanded as rent.
     - id: partial_rent_steps
       sections: ["83.56"]
       text: >-
-        If partial rent is accepted after the notice, 83.56(5)(a) lists what the landlord must then do ("If
-        partial rent is accepted after posting the notice for nonpayment, the landlord must:"). The tool records
-        whether a receipt was given and does not decide whether the list was followed.
+        If partial rent is accepted after the notice, 83.56(5)(a) says the landlord does not waive "by accepting
+        partial rent for the period", and lists what the landlord must then do ("If partial rent is accepted after
+        posting the notice for nonpayment, the landlord must:"): a receipt, the money into the court registry on
+        filing, or a new 3-day notice. Apply the list to the record (partial_rent_accepted, partial_payment_receipt);
+        the sheet asks only about the receipt, so the other two steps are not known yet unless the tenant says.
 
 # ---------- read by the model ----------
 guidance:
@@ -161,8 +175,10 @@ guidance:
       your notice states. How the days are counted is stated with the date as an assumption.
 
   failure_modes:
-    - Counting the 3 days in calendar days, or counting holidays yourself; only get_deadlines computes the date.
-    - Reporting the computed date without its counting line, or without the date the notice itself states.
-    - Computing the 83.60(2) date; the tool does not.
-    - Treating an accepted partial payment as ending the notice without showing 83.56(5)(a).
+    - Counting the 3 days yourself, in calendar days or with holidays; only get_deadlines computes the date, and whether it has passed comes from its listing.
+    - Giving the computed date without its counting line, or without the date the notice itself states.
+    - Saying the tenant has a defense in court without 83.60(2), under which not paying the rent into the registry "constitutes an absolute waiver of the tenant’s defenses other than payment".
+    - Treating an accepted partial payment as ending the notice; 83.56(5)(a) says the landlord does not waive "by accepting partial rent for the period".
+    - Saying a defective notice ends the case; 83.60(1)(a) gives the landlord "an opportunity to cure a deficiency in a notice" first.
+    - Applying the repair defense in 83.60(1)(b) without the written notice it requires, "indicating the intention of the tenant not to pay rent by reason thereof"; the repair issue's facts hold it.
     - Not asking whether court papers have been served.

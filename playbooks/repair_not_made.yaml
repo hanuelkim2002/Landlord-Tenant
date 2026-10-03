@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.51.txt, statutes/83.56.txt, statutes/83.60.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.1
+  version: 0.2
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -101,25 +101,45 @@ spec:
     - id: which_code_applies
       sections: ["83.51"]
       text: >-
-        83.51(1)(a) points to "the requirements of applicable building, housing, and health codes". Those codes
-        are not in the stored text. The tool does not decide whether a condition violates a code.
+        83.51(1)(a) points to "the requirements of applicable building, housing, and health codes". Those codes are
+        not in the stored text, so whether a condition violates a code cannot be applied here; say so. 83.51(1)(b)'s
+        list applies "Where there are no applicable building, housing, or health codes".
     - id: material_noncompliance
       sections: ["83.56", "83.60"]
       text: >-
-        Both 7-day periods concern a landlord who "materially fails to comply" or a "material noncompliance".
-        The stored text does not define "material". No cases loaded yet.
+        Both 7-day periods concern a landlord who "materially fails to comply" or a "material noncompliance". The
+        stored text does not define "material". Set the record's description of the problem, how long it has lasted,
+        and the landlord's response beside the word.
+      readings:
+        - >-
+          A failure is material when it is a failure of a duty 83.51(1) lists (the codes; roofs, windows, doors,
+          floors, steps, porches, exterior walls, foundations, other structural parts; the plumbing), whatever its
+          size.
+        - >-
+          Material turns on degree: how serious the condition is, how long it has lasted, and how it affects living in
+          the unit, so a failure of a listed duty can still be minor.
     - id: subsection_one_or_two
       sections: ["83.51"]
       text: >-
-        83.51(1) and 83.51(2) list different duties, and 83.51(2)(c) treats subsection (2) differently in an
-        action for possession. The tool shows both texts and does not decide which subsection a condition falls
-        under.
+        83.51(1) covers the codes and the structure and plumbing; 83.51(2)(a) adds, for a unit other than a
+        single-family home or duplex and "Unless otherwise agreed in writing", extermination, locks and keys, common
+        areas, garbage removal, and heat, running water, and hot water. 83.56(1) and 83.60(1)(b) speak only of 83.51(1),
+        and 83.51(2)(c) says part II does not let the tenant raise a noncompliance with subsection (2) as a defense to
+        an action for possession. Apply the lists to the problem in the record (single_family_or_duplex). What stays
+        open is an item subsection (2) names that a code may also cover.
+      readings:
+        - >-
+          It is a subsection (1) duty when a code covers it, and 83.51(3) says that when subsection (1)'s duty is the
+          same or greater, "the landlord’s duty is determined by subsection (1)".
+        - >-
+          It is a subsection (2) duty because subsection (2) names it, so 83.56(1) and 83.60(1)(b) do not reach it.
     - id: court_procedure
       sections: ["83.60"]
       text: >-
-        Once an eviction case is filed, 83.60(2) sets a period of "5 days, excluding Saturdays, Sundays, and legal
-        holidays, after the date of service of process". This tool counts calendar days only and does not
-        compute that date.
+        Once an eviction case is filed, 83.60(2) requires a tenant who raises "any defense other than payment" to pay
+        the rent into the registry of the court, within "5 days, excluding Saturdays, Sundays, and legal holidays,
+        after the date of service of process". Apply the requirement itself when the record shows a case was filed;
+        this tool counts calendar days only and does not compute that date.
 
 # ---------- read by the model ----------
 guidance:
@@ -158,11 +178,13 @@ guidance:
       Stat. 83.56(1) that is a notice "specifying the noncompliance and indicating the intention of the tenant to
       terminate the rental agreement by reason thereof", and in 83.60(1)(b) one "specifying the noncompliance and
       indicating the intention of the tenant not to pay rent by reason thereof". This letter states your request
-      and any sentences quoted above. Whether it is such a notice is not something this tool decides.
+      and any sentences quoted above. It is such a notice only if it states one of those intentions; ask in the chat to have this applied to your letter before you send it.
 
   failure_modes:
-    - Treating any written complaint as the notice in 83.56(1) or 83.60(1)(b); each names an intention the notice must state.
-    - Counting the 7 days from the date the notice was sent instead of the date it was delivered.
-    - Skipping whether the tenant paid rent after knowing of the problem (83.56(5)(a)).
-    - Treating an 83.51(2) item as an 83.51(1) item without showing both texts.
+    - Treating any written complaint as the notice in 83.56(1) or 83.60(1)(b); each must state an intention, to end the lease or not to pay rent (notice_states_termination_intent, notice_states_withholding_intent).
+    - Saying the tenant may withhold rent for an item only 83.51(2) lists; 83.60(1)(b) speaks of "a material noncompliance with s. 83.51 (1)". For ending the lease, 83.56(1) also reaches "material provisions of the rental agreement", so read the lease's repair clause.
+    - Counting the 7 days yourself, or from the date the notice was sent instead of delivered; whether they have passed comes from get_deadlines.
+    - Skipping 83.56(5)(a). A tenant who "pays rent with actual knowledge of a noncompliance by the landlord" waives the right to terminate or sue for that noncompliance, "but not for any subsequent or continuing noncompliance" (rent_paid_since_known).
+    - Applying 83.51 to a condition the record says the tenant's side caused. 83.51(4) says "The landlord is not responsible to the tenant under this section for conditions created or caused by the negligent or wrongful act or omission of the tenant".
+    - Explaining rent withholding without 83.60(2); once a case is filed, raising "any defense other than payment" requires paying the rent into the court registry.
     - Computing any date outside compute_deadlines.

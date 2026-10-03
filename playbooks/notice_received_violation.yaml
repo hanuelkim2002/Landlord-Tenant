@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.56.txt, statutes/83.52.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.1
+  version: 0.2
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -91,21 +91,38 @@ spec:
     - id: which_paragraph
       sections: ["83.56"]
       text: >-
-        83.56(2)(a) covers noncompliance "of a nature that the tenant should not be given an opportunity to cure
-        it" and 83.56(2)(b) noncompliance "of a nature that the tenant should be given an opportunity to cure
-        it". The tool records what the notice says and does not decide which paragraph applies.
+        83.56(2)(a) covers noncompliance "of a nature that the tenant should not be given an opportunity to cure it",
+        with examples: "destruction, damage, or misuse of the landlord’s or other tenants’ property by intentional
+        act" and "a subsequent or continued unreasonable disturbance". 83.56(2)(b) covers noncompliance "of a nature
+        that the tenant should be given an opportunity to cure it", with examples such as "having or permitting
+        unauthorized pets, guests, or vehicles". The record says which kind of notice the landlord sent
+        (notice_offers_cure, notice_terminates_now); set the violation it describes beside each list. What stays open
+        is a violation like neither list's examples, sent as a notice that ends the tenancy at once.
+      readings:
+        - >-
+          The landlord's notice stands when the violation is like 83.56(2)(a)'s examples, or repeats within 12 months
+          of a written warning of a similar violation.
+        - >-
+          A violation like 83.56(2)(b)'s examples must get the notice with 7 days to correct, and a notice under
+          83.56(2)(a) for it denies the tenant the chance the statute says the tenant "should be given".
     - id: delivered_or_received
       sections: ["83.56"]
       text: >-
         The text of 83.56(2)(b) runs the period "from the date that the written notice is delivered", while the
-        model form says "within 7 days of receipt of this notice". The tool counts from the delivery date the
-        tenant gives and does not decide whether the two differ.
+        model form says "within 7 days of receipt of this notice". The tool counts from the delivery date the tenant
+        gives. When delivery and receipt are the same day the question does not arise.
+      readings:
+        - >-
+          The statute's own words govern: 7 days "from the date that the written notice is delivered".
+        - >-
+          The form the statute prescribes tells the tenant "within 7 days of receipt of this notice", and a tenant who
+          relies on it should not lose by the difference.
     - id: twelve_months
       sections: ["83.56"]
       text: >-
         Both paragraphs refer to a period of 12 months (a "written warning by the landlord of a similar violation",
-        and noncompliance that "recurs within 12 months after notice"). This tool counts in days and does not
-        compute a 12-month period. It records the dates.
+        and noncompliance that "recurs within 12 months after notice"). This tool counts in days and does not compute
+        a 12-month period. Set the dates in the record beside the words and say the tool does not count the months.
 
 # ---------- read by the model ----------
 guidance:
@@ -141,12 +158,12 @@ guidance:
     notice_sufficiency: >-
       The 7-day periods this tool computes for this issue run from the date the landlord's notice was delivered,
       as you gave it. Fla. Stat. 83.56(2)(b) speaks of a noncompliance "corrected within 7 days from the date that
-      the written notice is delivered". A letter from you does not change that date, and whether it shows a
-      correction is not something this tool decides.
+      the written notice is delivered". A letter from you does not change that date. What the statute looks to is whether the noncompliance was corrected within the period, and your letter can say when it was.
 
   failure_modes:
     - Counting from the date the notice was written instead of the date it was delivered.
-    - Deciding whether the notice falls under 83.56(2)(a) or (b); record what it says instead.
-    - Skipping whether the landlord accepted rent after the notice (83.56(5)(a)).
+    - Saying the tenant must leave in 7 days when the notice offers a chance to correct, or that correcting the violation ends the matter when the notice ends the tenancy at once (which_paragraph).
+    - Saying the violation was corrected in time without the record's correction date beside the 7-day date get_deadlines shows; the tool compares no dates.
+    - Skipping 83.56(5)(a). A landlord who "accepts rent with actual knowledge of a noncompliance by the tenant" waives the right to terminate for it, "but not for any subsequent or continuing noncompliance".
     - Computing a 12-month period; the tool counts days only.
     - Computing any date outside compute_deadlines.

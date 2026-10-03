@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.46.txt, statutes/83.57.txt, statutes/83.64.txt, statutes/83.425.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.1
+  version: 0.2
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -71,18 +71,37 @@ spec:
     - id: no_increase_section
       sections: ["83.46", "83.57", "83.425"]
       text: >-
-        The stored text of Chapter 83, part II has no section setting notice for a rent increase. 83.425 says
-        "The regulation of residential tenancies, the landlord-tenant relationship, and all other matters covered
-        under this part are preempted to the state." The tool shows the lease's rent clause and, for a tenancy
-        without a fixed term, 83.57. It does not decide whether an increase is allowed. Say so plainly.
+        The stored text of Chapter 83, part II has no section setting notice for a rent increase. 83.425 says "The
+        regulation of residential tenancies, the landlord-tenant relationship, and all other matters covered under
+        this part are preempted to the state." Set the lease's rent clause beside the increase, and for a tenancy
+        without a fixed term, 83.57. Whether and how an increase may be made is not settled by the stored text; say
+        so plainly with the readings.
+      readings:
+        - >-
+          During a fixed term the rent is what the lease says, so an increase needs a lease clause allowing it or the
+          tenant's agreement; part II adds nothing either way.
+        - >-
+          For a month-to-month tenancy, a landlord who may end it on 83.57 notice may change the rent on the same
+          notice, "not less than 30 days’ notice prior to the end of any monthly period".
+        - >-
+          For a month-to-month tenancy no particular notice is needed, since no section sets one.
     - id: retaliation
       sections: ["83.64"]
       text: >-
-        83.64(1) says "It is unlawful for a landlord to discriminatorily increase a tenant’s rent or decrease
-        services to a tenant, or to bring or threaten to bring an action for possession or other civil action,
-        primarily because the landlord is retaliating against the tenant." 83.64(4) defines "Discrimination" for
-        that section. The tool records the dates and what the tenant knows about other tenants, and does not
-        decide whether the section applies.
+        83.64(1) says "It is unlawful for a landlord to discriminatorily increase a tenant’s rent or decrease services
+        to a tenant, or to bring or threaten to bring an action for possession or other civil action, primarily
+        because the landlord is retaliating against the tenant." 83.64(4) defines "Discrimination" for that section.
+        Set the record beside its parts: the complaint and its date, what the tenant knows about other tenants' rent
+        (other_tenants_increase), and the tenant's good faith. The landlord's motive is not in the record. What stays
+        open is what the tenant can do about an increase alone.
+      readings:
+        - >-
+          83.64 works only as a defense: 83.64(2) says retaliation "may be raised by the tenant as a defense in any
+          action brought against him or her for possession", so a tenant facing only an increase has nothing to raise
+          until such an action.
+        - >-
+          83.64(1) makes a discriminatory, retaliatory increase unlawful on its own terms, and 83.55 lets the tenant
+          recover damages when the landlord fails to comply with part II.
 
 # ---------- read by the model ----------
 guidance:
@@ -120,7 +139,9 @@ guidance:
       section on notice of a rent increase. A letter from you does not start any period this tool tracks.
 
   failure_modes:
-    - Stating a notice period for rent increases; the stored text has none.
-    - Deciding whether an increase is retaliatory under 83.64.
-    - Comparing the increase date with the lease term without showing the lease's own words.
+    - Stating a notice period for rent increases; the stored text has none (no_increase_section).
+    - Saying an increase is retaliatory because it followed a complaint. 83.64(1) needs an increase that is discriminatory and "primarily because the landlord is retaliating against the tenant", and 83.64(4) makes different treatment "a prerequisite to a finding of retaliatory conduct".
+    - Applying 83.64 without its condition that "the tenant must have acted in good faith".
+    - Applying a local rent rule from memory; 83.425 preempts local regulation and the stored text holds none.
+    - Comparing the increase date with the lease term yourself, or without the lease's own words; the tool compares no dates.
     - Computing any date outside compute_deadlines.

@@ -5,6 +5,25 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- Playbooks rewritten for applying the law (TODO item 50, done; the author still checks each against
+  `statutes/` before signing). Every open question now says what the stored text lets the model apply and what
+  stays open, and a point the text does not settle carries `readings`, two or more, each resting on quoted
+  words: the deposit termination date (the lease end against the move-out date, with 83.49(2)(d)'s "WITHIN 30
+  DAYS AFTER YOU MOVE OUT"), e-mailed notices and receipt, the objection's form, routine maintenance as repair
+  or as a further purpose of entry, abuse of access, 83.575(2)'s "within 15 days before the start", permission to
+  stay on, whether a landlord must act on a disturbance, what is unreasonable, ending a lease over a neighbor, a
+  3-day notice's form and charges other than rent, which paragraph of 83.56(2) a violation falls under, delivery
+  against receipt, rent increases, retaliation as a defense or a claim, what is material, an item both
+  subsections of 83.51 may cover. Questions about a limit of the tool (hours, months, a lease-set period, the
+  court-day counting the author is researching) have no readings. Was: each said "the tool records ... and does
+  not decide". `failure_modes` are now slips in applying: a condition skipped (83.49(5)'s missing notice, 83.575(1)'s
+  landlord-notice condition, 83.64's good faith and different treatment, 83.51(4)), a fact assumed, a forfeiture or
+  a defense stated without its other half (83.49(3)(b)'s "does not waive any rights", 83.60(2)'s registry, 83.60(1)(a)'s
+  cure), a date counted by the model. Was: written for organizing ("Deciding whether an increase is retaliatory").
+  Letter notes that ended "is not something this tool decides" now say what the statute turns on, or to ask in
+  the chat. Versions 0.2 (deposit_not_returned 0.3). `check_playbook` checks each open question's shape (an id,
+  sections in `statutes/`, text, and readings of two or more when given); the prose quote check covers the
+  readings. Playbook checks: 0 failures.
 - The plan: the tool applies the law to the tenant's confirmed facts (the author's decision). Was: an
   organizer that set the lease, the statute, and the cases beside the facts and never said what they meant for
   the tenant; on the web page, "what can I to sue the landlord" got three statute quotes and "This tool does

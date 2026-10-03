@@ -136,7 +136,8 @@ def check_playbook(playbook, statute):
     Quotes: every spec quote word for word in the section it cites, and every quotation of 20 or more
     characters in the guidance and open questions word for word in a stored section. Shape: a question for
     every element and an element for every question, applies_if naming a yes/no fact, clock cites among the
-    playbook's sections, and the guidance parts the tool reads (postures, including notice_sufficiency)."""
+    playbook's sections, each open question's id, sections, text, and readings (two or more when given), and
+    the guidance parts the tool reads (postures, including notice_sufficiency)."""
     fails = 0
     quotes = []
     for c in playbook.spec.clocks:
@@ -165,6 +166,14 @@ def check_playbook(playbook, statute):
             fails += report(f"{thing.id}: applies_if {thing.applies_if} is a yes/no fact", target is not None and target.type == "bool")
     for c in playbook.spec.clocks:
         fails += report(f"clock {c.id}: {c.cite} is among the playbook's sections", c.cite.split("(")[0] in playbook.sections)
+    # Open questions (rule 5): each says what applies and what stays open; an open point carries two or more
+    # readings, which the model gives side by side instead of settling it.
+    fails += report("open questions: each has an id, sections in statutes/, and text; readings, if any, two or more",
+                    all(isinstance(q, dict) and q.get("id") and q.get("text") and q.get("sections")
+                        and all(s in statute for s in q["sections"])
+                        and ("readings" not in q or (isinstance(q["readings"], list) and len(q["readings"]) >= 2
+                                                     and all(isinstance(r, str) for r in q["readings"])))
+                        for q in playbook.spec.open_questions))
     postures = playbook.guidance.get("postures", {})
     fails += report("guidance has lease_checks, evidence, failure_modes, and every posture",
                     all(k in playbook.guidance for k in ("lease_checks", "evidence", "failure_modes"))
