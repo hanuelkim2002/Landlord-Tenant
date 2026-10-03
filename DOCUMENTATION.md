@@ -502,9 +502,11 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   program gets the listing as the artifact, and the chat loop prints the turn's last one through
   `timeline.render_deadlines`; the model gets `deadline_receipt(listing)`, how many dated deadlines for which
   issues and which issues wait, with no date in it, so it cannot retype a deadline from earlier in the chat
-  and must call the tool to show them again (TODO item 44). A turn-ending tool (`return_direct=True`): when
-  it is the only tool the model called in a step, the agent stops after it and the model writes no reply
-  (TODO item 19). Whether a deadline has passed reaches the model through DEADLINE STATUS in the prompt.
+  and must call the tool to show them again (TODO item 44); the receipt also says whether each has passed is in
+  DEADLINE STATUS, to add nothing when the tenant asked only for the deadlines, and otherwise to answer the
+  rest without writing a date. Not turn-ending since TODO item 51 (it was `return_direct` from item 19, so the
+  model could not retype printed dates; since items 44 and 46 it gets none): the model's answer follows the
+  printed listing in the same turn, so a question that mixes a deadline with the law gets both.
 - `get_cases(topic)`: `topic` must name one of the matter's CASE TOPICS, as given or once `topic_named` sets
   aside quote marks, curly apostrophes, letter case, and a trailing case count (`tools.offered_topics`, i.e.
   `wiki.case_topics` for the active playbooks' sections); otherwise "No case topic named ...". A tool with
@@ -553,8 +555,9 @@ this order:
    stored section (83.47). 2 quote only what was given, word for word, fetch a section before citing one
    not in STATUTE SECTIONS, say plainly when nothing answers; 3 dates only from ELEMENT STATUS, a lease quote,
    the tenant's words, or a tool result; whether a deadline has passed only from DEADLINE STATUS ("passed" or
-   "upcoming"), never a comparison of the model's own, nor a date worked out for an open question's reading; the dates only from `get_deadlines`, called alone every
-   time, which the program prints, ending the turn; 4 the model proposes facts with `propose_facts`, the
+   "upcoming"), never a comparison of the model's own, nor a date worked out for an open question's reading; the dates only from `get_deadlines`, called every
+   time, which the program prints above the reply; asked only for the deadlines the model adds nothing, asked
+   more it answers the rest applying DEADLINE STATUS (TODO item 51); 4 the model proposes facts with `propose_facts`, the
    tenant confirms them on the sheet; 5 open questions stay open, given with their readings and what each
    would mean on the tenant's facts, never picked, never put to the tenant; one with no readings is a limit
    of the tool; 6 letters only when asked, only through `draft_letter`, missing details asked once, posture

@@ -96,10 +96,11 @@ def propose_facts(facts_json: str) -> str:
 
 # ---- Deadlines
 
-# get_deadlines ends the model's turn (return_direct): when it is the only tool the model called in a step, the
-# agent stops after it, the chat loop prints what the program made, and the model writes no reply after it, so
-# it cannot repeat or reword a printed line (TODO item 19). get_cases did too until the model was to apply the
-# cases it gets (TODO item 47).
+# get_deadlines ended the model's turn (return_direct) from TODO item 19 to item 51, so the model could not repeat
+# or reword the printed dates. Since item 44 the model gets no dates, and since item 46 DEADLINE STATUS tells it
+# which deadlines have passed, so now the program prints the listing and the model answers the rest of the
+# question after it ("If I get rid of the dog by Friday, am I safe?" got the listing and no answer, eval of
+# 2026-10-02). get_cases stopped ending the turn at item 47.
 
 def open_facts_by_issue():
     """The facts each active issue still needs (proposed, changed, or missing), by issue. An issue with none is
@@ -164,15 +165,17 @@ def deadline_receipt(listing):
     waiting = sorted(data.get("waiting", {}))
     return (f"The program printed the tenant's deadlines: {len(dated)} dated, for {issues or 'no issue'}"
             + (f"; still waiting for facts: {waiting}" if waiting else "")
-            + ". You are not shown the dates. To show the deadlines again, call get_deadlines again.")
+            + ". You are not shown the dates; whether each has passed is in DEADLINE STATUS. If the tenant asked only "
+            "for the deadlines, add nothing; otherwise answer the rest of the question without writing a date. To "
+            "show the deadlines again, call get_deadlines again.")
 
 
-@tool(response_format="content_and_artifact", return_direct=True)
+@tool(response_format="content_and_artifact")
 def get_deadlines() -> tuple[str, str]:
-    """Compute every deadline from the CONFIRMED facts. This is the ONLY way to get a date. Never count or
-    calculate days yourself. The program prints the deadlines to the tenant, every field included, and your
-    turn ends there: call it alone. You get back only a receipt, with no dates: never write a deadline
-    yourself, and to show the deadlines again, call get_deadlines again."""
+    """Compute every deadline from the CONFIRMED facts; the program prints them to the tenant, every field
+    included, above your reply. This is the ONLY way to get a date: never count or calculate days yourself.
+    You get back only a receipt, with no dates: never write a deadline yourself. Whether one has passed is in
+    DEADLINE STATUS. To show the deadlines again, call get_deadlines again."""
     listing = deadline_listing()
     return deadline_receipt(listing), listing
 

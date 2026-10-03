@@ -726,17 +726,20 @@ try:
           and second_blocks == [{"kind": "reply", "text": "Second turn."}] and not second_proposed
           and config_now["configurable"]["thread_id"] == record.session)
 
-    # get_deadlines ends the model's turn (return_direct, TODO item 19); get_cases no longer does (item 47): a stand-in model calls
-    # get_deadlines alone, then would reply; the agent stops after the tool, so the reply never comes
+    # get_deadlines and get_cases no longer end the model's turn (items 47 and 51; get_deadlines did from item 19):
+    # a stand-in model calls get_deadlines, then applies the status; the reply comes after the printed listing
     class StandIn(GenericFakeChatModel):
         def bind_tools(self, tools, **kwargs):
             return self
+    applies = "The program's listing above shows the 7-day period has not passed yet."
     stand_in = StandIn(messages=iter([AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "d1"}]),
-                                      AIMessage(content="Your deadline is 2026-08-30.")]))
-    ended = create_agent(stand_in, tools=model_tools).invoke({"messages": [HumanMessage(content="What are my deadlines?")]})
-    check("get_deadlines ends the turn, nothing from the model after it; get_cases does not, so the model can apply the cases",
-          get_deadlines.return_direct and not get_cases.return_direct and ended["messages"][-1].type == "tool"
-          and not any(m.type == "ai" and "2026-08-30" in m.content for m in ended["messages"]))
+                                      AIMessage(content=applies)]))
+    ended = create_agent(stand_in, tools=model_tools).invoke(
+        {"messages": [HumanMessage(content="If I get rid of the dog by Friday, am I safe?")]})
+    check("item 51: neither get_deadlines nor get_cases ends the turn; the model's answer follows the printed listing",
+          not get_deadlines.return_direct and not get_cases.return_direct
+          and [m.type for m in ended["messages"][-2:]] == ["tool", "ai"] and ended["messages"][-1].content == applies
+          and "DEADLINE STATUS" in ended["messages"][-2].content)
 
     # the same letter twice in one session (m-026): drafted once; a changed letter is drafted again
     letter_args = {"issue": "deposit_not_returned", "posture": "preserve", "ask": "Return the deposit",
@@ -862,7 +865,8 @@ try:
         AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": "a1", "args": {"facts_json": json.dumps(
             {"claim_notice_received": {"value": True, "how": "stated", "said": said}})}}]),
         AIMessage(content=f'You said: "{said}"'),
-        AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "a2"}])]))
+        AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "a2"}]),
+        AIMessage(content="")]))                            # asked only for the deadlines: nothing after the listing
     page.session_state["agent"] = create_agent(stand_in, tools=model_tools, checkpointer=InMemorySaver())
     page.session_state["config"] = {"configurable": {"thread_id": page.session_state["session"]}}
     next(b for b in page.button if b.label == "Continue").click().run()
@@ -892,8 +896,9 @@ try:
     page.chat_input[0].set_value("What are my deadlines?").run()
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{page.session_state['session']}.jsonl").read_text().splitlines()]
     check("what the sheet confirmed goes to the model with the next message, and the deadlines show in a program box",
-          lines[-3] == {**lines[-3], "role": "program", "text": "[Program note: the tenant confirmed on the sheet: "
-                        "claim_notice_received = True, issue deposit_claim_received = confirmed]\n"}
+          [line["text"] for line in lines if line["role"] == "program"][-1]
+          == "[Program note: the tenant confirmed on the sheet: claim_notice_received = True, issue "
+             "deposit_claim_received = confirmed]\n"
           and page.session_state["history"][-1]["kind"] == "deadlines")
     with contextlib.redirect_stderr(io.StringIO()):                 # the page prints the error's traceback
         page.chat_input[0].set_value("And now?").run()              # the stand-in has nothing left to say

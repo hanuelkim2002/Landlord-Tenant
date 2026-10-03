@@ -3,6 +3,18 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-03
+
+- `get_deadlines` no longer ends the model's turn (TODO item 51, done). Was: `return_direct` since item 19, so a
+  question that mixed a deadline with the law ("If I get rid of the dog by Friday, am I safe?") got the printed
+  listing and no answer: 6 of the 13 legal questions not applied in the eval of 2026-10-02. The reason for ending
+  the turn, the model retyping printed dates, went with item 44 (the model gets no dates) and item 46 (DEADLINE
+  STATUS gives "passed" or "upcoming"). Now the listing prints and the model's answer follows it. The receipt
+  says to add nothing when only the deadlines were asked for and otherwise to answer the rest without writing a
+  date; rule 3 says the same (call `get_deadlines` every time, no longer "alone", and "your turn ends there" is
+  gone). Smoke: the stand-in model's answer now follows the listing (was: nothing after it); the page's
+  stand-in gets an empty reply after the listing, and its check finds the program note by role.
+
 ## 2026-10-02
 
 - The first eval of applied answers (TODO item 49, done but for the author's sample, which stays as item 49;

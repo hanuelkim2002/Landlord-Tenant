@@ -17,12 +17,6 @@ structural ones first.
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on
     the law? Mark the rubric's categories (`dev/eval_rubric.md`) and right, wrong, or partly; the scorers'
     calls on the same transcripts are in `results/blind_score_*.json` (codes in `blind_key.json`).
-51. `get_deadlines` still ends the turn (`return_direct`, item 19), so a question that mixes a deadline with the
-    law gets the listing and no applied answer: 6 of the 13 legal questions not applied in the eval ("If I get
-    rid of the dog by Friday, am I safe?" 3 of 3). The reason for ending the turn, the model retyping printed
-    dates, is gone: since item 44 the model gets no dates, and since item 46 DEADLINE STATUS gives it "passed"
-    or "upcoming". Option: `return_direct` off, the receipt saying the dates are printed above and to apply
-    their status without writing one.
 52. The fallback line where an open question or a case is on the point: 6 of the 13 (a cash-only 3-day notice
     3 of 3, though the notice-form open question and Moskowitz v. Aslam speak to it; the renewal deadline 2 of
     3). Rule 2's "If nothing you have or can fetch answers" is read literally when no stored sentence uses the
