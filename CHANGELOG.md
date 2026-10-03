@@ -5,6 +5,17 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- The program prints the deadlines when the tenant asks when and the model did not call `get_deadlines` (TODO
+  item 65, done). Was: rule 3 asks the model to call it for every question about when, how long, how many days,
+  or a last day, and in the evals of 2026-10-03 it did not on 1, 4, then 5 of 39 such questions ("the deadline
+  is seven days before your planned move-out date"), so the tenant got no dates. Now `agent.turn` checks the
+  tenant's message (`WHEN_QUESTION`; "when I moved out" is not one) and, when the turn holds no `get_deadlines`
+  call, `deadlines_unasked` puts the program's listing first, the same `deadlines` block the tool's call would
+  print, logged and transcribed as a `printed` line marked "deadlines". The model is not told, and it still
+  answers in its own words. `dev/eval.py` counts these (`deadlines_by_program`, "dl-prog") apart from the
+  model's calls, which "calls get_deadlines" still measures. Smoke: a stand-in that answers without the tool
+  gets the program's listing first; one that calls it gets one listing.
+
 - A caution for a section a reply cites and retells without quoting (TODO item 66, done). Was: item 54's rule pair
   asked for every rule to be quoted and the eval's `cites_unquoted` stayed at 27, then 29 turns per 100 replies;
   the tenant was told nothing. Now `agent.check_reply` adds one line per reply naming the sections it cites with

@@ -814,6 +814,25 @@ try:
           and [m.type for m in ended["messages"][-2:]] == ["tool", "ai"] and ended["messages"][-1].content == applies
           and "your instructions say which have passed" in ended["messages"][-2].content)
 
+    # item 65: a question about when, answered without get_deadlines: the program prints the deadlines above the
+    # reply; when the model calls it, the listing is printed once, not twice
+    events_now = len(read_events())
+    skips = StandIn(messages=iter([AIMessage(content="It is seven days before you move out."),
+                                   AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "d2"}]),
+                                   AIMessage(content="The listing is above.")]))
+    agent_when = create_agent(skips, tools=model_tools, checkpointer=InMemorySaver())
+    when_blocks, _ = turn(agent_when, thread_config(), "When do I have to tell them?")
+    asked_blocks, _ = turn(agent_when, thread_config(), "When is the last day?")
+    session_lines = [json.loads(line) for line in
+                     (matter_dir() / "sessions" / f"{record.session}.jsonl").read_text().splitlines()]
+    check("item 65: asked when, a turn without get_deadlines gets the deadlines printed by the program first, logged "
+          "and transcribed; a turn that calls it gets one listing",
+          [b["kind"] for b in when_blocks] == ["deadlines", "reply"]
+          and when_blocks[0]["text"] == render_deadlines(deadline_listing())
+          and [b["kind"] for b in asked_blocks] == ["deadlines", "reply"]
+          and any(e["kind"] == "deadlines_computed" for e in read_events()[events_now:])
+          and sum(line.get("what") == "deadlines" for line in session_lines) == 1)
+
     # the same letter twice in one session (m-026): drafted once; a changed letter is drafted again
     letter_args = {"issue": "deposit_not_returned", "posture": "preserve", "ask": "Return the deposit",
                    "respond_within_days": 10, "delivery_method": "certified mail"}

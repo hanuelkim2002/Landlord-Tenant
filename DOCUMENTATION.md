@@ -184,7 +184,13 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `stop`. `turn(agent, config, text, note="")` is one turn of the model: the tenant's message goes to the
   transcript before the model runs (so `propose_facts` can check the tenant's words), then the note, if any; the
   turn's new messages are the thread after what the checkpointer held before it; it returns the blocks and
-  whether the model called `propose_facts`, so the sheet comes next. `turn_blocks(new, messages)` transcribes a
+  whether the model called `propose_facts`, so the sheet comes next. When the tenant's message asks about when
+  (`WHEN_QUESTION`: "when do", "when is", and the like, "how long", "how many days", "last day", "deadline", "by
+  when"; not "when I moved out") and the turn holds no `get_deadlines` call, `deadlines_unasked` puts the
+  deadlines first, as a `deadlines` block printed by the program (`render_deadlines(deadline_listing())`, which
+  logs `deadlines_computed` as the tool does), written to the transcript as a `printed` line marked `"what":
+  "deadlines"` (TODO item 65: the model answered 1, then 4 of 39 such questions without the tool). The model is
+  not told. `turn_blocks(new, messages)` transcribes a
   turn's new messages and builds its blocks; other tool results are not shown. Under each reply come its
   cautions, then, if the reply quotes the statute (a quoted passage with a ch. 83 cite,
   `citations.quoted_passages`) or the lease (a quoted passage found in a lease profile quote) and does not
@@ -451,7 +457,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   `command` (`text`: a chat command, `timeline`, `issues`, or `drop`, handled without the model), `sheet` (`id`, `question`,
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_suggested`
   when the answer brought in a related issue), or
-  `printed` (`text`: what the program printed outside the chat, the stop text), or
+  `printed` (`text`: what the program printed outside the chat, the stop text, or, with `"what": "deadlines"`,
+  the deadlines it printed when asked when and the model did not call `get_deadlines`), or
   `footer` (`text`: `READING_LINE`, printed by the program under a reply that quotes the statute or the lease; until
   2026-10-02 it was `NOT_DECIDED`), or
   `program` (`text`: a note sent to the model: ahead of the tenant's message after a sheet, or
@@ -836,7 +843,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   line, sheet answer, or the run's lease holds, `lease_dates(entry)` from the PDF named in the run's own copy of
   its scenario), cases not given (a "Name v. Name" no `get_cases` result in
   the session holds), retold cites (`citations.cites_without_quote`: a cite outside quote marks with none of
-  its words quoted in the same reply; TODO item 54), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
+  its words quoted in the same reply; TODO item 54), deadlines the program printed itself (`deadlines_by_program`,
+  "dl-prog" in the table: a transcript `printed` line marked `"what": "deadlines"`; an expectation that a turn
+  calls `get_deadlines` still counts only the model's call; TODO item 65), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
   `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: a prompt
   part's name as the prompt writes it, before TODO item 61 or since, in capitals, or a rule's number such as
   "rule 8"; TODO items 53 and 61). Since 2026-10-02 (TODO item 49) a legal question's

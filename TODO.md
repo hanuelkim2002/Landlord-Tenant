@@ -37,11 +37,6 @@ structural ones first.
     source, so a case's, the lease's, or the tool's words, or a phrase of 83.60 followed by "83.51(1)" in the
     reply, are checked against the wrong section (`citations.quoted_passages`). An option: a quote cited to a
     section it is not in, but word for word in what the model was given, is not flagged for the section.
-65. Questions about when with `get_deadlines` uncalled: 4 of 39 after items 54 to 61 (1 of 39 before; 5 with the
-    deadline part named THE PROGRAM'S DEADLINES, since renamed). The lease-end story's "When is the last day I
-    can tell them I'm leaving?" in 3 of 3: the model applies 83.575(1) and says the date turns on the lease end,
-    which the story confirms as 2026-12-31 against the test lease's 2027 (item 60). Rule 3 says call it every
-    time. Watch after item 60; then a code-side option, since the program knows a question about when.
 67. The eval's "cases not given" (`CASE_NAME` in `dev/eval.py`) counts part of a given case's name as another
     case: "Inc. v. Varnado", "Income Realty v. Bentley", "Follows Durene v. Alcime" (3 turns, eval of
     2026-10-03). Match against the names `get_cases` printed (`agent.named_cases`) instead.

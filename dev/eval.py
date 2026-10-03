@@ -35,7 +35,8 @@ than APPLIED_WORDS words outside quote marks: the law set out and not applied), 
 outside quote marks, that is in no fact, no tenant line, no printed deadline, and is not the session's day),
 cases not given (a "Name v. Name" in a reply that no get_cases result in the session holds), retold cites (a
 ch. 83 cite outside quote marks whose words no quote in the same reply holds, citations.cites_without_quote:
-a rule retold instead of quoted, TODO item 54), and two word
+a rule retold instead of quoted, TODO item 54), deadlines the program printed itself (asked when, the model
+did not call get_deadlines, TODO item 65; the turn's "calls get_deadlines" still counts only the model), and two word
 screens that mark a reply for a person to read: CHOOSE_WORDS (you should, your best option, I recommend ...)
 and OFFER_WORDS (would you like me to ...). The screens find candidates; they are not verdicts. Since
 2026-10-02 (TODO item 49) the tool applies the law, so the old LAW_WORDS screen (a party and must, may, can,
@@ -266,6 +267,8 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
         "called": [c["name"] for c in calls],
         "topics": [c["args"].get("topic") for c in calls if c["name"] == "get_cases"],
         "cautions": [e["text"] for e in turn["entries"] if e["role"] == "check" and "no reply came back" not in e["text"]],
+        # the deadlines the program printed itself, the model having not called get_deadlines (TODO item 65)
+        "deadlines_by_program": any(e["role"] == "printed" and e.get("what") == "deadlines" for e in turn["entries"]),
         "choose_words": sorted({m.group(0) for m in CHOOSE_WORDS.finditer(bare)}),
         "quotes_only": sum(quotes_only(r) for r in replies),
         "applied": any(applied(r) for r in replies),
@@ -354,6 +357,8 @@ def transcript_text(entries):
             lines.append(f"[PROGRAM CAUTION shown to the tenant] {e['text']}")
         elif role == "footer":
             lines.append(f"[PROGRAM LINE printed under the reply] {e['text']}")
+        elif role == "printed" and e.get("what") == "deadlines":
+            lines.append(f"[PROGRAM PRINTED, the deadlines: asked when, the model did not call get_deadlines]\n{e['text']}")
         elif role == "printed":
             lines.append(f"[PROGRAM PRINTED, outside the chat]\n{e['text']}")
         elif role == "tool":
@@ -419,6 +424,7 @@ def score_run(entry, scenario, out):
         "field_names": sum(bool(t["field_names"]) for t in measured),
         "prompt_names": sum(bool(t.get("prompt_names")) for t in measured),
         "cites_unquoted": sum(bool(t["cites_unquoted"]) for t in measured),
+        "deadlines_by_program": sum(t["deadlines_by_program"] for t in measured),
         "echo": sum(bool(t["echo"]) for t in measured),
         "footers": sum(len(t["footers"]) for t in measured),
         "turns": measured,
@@ -436,25 +442,27 @@ def score(out):
                                                  "empty_turns": 0, "cautions": 0, "quotes_only": 0, "choose_screen": 0,
                                                  "dates_made": 0, "cases_not_given": 0,
                                                  "offer_screen": 0, "field_names": 0, "prompt_names": 0, "cites_unquoted": 0, "echo": 0,
+                                                 "deadlines_by_program": 0,
                                                  "footers": 0,
                                                  "failed": {}})
         row["runs"] += 1
         for key in ("crashed", "gateway_trouble", "expected_ok", "replies", "empty_turns", "cautions", "quotes_only",
                     "choose_screen", "dates_made", "cases_not_given", "offer_screen", "field_names", "prompt_names",
-                    "cites_unquoted", "echo", "footers"):
+                    "cites_unquoted", "echo", "footers", "deadlines_by_program"):
             row[key] += int(s[key])
         for x in s["expect"]:
             if not x["ok"]:
                 row["failed"][x["what"]] = row["failed"].get(x["what"], 0) + 1
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
     print(f"\n{'scenario':<28}{'runs':>5}{'gw':>4}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'qonly':>6}"
-          f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'prompt':>7}{'retold':>7}{'echo':>5}{'footer':>7}")
+          f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'prompt':>7}{'retold':>7}{'echo':>5}{'footer':>7}"
+          f"{'dl-prog':>8}")
     for name, row in summary.items():
         print(f"{name:<28}{row['runs']:>5}{row['gateway_trouble']:>4}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
               f"{row['cautions']:>5}{row['quotes_only']:>6}{row['choose_screen']:>8}{row['dates_made']:>6}"
               f"{row['cases_not_given']:>6}{row['offer_screen']:>7}{row['field_names']:>6}{row['prompt_names']:>7}"
               f"{row['cites_unquoted']:>7}"
-              f"{row['echo']:>5}{row['footers']:>7}")
+              f"{row['echo']:>5}{row['footers']:>7}{row['deadlines_by_program']:>8}")
         for what, n in row["failed"].items():
             print(f"    failed {n}x: {what}")
 

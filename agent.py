@@ -29,7 +29,7 @@ from record import (active_playbooks, add_issues, add_related_issues, append_eve
                     element_status, matter_dir, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from tools import deadline_status, offered_topics, tools
+from tools import deadline_listing, deadline_status, offered_topics, tools
 
 
 # ---- Rules: the fixed part of the system prompt. The lease profile, the playbooks' notes and open questions,
@@ -533,6 +533,25 @@ def retry_empty(agent, config, result):
     return again, more, blocks
 
 
+# A question about when, how long, how many days, or a last day (rule 3), answered without get_deadlines: the
+# program prints the deadlines itself, above the reply, as get_deadlines would have (TODO item 65). In the evals of
+# 2026-10-03 the model answered 1, then 4 of 39 such questions without calling it ("the deadline is seven days
+# before your planned move-out date"). "When I moved out" is not a question about when; "When do I have to" is.
+WHEN_QUESTION = re.compile(r"\b(when (do|does|did|is|are|was|will|would|can|could|should|must|have|has)|how long|"
+                           r"how many days|last day|deadlines?|by when)\b", re.I)
+
+
+def deadlines_unasked(text, new):
+    """The deadlines as a block, printed by the program, when the tenant's message asks about when and the turn's
+    new messages hold no get_deadlines call; None otherwise. Written to the transcript as a printed line marked
+    "deadlines". deadline_listing logs its deadlines_computed events, as for the tool."""
+    if not WHEN_QUESTION.search(text) or any(m.type == "tool" and m.name == "get_deadlines" for m in new):
+        return None
+    shown = render_deadlines(deadline_listing())
+    record.append_transcript({"role": "printed", "what": "deadlines", "text": shown})
+    return block("deadlines", shown)
+
+
 def thread_config():
     """The chat thread's config. The thread takes the session's id, so the conversation and the record's events
     share one id."""
@@ -542,8 +561,9 @@ def thread_config():
 def turn(agent, config, text, note=""):
     """One turn of the model on the tenant's message, with any note from the sheet in front of it. The message
     goes to the transcript before the model runs (propose_facts checks the tenant's words against it). A turn
-    that shows the tenant nothing is asked once more (retry_empty). Returns the turn's blocks, and whether the
-    model proposed facts, so the sheet comes next."""
+    that shows the tenant nothing is asked once more (retry_empty). A question about when that the model
+    answered without get_deadlines gets the deadlines printed by the program, first (deadlines_unasked). Returns
+    the turn's blocks, and whether the model proposed facts, so the sheet comes next."""
     record.append_transcript({"role": "tenant", "text": text})
     if note:
         record.append_transcript({"role": "program", "text": note})
@@ -554,6 +574,9 @@ def turn(agent, config, text, note=""):
     if not blocks:                                       # nothing for the tenant: ask the model once more
         result, more, blocks = retry_empty(agent, config, result)
         new = new + more
+    unasked = deadlines_unasked(text, new)               # asked when, and the model did not get the deadlines
+    if unasked:
+        blocks.insert(0, unasked)
     return blocks, any(m.type == "tool" and m.name == "propose_facts" for m in new)
 
 
