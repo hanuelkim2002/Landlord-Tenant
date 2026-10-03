@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/current.pdf",
     "I came out this morning and my car was gone. My apartment complex had it towed from my own parking spot because my parking permit sticker expired yesterday.",
     "It cost me $250 to get it back. Can they do that?",
     ""

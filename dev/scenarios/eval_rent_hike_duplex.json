@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/month_to_month_950.pdf",
     "I rent one side of a duplex in Gainesville, month to month, for $950. On September 27, 2026 my landlord texted me that rent is going up to $1,150 starting November 1, 2026.",
     "Two weeks before that, on September 12, 2026, I emailed him asking him to fix the roof because it leaks into my bedroom when it rains, and he still hasn't fixed it. I feel like he's punishing me for complaining.",
     ""

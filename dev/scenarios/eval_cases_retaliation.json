@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/current_no_pets.pdf",
     "On September 10, 2026 I called the city code enforcement about the broken smoke detectors and the mold in my apartment, because my landlord never fixed them.",
     "On September 24, 2026 my landlord handed me a 7-day notice saying I'm violating the lease by having a cat and I have 7 days to remove it or the lease ends. I've had the cat for a year and he never cared before.",
     ""

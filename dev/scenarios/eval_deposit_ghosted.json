@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/ended_2026-07-31.pdf",
     "I just graduated from UF and moved out of my apartment on July 31, 2026, the day my lease ended. I paid a $900 security deposit.",
     "When I turned in my keys I texted the manager my mom's address in Orlando. It's been two months and I got nothing back, no money and no letter, and they won't answer my calls.",
     ""

@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/current.pdf",
     "My upstairs neighbors throw parties until 3 or 4 am almost every night and I can't sleep before my exams.",
     "I've complained to the front office three times and they say there's nothing they can do. Can I do anything?",
     ""

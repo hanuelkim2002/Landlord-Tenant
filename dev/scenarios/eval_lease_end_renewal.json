@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/ends_2026-12-31.pdf",
     "My lease ends December 31, 2026. The leasing office emailed me on September 25, 2026 saying I have to sign a renewal by October 15 or they'll start showing my unit.",
     "I'm not sure yet if I'm staying because I might study abroad in the spring. My lease says I have to give 60 days written notice if I'm not renewing.",
     ""

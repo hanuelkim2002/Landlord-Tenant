@@ -91,7 +91,6 @@ SLASH_DATE = re.compile(r"\b(\d{1,2})/(\d{1,2})/(20\d\d)\b")
 GATEWAY_SIGNS = ("run.py did not come back to a prompt", "Expecting value: line 1 column 1 (char 0)")
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
           "November", "December"]
-LEASE_DATES = frozenset()                                    # set from the seed's lease text when scoring starts
 
 
 # ---- Running: one live session per (scenario, repeat), several at once.
@@ -112,7 +111,7 @@ def run_one(project, out, name, rep):
     seed_tenant(project, tenant)
     data = json.loads((SCENARIOS / f"{name}.json").read_text())
     data["start"] = [tenant if line == "t-test" else line for line in data["start"]]
-    data["start"] = [str(HERE / line) if line == "lease.pdf" else line for line in data["start"]]
+    data["start"] = [str(HERE / line) if line.endswith(".pdf") else line for line in data["start"]]   # its lease
     scenario = out / "runs" / f"{name}_r{rep}.json"
     scenario.write_text(json.dumps(data, indent=2))
     screen = out / "runs" / f"{name}_r{rep}.out"
@@ -152,6 +151,11 @@ def file_away(project, out, runs):
 
 
 def run(out, repeats, names, project, parallel):
+    leases = {line for name in names for line in json.loads((SCENARIOS / f"{name}.json").read_text())["start"]
+              if line.endswith(".pdf")}
+    missing = sorted(line for line in leases if not (HERE / line).exists())
+    if missing:                                           # dev/leases/ is built from lease.pdf, and git ignores it
+        sys.exit(f"missing {missing}: run python dev/build_test_leases.py first")
     (out / "runs").mkdir(parents=True, exist_ok=True)
     jobs = [(name, rep) for rep in range(1, repeats + 1) for name in names]
     with ThreadPoolExecutor(max_workers=parallel) as pool:
@@ -208,10 +212,17 @@ def dates_in(text):
     return found
 
 
-def lease_dates():
-    """Every date the test lease prints (the seed's pages.json): a reply may quote or restate the lease's dates."""
-    pages = SEED / "pages.json"
-    return frozenset(dates_in(" ".join(p["text"] for p in json.loads(pages.read_text())))) if pages.exists() else frozenset()
+def lease_dates(entry):
+    """Every date the lease a run read prints: a reply may quote or restate the lease's dates. The lease is the PDF
+    in the run's own copy of its scenario (runs/<name>_r<rep>.json). Since TODO item 60 each story reads a lease
+    of its own (dev/build_test_leases.py); before, every run read lease.pdf."""
+    import PyPDF2                                      # the project's PDF reader (lease.ingest_pdf)
+    copy = Path(entry["screen"]).with_suffix(".json")
+    start = json.loads(copy.read_text())["start"] if copy.exists() else []
+    pdf = next((Path(line) for line in start if line.endswith(".pdf")), None)
+    if pdf is None or not pdf.exists():
+        return frozenset()
+    return frozenset(dates_in(" ".join(page.extract_text() or "" for page in PyPDF2.PdfReader(pdf).pages)))
 
 
 def case_given(name, fetched):
@@ -376,7 +387,7 @@ def score_run(entry, scenario, out):
     for value in matter.get("facts", {}).values():
         known |= dates_in(str(value))
     known |= dates_in(matter.get("description", "")) | {e["when"][:10] for e in entries if e.get("when")}
-    known |= LEASE_DATES                               # every scenario reads the same test lease
+    known |= lease_dates(entry)                        # the lease the run read
     known |= set().union(*(dates_in(ev.get("text", "")) for ev in events if ev["kind"] == "tenant_update"), set())
     for e in entries:                                  # not the printed deadlines: the model never sees them
         if e["role"] in ("tenant", "sheet"):
@@ -415,9 +426,7 @@ def score_run(entry, scenario, out):
 
 
 def score(out):
-    global LEASE_DATES
     sys.path.insert(0, str(HERE))                         # corpus, for the playbook issue names
-    LEASE_DATES = lease_dates()
     runs = json.loads((out / "runs.json").read_text())
     scores = [score_run(r, json.loads((SCENARIOS / f"{r['scenario']}.json").read_text()), out) for r in runs]
     (out / "scores.json").write_text(json.dumps(scores, indent=2))

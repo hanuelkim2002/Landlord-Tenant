@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/cash_1300.pdf",
     "On September 25, 2026 my landlord handed me a 3-day notice saying I owe $1,300 for September rent and I have to pay in cash only by September 30, 2026 or leave. I always pay by check and he's never asked for cash before.",
     "I didn't pay because I didn't have the cash. Yesterday, September 30, 2026, someone served me with court papers for eviction. I live in Gainesville, Alachua County.",
     ""

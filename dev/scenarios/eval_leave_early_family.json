@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/family_1050.pdf",
     "My mom got really sick and I need to move back home to Miami to take care of her. My lease here in Gainesville runs until July 31, 2027 and rent is $1,050 a month. I want to move out around December 15, 2026.",
     "When I signed the lease I also signed a paper saying I'd pay two months' rent if I leave early. I haven't told my landlord yet. I'm not in the military.",
     ""

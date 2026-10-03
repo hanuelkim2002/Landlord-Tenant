@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/current_no_pets.pdf",
     "On September 26, 2026 my landlord handed me a notice saying I'm violating my lease because there's a dog in my apartment and my lease says no pets. It says I have 7 days to get rid of the dog or my lease will be terminated.",
     "It's my friend's dog, I'm just watching her for two weeks while he's out of town. I've never gotten a warning before. I paid October rent today and they took it.",
     ""

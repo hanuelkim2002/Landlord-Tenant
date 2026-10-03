@@ -453,7 +453,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   caution about a cite or a quote from `check_reply`, or `NO_REPLY` from `retry_empty`). Only the chat is transcribed; the
   intake or resume calls before it are not.
 
-Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `statutes/83.*.txt` and `.html` (the
+Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `dev/leases/`
+(the eval's test leases, one per story, built from `lease.pdf` by `dev/build_test_leases.py`; gitignored), `statutes/83.*.txt` and `.html` (the
 read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key), `docs/trials/` (dated records of trials, e.g. `2026-10-01-rules/`: the versions of the rules tried, the method, and the results; not kept current), `docs/structure/` (dated snapshots of the structure: a diagram of a
 session, a diagram of the storage, and the Skills history; not kept current), and `calendars/` (read-only, like `statutes/`):
 `court_holidays_circuit8.json` (Eighth Judicial Circuit: Alachua, Baker, Bradford, Gilchrist, Levy, and
@@ -707,8 +708,21 @@ Offline checks (no model call, no key needed):
     python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook checks: every line OK
     python schemas.py                                                            # what the model sees per tool
     python dev/build_cases.py "<Westlaw print>"                                  # once: builds cases/
+    python dev/build_test_leases.py                                              # once: the eval's test leases
     python wiki.py check                                                         # wiki checks: no problems
 
+- `python dev/build_test_leases.py`: writes `dev/leases/<name>.pdf`, one lease per eval story (TODO item 60,
+  2026-10-03; before, every scenario read `lease.pdf`, a twelve-month lease from 2026-10-01 at $1,850, and the
+  stories said otherwise, so a rent increase was read as a decrease and a $1,000 deposit as $1,850). Each is
+  `lease.pdf`'s text as PyPDF2 reads it, with changes from `LEASES` made word for word: `term(start, end,
+  signed)`, `rent(words, figure, fee)` (with the early termination fee, two months' rent), `deposit(words,
+  figure)`, `NO_PETS`. A change whose old words are not in the text exactly once stops the build. `pdf_bytes`
+  writes a plain PDF (each line in order, Helvetica, WinAnsiEncoding), and `build` reads it back and checks its
+  text is the changed text. Ten leases: `current` (2026-08-01 to 2027-07-31, the old rent and deposit), with
+  `_no_pets`, `cash_1300`, `taped_1100`, `family_1050`, three ended ones (`ended_2026-06-30`, `-07-31`,
+  `-08-31`), `ends_2026-12-31`, and `month_to_month_950` (a term that ended 2025-09-30, month to month since
+  under the lease's Section 2.4). Gemma reads each with the story's term, rent, and deposit (checked
+  2026-10-03).
 - `python dev/build_cases.py <print>`: the print is the Westlaw Find and Print file (Rich Text, turned into
   plain text by macOS's `textutil`; a `.txt` is read as is). `split_print` finds each opinion (a cite on its
   own line with a court named below it; a bare cite in a negative-treatment table has a summary instead) up
@@ -813,8 +827,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   measured: empty turns, program cautions, field names, a computed deadline the program printed found in the reply
   (the model never sees one, so it counted it; not when the date is also a fact the record holds), quotes only (a quote
   and fewer than 40 words of its own), dates made (a date with a year outside quote marks that no fact, tenant
-  line, sheet answer, or the test lease's own text, `LEASE_DATES` from the seed's
-  `pages.json`, holds), cases not given (a "Name v. Name" no `get_cases` result in
+  line, sheet answer, or the run's lease holds, `lease_dates(entry)` from the PDF named in the run's own copy of
+  its scenario), cases not given (a "Name v. Name" no `get_cases` result in
   the session holds), retold cites (`citations.cites_without_quote`: a cite outside quote marks with none of
   its words quoted in the same reply; TODO item 54), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
   `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: a prompt
@@ -828,7 +842,10 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   (the driver's timeout, an empty answer where JSON was expected, or two unrecovered empty turns in a row) is
   marked `gateway_trouble` and counted apart. Writes `runs/` (screens),
   `runs.json`, `transcripts/` (each run as text marking who produced each part), `scores.json`, and
-  `summary.json`, and prints a table per scenario. The eval scenarios are `dev/scenarios/eval_*.json`:
+  `summary.json`, and prints a table per scenario. A scenario's lease is the PDF its `start` names, resolved in
+  the scored copy of the project; `run` stops before any session when one is missing ("run python
+  dev/build_test_leases.py first"). The eval scenarios are `dev/scenarios/eval_*.json`, each with the lease of
+  its story from `dev/leases/` (TODO item 60):
   one realistic lay-tenant story per playbook (`deposit_ghosted`, `claim_carpet`, `entry_shower`,
   `lease_end_renewal`, `nonpayment_taped`, `violation_dog`, `rent_hike_duplex`, `repair_mold_apt`,
   `leave_early_family`, and `noise_neighbors` since neighbor_disturbance was added; it was `nc_noise`), two

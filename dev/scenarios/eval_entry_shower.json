@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/current.pdf",
     "This morning, September 30, 2026, around 8 am a maintenance guy from my apartment complex walked into my apartment while I was in the shower. Nobody told me anyone was coming.",
     "He said he was there to change the AC filter. This is the second time this month. I pay my rent on time and I feel really unsafe.",
     ""

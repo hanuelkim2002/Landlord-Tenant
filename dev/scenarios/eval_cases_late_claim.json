@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/ended_2026-06-30.pdf",
     "I moved out of my apartment on June 30, 2026 when my lease ended. My deposit was $1,000. I had texted them my new address.",
     "I got a letter from the landlord by certified mail on August 24, 2026 (it's dated August 20, 2026) saying they're keeping $700 for cleaning and painting. That's almost two months after I left.",
     ""

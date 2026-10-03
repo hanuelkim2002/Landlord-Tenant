@@ -48,11 +48,6 @@ structural ones first.
 67. The eval's "cases not given" (`CASE_NAME` in `dev/eval.py`) counts part of a given case's name as another
     case: "Inc. v. Varnado", "Income Realty v. Bentley", "Follows Durene v. Alcime" (3 turns, eval of
     2026-10-03). Match against the names `get_cases` printed (`agent.named_cases`) instead.
-60. The eval's test data: every scenario uses the same test lease, whose rent ($1,850), deposit, and 2027 term
-    end conflict with some stories (a rent hike read as a decrease against the lease's rent; a $1,000 deposit
-    story read as $1,850; the 2027 end date against the sheet's 2026-07-31). Scenarios need stories that fit the
-    lease, or leases that fit the stories, before their answers can be judged on those facts.
-
 ## Harness and code
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.

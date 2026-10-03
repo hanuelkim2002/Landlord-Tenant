@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- A lease for each eval story (TODO item 60, done). Was: every scenario read `lease.pdf`, a twelve-month lease
+  from 2026-10-01 at $1,850 with a $1,850 deposit and an authorized dog, so the stories contradicted it (a $950
+  month-to-month duplex whose increase was read as a decrease; a $1,000 deposit read as $1,850; a lease that
+  ended 2026-07-31 against the lease's 2027; most stories' September events before the lease began). New:
+  `dev/build_test_leases.py` writes ten leases into `dev/leases/` (gitignored, like `lease.pdf`), each
+  `lease.pdf`'s text with the story's term, rent, deposit, two months' rent as the early termination fee, and
+  for the dog and cat stories a no-pets clause, changed word for word and checked when built. Each eval
+  scenario names its lease in `start` instead of `lease.pdf`. `dev/eval.py` passes any `.pdf` in `start` as a
+  path, stops before running when a lease is missing, and reads the dates a reply may restate from the run's
+  own lease (`lease_dates(entry)`) instead of the seed's `pages.json` (rescoring a past run gives the same
+  numbers, since its copy names `lease.pdf`). Checked live: Gemma reads every lease with the story's term,
+  rent, and deposit, and every quote passes `check_quotes`. Left as they were: the lease is for a house with a
+  yard where some stories are apartments, a townhouse, or a duplex, and the addendum's initials are blank.
+
 - Eval of items 61 and 54 to 58 (`docs/evals/2026-10-03-items54-61/`; 16 scenarios, 3 runs, three runs: the code
   before, after, and after the deadline-name fix; code-scored). Runs meeting every expectation 41, 37, 40 of 48;
   prompt part names 18, 8, 3 turns per 100 replies; field ids 17, 12, 8; quote cautions 47, 22, 28; the new

@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/current.pdf",
     "My roommate moved out in August without telling anyone and stopped paying his half of the rent, which is $600. I've been covering the whole thing.",
     "Can I make him pay me back? We're both on the lease.",
     ""

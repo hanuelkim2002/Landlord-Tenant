@@ -3,7 +3,7 @@
   "start": [
     "new",
     "t-test",
-    "lease.pdf",
+    "dev/leases/current.pdf",
     "I live in an apartment complex near campus. Since August 20, 2026 there's been black mold growing on the bathroom ceiling and the AC unit leaks water onto the floor. I reported it on the resident portal on August 22, 2026.",
     "Maintenance came once on September 3 and just painted over the mold and it came back. I have asthma and it's getting worse. I've been paying rent the whole time.",
     ""
