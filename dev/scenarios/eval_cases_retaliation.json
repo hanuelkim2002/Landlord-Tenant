@@ -116,12 +116,7 @@
     "turns": [
       {
         "say": "because I reported him",
-        "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "Has a court ever said",
@@ -131,9 +126,7 @@
         "topics": [
           "Retaliatory eviction"
         ],
-        "must_not": [
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+        "cases_used": true
       },
       {
         "say": "What are my deadlines?",

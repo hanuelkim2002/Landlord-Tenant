@@ -99,12 +99,7 @@
       },
       {
         "say": "Can they just keep my money",
-        "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "Can you help me write something",

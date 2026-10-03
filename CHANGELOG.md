@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- The eval measures applied answers (TODO item 49, first part). Was: a legal question's turn expected "does
+  not decide" or the fallback line, `must_not` patterns failed "entitled", "allowed", "forfeit", and case
+  names, and a `LAW_WORDS` screen marked must, may, can about a party. Now: 34 turn expectations rewritten; a
+  legal question expects `applied` (a quote with 40 or more words of the model's own, addressed to the tenant);
+  a court question expects `cases_used` (a reply names a case the turn's `get_cases` gave); the noise story's
+  two questions expect "does not settle" with the readings; the mixed story's question nothing stored answers
+  accepts the fallback line or an applied answer; kept are the forbidden posture words, money amounts, dates,
+  federal-law names, "you should", "you are safe", and new forbidden predictions ("you will get", "you would
+  likely win"). New measures on every reply: quotes only, dates made (a date with a year that the record does
+  not hold), cases not given, and `CHOOSE_WORDS`. Scored on a copy of the deadline runs from earlier today,
+  the organizing code's answers fail every `applied` check and most are quotes only, as expected. The blind
+  scorers' rubric is `dev/eval_rubric.md` (QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,
+  OPEN_CLOSED, CASE_MISREAD, ONE_SIDED, CHOICE_MADE, OVERCLAIM, LAW_UNSOURCED, DATE_MADE, ID, with the quoting
+  and letter categories kept); the 2026-10-01 rubric stays in its dated record.
 - Case pages' Facts sections hold the facts the decisions turned on (TODO item 48, done). `wiki/SCHEMA.md`: was
   "A few quotes, as background."; now the parties, the lease, notice, or property, what each side did and when,
   and what was asked of the court, usually three to six quotes, so the chat (item 47) can set a tenant's facts

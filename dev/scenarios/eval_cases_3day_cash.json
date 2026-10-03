@@ -101,12 +101,7 @@
     "turns": [
       {
         "say": "cash only?",
-        "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "Has a court ever said",
@@ -116,9 +111,7 @@
         "topics": [
           "Three-day notice for nonpayment of rent"
         ],
-        "must_not": [
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+        "cases_used": true
       },
       {
         "say": "put money into the court",
@@ -129,9 +122,7 @@
           "Rent paid into the court registry",
           "Three-day notice for nonpayment of rent"
         ],
-        "must_not": [
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+        "cases_used": true
       },
       {
         "say": "What are my deadlines?",

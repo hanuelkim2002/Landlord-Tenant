@@ -103,9 +103,9 @@
       {
         "say": "How much is this going to cost",
         "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit",
           "\\$\\s?4,?200|\\$\\s?3,?150|\\$\\s?7,?350"
-        ]
+        ],
+        "applied": true
       },
       {
         "say": "When do I have to tell them",
@@ -115,12 +115,7 @@
       },
       {
         "say": "keep my deposit",
-        "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "Has a judge ever said",
@@ -130,9 +125,7 @@
         "topics": [
           "Liquidated damages and early termination fees"
         ],
-        "must_not": [
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+        "cases_used": true
       }
     ],
     "not_covered_note": false

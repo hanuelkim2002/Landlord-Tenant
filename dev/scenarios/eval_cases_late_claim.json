@@ -95,12 +95,7 @@
     "turns": [
       {
         "say": "Can they still keep my money",
-        "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "Has this happened to other people",
@@ -110,27 +105,18 @@
         "topics": [
           "Landlord's notice of claim on the deposit"
         ],
-        "must_not": [
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+        "cases_used": true
       },
       {
         "say": "I get my $700 back",
-        "must": [
-          "does not decide|do not answer that"
-        ],
         "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit",
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]",
-          "\\byou (will|would) (get|receive)"
-        ]
+          "\\byou will (get|receive)\\b"
+        ],
+        "applied": true
       },
       {
         "say": "Who pays for a lawyer",
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit",
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+        "applied": true
       }
     ],
     "not_covered_note": false

@@ -21,14 +21,21 @@ A scenario's "expect" block (every key optional):
   "turns"            checks on single chat turns, each found by a piece of the tenant's line ("say"):
                      "called" / "not_called" (tool names), "must" / "must_not" (regexes on the turn's replies;
                      must_not looks only outside quote marks),
-                     "topics" (the get_cases topics allowed in that turn; any other topic fails)
+                     "topics" (the get_cases topics allowed in that turn; any other topic fails),
+                     "applied" (true: a reply in the turn applies the law, APPLIED, not quotes alone),
+                     "cases_used" (true: a reply names a case the turn's get_cases result gave)
   "screen_must"      regexes the whole screen must match (a lease clause shown at the stop, e.g.)
   "screen_must_not"  regexes the whole screen must not match (a wrong suggestion on the sheet, e.g.)
 Every reply is also measured, whatever the scenario: empty turns (reply_empty events), program cautions
 (quote_flagged and cite_flagged events), field names (a snake_case id outside quote marks), deadline echo (a
-date the program printed in the same turn, repeated in the reply), and two word screens that mark a reply for
-a person to read: LAW_WORDS (a party and must, may, can, entitled ... outside quote marks) and OFFER_WORDS
-(would you like me to ...). The screens find candidates; they are not verdicts. A run with signs that the
+date the program printed in the same turn, repeated in the reply), quotes only (a reply with a quote and fewer
+than APPLIED_WORDS words outside quote marks: the law set out and not applied), dates made (a date with a year,
+outside quote marks, that is in no fact, no tenant line, no printed deadline, and is not the session's day),
+cases not given (a "Name v. Name" in a reply that no get_cases result in the session holds), and two word
+screens that mark a reply for a person to read: CHOOSE_WORDS (you should, your best option, I recommend ...)
+and OFFER_WORDS (would you like me to ...). The screens find candidates; they are not verdicts. Since
+2026-10-02 (TODO item 49) the tool applies the law, so the old LAW_WORDS screen (a party and must, may, can,
+entitled ...) is gone: those words are now the point of an answer. A run with signs that the
 gateway failed (GATEWAY_SIGNS, or two unrecovered empty turns in a row) is marked gateway_trouble ("gw"). A turn's "must" patterns
 are matched against what the tenant read, the replies and any line the program printed under them (footer);
 "footers" counts those lines, so the model's own lines and the program's can be told apart.
@@ -51,14 +58,22 @@ SCENARIOS = HERE / "dev" / "scenarios"
 SEED = HERE / "matters" / "t-test" / "test-001"
 
 QUOTED = re.compile(r"\"[^\"]*\"|“[^”]*”")                  # quoted passages, left out of the word screens
-LAW_WORDS = re.compile(r"\b(you|your landlord|the landlord|landlords?|he|she|they|tenants?)\s+(must|may|can|"
-                       r"cannot|can't|should|shouldn't|has to|have to|need to|needs to|is required|are required|"
-                       r"is entitled|are entitled|is allowed|are allowed|is not allowed|are not allowed)\b"
-                       r"|\b(illegal|unlawful|violat(?:ed|es|ing|ion)|forfeit\w*|entitled|your rights)\b", re.I)
+# Choosing for the tenant, which an applied answer never does (README, Purpose): it lays out the options.
+CHOOSE_WORDS = re.compile(r"(?<!what )(?<!whether )\byou should\b|\byour best (option|choice|move|bet)\b|"
+                          r"\bI (would )?(recommend|suggest|advise)\b|\bthe best (thing|option|choice) (is|would be)\b",
+                          re.I)
+# An applied answer: a quote, and enough words of the model's own around it to apply it to the tenant. A list of
+# quotes with "This tool does not decide that." has a handful (the page's "what can I do to sue" answer, 6).
+APPLIED_WORDS = 40
+SOURCE_LABEL = re.compile(r"Fla\. Stat\. [\d.()a-z]+|Lease Section [\d.]+(?:, page \d+)?|\(at \d+\)", re.I)
+CASE_NAME = re.compile(r"\b[A-Z][A-Za-z.&'’]+(?: [A-Z][A-Za-z.&'’]+)* v\. [A-Z][A-Za-z.&'’]+")
 OFFER_WORDS = re.compile(r"\b(would you like|do you want me|if you(?:'d| would) like|i can (?:draft|help|"
                          r"prepare|write)|next steps?|you (?:could|might) (?:consider|want))\b", re.I)
 FIELD_NAME = re.compile(r"\b[a-z]+(?:_[a-z]+)+\b")          # forwarding_address_given; file names have digits
 ISO_DATE = re.compile(r"\b20\d\d-\d\d-\d\d\b")
+SPOKEN_DATE = re.compile(r"\b(January|February|March|April|May|June|July|August|September|October|November|December)"
+                         r" (\d{1,2}),? (20\d\d)\b")
+SLASH_DATE = re.compile(r"\b(\d{1,2})/(\d{1,2})/(20\d\d)\b")
 # Signs that the gateway, not the model, failed a run: run.py never came back (the driver's timeout), an empty
 # answer where JSON was expected, or two turns in a row the model left empty even after the retry. The eval of
 # 2026-10-01 hit an eight-minute stretch of these; such runs are counted apart, not as the model's slips.
@@ -163,14 +178,42 @@ def spoken_dates(iso):
     return [iso, f"{month} {int(d)}, {y}", f"{month} {int(d)}"]
 
 
-def measure_turn(turn):
-    """What one turn did: tools called, case topics asked for, replies, and the generic measures."""
+def dates_in(text):
+    """Every full date in a text (2026-07-31, July 31, 2026, 7/31/2026) as YYYY-MM-DD."""
+    found = set(ISO_DATE.findall(text))
+    found |= {f"{y}-{MONTHS.index(m) + 1:02d}-{int(d):02d}" for m, d, y in SPOKEN_DATE.findall(text)}
+    found |= {f"{y}-{int(m):02d}-{int(d):02d}" for m, d, y in SLASH_DATE.findall(text)}
+    return found
+
+
+def own_words(text):
+    """How many words a reply has outside quote marks and source labels: the model's own."""
+    return len(SOURCE_LABEL.sub(" ", QUOTED.sub(" ", text)).split())
+
+
+def quotes_only(reply):
+    """A reply with a quote of 20 characters or more and fewer than APPLIED_WORDS words of its own."""
+    return any(len(q) >= 22 for q in QUOTED.findall(reply)) and own_words(reply) < APPLIED_WORDS
+
+
+def applied(reply):
+    """A reply that quotes and applies: a quote, APPLIED_WORDS words or more of its own, addressed to the tenant."""
+    return (any(len(q) >= 22 for q in QUOTED.findall(reply)) and own_words(reply) >= APPLIED_WORDS
+            and re.search(r"\byou(r)?\b", QUOTED.sub(" ", reply), re.I) is not None)
+
+
+def measure_turn(turn, known_dates=frozenset(), fetched=""):
+    """What one turn did: tools called, case topics asked for, replies, and the generic measures. known_dates:
+    every date the record holds (facts, the tenant's lines, printed deadlines, the session's days); fetched:
+    every get_cases result in the session up to and including this turn."""
     replies = [e["text"].strip() for e in turn["entries"] if e["role"] == "model" and (e.get("text") or "").strip()]
     calls = [c for e in turn["entries"] if e["role"] == "model" for c in e.get("tool_calls", [])]
     printed = [d for e in turn["entries"] if e["role"] == "tool" and e["name"] == "get_deadlines"
                for d in ISO_DATE.findall(e.get("shown") or e["text"])]
     text = "\n".join(replies)
     bare = QUOTED.sub("", text)                       # outside quote marks
+    this_turn_cases = "\n".join((e.get("text") or "") for e in turn["entries"]
+                                if e["role"] == "tool" and e["name"] == "get_cases")
     return {
         "say": turn["say"],
         "replies": replies,
@@ -178,7 +221,12 @@ def measure_turn(turn):
         "called": [c["name"] for c in calls],
         "topics": [c["args"].get("topic") for c in calls if c["name"] == "get_cases"],
         "cautions": [e["text"] for e in turn["entries"] if e["role"] == "check" and "no reply came back" not in e["text"]],
-        "law_words": sorted({m.group(0) for m in LAW_WORDS.finditer(bare)}),
+        "choose_words": sorted({m.group(0) for m in CHOOSE_WORDS.finditer(bare)}),
+        "quotes_only": sum(quotes_only(r) for r in replies),
+        "applied": any(applied(r) for r in replies),
+        "dates_made": sorted(dates_in(bare) - set(known_dates)),
+        "cases_not_given": sorted({m.group(0) for m in CASE_NAME.finditer(text) if m.group(0) not in fetched}),
+        "cases_used": sorted({m.group(0) for m in CASE_NAME.finditer(text) if m.group(0) in this_turn_cases}),
         "offer_words": sorted({m.group(0) for m in OFFER_WORDS.finditer(bare)}),
         "field_names": sorted(set(FIELD_NAME.findall(bare))),
         "echo": sorted({iso for iso in set(printed) if any(s in text for s in spoken_dates(iso))}),
@@ -220,6 +268,10 @@ def check_expect(expect, matter, events, turns, screen):
         for pattern in want.get("must_not", []):           # outside quote marks: a quote may say "forfeits"
             hit = re.search(pattern, QUOTED.sub("", text), re.I)
             results.append((f"'{want['say'][:30]}' lacks /{pattern}/", not hit, hit.group(0) if hit else ""))
+        if want.get("applied"):
+            results.append((f"'{want['say'][:30]}' applied", t["applied"], t["replies"][-1][:200] if t["replies"] else ""))
+        if want.get("cases_used"):
+            results.append((f"'{want['say'][:30]}' uses its cases", bool(t["cases_used"]), t["cases_used"]))
         if "topics" in want:
             wrong = [x for x in t["topics"] if x not in want["topics"]]
             results.append((f"'{want['say'][:30]}' topic", bool(t["topics"]) and not wrong, t["topics"]))
@@ -275,7 +327,20 @@ def score_run(entry, scenario, out):
     entries = [e for f in sorted((matter_dir / "sessions").glob("*.jsonl")) for e in read_jsonl(f)] \
         if (matter_dir / "sessions").exists() else []
     turns = turns_of(entries)
-    measured = [measure_turn(t) for t in turns]
+    # every date the record holds: confirmed facts, the tenant's words (description, updates, chat), sheet
+    # answers, printed deadlines, and the session's own days (a reply may say today's date)
+    known = set()
+    for value in matter.get("facts", {}).values():
+        known |= dates_in(str(value))
+    known |= dates_in(matter.get("description", "")) | {e["when"][:10] for e in entries if e.get("when")}
+    known |= set().union(*(dates_in(ev.get("text", "")) for ev in events if ev["kind"] == "tenant_update"), set())
+    for e in entries:
+        if e["role"] in ("tenant", "sheet") or (e["role"] == "tool" and e.get("name") == "get_deadlines"):
+            known |= dates_in(" ".join(str(e.get(k) or "") for k in ("text", "shown", "value", "typed")))
+    measured, fetched = [], ""
+    for t in turns:
+        fetched += "\n".join((e.get("text") or "") for e in t["entries"] if e["role"] == "tool" and e["name"] == "get_cases")
+        measured.append(measure_turn(t, frozenset(known), fetched))
     unrecovered = [not t["replies"] and any(e["role"] == "check" and "no reply came back" in e["text"]
                                             for e in turn["entries"]) for t, turn in zip(measured, turns)]
     gateway = any(sign in screen for sign in GATEWAY_SIGNS) or any(a and b for a, b in zip(unrecovered, unrecovered[1:]))
@@ -291,7 +356,10 @@ def score_run(entry, scenario, out):
         "replies": sum(len(t["replies"]) for t in measured),
         "empty_turns": sum(ev["kind"] == "reply_empty" for ev in events),
         "cautions": sum(len(t["cautions"]) for t in measured),
-        "law_screen": sum(bool(t["law_words"]) for t in measured),
+        "quotes_only": sum(t["quotes_only"] for t in measured),
+        "choose_screen": sum(bool(t["choose_words"]) for t in measured),
+        "dates_made": sum(bool(t["dates_made"]) for t in measured),
+        "cases_not_given": sum(bool(t["cases_not_given"]) for t in measured),
         "offer_screen": sum(bool(t["offer_words"]) for t in measured),
         "field_names": sum(bool(t["field_names"]) for t in measured),
         "echo": sum(bool(t["echo"]) for t in measured),
@@ -308,23 +376,24 @@ def score(out):
     summary = {}
     for s in scores:
         row = summary.setdefault(s["scenario"], {"runs": 0, "crashed": 0, "gateway_trouble": 0, "expected_ok": 0, "replies": 0,
-                                                 "empty_turns": 0, "cautions": 0, "law_screen": 0,
+                                                 "empty_turns": 0, "cautions": 0, "quotes_only": 0, "choose_screen": 0,
+                                                 "dates_made": 0, "cases_not_given": 0,
                                                  "offer_screen": 0, "field_names": 0, "echo": 0, "footers": 0,
                                                  "failed": {}})
         row["runs"] += 1
-        for key in ("crashed", "gateway_trouble", "expected_ok", "replies", "empty_turns", "cautions", "law_screen",
-                    "offer_screen", "field_names", "echo", "footers"):
+        for key in ("crashed", "gateway_trouble", "expected_ok", "replies", "empty_turns", "cautions", "quotes_only",
+                    "choose_screen", "dates_made", "cases_not_given", "offer_screen", "field_names", "echo", "footers"):
             row[key] += int(s[key])
         for x in s["expect"]:
             if not x["ok"]:
                 row["failed"][x["what"]] = row["failed"].get(x["what"], 0) + 1
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
-    print(f"\n{'scenario':<28}{'runs':>5}{'gw':>4}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'law?':>5}"
-          f"{'offer?':>7}{'field':>6}{'echo':>5}{'footer':>7}")
+    print(f"\n{'scenario':<28}{'runs':>5}{'gw':>4}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'qonly':>6}"
+          f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'echo':>5}{'footer':>7}")
     for name, row in summary.items():
         print(f"{name:<28}{row['runs']:>5}{row['gateway_trouble']:>4}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
-              f"{row['cautions']:>5}{row['law_screen']:>5}{row['offer_screen']:>7}{row['field_names']:>6}"
-              f"{row['echo']:>5}{row['footers']:>7}")
+              f"{row['cautions']:>5}{row['quotes_only']:>6}{row['choose_screen']:>8}{row['dates_made']:>6}"
+              f"{row['cases_not_given']:>6}{row['offer_screen']:>7}{row['field_names']:>6}{row['echo']:>5}{row['footers']:>7}")
         for what, n in row["failed"].items():
             print(f"    failed {n}x: {what}")
 

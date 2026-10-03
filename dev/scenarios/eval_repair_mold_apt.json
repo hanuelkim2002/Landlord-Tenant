@@ -107,12 +107,7 @@
     "turns": [
       {
         "say": "Can I stop paying rent",
-        "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "What are my deadlines?",
@@ -131,19 +126,14 @@
           "Landlord's notice of a dangerous condition",
           "Constructive eviction"
         ],
-        "must_not": [
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+        "cases_used": true
       },
       {
         "say": "would I win",
-        "must": [
-          "does not decide|do not answer that"
-        ],
         "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit",
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+          "\\byou (will|'ll|would likely|would probably) (win|lose)\\b"
+        ],
+        "applied": true
       }
     ],
     "not_covered_note": false

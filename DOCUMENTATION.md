@@ -756,9 +756,19 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   `deadlines_computed` event naming a clock), `letters` (`draft` events), `screen_must` and `screen_must_not`
   (regexes on the whole screen), `turns` (per chat line, found by a
   piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
-  outside quote marks, the `topics` allowed for `get_cases`), and `screen_must_not`. Every reply is also
-  measured: empty turns, program cautions, field names, a printed deadline date repeated, and two word screens
-  (`LAW_WORDS`, `OFFER_WORDS`) that only mark a reply for a person to read. A run with signs that the gateway failed
+  outside quote marks, the `topics` allowed for `get_cases`, `applied`: a reply applies the law, a quote with
+  `APPLIED_WORDS` (40) words or more of the model's own addressed to the tenant, and `cases_used`: a reply names
+  a case the turn's `get_cases` result gave), and `screen_must_not`. Every reply is also
+  measured: empty turns, program cautions, field names, a printed deadline date repeated, quotes only (a quote
+  and fewer than 40 words of its own), dates made (a date with a year outside quote marks that no fact, tenant
+  line, sheet answer, or printed deadline holds), cases not given (a "Name v. Name" no `get_cases` result in
+  the session holds), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
+  `OFFER_WORDS`) that only mark a reply for a person to read. Since 2026-10-02 (TODO item 49) a legal question's
+  turn expects `applied` instead of "does not decide", and the `LAW_WORDS` screen and the `must_not` patterns
+  against "entitled", "allowed", "forfeit", and case names are gone. The blind scorers' rubric is
+  `dev/eval_rubric.md` (applied answers: QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,
+  OPEN_CLOSED, CASE_MISREAD, ONE_SIDED, CHOICE_MADE, OVERCLAIM, LAW_UNSOURCED, DATE_MADE, ID, and the quoting
+  and letter categories). A run with signs that the gateway failed
   (the driver's timeout, an empty answer where JSON was expected, or two unrecovered empty turns in a row) is
   marked `gateway_trouble` and counted apart. Writes `runs/` (screens),
   `runs.json`, `transcripts/` (each run as text marking who produced each part), `scores.json`, and

@@ -99,18 +99,11 @@
     "turns": [
       {
         "say": "Is he allowed",
-        "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "change the locks",
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "What should I do?",
@@ -120,7 +113,8 @@
         "must_not": [
           "would you like|do you want (me|to)|if you would like|I can (draft|help|write)",
           "(?<!what )(?<!whether )\\byou should\\b"
-        ]
+        ],
+        "applied": true
       },
       {
         "say": "What are my deadlines?",

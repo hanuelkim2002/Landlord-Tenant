@@ -93,17 +93,13 @@
       {
         "say": "about my religion",
         "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit",
           "Fair Housing|42 U\\.?S\\.?C|760\\.\\d|Civil Rights Act"
         ]
       },
       {
         "say": "refuse to renew",
         "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
+          "do not answer that|tool's reading"
         ]
       },
       {

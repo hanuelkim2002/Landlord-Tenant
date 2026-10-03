@@ -108,20 +108,16 @@
       {
         "say": "they can't do anything",
         "must": [
-          "does not decide|do not answer that|does not settle"
+          "does not settle"
         ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "break my lease",
         "must": [
-          "does not decide|do not answer that|does not settle"
+          "does not settle"
         ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "What are my deadlines?",
@@ -136,10 +132,7 @@
         ]
       },
       {
-        "say": "too loud",
-        "must_not": [
-          "\\b[A-Z][A-Za-z.&']+ v\\. [A-Z]"
-        ]
+        "say": "too loud"
       }
     ]
   }

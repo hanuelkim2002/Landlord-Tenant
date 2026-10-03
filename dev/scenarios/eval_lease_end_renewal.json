@@ -93,12 +93,7 @@
     "turns": [
       {
         "say": "Do I have to sign",
-        "must": [
-          "does not decide|do not answer that"
-        ],
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       },
       {
         "say": "When is the last day",
@@ -111,9 +106,7 @@
       },
       {
         "say": "What happens if I just stay",
-        "must_not": [
-          "\\b(you|your landlord|the landlord|he|they) (are|is) (not )?(entitled|allowed|required)\\b|\\bforfeit"
-        ]
+        "applied": true
       }
     ],
     "not_covered_note": false
