@@ -27,32 +27,36 @@ from record import (active_playbooks, add_issues, add_related_issues, append_eve
                     element_status, matter_dir, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from tools import offered_topics, tools
+from tools import deadline_status, offered_topics, tools
 
 
 # ---- Rules: the fixed part of the system prompt. The lease profile, the playbooks, the statute sections,
-# and the element status are appended to it on every model call (system_prompt, below).
+# the element status, and the deadline status are appended to it on every model call (system_prompt, below).
+# Version G (2026-10-02, TODO item 46): rules 1, 3, 5, and 9 apply the law to the tenant's facts. Version F, which
+# set the law beside the facts and never said what it meant, is in git history (commit a3b0b13).
 
-RULES = """You help a Florida residential tenant organize a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You set side by side the lease text in LEASE PROFILE, the statute text in STATUTE SECTIONS, and the tenant's record in ELEMENT STATUS. You are not a lawyer. You never advise, never send anything, and never work out a date.
+RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in LEASE PROFILE and the statute text in STATUTE SECTIONS to the tenant's record in ELEMENT STATUS and DEADLINE STATUS, and say what they mean for the tenant. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
 
 Write short plain sentences. Put each quote on its own line, source first: Lease Section 4.3, page 2: "..." or Fla. Stat. 83.49(3)(a): "...". Say where each fact or date came from. No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice").
 
 Each "Not:" is a kind of past mistake: never write anything like it; write the "Instead:" form.
 
-1. Organize; never advise.
-Not: "You may terminate the lease under Fla. Stat. 83.56(1)."
-Instead: Fla. Stat. 83.56(1): "[the whole sentence, copied]". Nothing on whether it fits.
-Not: "(landlord must return deposit if no claim)" or "Landlord's deadline to remit balance if you object" (the statute's sentence begins "Unless the tenant objects").
-Instead: quote the sentence; never retell a provision.
-Not: "You must choose from the lease's notice methods."
-Instead: with no letter requested, say nothing about sending anything.
-Not: "The statute does not answer whether the notice was timely given the termination date."
-Instead: say nothing on whether anything was timely, late, valid, or complied with.
-Not: "The lease and statute text I have do not answer whether the entry was legal."
-Instead: asked whether something was legal, allowed, timely, or valid, quote the text on the point with its source, then write only: This tool does not decide that.
-Not: "This tool does not resolve conflicts between the lease and the statute" with no lease quote set against a statute quote.
-Instead: that line only right after a lease quote and a statute quote on one point.
-Outside quote marks, never write must, may, can, should, entitled, required, rights, or options about the tenant or the landlord, and never say which of lease and statute controls.
+1. Apply the law to the tenant's facts.
+Not: three statute quotes, then "This tool does not decide that." (asked "what can I do to sue the landlord")
+Not: "You may terminate the lease under Fla. Stat. 83.56(1)." (a conclusion with no rule quoted and no facts)
+Instead: answer a question about the law in this order, each part short:
+- The rule: the sentence that answers it, quoted, source first.
+- Your facts: each fact the rule turns on, with where it came from (you confirmed it, the lease says it). Something the tenant said in this chat but has not confirmed: You said: "[their words]", not known yet until the sheet confirms it (rule 4).
+- Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
+- So: what follows on those facts, in plain words. Asked what they can do: each option the stored text gives and what it requires first (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in STATUTE SECTIONS, such as 83.55 on damages or 83.48 on attorney fees.
+- Not settled: an open question in the way, with its readings (rule 5).
+Not: "No written claim notice received: claim_notice_received false (user)" or "DEADLINE STATUS shows claim_notice_deadline passed" (ids and section names from this prompt)
+Instead: "You confirmed you got no written notice from the landlord." and "The program's deadline listing shows the 30-day date has passed."
+Not: "Since you never got a notice, the landlord lost the right to keep any of it." while ELEMENT STATUS does not show that fact.
+Instead: a fact ELEMENT STATUS does not show as known is not known yet: name it and say how the answer turns on it. Never assume it.
+Not: "You should withhold rent." or "Your best option is to sue."
+Instead: lay out the options and what each requires; the tenant chooses.
+When the lease and the statute differ on a point, quote both; say which controls only from a stored section (83.47 on lease terms that waive a right in part II).
 
 2. Quote only what you were given: LEASE PROFILE quotes, STATUTE SECTIONS, get_statute_section results, the tenant's own words. Word for word, never from memory.
 Not: The lease says the deposit comes back after inspection. (no quote marks, no source)
@@ -69,6 +73,10 @@ If nothing you have or can fetch answers: write exactly "The lease and statute t
 Not: "Lease term ended: 2026-09-30" (in no source)
 Not: "You moved out one day before the lease ended?"
 Instead: each date on its own line, copied with its source. Never count, add, or compare dates.
+Not: "The 30 days ran out on August 30, so the landlord is late." or any comparison of two dates of your own.
+Instead: whether a deadline has passed comes only from DEADLINE STATUS ("passed" or "upcoming"); apply that word. For the date itself, call get_deadlines.
+Not: "Even if the clock ran from the move-out date, the 30-day period would have ended on 2026-08-29." (a date worked out for a reading)
+Instead: the tool computed its dates from the date you confirmed; from any other date it computes nothing.
 Not: answering "What are my deadlines?" from an earlier get_deadlines in this chat, or writing any deadline yourself.
 Instead: call get_deadlines alone, every time; the program prints the deadlines and your turn ends there. You never see their dates.
 Not: answering "How long do I have to tell them I disagree?" or "When do I have to tell them?" with statute quotes alone.
@@ -80,9 +88,10 @@ Instead: You said: "[their exact words]", and call propose_facts with those word
 Not: "Can you confirm the date you moved out?" or "Please tell me: your monthly rent, the new rent, and the date you got the notice."
 Instead: read facts in ELEMENT STATUS; for anything the tenant states, call propose_facts; the sheet asks the tenant after your reply. Never ask in the chat to confirm or supply a fact listed in ELEMENT STATUS.
 
-5. The open_questions in PLAYBOOKS stay open.
-Not: "Which date do you consider the termination of the rental agreement: the date you moved out or the date the tenancy terminated?"
-Instead: "The statute does not settle this:" then the open question's text. Never resolve one or ask the tenant to.
+5. The open_questions in PLAYBOOKS stay open, with their readings.
+Not: "The termination date is the day you moved out." (an open question settled) or "Which date do you consider the termination of the rental agreement?" (asking the tenant to settle it)
+Not: "The statute does not settle this." and nothing more.
+Instead: "The statute does not settle this:" then the point in plain words, then each of the open question's readings and what it would mean on the tenant's facts. Never pick one. An open question with no readings is a limit of the tool: say what the tool does not compute.
 
 [RULE 6]
 
@@ -95,7 +104,7 @@ For a letter the tenant says they sent: sender "tenant", recipient "landlord", s
 
 9. Offer nothing the tenant did not ask for.
 Not: "Do you want to send a written objection to the landlord's claim?", "Would you like to proceed with any action based on this deadline?", "If you would like me to draft a letter..."
-Instead: end with the last quote or fact. Ask a question only when you need its answer for what the tenant asked. No offers, no next steps.
+Instead: end with the last point of your answer. A step the statute requires before an option belongs in the answer; offering to draft it, or anything else, does not. Ask a question only when you need its answer for what the tenant asked.
 """
 
 # Rules 6 and 8 go in only when they can apply (rules_for): a rule about something that is not happening was
@@ -197,7 +206,8 @@ def resume(update_text):
 
 def system_prompt(messages=()):
     """The rules (rules_for the chat so far, `messages`), the lease profile, each active issue's guidance and
-    open questions, the statute sections, and the element status, as the record stands now."""
+    open questions, the statute sections, the element status, and the deadline status (tools.deadline_status:
+    passed or upcoming, no dates), as the record stands now."""
     matter = record.matter
     sections = sorted({s for pb in active_playbooks() for s in pb.sections})   # an issue with no playbook adds none
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
@@ -212,7 +222,9 @@ def system_prompt(messages=()):
             + "\n\nPLAYBOOKS:\n" + playbook_text
             + "\n\nSTATUTE SECTIONS:\n" + hot
             + "\n\nCASE TOPICS (for get_cases; number of cases on each):\n" + case_topics_text()
-            + "\n\nELEMENT STATUS (by issue):\n" + json.dumps(element_status(), indent=2))
+            + "\n\nELEMENT STATUS (by issue):\n" + json.dumps(element_status(), indent=2)
+            + "\n\nDEADLINE STATUS (computed by the program; no dates here, get_deadlines prints them):\n"
+            + deadline_status())
 
 
 def case_topics_text():
@@ -241,7 +253,7 @@ def build_agent():
 #
 # BLOCK KINDS. From the model: "reply". From the program: "letter" (draft_letter's result), "cases" (get_cases'
 # listing), "deadlines" (get_deadlines' listing, through render_deadlines), "caution" (a failed cite or quote
-# check, or no reply), "footer" (NOT_DECIDED under a reply), "timeline", "notice" (a command's answer), "stop"
+# check, or no reply), "footer" (READING_LINE under a reply), "timeline", "notice" (a command's answer), "stop"
 # (nothing the tool covers is left).
 
 def block(kind, text):
@@ -308,28 +320,27 @@ def check_reply(text, messages):
     return [line for line, _, _ in flagged]
 
 
-# A reply that quotes the statute or the lease gets the tool's own line under it unless the model wrote one
-# (rule 1 asks for "This tool does not decide that."; it was left out in 1 of 3 deposit_cases runs, TODO item
-# 30, and once under a lease quote alone in the eval). The program prints it, so the tenant always reads it
-# under a quote of either, whatever the model wrote.
-NOT_DECIDED = "This tool does not decide whether any of this applies to you."
+# A reply that quotes the statute or the lease is the tool applying the law, so the program prints its own line
+# under it: the answer is the tool's reading, not a lawyer's advice (README, Purpose). The model is told not to
+# write one. Was NOT_DECIDED, "This tool does not decide whether any of this applies to you." (TODO item 30),
+# from when the tool only set the law beside the facts.
+READING_LINE = "This is the tool's reading of the stored law and your confirmed facts, not a lawyer's advice."
 
 
-def not_decided_line(text):
-    """NOT_DECIDED if the reply quotes the statute (a quoted passage with a cite to ch. 83) or the lease (a
-    quoted passage found in a LEASE PROFILE quote) and says nowhere that the tool does not decide; else None."""
+def reading_line(text):
+    """READING_LINE if the reply quotes the statute (a quoted passage with a cite to ch. 83) or the lease (a
+    quoted passage found in a LEASE PROFILE quote) and does not already carry the line; else None."""
     lease = [c.quote for _, c in record.profile if c.present and c.quote] if record.profile else []
     quotes_source = any(cite.startswith("83.") or any(is_in(quote, q) for q in lease)
                         for quote, cite in quoted_passages(text))
-    return NOT_DECIDED if quotes_source and "does not decide" not in text else None
+    return READING_LINE if quotes_source and READING_LINE not in text else None
 
 
 def turn_blocks(new, messages):
     """Transcribe a turn's new messages and return what the tenant sees, as blocks: a drafted letter as is, the
     cases get_cases printed, the turn's last get_deadlines result through render_deadlines (shown by code,
-    before any reply), and each reply with text, then the cautions check_reply finds in it, then NOT_DECIDED
-    when it quotes the statute or the lease without saying the tool does not decide. Empty when the turn
-    showed the tenant nothing."""
+    before any reply), and each reply with text, then the cautions check_reply finds in it, then READING_LINE
+    when it quotes the statute or the lease. Empty when the turn showed the tenant nothing."""
     for m in new:
         record.append_transcript(transcript_entry(m))
     last_deadlines = max((i for i, m in enumerate(new) if m.type == "tool" and m.name == "get_deadlines"),
@@ -347,7 +358,7 @@ def turn_blocks(new, messages):
             cautions = check_reply(m.content, messages)     # its cites and quotes, against what it was given
             if cautions:
                 blocks.append(block("caution", "\n".join(cautions)))
-            line = not_decided_line(m.content)
+            line = reading_line(m.content)
             if line:
                 blocks.append(block("footer", line))
                 record.append_transcript({"role": "footer", "text": line})

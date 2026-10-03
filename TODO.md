@@ -11,18 +11,6 @@ landlord" got three statute quotes (83.56(1), 83.60(1)(b), 83.64(1)) and "This t
 In development, on test matters only. Until item 46 is done the code still organizes only: the rules, the
 program's "does not decide" lines, and the page's sidebar say so. In this order, each its own change.
 
-46. Rules for applying. Rule 1 (organize, never advise) becomes the application rule, in the README's
-    shape: the rule quoted with its source; the confirmed facts it turns on, from ELEMENT STATUS with where
-    each came from; for each condition, met, failed, or not known yet (a missing fact named, never assumed);
-    what follows on those facts, the options the statute gives and what each requires first; no choice made
-    for the tenant. Rule 5: an open question is named with the readings on each side. Rule 9: a step the
-    statute requires before an option (a written notice first, e.g.) is part of the answer, not an offer; an
-    unasked letter is still an offer. Rule 3 stays: no date arithmetic, and whether a deadline has passed comes
-    from get_deadlines. `NOT_DECIDED` becomes a line saying the answer is the tool's reading of the stored law
-    and the confirmed facts, not a lawyer's advice; decide the other "does not decide" lines the program prints
-    (the cases' closing line in `wiki.render_cases`, `sheet.stop_text`, the sheet's lease comparison, which is
-    a conflict of facts and may stay) and the page's sidebar line. Keep today's rules as a file for
-    `RULES_FILE`, so the eval can compare the two. "Not:" / "Instead:" pairs come from real slips once seen.
 47. Cases to the model. `get_cases` gives the model each case's page (quoted facts, issues, rules, reasoning),
     not only the names, and still prints them for the tenant. Rule 8: set the tenant's facts beside each
     case's, say where they match and where they differ, and name a case that cuts against the tenant. The model

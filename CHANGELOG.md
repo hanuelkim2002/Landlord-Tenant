@@ -5,6 +5,31 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- Rules version G: the model applies the law (TODO item 46, done). Was version F, "organize, never advise":
+  quotes set beside the facts and "This tool does not decide that."; a question like "what can I do to sue the
+  landlord" got three quotes. Rule 1 now answers in order: the rule quoted; the facts it turns on, in plain words
+  with their source (a fact said in the chat but not yet confirmed is not known yet); each condition met,
+  failed, or not known; what follows, with the options the stored text gives and what each requires first; the
+  open question in the way. It never assumes a fact or chooses for the tenant, and says which of lease and
+  statute controls only from a stored section (83.47). Rule 3: whether a deadline has passed comes only from
+  the new DEADLINE STATUS, never a date comparison or a date worked out for a reading. Rule 5: an open
+  question is given with its readings and what each would mean on the facts. Rule 9: a step the statute
+  requires before an option is part of the answer, an offer is not. New in the prompt: DEADLINE STATUS
+  (`tools.deadline_status`, after ELEMENT STATUS): each computed deadline's issues, whose, what it counts from,
+  cite, and "passed" or "upcoming", with no date, and what waiting issues wait for; logs nothing
+  (`tools.open_facts_by_issue` now shared with `deadline_listing`). The program's line under a reply that
+  quotes the statute or the lease is `READING_LINE`, "This is the tool's reading of the stored law and your
+  confirmed facts, not a lawyer's advice." (`agent.reading_line`; was `NOT_DECIDED`, "This tool does not decide
+  whether any of this applies to you."), and the model is told not to write its own. The stop text's last line
+  says the tool has no playbook for the situation, so it does not apply the clauses. The page's sidebar says
+  the tool applies the stored statute, in development. Not done as the item said: today's rules were not kept
+  as a `RULES_FILE`; the eval compares with the whole code before the change (a git worktree, `--project`),
+  which also keeps the old footer and case tool. Two live probes on a scratch copy of the test matter (your
+  question from the page, and "Was it legal for them to keep my deposit?"): the first answers applied the rule
+  to the facts, gave both readings of the termination date, and listed suing for the deposit and 83.49(3)(c)'s
+  costs and fees; they also showed field names in the facts and a date worked out for a reading, both now
+  "Not:" pairs; the second probe showed neither. Smoke: five checks on the reading line, DEADLINE STATUS
+  (passed, waiting, no date, nothing logged), and the rules and readings in the prompt.
 - Playbooks rewritten for applying the law (TODO item 50, done; the author still checks each against
   `statutes/` before signing). Every open question now says what the stored text lets the model apply and what
   stays open, and a point the text does not settle carries `readings`, two or more, each resting on quoted

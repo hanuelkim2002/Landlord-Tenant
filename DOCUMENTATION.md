@@ -169,17 +169,17 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   blocks, the parts the tenant sees in order, each `{"kind", "text"}` made by `block`: `reply` is the model's
   words; every other kind is the program's: `letter` (a `draft_letter` result as is), `cases` (a `get_cases`
   listing), `deadlines` (the turn's last `get_deadlines` listing through `render_deadlines`), `caution` (failed
-  cite or quote checks, or `NO_REPLY`), `footer` (`NOT_DECIDED`), `timeline`, `notice` (a command's answer), and
+  cite or quote checks, or `NO_REPLY`), `footer` (`READING_LINE`), `timeline`, `notice` (a command's answer), and
   `stop`. `turn(agent, config, text, note="")` is one turn of the model: the tenant's message goes to the
   transcript before the model runs (so `propose_facts` can check the tenant's words), then the note, if any; the
   turn's new messages are the thread after what the checkpointer held before it; it returns the blocks and
   whether the model called `propose_facts`, so the sheet comes next. `turn_blocks(new, messages)` transcribes a
   turn's new messages and builds its blocks; other tool results are not shown. Under each reply come its
   cautions, then, if the reply quotes the statute (a quoted passage with a ch. 83 cite,
-  `citations.quoted_passages`) or the lease (a quoted passage found in a lease profile quote) and nowhere
-  says "does not decide", `NOT_DECIDED` ("This tool does
-  not decide whether any of this applies to you.", from `not_decided_line`), also written to the transcript
-  as a `footer` line (TODO item 30). When a turn has no blocks (the reply was empty
+  `citations.quoted_passages`) or the lease (a quoted passage found in a lease profile quote) and does not
+  already carry it, `READING_LINE` ("This is the tool's reading of the stored law and your confirmed
+  facts, not a lawyer's advice.", from `reading_line`), also written to the transcript as a `footer` line
+  (TODO item 46; was `NOT_DECIDED`, "This tool does not decide whether any of this applies to you."). When a turn has no blocks (the reply was empty
   or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and returns that
   second turn's blocks; if it is empty too, a `NO_REPLY` caution ("[Check: no reply came back from the model. Please
   ask again.]"). Either way it logs `reply_empty`, with `finish`: the `finish_reason` the gateway gave for each
@@ -421,8 +421,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_suggested`
   when the answer brought in a related issue), or
   `printed` (`text`: what the program printed outside the chat, the stop text), or
-  `footer` (`text`: `NOT_DECIDED`, printed by the program under a reply that quotes the statute or the lease without
-  saying the tool does not decide), or
+  `footer` (`text`: `READING_LINE`, printed by the program under a reply that quotes the statute or the lease; until
+  2026-10-02 it was `NOT_DECIDED`), or
   `program` (`text`: a note sent to the model: ahead of the tenant's message after a sheet, or
   `EMPTY_REPLY` after an empty reply), or `check` (`text`: a "[Check: ...]" line printed to the tenant: a
   caution about a cite or a quote from `check_reply`, or `NO_REPLY` from `retry_empty`). Only the chat is transcribed; the
@@ -531,43 +531,48 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 932 words always, plus rule 6 on letters (172 words) once a letter is in
-   play, and rule 8 on cases in full (153 words) when there is a case topic, otherwise one line (since
-   2026-10-01; rule 1's line on asking how a requested letter will be sent moved into rule 6, which already
-   asked it). Pairs added from the eval baseline of 2026-10-01: the format line names issue ids; rule 3, a
-   question about when or how long goes to `get_deadlines`; rule 6, the tenant's words are the ask, and the
-   posture lines are never retold without quote marks; rule 8, the topic on the same notice, deposit,
-   repair, entry, rent, fee, or lease term is called even if it does not name the exact point. Version F of the 2026-10-01 trial (`docs/trials/2026-10-01-rules/`), 1,130 words with a rule
-   on cases added after it (TODO item 25) and later fixes for TODO item 23: rule 1's notices-clause line applies only to a requested letter; a pair for legality questions (quote, then "This tool does not decide that."); rule 2's fallback sentence used exactly, and cite the subsection the words sit in; rule 3 names the echoed empty result; rule 4 adds an example of asking for sheet facts. A role
-   paragraph (organize lease, statute, and record side by side; not a lawyer; never advise, send, or work
-   out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
-   `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no field names), then nine numbered rules,
-   each stated with "Not:" examples taken from real slips and the "Instead:" form: 1 organize, never advise
-   (no must/may/can/should/entitled/required/rights/options about anyone outside quote marks; the conflict
-   line only right after a lease quote and a statute quote on one point); 2 quote only what was given, word
-   for word, fetch a section before citing one not in STATUTE SECTIONS, say plainly when nothing answers;
-   3 dates only from ELEMENT STATUS, a lease quote, the tenant's words, or a tool result, deadlines only
-   from `get_deadlines`, called alone every time, which the program prints, ending the turn, the model never
-   seeing the dates; 4 the model proposes
-   facts with `propose_facts`, the tenant confirms them on the sheet, nothing asked or confirmed in the
-   chat; 5 open questions stay open (quote the open question's text; never resolve it or ask the tenant
-   to); 6 letters only when asked, only through `draft_letter`, missing details asked once, posture lines
-   copied word for word, then one line; 7 record messages and sent letters with `add_communication`;
-   8 cases only through `get_cases`, called alone, which the program prints, ending the turn, only when the
-   tenant asks what courts or cases say ("This tool has no cases on that." when no topic fits); 9 offer
-   nothing the tenant did not ask for
-   (rule 8 until 2026-10-01). Rules 1 to 7 cover the same ground as the seven rules of
-   2026-09-30 (whose numbers TODO.md items 15 to 22 use); rule 9 was part of the old rule 1. Old rules 1 to
-   15 (until 2026-09-30) map to the seven as: 1, 4, 8 to 2; 2 to 3; 3, 9 to 4; 5 to 5; 6, 11, 12 to 6;
-   7, 13 to 1; 14, 15 to 7; 10 dropped.
+1. `RULES`, through `rules_for`: 1,286 words always, plus rule 6 on letters (172 words) once a letter is in
+   play, and rule 8 on cases in full (153 words) when there is a case topic, otherwise one line. Version G
+   (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
+   the statute to the record in ELEMENT STATUS and DEADLINE STATUS and say what they mean for the tenant; not
+   a lawyer, and the program prints the line saying so, so the model writes none; never send anything or
+   work out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
+   `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no ids), then nine numbered rules, each with
+   "Not:" examples and the "Instead:" form: 1 apply the law to the tenant's facts, in order: the rule quoted;
+   the facts it turns on in plain words with where each came from, never an id or a prompt section's name (a
+   fact said in the chat but not confirmed is "not known yet until the sheet confirms it"); for each condition, met, failed, or not known; what follows, and when
+   asked what they can do, each option the stored text gives and what it requires first (fetching a section
+   such as 83.55 or 83.48 when it is not in STATUTE SECTIONS); the open question in the way. Never assume a
+   fact, never choose among options for the tenant, and say which of lease and statute controls only from a
+   stored section (83.47). 2 quote only what was given, word for word, fetch a section before citing one
+   not in STATUTE SECTIONS, say plainly when nothing answers; 3 dates only from ELEMENT STATUS, a lease quote,
+   the tenant's words, or a tool result; whether a deadline has passed only from DEADLINE STATUS ("passed" or
+   "upcoming"), never a comparison of the model's own, nor a date worked out for an open question's reading; the dates only from `get_deadlines`, called alone every
+   time, which the program prints, ending the turn; 4 the model proposes facts with `propose_facts`, the
+   tenant confirms them on the sheet; 5 open questions stay open, given with their readings and what each
+   would mean on the tenant's facts, never picked, never put to the tenant; one with no readings is a limit
+   of the tool; 6 letters only when asked, only through `draft_letter`, missing details asked once, posture
+   lines copied word for word, then one line; 7 record messages and sent letters with `add_communication`;
+   8 cases only through `get_cases` (unchanged from version F); 9 offer nothing the tenant did not ask for,
+   though a step the statute requires before an option is part of the answer. Version F (2026-10-01, the
+   trial in `docs/trials/2026-10-01-rules/`), which set the lease, the statute, and the record side by side
+   and never said what they meant (rule 1 "organize, never advise": no must, may, can, should, entitled,
+   required, rights, or options about anyone outside quote marks; quote, then "This tool does not decide
+   that."), is in git history at commit a3b0b13. Rules 1 to 7 cover the same ground as the seven rules of
+   2026-09-30 (whose numbers TODO.md items 15 to 22 use).
 2. `LEASE PROFILE`: the whole profile as JSON.
 3. `PLAYBOOKS`: for each active playbook, YAML of its `issue`, its `guidance`, and its
-   `spec.open_questions` (which rule 5 refers to). The rest of `spec` never enters the context.
+   `spec.open_questions` with their readings (which rule 5 refers to). The rest of `spec` never enters the context.
 4. `STATUTE SECTIONS`: the text of every section the active playbooks list in `sections`, once each. An
    issue with no playbook yet adds none.
 5. `CASE TOPICS (for get_cases; number of cases on each)`: `agent.case_topics_text()`, one line per topic
    from `tools.offered_topics()`, or "none for these issues" (always, until the author verifies pages).
 6. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at the moment of the call.
+7. `DEADLINE STATUS (computed by the program; no dates here, get_deadlines prints them)`:
+   `tools.deadline_status()`: for the issues with every fact confirmed, each deadline with its issues, whose
+   it is, what it counts from (the fact's id, not its date), its cite, and "passed" or "upcoming" (or why it has
+   no date); then each issue still waiting, with the facts it waits for. Logs nothing. So the model can apply a
+   condition such as "within the 30-day period" without seeing or comparing a date.
 
 The program note after a sheet still tells the model, in the conversation, that a sheet just ran.
 

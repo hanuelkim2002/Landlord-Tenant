@@ -37,7 +37,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
 from lease import FOOTER, lease_clauses
 from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from agent import (CASE_RULE, LETTER_RULE, NO_CASES_RULE, NOT_DECIDED, check_reply, command, given_text, print_blocks,
+from agent import (CASE_RULE, LETTER_RULE, NO_CASES_RULE, READING_LINE, check_reply, command, given_text, print_blocks,
                    retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn, turn_blocks)
 from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
@@ -399,6 +399,8 @@ try:
         "value": False, "how": "stated", "said": "Actually I moved out ... I got a letter"}})})
     check("propose_facts refuses an ellipsis joining words the tenant never typed", "said must be" in invented)
     check("get_deadlines waits while facts are open", deadline_listing().startswith("Not yet"))
+    check("item 46: while facts are open, the prompt's deadline status says what each issue waits for",
+          "- waiting [deposit_not_returned]: no deadline until these are confirmed: " in system_prompt().split("DEADLINE STATUS (computed")[1])
     check("printed deadlines say none yet, and what is waiting",
           render_deadlines(deadline_listing()).startswith("No deadlines yet")
           and "waiting [deposit_not_returned]: " in render_deadlines(deadline_listing()))
@@ -431,6 +433,15 @@ try:
     check("get_deadlines answers once every fact is confirmed", deadlines.get("tenant_objection_deadline") == "2026-10-10")
     listed = json.loads(deadline_listing())["deadlines"]
     shared = [d for d in listed if d["clock"] == "claim_notice_deadline"]
+    events_now = len(read_events())
+    status_text = system_prompt().split("DEADLINE STATUS (computed")[1]
+    check("item 46: the prompt shows each computed deadline as passed or upcoming, with no date, and logs nothing",
+          "- claim_notice_deadline [deposit_not_returned, deposit_claim_received]: the landlord's, 30 days after "
+          "tenancy_terminated, Fla. Stat. 83.49(3)(a): passed" in status_text
+          and not re.search(r"\b20\d\d-\d\d-\d\d\b", status_text) and len(read_events()) == events_now)
+    check("item 46: the rules apply the law, and open questions reach the model with their readings",
+          "1. Apply the law to the tenant's facts." in system_prompt() and "stay open, with their readings" in system_prompt()
+          and "readings:" in system_prompt().split("PLAYBOOKS:")[1].split("STATUTE SECTIONS:")[0])
     check("a deadline two issues share is listed once, with both issues", len(shared) == 1
           and shared[0]["issues"] == ["deposit_not_returned", "deposit_claim_received"])
     printed = render_deadlines(deadline_listing())
@@ -455,7 +466,7 @@ try:
     check("timeline <issue> keeps a shared deadline under either issue",
           "claim notice deadline" in render_timeline("deposit_claim_received")
           and "claim notice deadline" in render_timeline("deposit_not_returned"))
-    status_now = json.loads(system_prompt().split("ELEMENT STATUS (by issue):\n")[1])
+    status_now = json.loads(system_prompt().split("ELEMENT STATUS (by issue):\n")[1].split("\n\nDEADLINE STATUS")[0])
     check("the prompt's element status is the record as it is now", any(
           r["id"] == "vacated" and r["status"] == "known" and r["value"] == "2026-07-28"
           for r in status_now["deposit_not_returned"]))
@@ -655,16 +666,17 @@ try:
     # and kept in the transcript; not under a reply that has it, nor under one quoting only the tenant
     bare = AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"')
     shown_bare = turn_blocks([bare], [bare])
-    shown_others = (turn_blocks([AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nThis tool does not decide that.')], [])
+    shown_others = (turn_blocks([AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\n{READING_LINE}')], [])
                     + turn_blocks([AIMessage(content='You said: "I paid the whole rent for September myself."')], []))
     session_lines = (record.matter_dir() / "sessions" / f"{record.session}.jsonl").read_text().splitlines()
     footers = [json.loads(line) for line in session_lines if json.loads(line)["role"] == "footer"]
-    check("item 30: a statute quote with no 'does not decide' line gets the program's line, once, in the transcript",
-          shown_bare[-1] == {"kind": "footer", "text": NOT_DECIDED} and NOT_DECIDED not in screen(shown_others)
-          and [f["text"] for f in footers] == [NOT_DECIDED])
+    check("item 46: a reply that quotes the statute gets the program's reading line, once, in the transcript; "
+          "none under one that already has it or quotes only the tenant",
+          shown_bare[-1] == {"kind": "footer", "text": READING_LINE} and screen(shown_others).count(READING_LINE) == 1
+          and [f["text"] for f in footers] == [READING_LINE])
     lease_words = next(c.quote for _, c in record.profile if c.present and c.quote and len(c.quote) > 60)[:60]
-    check("a lease quote with no 'does not decide' line gets the program's line too (eval, 2026-10-01)",
-          screen(turn_blocks([AIMessage(content=f'Lease Section 4.3, page 2: "{lease_words}"')], [])).count(NOT_DECIDED) == 1)
+    check("a lease quote gets the program's reading line too (eval, 2026-10-01)",
+          screen(turn_blocks([AIMessage(content=f'Lease Section 4.3, page 2: "{lease_words}"')], [])).count(READING_LINE) == 1)
 
     # blocks (TODO item 31): what the tenant sees from a turn or a command, the model's words apart from the
     # program's, for the terminal and the web page alike
@@ -854,7 +866,7 @@ try:
     check("the page shows the model's reply in a speech bubble, the program's caution and line outside it",
           bubbles[-1][0] == "assistant" and "83\\.49\\(3\\)\\(a\\)" in bubbles[-1][1][0]
           and any("[Check: 83.64" in w.value.replace("\\", "") for w in page.warning)
-          and any(NOT_DECIDED in i.value.replace("\\", "") for i in page.info))
+          and any(READING_LINE in i.value.replace("\\", "") for i in page.info))
     check("the page shows a reply as written: a $ starts no math, a * no italics",
           "\\$900 \\*or more\\*" in bubbles[-1][1][0])
     page.chat_input[0].set_value("issues").run()

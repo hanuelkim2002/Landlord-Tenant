@@ -100,16 +100,23 @@ def propose_facts(facts_json: str) -> str:
 # is one of them, the agent stops after the tool, the chat loop prints what the program made, and the model
 # writes no reply after it, so it cannot repeat or reword a printed line (TODO item 19).
 
-def deadline_listing():
-    """Every deadline the confirmed facts give, as JSON: {"deadlines": [...], "waiting": {issue: [open facts]}},
-    issue by issue (an issue is ready when none of its facts is proposed, changed, or missing; a deadline two
-    issues share appears once), or "Not yet. ..." with the open facts when no issue is ready. Writes a
-    deadlines_computed event per ready issue. What the program prints, through render_deadlines."""
+def open_facts_by_issue():
+    """The facts each active issue still needs (proposed, changed, or missing), by issue. An issue with none is
+    ready: its deadlines can be computed."""
     waiting = {}
     for issue, rows in element_status().items():
         open_ids = sorted({r["id"] for r in rows if r["status"] in ("proposed", "changed", "missing")})
         if open_ids:
             waiting[issue] = open_ids
+    return waiting
+
+
+def deadline_listing():
+    """Every deadline the confirmed facts give, as JSON: {"deadlines": [...], "waiting": {issue: [open facts]}},
+    issue by issue (an issue is ready when none of its facts is proposed, changed, or missing; a deadline two
+    issues share appears once), or "Not yet. ..." with the open facts when no issue is ready. Writes a
+    deadlines_computed event per ready issue. What the program prints, through render_deadlines."""
+    waiting = open_facts_by_issue()
     ready = [pb for pb in active_playbooks() if pb.issue not in waiting]
     if not ready:
         return "Not yet. No issue has all its facts confirmed. Still open, by issue: " + json.dumps(waiting)
@@ -121,6 +128,27 @@ def deadline_listing():
     if waiting:
         result["waiting"] = waiting            # these issues' dates come once their facts are confirmed
     return json.dumps(result, indent=2, default=str)
+
+
+def deadline_status():
+    """DEADLINE STATUS, for the system prompt: each deadline of the ready issues, whose it is, what it counts
+    from, its cite, and whether it has passed, with no date in it, then the issues still waiting and what for.
+    So the model can apply a condition such as "within the 30-day period" from the program's "passed" or
+    "upcoming", never from dates of its own (TODO item 46). Logs nothing: the prompt is rebuilt on every call."""
+    waiting = open_facts_by_issue()
+    ready = [pb for pb in active_playbooks() if pb.issue not in waiting]
+    lines = []
+    for d in matter_deadlines(ready, record.matter["facts"], date.today()):
+        issues = ", ".join(d["issues"])
+        if "deadline" not in d:
+            lines.append(f"- {d['clock']} [{issues}]: no date ({d['status']})")
+            continue
+        start = d["from"].split()[0]                       # the trigger's id; its date stays out
+        lines.append(f"- {d['clock']} [{issues}]: the {d['actor']}'s, {d['rule']} {start}, Fla. Stat. {d['cite']}: "
+                     f"{d['status']}")
+    lines += [f"- waiting [{issue}]: no deadline until these are confirmed: {', '.join(ids)}"
+              for issue, ids in waiting.items()]
+    return "\n".join(lines) or "none: no active issue has a deadline this tool computes"
 
 
 def deadline_receipt(listing):

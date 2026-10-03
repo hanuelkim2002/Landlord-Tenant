@@ -360,8 +360,9 @@ open_record()
 
 with st.sidebar:
     st.title("Landlord-Tenant Organizer")
-    st.caption("Florida, Fla. Stat. ch. 83 part II. Organizes your records and the law's own words. Never "
-               "advises, never sends anything. Runs on this computer only.")
+    st.caption("Florida, Fla. Stat. ch. 83 part II. Applies the stored statute to your confirmed facts: the "
+               "tool's reading, not a lawyer's advice. In development, for test matters only. Never sends "
+               "anything. Runs on this computer only.")
     if st.button("New matter", width="stretch"):
         close_session()
         state.stage = "new"

@@ -195,7 +195,8 @@ CLAUSE_CHARS = 600                                       # a longer clause is cu
 def stop_text():
     """What run.py prints when no covered issue is active: STOP_LINE, the situations the tool covers (each
     playbook's description) and how to come back to one, then the lease clauses lease.clauses_about finds for
-    the tenant's description and updates, each with its section, title, and page, word for word."""
+    the tenant's description and updates, each with its section, title, and page, word for word, and a line
+    saying the tool does not apply them, having no playbook for the situation."""
     lines = [STOP_LINE, "", "This tool covers these situations:"]
     lines += [f"  - {pb.description}" for pb in playbooks.values()]
     lines += ["If one of them is part of what happened, open this matter again (choose existing) and describe that part."]
@@ -208,6 +209,6 @@ def stop_text():
         for c in found:
             words = c["text"] if len(c["text"]) <= CLAUSE_CHARS else c["text"][:CLAUSE_CHARS].rsplit(" ", 1)[0] + " ..."
             lines.append(f'  Lease Section {c["number"]}, {c["title"]}, page {c["page"]}: "{words}"')
-        lines.append("This tool does not decide what they mean for you.")
+        lines.append("This tool has no playbook for this situation, so it does not apply them to your facts.")
     return "\n".join(lines)
 
