@@ -20,7 +20,8 @@ structural ones first.
 59. Dates the model made (blind 12.5; code 4): 30 days counted from a move-out ("2026-07-30"), "about 52 days",
     "whichever date controls, the 30-day period has passed". Rule 3's pairs are in the prompt; keep counting. After
     items 51 to 53 (2026-10-03): 4 turns, all counts like "Thirty days after June 30, 2026 is July 30, 2026.",
-    now caught by the eval's echo measure (a computed deadline in a reply).
+    now caught by the eval's echo measure (a computed deadline in a reply). After items 54 to 61: 3 turns
+    (`docs/evals/2026-10-03-items54-61/`), "2026-07-30" counted from a move-out again.
 63. Condition slips the blind scorers found on 2026-10-02 that no failure mode names yet (item 55 added five).
     For the author: which belong in the playbooks, each quoted from `statutes/`: 83.49(5) left out where the
     record shows no 7-day vacate notice (wants_to_leave_early, the deposit playbooks); 83.64(1)'s examples read
@@ -36,6 +37,17 @@ structural ones first.
     source, so a case's, the lease's, or the tool's words, or a phrase of 83.60 followed by "83.51(1)" in the
     reply, are checked against the wrong section (`citations.quoted_passages`). An option: a quote cited to a
     section it is not in, but word for word in what the model was given, is not flagged for the section.
+65. Questions about when with `get_deadlines` uncalled: 4 of 39 after items 54 to 61 (1 of 39 before; 5 with the
+    deadline part named THE PROGRAM'S DEADLINES, since renamed). The lease-end story's "When is the last day I
+    can tell them I'm leaving?" in 3 of 3: the model applies 83.575(1) and says the date turns on the lease end,
+    which the story confirms as 2026-12-31 against the test lease's 2027 (item 60). Rule 3 says call it every
+    time. Watch after item 60; then a code-side option, since the program knows a question about when.
+66. Sections retold without their quote did not fall with item 54's pair: 27, then 29 turns per 100 replies
+    (`cites_unquoted`, eval of 2026-10-03). A code-side option: a caution naming a section the reply cites with
+    none of its words quoted (`citations.cites_without_quote`), as for a quote or a cite now.
+67. The eval's "cases not given" (`CASE_NAME` in `dev/eval.py`) counts part of a given case's name as another
+    case: "Inc. v. Varnado", "Income Realty v. Bentley", "Follows Durene v. Alcime" (3 turns, eval of
+    2026-10-03). Match against the names `get_cases` printed (`agent.named_cases`) instead.
 60. The eval's test data: every scenario uses the same test lease, whose rent ($1,850), deposit, and 2027 term
     end conflict with some stories (a rent hike read as a decrease against the lease's rent; a $1,000 deposit
     story read as $1,850; the 2027 end date against the sheet's 2026-07-31). Scenarios need stories that fit the
@@ -166,7 +178,8 @@ reused, so older references (smoke check names, the changelog) still point to th
     it as LAW under the rubric's literal rule (12 of 38 after-runs' LAW calls, most marked borderline). Decide
     whether this line is the wanted answer there or the quote-then-"does not decide" form is. Superseded by
     item 46: an answer applies what is stored, and this line is left for a question nothing stored speaks to.
-    After item 52 (eval of 2026-10-03), the renewal question still got this line in 2 of 3 runs.
+    After item 52 (eval of 2026-10-03), the renewal question still got this line in 2 of 3 runs, and 3 of 3
+    after items 54 to 61.
 62. Offers the tenant did not ask for (rule 9) rose from 3 to 6 turns in 48 runs after items 51 to 53 (eval of
     2026-10-03), with more replies after a deadline listing. Keep counting (`OFFER_WORDS`, rubric OFFER).
 41. Empty replies remain rare (2 and 3 turns in 48 runs before and after, 2026-10-01); `reply_empty` now logs

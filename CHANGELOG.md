@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Eval of items 61 and 54 to 58 (`docs/evals/2026-10-03-items54-61/`; 16 scenarios, 3 runs, three runs: the code
+  before, after, and after the deadline-name fix; code-scored). Runs meeting every expectation 41, 37, 40 of 48;
+  prompt part names 18, 8, 3 turns per 100 replies; field ids 17, 12, 8; quote cautions 47, 22, 28; the new
+  left-out caution 24 in each after run; sections retold not quoted 27, 29, 29 (item 54's pair did nothing
+  measurable); `get_deadlines` on questions about when 38, 34, 35 of 39, the first run's drop being the
+  regression the fix addressed. Left to TODO: items 65 to 67, and notes on items 40 and 59. `method/compare.py`
+  adds measures per 100 replies, cautions by kind, and single turns to the comparison. Chart shown in the
+  session.
+
 - The deadline part of the prompt renamed again, WHICH DEADLINES HAVE PASSED (a fix to TODO item 61). Was, since
   item 61 that morning: THE PROGRAM'S DEADLINES. The eval of items 54 to 61 found the model reading it as the
   deadlines themselves: "You have until the upcoming deadline shown in THE PROGRAM'S DEADLINES", "the deadline is
