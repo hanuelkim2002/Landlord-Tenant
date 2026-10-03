@@ -5,6 +5,19 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- False quote cautions from a quote's inner marks (TODO item 58, done). Was: program cautions rose from 6 to 48
+  in the eval of 2026-10-02, and the item guessed that inner quote marks broke `citations.quote_spans`' pairing.
+  Replayed on the 168 replies of 2026-10-03, the cause was elsewhere: `compact` made curly marks straight but
+  kept them, so a quote whose inner marks the model changed (‘Reasonable notice’ inside a quote of 83.53(2),
+  whose stored text has “Reasonable notice”; ‘cash’ inside Moskowitz v. Aslam's words) was not word for word,
+  and the tool's own words, which the prompt holds as YAML with an apostrophe doubled ("neighbor''s"), were not
+  either. `compact` now leaves quote marks and apostrophes out. The replay: 69 cautions before, 54 after, the 15
+  gone all false, none added. Tried and dropped, since neither changed a caution or a cite check in the replay:
+  a pairing that lets a quote hold a quote, and the playbooks' text as plain text in `given_text`. What is left
+  went to TODO item 64: mostly real cautions, and about 12 false ones where a quote takes a cite in the prose
+  as its source. Smoke: a quote of 83.53(2) with its inner marks made single, and the tool's words with an
+  apostrophe doubled in the given text. Wiki checks (which use `compact` for pin pages): 0 problems.
+
 - Two code checks on the cases a reply uses (TODO item 57, done). Was: in the eval of 2026-10-02 every mold-story
   answer left out the three printed cases that went for the landlord (ONE_SIDED 12.5), and one credited a
   case's words to another (part of CASE_MISREAD 16.5); rule 8 already asked for every case. Now, as cautions the

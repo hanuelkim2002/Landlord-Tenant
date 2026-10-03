@@ -319,6 +319,13 @@ check("a short quote keeps its two marks, so the words after it are not read as 
 check("a quote that runs over two lines is one passage",
       [q for q, c in quoted_passages('Lease Section 4.3: "Tenant shall notify Landlord in writing\nof a forwarding address" and "x"')]
       == ["Tenant shall notify Landlord in writing\nof a forwarding address"])
+check("item 58: a quote holding the statute's own quoted words passes with its inner marks changed to single ones",
+      check_quoted("Fla. Stat. 83.53(2): “The landlord may enter the dwelling unit upon reasonable notice to the tenant "
+                   "and at a reasonable time for the purpose of repair of the premises. ‘Reasonable notice’ for the "
+                   "purpose of repair is notice given at least 24 hours prior to the entry”", "") == [])
+check("item 58: the tool's own words pass though the prompt holds them as YAML, with an apostrophe doubled",
+      check_quoted('The tool says: "It is not: the disturbance is the neighbor\'s failure of 83.52(7)"',
+                   "- 'It is not: the disturbance is the neighbor''s failure of 83.52(7)'") == [])
 check("item 54: a cite retold with none of its words quoted is found; one whose words are quoted, or whose "
       "subsection holds the quote, is not",
       cites_without_quote(f'Fla. Stat. 83.49(3)(a): "{FORFEIT}". Under 83.49(3) that is so. Under Fla. Stat. '

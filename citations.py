@@ -134,13 +134,17 @@ def quoted_passages(text):
     return found
 
 
-TYPOGRAPHY = str.maketrans({"’": "'", "‘": "'", "“": '"', "”": '"', "‑": "-", "‐": "-", "–": "-", "—": "-"})
+TYPOGRAPHY = str.maketrans({"’": None, "‘": None, "“": None, "”": None, "'": None, '"': None,
+                            "‑": "-", "‐": "-", "–": "-", "—": "-"})
 
 
 def compact(text):
-    """Lowercase, curly quote marks and dash variants made plain, all whitespace removed. Looser than squash on
-    purpose: the model writes "tenant's" for the statute's "tenant’s", and "confirmation" for the lease PDF's
-    "confir mation". Neither is a misquote."""
+    """Lowercase, quote marks and apostrophes left out, dash variants made plain, all whitespace removed. Looser
+    than squash on purpose: the model writes "tenant's" for the statute's "tenant’s", and "confirmation" for the
+    lease PDF's "confir mation". Neither is a misquote. Nor is a quote inside a quote whose marks the model
+    changed, ‘Reasonable notice’ for the statute's “Reasonable notice” (TODO item 58: until then curly marks were
+    made straight but kept, so single and double inner marks differed, 15 false cautions in the eval of
+    2026-10-03), or the tool's own words the prompt holds as YAML, which doubles an apostrophe ("neighbor''s")."""
     return "".join(text.translate(TYPOGRAPHY).lower().split())
 
 

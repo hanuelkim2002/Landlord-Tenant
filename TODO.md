@@ -17,10 +17,6 @@ structural ones first.
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on
     the law? Mark the rubric's categories (`dev/eval_rubric.md`) and right, wrong, or partly; the scorers'
     calls on the same transcripts are in `results/blind_score_*.json` (codes in `blind_key.json`).
-58. Program cautions rose from 6 to 48. Two kinds: real ones (the tenant's words reworded inside quote marks,
-    "I moved out July 31, 2026."), and false alarms where a reply quotes a case or a reading whole and its inner
-    quote marks, made straight, break `citations.quote_spans`' pairing. Fix the pairing for nested quotes first,
-    then count again.
 59. Dates the model made (blind 12.5; code 4): 30 days counted from a move-out ("2026-07-30"), "about 52 days",
     "whichever date controls, the 30-day period has passed". Rule 3's pairs are in the prompt; keep counting. After
     items 51 to 53 (2026-10-03): 4 turns, all counts like "Thirty days after June 30, 2026 is July 30, 2026.",
@@ -33,6 +29,13 @@ structural ones first.
     applied to the 83.60(1)(b) defense; a rent increase read as a decrease against the test lease's rent (item 60).
     Also wants_to_leave_early's fee_notice_period, which has no readings: in 3 of 3 runs the model took the
     lease's 7-day notice of vacating as the fee's notice period (scored borderline). Whether it needs readings.
+64. Quote cautions left after item 58 (replayed on the runs of 2026-10-03, 54 under the replay's approximate
+    given text): most are real (the tenant's words reworded inside quote marks, "I have not sent a written
+    objection to the landlord's claim."; the statute misquoted, "decrease in services"; a sentence in
+    83.64(1) cited to 83.64(1)(a)). About 12 are false: a quote takes the cite next to it in the prose as its
+    source, so a case's, the lease's, or the tool's words, or a phrase of 83.60 followed by "83.51(1)" in the
+    reply, are checked against the wrong section (`citations.quoted_passages`). An option: a quote cited to a
+    section it is not in, but word for word in what the model was given, is not flagged for the section.
 60. The eval's test data: every scenario uses the same test lease, whose rent ($1,850), deposit, and 2027 term
     end conflict with some stories (a rent hike read as a decrease against the lease's rent; a $1,000 deposit
     story read as $1,850; the 2027 end date against the sheet's 2026-07-31). Scenarios need stories that fit the
