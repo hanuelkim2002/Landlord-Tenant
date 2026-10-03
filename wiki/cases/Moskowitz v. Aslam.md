@@ -18,7 +18,8 @@ Third District, Chief Judge Schwartz, on the landlords' petition for certiorari 
 ## Facts
 
 - "The county court sua sponte dismissed an action for residential eviction and past due rent because the three day letter ... served pursuant to section 83.56(3), Florida Statutes (1989), incorporated a demand—that the rent be paid “in cash”—which does not explicitly appear in the form set out in the statute" (at 1367)
-- The letter, as set out in a footnote, said in part: "That rent was due on October 1, 1989, and I demand payment of the said rent in cash or possession of said premises within 3 days (excluding Saturdays, Sundays, or legal holidays) from the date of delivery of this notice, to wit: on or before October 16, 1989." (at 1367)
+- "The letter stated: You are hereby notified that you are indebted to me in the sum of $395 for rent and use of the premises ... now occupied by you." (at 1367)
+- "That rent was due on October 1, 1989, and I demand payment of the said rent in cash or possession of said premises within 3 days (excluding Saturdays, Sundays, or legal holidays) from the date of delivery of this notice, to wit: on or before October 16, 1989." (at 1367)
 
 ## Does a three-day notice that demands the rent be paid in cash depart from the form 83.56(3) sets out?
 

@@ -17,7 +17,9 @@ Third District, Judge Gersten writing, on the tenant's appeal from the dismissal
 
 ## Facts
 
+- "Appellant, Carlos Badaraco (“tenant”), appeals the dismissal of his complaint against his landlord, appellee Suncoast Towers V Associates (“landlord”)." (at 502)
 - "The tenant sought to bring a class action on behalf of himself and other tenants, seeking damages for interruption of water and elevator services that occurred during renovations to convert a rental building into a condominium." (at 502)
+- "According to the tenant, Section 83.67, Florida Statutes (1995), entitled him to damages in the amount of three months’ rent for each interruption of utility services necessitated by the construction process." (at 503)
 - "Here, the tenant conceded that the landlord did not attempt to coerce tenants to leave the premises, and interrupted water and elevator service only as part of its general repairs and improvements." (at 503)
 
 ## Does 83.67 give each tenant three months' rent for every interruption of water or elevator service during renovations that were not meant to force tenants out?

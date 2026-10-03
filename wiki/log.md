@@ -79,3 +79,24 @@ What was added or changed in the wiki, newest last. Entries are added, never rew
   only; the appendix of forms is not stored (its changes are marked by formatting the text loses). Linked
   with Wilson v. Terwillinger, which cites it, and with the 1991 forms decision. Every opinion in `cases/`
   now has a page: 82.
+
+## 2026-10-02 the facts the decisions turned on
+
+- The chat now gives case pages to the model, which sets each case's facts beside the tenant's (TODO items 47
+  and 48), so `SCHEMA.md`'s Facts rule changed from "A few quotes, as background." to the facts the decision
+  turned on: the parties, the lease, notice, or property, what each side did and when, what was asked of the
+  court; usually three to six quotes.
+- Rewritten from the opinions: the Facts sections of the 20 tagged case pages with two quotes or fewer
+  (Badaraco, Casey, Stein, Durene, Florida RS v. Nelson, Rowe, Gilbert, Grant, Guthartz v. Lewis, Haynes,
+  Lewis v. Guthartz, Malagon, Meli, Moskowitz, Nardi, Olen v. Moss (984 So. 2d 558), Olszewska, Salmonte,
+  Scruggs, Xanadu). Earlier bullets kept, most lengthened; prose labels inside two bullets dropped (Haynes,
+  Moskowitz). Nothing outside the Facts sections changed. Not touched: the 1991 forms decision (a forms page,
+  no dispute facts), the 30 tagged pages that already had three or more, and the untagged pages (never loaded
+  for a tenant).
+- Opinions that state few facts got the ones they state: Casey (a per curiam memorandum; no dates, roles only
+  in the caption), Gilbert (two sentences), Moskowitz (the letter, and what the court did with it), Olen v.
+  Moss (a challenge to the lease form, no tenant's own facts). Haynes: the time of day and the number of units
+  appear only in the dissent and stay out of Facts. Xanadu: one bullet is the statute's effective date, which
+  the decision compares with the agreement date.
+- `python wiki.py check`: 122 pages, 0 problems, 0 warnings. No page verified yet.
+

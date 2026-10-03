@@ -18,7 +18,11 @@ fees as costs. The rental agreement was signed sixteen days before the 1983 vers
 
 ## Facts
 
+- "Xanadu of Cocoa Beach, Inc. (Xanadu), appeals a final judgment denying its claim for rent due and awarding defendant, Randolph Lenz, costs and attorney’s fees." (at 519)
 - "The rental agreement between the parties was executed on June 6, 1983." (at 519)
+- "Section 83.48, Florida Statutes (1983), effective June 22, 1983" (at 519)
+- "the rental agreement between the parties contained no provision for or against attorney’s fees" (at 520)
+- "Appellant argues that because an award of attorney’s fees is a substantive right the trial judge improperly made a “retroactive” application of the 1983 statute to a pre-existing contract which constituted an unconstitutional impairment of the landlord’s rights under the rental agreement." (at 519)
 
 ## Did the 1983 version of 83.48 apply to a rental agreement signed before it took effect?
 

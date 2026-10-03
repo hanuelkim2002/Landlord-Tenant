@@ -19,8 +19,12 @@ the manager's own loans.
 
 ## Facts
 
-- "The account at issue here was entitled “N Security Escrow Account,” which was used to hold tenants' security deposits from the various properties." (at 308)
-- "Continental then set off the balance of the N Security Escrow Account, amounting to $63,286.56, in order to satisfy Geovest's indebtedness." (at 308)
+- "The appellant landlords hired Geovest Property Management, Inc. to act as their property management agent. Geovest was authorized to lease the properties to tenants, and to receive and account for all rents." (at 308)
+- "To carry out these responsibilities, Geovest opened various bank accounts at appellee Continental National Bank of Miami. Only Geovest was an authorized signatory on the accounts. The account at issue here was entitled “N Security Escrow Account,” which was used to hold tenants' security deposits from the various properties." (at 308)
+- "Over a period of time Geovest borrowed approximately $60,000 from the bank. The loans were used for Geovest's own purposes, entirely unrelated to its property management services for appellants." (at 308)
+- "The present controversy arose when Continental called its loans to Geovest. Continental then set off the balance of the N Security Escrow Account, amounting to $63,286.56, in order to satisfy Geovest's indebtedness. Appellants brought suit against Continental for wrongful setoff, alleging that they had been required to use their own funds to reimburse the tenants for the security deposits wrongfully taken by Continental." (at 308)
+- "While conceding for purposes of the motion that its set-off of the N Security Escrow Account was wrongful, Continental argued that the appellants lacked standing to assert any claims for conversion because the security deposits were not the appellants' funds." (at 308)
+- "When Geovest opened the N Security Escrow Account, Geovest became the sole signatory and did not disclose appellants' identities to the bank. ... After the setoff occurred, appellants terminated Geovest's contract, thus ending the agency relationship." (at 309)
 
 ## Could the landlords sue the bank for taking the deposits their agent held?
 

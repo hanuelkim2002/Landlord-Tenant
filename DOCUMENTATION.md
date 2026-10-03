@@ -464,7 +464,8 @@ prose describes and connects and never states the law, the case and topic page l
 what the checks cover), `cases/<Case name>.md` (one per opinion: front matter `kind`, `cite`, `file`,
 `court`, `decided`, `statute_read`, `sections` (tags; empty for an opinion that reads no part II section,
 which then needs `scope_note` and is never loaded for a tenant), `topics` (links), and the sign-off fields
-`verified_by`, `verified_on`, `verified_hash`; then a line on court and posture, Facts, one section per
+`verified_by`, `verified_on`, `verified_hash`; then a line on court and posture, Facts (the facts the
+decision turned on, quoted, usually three to six, for the chat to set beside a tenant's), one section per
 issue as a question with `Topic:`, `Rule:`, `Reasoning:`, and any `Dissent:`, Statute read, Related,
 Disposition), `topics/<Topic>.md` (one per topic, made as cases raise them: `kind`, `sections`, the sign-off
 fields; what it covers, today's statute text when a section speaks to it, "## Cases" listing every case page

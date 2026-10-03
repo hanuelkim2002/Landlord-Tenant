@@ -17,8 +17,12 @@ Third District, per curiam, on the occupant's petition for a writ of prohibition
 
 ## Facts
 
+- "Irene Olszewska petitions this court for a writ of prohibition disqualifying the trial judge and also appeals the final judgment for removal of tenant." (at 11)
+- "The verbal altercations that occurred between Olszewska’s attorney and the court" (at 11)
+- "the order was entered after the motion to disqualify was denied." (at 11)
 - "The plaintiff’s complaint did not claim rental payments in arrears." (at 12)
 - "The alleged lease in this case provided a rental rate of five dollars per week, yet its holdover provision charges three hundred fifty dollars per week." (at 12)
+- "There is no evidence that such a hearing took place, nor is there any evidence that Olszewska received adequate notice of the requirement to place the proper amount into the circuit court registry." (at 12)
 
 ## Did the exchanges between the trial judge and the occupant's attorney require the judge's disqualification?
 

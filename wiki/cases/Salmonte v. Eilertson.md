@@ -17,8 +17,11 @@ First District, per curiam, on the tenant's appeal and the landlords' cross-appe
 
 ## Facts
 
+- "Paul Salmonte, the tenant, leased the Eilertsons’ Florida home in September 1985. The landlords lived in Houston, Texas, and sometimes returned to inspect the house." (at 180)
 - "In May 1986, they began inspecting more frequently than the tenant liked, so he began refusing entrance to the landlords and the pest control service." (at 180)
+- "During the landlords’ inspections, they discovered various unauthorized changes or breaches of the lease agreement, including keeping pets and changes in the carpeting, wallpaper, locks, and wiring. One of the landlords’ rugs had been moved from the house to the garage and had a car parked on it." (at 180)
 - "The landlords soon filed a complaint for eviction. The tenant asserted retaliatory eviction as an affirmative defense and as a basis for a counterclaim. The tenant admitted, however, the unauthorized pets, rug, and other violations." (at 180)
+- "This cause is before us on appeal and cross appeal of a jury verdict in a landlord-tenant dispute, allowing the tenant to keep possession but awarding him nothing on his counterclaim. The trial court also denied the parties’ respective motions for costs and attorney fees." (at 180)
 
 ## Could the tenant defend the eviction as retaliatory after admitting that he breached the lease?
 

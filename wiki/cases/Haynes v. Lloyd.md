@@ -18,7 +18,10 @@ Fifth District, Judge Cowart writing, on the appeal of a child who was visiting 
 ## Facts
 
 - "Appellant, a four and one-half year old child visiting a tenant at apartments owned by appellee-landlord, fell from a tree and cut his arm on a piece of broken glass that was on the ground." (at 945)
-- In a footnote: "The landlord testified on deposition that he had an employee named Hezikiah, who picked up around the apartments every morning, five days a week." (at 947)
+- "In an action alleging that the landlord was negligent in maintaining the apartment premises, the trial court granted summary judgment in favor of the landlord" (at 945)
+- "prior to the child’s injury the landlord had no actual knowledge of the broken glass and further, there was absolutely no evidence as to the period of time that the broken glass had been under the tree before the child fell." (at 946)
+- "The landlord testified on deposition that he had an employee named Hezikiah, who picked up around the apartments every morning, five days a week." (at 947)
+- "appellant relies heavily on the landlord’s answer to the following question on cross-examination: Q. If this material is here as it appears in the photograph, is it your testimony that he [Hezikiah] must not have picked up that day? A. Right." (at 947)
 
 ## Was broken glass on the ground where young children play a dangerous condition?
 

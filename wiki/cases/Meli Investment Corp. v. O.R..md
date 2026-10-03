@@ -20,8 +20,12 @@ is not in `statutes/`.
 
 ## Facts
 
+- "Landlord brought suit against tenants as holdover tenants, § 83.58, Fla.Stat. (1991), seeking damages pursuant to section 83.04, Florida Statutes (1991). The tenants counterclaimed for wrongful eviction, harassment, and discrimination on the basis of acquired immune deficiency syndrome (AIDS), pursuant to section 760.50, Florida Statutes (1991)." (at 676)
 - "The partial final judgment entered on the landlord's complaint found the tenants to be tenants at will, not holdover tenants, and, therefore, entitled to fifteen days written notice of termination of their tenancy." (at 676)
-- "The court then applied a risk multiplier of 2, for a total award of $21,000." (at 677)
+- "The final judgment on the counterclaim found that the landlord had discriminated against the tenants on the basis that O.R. was, or was regarded as being, infected with the AIDS virus, and awarded the tenants $5,000 in liquidated damages." (at 676)
+- "Tenants timely filed a motion for attorneys fees and costs, as provided for in sections 83.48 and 760.50(6)(a) 3., Florida Statutes (1991). ... Tenants' counsel presented evidence that he had taken the case on a contingency basis, and testified regarding the novelty of an AIDS discrimination case, the undesirability of taking such a case, and the intricacy of the landlord/tenant issues involved." (at 676)
+- "In its order, the trial court found tenants' counsel reasonably expended 60 hours on behalf of the tenants, and that $175 per hour was a reasonable fee. The court then applied a risk multiplier of 2, for a total award of $21,000." (at 677)
+- "The trial court's order awarded fees without allocation to the defense of the original complaint and the successful counterclaim." (at 677)
 
 ## Could the fee for the landlord-tenant part of the case carry a risk multiplier?
 

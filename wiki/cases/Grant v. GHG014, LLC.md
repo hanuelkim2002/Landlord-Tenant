@@ -17,8 +17,11 @@ Fourth District, Judge Warner writing, on the appeal of three people who said th
 
 ## Facts
 
+- "The appellants, who allege they were tenants of the appellees, appeal the trial court’s order denying their motion for a mandatory injunction." (at 1066)
 - "They sought the immediate possession of a residential apartment, contending that the appellees violated section 83.67(2), Florida Statutes, by changing the locks of the apartment." (at 1066)
+- "Appellants filed for an injunction a day after filing their complaint alleging their entitlement to possession of the premises." (at 1067)
 - "The putative landlord and its agent filed an answer denying that they had entered into a landlord-tenant relationship with the appellants." (at 1067)
+- "The court held an evidentiary hearing on the request for injunction and afterwards determined that appellants had not proved the existence of a tenancy." (at 1067)
 
 ## Was a motion for immediate possession, made before the case was at issue, a request for a temporary mandatory injunction?
 

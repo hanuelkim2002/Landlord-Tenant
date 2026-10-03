@@ -11,9 +11,6 @@ landlord" got three statute quotes (83.56(1), 83.60(1)(b), 83.64(1)) and "This t
 In development, on test matters only. Until item 46 is done the code still organizes only: the rules, the
 program's "does not decide" lines, and the page's sidebar say so. In this order, each its own change.
 
-48. Case pages' facts (`wiki/SCHEMA.md`, A case page): "A few quotes, as background" becomes the facts the
-    decision turned on, quoted (who, the lease or notice, what was done and when). An edit undoes a page's
-    verification, so the author verifies again. The prose rule stays: a page never applies itself to anyone.
 49. The eval for applying. Rubric categories in place of LAW and the offer screen: UNCONFIRMED_FACT (a fact
     used that the record does not hold), CONDITION_MISSED (a condition of the quoted rule not addressed),
     CONDITION_WRONG (a condition called met or failed against the record), OPEN_CLOSED (a playbook open

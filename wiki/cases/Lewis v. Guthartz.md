@@ -18,8 +18,12 @@ Tenants of an FHA-insured building sued their landlord over rents and deposits a
 
 ## Facts
 
-- "Under this agreement, monthly rental rates were fixed by the FHA and security deposits limited to one month's rent." (at 222)
-- "The trial judge awarded $105,828.12 actual damages to the Tenants." (at 223)
+- "Lewis et al. (Tenants) are 132 tenants in Guthartz' (Landlord) Bay Terrace Apartments on Miami Beach." (at 222)
+- "As part of the mortgage, an FHA Regulatory Agreement was recorded. Under this agreement, monthly rental rates were fixed by the FHA and security deposits limited to one month's rent." (at 222)
+- "The Tenants sued, claiming inter alia, that the Landlord charged excessive rents and security deposits. They sought restitution, injunctive relief, and attorneys' fees." (at 222)
+- "They also sought punitive damages based upon: illegal rent increases; illegal retention of excess security deposits; commingling of security deposits with the Landlord's own funds; intimidation and harassment of the Tenants; continual disobedience of federal regulations; repeated violations of court orders; and submissions of false statements to the FHA, which resulted in a criminal conviction in federal court for knowingly making a false statement to a federal agency." (at 222)
+- "At a non-jury trial in September 1978, the Tenants prevailed. The trial judge awarded $105,828.12 actual damages to the Tenants. ... the trial court awarded the Tenants $1,000,000 in punitive damages ... The trial court also awarded attorneys' fees of $200,800." (at 223)
+- "In the instant case, the Tenants' action was not bottomed on the rental agreement but rather the FHA regulatory agreement. The latter was one of the documents attached to the complaints and sued upon; it was upon the latter that the trial court imposed liability on the Landlord. No liability was urged or claimed or adjudicated against the Landlord predicated upon any obligation, covenant or promise under the rental agreements." (at 224)
 
 ## Must tenants plead and prove an independent tort to recover punitive damages for a landlord's breach of contract?
 

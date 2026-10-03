@@ -17,7 +17,10 @@ Fourth District (Gross, J.), on the landlords' appeal from a partial summary jud
 
 ## Facts
 
+- "Here, Olen Properties appeals a different ruling, one granting a partial summary judgment and enjoining enforcement of certain provisions in a residential lease." (at 559)
+- "The circuit court’s order appears to enjoin the enforcement of provisions contained in paragraphs (6) and (16) of a form residential lease." (at 559)
 - "Paragraph (6) allows a tenant to cancel a lease after seven months of occupancy, if the tenant meets certain conditions, including the payment of a fee equal to one month’s rent as “liquidated damages.”" (at 559)
+- "Paragraph (16) concerns default by a tenant, and generally reserves to the landlord “all rights provided under state law ... including the right to terminate the Lease, retake possession of the premises, and recover damages.”" (at 559)
 - "For tenants who vacate the premises before the end of a lease term, “either voluntarily or involuntarily,” paragraph (16) states that the tenant “shall be obligated to” the landlord “for an amount equivalent to 3 months rent which amount shall operate as liquidated damages.”" (at 559)
 
 ## Was the lease's cancellation provision, letting a tenant end the lease early on payment of one month's rent, enforceable?

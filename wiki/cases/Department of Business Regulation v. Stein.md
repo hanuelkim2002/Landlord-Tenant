@@ -19,7 +19,11 @@ deposits.
 
 ## Facts
 
-- "After receiving complaints from the tenants, appellant instituted administrative action against appellees alleging that they had failed to pay interest on the tenants' security deposits it had been holding since October 1, 1972, as required by s 83.49, Fla.Stat., F.S.A., of the Florida Residential Landlord and Tenant Act." (at 206)
+- "Appellant is the Department of Business Regulation, Division of Hotels and Restaurants, an agency of the State of Florida. Appellees, pursuant to a license issued by appellant, own and operate an apartment building in Dade County, Florida, known as Lancelot Hall." (at 206)
+- "Prior to October 1, 1972, appellees had rented numerous apartments in Lancelot Hall pursuant to a standard printed lease form. Under this lease, security deposits were required to be paid by the various tenants." (at 206)
+- "After receiving complaints from the tenants, appellant instituted administrative action against appellees alleging that they had failed to pay interest on the tenants’ security deposits it had been holding since October 1, 1972, as required by s 83.49, Fla.Stat., F.S.A., of the Florida Residential Landlord and Tenant Act." (at 206)
+- "Appellees then instituted declaratory judgment actions in the circuit court seeking to preclude appellant from enforcing the terms of the Act or applying it unconstitutionally to them." (at 206)
+- "From these two judgments, appellant appeals contending the circuit court erred in determining: first, that s 83.49(2), Fla.Stat., F.S.A. does not require the payment of interest on security deposits received by appellees from tenants under written leases executed prior to October 1, 1972, and, second, that the division of Hotels and Restaurants of the Department of Business Regulation has neither the power to fine appellees or to revoke their license for failure to comply with s 83.49(2), Fla.Stat., F.S.A." (at 206)
 
 ## Did the interest requirement reach deposits under leases signed before October 1, 1972?
 

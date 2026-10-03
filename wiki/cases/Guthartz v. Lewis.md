@@ -19,7 +19,12 @@ court certified in [[Lewis v. Guthartz]].
 
 ## Facts
 
+- "Barnett Guthartz, the owner of a 238-unit apartment complex called Bay Terrace Apartments, was sued by sixty of his tenants." (at 601)
+- "As third-party beneficiaries of a regulatory agreement between Guthartz and the FHA, the insurer of the mortgage on the buildings, the tenants claimed that Guthartz had collected from them rents and security deposits in excess of the maximum allowed under the FHA rent schedule ... and sought to recover these excess payments, punitive damages, and attorneys’ fees." (at 601)
+- "The trial court, in a non-jury trial, found Guthartz liable and appointed a special master who determined that Guthartz had overcharged the tenants $86,526.50 ... and subsequently ordered that Guthartz pay punitive damages of $1,000,000, the tenants’ attorneys’ fees in the amount of $200,800, and the special master’s fee of $17,000." (at 601)
 - "As the court below found, Guthartz wrongfully overcharged the tenants, adamantly refused to return the rents and deposits, and attempted to conceal this wrongdoing by making false statements to the FHA." (at 603)
+- "Guthartz admits that the rental agreements contain a clause “allowing attorney’s fees to the landlord,”" (at 603)
+- "The present litigation in respect to security deposits dealt only with the question of whether a security deposit equal to two months’ rent could be required by the landlord under the FHA regulations." (at 604)
 
 ## Can punitive damages rest on the landlord's breach of contract alone?
 

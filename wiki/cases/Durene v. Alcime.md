@@ -18,8 +18,11 @@ tenant sued for her deposit; the landlord counterclaimed for damages.
 
 ## Facts
 
-- "Petitioner vacated the subject residential property the first week of September, 1982 and requested in writing the return of a $300 security deposit." (at 1209)
-- "On that date, defendant requested and was granted leave to file a counterclaim for actual and punitive damages." (at 1209)
+- "Petitioner was the plaintiff below in an action to recover a security deposit held by defendant landlord. Petitioner vacated the subject residential property the first week of September, 1982 and requested in writing the return of a $300 security deposit." (at 1209)
+- "October 6, 1982, the petitioner filed suit in Dade County Court for the return of the money. Trial was set for December 7, 1982. On that date, defendant requested and was granted leave to file a counterclaim for actual and punitive damages." (at 1209)
+- "Petitioner moved to dismiss the counterclaim and a final order, finding that defendant had forfeited his right to state a cause of action for damages by failing to comply with the requirements of section 83.49(3)(a), Florida Statutes (1981), ... was entered dismissing defendant’s counterclaim." (at 1209)
+- "Thereafter, the defendant landlord returned the security deposit and appealed the dismissal of the counterclaim to the appellate division of the circuit court." (at 1209)
+- "A three judge panel reversed the trial court, finding that the notice requirements of section 83.49(3)(a) pertained only to claims for damages made against the security deposit itself and not to general claims for damages against a former tenant. This petition followed." (at 1209)
 
 ## Does a late notice of claim bar all of the landlord's damage claims, or only claims against the deposit?
 

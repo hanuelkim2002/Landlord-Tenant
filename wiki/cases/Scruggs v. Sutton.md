@@ -16,6 +16,15 @@ verified_hash:
 Third District (Cope, J.), on the owners' appeal from a fee award to the occupant who defeated their
 eviction claim and won a resulting trust in the property.
 
+## Facts
+
+- "The Scruggs filed a second amended complaint for eviction and ejectment against Sutton. For the eviction count, the Scruggs requested attorney’s fees under section 83.48, Florida Statutes (2004)." (at 854)
+- "Sutton answered the second amended complaint and filed a three-count counterclaim seeking to quiet title and impose a resulting trust or a constructive trust. Sutton only sought attorney’s fees for count II of his counterclaim, seeking a resulting trust." (at 854)
+- "After a non-jury trial, the trial court entered final judgment establishing a resulting or constructive trust in Sutton’s favor." (at 854)
+- "Sutton filed his motion for attorney’s fees asserting that he was the prevailing party under section 83.48. The Scruggs opposed the motion because Sutton never pled a claim for attorney’s fees except in the prayer for relief in count II of his counterclaim seeking a resulting trust." (at 854)
+- "Sutton concedes that he did not plead entitlement to attorney’s fees in his answer and affirmative defenses in response to the Scruggs’ complaint." (at 854)
+- "The trial court granted Sutton’s motion for attorney’s fees finding that attorney’s fees are defined as costs in section 83.48 and a prevailing party under the statute is entitled to costs without pleading entitlement thereto. The Scruggs have appealed." (at 854)
+
 ## Must a party plead entitlement to fees under 83.48, which treats fees as costs?
 
 Topic: [[Prevailing party fees under 83.48]], [[Pleading a claim for fees]]

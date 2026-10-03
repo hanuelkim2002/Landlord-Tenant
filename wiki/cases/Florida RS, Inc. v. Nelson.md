@@ -18,7 +18,10 @@ interest on his deposit and sought to represent a class.
 
 ## Facts
 
-- "Nelson filed an action for breach of lease and violation of section 83.49(9), Florida Statutes (1995), which requires that interest be paid on security deposits on an annual basis." (at 55)
+- "Nelson, an attorney, was a tenant of a residential complex managed by Florida RS, Inc. Because the manager asserted a past balance owed by Nelson, it filed a three-day notice for payment or possession of premises." (at 55)
+- "Nelson filed an action for breach of lease and violation of section 83.49(9), Florida Statutes (1995), which requires that interest be paid on security deposits on an annual basis. Nelson sought to certify a class action law suit for himself and all others similarly situated." (at 55)
+- "The court dismissed the breach of lease complaint and, because interest was then paid to all lessees entitled thereto, refused to certify the class action. The court granted Nelson $27,654 in attorney’s fees for himself and another lawyer employed by him and this appeal follows." (at 55)
+- "The attorney’s fees awarded by the court included work done while seeking to represent a class even though no class was certified." (at 55)
 - "Nelson prevailed in getting paid $30.70 in interest on his security deposit." (at 55)
 
 ## May the fee cover work on a class action that was never certified?

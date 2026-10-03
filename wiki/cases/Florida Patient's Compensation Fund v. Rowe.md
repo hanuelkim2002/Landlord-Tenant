@@ -19,7 +19,12 @@ statutes.
 
 ## Facts
 
+- "This cause concerns the constitutional validity of section 768.56, Florida Statutes (1981), which directs the trial court to award a “reasonable attorney’s fee” to the prevailing party in a medical malpractice action." (at 1146)
 - "The appellee, Lena Rowe, was the prevailing party in a medical malpractice action against Lee Memorial Hospital." (at 1146)
+- "The appellant, Florida Patient’s Compensation Fund, is responsible for payment of the portion of the judgment against the hospital that exceeds the $100,000 primary coverage." (at 1146)
+- "The trial court expressly found constitutional section 768.56, Florida Statutes (1981), and expressed concern in its judgment regarding the appropriate method for computing reasonable attorney fees pursuant to the statute, and reserved jurisdiction for a further hearing concerning the amount of the fee." (at 1146)
+- "In the instant case, the trial judge set an amount for the fee pursuant to section 768.56, but expressed uncertainty as to whether his computation was correct under the statute and reserved jurisdiction for further argument on the proper method of computing the fee." (at 1149)
+- "It is before us by virtue of our “pass-through” jurisdiction, ... the Second District Court of Appeal having certified the judgment as involving an issue of great public importance requiring immediate resolution by this Court." (at 1146)
 
 ## How is a reasonable attorney fee computed?
 

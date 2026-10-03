@@ -16,6 +16,11 @@ verified_hash:
 Third District, per curiam, on a tenant's appeal from the denial of fees after he won a personal injury
 judgment against his landlord.
 
+## Facts
+
+- "Michael Gilbert, a tenant who recovered a judgment against his landlord in a personal injury action, appeals from an order of the trial court denying his motion to assess attorney’s fees against the landlord." (at 951)
+- "Gilbert’s tort action was based upon the landlord’s breach of a duty imposed by the Florida Residential Landlord and Tenant Act, section 83.51(1)(a), Florida Statutes (1983)." (at 951)
+
 ## Can a tenant who wins a personal injury suit based on 83.51 recover fees under 83.48?
 
 Topic: [[Prevailing party fees under 83.48]]

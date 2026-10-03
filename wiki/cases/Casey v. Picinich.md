@@ -19,6 +19,8 @@ part.
 ## Facts
 
 - "Appellees have conceded that appellant is entitled to $54.38 as interest earned on his security deposit and $25 from the portion of the security deposit retained by them." (at 77)
+- "another $20, the balance of the retained security deposit" (at 77)
+- "Appellees’ untimely notice" (at 77)
 
 ## What follows from the landlord's untimely notice of claim?
 

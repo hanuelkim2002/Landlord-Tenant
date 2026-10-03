@@ -59,7 +59,7 @@ nothing else.
 
 ## Prose
 
-The prose describes and connects: what a case is about, its court and posture, the facts as background,
+The prose describes and connects: what a case is about, its court and posture, the facts it turned on,
 and which cases it relates to and how (cites, follows, distinguishes, disagrees with, quotes, reads an
 older version of the statute). It never states what the law is, never says what a case held except by
 quoting it, never says which side a case favors, and never says whether it applies to anyone. Issues are
@@ -71,7 +71,10 @@ written as questions.
     One or two lines: court, posture, who appealed.
 
     ## Facts
-    A few quotes, as background.
+    The facts the decision turned on, quoted: who the parties were (landlord, tenant), the lease,
+    notice, or property, what each side did and when, and what was asked of the court. Enough to
+    set a tenant's facts beside them in the chat; usually three to six quotes. An opinion that
+    states fewer facts gets the ones it states.
 
     ## <An issue the court decided, as a question>      (one section per issue)
     Topic: [[...]]                                    (when one fits)

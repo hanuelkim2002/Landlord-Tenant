@@ -5,6 +5,17 @@ session can see why the code is the way it is.
 
 ## 2026-10-02
 
+- Case pages' Facts sections hold the facts the decisions turned on (TODO item 48, done). `wiki/SCHEMA.md`: was
+  "A few quotes, as background."; now the parties, the lease, notice, or property, what each side did and when,
+  and what was asked of the court, usually three to six quotes, so the chat (item 47) can set a tenant's facts
+  beside them. The 20 tagged case pages with two quotes or fewer were rewritten from their opinions, by four
+  agents in parallel, each page's quotes checked by `wiki.py check`: from 30 quotes to 99 (Durene now has the
+  move-out, the written request for the $300, the suit, the counterclaim, its dismissal, the return of the
+  deposit, and the panel's reversal). Nothing outside the Facts sections changed (checked section by section
+  against git); two bullets lost a prose label. Opinions that state few facts got what they state (Casey,
+  Gilbert, Moskowitz, Olen v. Moss); details in `wiki/log.md`. Not touched: the 1991 forms decision, the 30
+  tagged pages that had three or more quotes, and the untagged pages. No page was verified, so no sign-off
+  was undone; the author verifies pages as before. `wiki.py check`: 0 problems.
 - Cases go to the model, which applies them (TODO item 47, done). Was: `get_cases` gave the model only the
   names of the cases it printed and ended the turn, and rule 8 said never quote, summarize, or choose among
   cases. Now `wiki.render_cases` also prints each case's Facts quotes and its Related lines ("Other cases on

@@ -18,7 +18,11 @@ tenants their whole deposit and the landlord a smaller sum on her counterclaim.
 
 ## Facts
 
+- "Appellants, as tenants, brought an action against their landlord for return of their security deposit and for damages. Appellee, the landlord, counterclaimed for damages." (at 353)
 - "The final judgment, following a jury verdict, awarded appellants the total amount of the security deposit, but also awarded appellees a smaller amount for damages on the counterclaim." (at 353)
+- "Appellants sought attorney's fees under section 83.49(3)(c), Florida Statutes (1989)" (at 353)
+- "The trial court held, inter alia: both parties prevailed on separate issues at trial. ... Plaintiff's Motion to Award Attorney's Fees is DENIED and both parties are ordered to bear their own attorney's fees and costs of litigation." (at 353)
+- "the total security deposit of $3,300.00 was awarded to appellants, and (2) by finding for appellants in Count I, the trial court implicitly found as alleged in Paragraph 14 of that Count that appellee failed to comply with the notice provision regarding the retention of the security deposit." (at 354)
 
 ## Is the tenant who recovers the deposit the prevailing party when the landlord also recovers on a counterclaim?
 
