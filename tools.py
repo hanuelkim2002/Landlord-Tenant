@@ -97,7 +97,7 @@ def propose_facts(facts_json: str) -> str:
 # ---- Deadlines
 
 # get_deadlines ended the model's turn (return_direct) from TODO item 19 to item 51, so the model could not repeat
-# or reword the printed dates. Since item 44 the model gets no dates, and since item 46 DEADLINE STATUS tells it
+# or reword the printed dates. Since item 44 the model gets no dates, and since item 46 the prompt's deadline status tells it
 # which deadlines have passed, so now the program prints the listing and the model answers the rest of the
 # question after it ("If I get rid of the dog by Friday, am I safe?" got the listing and no answer, eval of
 # 2026-10-02). get_cases stopped ending the turn at item 47.
@@ -133,7 +133,7 @@ def deadline_listing():
 
 
 def deadline_status():
-    """DEADLINE STATUS, for the system prompt: each deadline of the ready issues, whose it is, what it counts
+    """THE PROGRAM'S DEADLINES, for the system prompt (agent.PARTS): each deadline of the ready issues, whose it is, what it counts
     from, its cite, and whether it has passed, with no date in it, then the issues still waiting and what for.
     So the model can apply a condition such as "within the 30-day period" from the program's "passed" or
     "upcoming", never from dates of its own (TODO item 46). Logs nothing: the prompt is rebuilt on every call."""
@@ -158,7 +158,7 @@ def deadline_receipt(listing):
     """What the model gets back from get_deadlines: what was printed, with no date in it (TODO item 44: given
     the dates, the model retyped them when asked again instead of calling the tool)."""
     if listing.startswith("Not yet"):
-        return ("The program printed for the tenant that no issue has all its facts confirmed yet. ELEMENT STATUS "
+        return ("The program printed for the tenant that no issue has all its facts confirmed yet. YOUR FACTS "
                 "shows the open facts.")
     data = json.loads(listing)
     dated = [d for d in data["deadlines"] if "deadline" in d]
@@ -166,7 +166,7 @@ def deadline_receipt(listing):
     waiting = sorted(data.get("waiting", {}))
     return (f"The program printed the tenant's deadlines: {len(dated)} dated, for {issues or 'no issue'}"
             + (f"; still waiting for facts: {waiting}" if waiting else "")
-            + ". You are not shown the dates; whether each has passed is in DEADLINE STATUS. If the tenant asked only "
+            + ". You are not shown the dates; whether each has passed is in THE PROGRAM'S DEADLINES. If the tenant asked only "
             "for the deadlines, add nothing; otherwise answer the rest of the question without writing a date. To "
             "show the deadlines again, call get_deadlines again.")
 
@@ -176,7 +176,7 @@ def get_deadlines() -> tuple[str, str]:
     """Compute every deadline from the CONFIRMED facts; the program prints them to the tenant, every field
     included, above your reply. This is the ONLY way to get a date: never count or calculate days yourself.
     You get back only a receipt, with no dates: never write a deadline yourself. Whether one has passed is in
-    DEADLINE STATUS. To show the deadlines again, call get_deadlines again."""
+    THE PROGRAM'S DEADLINES. To show the deadlines again, call get_deadlines again."""
     listing = deadline_listing()
     return deadline_receipt(listing), listing
 
@@ -191,7 +191,7 @@ def offered_topics():
 
 
 def topic_named(topic, topics):
-    """The CASE TOPICS name the model meant, or None: the name as given, or the same name once quote marks,
+    """The case topic the model meant, or None: the name as given, or the same name once quote marks,
     curly apostrophes, letter case, and a trailing case count are set aside (the model once copied
     "Landlord's maintenance duties under 83.51 (9)" from the prompt's list, eval of 2026-10-01)."""
     if topic in topics:
@@ -203,17 +203,17 @@ def topic_named(topic, topics):
 
 @tool(response_format="content_and_artifact")
 def get_cases(topic: str) -> tuple[str, str]:
-    """What courts have said on one topic listed in CASE TOPICS: every case the tool holds on it, oldest first,
+    """What courts have said on one topic listed in COURT CASES THIS TOOL HAS: every case the tool holds on it, oldest first,
     in the courts' own quoted words with pin pages (the statute version each read, its facts, its rule and
     reasoning, how other cases treat it). The program prints them for the tenant above your reply, and you get
     the same text to apply (rule 8). Call it when the tenant asks what courts said, or when a topic is on the
-    point you are applying. Pass the topic exactly as CASE TOPICS lists it. Quote a case only from this result,
+    point you are applying. Pass the topic exactly as it is listed there. Quote a case only from this result,
     word for word, with its name and page."""
     topics = offered_topics()
     topic = topic_named(topic, topics) or topic
     if topic not in topics:                                # the tenant sees the topics and can ask for one
         listed = "; ".join(sorted(topics)) or "none for these issues"
-        return (f"No case topic named {topic!r} for this matter. The program printed the CASE TOPICS for the tenant.",
+        return (f"No case topic named {topic!r} for this matter. The program printed this tool's case topics for the tenant.",
                 f"This tool has no case topic named \"{topic}\". Its case topics for your issues: {listed}.")
     shown_before = record.session and any(ev["kind"] == "cases_shown" and ev.get("topic") == topic
                                           and ev.get("session") == record.session for ev in read_events())

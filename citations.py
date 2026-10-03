@@ -53,7 +53,7 @@ def cites_in(text):
 
 
 def check_cites(text, shown):
-    """Check each cite in a reply. shown: the sections the model had in this turn (its STATUTE SECTIONS plus any
+    """Check each cite in a reply. shown: the sections the model had in this turn (THE STATUTE in its prompt plus any
     it fetched with get_statute_section). Returns [(cite, problem)], empty when every cite passes:
     - the section is not in the stored statutes;
     - it was not shown or fetched (rule 2: fetch a section before mentioning it);

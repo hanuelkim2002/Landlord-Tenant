@@ -5,6 +5,22 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- The system prompt's parts renamed in words a tenant can read (TODO item 61, done). Was: LEASE PROFILE,
+  PLAYBOOKS, STATUTE SECTIONS, CASE TOPICS, ELEMENT STATUS, DEADLINE STATUS, and after item 53 the model still
+  wrote them in 17 replies per 100 ("(ELEMENT STATUS shows eviction_action_filed: true)", "the open question in
+  PLAYBOOKS"), naming its source as the format line asks but with the prompt's name for it. Now `agent.PARTS`:
+  YOUR LEASE, THE TOOL'S NOTES ON YOUR ISSUES, WHAT THE STATUTE DOES NOT SETTLE, THE STATUTE, COURT CASES THIS
+  TOOL HAS, YOUR FACTS, THE PROGRAM'S DEADLINES, each with a short line on what it holds. PLAYBOOKS is split in
+  two: the guidance under THE TOOL'S NOTES, the open questions under WHAT THE STATUTE DOES NOT SETTLE (rule 5's
+  wanted words). The rules, rule 6 and rule 8, and the tools' descriptions and receipts (`get_deadlines`,
+  `deadline_receipt`, `get_cases`) use the new names; the format line now asks for each source in plain
+  lower-case words ("your lease", "you confirmed", "the program's deadlines") and forbids a part name in
+  capitals and a rule number. The eval's `PROMPT_NAME` counts the old names, the new ones in capitals, and a
+  rule's number; the rubric's ID category says the same. Smoke: a `prompt_part` helper reads a part by its name;
+  new check that the parts come in order under their names, with no old name in the prompt, the rules, or a
+  tool's description. The rest of the item went to TODO: the renewal question's fallback line (item 40), offers
+  (new item 62).
+
 - Eval of items 51 to 53 (`docs/evals/2026-10-03-items51-53/`; 16 scenarios, 3 runs, against the applying runs
   of the day before, code-scored): runs meeting every expectation 31 to 41 of 48; legal questions applied 62 to
   72 of 75; a question mixing a deadline with the law applied 0 to 3 of 3; a cash-only 3-day notice applied 0

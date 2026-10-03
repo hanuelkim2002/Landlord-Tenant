@@ -39,13 +39,6 @@ structural ones first.
     "whichever date controls, the 30-day period has passed". Rule 3's pairs are in the prompt; keep counting. After
     items 51 to 53 (2026-10-03): 4 turns, all counts like "Thirty days after June 30, 2026 is July 30, 2026.",
     now caught by the eval's echo measure (a computed deadline in a reply).
-61. Prompt names in replies did not fall with item 53: 17 turns per 100 replies before and after
-    (`docs/evals/2026-10-03-items51-53/`); field ids fell from 30 to 17. The model cites its sources as
-    "(ELEMENT STATUS shows ...)", "PLAYBOOKS", "DEADLINE STATUS", though the format line forbids it. Options:
-    name the prompt's parts in words a tenant can read ("YOUR CONFIRMED FACTS", "YOUR LEASE", "THE PROGRAM'S
-    DEADLINE LISTING"), so a reply that names its source reads well; or a program caution on a prompt name. The
-    same eval: the renewal question ("Do I have to sign the renewal by October 15?") still got the fallback line
-    in 2 of 3 after item 52, and offers rose from 3 to 6.
 60. The eval's test data: every scenario uses the same test lease, whose rent ($1,850), deposit, and 2027 term
     end conflict with some stories (a rent hike read as a decrease against the lease's rent; a $1,000 deposit
     story read as $1,850; the 2027 end date against the sheet's 2026-07-31). Scenarios need stories that fit the
@@ -176,6 +169,9 @@ reused, so older references (smoke check names, the changelog) still point to th
     it as LAW under the rubric's literal rule (12 of 38 after-runs' LAW calls, most marked borderline). Decide
     whether this line is the wanted answer there or the quote-then-"does not decide" form is. Superseded by
     item 46: an answer applies what is stored, and this line is left for a question nothing stored speaks to.
+    After item 52 (eval of 2026-10-03), the renewal question still got this line in 2 of 3 runs.
+62. Offers the tenant did not ask for (rule 9) rose from 3 to 6 turns in 48 runs after items 51 to 53 (eval of
+    2026-10-03), with more replies after a deadline listing. Keep counting (`OFFER_WORDS`, rubric OFFER).
 41. Empty replies remain rare (2 and 3 turns in 48 runs before and after, 2026-10-01); `reply_empty` now logs
     the gateway's finish_reason, so the next ones show whether the model or the gateway left them empty.
 

@@ -159,7 +159,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   file's text replaces it for the run, for trying versions of the rules), `rules_for(messages)` (`RULES`
   with its two markers filled: `[RULE 6]` with `LETTER_RULE` once a letter is in play, i.e. a tenant
   message in the chat matches `LETTER_WORDS` (letter, draft, write, writing) or the matter has a `draft`
-  event, else nothing; `[RULE 8]` with `CASE_RULE` when CASE TOPICS has a topic, else `NO_CASES_RULE`, one
+  event, else nothing; `[RULE 8]` with `CASE_RULE` when there is a case topic (`tools.offered_topics`), else `NO_CASES_RULE`, one
   line saying there are none; a `RULES_FILE` without the markers is used as is), `read_lease(pdf_path)` (store
   the PDF, read it into the lease profile with the extraction model, check every quote, save the profile; for a
   new matter), `intake` (classify, propose facts, save; for a
@@ -505,11 +505,11 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   `timeline.render_deadlines`; the model gets `deadline_receipt(listing)`, how many dated deadlines for which
   issues and which issues wait, with no date in it, so it cannot retype a deadline from earlier in the chat
   and must call the tool to show them again (TODO item 44); the receipt also says whether each has passed is in
-  DEADLINE STATUS, to add nothing when the tenant asked only for the deadlines, and otherwise to answer the
+  THE PROGRAM'S DEADLINES, to add nothing when the tenant asked only for the deadlines, and otherwise to answer the
   rest without writing a date. Not turn-ending since TODO item 51 (it was `return_direct` from item 19, so the
   model could not retype printed dates; since items 44 and 46 it gets none): the model's answer follows the
   printed listing in the same turn, so a question that mixes a deadline with the law gets both.
-- `get_cases(topic)`: `topic` must name one of the matter's CASE TOPICS, as given or once `topic_named` sets
+- `get_cases(topic)`: `topic` must name one of the matter's case topics, as given or once `topic_named` sets
   aside quote marks, curly apostrophes, letter case, and a trailing case count (`tools.offered_topics`, i.e.
   `wiki.case_topics` for the active playbooks' sections); otherwise "No case topic named ...". A tool with
   `response_format="content_and_artifact"`: the program gets `wiki.render_cases(topic)` as the message's
@@ -520,7 +520,7 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   printed cases in the same turn. Every call prints something: a topic already printed in this session prints
   one line ("The cases on ... are printed above in this chat."; the model gets "[... already printed above in
   this chat, and their words are in your earlier get_cases result. Nothing new was printed.]"), and
-  a topic not offered prints "This tool has no case topic named ..." with the matter's CASE TOPICS, so the
+  a topic not offered prints "This tool has no case topic named ..." with the matter's case topics, so the
   tenant sees the topics there are.
 - `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
   obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a playbook;
@@ -541,32 +541,35 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 1,284 words always, plus rule 6 on letters (172 words) once a letter is in
-   play, and rule 8 on cases in full (247 words) when there is a case topic, otherwise one line. Version G
+1. `RULES`, through `rules_for`: 1,499 words always, plus rule 6 on letters (174 words) once a letter is in
+   play, and rule 8 on cases in full (255 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
-   the statute to the record in ELEMENT STATUS and DEADLINE STATUS and say what they mean for the tenant; not
+   the statute to the record in YOUR FACTS and THE PROGRAM'S DEADLINES and say what they mean for the tenant,
+   the parts being named as the model names them to the tenant; not
    a lawyer, and the program prints the line saying so, so the model writes none; never send anything or
    work out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
-   `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no ids, and never the name of a part of the
-   prompt or a rule, such as ELEMENT STATUS or "rule 8"; TODO item 53), then nine numbered rules, each with
+   `Fla. Stat. 83.49(3)(a): "..."`; each source named in plain lower-case words, "your lease", "the statute",
+   "you confirmed", "the program's deadlines", "the statute does not settle this"; no labels like "Quote:", no
+   ids, no part name in capitals as the prompt writes it, and no rule number such as "rule 8"; TODO items 53 and
+   61), then nine numbered rules, each with
    "Not:" examples and the "Instead:" form: 1 apply the law to the tenant's facts, in order: the rule quoted;
    the facts it turns on in plain words with where each came from, never an id or a prompt section's name (a
    fact said in the chat but not confirmed is "not known yet until the sheet confirms it"); for each condition, met, failed, or not known; what follows, and when
    asked what they can do, each option the stored text gives and what it requires first (fetching a section
-   such as 83.55 or 83.48 when it is not in STATUTE SECTIONS); the open question in the way. Never assume a
+   such as 83.55 or 83.48 when it is not in THE STATUTE); the open question in the way. Never assume a
    fact, never choose among options for the tenant, and say which of lease and statute controls only from a
    stored section (83.47). 2 quote only what was given, word for word, fetch a section before citing one
-   not in STATUTE SECTIONS, say plainly when nothing answers, but never with the fallback line when an open
-   question or a CASE TOPICS topic is on the point, even in other words than the tenant's (TODO item 52); 3 dates only from ELEMENT STATUS, a lease quote,
-   the tenant's words, or a tool result; whether a deadline has passed only from DEADLINE STATUS ("passed" or
+   not in THE STATUTE, say plainly when nothing answers, but never with the fallback line when an open
+   question or a case topic is on the point, even in other words than the tenant's (TODO item 52); 3 dates only from YOUR FACTS, a lease quote,
+   the tenant's words, or a tool result; whether a deadline has passed only from THE PROGRAM'S DEADLINES ("passed" or
    "upcoming"), never a comparison of the model's own, nor a date worked out for an open question's reading; the dates only from `get_deadlines`, called every
    time, which the program prints above the reply; asked only for the deadlines the model adds nothing, asked
-   more it answers the rest applying DEADLINE STATUS (TODO item 51); 4 the model proposes facts with `propose_facts`, the
+   more it answers the rest applying THE PROGRAM'S DEADLINES (TODO item 51); 4 the model proposes facts with `propose_facts`, the
    tenant confirms them on the sheet; 5 open questions stay open, given with their readings and what each
    would mean on the tenant's facts, never picked, never put to the tenant; one with no readings is a limit
    of the tool; 6 letters only when asked, only through `draft_letter`, missing details asked once, posture
    lines copied word for word, then one line; 7 record messages and sent letters with `add_communication`;
-   8 cases only through `get_cases`, called when the tenant asks what courts said or a CASE TOPICS topic is on
+   8 cases only through `get_cases`, called when the tenant asks what courts said or a case topic is on
    the point being applied; then for every case it gives, its facts beside the tenant's, its rule quoted with
    name and page (and the statute version it read when not today's), what the rule would mean on the
    tenant's facts and whether another case distinguished it, a case against the tenant said so plainly, no
@@ -577,17 +580,26 @@ this order:
    required, rights, or options about anyone outside quote marks; quote, then "This tool does not decide
    that."), is in git history at commit a3b0b13. Rules 1 to 7 cover the same ground as the seven rules of
    2026-09-30 (whose numbers TODO.md items 15 to 22 use).
-2. `LEASE PROFILE`: the whole profile as JSON.
-3. `PLAYBOOKS`: for each active playbook, YAML of its `issue`, its `guidance`, and its
-   `spec.open_questions` with their readings (which rule 5 refers to), each without its `id` (no tool takes
-   one, and the model copied them into replies; TODO item 53). The rest of `spec` never enters the context.
-4. `STATUTE SECTIONS`: the text of every section the active playbooks list in `sections`, once each. An
+Then the parts, each under its name in `agent.PARTS`, a name a tenant can read, with a short line saying what
+it holds. A reply that names its source in plain words ("your facts show", "the program's deadlines show")
+reads right to the tenant. Until TODO item 61 (2026-10-03) the parts were LEASE PROFILE, PLAYBOOKS (guidance
+and open questions together), STATUTE SECTIONS, CASE TOPICS, ELEMENT STATUS, and DEADLINE STATUS, and the
+model wrote "(ELEMENT STATUS shows ...)" or "the open question in PLAYBOOKS" in 17 replies per 100 though the
+rules forbade it.
+
+2. `YOUR LEASE`: the whole lease profile as JSON.
+3. `THE TOOL'S NOTES ON YOUR ISSUES`: for each active playbook, YAML of its `issue` and its `guidance`
+   (questions, lease checks, evidence, postures, failure modes).
+4. `WHAT THE STATUTE DOES NOT SETTLE`: for each active playbook with open questions, YAML of its `issue` and
+   its `spec.open_questions` with their readings (which rule 5 refers to), each without its `id` (no tool takes
+   one, and the model copied them into replies; TODO item 53); "none listed for these issues" when no active
+   playbook has one. The rest of `spec` never enters the context.
+5. `THE STATUTE`: the text of every section the active playbooks list in `sections`, once each. An
    issue with no playbook yet adds none.
-5. `CASE TOPICS (for get_cases; number of cases on each)`: `agent.case_topics_text()`, one line per topic
+6. `COURT CASES THIS TOOL HAS`: `agent.case_topics_text()`, one line per topic with its number of cases,
    from `tools.offered_topics()`, or "none for these issues" (always, until the author verifies pages).
-6. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at the moment of the call.
-7. `DEADLINE STATUS (computed by the program; no dates here, get_deadlines prints them)`:
-   `tools.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
+7. `YOUR FACTS`: `element_status()` as JSON at the moment of the call.
+8. `THE PROGRAM'S DEADLINES`: `tools.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
    notice deadline", not the clock's id) with its issues, whose it is, what it counts from (the fact's label,
    not its date), its cite, and "passed" or "upcoming" (or why it has
    no date); then each issue still waiting, with the facts it waits for. Logs nothing. So the model can apply a
@@ -777,8 +789,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   line, sheet answer, or the test lease's own text, `LEASE_DATES` from the seed's
   `pages.json`, holds), cases not given (a "Name v. Name" no `get_cases` result in
   the session holds), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
-  `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: ELEMENT
-  STATUS, PLAYBOOKS, and the prompt's other parts; TODO item 53). Since 2026-10-02 (TODO item 49) a legal question's
+  `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: a prompt
+  part's name as the prompt writes it, before TODO item 61 or since, in capitals, or a rule's number such as
+  "rule 8"; TODO items 53 and 61). Since 2026-10-02 (TODO item 49) a legal question's
   turn expects `applied` instead of "does not decide", and the `LAW_WORDS` screen and the `must_not` patterns
   against "entitled", "allowed", "forfeit", and case names are gone. The blind scorers' rubric is
   `dev/eval_rubric.md` (applied answers: QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,

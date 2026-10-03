@@ -68,7 +68,9 @@ Quoting and the record (as before):
 - DATE_MADE: a date that is not in the record (tenant's words, SHEET values, lease quotes, printed
   deadlines), or a date the model counted, added, or compared itself ("would have ended on August 29").
   Applying the program's "passed" or "upcoming" is fine.
-- ID: a field or clock id or a prompt section's name in a reply ("claim_notice_received", "DEADLINE STATUS").
+- ID: a field or clock id, a prompt part's name as the prompt writes it, in capitals ("YOUR FACTS shows",
+  "DEADLINE STATUS"), or a rule's number ("rule 8") in a reply ("claim_notice_received"). A source named in plain
+  words ("your lease", "the program's deadlines", "the statute does not settle this") is not a slip.
 - CONFIRM_IN_CHAT: the reply asks the tenant, in the chat, to confirm or supply a fact the sheet asks.
 - OFFER: offers a letter or any action the tenant did not ask for ("Would you like me to draft ..."). A step
   the statute requires before an option, stated as part of the answer, is not an offer.

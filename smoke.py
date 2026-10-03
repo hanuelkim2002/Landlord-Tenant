@@ -37,7 +37,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
 from lease import FOOTER, lease_clauses
 from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from agent import (CASE_RULE, LETTER_RULE, NO_CASES_RULE, READING_LINE, check_reply, command, given_text, print_blocks,
+from agent import (CASE_RULE, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, command, given_text, print_blocks,
                    retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn, turn_blocks)
 from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
@@ -347,6 +347,13 @@ def screen(blocks):
     return "\n".join(b["text"] for b in blocks)
 
 
+def prompt_part(key):
+    """One part of the system prompt as it stands now (agent.PARTS), without its name."""
+    after = system_prompt().split("\n\n" + PARTS[key] + ":\n")[1]
+    later = list(PARTS.values())[list(PARTS).index(key) + 1:]
+    return after.split("\n\n" + later[0] + ":\n")[0] if later else after
+
+
 make_scratch("t-smoke",
              issues=["deposit_not_returned", "deposit_claim_received"],
              facts={"claim_notice_received": False},
@@ -400,7 +407,7 @@ try:
     check("propose_facts refuses an ellipsis joining words the tenant never typed", "said must be" in invented)
     check("get_deadlines waits while facts are open", deadline_listing().startswith("Not yet"))
     check("item 46: while facts are open, the prompt's deadline status says what each issue waits for",
-          "- waiting [deposit not returned]: no deadline until these are confirmed: " in system_prompt().split("DEADLINE STATUS (computed")[1])
+          "- waiting [deposit not returned]: no deadline until these are confirmed: " in prompt_part("deadlines"))
     check("printed deadlines say none yet, and what is waiting",
           render_deadlines(deadline_listing()).startswith("No deadlines yet")
           and "waiting [deposit_not_returned]: " in render_deadlines(deadline_listing()))
@@ -434,22 +441,30 @@ try:
     listed = json.loads(deadline_listing())["deadlines"]
     shared = [d for d in listed if d["clock"] == "claim_notice_deadline"]
     events_now = len(read_events())
-    status_text = system_prompt().split("DEADLINE STATUS (computed")[1]
+    status_text = prompt_part("deadlines")
     check("item 46: the prompt shows each computed deadline as passed or upcoming, with no date, and logs nothing",
           "- claim notice deadline [deposit not returned, deposit claim received]: the landlord's, 30 days after "
           "tenancy terminated, Fla. Stat. 83.49(3)(a): passed" in status_text
-          and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", status_text.split("\n", 1)[1])     # under the header
+          and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", status_text)
           and not re.search(r"\b20\d\d-\d\d-\d\d\b", status_text) and len(read_events()) == events_now)
-    playbook_part = system_prompt().split("PLAYBOOKS:")[1].split("STATUTE SECTIONS:")[0]
-    check("item 53: the open questions reach the model without their ids, and the rules name the prompt's parts it never writes",
-          "readings:" in playbook_part and "id: termination_date_meaning" not in playbook_part
-          and "termination_date_meaning" not in playbook_part and "never the name of a part of this prompt" in system_prompt())
+    open_part = prompt_part("open")
+    check("item 53: the open questions reach the model without their ids, and the rules forbid writing the prompt's part names",
+          "readings:" in open_part and "termination_date_meaning" not in open_part
+          and "no part name in capitals as this prompt writes it" in system_prompt())
+    old_names = re.compile(r"LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS")
+    prompt_now = system_prompt([HumanMessage(content="Can you write a letter to my landlord?")])     # rule 6 in too
+    heads = [prompt_now.index("\n\n" + name + ":\n") for name in PARTS.values()]
+    check("item 61: the prompt's parts go under names a tenant can read, in order, with no old part name left in "
+          "the prompt, the rules, or a tool's description",
+          heads == sorted(heads) and not old_names.search(prompt_now + CASE_RULE + NO_CASES_RULE + LETTER_RULE)
+          and not any(old_names.search(t.description) for t in model_tools)
+          and "postures:" in prompt_part("notes") and "open_questions" not in prompt_part("notes"))
     check("item 52: the fallback line is ruled out where an open question or a case topic is on the point",
-          "the fallback line only when no stored sentence, no open question in PLAYBOOKS, and no CASE TOPICS topic"
-          in system_prompt())
+          "the fallback line only when no stored sentence, no open question in WHAT THE STATUTE DOES NOT SETTLE, and no "
+          "topic in COURT CASES THIS TOOL HAS" in system_prompt())
     check("item 46: the rules apply the law, and open questions reach the model with their readings",
           "1. Apply the law to the tenant's facts." in system_prompt() and "stay open, with their readings" in system_prompt()
-          and "readings:" in system_prompt().split("PLAYBOOKS:")[1].split("STATUTE SECTIONS:")[0])
+          and "readings:" in prompt_part("open"))
     check("a deadline two issues share is listed once, with both issues", len(shared) == 1
           and shared[0]["issues"] == ["deposit_not_returned", "deposit_claim_received"])
     printed = render_deadlines(deadline_listing())
@@ -474,7 +489,7 @@ try:
     check("timeline <issue> keeps a shared deadline under either issue",
           "claim notice deadline" in render_timeline("deposit_claim_received")
           and "claim notice deadline" in render_timeline("deposit_not_returned"))
-    status_now = json.loads(system_prompt().split("ELEMENT STATUS (by issue):\n")[1].split("\n\nDEADLINE STATUS")[0])
+    status_now = json.loads(prompt_part("facts"))
     check("the prompt's element status is the record as it is now", any(
           r["id"] == "vacated" and r["status"] == "known" and r["value"] == "2026-07-28"
           for r in status_now["deposit_not_returned"]))
@@ -491,7 +506,7 @@ try:
     # cases (wiki.py, get_cases): nothing is offered until a page is verified; a verified, tagged page offers its
     # topics, prints by code, and is logged; an untagged page never shows; a case cite must be one shown
     check("no case topic is offered while no page is verified, and the prompt says so",
-          offered_topics() == {} and "CASE TOPICS (for get_cases; number of cases on each):\nnone for these issues" in system_prompt())
+          offered_topics() == {} and prompt_part("cases") == "none for these issues")
     # rules that can apply only sometimes (agent.rules_for): letters once a letter is in play, cases in full
     # only with a topic to offer
     check("the letter rule is in when a letter is in play: a letter drafted (this matter has one), or asked for",
@@ -617,10 +632,10 @@ try:
           and any(e["kind"] == "issue_confirmed" and e["issue"] == "deposit_claim_received" for e in events))
     check("the model's next prompt has the new issue's guidance", "issue: deposit_claim_received" in system_prompt())
     check("the prompt carries the sections the active playbooks name", "=== 83.49 ===" in system_prompt())
-    sections_before = system_prompt().split("STATUTE SECTIONS:")[1].split("ELEMENT STATUS")[0]
+    sections_before = prompt_part("statute")
     record.add_issues(["other"], "classify", "a smoke check")        # "other" is the one label with no playbook
     check("an issue with no playbook is recorded at once and adds no sections", "other" in record.matter["issues"]
-          and system_prompt().split("STATUTE SECTIONS:")[1].split("ELEMENT STATUS")[0] == sections_before)
+          and prompt_part("statute") == sections_before)
     check("add_issues never adds an issue twice", record.add_issues(["deposit_claim_received"], "classify", "x") == [])
     check("timeline full shows the suggestion and the confirmation", "issue suggested: deposit claim received"
           in render_timeline(full=True) and "issue confirmed: deposit claim received" in render_timeline(full=True))
@@ -747,7 +762,7 @@ try:
     check("item 51: neither get_deadlines nor get_cases ends the turn; the model's answer follows the printed listing",
           not get_deadlines.return_direct and not get_cases.return_direct
           and [m.type for m in ended["messages"][-2:]] == ["tool", "ai"] and ended["messages"][-1].content == applies
-          and "DEADLINE STATUS" in ended["messages"][-2].content)
+          and "THE PROGRAM'S DEADLINES" in ended["messages"][-2].content)
 
     # the same letter twice in one session (m-026): drafted once; a changed letter is drafted again
     letter_args = {"issue": "deposit_not_returned", "posture": "preserve", "ask": "Return the deposit",

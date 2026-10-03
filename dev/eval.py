@@ -72,8 +72,12 @@ CASE_NAME = re.compile(r"\b[A-Z][A-Za-z.&'’]+(?: [A-Z][A-Za-z.&'’]+)* v\. [A
 OFFER_WORDS = re.compile(r"\b(would you like|do you want me|if you(?:'d| would) like|i can (?:draft|help|"
                          r"prepare|write)|next steps?|you (?:could|might) (?:consider|want))\b", re.I)
 FIELD_NAME = re.compile(r"\b[a-z]+(?:_[a-z]+)+\b")          # forwarding_address_given; file names have digits
-# the names of the system prompt's parts, which a reply must never use (TODO item 53)
-PROMPT_NAME = re.compile(r"\b(LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS)\b")
+# the names of the system prompt's parts as the prompt writes them, which a reply never copies (TODO item 53): the
+# names before item 61, the names since (agent.PARTS, in capitals; "your lease" in plain words is the wanted form),
+# and a rule's number ("rule 8"; not a court rule's "Rule 1.070")
+PROMPT_NAME = re.compile(r"\b(LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS|"
+                         r"YOUR LEASE|THE TOOL['’]S NOTES|WHAT THE STATUTE DOES NOT SETTLE|THE STATUTE|"
+                         r"COURT CASES THIS TOOL HAS|YOUR FACTS|THE PROGRAM['’]S DEADLINES|[Rr]ule [1-9](?![.\d]))\b")
 ISO_DATE = re.compile(r"\b20\d\d-\d\d-\d\d\b")
 SPOKEN_DATE = re.compile(r"\b(January|February|March|April|May|June|July|August|September|October|November|December)"
                          r" (\d{1,2}),? (20\d\d)\b")
