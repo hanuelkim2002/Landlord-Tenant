@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.53.txt, statutes/83.67.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.2
+  version: 0.3
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -82,7 +82,7 @@ spec:
         reasonable notice to the tenant and at a reasonable time for the purpose of repair of the premises"; and,
         for the further purposes in 83.53(1) (inspecting, supplying agreed services, showing the unit, and the
         others listed), only in the circumstances 83.53(2)(a)-(d) list. Apply the one that fits the reason in the
-        record (entry_reason_given); with no reason recorded, say which facts each turns on. What stays open is a
+        record; with no reason recorded, say which facts each turns on. What stays open is a
         visit that fits more than one, such as routine maintenance or pest control.
       readings:
         - >-
@@ -95,8 +95,7 @@ spec:
       sections: ["83.53"]
       text: >-
         83.53(3) says "The landlord shall not abuse the right of access nor use it to harass the tenant." The stored
-        text does not define abuse or harassment. Set the record's entries beside it (how often, at what times, with
-        what notice, repeated_entries).
+        text does not define abuse or harassment. Set the record's entries beside it (how often, at what times, with what notice, whether it keeps happening).
       readings:
         - >-
           Abuse means entering outside the ways 83.53(2) allows, so entries the statute allows are not abuse however

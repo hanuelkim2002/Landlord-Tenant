@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.49.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.3
+  version: 0.4
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -144,7 +144,7 @@ guidance:
     notice_sufficiency: 'Sending this letter does not start any deadline that this tool computes for this issue. The only notice from a tenant that this tool tracks here is in Fla. Stat. 83.49(5), which says that "any tenant who vacates or abandons the premises before the expiration of the term specified in the rental agreement" "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises". The same sentence also covers week-to-week, month-to-month, and other periodic tenancies. Whether it applies to you turns on when you moved out and on your lease (the sentence begins "Except when otherwise provided by the terms of a written rental agreement"); ask in the chat to have it applied to your confirmed facts.'
 
   failure_modes:
-    - Applying either clock without saying which date it counts from, or using the lease end date without the move-out date beside it (termination_date_meaning).
+    - Applying either clock without saying which date it counts from, or using the lease end date without the move-out date beside it.
     - Saying the landlord "forfeits the right to impose a claim upon the security deposit" unless the record shows both conditions, that the tenant confirmed no notice of claim arrived and that get_deadlines lists the 30-day notice date as passed; never your own count.
     - Stopping at the forfeiture. The same sentence lets the landlord "file an action for damages after returning the security deposit to the tenant".
     - Applying 83.49(3)(a) to an early move-out or a periodic tenancy without 83.49(5), whose missing 7-day notice "relieves the landlord of the notice requirement of paragraph (3)(a)".

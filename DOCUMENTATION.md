@@ -39,8 +39,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `check_playbook` (one playbook: every spec quote verbatim in its cited section, every
   quotation of 20 or more characters in the guidance and open questions verbatim in a stored section, a
   question for every element and an element for every question, `applies_if` naming a yes/no fact, clock
-  cites among `sections`, the guidance parts the tool reads; prints a line per check via `report`, returns
-  the failures), `check_all_playbooks` (all of them, plus a fact id shared by playbooks having the same type
+  cites among `sections`, each open question's shape, no id from `playbook_ids` (every fact, clock, and open
+  question id of the playbooks) in the guidance's prose or the open questions' text and readings, the guidance
+  parts the tool reads; prints a line per check via `report`, returns the failures), `check_all_playbooks`
+  (all of them, checking ids against every playbook's, plus a fact id shared by playbooks having the same type
   and question; returns the failures), and `playbooks` (dict, issue to `Playbook`, from
   `playbooks/*.yaml`). No model calls. Imports `config`, `lease` (for `LeaseProfile`, to check
   `compare_to`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
@@ -545,7 +547,8 @@ this order:
    the statute to the record in ELEMENT STATUS and DEADLINE STATUS and say what they mean for the tenant; not
    a lawyer, and the program prints the line saying so, so the model writes none; never send anything or
    work out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
-   `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no ids), then nine numbered rules, each with
+   `Fla. Stat. 83.49(3)(a): "..."`; no labels like "Quote:", no ids, and never the name of a part of the
+   prompt or a rule, such as ELEMENT STATUS or "rule 8"; TODO item 53), then nine numbered rules, each with
    "Not:" examples and the "Instead:" form: 1 apply the law to the tenant's facts, in order: the rule quoted;
    the facts it turns on in plain words with where each came from, never an id or a prompt section's name (a
    fact said in the chat but not confirmed is "not known yet until the sheet confirms it"); for each condition, met, failed, or not known; what follows, and when
@@ -576,15 +579,17 @@ this order:
    2026-09-30 (whose numbers TODO.md items 15 to 22 use).
 2. `LEASE PROFILE`: the whole profile as JSON.
 3. `PLAYBOOKS`: for each active playbook, YAML of its `issue`, its `guidance`, and its
-   `spec.open_questions` with their readings (which rule 5 refers to). The rest of `spec` never enters the context.
+   `spec.open_questions` with their readings (which rule 5 refers to), each without its `id` (no tool takes
+   one, and the model copied them into replies; TODO item 53). The rest of `spec` never enters the context.
 4. `STATUTE SECTIONS`: the text of every section the active playbooks list in `sections`, once each. An
    issue with no playbook yet adds none.
 5. `CASE TOPICS (for get_cases; number of cases on each)`: `agent.case_topics_text()`, one line per topic
    from `tools.offered_topics()`, or "none for these issues" (always, until the author verifies pages).
 6. `ELEMENT STATUS (by issue)`: `element_status()` as JSON at the moment of the call.
 7. `DEADLINE STATUS (computed by the program; no dates here, get_deadlines prints them)`:
-   `tools.deadline_status()`: for the issues with every fact confirmed, each deadline with its issues, whose
-   it is, what it counts from (the fact's id, not its date), its cite, and "passed" or "upcoming" (or why it has
+   `tools.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
+   notice deadline", not the clock's id) with its issues, whose it is, what it counts from (the fact's label,
+   not its date), its cite, and "passed" or "upcoming" (or why it has
    no date); then each issue still waiting, with the facts it waits for. Logs nothing. So the model can apply a
    condition such as "within the 30-day period" without seeing or comparing a date.
 
@@ -595,8 +600,9 @@ The program note after a sheet still tells the model, in the conversation, that 
 Ten playbooks, one per label in `ISSUE_LABELS` except `other`: deposit_not_returned,
 deposit_claim_received, repair_not_made, notice_received_nonpayment, notice_received_violation,
 landlord_entered_unannounced, rent_increased, wants_to_leave_early, lease_ending, neighbor_disturbance. The
-playbooks have `verified_by: null` until the author's hand check; all are version 0.2 (deposit_not_returned
-0.3) since their open questions and failure modes were rewritten for applying the law (2026-10-02). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
+playbooks have `verified_by: null` until the author's hand check; all are version 0.3 (deposit_not_returned
+and notice_received_nonpayment 0.4) since their open questions and failure modes were rewritten for applying
+the law (2026-10-02) and their prose lost its ids (2026-10-03). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
 (83.53(2) is in hours), rent_increased (no section on notice of a rent increase), neighbor_disturbance (no
 deadline for a landlord to act on one tenant's complaint about another; its open questions: whose duty
 83.52(7) states, 83.56(2)(a) as a remedy not a duty, what is unreasonable, and whether 83.56(1) lets the
@@ -770,7 +776,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   line, sheet answer, printed deadline, or the test lease's own text, `LEASE_DATES` from the seed's
   `pages.json`, holds), cases not given (a "Name v. Name" no `get_cases` result in
   the session holds), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
-  `OFFER_WORDS`) that only mark a reply for a person to read. Since 2026-10-02 (TODO item 49) a legal question's
+  `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: ELEMENT
+  STATUS, PLAYBOOKS, and the prompt's other parts; TODO item 53). Since 2026-10-02 (TODO item 49) a legal question's
   turn expects `applied` instead of "does not decide", and the `LAW_WORDS` screen and the `must_not` patterns
   against "entitled", "allowed", "forfeit", and case names are gone. The blind scorers' rubric is
   `dev/eval_rubric.md` (applied answers: QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,

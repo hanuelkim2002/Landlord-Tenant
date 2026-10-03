@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.49.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.2
+  version: 0.3
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -115,7 +115,7 @@ spec:
       text: >-
         83.49(3)(a) names two ways to give the notice of claim: "by certified mail to the tenant’s last known mailing
         address or by e-mail in accordance with s. 83.505". 83.505(1) allows e-mail only "if the parties have signed an
-        addendum to the rental agreement". Apply these to how the record says the notice came (claim_delivery); if
+        addendum to the rental agreement". Apply these to how the record says the notice came; if
         the tenant has not said whether they signed such an addendum, that condition is not known yet. What stays
         open is a notice that reached the tenant in time some other way.
       readings:
@@ -184,6 +184,6 @@ guidance:
     - Counting the objection window from the date printed on the notice, or the remit window from the date it was received; get_deadlines counts each from its own date.
     - Treating the remit clock as unconditional. It comes from a sentence that begins "Unless the tenant objects".
     - Saying the tenant lost the deposit by not objecting in time. 83.49(3)(b) says "The failure of the tenant to make a timely objection does not waive any rights of the tenant to seek damages in a separate action."
-    - Saying the claim is forfeited unless the record shows the notice came after the 30-day date get_deadlines lists, or by a way 83.49(3)(a) does not name (email_notice_conditions).
+    - Saying the claim is forfeited unless the record shows the notice came after the 30-day date get_deadlines lists, or by a way 83.49(3)(a) does not name.
     - Judging the claim's amount by a standard neither the lease nor 83.49 states. 83.49 sets the notice and objection steps, not what damage a landlord may charge for; "normal wear and tear" appears in the stored text only in 83.491, the fee in lieu of a deposit. Set the claim's reason beside the lease's move-out clauses and the tenant's account.
     - Computing any date outside compute_deadlines.

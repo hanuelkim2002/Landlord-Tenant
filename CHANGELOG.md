@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Ids and prompt names kept out of the model's reading where they need not be there (TODO item 53, done). Was: in
+  the eval of 2026-10-02, 39 turns had a field id and the blind scorers' most common slip (48) was an id or a
+  prompt name ("ELEMENT STATUS", "PLAYBOOKS", "remedy_not_duty"). Three causes removed at the source: item 50's
+  own prose named ids in parentheses ("(rent_paid_since_known)", "(termination_date_meaning)") in 29 places,
+  now in words or gone (every playbook one version up); the open questions reached the model with their `id`,
+  which no tool takes, and now go without it; DEADLINE STATUS named clocks and facts by id, now by label ("claim
+  notice deadline [deposit not returned] ... 30 days after tenancy terminated"). The format line in the rules
+  adds: never the name of a part of the prompt or a rule ("ELEMENT STATUS", "rule 8"). Fact ids stay in ELEMENT
+  STATUS, since `propose_facts` takes them. New playbook check (`corpus.playbook_ids`, in `check_playbook`): no
+  fact, clock, or open question id of any playbook in the guidance's prose or the open questions' text and
+  readings. New eval measure: prompt names in replies (`PROMPT_NAME`). Smoke: the open questions reach the
+  prompt without ids, the deadline status has no id under its header, the rules name the prompt's parts.
+  Playbook checks: 0 failures.
+
 - The fallback line is not for a point an open question or a case speaks to (TODO item 52, done). Was: in the
   eval of 2026-10-02, "The lease and statute text I have do not answer that." answered 6 of the 13 legal
   questions not applied, among them a 3-day notice demanding cash only (3 of 3), though the notice-form open

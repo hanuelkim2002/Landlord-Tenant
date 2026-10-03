@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.56.txt, statutes/83.60.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.3
+  version: 0.4
 
 counting:
   convention: court business days, trigger day not counted, Saturdays, Sundays, and the circuit's court holidays skipped (calendars/)
@@ -134,7 +134,7 @@ spec:
         If partial rent is accepted after the notice, 83.56(5)(a) says the landlord does not waive "by accepting
         partial rent for the period", and lists what the landlord must then do ("If partial rent is accepted after
         posting the notice for nonpayment, the landlord must:"): a receipt, the money into the court registry on
-        filing, or a new 3-day notice. Apply the list to the record (partial_rent_accepted, partial_payment_receipt);
+        filing, or a new 3-day notice. Apply the list to the record;
         the sheet asks only about the receipt, so the other two steps are not known yet unless the tenant says.
 
 # ---------- read by the model ----------

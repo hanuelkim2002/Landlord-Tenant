@@ -139,16 +139,17 @@ def deadline_status():
     "upcoming", never from dates of its own (TODO item 46). Logs nothing: the prompt is rebuilt on every call."""
     waiting = open_facts_by_issue()
     ready = [pb for pb in active_playbooks() if pb.issue not in waiting]
+    words = lambda ident: ident.replace("_", " ")         # labels, not ids: the model copies an id it reads (item 53)
     lines = []
     for d in matter_deadlines(ready, record.matter["facts"], date.today()):
-        issues = ", ".join(d["issues"])
+        issues = ", ".join(words(i) for i in d["issues"])
         if "deadline" not in d:
-            lines.append(f"- {d['clock']} [{issues}]: no date ({d['status']})")
+            lines.append(f"- {words(d['clock'])} [{issues}]: no date ({words(d['status'])})")
             continue
-        start = d["from"].split()[0]                       # the trigger's id; its date stays out
-        lines.append(f"- {d['clock']} [{issues}]: the {d['actor']}'s, {d['rule']} {start}, Fla. Stat. {d['cite']}: "
-                     f"{d['status']}")
-    lines += [f"- waiting [{issue}]: no deadline until these are confirmed: {', '.join(ids)}"
+        start = d["from"].split()[0]                       # the trigger; its date stays out
+        lines.append(f"- {words(d['clock'])} [{issues}]: the {d['actor']}'s, {d['rule']} {words(start)}, Fla. Stat. "
+                     f"{d['cite']}: {d['status']}")
+    lines += [f"- waiting [{words(issue)}]: no deadline until these are confirmed: {', '.join(words(i) for i in ids)}"
               for issue, ids in waiting.items()]
     return "\n".join(lines) or "none: no active issue has a deadline this tool computes"
 

@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.575.txt, statutes/83.57.txt, statutes/83.58.txt, statutes/83.46.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.2
+  version: 0.3
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -103,7 +103,7 @@ spec:
         agreement may not require less than 30 days’ notice or more than 60 days’ notice from either the tenant or the
         landlord." The landlord's written notice under 83.575(2) is due "within 15 days before the start of the
         notification period contained in the rental agreement". Apply these to the lease's own words
-        (lease_end_notice_terms) and the confirmed dates. This tool does not compute a date from a period the lease
+        and the confirmed dates. This tool does not compute a date from a period the lease
         sets, so no last day is given. What stays open is what "within 15 days before the start" asks of the landlord.
       readings:
         - >-
@@ -124,7 +124,7 @@ spec:
         83.575(3) covers a tenant who "remains on the premises with the permission of the landlord after the rental
         agreement has terminated", and 83.58 a tenant who "holds over and continues in possession of the dwelling unit
         or any part thereof after the expiration of the rental agreement without the permission of the landlord".
-        Apply the one the record points to (landlord_permission_to_stay). What stays open is what counts as permission
+        Apply the one the record points to. What stays open is what counts as permission
         when the landlord said nothing, or took rent for a period after the end.
       readings:
         - >-

@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.46.txt, statutes/83.57.txt, statutes/83.64.txt, statutes/83.425.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.2
+  version: 0.3
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -91,8 +91,8 @@ spec:
         83.64(1) says "It is unlawful for a landlord to discriminatorily increase a tenant’s rent or decrease services
         to a tenant, or to bring or threaten to bring an action for possession or other civil action, primarily
         because the landlord is retaliating against the tenant." 83.64(4) defines "Discrimination" for that section.
-        Set the record beside its parts: the complaint and its date, what the tenant knows about other tenants' rent
-        (other_tenants_increase), and the tenant's good faith. The landlord's motive is not in the record. What stays
+        Set the record beside its parts: the complaint and its date, what the tenant knows about other tenants' rent,
+        and the tenant's good faith. The landlord's motive is not in the record. What stays
         open is what the tenant can do about an increase alone.
       readings:
         - >-
@@ -139,7 +139,7 @@ guidance:
       section on notice of a rent increase. A letter from you does not start any period this tool tracks.
 
   failure_modes:
-    - Stating a notice period for rent increases; the stored text has none (no_increase_section).
+    - Stating a notice period for rent increases; the stored text has none.
     - Saying an increase is retaliatory because it followed a complaint. 83.64(1) needs an increase that is discriminatory and "primarily because the landlord is retaliating against the tenant", and 83.64(4) makes different treatment "a prerequisite to a finding of retaliatory conduct".
     - Applying 83.64 without its condition that "the tenant must have acted in good faith".
     - Applying a local rent rule from memory; 83.425 preempts local regulation and the stored text holds none.

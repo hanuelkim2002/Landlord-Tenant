@@ -71,6 +71,8 @@ CASE_NAME = re.compile(r"\b[A-Z][A-Za-z.&'’]+(?: [A-Z][A-Za-z.&'’]+)* v\. [A
 OFFER_WORDS = re.compile(r"\b(would you like|do you want me|if you(?:'d| would) like|i can (?:draft|help|"
                          r"prepare|write)|next steps?|you (?:could|might) (?:consider|want))\b", re.I)
 FIELD_NAME = re.compile(r"\b[a-z]+(?:_[a-z]+)+\b")          # forwarding_address_given; file names have digits
+# the names of the system prompt's parts, which a reply must never use (TODO item 53)
+PROMPT_NAME = re.compile(r"\b(LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS)\b")
 ISO_DATE = re.compile(r"\b20\d\d-\d\d-\d\d\b")
 SPOKEN_DATE = re.compile(r"\b(January|February|March|April|May|June|July|August|September|October|November|December)"
                          r" (\d{1,2}),? (20\d\d)\b")
@@ -242,6 +244,7 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
         "cases_used": sorted({m.group(0) for m in CASE_NAME.finditer(text) if case_given(m.group(0), fetched)}),
         "offer_words": sorted({m.group(0) for m in OFFER_WORDS.finditer(bare)}),
         "field_names": sorted(set(FIELD_NAME.findall(bare))),
+        "prompt_names": sorted(set(PROMPT_NAME.findall(text))),
         "echo": sorted({iso for iso in set(printed) if any(s in text for s in spoken_dates(iso))}),
     }
 
@@ -380,6 +383,7 @@ def score_run(entry, scenario, out):
         "cases_not_given": sum(bool(t["cases_not_given"]) for t in measured),
         "offer_screen": sum(bool(t["offer_words"]) for t in measured),
         "field_names": sum(bool(t["field_names"]) for t in measured),
+        "prompt_names": sum(bool(t.get("prompt_names")) for t in measured),
         "echo": sum(bool(t["echo"]) for t in measured),
         "footers": sum(len(t["footers"]) for t in measured),
         "turns": measured,
@@ -398,22 +402,25 @@ def score(out):
         row = summary.setdefault(s["scenario"], {"runs": 0, "crashed": 0, "gateway_trouble": 0, "expected_ok": 0, "replies": 0,
                                                  "empty_turns": 0, "cautions": 0, "quotes_only": 0, "choose_screen": 0,
                                                  "dates_made": 0, "cases_not_given": 0,
-                                                 "offer_screen": 0, "field_names": 0, "echo": 0, "footers": 0,
+                                                 "offer_screen": 0, "field_names": 0, "prompt_names": 0, "echo": 0,
+                                                 "footers": 0,
                                                  "failed": {}})
         row["runs"] += 1
         for key in ("crashed", "gateway_trouble", "expected_ok", "replies", "empty_turns", "cautions", "quotes_only",
-                    "choose_screen", "dates_made", "cases_not_given", "offer_screen", "field_names", "echo", "footers"):
+                    "choose_screen", "dates_made", "cases_not_given", "offer_screen", "field_names", "prompt_names",
+                    "echo", "footers"):
             row[key] += int(s[key])
         for x in s["expect"]:
             if not x["ok"]:
                 row["failed"][x["what"]] = row["failed"].get(x["what"], 0) + 1
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
     print(f"\n{'scenario':<28}{'runs':>5}{'gw':>4}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'qonly':>6}"
-          f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'echo':>5}{'footer':>7}")
+          f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'prompt':>7}{'echo':>5}{'footer':>7}")
     for name, row in summary.items():
         print(f"{name:<28}{row['runs']:>5}{row['gateway_trouble']:>4}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
               f"{row['cautions']:>5}{row['quotes_only']:>6}{row['choose_screen']:>8}{row['dates_made']:>6}"
-              f"{row['cases_not_given']:>6}{row['offer_screen']:>7}{row['field_names']:>6}{row['echo']:>5}{row['footers']:>7}")
+              f"{row['cases_not_given']:>6}{row['offer_screen']:>7}{row['field_names']:>6}{row['prompt_names']:>7}"
+              f"{row['echo']:>5}{row['footers']:>7}")
         for what, n in row["failed"].items():
             print(f"    failed {n}x: {what}")
 

@@ -37,7 +37,7 @@ from tools import deadline_status, offered_topics, tools
 
 RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in LEASE PROFILE, the statute text in STATUTE SECTIONS, and the cases get_cases gives you to the tenant's record in ELEMENT STATUS and DEADLINE STATUS, and say what they mean for the tenant. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
 
-Write short plain sentences. Put each quote on its own line, source first: Lease Section 4.3, page 2: "..." or Fla. Stat. 83.49(3)(a): "...". Say where each fact or date came from. No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice").
+Write short plain sentences. Put each quote on its own line, source first: Lease Section 4.3, page 2: "..." or Fla. Stat. 83.49(3)(a): "...". Say where each fact or date came from. No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice"), and never the name of a part of this prompt or a rule (LEASE PROFILE, PLAYBOOKS, STATUTE SECTIONS, CASE TOPICS, ELEMENT STATUS, DEADLINE STATUS, "rule 8"): say "your lease", "the statute", "the program's deadline listing".
 
 Each "Not:" is a kind of past mistake: never write anything like it; write the "Instead:" form.
 
@@ -221,8 +221,11 @@ def system_prompt(messages=()):
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
     # Only the model-facing part of each playbook: the guidance half, plus the open questions rule 5 refers
     # to. The rest of spec (elements, clocks, exclusions) is for code and never enters the context.
+    # The open questions go in without their ids: no tool takes one, and the model copied them into replies
+    # (TODO item 53).
     playbook_text = "\n\n".join(
-        yaml.safe_dump({"issue": pb.issue, "guidance": pb.guidance, "open_questions": pb.spec.open_questions},
+        yaml.safe_dump({"issue": pb.issue, "guidance": pb.guidance,
+                        "open_questions": [{k: v for k, v in q.items() if k != "id"} for q in pb.spec.open_questions]},
                        sort_keys=False, allow_unicode=True, width=110)
         for pb in active_playbooks())
     return (rules_for(messages)

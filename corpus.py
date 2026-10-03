@@ -131,13 +131,20 @@ def prose_strings(x):
             yield from prose_strings(v)
 
 
-def check_playbook(playbook, statute):
+def playbook_ids(pbs):
+    """Every fact, clock, and open question id of these playbooks: words the model must never write (TODO item 53)."""
+    return {i for pb in pbs for i in [e.id for e in pb.spec.elements] + [c.id for c in pb.spec.clocks]
+            + [q.get("id") for q in pb.spec.open_questions if isinstance(q, dict)] if i}
+
+
+def check_playbook(playbook, statute, ids=None):
     """Check one playbook and print a line per check. Returns the number of failures.
     Quotes: every spec quote word for word in the section it cites, and every quotation of 20 or more
     characters in the guidance and open questions word for word in a stored section. Shape: a question for
     every element and an element for every question, applies_if naming a yes/no fact, clock cites among the
-    playbook's sections, each open question's id, sections, text, and readings (two or more when given), and
-    the guidance parts the tool reads (postures, including notice_sufficiency)."""
+    playbook's sections, each open question's id, sections, text, and readings (two or more when given), no
+    id (playbook_ids; this playbook's own when ids is None) in the model's prose, and the guidance parts the
+    tool reads (postures, including notice_sufficiency)."""
     fails = 0
     quotes = []
     for c in playbook.spec.clocks:
@@ -174,6 +181,13 @@ def check_playbook(playbook, statute):
                         and ("readings" not in q or (isinstance(q["readings"], list) and len(q["readings"]) >= 2
                                                      and all(isinstance(r, str) for r in q["readings"])))
                         for q in playbook.spec.open_questions))
+    # The model copies an id it reads in prose into its replies (eval of 2026-10-02: 39 turns), so the guidance and
+    # the open questions' text and readings say things in words. Keys (questions, lease_checks) may be ids.
+    ids = ids or playbook_ids([playbook])
+    texts = list(prose_strings(playbook.guidance)) + [q.get("text", "") for q in playbook.spec.open_questions] \
+        + [r for q in playbook.spec.open_questions for r in q.get("readings", [])]
+    named = sorted({w for t in texts for w in re.findall(r"\b[a-z]+(?:_[a-z]+)+\b", t) if w in ids})
+    fails += report("no fact, clock, or open question id in the model's prose" + (f": {named}" if named else ""), not named)
     postures = playbook.guidance.get("postures", {})
     fails += report("guidance has lease_checks, evidence, failure_modes, and every posture",
                     all(k in playbook.guidance for k in ("lease_checks", "evidence", "failure_modes"))
@@ -185,9 +199,10 @@ def check_all_playbooks():
     """Run check_playbook on every loaded playbook, then check that a fact id used by more than one playbook
     has the same type and question in each. Called by smoke.py, not at import. Returns the number of failures."""
     fails = 0
+    ids = playbook_ids(playbooks.values())
     for issue, pb in playbooks.items():
         print(f"--- {issue}")
-        fails += check_playbook(pb, statute)
+        fails += check_playbook(pb, statute, ids)
     print("--- facts shared across playbooks")
     for fact_id in sorted({e.id for pb in playbooks.values() for e in pb.spec.elements}):
         uses = [(pb.issue, e.type, pb.guidance["questions"].get(fact_id)) for pb in playbooks.values()

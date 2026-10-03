@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.52.txt, statutes/83.56.txt, statutes/83.64.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.2
+  version: 0.3
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -69,7 +69,7 @@ spec:
         83.52(7) says the tenant shall "Conduct himself or herself, and require other persons on the premises with
         his or her consent to conduct themselves, in a manner that does not unreasonably disturb the tenant’s
         neighbors or constitute a breach of the peace." It states each tenant's own duty. Apply it by who the record
-        says is causing the disturbance: when that person rents from the same landlord (source_rents_from_landlord),
+        says is causing the disturbance: when that person rents from the same landlord,
         the landlord holds the remedy in 83.56(2)(a) against them; when they do not, the tenant's landlord has no
         tenancy with them under part II, and the tenant's options run through the tenant's own lease and law the
         stored text does not hold.
@@ -152,8 +152,8 @@ guidance:
       disturbance is not settled by the stored text.
 
   failure_modes:
-    - Saying the landlord must stop the disturbance or evict the neighbor; the stored text gives the landlord a remedy it "may" use (remedy_not_duty).
-    - Calling the disturbance unreasonable without setting the record's description, times, and frequency beside the open question (what_is_unreasonable).
-    - Saying the tenant may end the lease without the lease clause the landlord failed and the written notice 83.56(1) requires (ending_own_lease), or may hold back rent over it; 83.60(1)(b) speaks only of "a material noncompliance with s. 83.51 (1)".
-    - Treating a neighbor who rents from someone else as someone the tenant's landlord can act against under 83.56(2)(a) (whose_duty).
+    - Saying the landlord must stop the disturbance or evict the neighbor; the stored text gives the landlord a remedy it "may" use.
+    - Calling the disturbance unreasonable without setting the record's description, times, and frequency beside the open question.
+    - Saying the tenant may end the lease without the lease clause the landlord failed and the written notice 83.56(1) requires, or may hold back rent over it; 83.60(1)(b) speaks only of "a material noncompliance with s. 83.51 (1)".
+    - Treating a neighbor who rents from someone else as someone the tenant's landlord can act against under 83.56(2)(a).
     - Saying a step the landlord took after the tenant complained was retaliation. 83.64(1) turns on an act "primarily because the landlord is retaliating against the tenant", and 83.64(3) excuses an eviction for good cause.

@@ -17,12 +17,6 @@ structural ones first.
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on
     the law? Mark the rubric's categories (`dev/eval_rubric.md`) and right, wrong, or partly; the scorers'
     calls on the same transcripts are in `results/blind_score_*.json` (codes in `blind_key.json`).
-53. Ids and prompt names in replies: turns with a field id 5 before, 39 after; the blind scorers' most common
-    slip (48, nearly all firm): "ELEMENT STATUS", "PLAYBOOKS", "DEADLINE STATUS", fact ids, open question ids.
-    Part of it is item 50's own prose, which names ids in parentheses ("(rent_paid_since_known)",
-    "(termination_date_meaning)"), and DEADLINE STATUS's clock ids. Options: plain words in the playbooks'
-    model-facing prose and labels in DEADLINE STATUS; a program check that flags an id in a reply, like the
-    quote cautions.
 54. A rule restated without its quote (LAW_UNSOURCED, 42, 34.5 firm): applied answers paraphrase sections, or
     parts of a quoted one, that they do not quote. A pair for rule 1: every rule the answer turns on is quoted,
     including a second condition.

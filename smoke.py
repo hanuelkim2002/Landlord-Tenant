@@ -400,7 +400,7 @@ try:
     check("propose_facts refuses an ellipsis joining words the tenant never typed", "said must be" in invented)
     check("get_deadlines waits while facts are open", deadline_listing().startswith("Not yet"))
     check("item 46: while facts are open, the prompt's deadline status says what each issue waits for",
-          "- waiting [deposit_not_returned]: no deadline until these are confirmed: " in system_prompt().split("DEADLINE STATUS (computed")[1])
+          "- waiting [deposit not returned]: no deadline until these are confirmed: " in system_prompt().split("DEADLINE STATUS (computed")[1])
     check("printed deadlines say none yet, and what is waiting",
           render_deadlines(deadline_listing()).startswith("No deadlines yet")
           and "waiting [deposit_not_returned]: " in render_deadlines(deadline_listing()))
@@ -436,9 +436,14 @@ try:
     events_now = len(read_events())
     status_text = system_prompt().split("DEADLINE STATUS (computed")[1]
     check("item 46: the prompt shows each computed deadline as passed or upcoming, with no date, and logs nothing",
-          "- claim_notice_deadline [deposit_not_returned, deposit_claim_received]: the landlord's, 30 days after "
-          "tenancy_terminated, Fla. Stat. 83.49(3)(a): passed" in status_text
+          "- claim notice deadline [deposit not returned, deposit claim received]: the landlord's, 30 days after "
+          "tenancy terminated, Fla. Stat. 83.49(3)(a): passed" in status_text
+          and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", status_text.split("\n", 1)[1])     # under the header
           and not re.search(r"\b20\d\d-\d\d-\d\d\b", status_text) and len(read_events()) == events_now)
+    playbook_part = system_prompt().split("PLAYBOOKS:")[1].split("STATUTE SECTIONS:")[0]
+    check("item 53: the open questions reach the model without their ids, and the rules name the prompt's parts it never writes",
+          "readings:" in playbook_part and "id: termination_date_meaning" not in playbook_part
+          and "termination_date_meaning" not in playbook_part and "never the name of a part of this prompt" in system_prompt())
     check("item 52: the fallback line is ruled out where an open question or a case topic is on the point",
           "the fallback line only when no stored sentence, no open question in PLAYBOOKS, and no CASE TOPICS topic"
           in system_prompt())

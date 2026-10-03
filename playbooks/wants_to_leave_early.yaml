@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.595.txt, statutes/83.49.txt, statutes/83.682.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.2
+  version: 0.3
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -109,7 +109,7 @@ spec:
         end the tenancy and the tenant's liability, relet for the tenant's account with "a duty to exercise good faith
         in attempting to relet the premises", stand by and hold the tenant liable for rent as it comes due, or charge
         liquidated damages or an early termination fee under a separate addendum. The choice is the landlord's. Apply
-        each to the record (early_termination_addendum, early_termination_amount, monthly_rent) so the tenant sees
+        each to the record (the addendum, its amount, the monthly rent) so the tenant sees
         what each would mean; never say which the landlord will choose or give one amount owed.
     - id: fee_notice_period
       sections: ["83.595"]
@@ -173,10 +173,10 @@ guidance:
       gave. This letter is that notice only if it is sent that way and gives your new address.
 
   failure_modes:
-    - Stating what the tenant will owe as one amount; 83.595 lists the landlord's choices (landlord_choice).
+    - Stating what the tenant will owe as one amount; 83.595 lists the landlord's choices.
     - Applying 83.595(4)'s fee or liquidated damages without the separate addendum, which the tenant must accept "by signing a separate addendum to the rental agreement".
     - Applying 83.595(2) without the landlord's "duty to exercise good faith in attempting to relet the premises".
-    - Missing a way out the record points to, such as the landlord's noncompliance (reason_is_landlord_noncompliance, through the repair issue and 83.56(1)), military orders (83.682), or damage to the unit (83.63).
+    - Missing a way out the record points to, such as the landlord's noncompliance (through the repair issue and 83.56(1)), military orders (83.682), or damage to the unit (83.63).
     - Counting the 7 days from the notice date instead of back from the move-out date.
     - Computing a period the lease sets (such as the notice for an early termination fee).
     - Computing any date outside compute_deadlines.
