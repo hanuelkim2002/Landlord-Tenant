@@ -439,6 +439,9 @@ try:
           "- claim_notice_deadline [deposit_not_returned, deposit_claim_received]: the landlord's, 30 days after "
           "tenancy_terminated, Fla. Stat. 83.49(3)(a): passed" in status_text
           and not re.search(r"\b20\d\d-\d\d-\d\d\b", status_text) and len(read_events()) == events_now)
+    check("item 52: the fallback line is ruled out where an open question or a case topic is on the point",
+          "the fallback line only when no stored sentence, no open question in PLAYBOOKS, and no CASE TOPICS topic"
+          in system_prompt())
     check("item 46: the rules apply the law, and open questions reach the model with their readings",
           "1. Apply the law to the tenant's facts." in system_prompt() and "stay open, with their readings" in system_prompt()
           and "readings:" in system_prompt().split("PLAYBOOKS:")[1].split("STATUTE SECTIONS:")[0])

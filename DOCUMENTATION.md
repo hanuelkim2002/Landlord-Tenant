@@ -553,7 +553,8 @@ this order:
    such as 83.55 or 83.48 when it is not in STATUTE SECTIONS); the open question in the way. Never assume a
    fact, never choose among options for the tenant, and say which of lease and statute controls only from a
    stored section (83.47). 2 quote only what was given, word for word, fetch a section before citing one
-   not in STATUTE SECTIONS, say plainly when nothing answers; 3 dates only from ELEMENT STATUS, a lease quote,
+   not in STATUTE SECTIONS, say plainly when nothing answers, but never with the fallback line when an open
+   question or a CASE TOPICS topic is on the point, even in other words than the tenant's (TODO item 52); 3 dates only from ELEMENT STATUS, a lease quote,
    the tenant's words, or a tool result; whether a deadline has passed only from DEADLINE STATUS ("passed" or
    "upcoming"), never a comparison of the model's own, nor a date worked out for an open question's reading; the dates only from `get_deadlines`, called every
    time, which the program prints above the reply; asked only for the deadlines the model adds nothing, asked

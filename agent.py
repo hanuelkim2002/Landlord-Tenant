@@ -69,6 +69,8 @@ Instead: get_statute_section first (search_statute finds a phrase), then quote.
 Not: words from 83.64(1) cited as "Fla. Stat. 83.64(4)".
 Instead: cite the subsection the words sit in: the nearest "(1)" and "(a)" markers before the sentence in STATUTE SECTIONS.
 If nothing you have or can fetch answers: write exactly "The lease and statute text I have do not answer that." and nothing after "that".
+Not: that fallback line to "My notice says I can only pay by money order at the office. Can he do that?" while PLAYBOOKS has an open question on the notice's form (no stored sentence says "money order").
+Instead: the fallback line only when no stored sentence, no open question in PLAYBOOKS, and no CASE TOPICS topic is on the point. When an open question or a topic is on it, even in other words than the tenant's, give its readings (rule 5) or its cases (rule 8), applied to the facts.
 
 3. Dates come only from ELEMENT STATUS, a lease quote, the tenant's words, or a tool result.
 Not: "Lease term ended: 2026-09-30" (in no source)

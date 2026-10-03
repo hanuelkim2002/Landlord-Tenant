@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- The fallback line is not for a point an open question or a case speaks to (TODO item 52, done). Was: in the
+  eval of 2026-10-02, "The lease and statute text I have do not answer that." answered 6 of the 13 legal
+  questions not applied, among them a 3-day notice demanding cash only (3 of 3), though the notice-form open
+  question and Moskowitz v. Aslam are on it: no stored sentence says "cash". Rule 2 has a new pair: the fallback
+  line only when no stored sentence, no open question, and no case topic is on the point, even in other words
+  than the tenant's; otherwise the readings or the cases, applied. Its example is a money-order notice, not the
+  eval's own question, so the eval still tests whether the pair carries over. The notice-form open question of
+  notice_received_nonpayment (version 0.3) now names terms the form does not have (how, where, or in what form
+  rent is paid), in its text and first reading. Smoke: the pair is in the prompt. Playbook checks: 0 failures.
+
 - `get_deadlines` no longer ends the model's turn (TODO item 51, done). Was: `return_direct` since item 19, so a
   question that mixed a deadline with the law ("If I get rid of the dog by Friday, am I safe?") got the printed
   listing and no answer: 6 of the 13 legal questions not applied in the eval of 2026-10-02. The reason for ending

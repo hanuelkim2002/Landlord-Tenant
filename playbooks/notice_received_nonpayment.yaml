@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.56.txt, statutes/83.60.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.2
+  version: 0.3
 
 counting:
   convention: court business days, trigger day not counted, Saturdays, Sundays, and the circuit's court holidays skipped (calendars/)
@@ -117,12 +117,14 @@ spec:
         says the notice states (the amount demanded, the date to pay by, how it was delivered) beside the form's
         parts. A defect does not end a case by itself: 83.60(1)(a) says "The landlord must be given an opportunity to
         cure a deficiency in a notice or in the pleadings before dismissal of the action." What stays open is how far a
-        notice may differ and still be in substantially that form, and whether it may demand more than rent.
+        notice may differ and still be in substantially that form, whether it may demand more than rent, and whether
+        it may add terms the form does not have, such as how, where, or in what form the rent must be paid.
       readings:
         - >-
-          A notice that leaves out a part of the form (the county, the excluded days, the date to pay by) or demands
-          charges other than rent is not in substantially the form, since the form demands only "the sum of dollars
-          for the rent and use of the premises".
+          A notice that leaves out a part of the form (the county, the excluded days, the date to pay by), demands
+          charges other than rent, or adds a term the form does not have (cash only, a money order, one office) is
+          not in substantially the form, since the form demands only "the sum of dollars for the rent and use of the
+          premises".
         - >-
           Substantially allows differences that do not mislead the tenant about how much, by when, and to whom, and
           charges the lease itself calls rent may be demanded as rent.
