@@ -29,7 +29,8 @@ A scenario's "expect" block (every key optional):
   "screen_must_not"  regexes the whole screen must not match (a wrong suggestion on the sheet, e.g.)
 Every reply is also measured, whatever the scenario: empty turns (reply_empty events), program cautions
 (quote_flagged and cite_flagged events), field names (a snake_case id outside quote marks), deadline echo (a
-date the program printed in the same turn, repeated in the reply), quotes only (a reply with a quote and fewer
+computed deadline the program printed in the same turn, in the reply: since the model never sees one, it
+counted it), quotes only (a reply with a quote and fewer
 than APPLIED_WORDS words outside quote marks: the law set out and not applied), dates made (a date with a year,
 outside quote marks, that is in no fact, no tenant line, no printed deadline, and is not the session's day),
 cases not given (a "Name v. Name" in a reply that no get_cases result in the session holds), and two word
@@ -182,6 +183,16 @@ def spoken_dates(iso):
     return [iso, f"{month} {int(d)}, {y}", f"{month} {int(d)}"]
 
 
+def deadline_dates(listing):
+    """The computed deadlines in a get_deadlines listing (its JSON "deadline" fields), not the confirmed dates they
+    count from, which the listing also prints. The model never sees these (TODO item 44), so one in a reply was
+    counted by the model."""
+    try:
+        return [str(d["deadline"]) for d in json.loads(listing)["deadlines"] if "deadline" in d]
+    except (ValueError, KeyError, TypeError):
+        return []
+
+
 def dates_in(text):
     """Every full date in a text (2026-07-31, July 31, 2026, 7/31/2026) as YYYY-MM-DD."""
     found = set(ISO_DATE.findall(text))
@@ -226,7 +237,7 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
     replies = [e["text"].strip() for e in turn["entries"] if e["role"] == "model" and (e.get("text") or "").strip()]
     calls = [c for e in turn["entries"] if e["role"] == "model" for c in e.get("tool_calls", [])]
     printed = [d for e in turn["entries"] if e["role"] == "tool" and e["name"] == "get_deadlines"
-               for d in ISO_DATE.findall(e.get("shown") or e["text"])]
+               for d in deadline_dates(e.get("shown") or e["text"])]
     text = "\n".join(replies)
     bare = QUOTED.sub("", text)                       # outside quote marks
     return {
@@ -245,7 +256,9 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
         "offer_words": sorted({m.group(0) for m in OFFER_WORDS.finditer(bare)}),
         "field_names": sorted(set(FIELD_NAME.findall(bare))),
         "prompt_names": sorted(set(PROMPT_NAME.findall(text))),
-        "echo": sorted({iso for iso in set(printed) if any(s in text for s in spoken_dates(iso))}),
+        # a printed deadline in the reply, unless the same date is also a fact the record holds (a deadline can fall
+        # on the date the notice itself states)
+        "echo": sorted({iso for iso in set(printed) - set(known_dates) if any(s in text for s in spoken_dates(iso))}),
     }
 
 
@@ -355,9 +368,9 @@ def score_run(entry, scenario, out):
     known |= dates_in(matter.get("description", "")) | {e["when"][:10] for e in entries if e.get("when")}
     known |= LEASE_DATES                               # every scenario reads the same test lease
     known |= set().union(*(dates_in(ev.get("text", "")) for ev in events if ev["kind"] == "tenant_update"), set())
-    for e in entries:
-        if e["role"] in ("tenant", "sheet") or (e["role"] == "tool" and e.get("name") == "get_deadlines"):
-            known |= dates_in(" ".join(str(e.get(k) or "") for k in ("text", "shown", "value", "typed")))
+    for e in entries:                                  # not the printed deadlines: the model never sees them
+        if e["role"] in ("tenant", "sheet"):
+            known |= dates_in(" ".join(str(e.get(k) or "") for k in ("text", "value", "typed")))
     measured, fetched = [], ""
     for t in turns:
         fetched += "\n".join((e.get("text") or "") for e in t["entries"] if e["role"] == "tool" and e["name"] == "get_cases")

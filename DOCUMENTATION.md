@@ -771,9 +771,10 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   a case a `get_cases` result in the session gave, `case_given` matching it with or without leading words such
   as "In"; a court question answered from cases given earlier also counts as calling `get_cases`), and
   `screen_must_not`. Every reply is also
-  measured: empty turns, program cautions, field names, a printed deadline date repeated, quotes only (a quote
+  measured: empty turns, program cautions, field names, a computed deadline the program printed found in the reply
+  (the model never sees one, so it counted it; not when the date is also a fact the record holds), quotes only (a quote
   and fewer than 40 words of its own), dates made (a date with a year outside quote marks that no fact, tenant
-  line, sheet answer, printed deadline, or the test lease's own text, `LEASE_DATES` from the seed's
+  line, sheet answer, or the test lease's own text, `LEASE_DATES` from the seed's
   `pages.json`, holds), cases not given (a "Name v. Name" no `get_cases` result in
   the session holds), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
   `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: ELEMENT

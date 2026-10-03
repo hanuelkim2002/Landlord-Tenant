@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Eval of items 51 to 53 (`docs/evals/2026-10-03-items51-53/`; 16 scenarios, 3 runs, against the applying runs
+  of the day before, code-scored): runs meeting every expectation 31 to 41 of 48; legal questions applied 62 to
+  72 of 75; a question mixing a deadline with the law applied 0 to 3 of 3; a cash-only 3-day notice applied 0
+  to 2 of 3; field ids 30 to 17 turns per 100 replies; prompt names unchanged at 17 (TODO item 61); the renewal
+  question still gets the fallback line in 2 of 3; offers 3 to 6. Scorer fixes in `dev/eval.py`, every run
+  rescored: an echo is a computed deadline (the listing's "deadline" fields, `deadline_dates`) found in a reply
+  and not also a fact the record holds, and the printed deadlines no longer count as dates the record holds.
+  Was: the listing's confirmed trigger dates counted as echoes when a reply named them, and a deadline the
+  model counted itself went uncaught. Chart shown in the session.
+
 - Ids and prompt names kept out of the model's reading where they need not be there (TODO item 53, done). Was: in
   the eval of 2026-10-02, 39 turns had a field id and the blind scorers' most common slip (48) was an id or a
   prompt name ("ELEMENT STATUS", "PLAYBOOKS", "remedy_not_duty"). Three causes removed at the source: item 50's
