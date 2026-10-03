@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- A caution for a section a reply cites and retells without quoting (TODO item 66, done). Was: item 54's rule pair
+  asked for every rule to be quoted and the eval's `cites_unquoted` stayed at 27, then 29 turns per 100 replies;
+  the tenant was told nothing. Now `agent.check_reply` adds one line per reply naming the sections it cites with
+  none of their words quoted (`citations.cites_without_quote`, which until now only the eval used), less any
+  cite already cautioned (not loaded, or a misplaced quote's): "[Check: this reply cites 83.56(5)(a) and 83.55
+  without quoting them: what it says they mean is the reply's own wording, not the statute's. Read the
+  statute's words before relying on the reply.]", and a `cite_flagged` event per cite. Expected rate, from
+  the last eval: about 29 replies in 100. Smoke: a reply quoting 83.49(3)(a) and retelling 83.49(3)(b) gets
+  the line for (3)(b) only, and its event.
+
 - A lease for each eval story (TODO item 60, done). Was: every scenario read `lease.pdf`, a twelve-month lease
   from 2026-10-01 at $1,850 with a $1,850 deposit and an authorized dog, so the stories contradicted it (a $950
   month-to-month duplex whose increase was read as a decrease; a $1,000 deposit read as $1,850; a lease that

@@ -19,8 +19,8 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 import record
 import wiki
-from citations import (caution, check_case_cites, check_cites, check_quoted, is_in, quote_label, quote_spans,
-                       quoted_passages)
+from citations import (caution, check_case_cites, check_cites, check_quoted, cites_without_quote, is_in, quote_label,
+                       quote_spans, quoted_passages)
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
@@ -407,11 +407,27 @@ def check_case_quotes(text, messages):
     return problems
 
 
+# A section the reply names and retells without quoting it (TODO item 66): rule 1 asks for every rule an answer
+# turns on to be quoted, and item 54's pair for it changed nothing measurable (27, then 29 turns per 100 replies
+# with one, eval of 2026-10-03), so the tenant is told which sections the reply only retold.
+RETOLD = ("[Check: this reply cites {} without quoting {}: what it says {} is the reply's own wording, not the "
+          "statute's. Read the statute's words before relying on the reply.]")
+
+
+def retold_line(cites):
+    """RETOLD for these cites, in the singular or the plural."""
+    one = len(cites) == 1
+    named = cites[0] if one else ", ".join(cites[:-1]) + " and " + cites[-1]
+    return RETOLD.format(named, "it" if one else "them", "it means" if one else "they mean")
+
+
 def check_reply(text, messages):
     """Check the cites and the quotes in one reply (citations.check_cites and check_quoted, and check_case_quotes
     for a quote credited to a printed case), against the chat's thread so far. Each one that fails gets a caution
-    line, shown under the reply, a line in the transcript, and a cite_flagged or quote_flagged event. Returns the
-    caution lines. The reply itself is not changed."""
+    line, shown under the reply, a line in the transcript, and a cite_flagged or quote_flagged event. Then one
+    line for the sections the reply cites with none of their words quoted (citations.cites_without_quote, less
+    any cite already flagged), with a cite_flagged event each. Returns the caution lines. The reply itself is
+    not changed."""
     flagged = []
     for cite, problem in check_cites(text, sections_shown(messages)):
         flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
@@ -423,7 +439,15 @@ def check_reply(text, messages):
     for line, kind, data in flagged:
         record.append_transcript({"role": "check", "text": line})
         append_event(kind, **data)
-    return [line for line, _, _ in flagged]
+    lines = [line for line, _, _ in flagged]
+    already = {data["cite"] for _, _, data in flagged}         # a cite with its own caution already
+    retold = [cite for cite in cites_without_quote(text) if cite not in already]
+    if retold:
+        lines.append(retold_line(retold))
+        record.append_transcript({"role": "check", "text": lines[-1]})
+        for cite in retold:
+            append_event("cite_flagged", cite=cite, problem="cited with none of its words quoted in the reply")
+    return lines
 
 
 # A reply that quotes the statute or the lease is the tool applying the law, so the program prints its own line

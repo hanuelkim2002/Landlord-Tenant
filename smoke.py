@@ -522,6 +522,14 @@ try:
     check("a flagged cite and quote are printed and logged, a good cite is not",
           "[Check: 83.64" in cautions and "[Check: 83.49" not in cautions
           and [(e["kind"], e.get("cite")) for e in flagged] == [("cite_flagged", "83.64"), ("quote_flagged", "83.49(3)(b)")])
+    events_now = len(read_events())
+    retold = check_reply(f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nUnder 83.49(3)(b), if you do not object within 15 '
+                         f'days, they may deduct.', [])
+    check("item 66: a section the reply cites and retells without quoting gets one caution line and an event; one it "
+          "quotes does not",
+          retold == ["[Check: this reply cites 83.49(3)(b) without quoting it: what it says it means is the reply's own "
+                     "wording, not the statute's. Read the statute's words before relying on the reply.]"]
+          and [(e["kind"], e["cite"]) for e in read_events()[events_now:]] == [("cite_flagged", "83.49(3)(b)")])
     # cases (wiki.py, get_cases): nothing is offered until a page is verified; a verified, tagged page offers its
     # topics, prints by code, and is logged; an untagged page never shows; a case cite must be one shown
     check("no case topic is offered while no page is verified, and the prompt says so",
@@ -615,9 +623,10 @@ try:
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{sid}.jsonl").read_text().splitlines()]
     check("the transcript holds the tenant's words and every sheet answer",
           [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 12)
-    check("the transcript holds every caution: a cite and a quote, then item 57's wrong case and case left out",
+    check("the transcript holds every caution: a cite and a quote, item 66's retold section, then item 57's wrong "
+          "case and case left out",
           [line["text"][:17] for line in lines if line["role"] == "check"]
-          == ["[Check: 83.64 was", "[Check: the quote", "[Check: the quote", "[Check: the progr"])
+          == ["[Check: 83.64 was", "[Check: the quote", "[Check: this repl", "[Check: the quote", "[Check: the progr"])
 
     # the timeline
     full, plain = render_timeline(full=True), render_timeline()

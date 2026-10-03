@@ -42,12 +42,10 @@ structural ones first.
     can tell them I'm leaving?" in 3 of 3: the model applies 83.575(1) and says the date turns on the lease end,
     which the story confirms as 2026-12-31 against the test lease's 2027 (item 60). Rule 3 says call it every
     time. Watch after item 60; then a code-side option, since the program knows a question about when.
-66. Sections retold without their quote did not fall with item 54's pair: 27, then 29 turns per 100 replies
-    (`cites_unquoted`, eval of 2026-10-03). A code-side option: a caution naming a section the reply cites with
-    none of its words quoted (`citations.cites_without_quote`), as for a quote or a cite now.
 67. The eval's "cases not given" (`CASE_NAME` in `dev/eval.py`) counts part of a given case's name as another
     case: "Inc. v. Varnado", "Income Realty v. Bentley", "Follows Durene v. Alcime" (3 turns, eval of
     2026-10-03). Match against the names `get_cases` printed (`agent.named_cases`) instead.
+
 ## Harness and code
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.

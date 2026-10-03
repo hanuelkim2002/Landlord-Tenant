@@ -74,7 +74,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   fits a claim made in the reply's own words, and a paraphrase outside quote marks is not checked.
   `cites_without_quote(text)` (each cite outside quote marks whose words no quoted passage in the same text
   holds: a section or subsection retold instead of quoted; a quote in a narrower subsection counts for the
-  wider cite; measured by `dev/eval.py`, never shown to the tenant; TODO item 54). `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
+  wider cite; measured by `dev/eval.py` since TODO item 54, and shown to the tenant by `agent.check_reply` since
+  item 66). `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
   given)` (each reporter cite in a reply, outside quote marks, must appear in what the model was given, i.e.
   a `get_cases` receipt; returns `(cite, problem)`). Imports `corpus`. Imported by `agent`, `smoke`, `wiki`, `dev/eval.py`.
 - `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
@@ -202,7 +203,12 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `given_text(messages)` (the system prompt, the lease quotes as plain text, the tenant's description and
   updates, and every thread message the model did not write). Each failure gets a "[Check: ...]" line, a
   `check` transcript line, and a `cite_flagged` or `quote_flagged` event; it returns the lines. The
-  reply is not held back or changed, and the model is not told. It also runs `check_case_quotes(text,
+  reply is not held back or changed, and the model is not told. Last, one line for the sections the reply
+  cites with none of their words quoted (`citations.cites_without_quote`, less any cite that already has a
+  caution): `RETOLD` through `retold_line`, "[Check: this reply cites 83.55 without quoting it: what it says it
+  means is the reply's own wording, not the statute's. Read the statute's words before relying on the
+  reply.]", with a `cite_flagged` event per cite ("cited with none of its words quoted in the reply"; TODO item
+  66: item 54's rule pair left these at 29 turns per 100 replies). It also runs `check_case_quotes(text,
   messages)`: a quote credited to a printed case whose part of the printed text (`printed_cases(messages)`,
   `[(name, part)]` from each `get_cases` artifact through `wiki.cases_printed`) does not hold it while another
   case's part does is flagged "is in X's text, not Y's" as a `quote_flagged` event with the case as `cite`; the
