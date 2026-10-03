@@ -18,7 +18,9 @@ from langchain_core.utils.uuid import uuid7
 from langgraph.checkpoint.memory import InMemorySaver
 
 import record
-from citations import caution, check_case_cites, check_cites, check_quoted, is_in, quote_label, quoted_passages
+import wiki
+from citations import (caution, check_case_cites, check_cites, check_quoted, is_in, quote_label, quote_spans,
+                       quoted_passages)
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
@@ -333,16 +335,85 @@ def given_text(messages):
     return "\n".join([system_prompt(messages), record.matter.get("description", ""), *lease_quotes, *updates, *thread])
 
 
+# ---- Cases in a reply (TODO item 57). In the eval of 2026-10-02 every mold-story answer left out the three
+# printed cases that went for the landlord, and one credited a case's words to another case. Code can see both:
+# which printed cases a reply names, and which printed case's text holds a quote.
+
+CASES_LEFT_OUT = ("[Check: the program printed cases above that this reply does not discuss: {}. Read them too "
+                  "before relying on the reply.]")
+
+
+def named_cases(text, names):
+    """Where the text names each of these cases: [(start, end, name)]. A case is named by its short name
+    ("Bennett v. Mattison") or its first party's name alone ("Bennett"; "Olen Properties Corp." for Olen
+    Properties Corp. v. Moss (984 So. 2d 558)). A name inside a longer one is the longer one's: "Bennett" in
+    "Bennett M. Lifter" names Bennett M. Lifter, Inc. v. Varnado, and "Lewis" in "Guthartz v. Lewis" names no
+    Lewis case."""
+    found = []
+    for name in names:
+        plain = name.split(" (")[0]
+        first, _, second = plain.partition(" v. ")
+        first = first.split(",")[0]
+        forms = sorted({plain, first} | ({f"{first} v. {second.split(',')[0]}"} if second else set()), key=len, reverse=True)
+        pattern = r"(?<!\w)(?:" + "|".join(re.escape(f) for f in forms) + r")(?!\w)"
+        found += [(m.start(), m.end(), name) for m in re.finditer(pattern, text)]
+    return [n for n in found if not any(o[0] <= n[0] and n[1] <= o[1] and o[1] - o[0] > n[1] - n[0] for o in found)]
+
+
+def printed_cases(messages):
+    """Each case a get_cases result in these messages printed, with its own part of the printed text:
+    [(name, part)], in order (wiki.cases_printed)."""
+    found = []
+    for m in messages:
+        printed = getattr(m, "artifact", None) if m.type == "tool" and m.name == "get_cases" else None
+        heads = wiki.cases_printed(printed) if printed else []
+        ends = [start for _, start in heads[1:]] + [len(printed or "")]
+        found += [(name, printed[start:end]) for (name, start), end in zip(heads, ends)]
+    return found
+
+
+def cases_left_out(new):
+    """The cases get_cases printed in a turn's new messages that no reply after the printing names, by name;
+    empty when nothing was printed or no reply followed."""
+    first = next((i for i, m in enumerate(new) if printed_cases([m])), None)
+    replies = "\n".join(m.content for m in new[first:] if m.type == "ai") if first is not None else ""
+    printed = [name for name, _ in printed_cases(new)]
+    named = {name for _, _, name in named_cases(replies, printed)}
+    return [name for name in printed if replies.strip() and name not in named]
+
+
+def check_case_quotes(text, messages):
+    """Each quote in a reply credited to a printed case whose part does not hold it while another case's part
+    does: [(quote, case, problem)]. A quote is credited to the printed case the reply names last before it in
+    the same paragraph (none when two cases are named at that same place). Words a statute section also holds are
+    left to check_quoted."""
+    cases = printed_cases(messages)
+    problems = []
+    for start, _, quote in quote_spans(text):
+        holding = [name for name, part in cases if is_in(quote, part)]
+        if not holding or any(is_in(quote, words) for words in statute.values()):
+            continue
+        paragraph = text[max(0, text.rfind("\n\n", 0, start)):start]
+        named = named_cases(paragraph, [name for name, _ in cases])
+        last = max((start for start, _, _ in named), default=None)
+        at_last = {name for start, _, name in named if start == last}
+        credited = at_last.pop() if len(at_last) == 1 else None
+        if credited and credited not in holding:
+            problems.append((quote, credited, f"is in {holding[0]}'s text, not {credited}'s"))
+    return problems
+
+
 def check_reply(text, messages):
-    """Check the cites and the quotes in one reply (citations.check_cites and check_quoted), against the chat's
-    thread so far. Each one that fails gets a caution line, shown under the reply, a line in the transcript, and
-    a cite_flagged or quote_flagged event. Returns the caution lines. The reply itself is not changed."""
+    """Check the cites and the quotes in one reply (citations.check_cites and check_quoted, and check_case_quotes
+    for a quote credited to a printed case), against the chat's thread so far. Each one that fails gets a caution
+    line, shown under the reply, a line in the transcript, and a cite_flagged or quote_flagged event. Returns the
+    caution lines. The reply itself is not changed."""
     flagged = []
     for cite, problem in check_cites(text, sections_shown(messages)):
         flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
     for cite, problem in check_case_cites(text, given_text(messages)):
         flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
-    for quote, cite, problem in check_quoted(text, given_text(messages)):
+    for quote, cite, problem in check_quoted(text, given_text(messages)) + check_case_quotes(text, messages):
         flagged.append((caution(quote_label(quote, cite), problem), "quote_flagged",
                         {"quote": quote, "cite": cite, "problem": problem}))
     for line, kind, data in flagged:
@@ -373,8 +444,9 @@ def turn_blocks(new, messages):
     """Transcribe a turn's new messages and return what the tenant sees, as blocks: a drafted letter as is, the
     cases get_cases printed, the turn's last get_deadlines result through render_deadlines (shown by code,
     before any reply), and each reply with text, then the cautions check_reply finds in it (and CUT_OFF when the
-    reply stopped at the length limit), then READING_LINE when it quotes the statute or the lease. Empty when the
-    turn showed the tenant nothing."""
+    reply stopped at the length limit), then READING_LINE when it quotes the statute or the lease; last, a caution
+    naming any case get_cases printed that no reply after it names (cases_left_out). Empty when the turn showed
+    the tenant nothing."""
     for m in new:
         record.append_transcript(transcript_entry(m))
     last_deadlines = max((i for i, m in enumerate(new) if m.type == "tool" and m.name == "get_deadlines"),
@@ -399,6 +471,12 @@ def turn_blocks(new, messages):
             if line:
                 blocks.append(block("footer", line))
                 record.append_transcript({"role": "footer", "text": line})
+    left_out = cases_left_out(new)                       # printed cases no reply after them names (item 57)
+    if left_out:
+        line = CASES_LEFT_OUT.format("; ".join(left_out))
+        blocks.append(block("caution", line))
+        record.append_transcript({"role": "check", "text": line})
+        append_event("cases_left_out", cases=left_out)
     return blocks
 
 

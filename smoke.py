@@ -39,7 +39,8 @@ from lease import FOOTER, lease_clauses
 from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
 from agent import (CASE_RULE, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, command, given_text, print_blocks,
-                   retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn, turn_blocks)
+                   printed_cases, retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn,
+                   turn_blocks)
 from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
 
@@ -562,6 +563,27 @@ try:
               and topic_named("Notice of claim", offered) is None)
         check("a case cite in a reply must be one the tool showed in the chat",
               check_case_cites("See 448 So. 2d 1208 and 573 So. 2d 76.", shown_msg.content) == [("573 So. 2d 76", "is not a case this tool showed in this chat")])
+        # item 57: two cases printed; a reply that names one and gives the other's words as its own is cautioned
+        verify("Malagon v. Solari", "Smoke", verified_copy)
+        printed_two = wiki.render_cases(topic)
+        call_two = AIMessage(content="", tool_calls=[{"name": "get_cases", "args": {"topic": topic}, "id": "k4"}])
+        shown_two = ToolMessage(content="The program printed these cases:\n\n" + printed_two, artifact=printed_two,
+                                name="get_cases", tool_call_id="k4")
+        parts = dict(printed_cases([shown_two]))
+        malagon_words = re.findall(r'"([^"]{30,90})', parts["Malagon v. Solari"])[0]
+        wrong = AIMessage(content=f'In Durene v. Alcime, 448 So. 2d 1208, the court wrote: "{malagon_words}"')
+        events_now = len(read_events())
+        wrong_screen = screen(turn_blocks([call_two, shown_two, wrong], [call_two, shown_two, wrong]))
+        right = AIMessage(content=f'In Durene v. Alcime the court held a notice must be timely. In Malagon v. Solari: "{malagon_words}"')
+        right_screen = screen(turn_blocks([call_two, shown_two, right], [call_two, shown_two, right]))
+        check("item 57: a printed case no reply names gets a caution and an event; a quote credited to the wrong "
+              "printed case is flagged; a reply naming each case, quoting each right, gets neither",
+              list(parts) == ["Durene v. Alcime", "Malagon v. Solari"]
+              and "this reply does not discuss: Malagon v. Solari." in wrong_screen
+              and "is in Malagon v. Solari's text, not Durene v. Alcime's" in wrong_screen
+              and [e["kind"] for e in read_events()[events_now:]] == ["quote_flagged", "cases_left_out"]
+              and "does not discuss" not in right_screen and "[Check:" not in right_screen
+              and "a reply left out printed cases: Malagon v. Solari" in render_timeline(full=True))
     finally:
         wiki.ROOT = WIKI
         shutil.rmtree(verified_copy.parent)
@@ -586,8 +608,9 @@ try:
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{sid}.jsonl").read_text().splitlines()]
     check("the transcript holds the tenant's words and every sheet answer",
           [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 12)
-    check("the transcript holds both cautions", [line["text"][:17] for line in lines if line["role"] == "check"]
-          == ["[Check: 83.64 was", "[Check: the quote"])
+    check("the transcript holds every caution: a cite and a quote, then item 57's wrong case and case left out",
+          [line["text"][:17] for line in lines if line["role"] == "check"]
+          == ["[Check: 83.64 was", "[Check: the quote", "[Check: the quote", "[Check: the progr"])
 
     # the timeline
     full, plain = render_timeline(full=True), render_timeline()

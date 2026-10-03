@@ -104,8 +104,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   then "Other cases on it:", the page's Related lines (followed, distinguished, disagreed with), with "[not
   verified]" on unverified pages in a development run, ending with "These are courts' words in other people's
   cases, each with the statute version it read. How far one reaches your situation turns on how alike its
-  facts are to yours."; the tenant and the model get this same text). Imports
-  `citations`, `config`, `corpus`. Imported by `tools`, `smoke`.
+  facts are to yours."; the tenant and the model get this same text), and `cases_printed(text)` (the cases a
+  `render_cases` text prints, in order, each with where its own part starts, found by its heading line, name
+  then citation; a case named only under another's "Other cases on it" is not one; TODO item 57). Imports
+  `citations`, `config`, `corpus`. Imported by `tools`, `agent`, `smoke`.
 - `deterministic.py`: `check_elements` (element status), `court_days` (court business days from a
   county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
@@ -199,7 +201,19 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `given_text(messages)` (the system prompt, the lease quotes as plain text, the tenant's description and
   updates, and every thread message the model did not write). Each failure gets a "[Check: ...]" line, a
   `check` transcript line, and a `cite_flagged` or `quote_flagged` event; it returns the lines. The
-  reply is not held back or changed, and the model is not told.
+  reply is not held back or changed, and the model is not told. It also runs `check_case_quotes(text,
+  messages)`: a quote credited to a printed case whose part of the printed text (`printed_cases(messages)`,
+  `[(name, part)]` from each `get_cases` artifact through `wiki.cases_printed`) does not hold it while another
+  case's part does is flagged "is in X's text, not Y's" as a `quote_flagged` event with the case as `cite`; the
+  credit goes to the printed case the reply names last before the quote in the same paragraph, none when two
+  are named at that same place, and words a statute section also holds are left to `check_quoted`.
+  `named_cases(text, names)` finds where a text names each case, by its short name or its first party's name
+  alone, a name inside a longer one being the longer one's ("Bennett" in "Bennett M. Lifter" names Bennett M.
+  Lifter, Inc. v. Varnado). After a turn's replies, `turn_blocks` adds one more caution when a case `get_cases`
+  printed in the turn is named by no reply after it (`cases_left_out(new)`): `CASES_LEFT_OUT`, "[Check: the
+  program printed cases above that this reply does not discuss: <names>. Read them too before relying on the
+  reply.]", a `check` transcript line, and a `cases_left_out` event (TODO item 57: every mold-story answer of
+  2026-10-02 left out the printed cases that went for the landlord).
   `command(text)` answers a chat command without the model and returns its blocks, or `None` when the text is
   not one: `issues` (the active and suggested issues), `drop <issue>` (`reject_issue` with `issue_dropped`;
   when no covered issue is left, a second notice says the chat ends), `timeline`, `timeline full`, `timeline
@@ -212,7 +226,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   command or runs a turn, prints the blocks, ends after a drop leaves no covered issue, and after a turn that
   proposed facts runs `sheet.run_sheet` if `pending_rows()` has anything, keeping its `sheet_note` for the
   next message.
-  Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `lease`, `sheet`, `timeline`, `tools`. Imported by `run`, `app`, `smoke`.
+  Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `lease`, `sheet`, `timeline`, `tools`, `wiki`. Imported by `run`, `app`, `smoke`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
   (`new_tenant_id`), calls `new_matter` and `start_session("new")`, asks for the lease path (`ask_path`, which accepts a path dragged
   into the terminal), reads the lease (`agent.read_lease`), asks for the description (`ask_text`, several lines
@@ -358,7 +372,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    issue by `timeline <issue>`),
    and events (see Files on disk). Sorted by date only; rows on the same day keep the order they were
    added (confirmed dates and deadlines first, then events in log order). `issue` filters deadlines and
-   issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`, `cite_flagged`, `quote_flagged`, `reply_empty`,
+   issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`, `cite_flagged`, `quote_flagged`, `cases_left_out`, `reply_empty`,
    `deadlines_computed`, the issue events, `session_started`, and `session_ended` events.
 7. Letter assembly (`draft_letter`, then `build_letter`). Checks the issue and posture, checks each quote
    with `quote_is_real` (substring of a present lease clause quote or any stored statute section), then
@@ -395,6 +409,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
     `agent.retry_empty`. `timeline full` only.
   - `quote_flagged`: `quote` (the quoted words), `cite` (the cite next to it, or ""), `problem` (e.g. "is in
     83.49(3)(a), not 83.49(3)(b)"). Written by `agent.check_reply`. `timeline full` only.
+  - `cases_left_out`: `cases` (the names of printed cases no reply after them named). Written by
+    `agent.turn_blocks`. `timeline full` only.
   - `cases_shown`: `topic`, `cases` (the cites printed, oldest first), `unverified` (true, only in a
     development run with `WIKI_UNVERIFIED`). Written by `get_cases` when it prints; once per topic per
     session. `timeline full` only.

@@ -5,6 +5,23 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Two code checks on the cases a reply uses (TODO item 57, done). Was: in the eval of 2026-10-02 every mold-story
+  answer left out the three printed cases that went for the landlord (ONE_SIDED 12.5), and one credited a
+  case's words to another (part of CASE_MISREAD 16.5); rule 8 already asked for every case. Now, as cautions the
+  tenant reads: a case `get_cases` printed in the turn that no reply after it names ("[Check: the program
+  printed cases above that this reply does not discuss: ... Read them too before relying on the reply.]", a
+  `cases_left_out` event, `agent.cases_left_out`); and a quote credited to a printed case whose printed part
+  does not hold it while another case's does ("is in X's text, not Y's", a `quote_flagged` event,
+  `agent.check_case_quotes`, run by `check_reply`). New: `wiki.cases_printed` (the cases a printed text holds,
+  by their heading lines), `agent.printed_cases`, `agent.named_cases` (a case named by its short name or first
+  party, a name inside a longer one being the longer one's). Replayed on the runs of 2026-10-03: 20 of the 32
+  turns that printed cases would get the left-out caution (most printed four to nine cases and the reply
+  discussed one or two), no quote credited to the wrong case. Writing the replay found two matching bugs, fixed
+  before the commit: a name ending in "Corp." never matched (a word boundary cannot follow a period), and
+  "Bennett" inside "Bennett M. Lifter" was read as Bennett v. Mattison. Cases applied with no word on how alike
+  the facts are stay with rule 8; no code can see it. Timeline full shows `cases_left_out`. Smoke: two printed
+  cases, a reply naming one and quoting the other's words under its name, then a reply naming both.
+
 - Open questions read as unsettled (TODO item 56, done). Was: OPEN_CLOSED 19.5 in the blind scores of
   2026-10-02. Checked against the wording the model read, three causes: purpose_of_entry told the model to
   "Apply the one that fits the reason in the record", and every entry run called an air-conditioning filter

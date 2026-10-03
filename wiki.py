@@ -324,6 +324,16 @@ def render_cases(topic, root=None):
     return "\n".join(lines)
 
 
+def cases_printed(text, root=None):
+    """The cases a render_cases text prints, in its order, each with where its own part starts: [(name, start)].
+    A case's part starts at its heading line (name, then citation); a case named only under another's "Other
+    cases on it" is not one of them. Empty for any other text."""
+    pages = read_pages(root or ROOT)
+    heads = [(p["name"], text.find("\n" + p["name"] + ", " + citation(p["meta"]))) for p in pages.values()
+             if p["meta"].get("kind") == "case"]
+    return sorted(((name, at + 1) for name, at in heads if at >= 0), key=lambda head: head[1])
+
+
 def check_wiki(root=WIKI):
     """Print every problem and warning, then a count. Like the playbook checks: no problem may remain."""
     problems, warnings = lint(root)
