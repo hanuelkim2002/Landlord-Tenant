@@ -14,16 +14,22 @@ record over the life of the dispute, and drafts letters the tenant sends themsel
 The author is a law student, not admitted. Until 2026-10-02 the tool only set the lease, the statute, and
 the cases beside the tenant's facts and never said what they meant for the tenant. A list of quotes does not
 help a tenant who asks what they can do, so the tool now applies the law. An answer to a question about the
-law has this shape:
+law has this shape (2026-10-02; the first point and the citing added 2026-10-04):
 
-- the rule, quoted from the lease, the statute, or a court, with its source;
-- the tenant's facts it turns on, each from the record;
+- first, whether what the tenant wants to do is open to them at all: each option's conditions, checked by the
+  program against the confirmed facts (open, closed, not settled, or not known yet, and what it turns on),
+  before any steps toward it;
+- the rule in one plain sentence, cited to its source (a section of the statute, a section of the lease, a
+  case and page); the program prints the cited words beneath the answer, so the tenant has the exact text to
+  point to without reading it inside the answer;
+- only the facts the rule turns on, each in a few words;
 - for each condition of the rule, whether those facts meet it, fail it, or are not known yet;
-- what follows on those facts: the options the statute gives the tenant and what each requires first;
+- what follows on those facts: the steps for an option that is open, or that may be, and what each requires;
 - any point the stored text and the cases leave unsettled, with the readings on each side.
 
-The tool does not choose among the options for the tenant, and it says that its answer is its reading of
-the stored law, not a lawyer's advice.
+The answer does not recite: no statute or lease passage pasted into it, and no list of what the tenant has
+already told the tool. The tool does not choose among the options for the tenant, and it says that its answer
+is its reading of the stored law, not a lawyer's advice.
 
 Applying the law to one person's facts is legal advice. The tool is in development: it runs on test matters
 only, and no tenant uses it until the unlicensed-practice question is settled (an attorney's supervision or
@@ -36,8 +42,9 @@ a review).
 2. Match the dispute with the contract: classify the tenant's description into issues, work out which facts
    each issue needs, and confirm each one with the tenant before it is recorded.
 3. Apply the law to the dispute: preload the statute sections for each issue and the court decisions
-   that read them, compute every statutory deadline from confirmed facts in code, and answer the tenant's
-   questions by applying stored text, quoted, to the confirmed facts.
+   that read them, compute every statutory deadline from confirmed facts in code, check in code which options
+   the tenant's confirmed facts leave open, and answer the tenant's questions by applying stored text, cited
+   and printed by the program, to the confirmed facts.
 4. Keep a coherent evidentiary record: one append-only event log per matter holding facts as confirmed,
    messages as pasted, files as provided, letters as drafted and as sent, and a timeline built from it.
 
@@ -54,8 +61,11 @@ a review).
 ## Non-negotiables
 
 - An application rests only on confirmed facts and stored text. A fact the record does not hold is named as
-  missing, never assumed, and the step that needs it is left open. Every rule in an answer is quoted with its
-  source, and every fact carries where it came from.
+  missing, never assumed, and the step that needs it is left open. Every rule in an answer is cited to its
+  source, and the program prints the cited words; every fact carries where it came from.
+- An option comes before its steps. Whether an option is open is checked by code from the confirmed facts and
+  the playbook's conditions for it, quoted from the statute; the answer says whether it is open, closed, not
+  settled, or not known yet before it gives any step toward it.
 - An open point stays open. Where the statute's words and the cases do not settle a question (a playbook's
   open questions), the answer says so and gives the readings on each side; it never presents one as settled.
 - The model never computes a date. All date arithmetic is in one function, from confirmed facts only.
@@ -71,8 +81,9 @@ a review).
 - A fact enters the record only after the tenant confirms it. Proposed facts carry how they were proposed
   (stated or inferred) and the tenant's own words as basis.
 - The record is append-only. Current state is a snapshot; history is never edited or deleted.
-- Letters are a code template, not model text. The timeline and the cases' text are printed by code; the
-  model's answer applies and quotes them, never retells them in its own words.
+- Letters are a code template, not model text. The timeline, the cases' text, and the cited statute and lease
+  words are printed by code; the model's answer applies them, cites each case by name and page, and never says
+  a case or a section holds anything its printed words do not.
 - `statutes/` and `cases/` are read-only corpora. Playbook and case wiki quotes are verified against them
   after every edit. `cases/` holds the court's text only: no publisher's headnotes, synopses, or citator
   flags.

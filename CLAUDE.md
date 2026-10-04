@@ -2,7 +2,9 @@
 
 A Florida landlord-tenant dispute tool (Fla. Stat. ch. 83, pt. II) for a tenant in college housing. It
 applies the stored statute and cases to the tenant's confirmed facts (decided 2026-10-02; in development, on
-test matters only, see README), never sends anything, and never computes a date in the model. The author
+test matters only, see README), says first whether an option is open before its steps, cites the law and
+prints the cited words by code instead of reciting them (2026-10-04), never sends anything, and never computes
+a date in the model. The author
 is a law student, not admitted.
 
 ## Read these first

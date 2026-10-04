@@ -3,6 +3,18 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-04
+
+- The plan updated for the author's decision of 2026-10-04 (README, Purpose; CLAUDE.md), after the author tried
+  the web page with a real 57-page lease. Two changes to what an answer is: whether an option is open comes
+  first, checked by code from the confirmed facts and the playbook's conditions for it, before any step toward
+  it (a reply had said how to end the lease for an AC not repaired, and the next reply that an AC may not be a
+  duty 83.56(1) reaches); and an answer cites the law and the program prints the cited words, instead of the
+  model reciting sections, lease clauses, and the tenant's own facts (was, since 2026-10-02: "the rule, quoted
+  ... with its source"). README: the answer's shape, goal 3, and three non-negotiables. TODO: items 72 to 74 for
+  this, 75 for the lease PDF PyPDF2 could not fully decode, and a note on item 45 (a long lease read with no
+  sign of progress, a second click starting a second matter).
+
 ## 2026-10-03
 
 - Blind scoring of the applying code of 2026-10-02 against today's (`docs/evals/2026-10-03-blind/`). 84 transcripts,

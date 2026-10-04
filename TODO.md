@@ -12,6 +12,27 @@ In development, on test matters only. Items 46 to 50 were done the same day (CHA
 eval of applied answers (`docs/evals/2026-10-02-apply/`) left the author's sample (49) and items 51 to 60, the
 structural ones first.
 
+The author's decision of 2026-10-04 (README, Purpose), after trying the web page with a real lease: (1) a reply
+said how to end the lease for an AC not repaired (a new notice, 7 days, then terminate) and only in the next
+reply that an AC may not be a duty 83.56(1) reaches, so whether an option is open must come first, checked by
+code; (2) replies recited too much (the tenant's confirmed facts listed back, whole sections and a 1,900-character
+lease clause pasted), so an answer cites and the program prints the cited words. Items 72 to 74, in order.
+
+72. Options before steps, checked by code: in each playbook's spec, its options (for repair_not_made: end the
+    lease under 83.56(1), withhold rent under 83.60(1)(b)), each with its gates (what makes it open: the
+    problem being a duty 83.51(1) reaches or a material lease provision, rent paid with knowledge under
+    83.56(5)(a)) and its steps (the written notice and what it must say, the 7 days), each tied to a fact, a
+    clock, or an open question and quoted from the statute; a function that gives each option's status (open,
+    closed, not settled, not known yet) and each step's (done, to do, waiting) from the confirmed facts; a
+    prompt part with the statuses; rule 1 asks for an option's status before its steps. Pilot on
+    repair_not_made, then the other playbooks. The gates are the author's to check.
+73. Cite, do not recite: the model states each rule in one plain sentence with its cite and lists back no
+    confirmed fact; the program prints the cited statute subsection's words and any cited lease clause
+    (from the profile) under the reply. The quote checks stay for any quote the model still writes; item 66's
+    caution for a section cited without a quote goes, since that is now the wanted form. Rubric and eval: a
+    rule with no cite, or one its printed words do not say, is the slip; reciting is a slip of its own.
+74. Try the author's scenario again on the web page, and run the eval, after items 72 and 73.
+
 49. The author's sample of the first applying eval (`docs/evals/2026-10-02-apply/`): six transcripts, their
     contexts, and a scoring sheet in `dev/eval_runs/2026-10-02-apply-after/author_sample/` (not committed: they
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on
@@ -58,6 +79,12 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
    question below; (b) periods the lease sets (83.575(1)-(2), 83.595(4)); needs a clock whose length is a
    confirmed fact; (c) hours (83.53(2)); (d) months (83.56(2), 12 months). Decide which to support.
 
+75. A lease PDF whose text PyPDF2 cannot fully decode (2026-10-04, a 57-page lease made by FPDF): pages 1 to 36
+    use Type3 fonts with custom glyph names, and `lease.ingest_pdf` turned a fifth to three quarters of their
+    words, the section headings, and the apostrophes into Dingbats symbols; pages 37 to 57 read cleanly. Gemma
+    still found all 15 profile fields, but a long clause came back with the symbols in it, the model quoted
+    it with them, and the quote check flagged the quote though its words matched the lease. Try `pypdf`
+    (PyPDF2's successor) or `pdfminer.six` on such a file; switch `ingest_pdf` if one reads it.
 33. Some live sessions crash on their first attempt and pass on the second: 6 of 48 runs on the code before
     the eval changes and 3 of 48 after (2026-10-01), three of them one mixed story. Two causes found: malformed
     JSON (now asked for again) and a line break inside a quoted JSON string (the mixed story; now accepted,
@@ -138,7 +165,10 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     earlier sessions' chats (the terminal does not either; the transcripts are in `sessions/`); one browser
     tab at a time, since every tab of the one Streamlit program shares `record.matter`; closing the tab
     leaves the session with no `session_ended`, as a crash does in the terminal; a file the tenant wants
-    stored goes in only by its path, through the model's `add_artifact`, not by upload on the page.
+    stored goes in only by its path, through the model's `add_artifact`, not by upload on the page. Seen with a
+    57-page lease (2026-10-04): reading it took about four minutes with no sign of progress, a second click
+    on start began a second matter and a second request to the gateway (both ran), and the extraction call
+    has no time limit, so a stalled gateway would spin forever.
 
 ## Model behavior (later)
 
