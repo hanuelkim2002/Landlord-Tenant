@@ -110,7 +110,8 @@
         "applied": true,
         "must": [
           "(?i)not settled|turns on|depends on"
-        ]
+        ],
+        "open_first": true
       },
       {
         "say": "Is the AC part of my lease",
@@ -121,7 +122,8 @@
         "applied": true,
         "must": [
           "(?i)not settled|turns on|depends on"
-        ]
+        ],
+        "open_first": true
       },
       {
         "say": "What are my deadlines?",

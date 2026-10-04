@@ -873,7 +873,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
   outside quote marks, the `topics` allowed for `get_cases`, `applied`: a reply applies the law, a quote or a
   statute or lease cite (`CITE_SEEN`, since TODO item 73) with `APPLIED_WORDS` (40) words or more of the
-  model's own addressed to the tenant, and `cases_used`: a reply names
+  model's own addressed to the tenant, `open_first`: outside quote marks, whether the option is open
+  (`OPEN_WORDS`: not settled, turns on, depends on, not known yet, is not open, is closed) comes before the first
+  step toward it (`STEP_WORDS`: deliver, send, or give a notice, wait 7 days; TODO item 72), and `cases_used`: a reply names
   a case a `get_cases` result in the session gave, `case_given` matching it with or without leading words such
   as "In"; a court question answered from cases given earlier also counts as calling `get_cases`), and
   `screen_must_not`. Every reply is also

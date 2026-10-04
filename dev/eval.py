@@ -24,7 +24,9 @@ A scenario's "expect" block (every key optional):
                      "topics" (the get_cases topics allowed in that turn; any other topic fails),
                      "applied" (true: a reply in the turn applies the law, APPLIED, not quotes alone),
                      "cases_used" (true: a reply names a case a get_cases result in the session gave; a
-                     court question answered from cases given earlier also counts as calling get_cases)
+                     court question answered from cases given earlier also counts as calling get_cases),
+                     "open_first" (true: outside quote marks, whether the option is open, OPEN_WORDS, comes
+                     before the first step toward it, STEP_WORDS; TODO item 72)
   "screen_must"      regexes the whole screen must match (a lease clause shown at the stop, e.g.)
   "screen_must_not"  regexes the whole screen must not match (a wrong suggestion on the sheet, e.g.)
 Every reply is also measured, whatever the scenario: empty turns (reply_empty events), program cautions
@@ -75,6 +77,11 @@ APPLIED_WORDS = 40
 CITE_SEEN = re.compile(r"\b83\.\d+|\bLease Section \d", re.I)   # a statute or lease cite in a reply
 RECITED_CHARS = 300                                          # quoted characters past which a reply recites
 RECITED_FACTS = 3                                            # "You confirmed ..." lines that make a list
+# Whether an option is open, and a step toward it, in a reply's own words (TODO item 72): the status must come first.
+OPEN_WORDS = re.compile(r"not settled|turns on|depends on|not known yet|is not open|is closed|is open to you|"
+                        r"can(?:not|'t) end", re.I)
+STEP_WORDS = re.compile(r"\b(?:deliver|send|give|mail|e-?mail)\b[^.\n]{0,60}\bnotice\b|\bwait\b[^.\n]{0,20}\b7\b|"
+                        r"\bafter (?:the )?7 days\b", re.I)
 SOURCE_LABEL = re.compile(r"Fla\. Stat\. [\d.()a-z]+|Lease Section [\d.]+(?:, page \d+)?|\(at \d+\)", re.I)
 CASE_NAME = re.compile(r"\b[A-Z][A-Za-z.&'’]+(?: [A-Z][A-Za-z.&'’]+)* v\. [A-Z][A-Za-z.&'’]+")
 OFFER_WORDS = re.compile(r"\b(would you like|do you want me|if you(?:'d| would) like|i can (?:draft|help|"
@@ -342,6 +349,12 @@ def check_expect(expect, matter, events, turns, screen):
             results.append((f"'{want['say'][:30]}' lacks /{pattern}/", not hit, hit.group(0) if hit else ""))
         if want.get("applied"):
             results.append((f"'{want['say'][:30]}' applied", t["applied"], t["replies"][-1][:200] if t["replies"] else ""))
+        if want.get("open_first"):                         # whether the option is open, before any step (item 72)
+            bare = QUOTED.sub(" ", "\n".join(t["replies"]))
+            status, step = OPEN_WORDS.search(bare), STEP_WORDS.search(bare)
+            results.append((f"'{want['say'][:30]}' says whether it is open first",
+                            bool(status) and (step is None or status.start() < step.start()),
+                            f"status at {status.start() if status else None}, first step at {step.start() if step else None}"))
         if want.get("cases_used"):
             results.append((f"'{want['say'][:30]}' uses its cases", bool(t["cases_used"]), t["cases_used"]))
         if "topics" in want:
