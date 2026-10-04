@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- Eval of items 72 and 73 (`docs/evals/2026-10-04-options-cite/`; the code before, the new AC story on the old
+  code from a worktree, and the code after; code-scored). TODO item 74 done. Recitation 104 turns to 5 (61 to 3
+  per 100 replies); the AC story's answers say whether ending the lease, and withholding rent, is open before
+  any step in 3 of 3 runs (0 of 3 before); runs meeting every expectation 34 to 42 of 48 on the same 16 stories;
+  quote cautions 18 to 10, and item 66's retold caution (45) gone; dates worked out 4 to 0. Field ids rose 10 to
+  17 turns, mostly lease profile field names used as lease cites. New eval expectation `open_first`. TODO items
+  76 (no repairs clause in the lease profile; the model said the lease does not mention AC) and 77 (lease cites by
+  field name). Chart shown in the session.
+
 - Cite, do not recite (TODO item 73, done). Was: every rule quoted in the reply (rule 1, item 54), the tenant's
   confirmed facts listed back ("You confirmed ... You confirmed ..."), and a caution for a section cited without
   its words (item 66); in the author's run a reply pasted a 1,900-character lease clause to answer "was AC part of

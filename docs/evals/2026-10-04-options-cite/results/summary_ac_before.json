@@ -1,0 +1,28 @@
+{
+  "eval_repair_ac_terminate": {
+    "runs": 3,
+    "crashed": 0,
+    "gateway_trouble": 0,
+    "expected_ok": 0,
+    "replies": 12,
+    "empty_turns": 0,
+    "cautions": 10,
+    "quotes_only": 0,
+    "choose_screen": 2,
+    "dates_made": 0,
+    "cases_not_given": 1,
+    "offer_screen": 0,
+    "field_names": 3,
+    "prompt_names": 1,
+    "cites_unquoted": 7,
+    "echo": 0,
+    "recited": 9,
+    "deadlines_by_program": 0,
+    "footers": 9,
+    "failed": {
+      "'How do I end my lease' says whether it is open first": 3,
+      "'stop paying rent instead' says whether it is open first": 3,
+      "'stop paying rent instead' has /(?i)not settled|turns on|depends on/": 2
+    }
+  }
+}
