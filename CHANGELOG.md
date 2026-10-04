@@ -5,6 +5,21 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- The lease profile's repairs clause, and the lease part is not the whole lease (TODO item 76, done). Was: fifteen
+  profile fields, none about repairs, and asked "Is the AC part of my lease?" the model said "the lease does not
+  mention air conditioning" in 3 of 3 runs, from those fields alone. Now `lease.LeaseProfile` has a sixteenth,
+  `maintenance_and_repairs` (who maintains and repairs the unit, its systems, its appliances), optional so that
+  profiles read before it still load, with the field `None` (not read); `LeaseProfile.clauses()` gives the
+  clauses read, and `agent.given_text`, `cited_words`, `reading_line`, `tools.quote_is_real`, and
+  `lease.check_quotes` (which prints "not read") use it. Its description asks for one passage as printed: the
+  first wording ("the sentences that say who repairs what") got two subsections joined with the heading between
+  them dropped, and the quote failed `check_quotes`; with the second, both test leases tried give Article 7 whole
+  (about 1,100 characters, its 7.2 "Landlord shall repair the heating, air-conditioning, electrical, and
+  plumbing systems") and pass. YOUR LEASE's name line now says it holds only the clauses the tool reads, and rule
+  2 has the eval's "The lease does not mention air conditioning." as a "Not:". Smoke: an older profile loads
+  with the clause not read, the extraction schema asks for it, the name line and the rule. Profiles already
+  saved stay without it (TODO item 78).
+
 - Eval of items 72 and 73 (`docs/evals/2026-10-04-options-cite/`; the code before, the new AC story on the old
   code from a worktree, and the code after; code-scored). TODO item 74 done. Recitation 104 turns to 5 (61 to 3
   per 100 replies); the AC story's answers say whether ending the lease, and withholding rent, is open before

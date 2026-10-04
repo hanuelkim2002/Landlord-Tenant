@@ -18,7 +18,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   two clients are `None` when `UF_API_KEY` is missing; `require_key()` raises with a clear message then,
   and `run.py` and `smoke_online.py` call it first. Imports nothing from the project.
 - `lease.py`: lease intake. `ingest_pdf(pdf_path, matter_dir)` (store the PDF under its hash in the folder
-  it is given, extract page text with PyPDF2, write `pages.json`), the `Clause` and `LeaseProfile` shapes (fifteen named clauses), `extract_profile`
+  it is given, extract page text with PyPDF2, write `pages.json`), the `Clause` and `LeaseProfile` shapes (sixteen named clauses; `maintenance_and_repairs`, added 2026-10-04 for
+  TODO item 76, is optional, so a profile read before it loads with it `None`, not read; `LeaseProfile.clauses()`
+  gives the clauses read, as (name, clause), and every reader of a profile walks it that way; its description asks
+  for one passage copied as printed, headings inside it included, since Gemma first joined two subsections and
+  dropped the heading between them, and the quote failed `check_quotes`), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
   or start there and run onto the next). Lease clauses, no model: `lease_clauses(pages)` (the lease split at
   its numbered headings, `HEADING`, "5.4. Vehicles."; a heading counts only if its number closely follows the
@@ -412,7 +416,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
 
 - `lease_<sha256[:12]>.pdf`: the lease as provided, named by its hash.
 - `pages.json`: list of `{"page": n, "text": ...}` from PyPDF2.
-- `lease_profile.json`: the `LeaseProfile`, one `Clause` per field: `present`, `quote`, `page`, `section`.
+- `lease_profile.json`: the `LeaseProfile`, one `Clause` per field: `present`, `quote`, `page`, `section`; a
+  field the profile was read without (`maintenance_and_repairs` before 2026-10-04) is missing or `null`.
 - `matter.json`: current state only, overwritten by `save`. Keys: `id`, `tenant`, `description` (the intake text),
   `issues` (active: confirmed by the tenant, plus `other` if classified), `proposed_issues` (suggested, not
   yet confirmed: `{"issue", "source", "because"}`), `rejected_issues` (turned down or dropped; a related rule
@@ -641,7 +646,9 @@ and open questions together), STATUTE SECTIONS, CASE TOPICS, ELEMENT STATUS, and
 model wrote "(ELEMENT STATUS shows ...)" or "the open question in PLAYBOOKS" in 17 replies per 100 though the
 rules forbade it.
 
-2. `YOUR LEASE`: the whole lease profile as JSON.
+2. `YOUR LEASE`, whose name line says it holds only the clauses the tool reads, not the whole lease, and that null
+   is a clause not read (TODO item 76; rule 2's "Not:" is the eval's "The lease does not mention air
+   conditioning."): the whole lease profile as JSON.
 3. `THE TOOL'S NOTES ON YOUR ISSUES`: for each active playbook, YAML of its `issue` and its `guidance`
    (questions, lease checks, evidence, postures, failure modes).
 4. `WHAT THE STATUTE DOES NOT SETTLE`, whose name line says the stored text settles none of them, so every

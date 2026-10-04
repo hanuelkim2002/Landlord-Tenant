@@ -38,6 +38,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
 from lease import FOOTER, lease_clauses
 from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
+from agent import RULES as RULES_TEXT
 from agent import (CASE_RULE, CITED_HEAD, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, cited_words, command, given_text, print_blocks,
                    printed_cases, retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn,
                    turn_blocks)
@@ -528,7 +529,7 @@ try:
                    f'may deduct (Lease Section 4.3).')
     retold = check_reply(retold_text, [])
     cited = cited_words(retold_text)
-    lease_43 = next(c for _, c in record.profile if c.present and c.section and c.section.startswith("4.3"))
+    lease_43 = next(c for _, c in record.profile.clauses() if c.present and c.section and c.section.startswith("4.3"))
     check("item 73: a section cited without a quote gets no caution and no event (item 66's caution is gone); the "
           "program prints the words of each cite, the narrowest once, and the lease clause with its page",
           retold == [] and len(read_events()) == events_now
@@ -755,7 +756,7 @@ try:
           "none under one that already has it or quotes only the tenant",
           shown_bare[-1] == {"kind": "footer", "text": READING_LINE} and screen(shown_others).count(READING_LINE) == 1
           and [f["text"] for f in footers] == [READING_LINE])
-    lease_words = next(c.quote for _, c in record.profile if c.present and c.quote and len(c.quote) > 60)[:60]
+    lease_words = next(c.quote for _, c in record.profile.clauses() if c.present and c.quote and len(c.quote) > 60)[:60]
     cut = AIMessage(content="You confirmed you moved out on", response_metadata={"finish_reason": "length"})
     check("item 47: a reply stopped at the length limit gets a caution saying it was cut off",
           [b["kind"] for b in turn_blocks([cut], [cut])] == ["reply", "caution"]
@@ -887,6 +888,19 @@ try:
           and LETTER_RULE in system_prompt([HumanMessage(content="Can you help me write something to send them?")]))
 finally:
     remove_scratch("t-smoke-rules")
+
+# the lease profile's repairs clause (TODO item 76): a profile read before the slot was added loads, with the slot
+# not read (None) and left out of clauses(); the extraction asks for it; the prompt says the lease part is not the
+# whole lease, and rule 2 forbids "the lease does not mention" from it
+from lease import LeaseProfile
+old_profile = LeaseProfile.model_validate_json((TEST_MATTER / "lease_profile.json").read_text())
+check("item 76: an older profile loads with the repairs clause not read, and clauses() leaves it out; new reads ask for it",
+      old_profile.maintenance_and_repairs is None
+      and "maintenance_and_repairs" not in dict(old_profile.clauses()) and len(old_profile.clauses()) == 15
+      and "air conditioning" in LeaseProfile.model_json_schema()["properties"]["maintenance_and_repairs"]["description"])
+check("item 76: the lease part says it is not the whole lease, and rule 2 forbids saying the lease does not mention something",
+      PARTS["lease"].startswith("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease")
+      and 'Not: "The lease does not mention air conditioning."' in RULES_TEXT)
 
 # options before steps (TODO item 72, deterministic.check_options): the author's AC story of 2026-10-04 leaves
 # ending the lease not settled; a roof leak with every step taken is open; caused by the tenant, closed; a gate's

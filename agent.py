@@ -72,6 +72,8 @@ When the lease and the statute differ on a point, cite both; say which controls 
 2. Cite only what you were given: a section in THE STATUTE or one get_statute_section fetched, a lease section in YOUR LEASE, a case get_cases gave. Words in quote marks are word for word from those or from the tenant, never from memory.
 Not: The lease says the deposit comes back after inspection. (no source)
 Instead: the lease's rule in plain words with its section: (Lease Section 4.3).
+Not: "The lease does not mention air conditioning." (YOUR LEASE holds only the clauses the tool reads, not the whole lease)
+Instead: "The parts of your lease the tool has read do not cover that; the rest of your lease may." Then what the statute says on it.
 Not: the "repair within 5 days" you requested (the tenant wrote "Give them 5 days to reply")
 Instead: You said: "Give them 5 days to reply"
 Not: citing a section missing from THE STATUTE.
@@ -226,7 +228,8 @@ def resume(update_text):
 # names like "ELEMENT STATUS" and "PLAYBOOKS" it wrote "(ELEMENT STATUS shows ...)" in 17 replies per 100, though
 # the rules forbade it (TODO item 61). Under these names, a source named in plain words reads right to the tenant.
 PARTS = {
-    "lease": "YOUR LEASE (the tenant's lease: each clause quoted, with its section and page)",
+    "lease": ("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease: each quoted, "
+              "with its section and page; null is a clause not read from this lease)"),
     "notes": "THE TOOL'S NOTES ON YOUR ISSUES (by issue: questions, lease checks, evidence, postures, mistakes to avoid)",
     "open": ("WHAT THE STATUTE DOES NOT SETTLE (by issue: each open question, its sections, and its readings; the "
              "stored text settles none of them, so give every reading and pick none)"),
@@ -339,8 +342,7 @@ def given_text(messages):
     quotes as plain text (the prompt holds them as JSON, with quote marks escaped), the tenant's description
     and updates, and every message in the thread the model did not write (the tenant's messages, program
     notes, tool results)."""
-    lease_quotes = ([getattr(record.profile, f).quote or "" for f in type(record.profile).model_fields]
-                    if record.profile else [])
+    lease_quotes = [c.quote or "" for _, c in record.profile.clauses()] if record.profile else []
     updates = [ev["text"] for ev in read_events() if ev["kind"] == "tenant_update"]
     thread = [str(m.content) for m in messages if m.type != "ai"]
     return "\n".join([system_prompt(messages), record.matter.get("description", ""), *lease_quotes, *updates, *thread])
@@ -439,7 +441,7 @@ def cited_words(text):
         if len(words) > CITED_MAX:
             words = words[:CITED_MAX].rsplit(" ", 1)[0] + f" ... (the rest is in Fla. Stat. {cite})"
         parts.append(f"Fla. Stat. {cite}: {words}")
-    clauses = [c for _, c in record.profile if c.present and c.quote and c.section] if record.profile else []
+    clauses = [c for _, c in record.profile.clauses() if c.present and c.quote and c.section] if record.profile else []
     for number in dict.fromkeys(LEASE_CITE.findall(text)):
         for quote, clause in {c.quote: c for c in clauses if c.section.split()[0].rstrip(".") == number}.items():
             parts.append(f"Lease Section {clause.section}, page {clause.page}: {' '.join(quote.split())}")
@@ -479,7 +481,7 @@ def reading_line(text):
     """READING_LINE if the reply cites or quotes the statute (a ch. 83 cite, or a quoted passage with one) or the
     lease (a lease section cited, or a quoted passage found in a lease profile quote) and does not already carry
     the line; else None. Citing counts since TODO item 73, when the reply stopped quoting."""
-    lease = [c.quote for _, c in record.profile if c.present and c.quote] if record.profile else []
+    lease = [c.quote for _, c in record.profile.clauses() if c.present and c.quote] if record.profile else []
     quotes_source = any(cite.startswith("83.") or any(is_in(quote, q) for q in lease)
                         for quote, cite in quoted_passages(text))
     cites_source = bool(cites_in(unquoted(text)) or LEASE_CITE.search(text))

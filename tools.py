@@ -265,7 +265,7 @@ def pretty(d):
 
 def quote_is_real(text):
     """True if text appears verbatim in the lease profile or in a stored statute section."""
-    sources = [c.quote for _, c in record.profile if c.present] + list(statute.values())
+    sources = [c.quote for _, c in record.profile.clauses() if c.present] + list(statute.values())
     return any(squash(text) in squash(s) for s in sources)
 
 

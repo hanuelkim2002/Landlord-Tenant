@@ -48,8 +48,9 @@ class Clause(BaseModel):
 
 
 class LeaseProfile(BaseModel):
-    """The structured profile extracted from one lease. Fifteen named slots,
-    each a Clause. Filled by gemma, checked by check_quotes."""
+    """The structured profile extracted from one lease. Sixteen named slots,
+    each a Clause. Filled by gemma, checked by check_quotes. A profile read before a slot was added holds None
+    there (maintenance_and_repairs, added 2026-10-04): not read, which is not the same as not in the lease."""
     landlord_name_and_address: Clause
     tenant_names: Clause
     premises_address: Clause
@@ -65,6 +66,14 @@ class LeaseProfile(BaseModel):
     joint_and_several_liability: Clause
     signatures: Clause
     notice_before_vacating: Clause = Field(description="A term requiring the tenant to notify the landlord before moving out EARLY or abandoning, especially one tied to the deposit. Not the notice required before the lease's normal end date.")
+    # Added 2026-10-04 (TODO item 76): asked "Is the AC part of my lease?", the model said the lease does not mention
+    # air conditioning, from the other fifteen slots, none of which is about repairs.
+    maintenance_and_repairs: Optional[Clause] = Field(None, description="Who must maintain and repair the unit, its systems, and its appliances (air conditioning, heating, plumbing, appliances), and how the tenant asks for a repair. Copy one passage exactly as printed, from its first word to its last, with any numbered heading inside it; never join separate passages or leave out words between them.")
+
+    def clauses(self):
+        """Each slot read from the lease, as (name, clause); a slot this profile was read without (None) is left
+        out."""
+        return [(name, clause) for name, clause in self if clause is not None]
 
 
 # ---- Extract and Check: Gemma reads the lease into the profile; check_quotes confirms every quote word for word.
@@ -108,6 +117,9 @@ def check_quotes(profile, pages):
     """Every quote must appear verbatim starting on the page it claims. May run onto the next page."""
     page_text = {p["page"]: squash(p["text"]) for p in pages}
     for name, clause in profile:
+        if clause is None:
+            print(f"  ??   {name}: not read")
+            continue
         if not clause.present:
             print(f"  --   {name}: not present")
             continue

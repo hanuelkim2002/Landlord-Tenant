@@ -24,10 +24,6 @@ lease clause pasted), so an answer cites and the program prints the cited words.
     repair_not_made's gates (whether a problem 83.51(1)(b) does not name, like an AC, leaves ending the lease
     not settled rather than closed; whether rent paid with knowledge belongs as a gate on ending the lease
     only, as now, and not on withholding rent; the new open question on that waiver and its two readings).
-76. The lease profile has no field for a repairs or maintenance clause, so asked "Is the AC part of my lease?" the
-    model said "the lease does not mention air conditioning" from the 15 profile fields alone, in 3 of 3 runs
-    (`docs/evals/2026-10-04-options-cite/`). Like item 43: a `maintenance_and_repairs` field in
-    `lease.LeaseProfile` (every lease read again), and until then a rule that the profile is not the whole lease.
 77. Lease cites by a profile field's name ("notice_before_vacating", "term_end") where the clause has no section
     number: most of the 17 turns with a field id in the eval of 2026-10-04. Give the model the page in place of a
     missing section, or name the profile's fields in words in YOUR LEASE.
@@ -104,6 +100,9 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     (cases_retaliation) its case topic was offered only because the story also confirmed repair_not_made.
     Adding the section is a playbook change for the author to check against `statutes/`.
 
+78. Profiles read before 2026-10-04 lack the repairs clause (`maintenance_and_repairs` is `None`, "not read"): the
+    test matter `t-test`, and any saved matter. A way to read just the new clause from a matter's stored
+    `pages.json`, without starting a new matter, for the author to run on a matter of their choosing.
 43. No lease profile field holds a conduct, nuisance, or vehicle clause (the test lease has them at 5.2 and
     5.4), so the model cannot quote the lease's own rule in a neighbor_disturbance chat or letter; only the
     stop text shows such clauses, by code. Consider a `conduct_and_use` field in `lease.LeaseProfile` (a
