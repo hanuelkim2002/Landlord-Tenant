@@ -3,6 +3,44 @@
 The working list. Move an item to CHANGELOG.md when it is done, with the date. Reorder freely. Keep the
 "Open questions" section for things that need a decision before code is written.
 
+## What the tool knows (the author's decision of 2026-10-04; do these first, in order)
+
+After items 72 to 77 the author asked for a general theme, not fixes aimed at the example that showed each one
+(an AC): the chatbot must be aware of what it knows and does not know, and of whether that changes what the tenant
+can do (README, Purpose and non-negotiables). Seen on 2026-10-04: "the lease does not mention air conditioning",
+"the lease does not contain a holdover clause", "the lease does not mention any late fee", each said from the
+16 clauses the profile holds while the lease had the clause; and ending the lease over an AC shown as not settled
+on the statute alone while the lease's Article 7.2 promised the repair. Rule pairs alone did not change such
+behavior (items 54, 76); what the program computed did (options, deadlines). So the knowledge is computed by code.
+
+81. Knowledge states for the conditions of an option, computed by code. A gate (`corpus.Gate`, item 72) is decided
+    by a confirmed fact, a lease clause (read and present, read and absent, or not read), an open question, or
+    nothing the tool holds; `deterministic.check_options` gives each gate one of five states: known (met or
+    failed), the tenant can tell us (a fact the sheet asks), the tenant can check (an unread part of the lease, a
+    local code, a document; say what and where), not settled (an open question, its readings), outside the tool
+    (law it does not hold). An option's status follows from its gates, and each unknown gate says what the option
+    would be either way ("if your lease promises the repair, ending the lease may be open; if not, it turns on a
+    local code the tool cannot check"). Prove it on repair_not_made (its gates of 2026-10-04 rewritten, and a
+    gate met by a lease clause promising the repair, as 83.56(1) also reaches "material provisions of the rental
+    agreement"), deposit_not_returned, and notice_received_nonpayment, before the other playbooks (item 84).
+82. `search_lease(phrase)`, a tool over the matter's `pages.json` like `search_statute`, so the model looks before
+    it says the lease lacks something, and a found clause's words are printed as a cited clause's are. Then a
+    lease point is: in a clause read, found by search, or not found anywhere in the lease's text (which is a
+    known absence, unlike a clause not read). Seen 2026-10-04: a holdover clause (2.4) and a late charge in the
+    test lease, said to be missing in 4 turns of 12 runs (`dev/eval_runs/2026-10-04-items76-77`).
+83. A prompt part, computed from item 81, of what the answer depends on that the tool does not know, each with
+    its state and its effect on the options; rule 1 asks for it before any step, and a gap is never stated as a
+    fact. The rules' "Not:" lines come from several stories, not one.
+84. Options with knowledge-state gates for the other playbooks, each gate quoted from `statutes/` and checked by
+    the author: the deposit playbooks (the landlord missed the 30-day notice), the notices, entry, rent increase,
+    leaving early, lease ending, neighbor. The author's check of repair_not_made's gates is in this too (whether
+    a problem 83.51(1)(b) does not name leaves ending the lease not settled; rent paid with knowledge as a gate on
+    ending the lease only; the open question on that waiver and its two readings).
+85. Eval: a story per state where the deciding point is in that state (a fact the tenant has not given, a lease
+    clause the profile does not hold but the lease has, a lease that has no such clause, a local code, an open
+    question, law outside the tool), across playbooks; a rubric category for a gap stated as a fact and for an
+    unknown not tied to what the tenant can do; then a full eval and a blind scoring.
+
 ## Applying the law
 
 The author's decision of 2026-10-02 (README, Purpose): an answer applies the stored statute and cases to the
@@ -16,14 +54,8 @@ The author's decision of 2026-10-04 (README, Purpose), after trying the web page
 said how to end the lease for an AC not repaired (a new notice, 7 days, then terminate) and only in the next
 reply that an AC may not be a duty 83.56(1) reaches, so whether an option is open must come first, checked by
 code; (2) replies recited too much (the tenant's confirmed facts listed back, whole sections and a 1,900-character
-lease clause pasted), so an answer cites and the program prints the cited words. Items 72 to 74, in order.
+lease clause pasted), so an answer cites and the program prints the cited words. Items 72 to 77 were done that day (CHANGELOG); what remained went to the section above.
 
-72. Options before steps for the other nine playbooks (repair_not_made's two were done 2026-10-04, CHANGELOG):
-    each playbook's options with their gates and steps, quoted from the statute; for the deposit playbooks,
-    say, what the tenant can do when the landlord missed the 30-day notice. And for the author: check
-    repair_not_made's gates (whether a problem 83.51(1)(b) does not name, like an AC, leaves ending the lease
-    not settled rather than closed; whether rent paid with knowledge belongs as a gate on ending the lease
-    only, as now, and not on withholding rent; the new open question on that waiver and its two readings).
 49. The author's sample of the first applying eval (`docs/evals/2026-10-02-apply/`): six transcripts, their
     contexts, and a scoring sheet in `dev/eval_runs/2026-10-02-apply-after/author_sample/` (not committed: they
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on
@@ -97,16 +129,6 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     (cases_retaliation) its case topic was offered only because the story also confirmed repair_not_made.
     Adding the section is a playbook change for the author to check against `statutes/`.
 
-79. "The lease does not contain a holdover clause", "the lease does not mention any late fee": said from YOUR LEASE
-    in 4 turns of 12 runs on 2026-10-04 (`dev/eval_runs/2026-10-04-items76-77`), though the test lease has both
-    (2.4, Month-to-Month Holdover With Consent; a late charge of $75); rule 2's pair from item 76 did not stop
-    it. A `search_lease(phrase)` tool over the matter's `pages.json`, like `search_statute`, so the model looks
-    before it says the lease lacks something, and the lease's own words are printed as for a cited clause.
-80. The options do not see a promise in the lease: with the test lease's Article 7.2 read ("Landlord shall repair
-    the heating, air-conditioning, electrical, and plumbing systems"), ending the lease over an AC still comes
-    out not settled on the statute side alone, though 83.56(1) also reaches "material provisions of the rental
-    agreement". For the author: a gate met by a lease clause that promises the repair (a fact the sheet asks, or
-    the profile's repairs clause), and whether that promise is "material".
 78. Profiles read before 2026-10-04 lack the repairs clause (`maintenance_and_repairs` is `None`, "not read"): the
     test matter `t-test`, and any saved matter. A way to read just the new clause from a matter's stored
     `pages.json`, without starting a new matter, for the author to run on a matter of their choosing.

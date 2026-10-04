@@ -5,6 +5,13 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- The plan updated for the author's decision that the tool knows what it knows, as a general theme (README,
+  Purpose and non-negotiables): each condition an answer turns on is known, something the tenant can tell it,
+  something the tenant can check, not settled, or outside the tool, worked out by the program; a gap is never
+  stated as a fact, and each unknown is tied to what the tenant can do. TODO: a new first section, items 81 to
+  85, in order; items 72 (the other playbooks' options and the author's check), 79 (the lease search), and 80
+  (a lease promise as a gate) folded into it.
+
 - A check of items 76 and 77 on four stories, 3 runs each (`dev/eval_runs/2026-10-04-items76-77`, against the same
   stories in `-after`). Lease field names used as cites: 3 turns to 0; field ids overall 10 to 5. Asked "Is the
   AC part of my lease?", all three runs now cite the test lease's Article 7, whose 7.2 makes the landlord repair

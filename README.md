@@ -27,6 +27,14 @@ law has this shape (2026-10-02; the first point and the citing added 2026-10-04)
 - what follows on those facts: the steps for an option that is open, or that may be, and what each requires;
 - any point the stored text and the cases leave unsettled, with the readings on each side.
 
+The tool knows what it knows (the author's decision of 2026-10-04). Each condition an answer turns on is, for
+the tool, one of five things, worked out by the program and given to the model: known (the confirmed facts, a
+lease clause the tool has read, the statute); something the tenant can tell it (a fact the sheet asks);
+something the tenant can check (a part of the lease the tool has not read, a local code, a document);
+not settled (an open question, with its readings); or outside the tool (law it does not hold). The answer says
+which, never states a gap as a fact ("the lease does not mention it" from a lease the tool has not read
+whole), and says how each unknown would change what the tenant can do.
+
 The answer does not recite: no statute or lease passage pasted into it, and no list of what the tenant has
 already told the tool. The tool does not choose among the options for the tenant, and it says that its answer
 is its reading of the stored law, not a lawyer's advice.
@@ -63,6 +71,9 @@ a review).
 - An application rests only on confirmed facts and stored text. A fact the record does not hold is named as
   missing, never assumed, and the step that needs it is left open. Every rule in an answer is cited to its
   source, and the program prints the cited words; every fact carries where it came from.
+- The tool knows what it knows. A condition it has not settled from confirmed facts, a lease clause it read, or
+  the statute is named as one the tenant can tell it, can check, that is not settled, or that is outside the
+  tool, never answered as if known; and the answer says how it would change the tenant's options.
 - An option comes before its steps. Whether an option is open is checked by code from the confirmed facts and
   the playbook's conditions for it, quoted from the statute; the answer says whether it is open, closed, not
   settled, or not known yet before it gives any step toward it.
