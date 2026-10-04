@@ -1,0 +1,135 @@
+{
+  "about": "repair_not_made, after the author's run on the web page (2026-10-04, TODO items 72 and 73): an AC not repaired, a written notice by e-mail that did not say the tenant would end the lease, rent paid since. Asked how to end the lease, the answer must say first that ending it is not settled (83.56(1) reaches a failure of a duty in 83.51(1) or of a material lease provision, and 83.51(1) names no AC), before any step; and it must cite, not recite.",
+  "start": [
+    "new",
+    "t-test",
+    "dev/leases/current.pdf",
+    "The AC in my apartment stopped working on September 1, 2026. I emailed the leasing office on September 3, 2026 asking them to fix it. They said they would send someone but nobody ever came, and it is still broken. It is really hot in here. I have kept paying rent.",
+    "I want to end my lease and move out because of this.",
+    ""
+  ],
+  "sheet": {
+    "Tenant has received the landlord's written notice that the landlord intends to keep": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has not returned the tenant's security deposit": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The lease is ending or the tenancy is being ended": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written demand for unpaid rent or possession": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written notice about a lease violation": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has raised the rent or says the rent will go up": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Something in the unit needs repair and the landlord has not fixed it": [
+      "yes",
+      "yes",
+      "yes"
+    ],
+    "Tenant wants to move out before the lease term ends": [
+      "no",
+      "no",
+      "no"
+    ],
+    "What is the problem that needs repair": [
+      "the AC stopped working and does not cool"
+    ],
+    "roof, windows, doors, floors": [
+      "no"
+    ],
+    "problem start": [
+      "9/1/2026"
+    ],
+    "single-family house or a duplex": [
+      "no"
+    ],
+    "caused by you": [
+      "no"
+    ],
+    "delivered a written notice to the landlord": [
+      "yes"
+    ],
+    "written notice delivered to the landlord": [
+      "9/3/2026"
+    ],
+    "How did you deliver the written notice": [
+      "email to the leasing office"
+    ],
+    "intend to end the lease": [
+      "no"
+    ],
+    "intend not to pay rent": [
+      "no"
+    ],
+    "paid rent since you knew": [
+      "yes"
+    ],
+    "What has the landlord said or done": [
+      "they said they would send someone but nobody came"
+    ],
+    "filed an eviction case": [
+      "no"
+    ]
+  },
+  "chat": [
+    "How do I end my lease because of this?",
+    "Is the AC part of my lease?",
+    "Can I just stop paying rent instead?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "issues": [
+      "repair_not_made"
+    ],
+    "turns": [
+      {
+        "say": "How do I end my lease",
+        "applied": true,
+        "must": [
+          "(?i)not settled|turns on|depends on"
+        ]
+      },
+      {
+        "say": "Is the AC part of my lease",
+        "applied": true
+      },
+      {
+        "say": "stop paying rent instead",
+        "applied": true,
+        "must": [
+          "(?i)not settled|turns on|depends on"
+        ]
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ],
+    "not_covered_note": false
+  }
+}

@@ -74,8 +74,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   fits a claim made in the reply's own words, and a paraphrase outside quote marks is not checked.
   `cites_without_quote(text)` (each cite outside quote marks whose words no quoted passage in the same text
   holds: a section or subsection retold instead of quoted; a quote in a narrower subsection counts for the
-  wider cite; measured by `dev/eval.py` since TODO item 54, and shown to the tenant by `agent.check_reply` since
-  item 66). `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
+  wider cite; measured by `dev/eval.py` since TODO item 54; shown to the tenant by `agent.check_reply` from item
+  66 until item 73, when a rule in plain words with its cite became the wanted form). `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
   given)` (each reporter cite in a reply, outside quote marks, must appear in what the model was given, i.e.
   a `get_cases` receipt; returns `(cite, problem)`). Imports `corpus`. Imported by `agent`, `smoke`, `wiki`, `dev/eval.py`.
 - `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
@@ -197,9 +197,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   logs `deadlines_computed` as the tool does), written to the transcript as a `printed` line marked `"what":
   "deadlines"` (TODO item 65: the model answered 1, then 4 of 39 such questions without the tool). The model is
   not told. `turn_blocks(new, messages)` transcribes a
-  turn's new messages and builds its blocks; other tool results are not shown. Under each reply come its
-  cautions, then, if the reply quotes the statute (a quoted passage with a ch. 83 cite,
-  `citations.quoted_passages`) or the lease (a quoted passage found in a lease profile quote) and does not
+  turn's new messages and builds its blocks; other tool results are not shown. Under each reply come the words
+  it cites, then its cautions, then, if the reply cites or quotes the statute (a quoted passage with a ch. 83 cite,
+  `citations.quoted_passages`, or a ch. 83 cite outside quote marks) or the lease (a quoted passage found in a
+  lease profile quote, or a `LEASE_CITE`, "Lease Section 4.3") and does not
   already carry it (after `CUT_OFF`, "[Check: this reply was cut off at the model's length limit. Ask again for
   the rest.]", when the gateway's `finish_reason` was "length"), `READING_LINE` ("This is the tool's reading of the stored law and your confirmed
   facts, not a lawyer's advice.", from `reading_line`), also written to the transcript as a `footer` line
@@ -215,12 +216,15 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `given_text(messages)` (the system prompt, the lease quotes as plain text, the tenant's description and
   updates, and every thread message the model did not write). Each failure gets a "[Check: ...]" line, a
   `check` transcript line, and a `cite_flagged` or `quote_flagged` event; it returns the lines. The
-  reply is not held back or changed, and the model is not told. Last, one line for the sections the reply
-  cites with none of their words quoted (`citations.cites_without_quote`, less any cite that already has a
-  caution): `RETOLD` through `retold_line`, "[Check: this reply cites 83.55 without quoting it: what it says it
-  means is the reply's own wording, not the statute's. Read the statute's words before relying on the
-  reply.]", with a `cite_flagged` event per cite ("cited with none of its words quoted in the reply"; TODO item
-  66: item 54's rule pair left these at 29 turns per 100 replies). It also runs `check_case_quotes(text,
+  reply is not held back or changed, and the model is not told. (From TODO item 66 to 73 it also cautioned a
+  section cited with none of its words quoted, `RETOLD`; since item 73 that is the wanted form.) The words a
+  reply cites come from `cited_words(text)` (TODO item 73, the author's decision of 2026-10-04): for each ch. 83
+  cite outside quote marks that the stored statutes hold, the subsection's words (or the section's), the
+  narrowest once (83.56(1) cited, 83.56 alone adds nothing), cut at `CITED_MAX` (1,500) characters with the cite
+  for the rest; then each lease section (`LEASE_CITE`) whose clause the lease profile holds, with its page; under
+  `CITED_HEAD`, "The words the reply above cites, printed by the program from the stored statute and your
+  lease:". `turn_blocks` shows them as a `sources` block right under the reply and writes them to the transcript
+  as a `printed` line marked `"what": "sources"`. It also runs `check_case_quotes(text,
   messages)`: a quote credited to a printed case whose part of the printed text (`printed_cases(messages)`,
   `[(name, part)]` from each `get_cases` artifact through `wiki.cases_printed`) does not hold it while another
   case's part does is flagged "is in X's text, not Y's" as a `quote_flagged` event with the case as `cite`; the
@@ -283,7 +287,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   follows when the model proposed facts and rows are pending; an error from the gateway becomes a caution and
   the page goes on, with the traceback printed in the terminal running Streamlit). `show(b)` draws a block:
   the tenant's words and the model's `reply` in speech bubbles; `caution` as a warning; `footer` and
-  `notice` as notes; `deadlines`, `letter`, `cases`, `timeline`, `stop` in a box labeled by `PRINTED_BY` as
+  `notice` as notes; `sources`, the words a reply cites, folded in an expander ("The statute and lease words cited
+  above", TODO item 73); `deadlines`, `letter`, `cases`, `timeline`, `stop` in a box labeled by `PRINTED_BY` as
   printed by the program (listings in fixed-width text, only a letter wrapped). `plain(text)` shows text as
   written: markdown signs escaped (a `$` would start math) and line breaks kept. Right: `record_panel`, the
   timeline (`render_timeline` for all issues or one, full or not, redrawn from the record on every run and not
@@ -464,7 +469,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved, `issues_suggested`
   when the answer brought in a related issue), or
   `printed` (`text`: what the program printed outside the chat, the stop text, or, with `"what": "deadlines"`,
-  the deadlines it printed when asked when and the model did not call `get_deadlines`), or
+  the deadlines it printed when asked when and the model did not call `get_deadlines`, or, with `"what":
+  "sources"`, the statute and lease words a reply cites), or
   `footer` (`text`: `READING_LINE`, printed by the program under a reply that quotes the statute or the lease; until
   2026-10-02 it was `NOT_DECIDED`), or
   `program` (`text`: a note sent to the model: ahead of the tenant's message after a sheet, or
@@ -580,29 +586,33 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 1,794 words always, plus rule 6 on letters (174 words) once a letter is in
-   play, and rule 8 on cases in full (255 words) when there is a case topic, otherwise one line. Version G
+1. `RULES`, through `rules_for`: 1,964 words always, plus rule 6 on letters (174 words) once a letter is in
+   play, and rule 8 on cases in full (271 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
    the statute to the record in YOUR FACTS and WHICH DEADLINES HAVE PASSED and say what they mean for the tenant,
    the parts being named as the model names them to the tenant; not
    a lawyer, and the program prints the line saying so, so the model writes none; never send anything or
-   work out a date), a format line (short plain sentences; each quote on its own line, source first, e.g.
-   `Fla. Stat. 83.49(3)(a): "..."`; each source named in plain lower-case words, "your lease", "the statute",
-   "you confirmed", "the program's deadlines", "the statute does not settle this"; no labels like "Quote:", no
+   work out a date), a format line (short plain sentences; cite, do not recite: each rule in one plain sentence
+   with its source in parentheses, "(Fla. Stat. 83.56(1))" or "(Lease Section 4.3)", since the program prints the
+   cited words under the reply, never a section, lease clause, or case passage pasted in, quote marks only for
+   the few words a point turns on, and never a list of what the tenant confirmed or said, only the facts the
+   answer turns on, in a few words, TODO item 73; where a fact came from, when it matters, in plain lower-case
+   words, "you confirmed", "your lease says", "the program's deadlines"; no labels like "Quote:", no
    ids, no part name in capitals as the prompt writes it, and no rule number such as "rule 8"; TODO items 53 and
    61), then nine numbered rules, each with
    "Not:" examples and the "Instead:" form: 1 apply the law to the tenant's facts, in order: first, asked what
    they can do or how, whether that option is open, as YOUR OPTIONS gives it, never a step before it (TODO item
-   72, with the author's AC reply of 2026-10-04 as its "Not:"); the rule quoted;
-   every rule the answer turns on quoted, each condition and consequence relied on, never a section retold
-   in the model's own words or a rule nothing quoted gives (TODO item 54); the facts it turns on in plain
-   words with where each came from, never an id or a prompt section's name (a
+   72, with the author's AC reply of 2026-10-04 as its "Not:"); the rule in one plain sentence with its cite;
+   every rule the answer turns on cited to a section whose words say it, each condition and consequence relied
+   on, never a rule no cite gives (TODO items 54 and 73; the author's recited reply of 2026-10-04 as its "Not:");
+   only the facts it turns on, in a few words, never listed back, never an id or a prompt section's name (a
    fact said in the chat but not confirmed is "not known yet until the sheet confirms it"); for each condition, met, failed, or not known; what follows, and with an open question in the way what
    follows on each of its readings, never one as the answer (TODO item 56), and when
    asked what they can do, each option the stored text gives and what it requires first (fetching a section
    such as 83.55 or 83.48 when it is not in THE STATUTE); the open question in the way. Never assume a
    fact, never choose among options for the tenant, and say which of lease and statute controls only from a
-   stored section (83.47). 2 quote only what was given, word for word, fetch a section before citing one
+   stored section (83.47). 2 cite only what was given (a section of the statute shown or fetched, a lease
+   section, a case printed), words in quote marks word for word, fetch a section before citing one
    not in THE STATUTE, say plainly when nothing answers, but never with the fallback line when an open
    question or a case topic is on the point, even in other words than the tenant's (TODO item 52); 3 dates only from YOUR FACTS, a lease quote,
    the tenant's words, or a tool result; whether a deadline has passed only from WHICH DEADLINES HAVE PASSED ("passed" or
@@ -861,13 +871,16 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   `deadlines_computed` event naming a clock), `letters` (`draft` events), `screen_must` and `screen_must_not`
   (regexes on the whole screen), `turns` (per chat line, found by a
   piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
-  outside quote marks, the `topics` allowed for `get_cases`, `applied`: a reply applies the law, a quote with
-  `APPLIED_WORDS` (40) words or more of the model's own addressed to the tenant, and `cases_used`: a reply names
+  outside quote marks, the `topics` allowed for `get_cases`, `applied`: a reply applies the law, a quote or a
+  statute or lease cite (`CITE_SEEN`, since TODO item 73) with `APPLIED_WORDS` (40) words or more of the
+  model's own addressed to the tenant, and `cases_used`: a reply names
   a case a `get_cases` result in the session gave, `case_given` matching it with or without leading words such
   as "In"; a court question answered from cases given earlier also counts as calling `get_cases`), and
   `screen_must_not`. Every reply is also
   measured: empty turns, program cautions, field names, a computed deadline the program printed found in the reply
-  (the model never sees one, so it counted it; not when the date is also a fact the record holds), quotes only (a quote
+  (the model never sees one, so it counted it; not when the date is also a fact the record holds), recited
+  (`recited`: more than `RECITED_CHARS`, 300, characters in quote marks, or `RECITED_FACTS`, 3, lines of "You
+  confirmed" or "You said"; TODO item 73), quotes only (a quote
   and fewer than 40 words of its own), dates made (a date with a year outside quote marks that no fact, tenant
   line, sheet answer, or the run's lease holds, `lease_dates(entry)` from the PDF named in the run's own copy of
   its scenario), cases not given (a "Name v. Name" no `get_cases` result in
@@ -880,7 +893,7 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   "rule 8"; TODO items 53 and 61). Since 2026-10-02 (TODO item 49) a legal question's
   turn expects `applied` instead of "does not decide", and the `LAW_WORDS` screen and the `must_not` patterns
   against "entitled", "allowed", "forfeit", and case names are gone. The blind scorers' rubric is
-  `dev/eval_rubric.md` (applied answers: QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,
+  `dev/eval_rubric.md` (applied answers: OPTION_BEFORE_OPEN and RECITED since TODO items 72 and 73, QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,
   OPEN_CLOSED, CASE_MISREAD, ONE_SIDED, CHOICE_MADE, OVERCLAIM, LAW_UNSOURCED, DATE_MADE, ID, and the quoting
   and letter categories). A run with signs that the gateway failed
   (the driver's timeout, an empty answer where JSON was expected, or two unrecovered empty turns in a row) is
@@ -895,7 +908,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   `leave_early_family`, and `noise_neighbors` since neighbor_disturbance was added; it was `nc_noise`), two
   stories no playbook covers (`nc_roommate`, `nc_towing`, each expecting its lease clause at the stop), one
   covered problem next to an uncovered one (`nc_mixed_heater`), and three with facts like a case in the wiki
-  and plain questions about judges (`cases_late_claim`, `cases_3day_cash`, `cases_retaliation`); run with
+  and plain questions about judges (`cases_late_claim`, `cases_3day_cash`, `cases_retaliation`), and the
+  author's AC story of 2026-10-04 (`repair_ac_terminate`: asked how to end the lease, the answer must say it is
+  not settled; TODO items 72 and 73); run with
   `WIKI_UNVERIFIED=1` until pages are verified. Each scenario's `about` says what it tests.
 - `streamlit run app.py`: the web page (see `app.py` in Modules), on http://localhost:8501 only. The same
   model calls as `run.py`. Stop it with Ctrl-C in its terminal.

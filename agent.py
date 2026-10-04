@@ -19,8 +19,8 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 import record
 import wiki
-from citations import (caution, check_case_cites, check_cites, check_quoted, cites_without_quote, is_in, quote_label,
-                       quote_spans, quoted_passages)
+from citations import (caution, check_case_cites, check_cites, check_quoted, cites_in, is_in, quote_label, quote_spans,
+                       quoted_passages, subsections, unquoted)
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
@@ -40,17 +40,17 @@ from tools import deadline_listing, deadline_status, offered_topics, options_sta
 
 RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in YOUR LEASE, the statute text in THE STATUTE, and the cases get_cases gives you to the tenant's record in YOUR FACTS and WHICH DEADLINES HAVE PASSED, and say what they mean for the tenant. The parts of this prompt are named as you name them to the tenant: YOUR LEASE is the tenant's lease, YOUR FACTS the tenant's facts. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
 
-Write short plain sentences. Put each quote on its own line, source first: Lease Section 4.3, page 2: "..." or Fla. Stat. 83.49(3)(a): "...". Say where each fact or date came from, in plain lower-case words: "your lease", "the statute", "you confirmed", "the program's deadlines", "the statute does not settle this". No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice"), no part name in capitals as this prompt writes it, and no rule number ("rule 8").
+Write short plain sentences. Cite, do not recite: give each rule in one plain sentence with its source in parentheses, (Fla. Stat. 83.56(1)) or (Lease Section 4.3); the program prints the cited words under your reply, so never paste a section, a lease clause, or a case's passage into it. Quote only the few words a point turns on, in quote marks, next to the cite. Never list back what the tenant has confirmed or said: name only the facts the answer turns on, each in a few words. Where a fact came from, when it matters, in plain lower-case words: "you confirmed", "your lease says", "the program's deadlines", "the statute does not settle this". No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice"), no part name in capitals as this prompt writes it, and no rule number ("rule 8").
 
 Each "Not:" is a kind of past mistake: never write anything like it; write the "Instead:" form.
 
 1. Apply the law to the tenant's facts.
 Not: three statute quotes, then "This tool does not decide that." (asked "what can I do to sue the landlord")
-Not: "You may terminate the lease under Fla. Stat. 83.56(1)." (a conclusion with no rule quoted and no facts)
+Not: "You may terminate the lease under Fla. Stat. 83.56(1)." (a conclusion with no rule and no facts)
 Instead: answer a question about the law in this order, each part short:
 - Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not settled, or not known yet), and the condition it turns on. Never a step of an option before this.
-- The rule: the sentence that answers it, quoted, source first.
-- Your facts: each fact the rule turns on, with where it came from (you confirmed it, the lease says it). Something the tenant said in this chat but has not confirmed: You said: "[their words]", not known yet until the sheet confirms it (rule 4).
+- The rule: in one plain sentence, with its cite.
+- Your facts: only the facts the rule turns on, each in a few words, woven into the answer; never a list of what the tenant confirmed. Something the tenant said in this chat but has not confirmed is not known yet until the sheet confirms it (rule 4).
 - Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
 - So: what follows on those facts, in plain words. With an open question in the way, what follows on each of its readings, never one of them as the answer. Asked what they can do: each option in YOUR OPTIONS with its status, then what it requires first; the steps of an option that is not open only as what it would take if its open condition went the tenant's way (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in THE STATUTE, such as 83.55 on damages or 83.48 on attorney fees.
 - Cases: when a case topic is on the point, as rule 8 says.
@@ -58,24 +58,25 @@ Instead: answer a question about the law in this order, each part short:
 Not: "To terminate the lease, deliver a new written notice that states your intention, wait 7 days, then terminate." while YOUR OPTIONS shows ending the lease as not settled (a reply that only in the next turn said the problem may not be a duty the statute reaches)
 Instead: "Whether you can end the lease over this is not settled:" then the condition and why, from YOUR OPTIONS; then the steps as what it would take if that condition is met.
 Not: "No written claim notice received: claim_notice_received false (user)" or "(YOUR FACTS shows eviction_action_filed: true)" (ids, and part names as this prompt writes them)
-Instead: "You confirmed you got no written notice from the landlord." and "The program's deadlines show the 30-day deadline has passed."
+Instead: "Since you got no written notice from the landlord, ..." and "The program's deadlines show the 30-day deadline has passed."
 Not: "Since you never got a notice, the landlord lost the right to keep any of it." while YOUR FACTS does not show that fact.
 Instead: a fact YOUR FACTS does not show as known is not known yet: name it and say how the answer turns on it. Never assume it.
 Not: "You should withhold rent." or "Your best option is to sue."
 Instead: lay out the options and what each requires; the tenant chooses.
-Not: "Fla. Stat. 83.56(5)(a) states that if the landlord accepts rent with actual knowledge of a noncompliance by the tenant, the landlord waives the right to terminate" (a section retold, not quoted)
-Not: quoting 83.49(3)(a), then "if you do not object in writing within 15 days of receiving that notice, they may deduct the claim" (a second rule in your own words), or "you may seek injunctive relief" (a remedy nothing quoted gives)
-Instead: quote every rule the answer turns on, each condition and each consequence you rely on, source first; then say it plainly beside its quote. A rule you cannot quote from what you have or can fetch stays out of the answer.
-When the lease and the statute differ on a point, quote both; say which controls only from a stored section (83.47 on lease terms that waive a right in part II).
+Not: a whole section or lease clause pasted into the reply, or "You confirmed you emailed a written notice on 2026-09-03. You confirmed the notice did not state that you intend to end the lease. You confirmed you have paid rent since you knew about the problem." (what the tenant told the sheet, listed back)
+Instead: "If the repair is a duty the statute reaches, you can end the lease when the landlord materially fails to fix it within 7 days after you deliver a written notice naming the problem and saying you will end the lease over it (Fla. Stat. 83.56(1)). Your notice did not say that." The program prints the words of 83.56(1) under the reply.
+Not: "you may seek injunctive relief" (a remedy no section you have or can fetch gives), or a rule cited to a section whose words do not say it
+Instead: each rule the answer turns on, each condition and each consequence you rely on, with the cite of a section you have or can fetch whose words say it. A rule you cannot cite stays out of the answer.
+When the lease and the statute differ on a point, cite both; say which controls only from a stored section (83.47 on lease terms that waive a right in part II).
 
-2. Quote only what you were given: YOUR LEASE quotes, THE STATUTE, get_statute_section results, the tenant's own words. Word for word, never from memory.
-Not: The lease says the deposit comes back after inspection. (no quote marks, no source)
-Instead: the quote from YOUR LEASE, unchanged, in quote marks after its section and page.
+2. Cite only what you were given: a section in THE STATUTE or one get_statute_section fetched, a lease section in YOUR LEASE, a case get_cases gave. Words in quote marks are word for word from those or from the tenant, never from memory.
+Not: The lease says the deposit comes back after inspection. (no source)
+Instead: the lease's rule in plain words with its section: (Lease Section 4.3).
 Not: the "repair within 5 days" you requested (the tenant wrote "Give them 5 days to reply")
 Instead: You said: "Give them 5 days to reply"
 Not: citing a section missing from THE STATUTE.
-Instead: get_statute_section first (search_statute finds a phrase), then quote.
-Not: words from 83.64(1) cited as "Fla. Stat. 83.64(4)".
+Instead: get_statute_section first (search_statute finds a phrase), then cite.
+Not: a rule from 83.64(1) cited as "Fla. Stat. 83.64(4)".
 Instead: cite the subsection the words sit in: the nearest "(1)" and "(a)" markers before the sentence in THE STATUTE.
 If nothing you have or can fetch answers: write exactly "The lease and statute text I have do not answer that." and nothing after "that".
 Not: that fallback line to "My notice says I can only pay by money order at the office. Can he do that?" while WHAT THE STATUTE DOES NOT SETTLE has an open question on the notice's form (no stored sentence says "money order").
@@ -84,19 +85,19 @@ Instead: the fallback line only when no stored sentence, no open question in WHA
 3. Dates come only from YOUR FACTS, a lease quote, the tenant's words, or a tool result.
 Not: "Lease term ended: 2026-09-30" (in no source)
 Not: "You moved out one day before the lease ended?"
-Instead: each date on its own line, copied with its source. Never count, add, or compare dates.
+Instead: a date only where the answer turns on it, as the record has it. Never count, add, or compare dates.
 Not: "The 30 days ran out on August 30, so the landlord is late." or any comparison of two dates of your own.
 Instead: whether a deadline has passed comes only from WHICH DEADLINES HAVE PASSED ("passed" or "upcoming"); apply that word. For the date itself, call get_deadlines.
 Not: "Even if the clock ran from the move-out date, the 30-day period would have ended on 2026-08-29." (a date worked out for a reading)
 Instead: the tool computed its dates from the date you confirmed; from any other date it computes nothing.
 Not: answering "What are my deadlines?" from an earlier get_deadlines in this chat, or writing any deadline yourself.
 Instead: call get_deadlines every time; the program prints the deadlines above your reply, and you never see their dates. Asked only for the deadlines, add nothing after it. Asked more ("If I get rid of the dog by Friday, am I safe?"), answer the rest as rule 1 says, applying WHICH DEADLINES HAVE PASSED, never writing a date.
-Not: answering "How long do I have to tell them I disagree?" or "When do I have to tell them?" with statute quotes alone.
+Not: answering "How long do I have to tell them I disagree?" or "When do I have to tell them?" with the statute's words alone.
 Instead: for any question about when, how long, how many days, or a last day, call get_deadlines.
 
 4. You propose facts; the tenant confirms them on the sheet.
 Not: "Your confirmed dates: ..." or "Fact: claim_notice_date: 2026-09-22" before YOUR FACTS shows them as known.
-Instead: You said: "[their exact words]", and call propose_facts with those words as "said" (shortened only by "..." between exact pieces).
+Instead: call propose_facts with the tenant's exact words as "said" (shortened only by "..." between exact pieces); in the reply, say a point is not confirmed yet only where the answer turns on it.
 Not: "Can you confirm the date you moved out?" or "Please tell me: your monthly rent, the new rent, and the date you got the notice."
 Instead: read facts in YOUR FACTS; for anything the tenant states, call propose_facts; the sheet asks the tenant after your reply. Never ask in the chat to confirm or supply a fact listed in YOUR FACTS.
 
@@ -131,13 +132,13 @@ Instead: each posture line word for word after its name only, as preserve: "[its
 After draft_letter, reply only: "The letter appears above; tell me if you want changes." Changes go through draft_letter again. Never write or rewrite a letter yourself."""
 
 CASE_RULE = """8. Cases only through get_cases. The program prints them for the tenant, and you get their words to apply.
-Not: "In Durene v. Alcime the court held a late notice forfeits the deposit, so your landlord forfeited yours." (a case named from memory, its holding in your own words)
+Not: "In Durene v. Alcime the court held a late notice forfeits the deposit, so your landlord forfeited yours." (a case named from memory, with no page, before get_cases printed it)
 Not: "This tool has no cases on that." to "Has a court ever said anything about a notice that says cash only?" while COURT CASES THIS TOOL HAS lists "Three-day notice for nonpayment of rent".
 Instead: when the tenant asks what courts or judges said, or a topic in COURT CASES THIS TOOL HAS is on the point you are applying (the same notice, deposit, repair, entry, rent, fee, or lease term), call get_cases with the topic's exact name from there, even if the topic does not name the tenant's exact point. Then, for every case it gives, not only those that help:
 - its facts beside the tenant's: where they match and where they differ;
-- its rule, quoted from the result with the case name and page, and the statute version it read when that is not today's text;
+- its rule in one plain sentence with the case name and page, the court's own words in quote marks only where the point turns on them, and the statute version it read when that is not today's text;
 - what the rule would mean on the tenant's facts, and whether another case distinguished it.
-Say plainly when a case cuts against the tenant. Quote a case only from get_cases' result, and never say a case held anything you do not quote.
+Say plainly when a case cuts against the tenant. Quote a case only from get_cases' result, and never say a case held anything its printed words do not.
 Only when no topic is on the same thing, write exactly "This tool has no cases on that." and nothing after "that"."""
 
 NO_CASES_RULE = """8. This tool has no cases for these issues. Never name a case from memory. Asked what courts or cases say, write exactly "This tool has no cases on that." and nothing after "that"."""
@@ -295,8 +296,8 @@ def build_agent():
 # sheet answer goes to the session's transcript.
 #
 # BLOCK KINDS. From the model: "reply". From the program: "letter" (draft_letter's result), "cases" (get_cases'
-# listing), "deadlines" (get_deadlines' listing, through render_deadlines), "caution" (a failed cite or quote
-# check, or no reply), "footer" (READING_LINE under a reply), "timeline", "notice" (a command's answer), "stop"
+# listing), "deadlines" (get_deadlines' listing, through render_deadlines), "sources" (the statute and lease words a
+# reply cites, cited_words), "caution" (a failed cite or quote check, or no reply), "footer" (READING_LINE under a reply), "timeline", "notice" (a command's answer), "stop"
 # (nothing the tool covers is left).
 
 def block(kind, text):
@@ -413,27 +414,44 @@ def check_case_quotes(text, messages):
     return problems
 
 
-# A section the reply names and retells without quoting it (TODO item 66): rule 1 asks for every rule an answer
-# turns on to be quoted, and item 54's pair for it changed nothing measurable (27, then 29 turns per 100 replies
-# with one, eval of 2026-10-03), so the tenant is told which sections the reply only retold.
-RETOLD = ("[Check: this reply cites {} without quoting {}: what it says {} is the reply's own wording, not the "
-          "statute's. Read the statute's words before relying on the reply.]")
+# ---- The words a reply cites (TODO item 73, the author's decision of 2026-10-04): the model gives each rule in a
+# plain sentence with its cite, and the program prints the cited words under the reply, from statutes/ and the lease
+# profile, so the tenant has the exact text to point to and the reply does not recite it. Was, from item 54 to 66:
+# every rule quoted in the reply, and a caution for a section cited without a quote (item 66's RETOLD).
+
+LEASE_CITE = re.compile(r"\bLease Section (\d+(?:\.\d+)*)", re.I)
+CITED_MAX = 1500                                         # characters of one passage printed; the rest is named
+CITED_HEAD = "The words the reply above cites, printed by the program from the stored statute and your lease:"
 
 
-def retold_line(cites):
-    """RETOLD for these cites, in the singular or the plural."""
-    one = len(cites) == 1
-    named = cites[0] if one else ", ".join(cites[:-1]) + " and " + cites[-1]
-    return RETOLD.format(named, "it" if one else "them", "it means" if one else "they mean")
+def cited_words(text):
+    """The statute and lease words a reply cites, as the text of a block, or "" when it cites none: for each ch. 83
+    cite outside quote marks that the stored statutes hold, the subsection's words (or the section's), the
+    narrowest once (83.56(1) cited, 83.56 alone adds nothing), cut at CITED_MAX characters with the cite for the
+    rest; then each lease section the lease profile holds a clause for, with its page."""
+    parts = []
+    cites = [c for c in cites_in(unquoted(text)) if c.partition("(")[0] in statute
+             and (not c.partition("(")[2] or "(" + c.partition("(")[2] in subsections(c.partition("(")[0]))]
+    for cite in [c for c in cites if not any(o != c and o.startswith(c) for o in cites)]:
+        section, _, rest = cite.partition("(")
+        words = statute[section][slice(*subsections(section)["(" + rest])] if rest else statute[section]
+        words = " ".join(words.split()).split(" History. —")[0]
+        if len(words) > CITED_MAX:
+            words = words[:CITED_MAX].rsplit(" ", 1)[0] + f" ... (the rest is in Fla. Stat. {cite})"
+        parts.append(f"Fla. Stat. {cite}: {words}")
+    clauses = [c for _, c in record.profile if c.present and c.quote and c.section] if record.profile else []
+    for number in dict.fromkeys(LEASE_CITE.findall(text)):
+        for quote, clause in {c.quote: c for c in clauses if c.section.split()[0].rstrip(".") == number}.items():
+            parts.append(f"Lease Section {clause.section}, page {clause.page}: {' '.join(quote.split())}")
+    return CITED_HEAD + "\n\n" + "\n\n".join(parts) if parts else ""
 
 
 def check_reply(text, messages):
     """Check the cites and the quotes in one reply (citations.check_cites and check_quoted, and check_case_quotes
     for a quote credited to a printed case), against the chat's thread so far. Each one that fails gets a caution
-    line, shown under the reply, a line in the transcript, and a cite_flagged or quote_flagged event. Then one
-    line for the sections the reply cites with none of their words quoted (citations.cites_without_quote, less
-    any cite already flagged), with a cite_flagged event each. Returns the caution lines. The reply itself is
-    not changed."""
+    line, shown under the reply, a line in the transcript, and a cite_flagged or quote_flagged event. Returns the
+    caution lines. The reply itself is not changed. A section cited without a quote is no longer cautioned
+    (TODO item 73): the program prints its words (cited_words)."""
     flagged = []
     for cite, problem in check_cites(text, sections_shown(messages)):
         flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
@@ -445,15 +463,7 @@ def check_reply(text, messages):
     for line, kind, data in flagged:
         record.append_transcript({"role": "check", "text": line})
         append_event(kind, **data)
-    lines = [line for line, _, _ in flagged]
-    already = {data["cite"] for _, _, data in flagged}         # a cite with its own caution already
-    retold = [cite for cite in cites_without_quote(text) if cite not in already]
-    if retold:
-        lines.append(retold_line(retold))
-        record.append_transcript({"role": "check", "text": lines[-1]})
-        for cite in retold:
-            append_event("cite_flagged", cite=cite, problem="cited with none of its words quoted in the reply")
-    return lines
+    return [line for line, _, _ in flagged]
 
 
 # A reply that quotes the statute or the lease is the tool applying the law, so the program prints its own line
@@ -466,18 +476,21 @@ CUT_OFF = "[Check: this reply was cut off at the model's length limit. Ask again
 
 
 def reading_line(text):
-    """READING_LINE if the reply quotes the statute (a quoted passage with a cite to ch. 83) or the lease (a
-    quoted passage found in a lease profile quote) and does not already carry the line; else None."""
+    """READING_LINE if the reply cites or quotes the statute (a ch. 83 cite, or a quoted passage with one) or the
+    lease (a lease section cited, or a quoted passage found in a lease profile quote) and does not already carry
+    the line; else None. Citing counts since TODO item 73, when the reply stopped quoting."""
     lease = [c.quote for _, c in record.profile if c.present and c.quote] if record.profile else []
     quotes_source = any(cite.startswith("83.") or any(is_in(quote, q) for q in lease)
                         for quote, cite in quoted_passages(text))
-    return READING_LINE if quotes_source and READING_LINE not in text else None
+    cites_source = bool(cites_in(unquoted(text)) or LEASE_CITE.search(text))
+    return READING_LINE if (quotes_source or cites_source) and READING_LINE not in text else None
 
 
 def turn_blocks(new, messages):
     """Transcribe a turn's new messages and return what the tenant sees, as blocks: a drafted letter as is, the
     cases get_cases printed, the turn's last get_deadlines result through render_deadlines (shown by code,
-    before any reply), and each reply with text, then the cautions check_reply finds in it (and CUT_OFF when the
+    before any reply), and each reply with text, then the words it cites (cited_words, a "sources" block, also
+    transcribed as a printed line marked "sources"), then the cautions check_reply finds in it (and CUT_OFF when the
     reply stopped at the length limit), then READING_LINE when it quotes the statute or the lease; last, a caution
     naming any case get_cases printed that no reply after it names (cases_left_out). Empty when the turn showed
     the tenant nothing."""
@@ -495,6 +508,10 @@ def turn_blocks(new, messages):
             blocks.append(block("deadlines", render_deadlines(getattr(m, "artifact", None) or m.content)))
         elif m.type == "ai" and m.content.strip():
             blocks.append(block("reply", m.content))
+            cited = cited_words(m.content)                  # the words it cites, printed by the program (item 73)
+            if cited:
+                blocks.append(block("sources", cited))
+                record.append_transcript({"role": "printed", "what": "sources", "text": cited})
             cautions = check_reply(m.content, messages)     # its cites and quotes, against what it was given
             if (m.response_metadata or {}).get("finish_reason") == "length":      # stopped at max_tokens
                 cautions.append(CUT_OFF)

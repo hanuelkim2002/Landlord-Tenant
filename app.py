@@ -105,6 +105,7 @@ PRINTED_BY = {
     "cases": "Printed by the program from the case wiki, in the courts' own words.",
     "timeline": "Printed by the program from your record.",
     "stop": "Printed by the program.",
+    "sources": "Printed by the program: the statute's and your lease's own words that the reply above cites.",
 }
 
 
@@ -123,6 +124,10 @@ def show(b):
         st.info(plain(text))
     elif kind == "sheet":
         st.caption(plain(text))
+    elif kind == "sources":                                # the cited words, folded away until opened (item 73)
+        with st.expander("The statute and lease words cited above"):
+            st.caption(PRINTED_BY[kind])
+            st.markdown(plain(text.split("\n\n", 1)[1]))
     else:                                                  # deadlines, letter, cases, timeline, stop
         with st.container(border=True):
             st.caption(PRINTED_BY[kind])

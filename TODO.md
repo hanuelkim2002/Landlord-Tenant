@@ -24,11 +24,6 @@ lease clause pasted), so an answer cites and the program prints the cited words.
     repair_not_made's gates (whether a problem 83.51(1)(b) does not name, like an AC, leaves ending the lease
     not settled rather than closed; whether rent paid with knowledge belongs as a gate on ending the lease
     only, as now, and not on withholding rent; the new open question on that waiver and its two readings).
-73. Cite, do not recite: the model states each rule in one plain sentence with its cite and lists back no
-    confirmed fact; the program prints the cited statute subsection's words and any cited lease clause
-    (from the profile) under the reply. The quote checks stay for any quote the model still writes; item 66's
-    caution for a section cited without a quote goes, since that is now the wanted form. Rubric and eval: a
-    rule with no cite, or one its printed words do not say, is the slip; reciting is a slip of its own.
 74. Try the author's scenario again on the web page, and run the eval, after items 72 and 73.
 
 49. The author's sample of the first applying eval (`docs/evals/2026-10-02-apply/`): six transcripts, their

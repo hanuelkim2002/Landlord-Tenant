@@ -5,6 +5,23 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- Cite, do not recite (TODO item 73, done). Was: every rule quoted in the reply (rule 1, item 54), the tenant's
+  confirmed facts listed back ("You confirmed ... You confirmed ..."), and a caution for a section cited without
+  its words (item 66); in the author's run a reply pasted a 1,900-character lease clause to answer "was AC part of
+  my lease?". Now the format line and rules 1, 2, 3, 4, and 8 ask for each rule in one plain sentence with its
+  cite, quote marks only for the few words a point turns on, and only the facts the answer turns on, in a few
+  words; the author's recited reply is rule 1's new "Not:". The program prints the cited words under the reply
+  (`agent.cited_words`: each ch. 83 cite's subsection or section from `statutes/`, the narrowest once, cut at
+  1,500 characters; each cited lease section's clause from the profile), as a `sources` block, folded in an
+  expander on the web page, and a printed transcript line marked "sources". `reading_line` counts a cite as well
+  as a quote. Item 66's caution (`RETOLD`) is gone. The quote and cite checks stay. Eval: `applied` takes a cite
+  or a quote; a new measure, `recited` (more than 300 quoted characters, or three "You confirmed" lines); the
+  transcript labels the printed words. Rubric: LAW_UNSOURCED is a rule with no cite, or one its printed words do
+  not say; QUOTE_UNMARKED no longer counts a plain-words rule with its cite; new OPTION_BEFORE_OPEN and RECITED.
+  New eval scenario `repair_ac_terminate`, the author's AC story; the four stories where a repair is confirmed
+  answer the new sheet question. Smoke: the rules, the printed words (the narrowest cite once, the lease clause
+  with its page), the block order, no caution for a cite without a quote.
+
 - Options before steps, checked by code: the pilot on repair_not_made (TODO item 72, in part). Was: the model
   decided for itself whether an option was open, and in the author's run it laid out how to end the lease over
   an AC not repaired before any word on whether 83.56(1) reaches an AC. New: a playbook's `spec.options`

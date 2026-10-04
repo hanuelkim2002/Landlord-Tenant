@@ -35,7 +35,9 @@ than APPLIED_WORDS words outside quote marks: the law set out and not applied), 
 outside quote marks, that is in no fact, no tenant line, no printed deadline, and is not the session's day),
 cases not given (a "Name v. Name" in a reply that no get_cases result in the session holds), retold cites (a
 ch. 83 cite outside quote marks whose words no quote in the same reply holds, citations.cites_without_quote:
-a rule retold instead of quoted, TODO item 54), deadlines the program printed itself (asked when, the model
+a rule retold instead of quoted, TODO item 54; since item 73 the wanted form, the program printing the words),
+recited (more than RECITED_CHARS quoted characters, or RECITED_FACTS lines listing what the tenant confirmed or
+said, TODO item 73), deadlines the program printed itself (asked when, the model
 did not call get_deadlines, TODO item 65; the turn's "calls get_deadlines" still counts only the model), and two word
 screens that mark a reply for a person to read: CHOOSE_WORDS (you should, your best option, I recommend ...)
 and OFFER_WORDS (would you like me to ...). The screens find candidates; they are not verdicts. Since
@@ -70,6 +72,9 @@ CHOOSE_WORDS = re.compile(r"(?<!what )(?<!whether )\byou should\b|\byour best (o
 # An applied answer: a quote, and enough words of the model's own around it to apply it to the tenant. A list of
 # quotes with "This tool does not decide that." has a handful (the page's "what can I do to sue" answer, 6).
 APPLIED_WORDS = 40
+CITE_SEEN = re.compile(r"\b83\.\d+|\bLease Section \d", re.I)   # a statute or lease cite in a reply
+RECITED_CHARS = 300                                          # quoted characters past which a reply recites
+RECITED_FACTS = 3                                            # "You confirmed ..." lines that make a list
 SOURCE_LABEL = re.compile(r"Fla\. Stat\. [\d.()a-z]+|Lease Section [\d.]+(?:, page \d+)?|\(at \d+\)", re.I)
 CASE_NAME = re.compile(r"\b[A-Z][A-Za-z.&'’]+(?: [A-Z][A-Za-z.&'’]+)* v\. [A-Z][A-Za-z.&'’]+")
 OFFER_WORDS = re.compile(r"\b(would you like|do you want me|if you(?:'d| would) like|i can (?:draft|help|"
@@ -244,9 +249,19 @@ def quotes_only(reply):
 
 
 def applied(reply):
-    """A reply that quotes and applies: a quote, APPLIED_WORDS words or more of its own, addressed to the tenant."""
-    return (any(len(q) >= 22 for q in QUOTED.findall(reply)) and own_words(reply) >= APPLIED_WORDS
+    """A reply that cites or quotes and applies: a ch. 83 or lease cite, or a quote (since TODO item 73 a reply
+    cites instead of quoting), APPLIED_WORDS words or more of its own, addressed to the tenant."""
+    sourced = any(len(q) >= 22 for q in QUOTED.findall(reply)) or CITE_SEEN.search(reply) is not None
+    return (sourced and own_words(reply) >= APPLIED_WORDS
             and re.search(r"\byou(r)?\b", QUOTED.sub(" ", reply), re.I) is not None)
+
+
+def recited(reply):
+    """A reply that recites (TODO item 73): more than RECITED_CHARS characters inside quote marks (a section or a
+    lease clause pasted in), or RECITED_FACTS or more lines listing back what the tenant confirmed or said."""
+    pasted = sum(len(q) for q in QUOTED.findall(reply))
+    listed = len(re.findall(r"^\s*(?:[-*]\s*)?You (?:confirmed|said)\b", reply, re.M))
+    return pasted > RECITED_CHARS or listed >= RECITED_FACTS
 
 
 def measure_turn(turn, known_dates=frozenset(), fetched=""):
@@ -271,6 +286,7 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
         "deadlines_by_program": any(e["role"] == "printed" and e.get("what") == "deadlines" for e in turn["entries"]),
         "choose_words": sorted({m.group(0) for m in CHOOSE_WORDS.finditer(bare)}),
         "quotes_only": sum(quotes_only(r) for r in replies),
+        "recited": sum(recited(r) for r in replies),
         "applied": any(applied(r) for r in replies),
         "dates_made": sorted(dates_in(bare) - set(known_dates)),
         "cases_not_given": sorted({m.group(0) for m in CASE_NAME.finditer(text) if not case_given(m.group(0), fetched)}),
@@ -357,6 +373,8 @@ def transcript_text(entries):
             lines.append(f"[PROGRAM CAUTION shown to the tenant] {e['text']}")
         elif role == "footer":
             lines.append(f"[PROGRAM LINE printed under the reply] {e['text']}")
+        elif role == "printed" and e.get("what") == "sources":
+            lines.append(f"[PROGRAM PRINTED, the statute and lease words the reply cites]\n{e['text']}")
         elif role == "printed" and e.get("what") == "deadlines":
             lines.append(f"[PROGRAM PRINTED, the deadlines: asked when, the model did not call get_deadlines]\n{e['text']}")
         elif role == "printed":
@@ -417,6 +435,7 @@ def score_run(entry, scenario, out):
         "empty_turns": sum(ev["kind"] == "reply_empty" for ev in events),
         "cautions": sum(len(t["cautions"]) for t in measured),
         "quotes_only": sum(t["quotes_only"] for t in measured),
+        "recited": sum(bool(t.get("recited")) for t in measured),
         "choose_screen": sum(bool(t["choose_words"]) for t in measured),
         "dates_made": sum(bool(t["dates_made"]) for t in measured),
         "cases_not_given": sum(bool(t["cases_not_given"]) for t in measured),
@@ -441,14 +460,14 @@ def score(out):
         row = summary.setdefault(s["scenario"], {"runs": 0, "crashed": 0, "gateway_trouble": 0, "expected_ok": 0, "replies": 0,
                                                  "empty_turns": 0, "cautions": 0, "quotes_only": 0, "choose_screen": 0,
                                                  "dates_made": 0, "cases_not_given": 0,
-                                                 "offer_screen": 0, "field_names": 0, "prompt_names": 0, "cites_unquoted": 0, "echo": 0,
+                                                 "offer_screen": 0, "field_names": 0, "prompt_names": 0, "cites_unquoted": 0, "echo": 0, "recited": 0,
                                                  "deadlines_by_program": 0,
                                                  "footers": 0,
                                                  "failed": {}})
         row["runs"] += 1
         for key in ("crashed", "gateway_trouble", "expected_ok", "replies", "empty_turns", "cautions", "quotes_only",
                     "choose_screen", "dates_made", "cases_not_given", "offer_screen", "field_names", "prompt_names",
-                    "cites_unquoted", "echo", "footers", "deadlines_by_program"):
+                    "cites_unquoted", "echo", "footers", "deadlines_by_program", "recited"):
             row[key] += int(s[key])
         for x in s["expect"]:
             if not x["ok"]:
@@ -456,13 +475,13 @@ def score(out):
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
     print(f"\n{'scenario':<28}{'runs':>5}{'gw':>4}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'qonly':>6}"
           f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'prompt':>7}{'retold':>7}{'echo':>5}{'footer':>7}"
-          f"{'dl-prog':>8}")
+          f"{'dl-prog':>8}{'recite':>7}")
     for name, row in summary.items():
         print(f"{name:<28}{row['runs']:>5}{row['gateway_trouble']:>4}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
               f"{row['cautions']:>5}{row['quotes_only']:>6}{row['choose_screen']:>8}{row['dates_made']:>6}"
               f"{row['cases_not_given']:>6}{row['offer_screen']:>7}{row['field_names']:>6}{row['prompt_names']:>7}"
               f"{row['cites_unquoted']:>7}"
-              f"{row['echo']:>5}{row['footers']:>7}{row['deadlines_by_program']:>8}")
+              f"{row['echo']:>5}{row['footers']:>7}{row['deadlines_by_program']:>8}{row['recited']:>7}")
         for what, n in row["failed"].items():
             print(f"    failed {n}x: {what}")
 

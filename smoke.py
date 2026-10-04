@@ -38,7 +38,7 @@ from record import (append_event, append_transcript, end_session, list_matters, 
 from lease import FOOTER, lease_clauses
 from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from agent import (CASE_RULE, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, command, given_text, print_blocks,
+from agent import (CASE_RULE, CITED_HEAD, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, cited_words, command, given_text, print_blocks,
                    printed_cases, retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn,
                    turn_blocks)
 from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
@@ -479,8 +479,9 @@ try:
     check("item 56: the open questions' part says the stored text settles none, and rule 1's So gives each reading",
           "settles none of them, so give every reading and pick none):\n" in system_prompt()
           and "what follows on each of its readings, never one of them as the answer" in system_prompt())
-    check("item 54: rule 1 asks for every rule the answer turns on to be quoted",
-          "Instead: quote every rule the answer turns on, each condition and each consequence you rely on" in system_prompt())
+    check("item 73: rule 1 asks for every rule the answer turns on with its cite, and the format line to cite, not recite",
+          "Instead: each rule the answer turns on, each condition and each consequence you rely on, with the cite" in system_prompt()
+          and "Cite, do not recite:" in system_prompt())
     check("item 46: the rules apply the law, and open questions reach the model with their readings",
           "1. Apply the law to the tenant's facts." in system_prompt() and "stay open, with their readings" in system_prompt()
           and "readings:" in prompt_part("open"))
@@ -523,13 +524,19 @@ try:
           "[Check: 83.64" in cautions and "[Check: 83.49" not in cautions
           and [(e["kind"], e.get("cite")) for e in flagged] == [("cite_flagged", "83.64"), ("quote_flagged", "83.49(3)(b)")])
     events_now = len(read_events())
-    retold = check_reply(f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nUnder 83.49(3)(b), if you do not object within 15 '
-                         f'days, they may deduct.', [])
-    check("item 66: a section the reply cites and retells without quoting gets one caution line and an event; one it "
-          "quotes does not",
-          retold == ["[Check: this reply cites 83.49(3)(b) without quoting it: what it says it means is the reply's own "
-                     "wording, not the statute's. Read the statute's words before relying on the reply.]"]
-          and [(e["kind"], e["cite"]) for e in read_events()[events_now:]] == [("cite_flagged", "83.49(3)(b)")])
+    retold_text = (f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nUnder 83.49(3)(b), if you do not object within 15 days, they '
+                   f'may deduct (Lease Section 4.3).')
+    retold = check_reply(retold_text, [])
+    cited = cited_words(retold_text)
+    lease_43 = next(c for _, c in record.profile if c.present and c.section and c.section.startswith("4.3"))
+    check("item 73: a section cited without a quote gets no caution and no event (item 66's caution is gone); the "
+          "program prints the words of each cite, the narrowest once, and the lease clause with its page",
+          retold == [] and len(read_events()) == events_now
+          and cited.startswith(CITED_HEAD) and "\n\nFla. Stat. 83.49(3)(a): (a) Upon the vacating" in cited
+          and "\n\nFla. Stat. 83.49(3)(b): (b) Unless the tenant objects" in cited and "Fla. Stat. 83.49:" not in cited
+          and f"Lease Section {lease_43.section}, page {lease_43.page}: " in cited
+          and [b["kind"] for b in turn_blocks([AIMessage(content=retold_text)], [])] == ["reply", "sources", "footer"]
+          and cited_words("You said nothing about the law.") == "")
     # cases (wiki.py, get_cases): nothing is offered until a page is verified; a verified, tagged page offers its
     # topics, prints by code, and is logged; an untagged page never shows; a case cite must be one shown
     check("no case topic is offered while no page is verified, and the prompt says so",
@@ -623,10 +630,9 @@ try:
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{sid}.jsonl").read_text().splitlines()]
     check("the transcript holds the tenant's words and every sheet answer",
           [line["role"] for line in lines].count("tenant") == 1 and [line["role"] for line in lines].count("sheet") == 12)
-    check("the transcript holds every caution: a cite and a quote, item 66's retold section, then item 57's wrong "
-          "case and case left out",
+    check("the transcript holds every caution: a cite and a quote, then item 57's wrong case and case left out",
           [line["text"][:17] for line in lines if line["role"] == "check"]
-          == ["[Check: 83.64 was", "[Check: the quote", "[Check: this repl", "[Check: the quote", "[Check: the progr"])
+          == ["[Check: 83.64 was", "[Check: the quote", "[Check: the quote", "[Check: the progr"])
 
     # the timeline
     full, plain = render_timeline(full=True), render_timeline()
@@ -760,8 +766,8 @@ try:
     # blocks (TODO item 31): what the tenant sees from a turn or a command, the model's words apart from the
     # program's, for the terminal and the web page alike
     bad_cite = AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nSee also 83.64.')
-    check("a reply's blocks: the model's words, then the program's cautions, then its line",
-          [b["kind"] for b in turn_blocks([bad_cite], [bad_cite])] == ["reply", "caution", "footer"])
+    check("a reply's blocks: the model's words, the words it cites, then the program's cautions, then its line",
+          [b["kind"] for b in turn_blocks([bad_cite], [bad_cite])] == ["reply", "sources", "caution", "footer"])
     with contextlib.redirect_stdout(io.StringIO()) as printed:
         print_blocks([{"kind": "reply", "text": "One."}, {"kind": "footer", "text": "Two."}])
     check("the terminal prints each block's text with an empty line after it", printed.getvalue() == "One.\n\nTwo.\n\n")

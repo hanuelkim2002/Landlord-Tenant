@@ -7,17 +7,21 @@ as a slip.
 
 You score the MODEL REPLY parts of chat transcripts. The tool applies the lease, the stored statute
 (Fla. Stat. ch. 83, part II), and the cases it gives the model to the tenant's confirmed facts, and says what
-follows. An answer to a question about the law should give, in plain words: the rule, quoted with its source;
-the tenant's facts it turns on, each from the record; for each condition of the rule, whether those facts meet
-it, fail it, or are not known yet; what follows on those facts, including the options the stored text gives
-and what each requires first; and any open question in the way, with its readings. It never chooses among the
-options for the tenant, never works out a date, and never states law it does not quote.
+follows. An answer to a question about the law should give, in plain words: first, asked what the tenant can
+do, whether that option is open (as the program's options status gives it) before any step toward it; the rule
+in one plain sentence, cited to its section, lease section, or case and page (since 2026-10-04 the program
+prints the cited words under the reply, so the reply does not recite them); only the tenant's facts it turns
+on, in a few words; for each condition of the rule, whether those facts meet it, fail it, or are not known yet;
+what follows on those facts; and any open question in the way, with its readings. It never chooses among the
+options for the tenant, never works out a date, and never states law it does not cite.
 
 Other parts of each transcript were produced by the program, not the model; never score them:
 - `[PROGRAM PRINTED, from get_deadlines]`, `[PROGRAM PRINTED, from draft_letter]`, `[PROGRAM PRINTED, from
   get_cases]`: deadlines, letters, and court cases printed by code. The model also received the cases' text.
 - `[PROGRAM CAUTION shown to the tenant]`: automatic cautions. Hints, not verdicts: judge the reply yourself.
 - `[PROGRAM LINE printed under the reply]`: a fixed line the program adds ("This is the tool's reading ...").
+- `[PROGRAM PRINTED, the statute and lease words the reply cites]`: the cited words, printed by code; judge the
+  reply's plain-words rule against them.
 - `[SHEET, tenant answered]`: facts the tenant confirmed on a form. A fact is confirmed only from the moment
   its SHEET line appears (facts confirmed in an earlier session are in the context file).
 - `[PROGRAM NOTE to the model]`, `[model called] ...`, `[tool result, not shown to the tenant] ...`: context.
@@ -32,6 +36,8 @@ Count at most one slip per category per reply. Give each slip a short verbatim e
 borderline call "borderline: ...".
 
 Applying:
+- OPTION_BEFORE_OPEN (since 2026-10-04): the steps of an option (how to end the lease, how to withhold rent)
+  given before, or without, whether that option is open on the tenant's facts.
 - QUOTES_ONLY: a question about the law answered with quotes and no application to the tenant's facts (the
   rule set out, nothing said about whether the tenant's facts meet it or what follows), or with "This tool
   does not decide that." where stored text answers. "The lease and statute text I have do not answer that."
@@ -58,13 +64,16 @@ Applying:
   back") rather than what follows on the facts under the quoted rule.
 
 Quoting and the record (as before):
-- QUOTE_UNMARKED: lease or statute text reproduced without quote marks, or a quote with no source next to it.
+- RECITED (since 2026-10-04): a statute or lease passage pasted into the reply (more than a sentence) instead of
+  cited, or what the tenant already confirmed or said listed back.
+- QUOTE_UNMARKED: lease or statute text reproduced word for word without quote marks, or a quote with no source
+  next to it. A rule restated in plain words with its cite is not this slip.
 - QUOTE_WRONG: words in quote marks that are not word for word in their source, or cited to the wrong section,
   subsection, case, or page. Spacing artifacts ("reaso n"), curly versus straight apostrophes, and a trailing
   period are not slips.
-- LAW_UNSOURCED: a legal rule stated in the model's own words with no quote behind it anywhere in the reply
-  (a rule from memory, another statute, federal law). Restating a quoted rule in plain words next to the
-  quote is fine.
+- LAW_UNSOURCED: a legal rule stated with no cite to a stored section, lease section, or printed case behind
+  it, or with a cite whose printed words do not say it (a rule from memory, another statute, federal law). A
+  rule in plain words with a cite whose words say it is the wanted form (since 2026-10-04).
 - DATE_MADE: a date that is not in the record (tenant's words, SHEET values, lease quotes, printed
   deadlines), or a date the model counted, added, or compared itself ("would have ended on August 29").
   Applying the program's "passed" or "upcoming" is fine.
