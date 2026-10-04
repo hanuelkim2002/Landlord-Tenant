@@ -97,6 +97,16 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     (cases_retaliation) its case topic was offered only because the story also confirmed repair_not_made.
     Adding the section is a playbook change for the author to check against `statutes/`.
 
+79. "The lease does not contain a holdover clause", "the lease does not mention any late fee": said from YOUR LEASE
+    in 4 turns of 12 runs on 2026-10-04 (`dev/eval_runs/2026-10-04-items76-77`), though the test lease has both
+    (2.4, Month-to-Month Holdover With Consent; a late charge of $75); rule 2's pair from item 76 did not stop
+    it. A `search_lease(phrase)` tool over the matter's `pages.json`, like `search_statute`, so the model looks
+    before it says the lease lacks something, and the lease's own words are printed as for a cited clause.
+80. The options do not see a promise in the lease: with the test lease's Article 7.2 read ("Landlord shall repair
+    the heating, air-conditioning, electrical, and plumbing systems"), ending the lease over an AC still comes
+    out not settled on the statute side alone, though 83.56(1) also reaches "material provisions of the rental
+    agreement". For the author: a gate met by a lease clause that promises the repair (a fact the sheet asks, or
+    the profile's repairs clause), and whether that promise is "material".
 78. Profiles read before 2026-10-04 lack the repairs clause (`maintenance_and_repairs` is `None`, "not read"): the
     test matter `t-test`, and any saved matter. A way to read just the new clause from a matter's stored
     `pages.json`, without starting a new matter, for the author to run on a matter of their choosing.

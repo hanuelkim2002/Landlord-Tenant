@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- A check of items 76 and 77 on four stories, 3 runs each (`dev/eval_runs/2026-10-04-items76-77`, against the same
+  stories in `-after`). Lease field names used as cites: 3 turns to 0; field ids overall 10 to 5. Asked "Is the
+  AC part of my lease?", all three runs now cite the test lease's Article 7, whose 7.2 makes the landlord repair
+  the air-conditioning system (before, three runs said the lease does not mention it). Still said from the
+  profile: "the lease does not contain a holdover clause", "the lease does not mention any late fee", though the
+  test lease has both (TODO item 79). The options do not see a repair promised in the lease (item 80). The AC
+  story now expects that answer to cite Article 7 and never say the lease does not mention it, in place of
+  "applied", which a correct one-line answer failed.
+
 - Lease clauses in plain words, each with the cite to use (TODO item 77, done). Was: YOUR LEASE was the profile as
   JSON, and the model cited a clause with no section number by its field name ("(Lease notice_before_vacating)",
   "(term_end)"), most of the 17 turns with a field id in the eval of 2026-10-04. Now `lease.lease_lines` gives a

@@ -1,5 +1,5 @@
 {
-  "about": "repair_not_made, after the author's run on the web page (2026-10-04, TODO items 72 and 73): an AC not repaired, a written notice by e-mail that did not say the tenant would end the lease, rent paid since. Asked how to end the lease, the answer must say first that ending it is not settled (83.56(1) reaches a failure of a duty in 83.51(1) or of a material lease provision, and 83.51(1) names no AC), before any step; and it must cite, not recite.",
+  "about": "repair_not_made, after the author's run on the web page (2026-10-04, TODO items 72 and 73): an AC not repaired, a written notice by e-mail that did not say the tenant would end the lease, rent paid since. Asked how to end the lease, the answer must say first that ending it is not settled (83.56(1) reaches a failure of a duty in 83.51(1) or of a material lease provision, and 83.51(1) names no AC), before any step; and it must cite, not recite. Asked whether the AC is part of the lease, the answer cites the lease's repairs clause (the test lease's Article 7, read into the profile since TODO item 76), and never says the lease does not mention it.",
   "start": [
     "new",
     "t-test",
@@ -115,7 +115,12 @@
       },
       {
         "say": "Is the AC part of my lease",
-        "applied": true
+        "must": [
+          "(?i)Lease (?:Article|Section) 7\\b"
+        ],
+        "must_not": [
+          "(?i)lease (?:does not|doesn't) (?:mention|say|contain|address)"
+        ]
       },
       {
         "say": "stop paying rent instead",
