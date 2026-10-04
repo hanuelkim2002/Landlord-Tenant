@@ -535,9 +535,13 @@ try:
           retold == [] and len(read_events()) == events_now
           and cited.startswith(CITED_HEAD) and "\n\nFla. Stat. 83.49(3)(a): (a) Upon the vacating" in cited
           and "\n\nFla. Stat. 83.49(3)(b): (b) Unless the tenant objects" in cited and "Fla. Stat. 83.49:" not in cited
-          and f"Lease Section {lease_43.section}, page {lease_43.page}: " in cited
+          and f"Lease Section 4.3, page {lease_43.page} (what the landlord may keep from the deposit" in cited
           and [b["kind"] for b in turn_blocks([AIMessage(content=retold_text)], [])] == ["reply", "sources", "footer"]
           and cited_words("You said nothing about the law.") == "")
+    page_cited = cited_words("The landlord is the one named in your lease (Lease, page 1).")
+    check("item 77: a page cite prints the clauses on that page with no section number, each with its label",
+          "Lease, page 1 (the landlord's name and address): " in page_cited and "Lease, page 1 (the tenants' names): " in page_cited
+          and "Section" not in page_cited)
     # cases (wiki.py, get_cases): nothing is offered until a page is verified; a verified, tagged page offers its
     # topics, prints by code, and is logged; an untagged page never shows; a case cite must be one shown
     check("no case topic is offered while no page is verified, and the prompt says so",
@@ -901,6 +905,21 @@ check("item 76: an older profile loads with the repairs clause not read, and cla
 check("item 76: the lease part says it is not the whole lease, and rule 2 forbids saying the lease does not mention something",
       PARTS["lease"].startswith("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease")
       and 'Not: "The lease does not mention air conditioning."' in RULES_TEXT)
+
+# lease cites (TODO item 77): YOUR LEASE gives each clause in words with the cite to use, no field name; the program
+# prints the words for a section cite, a page cite (the clauses on that page with no number), and a cite inside an
+# article
+from agent import cited_clause
+from lease import Clause, lease_cite, lease_lines
+article = Clause(present=True, quote="7.1. Statutory Duties. ...", page=4, section="ARTICLE 7")
+lines_now = lease_lines(old_profile)
+check("item 77: YOUR LEASE names each clause in words with its cite, and no field name",
+      "- the rent (cite as Lease Section 3.1): " in lines_now and "- the tenants' names (cite as Lease, page 1): " in lines_now
+      and "- maintenance and repairs: not read from this lease" in lines_now
+      and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", lines_now)
+      and lease_cite(article) == "Lease Article 7" and cited_clause(article, "7.2", "")
+      and not cited_clause(article, "17.2", "")
+      and 'Not: "(Lease notice_before_vacating)" or "(term_end)"' in RULES_TEXT)
 
 # options before steps (TODO item 72, deterministic.check_options): the author's AC story of 2026-10-04 leaves
 # ending the lease not settled; a roof leak with every step taken is open; caused by the tenant, closed; a gate's

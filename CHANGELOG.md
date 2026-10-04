@@ -5,6 +5,17 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- Lease clauses in plain words, each with the cite to use (TODO item 77, done). Was: YOUR LEASE was the profile as
+  JSON, and the model cited a clause with no section number by its field name ("(Lease notice_before_vacating)",
+  "(term_end)"), most of the 17 turns with a field id in the eval of 2026-10-04. Now `lease.lease_lines` gives a
+  line per clause: its label in words (`lease.LABELS`), the cite to use (`lease.lease_cite`: "Lease Section 3.1",
+  "Lease Article 7", or "Lease, page 1" for a clause with no number), and its words; or that the reading found no
+  such clause, or did not read it. `agent.LEASE_CITE` takes the three cite forms, and `cited_words` prints the
+  clauses a cite names (`agent.cited_clause`: a numbered clause, one holding the cited number, or the clauses with
+  no number on a cited page), each with its label. The format line and rule 2 ask for the cite YOUR LEASE gives,
+  with "(Lease notice_before_vacating)" as a "Not:". The eval's `CITE_SEEN` takes the new forms. Smoke: the
+  lines, the cite forms, a page cite, a cite inside an article.
+
 - The lease profile's repairs clause, and the lease part is not the whole lease (TODO item 76, done). Was: fifteen
   profile fields, none about repairs, and asked "Is the AC part of my lease?" the model said "the lease does not
   mention air conditioning" in 3 of 3 runs, from those fields alone. Now `lease.LeaseProfile` has a sixteenth,

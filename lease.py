@@ -113,6 +113,55 @@ def quote_found(quote, page_text, page):
     return False
 
 
+# ---- The profile as the model reads it (TODO item 77): each clause in plain words with the cite to use. Given the
+# profile as JSON, the model cited a clause with no section number by its field name ("(Lease notice_before_vacating)",
+# "(term_end)"): most of the 17 turns with a field id in the eval of 2026-10-04.
+
+LABELS = {
+    "landlord_name_and_address": "the landlord's name and address",
+    "tenant_names": "the tenants' names",
+    "premises_address": "the address of the unit",
+    "term_start": "the start of the term",
+    "term_end": "the end of the term",
+    "rent": "the rent",
+    "security_deposit": "the security deposit",
+    "deposit_deductions": "what the landlord may keep from the deposit, and how it is returned",
+    "nonrefundable_fees": "fees that are not refunded",
+    "move_out_requirements": "what the tenant must do at move-out",
+    "forwarding_address_requirement": "giving a forwarding address",
+    "notices_to_landlord": "where and how the tenant sends notices to the landlord",
+    "joint_and_several_liability": "each tenant's liability for the whole lease",
+    "signatures": "the signatures",
+    "notice_before_vacating": "notice before moving out early",
+    "maintenance_and_repairs": "maintenance and repairs",
+}
+SECTION_NUMBER = re.compile(r"^\s*(?:(article|section|paragraph)\s+)?(\d+(?:\.\d+)*)\.?(?=\s|$)", re.I)
+
+
+def lease_cite(clause):
+    """How a clause is cited: "Lease Section 3.1" for a numbered section ("3.1. Monthly Rent"), "Lease Article 7"
+    for an article ("ARTICLE 7"), "Lease, page 1" for a clause the profile gives no number."""
+    found = SECTION_NUMBER.match(clause.section or "")
+    if not found:
+        return f"Lease, page {clause.page}"
+    return f"Lease {(found.group(1) or 'section').capitalize()} {found.group(2)}"
+
+
+def lease_lines(profile):
+    """The profile for the system prompt's YOUR LEASE: a line per clause, in LABELS' words, with its cite and its
+    words; a clause the reading found no provision for, or did not read, said so. No field name."""
+    lines = []
+    for name in type(profile).model_fields:
+        clause = getattr(profile, name)
+        if clause is None:
+            lines.append(f"- {LABELS[name]}: not read from this lease")
+        elif not clause.present:
+            lines.append(f"- {LABELS[name]}: the tool's reading found no such clause")
+        else:
+            lines.append(f"- {LABELS[name]} (cite as {lease_cite(clause)}): \"{' '.join(clause.quote.split())}\"")
+    return "\n".join(lines)
+
+
 def check_quotes(profile, pages):
     """Every quote must appear verbatim starting on the page it claims. May run onto the next page."""
     page_text = {p["page"]: squash(p["text"]) for p in pages}

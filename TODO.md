@@ -24,9 +24,6 @@ lease clause pasted), so an answer cites and the program prints the cited words.
     repair_not_made's gates (whether a problem 83.51(1)(b) does not name, like an AC, leaves ending the lease
     not settled rather than closed; whether rent paid with knowledge belongs as a gate on ending the lease
     only, as now, and not on withholding rent; the new open question on that waiver and its two readings).
-77. Lease cites by a profile field's name ("notice_before_vacating", "term_end") where the clause has no section
-    number: most of the 17 turns with a field id in the eval of 2026-10-04. Give the model the page in place of a
-    missing section, or name the profile's fields in words in YOUR LEASE.
 49. The author's sample of the first applying eval (`docs/evals/2026-10-02-apply/`): six transcripts, their
     contexts, and a scoring sheet in `dev/eval_runs/2026-10-02-apply-after/author_sample/` (not committed: they
     quote the test lease). The question code and the blind scorers cannot settle: is each application right on

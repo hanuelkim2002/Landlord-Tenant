@@ -22,7 +22,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   TODO item 76, is optional, so a profile read before it loads with it `None`, not read; `LeaseProfile.clauses()`
   gives the clauses read, as (name, clause), and every reader of a profile walks it that way; its description asks
   for one passage copied as printed, headings inside it included, since Gemma first joined two subsections and
-  dropped the heading between them, and the quote failed `check_quotes`), `extract_profile`
+  dropped the heading between them, and the quote failed `check_quotes`), the profile as the model reads it
+  (TODO item 77: `LABELS`, each field in plain words; `SECTION_NUMBER` and `lease_cite(clause)`, the cite to use,
+  "Lease Section 3.1", "Lease Article 7", or "Lease, page 1" for a clause with no number; `lease_lines(profile)`,
+  a line per clause, label, cite, and words, or that the reading found no such clause, or that it was not read;
+  no field name, since given the profile as JSON the model cited clauses by field name), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
   or start there and run onto the next). Lease clauses, no model: `lease_clauses(pages)` (the lease split at
   its numbered headings, `HEADING`, "5.4. Vehicles."; a heading counts only if its number closely follows the
@@ -225,7 +229,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   reply cites come from `cited_words(text)` (TODO item 73, the author's decision of 2026-10-04): for each ch. 83
   cite outside quote marks that the stored statutes hold, the subsection's words (or the section's), the
   narrowest once (83.56(1) cited, 83.56 alone adds nothing), cut at `CITED_MAX` (1,500) characters with the cite
-  for the rest; then each lease section (`LEASE_CITE`) whose clause the lease profile holds, with its page; under
+  for the rest; then each lease clause the profile holds under a lease cite (`LEASE_CITE`: "Lease Section 4.3",
+  "Lease Article 7", "Lease, page 1"; `cited_clause` matches a numbered clause, one holding the cited number,
+  such as Article 7 for "Lease Section 7.2", or for a page cite the clauses with no number on that page), each
+  with its cite, page, and `lease.LABELS` label; under
   `CITED_HEAD`, "The words the reply above cites, printed by the program from the stored statute and your
   lease:". `turn_blocks` shows them as a `sources` block right under the reply and writes them to the transcript
   as a `printed` line marked `"what": "sources"`. It also runs `check_case_quotes(text,
@@ -646,9 +653,10 @@ and open questions together), STATUTE SECTIONS, CASE TOPICS, ELEMENT STATUS, and
 model wrote "(ELEMENT STATUS shows ...)" or "the open question in PLAYBOOKS" in 17 replies per 100 though the
 rules forbade it.
 
-2. `YOUR LEASE`, whose name line says it holds only the clauses the tool reads, not the whole lease, and that null
-   is a clause not read (TODO item 76; rule 2's "Not:" is the eval's "The lease does not mention air
-   conditioning."): the whole lease profile as JSON.
+2. `YOUR LEASE`, whose name line says it holds only the clauses the tool reads, not the whole lease (TODO item 76;
+   rule 2's "Not:" is the eval's "The lease does not mention air conditioning."): `lease.lease_lines`, a line per
+   clause in plain words with the cite to use and its words (TODO item 77; was the profile as JSON, whose field
+   names the model used as cites; rule 2's "Not:" is "(Lease notice_before_vacating)").
 3. `THE TOOL'S NOTES ON YOUR ISSUES`: for each active playbook, YAML of its `issue` and its `guidance`
    (questions, lease checks, evidence, postures, failure modes).
 4. `WHAT THE STATUTE DOES NOT SETTLE`, whose name line says the stored text settles none of them, so every

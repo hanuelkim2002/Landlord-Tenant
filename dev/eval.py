@@ -74,7 +74,7 @@ CHOOSE_WORDS = re.compile(r"(?<!what )(?<!whether )\byou should\b|\byour best (o
 # An applied answer: a quote, and enough words of the model's own around it to apply it to the tenant. A list of
 # quotes with "This tool does not decide that." has a handful (the page's "what can I do to sue" answer, 6).
 APPLIED_WORDS = 40
-CITE_SEEN = re.compile(r"\b83\.\d+|\bLease Section \d", re.I)   # a statute or lease cite in a reply
+CITE_SEEN = re.compile(r"\b83\.\d+|\bLease (?:Section|Article|Paragraph) \d|\bLease,? page \d", re.I)   # a cite
 RECITED_CHARS = 300                                          # quoted characters past which a reply recites
 RECITED_FACTS = 3                                            # "You confirmed ..." lines that make a list
 # Whether an option is open, and a step toward it, in a reply's own words (TODO item 72): the status must come first.

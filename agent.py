@@ -24,7 +24,7 @@ from citations import (caution, check_case_cites, check_cites, check_quoted, cit
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
-from lease import check_quotes, extract_profile, ingest_pdf
+from lease import LABELS, SECTION_NUMBER, check_quotes, extract_profile, ingest_pdf, lease_cite, lease_lines
 from record import (active_playbooks, add_issues, add_related_issues, append_event, candidate_playbooks,
                     element_status, matter_dir, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet, stop_text
@@ -40,7 +40,7 @@ from tools import deadline_listing, deadline_status, offered_topics, options_sta
 
 RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in YOUR LEASE, the statute text in THE STATUTE, and the cases get_cases gives you to the tenant's record in YOUR FACTS and WHICH DEADLINES HAVE PASSED, and say what they mean for the tenant. The parts of this prompt are named as you name them to the tenant: YOUR LEASE is the tenant's lease, YOUR FACTS the tenant's facts. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
 
-Write short plain sentences. Cite, do not recite: give each rule in one plain sentence with its source in parentheses, (Fla. Stat. 83.56(1)) or (Lease Section 4.3); the program prints the cited words under your reply, so never paste a section, a lease clause, or a case's passage into it. Quote only the few words a point turns on, in quote marks, next to the cite. Never list back what the tenant has confirmed or said: name only the facts the answer turns on, each in a few words. Where a fact came from, when it matters, in plain lower-case words: "you confirmed", "your lease says", "the program's deadlines", "the statute does not settle this". No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice"), no part name in capitals as this prompt writes it, and no rule number ("rule 8").
+Write short plain sentences. Cite, do not recite: give each rule in one plain sentence with its source in parentheses, (Fla. Stat. 83.56(1)) or the cite YOUR LEASE gives the clause, (Lease Section 4.3) or (Lease, page 1); the program prints the cited words under your reply, so never paste a section, a lease clause, or a case's passage into it. Quote only the few words a point turns on, in quote marks, next to the cite. Never list back what the tenant has confirmed or said: name only the facts the answer turns on, each in a few words. Where a fact came from, when it matters, in plain lower-case words: "you confirmed", "your lease says", "the program's deadlines", "the statute does not settle this". No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice"), no part name in capitals as this prompt writes it, and no rule number ("rule 8").
 
 Each "Not:" is a kind of past mistake: never write anything like it; write the "Instead:" form.
 
@@ -74,6 +74,8 @@ Not: The lease says the deposit comes back after inspection. (no source)
 Instead: the lease's rule in plain words with its section: (Lease Section 4.3).
 Not: "The lease does not mention air conditioning." (YOUR LEASE holds only the clauses the tool reads, not the whole lease)
 Instead: "The parts of your lease the tool has read do not cover that; the rest of your lease may." Then what the statute says on it.
+Not: "(Lease notice_before_vacating)" or "(term_end)" (this tool's name for a clause, as a cite)
+Instead: the cite YOUR LEASE gives the clause: (Lease Section 3.1), (Lease Article 7), or (Lease, page 1).
 Not: the "repair within 5 days" you requested (the tenant wrote "Give them 5 days to reply")
 Instead: You said: "Give them 5 days to reply"
 Not: citing a section missing from THE STATUTE.
@@ -228,8 +230,8 @@ def resume(update_text):
 # names like "ELEMENT STATUS" and "PLAYBOOKS" it wrote "(ELEMENT STATUS shows ...)" in 17 replies per 100, though
 # the rules forbade it (TODO item 61). Under these names, a source named in plain words reads right to the tenant.
 PARTS = {
-    "lease": ("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease: each quoted, "
-              "with its section and page; null is a clause not read from this lease)"),
+    "lease": ("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease: each in plain "
+              "words, with the cite to use and its words)"),
     "notes": "THE TOOL'S NOTES ON YOUR ISSUES (by issue: questions, lease checks, evidence, postures, mistakes to avoid)",
     "open": ("WHAT THE STATUTE DOES NOT SETTLE (by issue: each open question, its sections, and its readings; the "
              "stored text settles none of them, so give every reading and pick none)"),
@@ -264,7 +266,7 @@ def system_prompt(messages=()):
               "open_questions": [{k: v for k, v in q.items() if k != "id"} for q in pb.spec.open_questions]})
         for pb in active_playbooks() if pb.spec.open_questions) or "none listed for these issues"
     return (rules_for(messages)
-            + f"\n\n{PARTS['lease']}:\n" + record.profile.model_dump_json(indent=2)
+            + f"\n\n{PARTS['lease']}:\n" + lease_lines(record.profile)
             + f"\n\n{PARTS['notes']}:\n" + notes
             + f"\n\n{PARTS['open']}:\n" + open_text
             + f"\n\n{PARTS['statute']}:\n" + hot
@@ -421,16 +423,28 @@ def check_case_quotes(text, messages):
 # profile, so the tenant has the exact text to point to and the reply does not recite it. Was, from item 54 to 66:
 # every rule quoted in the reply, and a caution for a section cited without a quote (item 66's RETOLD).
 
-LEASE_CITE = re.compile(r"\bLease Section (\d+(?:\.\d+)*)", re.I)
+# a lease cite as YOUR LEASE gives it (lease.lease_cite): "Lease Section 4.3", "Lease Article 7", "Lease, page 1"
+LEASE_CITE = re.compile(r"\bLease (?:Section|Article|Paragraph) (\d+(?:\.\d+)*)|\bLease,? page (\d+)", re.I)
 CITED_MAX = 1500                                         # characters of one passage printed; the rest is named
 CITED_HEAD = "The words the reply above cites, printed by the program from the stored statute and your lease:"
+
+
+def cited_clause(clause, number, page):
+    """The clause is the one a lease cite names: its number is the cited one or holds it (Article 7 for "Lease
+    Section 7.2"), or, for a page cite, it has no number and is on that page."""
+    found = SECTION_NUMBER.match(clause.section or "")
+    if number:
+        return bool(found) and (number == found.group(2) or number.startswith(found.group(2) + "."))
+    return not found and str(clause.page) == page
 
 
 def cited_words(text):
     """The statute and lease words a reply cites, as the text of a block, or "" when it cites none: for each ch. 83
     cite outside quote marks that the stored statutes hold, the subsection's words (or the section's), the
     narrowest once (83.56(1) cited, 83.56 alone adds nothing), cut at CITED_MAX characters with the cite for the
-    rest; then each lease section the lease profile holds a clause for, with its page."""
+    rest; then each lease clause the profile holds under a lease cite (LEASE_CITE): a numbered one, or one inside it
+    ("Lease Section 7.2" in "Lease Article 7"), or, for "Lease, page 1", the clauses on that page with no number;
+    each with its cite, page, and label."""
     parts = []
     cites = [c for c in cites_in(unquoted(text)) if c.partition("(")[0] in statute
              and (not c.partition("(")[2] or "(" + c.partition("(")[2] in subsections(c.partition("(")[0]))]
@@ -441,10 +455,12 @@ def cited_words(text):
         if len(words) > CITED_MAX:
             words = words[:CITED_MAX].rsplit(" ", 1)[0] + f" ... (the rest is in Fla. Stat. {cite})"
         parts.append(f"Fla. Stat. {cite}: {words}")
-    clauses = [c for _, c in record.profile.clauses() if c.present and c.quote and c.section] if record.profile else []
-    for number in dict.fromkeys(LEASE_CITE.findall(text)):
-        for quote, clause in {c.quote: c for c in clauses if c.section.split()[0].rstrip(".") == number}.items():
-            parts.append(f"Lease Section {clause.section}, page {clause.page}: {' '.join(quote.split())}")
+    clauses = [(n, c) for n, c in record.profile.clauses() if c.present and c.quote] if record.profile else []
+    for number, page in dict.fromkeys(LEASE_CITE.findall(text)):
+        for quote, (name, clause) in {c.quote: (n, c) for n, c in clauses if cited_clause(c, number, page)}.items():
+            cite = lease_cite(clause)
+            where = cite if cite.startswith("Lease, page") else f"{cite}, page {clause.page}"
+            parts.append(f"{where} ({LABELS[name]}): {' '.join(quote.split())}")
     return CITED_HEAD + "\n\n" + "\n\n".join(parts) if parts else ""
 
 
