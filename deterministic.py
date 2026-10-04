@@ -177,6 +177,44 @@ def matter_deadlines(playbooks, facts, today):
     return merged
 
 
+# ---- Options: whether each thing the statute lets the tenant do is open on the confirmed facts, and how far its
+# steps have got (TODO item 72). A reply had told the tenant how to end the lease over an AC not repaired, and only
+# the next reply said an AC may not be a duty 83.56(1) reaches; so the program decides openness first.
+
+def check_options(playbook, facts, today):
+    """Each option of the playbook with its status, from the confirmed facts only: "closed" when a gate's fact is
+    confirmed against it and that closes it; else "not known yet" while a gate's fact is not confirmed; else "not
+    settled" when a gate's fact points to an open question; else "open". Each gate is "met", "closed", "not
+    settled", or "not known yet"; each step "done" (its fact confirmed with its value, or its clock's date
+    passed), "waiting" (its clock's date upcoming), or "to do". Returns [{"option", "label", "cite", "status",
+    "gates", "steps", "also_open"}]."""
+    clocks = {row["clock"]: row.get("status") for row in compute_deadlines(playbook, facts, today)}
+    results = []
+    for o in playbook.spec.options:
+        gates = []
+        for g in o.gates:
+            if g.fact not in facts:
+                state = "not known yet"
+            elif facts[g.fact] == g.equals:
+                state = "met"
+            else:
+                state = "not settled" if g.otherwise == "unsettled" else "closed"
+            gates.append({"says": g.says, "cite": g.cite, "status": state,
+                          **({"why": " ".join(g.when_otherwise.split())} if state in ("closed", "not settled") else {})})
+        steps = []
+        for s in o.steps:
+            if s.clock:
+                state = {"passed": "done", "upcoming": "waiting"}.get(clocks.get(s.clock), "to do")
+            else:
+                state = "done" if facts.get(s.fact) == s.equals else "to do"
+            steps.append({"says": s.says, "cite": s.cite, "status": state})
+        states = {g["status"] for g in gates}
+        status = next((s for s in ("closed", "not known yet", "not settled") if s in states), "open")
+        results.append({"option": o.id, "label": o.label, "cite": o.cite, "status": status, "gates": gates,
+                        "steps": steps, "also_open": list(o.also_open)})
+    return results
+
+
 # ---- Classify and Fill Facts: two one-shot model calls made once at intake. Nothing here is confirmed.
 
 # The issue labels classify can pick. Each gets a playbook (except "other", which means none fits); a playbook

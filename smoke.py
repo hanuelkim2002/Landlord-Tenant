@@ -12,7 +12,7 @@ import logging
 import re
 import shutil
 import tempfile
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 import PyPDF2
@@ -29,7 +29,7 @@ from citations import (SUBSECTION_START, check_case_cites, check_cites, check_qu
                        quoted_passages, subsections)
 from config import CASES, MATTERS, WIKI
 from corpus import check_all_playbooks, load_playbook, playbooks, statute
-from deterministic import NOT_JSON, ask_json, check_elements, compute_deadlines, lease_value
+from deterministic import NOT_JSON, ask_json, check_elements, check_options, compute_deadlines, lease_value
 from dev.build_cases import court_text
 import wiki
 from wiki import lint, read_pages, verified, verify
@@ -881,6 +881,44 @@ try:
           and LETTER_RULE in system_prompt([HumanMessage(content="Can you help me write something to send them?")]))
 finally:
     remove_scratch("t-smoke-rules")
+
+# options before steps (TODO item 72, deterministic.check_options): the author's AC story of 2026-10-04 leaves
+# ending the lease not settled; a roof leak with every step taken is open; caused by the tenant, closed; a gate's
+# fact not confirmed, not known yet. The prompt gives the statuses in words.
+repair = playbooks["repair_not_made"]
+today = date.today()
+ac = {"problem_is_structure_or_plumbing": False, "caused_by_tenant_side": False, "rent_paid_since_known": True,
+      "written_notice_delivered": True, "written_notice_date": str(today - timedelta(days=30)),
+      "notice_states_termination_intent": False, "notice_states_withholding_intent": False}
+roof = {**ac, "problem_is_structure_or_plumbing": True, "rent_paid_since_known": False,
+        "notice_states_termination_intent": True, "written_notice_date": str(today - timedelta(days=10))}
+by_id = lambda facts: {o["option"]: o for o in check_options(repair, facts, today)}
+ac_options, roof_options = by_id(ac), by_id(roof)
+roof_soon = by_id({**roof, "written_notice_date": str(today - timedelta(days=2))})
+check("item 72: an AC not repaired leaves ending the lease and withholding rent not settled, each gate and step in its state",
+      ac_options["end_the_lease"]["status"] == "not settled" and ac_options["withhold_rent"]["status"] == "not settled"
+      and [g["status"] for g in ac_options["end_the_lease"]["gates"]] == ["not settled", "met", "not settled"]
+      and [s["status"] for s in ac_options["end_the_lease"]["steps"]] == ["done", "to do", "to do"]
+      and "turns on a building" in ac_options["end_the_lease"]["gates"][0]["why"])
+check("item 72: a roof leak with the notice given and the 7 days passed is open; with the 7 days still running, open and waiting",
+      roof_options["end_the_lease"]["status"] == "open"
+      and [s["status"] for s in roof_options["end_the_lease"]["steps"]] == ["done", "done", "done"]
+      and [s["status"] for s in roof_soon["end_the_lease"]["steps"]] == ["done", "done", "waiting"]
+      and roof_options["end_the_lease"]["also_open"] == ["material_noncompliance"])
+check("item 72: caused on the tenant's side closes both options; a gate's fact not confirmed leaves them not known yet",
+      {o["status"] for o in by_id({**roof, "caused_by_tenant_side": True}).values()} == {"closed"}
+      and by_id({k: v for k, v in roof.items() if k != "problem_is_structure_or_plumbing"})["end_the_lease"]["status"] == "not known yet")
+make_scratch("t-smoke-options", issues=["repair_not_made"], facts=ac, proposed={})
+try:
+    load_matter("t-smoke-options", "m-001")
+    options_part = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
+    check("item 72: the prompt gives each option's status, conditions, and steps in words, with no id, and rule 1 asks for it first",
+          "End the lease because the landlord has not made the repair (Fla. Stat. 83.56(1)): NOT SETTLED" in options_part
+          and "    step: the notice names the problem and says the tenant intends to end the lease because of it (83.56(1)): to do" in options_part
+          and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", options_part)
+          and "- Open or not: asked what they can do" in system_prompt())
+finally:
+    remove_scratch("t-smoke-options")
 
 # a story no playbook covers (sheet.stop_text, lease.clauses_about): the stop lists what the tool covers and shows
 # the lease's own clauses on the subject, word for word; nothing from the lease when no clause is on it

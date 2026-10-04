@@ -18,14 +18,12 @@ reply that an AC may not be a duty 83.56(1) reaches, so whether an option is ope
 code; (2) replies recited too much (the tenant's confirmed facts listed back, whole sections and a 1,900-character
 lease clause pasted), so an answer cites and the program prints the cited words. Items 72 to 74, in order.
 
-72. Options before steps, checked by code: in each playbook's spec, its options (for repair_not_made: end the
-    lease under 83.56(1), withhold rent under 83.60(1)(b)), each with its gates (what makes it open: the
-    problem being a duty 83.51(1) reaches or a material lease provision, rent paid with knowledge under
-    83.56(5)(a)) and its steps (the written notice and what it must say, the 7 days), each tied to a fact, a
-    clock, or an open question and quoted from the statute; a function that gives each option's status (open,
-    closed, not settled, not known yet) and each step's (done, to do, waiting) from the confirmed facts; a
-    prompt part with the statuses; rule 1 asks for an option's status before its steps. Pilot on
-    repair_not_made, then the other playbooks. The gates are the author's to check.
+72. Options before steps for the other nine playbooks (repair_not_made's two were done 2026-10-04, CHANGELOG):
+    each playbook's options with their gates and steps, quoted from the statute; for the deposit playbooks,
+    say, what the tenant can do when the landlord missed the 30-day notice. And for the author: check
+    repair_not_made's gates (whether a problem 83.51(1)(b) does not name, like an AC, leaves ending the lease
+    not settled rather than closed; whether rent paid with knowledge belongs as a gate on ending the lease
+    only, as now, and not on withholding rent; the new open question on that waiver and its two readings).
 73. Cite, do not recite: the model states each rule in one plain sentence with its cite and lists back no
     confirmed fact; the program prints the cited statute subsection's words and any cited lease clause
     (from the profile) under the reply. The quote checks stay for any quote the model still writes; item 66's

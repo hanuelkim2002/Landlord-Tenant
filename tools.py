@@ -18,7 +18,7 @@ from citations import is_in
 import config
 from config import squash
 from corpus import playbooks, statute
-from deterministic import matter_deadlines
+from deterministic import check_options, matter_deadlines
 from record import active_playbooks, append_event, element_status, matter_dir, read_events, save
 from sheet import parse_answer, shown
 import wiki
@@ -152,6 +152,28 @@ def deadline_status():
     lines += [f"- waiting [{words(issue)}]: no deadline until these are confirmed: {', '.join(words(i) for i in ids)}"
               for issue, ids in waiting.items()]
     return "\n".join(lines) or "none: no active issue has a deadline this tool computes"
+
+
+def options_status():
+    """YOUR OPTIONS, for the system prompt (agent.PARTS): for each active issue's options
+    (deterministic.check_options, from the confirmed facts), the option, its cite, and whether it is open, closed,
+    not settled, or not known yet; then each condition that decides it, with why when it is not met; each step
+    and whether it is done, waiting, or to do; and the open questions that bear on it even so, by their first
+    sentence. In words, never an id (TODO item 53). Logs nothing: the prompt is rebuilt on every call."""
+    facts = record.matter["facts"]
+    lines = []
+    for pb in active_playbooks():
+        first_sentence = {q["id"]: " ".join(q["text"].split()).split(". ")[0] + "."
+                          for q in pb.spec.open_questions if isinstance(q, dict)}
+        for o in check_options(pb, facts, date.today()):
+            lines.append(f"- {o['label']} (Fla. Stat. {o['cite']}): {o['status'].upper()}")
+            for g in o["gates"]:
+                lines.append(f"    condition: {g['says']} ({g['cite']}): {g['status']}" + (f". {g['why']}" if "why" in g else ""))
+            for s in o["steps"]:
+                lines.append(f"    step: {s['says']} ({s['cite']}): {s['status']}")
+            for q in o["also_open"]:
+                lines.append(f"    also, from what the statute does not settle: {first_sentence.get(q, '')}")
+    return "\n".join(lines) or "none: no active issue lists its options yet"
 
 
 def deadline_receipt(listing):

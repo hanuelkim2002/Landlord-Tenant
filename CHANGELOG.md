@@ -5,6 +5,22 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- Options before steps, checked by code: the pilot on repair_not_made (TODO item 72, in part). Was: the model
+  decided for itself whether an option was open, and in the author's run it laid out how to end the lease over
+  an AC not repaired before any word on whether 83.56(1) reaches an AC. New: a playbook's `spec.options`
+  (`corpus.Option`, `Gate`, `Step`), each gate and step tied to a fact or clock and quoted from the statute,
+  checked by `load_playbook` and `check_playbook`; `deterministic.check_options` gives each option's status from
+  the confirmed facts (open, closed, not settled, not known yet) and each step's (done, waiting, to do);
+  `tools.options_status` puts them into a new prompt part, YOUR OPTIONS, between YOUR FACTS and WHICH DEADLINES
+  HAVE PASSED; rule 1 begins with "Open or not" and takes the author's AC reply as its "Not:". repair_not_made
+  0.4: two options, ending the lease (83.56(1)) and withholding rent (83.60(1)(b)); a new fact asked on the
+  sheet, whether the problem is with the roof, windows, other structural parts, or the plumbing (the items
+  83.51(1)(b) names); a new open question with two readings, whether rent paid with knowledge waives ending
+  the lease over a problem still not fixed (83.56(5)(a)). On the author's facts both options come out not
+  settled, with why. Playbook checks: 0 failures. Smoke: the AC story, a roof leak at each stage, a problem the
+  tenant caused, a gate not yet answered, and the prompt part in words. The other nine playbooks and the
+  author's check of these gates stay as item 72.
+
 - The plan updated for the author's decision of 2026-10-04 (README, Purpose; CLAUDE.md), after the author tried
   the web page with a real 57-page lease. Two changes to what an answer is: whether an option is open comes
   first, checked by code from the confirmed facts and the playbook's conditions for it, before any step toward

@@ -113,7 +113,12 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `deterministic.py`: `check_elements` (element status), `court_days` (court business days from a
   county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
-  deadlines, with one that two playbooks share listed once, tagged with both issues),
+  deadlines, with one that two playbooks share listed once, tagged with both issues), `check_options(playbook,
+  facts, today)` (each option of the playbook with its status from the confirmed facts: "closed" when a gate's
+  fact is confirmed against it and that closes it, else "not known yet" while a gate's fact is not confirmed,
+  else "not settled" when a gate's fact points to an open question, else "open"; each gate "met", "closed", "not
+  settled", or "not known yet" with why when not met; each step "done" (its fact confirmed with its value, or its
+  clock's date passed, through `compute_deadlines`), "waiting" (the date upcoming), or "to do"; TODO item 72),
   `ISSUE_LABELS` (the labels `classify` can pick), and the two one-shot intake calls `classify` and
   `fill_facts`, both through `ask_json` on `agent_llm` (an answer that is not valid JSON is asked for again
   with `NOT_JSON` added, three answers at most, then the error is raised; parsed with `strict=False`, so a line
@@ -159,7 +164,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `timeline full` a corrected fact reads "corrected from <how> <suggested value>". Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
   `deterministic`, `sheet` (for `shown`). Imported by `agent`, `smoke`.
 - `tools.py`: the seven `@tool` functions and the `tools` list (see Tools the model can call), plus the
-  plain helpers `pretty`, `quote_is_real`, and `build_letter`. Imports `record`, `config`, `corpus`,
+  plain helpers `pretty`, `quote_is_real`, `build_letter`, `deadline_status` and `options_status` (two parts of
+  the system prompt), and `deadline_receipt`. Imports `record`, `config`, `corpus`,
   `deterministic`, `sheet`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
 - `agent.py`: `RULES` (the fixed part of the system prompt; if the environment sets `RULES_FILE`, that
   file's text replaces it for the run, for trying versions of the rules), `rules_for(messages)` (`RULES`
@@ -574,7 +580,7 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 1,635 words always, plus rule 6 on letters (174 words) once a letter is in
+1. `RULES`, through `rules_for`: 1,794 words always, plus rule 6 on letters (174 words) once a letter is in
    play, and rule 8 on cases in full (255 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
    the statute to the record in YOUR FACTS and WHICH DEADLINES HAVE PASSED and say what they mean for the tenant,
@@ -585,7 +591,9 @@ this order:
    "you confirmed", "the program's deadlines", "the statute does not settle this"; no labels like "Quote:", no
    ids, no part name in capitals as the prompt writes it, and no rule number such as "rule 8"; TODO items 53 and
    61), then nine numbered rules, each with
-   "Not:" examples and the "Instead:" form: 1 apply the law to the tenant's facts, in order: the rule quoted;
+   "Not:" examples and the "Instead:" form: 1 apply the law to the tenant's facts, in order: first, asked what
+   they can do or how, whether that option is open, as YOUR OPTIONS gives it, never a step before it (TODO item
+   72, with the author's AC reply of 2026-10-04 as its "Not:"); the rule quoted;
    every rule the answer turns on quoted, each condition and consequence relied on, never a section retold
    in the model's own words or a rule nothing quoted gives (TODO item 54); the facts it turns on in plain
    words with where each came from, never an id or a prompt section's name (a
@@ -636,7 +644,13 @@ rules forbade it.
 6. `COURT CASES THIS TOOL HAS`: `agent.case_topics_text()`, one line per topic with its number of cases,
    from `tools.offered_topics()`, or "none for these issues" (always, until the author verifies pages).
 7. `YOUR FACTS`: `element_status()` as JSON at the moment of the call.
-8. `WHICH DEADLINES HAVE PASSED`, whose name line says it has no dates and that any question about when calls
+8. `YOUR OPTIONS`: `tools.options_status()`: for each active issue's options (`deterministic.check_options`,
+   from the confirmed facts), "- <label> (Fla. Stat. <cite>): <STATUS>", then a line per condition (gate) with
+   its status and, when not met, why; a line per step with "done", "waiting", or "to do"; and "also, from what
+   the statute does not settle:" with the first sentence of each open question the option names in
+   `also_open`. In words, no id. "none: no active issue lists its options yet" otherwise (every playbook but
+   repair_not_made, so far). Rule 1 asks for an option's status before any of its steps (TODO item 72).
+9. `WHICH DEADLINES HAVE PASSED`, whose name line says it has no dates and that any question about when calls
    `get_deadlines` (named THE PROGRAM'S DEADLINES for a few hours on 2026-10-03, which the model read as the
    deadlines themselves and answered from): `tools.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
    notice deadline", not the clock's id) with its issues, whose it is, what it counts from (the fact's label,
@@ -655,7 +669,8 @@ playbooks have `verified_by: null` until the author's hand check. Their open que
 rewritten for applying the law (2026-10-02), their prose lost its ids (2026-10-03), and four got failure modes
 for conditions the model missed or misapplied (TODO item 55, 2026-10-03): version 0.3 for most,
 deposit_not_returned, lease_ending, and notice_received_violation 0.4, notice_received_nonpayment 0.5, and
-landlord_entered_unannounced 0.5 (its purpose_of_entry open question reworded the same day, item 56). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
+landlord_entered_unannounced 0.5 (its purpose_of_entry open question reworded the same day, item 56); repair_not_made
+0.4 since its options (2026-10-04, item 72). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
 (83.53(2) is in hours), rent_increased (no section on notice of a rent increase), neighbor_disturbance (no
 deadline for a landlord to act on one tenant's complaint about another; its open questions: whose duty
 83.52(7) states, 83.56(2)(a) as a remedy not a duty, what is unreasonable, and whether 83.56(1) lets the
@@ -698,6 +713,20 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     `check_playbook` against the section in its `cite`. Otherwise not read by code.
   - `related_issues`: list of `{issue, when: {fact, equals}}`. Read by `record.add_related_issues`: once
     `fact` is confirmed with the value `equals`, `issue` is added to the matter. Not shown to the model.
+  - `options` (TODO item 72; repair_not_made only, so far): each `id`, `label` (plain words), `cite`, `gates`
+    (what makes it open: `says`, `cite`, `quote`, `fact` and `equals`, `otherwise` "closed" or "unsettled" for
+    a fact confirmed with another value, `when_otherwise` in plain words, and `open_question` for an unsettled
+    one), `steps` (`says`, `cite`, `quote`, and one `fact` with `equals` or one `clock`), and `also_open` (open
+    questions that bear on it even when every gate is met). `load_playbook` checks that every fact, clock, and
+    open question named exists; `check_playbook` that every quote is in its section, every cite among the
+    playbook's sections, and no id in the prose. Read by `deterministic.check_options`; the gates are the
+    author's to check. repair_not_made (0.4): end the lease (83.56(1)), gated on the problem being a duty in
+    83.51(1) or a material lease provision (`problem_is_structure_or_plumbing`, a fact added for it; any other
+    problem is not settled, turning on a code or the lease), on its not being caused on the tenant's side
+    (83.51(4)), and on no waiver by rent paid with knowledge (83.56(5)(a); not settled when rent was paid, the
+    open question `rent_paid_waiver`); steps: the written notice, its stating the intent to end the lease, the
+    7 days. Withhold rent (83.60(1)(b)): the same first two gates (a lease provision alone does not reach it),
+    the notice stating the intent not to pay rent, the 7 days.
   - `open_questions`: each `id`, `sections`, `text` (what the stored text lets the model apply, and what stays
     open), and, for a point the stored text does not settle, `readings` (two or more readings of it, which the
     model gives side by side; a question about a limit of the tool, such as a period in hours or months, has

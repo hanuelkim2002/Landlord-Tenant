@@ -29,7 +29,7 @@ from record import (active_playbooks, add_issues, add_related_issues, append_eve
                     element_status, matter_dir, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from tools import deadline_listing, deadline_status, offered_topics, tools
+from tools import deadline_listing, deadline_status, offered_topics, options_status, tools
 
 
 # ---- Rules: the fixed part of the system prompt. The lease profile, the playbooks' notes and open questions,
@@ -48,12 +48,15 @@ Each "Not:" is a kind of past mistake: never write anything like it; write the "
 Not: three statute quotes, then "This tool does not decide that." (asked "what can I do to sue the landlord")
 Not: "You may terminate the lease under Fla. Stat. 83.56(1)." (a conclusion with no rule quoted and no facts)
 Instead: answer a question about the law in this order, each part short:
+- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not settled, or not known yet), and the condition it turns on. Never a step of an option before this.
 - The rule: the sentence that answers it, quoted, source first.
 - Your facts: each fact the rule turns on, with where it came from (you confirmed it, the lease says it). Something the tenant said in this chat but has not confirmed: You said: "[their words]", not known yet until the sheet confirms it (rule 4).
 - Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
-- So: what follows on those facts, in plain words. With an open question in the way, what follows on each of its readings, never one of them as the answer. Asked what they can do: each option the stored text gives and what it requires first (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in THE STATUTE, such as 83.55 on damages or 83.48 on attorney fees.
+- So: what follows on those facts, in plain words. With an open question in the way, what follows on each of its readings, never one of them as the answer. Asked what they can do: each option in YOUR OPTIONS with its status, then what it requires first; the steps of an option that is not open only as what it would take if its open condition went the tenant's way (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in THE STATUTE, such as 83.55 on damages or 83.48 on attorney fees.
 - Cases: when a case topic is on the point, as rule 8 says.
 - Not settled: an open question in the way, with its readings (rule 5).
+Not: "To terminate the lease, deliver a new written notice that states your intention, wait 7 days, then terminate." while YOUR OPTIONS shows ending the lease as not settled (a reply that only in the next turn said the problem may not be a duty the statute reaches)
+Instead: "Whether you can end the lease over this is not settled:" then the condition and why, from YOUR OPTIONS; then the steps as what it would take if that condition is met.
 Not: "No written claim notice received: claim_notice_received false (user)" or "(YOUR FACTS shows eviction_action_filed: true)" (ids, and part names as this prompt writes them)
 Instead: "You confirmed you got no written notice from the landlord." and "The program's deadlines show the 30-day deadline has passed."
 Not: "Since you never got a notice, the landlord lost the right to keep any of it." while YOUR FACTS does not show that fact.
@@ -229,6 +232,8 @@ PARTS = {
     "statute": "THE STATUTE (the sections for your issues, Fla. Stat. ch. 83, part II)",
     "cases": "COURT CASES THIS TOOL HAS (topics for get_cases; number of cases on each)",
     "facts": "YOUR FACTS (by issue: known, changed, proposed, missing, or n/a, and where each came from)",
+    "options": ("YOUR OPTIONS (checked by the program from the confirmed facts: whether each option is open, closed, "
+                "not settled, or not known yet, the conditions that decide it, and how far its steps have got)"),
     # Was THE PROGRAM'S DEADLINES (item 61, 2026-10-03), until the eval the same day: read as the deadlines
     # themselves, it was answered from ("You have until the upcoming deadline shown in THE PROGRAM'S DEADLINES")
     # and get_deadlines went uncalled on 5 of 39 questions about when.
@@ -261,6 +266,7 @@ def system_prompt(messages=()):
             + f"\n\n{PARTS['statute']}:\n" + hot
             + f"\n\n{PARTS['cases']}:\n" + case_topics_text()
             + f"\n\n{PARTS['facts']}:\n" + json.dumps(element_status(), indent=2)
+            + f"\n\n{PARTS['options']}:\n" + options_status()
             + f"\n\n{PARTS['deadlines']}:\n" + deadline_status())
 
 

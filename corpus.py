@@ -64,15 +64,55 @@ class RelatedIssue(BaseModel):
     when: Condition
 
 
+class Gate(BaseModel):
+    """What makes an option open, decided by one confirmed fact (TODO item 72): met when the fact is confirmed
+    with the value in equals; when it is confirmed with another value, the option is closed, or, with otherwise
+    "unsettled", not settled by the stored text (when_otherwise says why, in plain words, and open_question names
+    the open question that holds it); not known yet while the fact is not confirmed. says is the condition in
+    plain words, and quote the statute's words it rests on, from cite."""
+    says: str
+    cite: str
+    quote: str
+    fact: str
+    equals: Union[bool, str, int, float]
+    otherwise: Literal["closed", "unsettled"] = "closed"
+    when_otherwise: str
+    open_question: Optional[str] = None
+
+
+class Step(BaseModel):
+    """A step toward an option the tenant takes or waits for: done when its fact is confirmed with the value in
+    equals, or when its clock's date has passed; waiting while the clock's date is upcoming; to do otherwise."""
+    says: str
+    cite: str
+    quote: str
+    fact: Optional[str] = None
+    equals: Optional[Union[bool, str, int, float]] = None
+    clock: Optional[str] = None
+
+
+class Option(BaseModel):
+    """Something the statute lets the tenant do (end the lease, withhold rent), with the gates that decide
+    whether it is open on the tenant's facts and the steps it takes. also_open: open questions that stay open
+    even when every gate is met (whether a failure is "material")."""
+    id: str
+    label: str
+    cite: str
+    gates: List[Gate]
+    steps: List[Step]
+    also_open: List[str] = []
+
+
 class Spec(BaseModel):
     """The code-facing half of a playbook. Strictly typed where code computes
-    from it (elements, clocks); loose lists where nothing does yet."""
+    from it (elements, clocks, options); loose lists where nothing does yet."""
     elements: List[Element]
     clocks: List[Clock]
     lease_overrides: list = []
     exclusions: list = []
     related_issues: List[RelatedIssue] = []
     open_questions: list = []
+    options: List[Option] = []
 
 
 class Playbook(BaseModel):
@@ -109,6 +149,18 @@ def load_playbook(path):
             raise ValueError(f"clock {c.id}: shown_with {c.shown_with} is not a date element")
         if c.count == "court_business_days" and "premises_county" not in [e.id for e in pb.spec.elements]:
             raise ValueError(f"clock {c.id}: court business days need a premises_county element")
+    facts = {e.id for e in pb.spec.elements}
+    clocks = {c.id for c in pb.spec.clocks}
+    questions = {q.get("id") for q in pb.spec.open_questions if isinstance(q, dict)}
+    for o in pb.spec.options:                                # every gate and step names a fact or clock it has
+        for g in o.gates:
+            if g.fact not in facts or (g.open_question and g.open_question not in questions):
+                raise ValueError(f"option {o.id}: gate on {g.fact} names a fact or open question the playbook lacks")
+        for s in o.steps:
+            if (s.fact is None) == (s.clock is None) or (s.fact and s.fact not in facts) or (s.clock and s.clock not in clocks):
+                raise ValueError(f"option {o.id}: a step needs one fact or one clock of the playbook")
+        if not set(o.also_open) <= questions:
+            raise ValueError(f"option {o.id}: also_open names an open question the playbook lacks")
     return pb
 
 
@@ -139,10 +191,10 @@ def playbook_ids(pbs):
 
 def check_playbook(playbook, statute, ids=None):
     """Check one playbook and print a line per check. Returns the number of failures.
-    Quotes: every spec quote word for word in the section it cites, and every quotation of 20 or more
-    characters in the guidance and open questions word for word in a stored section. Shape: a question for
-    every element and an element for every question, applies_if naming a yes/no fact, clock cites among the
-    playbook's sections, each open question's id, sections, text, and readings (two or more when given), no
+    Quotes: every spec quote (clocks, overrides, exclusions, each option's gates and steps) word for word in the
+    section it cites, and every quotation of 20 or more characters in the guidance and open questions word for
+    word in a stored section. Shape: a question for every element and an element for every question, applies_if
+    naming a yes/no fact, clock and option cites among the playbook's sections, each open question's id, sections, text, and readings (two or more when given), no
     id (playbook_ids; this playbook's own when ids is None) in the model's prose, and the guidance parts the
     tool reads (postures, including notice_sufficiency)."""
     fails = 0
@@ -154,6 +206,9 @@ def check_playbook(playbook, statute, ids=None):
     for item in playbook.spec.lease_overrides + playbook.spec.exclusions:
         if item.get("quote"):
             quotes.append((item["cite"], item["cite"], item["quote"]))
+    for o in playbook.spec.options:                          # each gate and step quotes the section it rests on
+        for part in o.gates + o.steps:
+            quotes.append((f"option {o.id}: {part.says[:40]}", part.cite, part.quote))
     for name, cite, quote in quotes:
         section = cite.split("(")[0]                    # "83.49(3)(a)" -> "83.49"
         fails += report(f"{name} {cite}", squash(quote) in squash(statute[section]))
@@ -173,6 +228,10 @@ def check_playbook(playbook, statute, ids=None):
             fails += report(f"{thing.id}: applies_if {thing.applies_if} is a yes/no fact", target is not None and target.type == "bool")
     for c in playbook.spec.clocks:
         fails += report(f"clock {c.id}: {c.cite} is among the playbook's sections", c.cite.split("(")[0] in playbook.sections)
+    for o in playbook.spec.options:
+        cites = [o.cite] + [part.cite for part in o.gates + o.steps]
+        fails += report(f"option {o.id}: every cite is among the playbook's sections",
+                        all(c.split("(")[0] in playbook.sections for c in cites))
     # Open questions (rule 5): each says what applies and what stays open; an open point carries two or more
     # readings, which the model gives side by side instead of settling it.
     fails += report("open questions: each has an id, sections in statutes/, and text; readings, if any, two or more",
@@ -185,7 +244,9 @@ def check_playbook(playbook, statute, ids=None):
     # the open questions' text and readings say things in words. Keys (questions, lease_checks) may be ids.
     ids = ids or playbook_ids([playbook])
     texts = list(prose_strings(playbook.guidance)) + [q.get("text", "") for q in playbook.spec.open_questions] \
-        + [r for q in playbook.spec.open_questions for r in q.get("readings", [])]
+        + [r for q in playbook.spec.open_questions for r in q.get("readings", [])] \
+        + [x for o in playbook.spec.options for x in [o.label] + [p.says for p in o.gates + o.steps]
+           + [g.when_otherwise for g in o.gates]]
     named = sorted({w for t in texts for w in re.findall(r"\b[a-z]+(?:_[a-z]+)+\b", t) if w in ids})
     fails += report("no fact, clock, or open question id in the model's prose" + (f": {named}" if named else ""), not named)
     postures = playbook.guidance.get("postures", {})
