@@ -1,0 +1,43 @@
+{"scorer": "B2_b", "runs": [
+  {"code": "R002", "scenario": "eval_cases_3day_cash", "replies": 4, "law_replies": 4, "applied_well": 2, "slips": [
+    {"reply": 3, "category": "CONDITION_MISSED", "evidence": "\"If you have asserted a defense other than payment, the rule requires you to pay into the registry; if you have not asserted such a defense, the rule does not require payment.\" (the application leaves out the quoted 5-day-after-service window, with service confirmed 2026-09-30, and the motion-to-determine-rent alternative)"},
+    {"reply": 4, "category": "ID", "evidence": "\"Whether a deadline has passed comes from WHICH DEADLINES HAVE PASSED.\""},
+    {"reply": 4, "category": "DEADLINE_REPEAT", "evidence": "\"For the notice received nonpayment, the three-day demand period has passed.\""},
+    {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: \"the 5-day registry period after service of process if you assert a defense other than payment\" (83.60(2) was quoted in reply 3, not in this reply)"}
+  ]},
+  {"code": "R054", "scenario": "eval_cases_3day_cash", "replies": 4, "law_replies": 3, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "\"the landlord cannot demand cash only because the lease does not require it and the statutory form does not mention payment method\" (no quoted rule says this)"},
+    {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: \"the statutory form does not mention payment method\" (the 83.56(3) form governs what the notice says; used here for a cash demand made outside the notice)"},
+    {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: \"You confirmed your monthly rent is ONE THOUSAND THREE HUNDRED AND 00/100 DOLLARS ($1,300.00) per month.\" (lease text without quote marks, and labeled as confirmed by the tenant)"},
+    {"reply": 2, "category": "OPEN_CLOSED", "evidence": "\"Therefore, if your notice did say cash only, a court would likely find it valid under Moskowitz.\" (notice_form open question settled by one case, no readings given)"},
+    {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: \"a court would likely find it valid under Moskowitz\" (a court-outcome prediction)"},
+    {"reply": 3, "category": "QUOTE_WRONG", "evidence": "\"50 So. 3d 672, 673 (Fla. 4th DCA 2010): \\\"We answer the question in the affirmative and affirm the decision of the County Court.\\\"\" (printed at 672)"},
+    {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: \"If you only defend on the ground that you paid or do not owe the rent (a payment defense), the deposit requirement does not apply.\" (83.60(2) excepts only payment; not owing is a defense other than payment)"},
+    {"reply": 3, "category": "CONFIRM_IN_CHAT", "evidence": "\"You would need to confirm the exact date you were served\" (the sheet already holds 2026-09-30)"},
+    {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: \"You confirmed your monthly rent is ONE THOUSAND THREE HUNDRED AND 00/100 DOLLARS ($1,300.00) per month.\" (lease text without quote marks)"}
+  ]},
+  {"code": "R055", "scenario": "eval_cases_3day_cash", "replies": 4, "law_replies": 3, "applied_well": 3, "slips": [
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "\"the landlord would need to be given an opportunity to cure the deficiency under Fla. Stat. 83.60(1)(a) before the eviction action could proceed\" (83.60(1)(a) not quoted; its text says cure \"before dismissal of the action\")"},
+    {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "\"the landlord would need to be given an opportunity to cure the deficiency under Fla. Stat. 83.60(1)(a) before the eviction action could proceed\" (83.60(1)(a) not quoted)"}
+  ]},
+  {"code": "R059", "scenario": "eval_cases_3day_cash", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (the 83.56(3) form in the model's prompt and the notice_form open question speak to cash-only terms; Moskowitz in this transcript does too)"},
+    {"reply": 2, "category": "ID", "evidence": "\"The ELEMENT STATUS shows the notice demanded $1300\""},
+    {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: \"it shows courts have considered cash-only demands and found them permissible\" (one case presented as settling the point; the statute's open question and readings not given)"},
+    {"reply": 3, "category": "CONDITION_MISSED", "evidence": "\"you must pay rent into the court registry within 5 days (excluding Saturdays, Sundays, and legal holidays) after service of process, or you waive those defenses\" (leaves out the quoted motion-to-determine-rent alternative)"},
+    {"reply": 3, "category": "ID", "evidence": "\"The open question registry_count notes\""}
+  ]},
+  {"code": "R064", "scenario": "eval_cases_3day_cash", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (the 83.56(3) form in the model's prompt and the notice_form open question speak to cash-only terms; Moskowitz in this transcript does too)"},
+    {"reply": 2, "category": "OPEN_CLOSED", "evidence": "\"Therefore, regardless of whether your notice included a cash-only demand, the rule answers your question: a landlord may include a cash demand in a three-day notice without invalidating it.\""},
+    {"reply": 2, "category": "CASE_MISREAD", "evidence": "\"The rule in Moskowitz v. Aslam does not depend on specific facts about your notice\" (case's rule said to reach the tenant with no word on how alike the facts are)"},
+    {"reply": 3, "category": "CONDITION_MISSED", "evidence": "\"the rule requires you to pay rent into the court registry within 5 days after service (excluding Saturdays, Sundays, and legal holidays)\" (leaves out the quoted motion-to-determine-rent alternative)"},
+    {"reply": 3, "category": "QUOTE_WRONG", "evidence": "\"The statute plainly requires the payment of rent if the tenant chooses to assert any defense other than payment, ...\" (at 672) (printed at 673; the next quote is cited at 673 but printed at 674; and \"The court quoted the county judge's order in this case:\" is put inside the quote marks)"}
+  ]},
+  {"code": "R082", "scenario": "eval_cases_3day_cash", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: \"The lease and statute text I have do not answer that.\" (the 83.56(3) form in the model's prompt and the notice_form open question speak to cash-only terms; Moskowitz in this transcript does too)"},
+    {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: \"If your notice did demand cash only, the case says it is still valid and does not invalidate the notice\" ... \"shows that demanding cash is not fatal\" (one case presented as settling the point; the statute's open question and readings not given)"},
+    {"reply": 3, "category": "CONDITION_MISSED", "evidence": "\"If you do, you must pay rent into the registry; if you fail to do so within 5 days after service (excluding weekends and holidays), you waive those defenses\" (leaves out the quoted motion-to-determine-rent alternative)"},
+    {"reply": 3, "category": "ID", "evidence": "\"The open question registry_count in PLAYBOOKS notes\""}
+  ]}
+]}

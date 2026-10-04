@@ -1,0 +1,105 @@
+{"scorer": "B4_a", "runs": [
+{"code": "R034", "scenario": "eval_entry_shower", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: names both but applies only the repair reading: \"The purpose (changing the AC filter) is a repair or agreed service, so the rule requires reasonable notice and a reasonable time.\""},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: 'unreasonably' called met with no basis while the record shows entries without notice: \"changing the locks to block the landlord's access is an unreasonable withholding of consent under the statute, so you may not do that.\""},
+  {"reply": 3, "category": "OPEN_CLOSED", "evidence": "\"The purpose (changing the AC filter) is a repair, so the rule requires reasonable notice\"; and on abuse: \"you must judge based on frequency, timing, and purpose.\""},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "83.56(1) reaches 83.51(1) or material lease provisions, applied to 83.53 entries: \"If you consider the repeated unauthorized entries a material failure to comply, you may give a written notice of noncompliance and intent to terminate under Fla. Stat. 83.56(1)\""},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "\"You may also seek a court order to stop the entries, but that requires filing a suit.\" (also the 83.53(2)(a)-(d) grounds stated without quote: \"Consent, emergency, or absence for half the rental period are not present\")"}
+]},
+{"code": "R036", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "no SHEET line on telling the landlord of an absence: \"You confirmed you did not tell the landlord you would be away.\""},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "the 83.53(2) sentence applies when the tenant does notify of an absence: \"Because you are current on rent and did not notify the landlord of an intended absence, the landlord may enter only with your consent or for protection/preservation\""},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "'unreasonably' called met against a record of unauthorized entries (which reply 1 found): \"Because you have not shown that the landlord's entry would be unlawful or that you have a justified reason to refuse access, withholding consent in this way would be unreasonable under the statute.\""},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "83.56(1) applied to an 83.53 violation as 'this part': \"You confirmed the landlord entered without notice, which violates Fla. Stat. 83.53(2) ... That is a failure to comply with this part.\""},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "\"you may recover the damages caused by the noncompliance (for example, invasion of privacy or anxiety).\""}
+]},
+{"code": "R042", "scenario": "eval_entry_shower", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "\"The rule: Fla. Stat. 83.53(2) says the landlord may enter the dwelling unit upon reasonable notice to the tenant and at a reasonable time for the purpose of repair of the premises.\" (statute text without quote marks; 83.53(3) likewise)"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "repair reading picked, agreed-service reading never given: \"The entry was for repair (changing the AC filter).\""},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: protection/preservation treated as possibly met though the recorded reason is changing an AC filter: \"it is an open question whether changing an AC filter qualifies as 'protection or preservation' or as 'repair.'\""},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: 'unreasonably' called met with no basis: \"That is an unreasonable withholding of consent under the rule.\""},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "\"The rule: Fla. Stat. 83.53(2) says the landlord may enter the dwelling unit upon reasonable notice to the tenant\" (no quote marks; lease 22.1 likewise)"},
+  {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: agreed-service reading omitted, open question recast: \"Whether changing an AC filter qualifies as 'repair' or as 'protection or preservation' is an open question in the tool\""},
+  {"reply": 3, "category": "ID", "evidence": "\"(repeated_entries true)\""},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "\"Fla. Stat. 83.56(1) says if the landlord materially fails to comply with the rental agreement or this part\"; also \"if a court found the entries to be a violation of 83.67 (e.g., as harassment), this remedy could be available.\""},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "\"You could sue for damages (e.g., invasion of privacy, distress)\"; \"You may seek injunctive relief to prevent further entries without notice\""}
+]},
+{"code": "R048", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: labels the purpose as repair: \"You confirmed the landlord entered to change the AC filter (a repair).\""},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: noncompliance called undetermined though the reply's own readings both find a violation: \"whether the entry constitutes noncompliance depends on whether changing the AC filter is considered 'repair of the premises' (requiring only notice) or a 'further purpose'\""},
+  {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: no eviction and no refusal of entry in the record: \"If you choose to assert a defense in an eviction action based on your refusal to allow entry\""},
+  {"reply": 4, "category": "ID", "evidence": "borderline: tool name and internal instructions leaked: \"your instructions say which have passed ... To show the deadlines again, call get_deadlines again.\""}
+]},
+{"code": "R049", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: protection/preservation left possibly met for an AC filter change: \"entry is allowed at any time if changing the AC filter qualifies as protection or preservation\""},
+  {"reply": 1, "category": "CASE_MISREAD", "evidence": "borderline: Solomon v. Gentry, Menendez, Haynes do not affirm a duty: \"Other cases on landlord's maintenance duties under 83.51 similarly affirm the landlord's duty to maintain and repair\""},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: abuse readings recast, the second (allowed entries can still abuse) dropped: \"if the entry is allowed under the protection-or-preservation reading, repeated entries at 8 am are not abuse\""},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: only this entry's time is on the sheet: \"repeated entries at 8 am\""},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: 'unreasonably' called likely met though the reply finds the entry not permitted: \"Changing the locks to block the landlord's entry likely violates the tenant's duty not to unreasonably withhold consent under 83.53(1).\""},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "Grant decided a temporary mandatory injunction and no proven tenancy: \"Grant v. GHG014, LLC ... treats a landlord's lock change as self-help eviction and emphasizes that interfering with the other party's access is disfavored.\""},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "\"may expose the tenant to liability for interfering with the landlord's right of access\""},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: same protection/preservation line, and 83.56(1) applied to an 83.53 entry: \"you may consider terminating the lease under 83.56(1) (if the failure is deemed material)\""},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "borderline: \"Other cases on landlord's maintenance duties under 83.51 similarly affirm the landlord's duty to maintain and repair\""},
+  {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: \"if the entry is allowed under the protection-or-preservation reading, repeated entries at 8 am are not abuse\""},
+  {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: \"repeated entries at 8 am\""},
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: 83.56(1) requires a notice indicating intent to terminate; the notice described only demands 24 hours notice: \"demanding that the landlord provide at least 24 hours written notice ... If the landlord fails to comply within 7 days after receiving your notice, you may consider terminating the lease\""},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "\"You may also seek injunctive relief to prevent further unauthorized entries\""}
+]},
+{"code": "R058", "scenario": "eval_entry_shower", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "\"The landlord may enter the dwelling unit upon reasonable notice to the tenant and at a reasonable time for the purpose of repair of the premises. ... Fla. Stat. 83.53(2)\" with no quote marks"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "\"The entry was for repair (changing the AC filter), so the landlord needed reasonable notice and a reasonable time.\""},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: the 83.53(2)(a)-(d) grounds are stated but never quoted: \"None of the alternative circumstances in 83.53(2)(a)-(d) apply\""},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "\"The aggrieved party may recover the damages caused by the noncompliance. Fla. Stat. 83.55\" with no quote marks"},
+  {"reply": 3, "category": "OPEN_CLOSED", "evidence": "\"You confirmed the entry was for repair (changing the AC filter)\""},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: \"you would need to file a lawsuit and prove the amount of damages (the statute does not specify an amount; a court determines it based on the harm shown)\""},
+  {"reply": 3, "category": "ID", "evidence": "\"LEASE PROFILE, section 22.1, page 9\""},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "borderline: Grant's injunction elements said to reach the tenant with no word on how alike the facts are: \"On your facts, to seek an injunction to stop the landlord from entering without notice, you would need to show irreparable injury\""}
+]},
+{"code": "R006", "scenario": "eval_violation_dog", "replies": 4, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: the reply quoted \"having or permitting unauthorized pets\" yet says: \"The lease and statute text I have do not answer whether you are responsible for a dog that is not yours but present in the unit.\""},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: the continuing-noncompliance exception is not applied to the confirmed fact that the dog is still there: \"So: The landlord may not be able to terminate for this violation if they waived by accepting rent.\""},
+  {"reply": 2, "category": "ONE_SIDED", "evidence": "recurrence within 12 months (eviction without further notice) left out: \"In that case, the landlord likely cannot terminate the lease for that violation\""},
+  {"reply": 4, "category": "QUOTE_UNMARKED", "evidence": "borderline: lease 22.1 text without quote marks or section: \"the lease requires it to be in writing and delivered by hand, certified mail, return receipt requested, or by nationally recognized overnight courier\""},
+  {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: the lease clause covers notices required under the lease or ch. 83, not a voluntary letter: \"If you do write a letter, the lease requires it to be in writing and delivered by hand\""},
+  {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: \"You may choose to write a letter to explain that the dog is not yours and that you will have it removed\""}
+]},
+{"code": "R022", "scenario": "eval_violation_dog", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "\"otherwise they must give a new notice to terminate.\""},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: the 83.56(2)(b) recurrence half (eviction without a subsequent notice) left out and contradicted: \"the landlord can end your lease only if you do not remove the dog within the 7-day cure period; otherwise they must give a new notice to terminate.\""},
+  {"reply": 2, "category": "OFFER", "evidence": "borderline: tenant asked whether to write: \"Once you provide those details, I can draft the letter for you.\""}
+]},
+{"code": "R023", "scenario": "eval_violation_dog", "replies": 4, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "83.56(5)(a) reproduced without quote marks: \"says a landlord who accepts rent with actual knowledge of a noncompliance waives the right to terminate for that noncompliance but not for any subsequent or continuing noncompliance\""},
+  {"reply": 1, "category": "CASE_MISREAD", "evidence": "no notice of noncompliance in Multach, a commercial lease: \"In Multach v. Adams, the court held that a landlord's acceptance of rent after a notice of noncompliance did not waive the right to enforce lease terms\""},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "the recurrence clause runs from this notice, not a prior warning: \"You said you have not received a prior written warning, so this 12-month provision does not apply based on your confirmed facts.\""},
+  {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "borderline: \"The statute says if the same conduct recurs within 12 months after notice, an eviction action may commence without a subsequent notice.\""},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "\"You said you have not received a prior written warning, so this 12-month provision does not apply based on your confirmed facts.\""},
+  {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: \"you are safe from lease termination based on this notice.\""}
+]},
+{"code": "R024", "scenario": "eval_violation_dog", "replies": 4, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "\"Fla. Stat. 83.56(5)(a) states that if the landlord accepts rent with actual knowledge of a noncompliance by the tenant, the landlord waives the right to terminate\" (no quote marks)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: \"you could defend by showing the violation was corrected in time, that the notice was defective\""},
+  {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "\"Fla. Stat. 83.56(5)(a) states that accepting rent with actual knowledge of a noncompliance waives the right to terminate\" (no quote marks)"},
+  {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: \"you would be safe from termination under this notice.\""},
+  {"reply": 2, "category": "ONE_SIDED", "evidence": "recurrence within 12 months (eviction without further notice) left out of the 'safe' answer: \"you would be safe from termination under this notice\""},
+  {"reply": 4, "category": "OFFER", "evidence": "borderline: \"Let me know those details, and I can draft the letter for you.\""},
+  {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "\"assert (adds a lease or statute obligation quote), or escalate (adds a consequence quote)\""}
+]},
+{"code": "R056", "scenario": "eval_violation_dog", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "\"(notice_offers_cure true)\", \"(violation_corrected false)\""},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "\"under Fla. Stat. 83.56(5)(a), if the landlord accepts rent with actual knowledge of a noncompliance by the tenant, the landlord waives the right to terminate\" (no quote marks)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "the 7 days have not run: \"Because you have not cured, the landlord could proceed to terminate if the notice were otherwise valid (condition met for termination).\""},
+  {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "\"Under Fla. Stat. 83.56(5)(a), if the landlord accepts rent with actual knowledge of a noncompliance by the tenant, the landlord waives the right to terminate\" (no quote marks)"},
+  {"reply": 2, "category": "ID", "evidence": "\"(which_paragraph)\", \"(delivered_or_received)\", \"(twelve_months)\""},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: the lease clause covers required notices, not a voluntary letter: \"Any such letter must be in writing and delivered by one of the methods listed in the lease\""},
+  {"reply": 2, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: \"write a letter to the landlord explaining that the dog is not yours and that you will have your friend pick it up this weekend, and to request that they withdraw the notice\""}
+]},
+{"code": "R076", "scenario": "eval_violation_dog", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_WRONG", "evidence": "tenant never wrote these words: You said: \"The notice offers 7 days to fix the problem.\"; and Multach quote cited \"(at 1256)\", printed at 1255"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "\"Fla. Stat. 83.56(5)(a) states that if the landlord accepts rent with actual knowledge of a noncompliance by the tenant, the landlord waives the right\" (no quote marks)"},
+  {"reply": 1, "category": "CASE_MISREAD", "evidence": "Multach (commercial lease, statute held inapplicable) said nothing on continuing breaches: \"This indicates that acceptance of rent after a breach does not waive the landlord's right to enforce lease terms for continuing breaches.\""},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "termination stated without the 7-day correction period: \"the waiver may not prevent the landlord from terminating for the continuing violation\""},
+  {"reply": 2, "category": "OFFER", "evidence": "borderline: \"Once you give me those four pieces, I can draft the letter for you.\""},
+  {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "borderline: \"The lease says notices to the landlord must be in writing and delivered by hand, certified mail, return receipt requested, or nationally recognized overnight courier to: SUNRISE PROPERTY HOLDINGS, LLC\" (no quote marks)"}
+]}
+]}

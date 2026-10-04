@@ -1,0 +1,96 @@
+{"scorer": "B5_a", "runs": [
+{"code": "R021", "scenario": "eval_claim_carpet", "replies": 4, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "DATE_MADE", "evidence": "which is within 30 days after termination (2026-08-31 plus 30 days = 2026-09-30)"},
+  {"reply": 1, "category": "ID", "evidence": "is an open question (see email_notice_conditions) ... (see receipt_date)"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "The lease requires you to return the premises in the same condition as at the commencement date, ordinary wear and tear excepted, with carpets professionally cleaned. (lease 15.2 text, not quoted anywhere in this reply)"},
+  {"reply": 3, "category": "LETTER_ORDER", "evidence": "borderline: What do you want the landlord to do? For example, return the full $1,850.00 deposit, withdraw the $650.00 claim, or something else? (asked again after the tenant said 'that's everything' and had chosen preserve, which asks for return of the full deposit)"},
+  {"reply": 4, "category": "QUOTES_ONLY", "evidence": "borderline: The lease and statute do not say what happens if the landlord's claim is for pre-existing damage. (said right after quoting lease 15.2, 'same condition as at the Commencement Date', which speaks to it; not applied)"}
+]},
+{"code": "R026", "scenario": "eval_claim_carpet", "replies": 5, "law_replies": 3, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "QUOTE_WRONG", "evidence": "Fla. Stat. 83.49(3)(a): 'Upon the vacating of the premises for termination of the rental agreement, if the landlord intends to impose a claim on the deposit, the landlord must, within 30 days...' (splices the opening of the no-claim sentence onto the claim sentence)"},
+  {"reply": 1, "category": "DATE_MADE", "evidence": "The landlord gave notice within 30 days after termination (18 days after 2026-08-31)"},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "and included a reason, so the notice requirement is met. (notice came by e-mail; the 'by e-mail in accordance with s. 83.505' / addendum condition is left out)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "If you object within 15 days of receipt, the landlord may not deduct unless they prove the claim is valid."},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "You have pictures showing the stains were pre-existing, which supports your objection that the claim is invalid."},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: You would need to check which reading applies to determine if the 15-day window is still open. (tenant asked to settle receipt_date)"},
+  {"reply": 2, "category": "CONFIRM_IN_CHAT", "evidence": "I need you to confirm the exact reason stated in the notice for the claim. Please copy the words from the notice"},
+  {"reply": 2, "category": "ID", "evidence": "for the deposit-claim-received issue, no deadline can be computed yet"},
+  {"reply": 3, "category": "LETTER_ORDER", "evidence": "Delivery method: You said you'll email it. ... Is that how you plan to send it? (also re-asks which issue the letter is about)"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: The lease allows email with confirmation of receipt for routine (non-statutory) communications. (lease 22.1 wording, no quote marks)"}
+]},
+{"code": "R029", "scenario": "eval_claim_carpet", "replies": 5, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "If you do object within that period, the landlord may not deduct the claim unless they sue and prevail."},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "If you send a written objection within that period, the landlord may not deduct the claim unless they sue and prevail."},
+  {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: The objection must be in writing and sent to the landlord's address as given in the lease or the notice. (objection_form presented as settled)"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "The lease requires notices to be in writing and delivered by hand, by certified mail, return receipt requested, or by nationally recognized overnight courier, or by email with confirmation of receipt for routine (non-statutory) communications."},
+  {"reply": 3, "category": "LETTER_ORDER", "evidence": "Is that how you intend to send it? ... And you said give them 15 days to answer; is that correct?"},
+  {"reply": 4, "category": "QUOTE_UNMARKED", "evidence": "The lease requires notices to be in writing and delivered by hand, by certified mail, return receipt requested, or by nationally recognized overnight courier, or by email with confirmation of receipt for routine (non-statutory) communications."},
+  {"reply": 4, "category": "LETTER_ORDER", "evidence": "borderline: Will you request confirmation of receipt when you email it? (after the tenant said 'that's everything, please write it now'; letter still not drafted)"},
+  {"reply": 5, "category": "CONDITION_WRONG", "evidence": "you must object in writing within 15 days after receipt to preserve your right to sue for a refund later (83.49(3)(b): failure to object 'does not waive any rights of the tenant to seek damages in a separate action')"}
+]},
+{"code": "R053", "scenario": "eval_claim_carpet", "replies": 5, "law_replies": 3, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "If you object in writing within that period, the landlord may not deduct the claim unless they file a lawsuit to prove it."},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "Durene v. Alcime: ... (notice here timely, so not on point). Malagon v. Solari: ... (notice given, so not on point). (e-mail notice; the 83.505 addendum condition never addressed)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "If you send a written objection by that deadline, the landlord may not deduct the claim unless they file a lawsuit to prove it."}
+]},
+{"code": "R061", "scenario": "eval_claim_carpet", "replies": 4, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "DATE_MADE", "evidence": "(2026-09-18 is within 30 days of 2026-08-31)"},
+  {"reply": 1, "category": "ID", "evidence": "(see email_notice_conditions in PLAYBOOKS) ... (DEADLINE STATUS shows tenant_objection_deadline upcoming)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "If you serve a timely written objection, the landlord may not deduct the claim unless they sue you for damages."},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: The objection must be sent by hand, certified mail, return receipt requested, or nationally recognized overnight courier for statutory communications. (objection_form presented as settled via the lease clause)"},
+  {"reply": 4, "category": "CASE_MISREAD", "evidence": "If the e-mail notice is invalid (because the parties have not signed an addendum ...), then under Durene and Casey the landlord has forfeited the right (Casey is an untimely-notice case; the tenant's notice was timely; no word on how alike the facts are)"},
+  {"reply": 4, "category": "ID", "evidence": "(your objection deadline is upcoming per DEADLINE STATUS) ... The open question email_notice_conditions notes"},
+  {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "If you object timely, the landlord may not deduct the claim unless they sue you for damages."}
+]},
+{"code": "R084", "scenario": "eval_claim_carpet", "replies": 3, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "borderline: Judges have ruled that if a landlord fails to give the required written notice within 30 days after move-out, they forfeit the right (Durene read the 1981 statute and speaks of 'a 15 day statute of limitation'; neither printed case states a 30-days-after-move-out rule)"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: within 30 days after move-out, they forfeit the right to impose a claim on the security deposit (no statute quote in the reply behind the 30-day rule)"},
+  {"reply": 3, "category": "QUOTES_ONLY", "evidence": "borderline: These cases address notice defects, not whether the damage was pre-existing. (case rules quoted; nothing said on whether this landlord's notice, timely but by e-mail, meets them or what follows)"}
+]},
+{"code": "R016", "scenario": "eval_deposit_ghosted", "replies": 6, "law_replies": 2, "applied_well": 2, "slips": [
+  {"reply": 5, "category": "LETTER_ORDER", "evidence": "You said you will mail the letter certified to the leasing office—is that correct? You want the landlord to have 10 days to reply—is that correct?"},
+  {"reply": 5, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: For the tone, the “preserve” posture is the nicest"}
+]},
+{"code": "R030", "scenario": "eval_deposit_ghosted", "replies": 5, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "the lease termination date (tenancy_terminated) ... (claim_notice_received false) ... The open question termination_date_meaning"},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "The lease says the term ends September 30, 2027, but you moved out early. (SHEET: moved out before lease end -> False)"},
+  {"reply": 1, "category": "DATE_MADE", "evidence": "borderline: The lease says the term ends September 30, 2027 (date not in any lease quote, SHEET value, or printed deadline in this transcript)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "the landlord forfeited the right to impose a claim on the deposit (forfeiture sentence not quoted in this reply)"},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "the landlord forfeited the right to impose a claim on the deposit. The landlord therefore must return the deposit (no 'may file an action for damages after returning the security deposit')"},
+  {"reply": 3, "category": "ID", "evidence": "This is about the deposit not being returned (deposit_not_returned)."},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "The lease requires notices to be in writing and delivered by hand, certified mail, return receipt requested, or nationally recognized overnight courier"},
+  {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: The “preserve” posture is the simplest and most polite"}
+]},
+{"code": "R041", "scenario": "eval_deposit_ghosted", "replies": 6, "law_replies": 2, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "after notice, the tenant has 15 days to object, and if no objection, the landlord must remit the balance within 30 days after the notice (83.49(3)(b) not quoted)"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "failing to give the required written notice within the 30-day period means the landlord forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit"},
+  {"reply": 4, "category": "QUOTE_UNMARKED", "evidence": "borderline: (choose from: by hand, by certified mail return receipt requested, by nationally recognized overnight courier, or by email with confirmation of receipt) (lease 22.1 wording, unmarked and unsourced)"},
+  {"reply": 5, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: This is the most neutral and friendly tone. ... the preserve posture is the most straightforward and courteous."}
+]},
+{"code": "R051", "scenario": "eval_deposit_ghosted", "replies": 5, "law_replies": 2, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "DATE_MADE", "evidence": "within 15 days after July 31, 2026 (by August 15, 2026) (no deadlines printed yet in the chat)"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "83.49(3)(c) fee-shifting (prevailing party gets costs and attorney fees)"},
+  {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "the fee-shifting rule (prevailing party gets costs and attorney fees)"},
+  {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: (This is the most neutral/friendly tone.) ... The “preserve” posture is the least confrontational."},
+  {"reply": 4, "category": "LETTER_ORDER", "evidence": "Please confirm: ... That you want the letter sent to the landlord at the address above ... by certified mail, return receipt requested. (tenant had already said certified to the leasing office)"}
+]},
+{"code": "R070", "scenario": "eval_deposit_ghosted", "replies": 6, "law_replies": 2, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "the landlord forfeits the right to impose a claim upon the security deposit and must return the deposit. The landlord may still file an action for damages (forfeiture sentence not quoted in this reply)"},
+  {"reply": 4, "category": "ID", "evidence": "This is about the security deposit not being returned (deposit_not_returned). Is that correct?"},
+  {"reply": 4, "category": "QUOTE_UNMARKED", "evidence": "The lease requires notices to be in writing and delivered by hand, certified mail, return receipt requested, or nationally recognized overnight courier, or by email with confirmation of receipt for routine (non-statutory) communications."},
+  {"reply": 5, "category": "LETTER_ORDER", "evidence": "borderline: You said you will mail the letter certified to the leasing office. Is that certified mail, return receipt requested"},
+  {"reply": 5, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: The “preserve” posture is the gentlest"}
+]},
+{"code": "R080", "scenario": "eval_deposit_ghosted", "replies": 5, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "QUOTE_WRONG", "evidence": "You said: 'I moved out July 31, 2026.' (tenant's words: 'moved out of my apartment on July 31, 2026')"},
+  {"reply": 1, "category": "DATE_MADE", "evidence": "the 15-day return period would have ended August 15, 2026 and the 30-day notice period would have ended August 30, 2026"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: If the termination date is the lease end date (September 30, 2027), both periods are still in the future. (SHEET: lease ended 2026-07-31, did not move out before lease end; the open question does not arise)"},
+  {"reply": 2, "category": "QUOTE_WRONG", "evidence": "You said: 'I moved out July 31, 2026.'"},
+  {"reply": 2, "category": "DATE_MADE", "evidence": "borderline: If the termination date is the lease end date (September 30, 2027), the 30-day notice period has not yet run (model's own comparison)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: If the termination date is the lease end date (September 30, 2027), the 30-day notice period has not yet run, so the forfeiture does not yet apply. (against SHEET lease end 2026-07-31)"},
+  {"reply": 3, "category": "ID", "evidence": "Is this about the security deposit not being returned (deposit_not_returned)?"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "The lease requires notices to be in writing and delivered by hand, certified mail, return receipt requested, or nationally recognized overnight courier"},
+  {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "assert (adds the landlord's obligation quote from the lease or statute), escalate (adds the obligation quote plus the consequence quote about forfeiture or fee-shifting)"},
+  {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "preserve – States the facts and asks for the return, with no legal quotes (the gentlest option). ... the preserve posture is the nicest"}
+]}
+]}

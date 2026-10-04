@@ -1,0 +1,261 @@
+{
+ "missing_batches": [],
+ "scorers": {
+  "B1_a": 70,
+  "B1_b": 82,
+  "B2_a": 26,
+  "B2_b": 29,
+  "B3_a": 78,
+  "B3_b": 79,
+  "B4_a": 79,
+  "B4_b": 81,
+  "B5_a": 70,
+  "B5_b": 77,
+  "B6_a": 69,
+  "B6_b": 77,
+  "B7_a": 72,
+  "B7_b": 60,
+  "B8_a": 43,
+  "B8_b": 41
+ },
+ "agreement": {
+  "found_by_both": 446,
+  "found_by_either": 587
+ },
+ "sides": {
+  "new": {
+   "transcripts": 42,
+   "replies": 170,
+   "law_replies_avg": 115.0,
+   "applied_well_avg": 36.0,
+   "total_slips_avg": 246.0,
+   "firm_slips_avg": 141.0,
+   "slips_by_category": {
+    "LAW_UNSOURCED": 46.5,
+    "CONDITION_WRONG": 30.5,
+    "QUOTE_UNMARKED": 26.0,
+    "UNCONFIRMED_FACT": 21.5,
+    "ID": 20.5,
+    "CASE_MISREAD": 17.5,
+    "OPEN_CLOSED": 15.0,
+    "CONDITION_MISSED": 13.5,
+    "ONE_SIDED": 13.5,
+    "DATE_MADE": 13.0,
+    "QUOTE_WRONG": 5.5,
+    "CONFIRM_IN_CHAT": 5.0,
+    "OVERCLAIM": 5.0,
+    "LETTER_ORDER": 5.0,
+    "POSTURE_OWN_WORDS": 3.5,
+    "QUOTES_ONLY": 2.5,
+    "CHOICE_MADE": 1.0,
+    "DEADLINE_REPEAT": 0.5,
+    "OFFER": 0.5
+   },
+   "firm_by_category": {
+    "LAW_UNSOURCED": 30.5,
+    "ID": 16.5,
+    "QUOTE_UNMARKED": 14.0,
+    "CONDITION_WRONG": 13.0,
+    "DATE_MADE": 12.0,
+    "CASE_MISREAD": 9.5,
+    "ONE_SIDED": 8.0,
+    "OPEN_CLOSED": 7.5,
+    "UNCONFIRMED_FACT": 7.0,
+    "CONDITION_MISSED": 6.5,
+    "QUOTE_WRONG": 5.0,
+    "CONFIRM_IN_CHAT": 5.0,
+    "LETTER_ORDER": 3.5,
+    "POSTURE_OWN_WORDS": 1.0,
+    "OVERCLAIM": 1.0,
+    "DEADLINE_REPEAT": 0.5,
+    "QUOTES_ONLY": 0.5
+   }
+  },
+  "old": {
+   "transcripts": 42,
+   "replies": 128,
+   "law_replies_avg": 103.0,
+   "applied_well_avg": 21.0,
+   "total_slips_avg": 270.5,
+   "firm_slips_avg": 192.0,
+   "slips_by_category": {
+    "ID": 46.0,
+    "LAW_UNSOURCED": 44.5,
+    "CONDITION_WRONG": 31.5,
+    "CONDITION_MISSED": 19.5,
+    "OPEN_CLOSED": 19.5,
+    "QUOTE_UNMARKED": 19.0,
+    "CASE_MISREAD": 16.0,
+    "DATE_MADE": 14.0,
+    "QUOTE_WRONG": 13.5,
+    "UNCONFIRMED_FACT": 13.5,
+    "ONE_SIDED": 11.0,
+    "POSTURE_OWN_WORDS": 6.0,
+    "QUOTES_ONLY": 5.5,
+    "OVERCLAIM": 4.0,
+    "CONFIRM_IN_CHAT": 3.0,
+    "LETTER_ORDER": 3.0,
+    "OFFER": 1.0
+   },
+   "firm_by_category": {
+    "ID": 45.0,
+    "LAW_UNSOURCED": 32.0,
+    "CONDITION_MISSED": 16.0,
+    "CONDITION_WRONG": 14.5,
+    "QUOTE_UNMARKED": 14.5,
+    "CASE_MISREAD": 12.5,
+    "OPEN_CLOSED": 12.0,
+    "DATE_MADE": 12.0,
+    "QUOTE_WRONG": 11.5,
+    "UNCONFIRMED_FACT": 7.0,
+    "ONE_SIDED": 6.0,
+    "OVERCLAIM": 3.5,
+    "POSTURE_OWN_WORDS": 2.5,
+    "CONFIRM_IN_CHAT": 2.0,
+    "LETTER_ORDER": 1.0
+   }
+  }
+ },
+ "applied_well_by_scenario": {
+  "eval_repair_mold_apt": {
+   "new": [
+    1.0,
+    9.0
+   ],
+   "old": [
+    1.0,
+    9.0
+   ]
+  },
+  "eval_cases_3day_cash": {
+   "new": [
+    3.5,
+    9.5
+   ],
+   "old": [
+    0.0,
+    9.0
+   ]
+  },
+  "eval_leave_early_family": {
+   "new": [
+    4.0,
+    12.0
+   ],
+   "old": [
+    2.0,
+    9.0
+   ]
+  },
+  "eval_nc_mixed_heater": {
+   "new": [
+    1.0,
+    3.0
+   ],
+   "old": [
+    0.0,
+    4.0
+   ]
+  },
+  "eval_entry_shower": {
+   "new": [
+    1.0,
+    9.0
+   ],
+   "old": [
+    0.0,
+    9.0
+   ]
+  },
+  "eval_violation_dog": {
+   "new": [
+    1.0,
+    8.0
+   ],
+   "old": [
+    0.5,
+    5.0
+   ]
+  },
+  "eval_claim_carpet": {
+   "new": [
+    5.0,
+    9.0
+   ],
+   "old": [
+    1.0,
+    5.0
+   ]
+  },
+  "eval_deposit_ghosted": {
+   "new": [
+    6.0,
+    6.0
+   ],
+   "old": [
+    3.0,
+    6.0
+   ]
+  },
+  "eval_cases_late_claim": {
+   "new": [
+    2.0,
+    12.0
+   ],
+   "old": [
+    5.5,
+    12.0
+   ]
+  },
+  "eval_noise_neighbors": {
+   "new": [
+    2.0,
+    9.0
+   ],
+   "old": [
+    2.5,
+    9.0
+   ]
+  },
+  "eval_nonpayment_taped": {
+   "new": [
+    5.0,
+    9.0
+   ],
+   "old": [
+    2.0,
+    7.0
+   ]
+  },
+  "eval_cases_retaliation": {
+   "new": [
+    1.5,
+    6.0
+   ],
+   "old": [
+    3.0,
+    6.0
+   ]
+  },
+  "eval_lease_end_renewal": {
+   "new": [
+    2.0,
+    7.5
+   ],
+   "old": [
+    0.0,
+    7.0
+   ]
+  },
+  "eval_rent_hike_duplex": {
+   "new": [
+    1.0,
+    6.0
+   ],
+   "old": [
+    0.5,
+    6.0
+   ]
+  }
+ }
+}

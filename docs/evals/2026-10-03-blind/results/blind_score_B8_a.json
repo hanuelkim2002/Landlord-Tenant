@@ -1,0 +1,57 @@
+{"scorer": "B8_a", "runs": [
+  {"code": "R008", "scenario": "eval_rent_hike_duplex", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Applied: if the tenancy is month‑to‑month, a rent increase may be made on the same notice required to terminate the tenancy ... so the increase would be allowed (one reading of the rent-increase open question used as the rule; the no-notice reading left out)"},
+    {"reply": 1, "category": "DATE_MADE", "evidence": "gives more than 30 days before the effective date (2026-11-01)"},
+    {"reply": 1, "category": "ID", "evidence": "(see open question “no_increase_section”)"},
+    {"reply": 2, "category": "CONDITION_WRONG", "evidence": "the rule prohibits a rent increase, not a rent decrease. Therefore the rent decrease you received is not prohibited retaliatory conduct under 83.64(1) (the sheet confirms the landlord raised the rent)"},
+    {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: whether the landlord’s failure to repair the roof is retaliatory depends on proving the landlord’s primary motive (the 'discriminatorily' / 83.64(4) prerequisite left out; other tenants' rent is 'don't know')"},
+    {"reply": 2, "category": "OPEN_CLOSED", "evidence": "the open question “retaliation” notes that the landlord’s motive is not in the record and that 83.64 works only as a defense in an action for possession (one reading given as settled; the 83.55 reading left out)"},
+    {"reply": 2, "category": "CASE_MISREAD", "evidence": "it illustrates that the defense requires the tenant to have acted in good faith (Salmonte's printed text says nothing about the tenant's good faith)"},
+    {"reply": 2, "category": "ID", "evidence": "borderline: the open question “retaliation” (the open question's id)"}
+  ]},
+  {"code": "R014", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "DATE_MADE", "evidence": "provides 35 days’ notice, which satisfies the 30‑day requirement"},
+    {"reply": 1, "category": "OPEN_CLOSED", "evidence": "For a month‑to‑month tenancy, the statute allows the landlord to change the rent by giving at least 30 days’ notice before the end of a monthly period. (application rests on one reading; the readings are only listed afterward)"},
+    {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "you said you received the increase notice in writing via email (the sheet says the notice was written; no delivery method for the increase notice is in the record)"},
+    {"reply": 1, "category": "CONDITION_WRONG", "evidence": "The lease requires notices to the landlord to be in writing ... which appears to meet the lease’s notice rule for routine communications (a rule for notices to the landlord applied to the landlord's notice to the tenant)"},
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: After the term ends, if the tenant remains in possession without a new lease, the tenancy becomes month‑to‑month. (the quoted 83.46(2) speaks of an agreement with no duration provision, not a holdover)"},
+    {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: delivered by hand, certified mail, or nationally recognized overnight courier, or by email with confirmation of receipt (lease notice provision given without quote marks or section)"},
+    {"reply": 2, "category": "DATE_MADE", "evidence": "the increase notice came 15 days later"},
+    {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "you complained about the roof (a good‑faith complaint to the landlord) (good faith is not in the record)"},
+    {"reply": 2, "category": "OPEN_CLOSED", "evidence": "the notice you received appears to give at least 30 days before the start of a monthly period, satisfying the statutory notice requirement (the rent-increase notice question treated as settled)"},
+    {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: Your complaint about the roof did not state an intention to terminate or withhold rent, so it is unclear whether it falls within the protected conduct (83.64(1)'s examples 'include, but are not limited to'; an 83.56(1) notice made a condition)"},
+    {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "s.83.56(1), which requires a notice specifying noncompliance and intention to terminate (83.56(1) not quoted)"}
+  ]},
+  {"code": "R032", "scenario": "eval_rent_hike_duplex", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": [
+    {"reply": 1, "category": "CONDITION_WRONG", "evidence": "The statute says rent is payable as agreed unless otherwise agreed. Therefore, during the lease term the landlord may not change the rent (83.46(1), on when rent is payable, applied to a change in amount; the confirmed month-to-month tenancy ignored)"},
+    {"reply": 1, "category": "OPEN_CLOSED", "evidence": "So: The landlord is not allowed to raise (or lower) the rent to any amount during the lease term without your agreement. (the rent-increase open question presented as settled, no readings)"},
+    {"reply": 2, "category": "ID", "evidence": "(written_notice_date)"},
+    {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: when the tenant’s complaint did not state an intention to terminate or withhold rent under 83.56(1) (an 83.56(1) requirement implied, not quoted)"}
+  ]},
+  {"code": "R052", "scenario": "eval_rent_hike_duplex", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "ID", "evidence": "(see open question “no_increase_section”)"},
+    {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: whether a rent increase from $1,850 to $1,150 is permitted because that is actually a decrease (the sheet confirms the landlord raised the rent)"},
+    {"reply": 2, "category": "ID", "evidence": "(problem_description)"},
+    {"reply": 2, "category": "QUOTE_WRONG", "evidence": "You said: \"the problem started … 2026-09-05\" (problem_started) (not the tenant's words; also \"complained_before_increase … true\")"},
+    {"reply": 2, "category": "CONDITION_WRONG", "evidence": "The rent was *decreased*, so the statutory condition of an “increase … rent” is not met. (the sheet confirms the landlord raised the rent)"},
+    {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you could sue for damages under Fla. Stat. 83.55 (which allows recovery when the landlord fails to comply with part II) (83.55 not quoted)"},
+    {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: If the landlord later files an eviction action, you could attempt to raise retaliation as a defense ... Alternatively, you could sue for damages (the open question's two competing readings given as two available options, not as unsettled)"},
+    {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: For 83.64(1) to apply, the landlord must have *increased* the rent (or decreased services) primarily because you complained. (the 'discriminatorily' prerequisite left out)"}
+  ]},
+  {"code": "R062", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 1, "slips": [
+    {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: i.e., not less than 30 days’ notice prior to the end of any monthly period (83.57(3) text repeated without quote marks; quoted with source earlier in the reply)"},
+    {"reply": 2, "category": "CONDITION_MISSED", "evidence": "If the increase was primarily because you complained about the roof, then it is unlawful under 83.64(1). (the 'discriminatorily' condition left out; other tenants' rent is 'don't know')"},
+    {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: the stored text does not say whether a complaint about repairs (without a notice of intent to terminate) is protected activity under 83.64(1) (an 83.56(1) requirement implied, not quoted)"},
+    {"reply": 3, "category": "ID", "evidence": "To show the deadlines again, call get_deadlines again. (tool name; the program's note to the model echoed)"}
+  ]},
+  {"code": "R077", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+    {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "you have not agreed to the increase"},
+    {"reply": 1, "category": "DATE_MADE", "evidence": "The increase effective date (November 1, 2026) is after the lease term ends"},
+    {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "If you remain after September 30, 2025 without a new lease, the tenancy becomes month‑to‑month."},
+    {"reply": 1, "category": "OPEN_CLOSED", "evidence": "You may also consider whether the increase is retaliatory, but that would require a possession action to raise the defense. (picks the 'only a defense' reading after listing both)"},
+    {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "Fla. Stat. 83.64(4): “Discrimination” under this section means that a tenant is being treated differently as to the rent charged (statute text after the first word without quote marks)"},
+    {"reply": 2, "category": "CONDITION_WRONG", "evidence": "The complaint about the roof is a protected activity under 83.64(1) only if it was made “pursuant to s. 83.56(1)” (83.64(1)'s examples 'include, but are not limited to')"},
+    {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "(a notice specifying noncompliance and indicating the intention to terminate the rental agreement) (83.56(1) paraphrased, not quoted)"},
+    {"reply": 2, "category": "DATE_MADE", "evidence": "borderline: You confirmed the lease term ended September 30, 2025 (the model's own comparison that the term has ended)"}
+  ]}
+]}

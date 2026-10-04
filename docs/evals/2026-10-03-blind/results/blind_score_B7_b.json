@@ -1,0 +1,97 @@
+{"scorer": "B7_b", "runs": [
+{"code": "R003", "scenario": "eval_nonpayment_taped", "replies": 3, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "Under Fla. Stat. 83.56(5)(a), a landlord does not waive the right to terminate the rental agreement by accepting partial rent for the period (statute text, no quote marks)"},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "so your partial payment does not stop the landlord from proceeding (the three steps 83.56(5)(a) requires after accepting partial rent are left out)"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "the landlord can now pursue eviction unless you pay the full rent demanded or raise a defense (which would require paying the rent into the court registry) (83.60(2) not quoted)"},
+  {"reply": 2, "category": "ID", "evidence": "PLAYBOOKS, notice_form readings:"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: the landlord may have a chance to cure the defect before any eviction action proceeds (83.60(1)(a) gives the chance to cure 'before dismissal of the action')"}
+]},
+{"code": "R010", "scenario": "eval_nonpayment_taped", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "(ELEMENT STATUS, amount_demanded) ... (LEASE PROFILE, rent section)"},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "The notice you received demanded an amount for rent (though less than the full rent) and did not state a late fee. (tenant said the notice included a $75 late fee)"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "the notice cannot lawfully include a late fee unless the lease provides for it, which it does not. The statute's required form limits the notice to rent only. (notice_form question settled)"},
+  {"reply": 2, "category": "ID", "evidence": "ELEMENT STATUS shows partial_rent_accepted true, from user ... (partial_payment_receipt false)"},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "borderline: Multach v. Adams quoted ('the refusal of the tender did not constitute a waiver') with no word on how alike its facts are (commercial lease, refused tender)"},
+  {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: there is no indication the landlord placed the amount in registry or posted a new notice. Therefore the landlord has not satisfied the statutory conditions"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "either give you a receipt, place the amount in the court registry, or post a new 3-day notice before filing for possession ... they have not met the prerequisite for filing (registry step is 'upon filing')"}
+]},
+{"code": "R018", "scenario": "eval_nonpayment_taped", "replies": 4, "law_replies": 3, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "the rule also says a landlord does not waive the right to terminate by accepting partial rent for the period, but if partial rent is accepted after posting the notice for nonpayment, the landlord must ... (83.56(5)(a) text, no quote marks)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: they may need to follow additional steps before they can lawfully terminate (the steps attach to filing an action for possession)"},
+  {"reply": 1, "category": "CONFIRM_IN_CHAT", "evidence": "You may want to check whether your partial payment was made after the notice and whether you received a receipt."},
+  {"reply": 4, "category": "ID", "evidence": "(partial_rent_accepted true) ... (partial_payment_receipt false)"}
+]},
+{"code": "R028", "scenario": "eval_nonpayment_taped", "replies": 4, "law_replies": 3, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "The landlord must still file an eviction action and serve you with court papers before you can be forced to leave."},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: You may raise defenses such as the lack of a receipt for the partial payment or possible defects in the notice. (no word on the 83.60(2) registry deposit)"},
+  {"reply": 3, "category": "ID", "evidence": "WHAT THE STATUTE DOES NOT SETTLE: notice_received_nonpayment:"}
+]},
+{"code": "R073", "scenario": "eval_nonpayment_taped", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 2, "category": "ID", "evidence": "(partial_payment_receipt false)"},
+  {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "The landlord also has not placed the amount in court registry (no eviction filed yet) nor posted a new 3-day notice."},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "To raise any defense other than payment, you would then need to pay the rent into the court registry under 83.60(2). (not quoted)"}
+]},
+{"code": "R074", "scenario": "eval_nonpayment_taped", "replies": 4, "law_replies": 3, "applied_well": 3, "slips": [
+  {"reply": 3, "category": "QUOTE_WRONG", "evidence": "\"a demand for payment itself implies that it may be met only by a discharge of the obligation 'in money.'\" (Moskowitz reads 'any demand for payment')"}
+]},
+{"code": "R001", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: If you did report him to the city for code violations and the landlord's notice is mainly because of that report, it could be unlawful retaliation. (good-faith condition of 83.64(1) left out)"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: If you did report him to the city for code violations and the landlord's notice is mainly because of that report, it could be unlawful retaliation. (good-faith condition left out)"}
+]},
+{"code": "R004", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: that is conduct listed in 83.64(1)(a) (complaining to a governmental agency about a suspected code violation) (83.64(1)(a) not quoted)"},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: If the landlord's primary motive is retaliation for your city report, the notice may be unlawful under 83.64(1). (good-faith condition left out)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: you must have engaged in protected conduct (complaining to a governmental agency) (83.64(1)(a) not quoted)"}
+]},
+{"code": "R017", "scenario": "eval_cases_retaliation", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: If confirmed, complaining to a governmental agency about code violations is protected activity under 83.64(1)(a). (not quoted)"},
+  {"reply": 2, "category": "QUOTES_ONLY", "evidence": "borderline: Salmonte quotes and 'it said the defense is unavailable when good cause exists' with nothing on the tenant's facts (the cat notice, the report)"}
+]},
+{"code": "R050", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: If you did report the landlord to the city and the landlord's cat notice is primarily because of that report, then the landlord may be acting unlawfully under 83.64(1). (good-faith condition left out)"},
+  {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "Fla. Stat. 83.64(1)(a): Examples of conduct for which the landlord may not retaliate include, but are not limited to, situations where: (statute text outside quote marks)"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: If you did report the landlord to the city and the landlord's cat notice is primarily because of that report, then the landlord may be acting unlawfully under 83.64(1). (good-faith condition left out)"}
+]},
+{"code": "R067", "scenario": "eval_cases_retaliation", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: you may raise the defense in any action for possession (83.64(2) not quoted)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: you would need to provide evidence of retaliation and lack of good cause (83.64(3) puts good cause on 'the landlord proves')"}
+]},
+{"code": "R071", "scenario": "eval_cases_retaliation", "replies": 2, "law_replies": 2, "applied_well": 1, "slips": []},
+{"code": "R007", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "If you do not plan to stay, the rule would require you to give the landlord notice within the period specified in the lease (you said 60 days) (83.575(1)'s condition that the provision also require the landlord's notice is left out)"},
+  {"reply": 2, "category": "CONFIRM_IN_CHAT", "evidence": "Do you plan to stay after the lease or rental period ends?"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: 83.57(3) (which applies to month-to-month tenancies; here the lease has a specific duration, so 83.57(3) does not directly apply ...) (83.57(3) not quoted)"},
+  {"reply": 3, "category": "CONFIRM_IN_CHAT", "evidence": "Do you plan to stay after the lease or rental period ends? If yes, has the landlord given you permission to stay"}
+]},
+{"code": "R009", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "The statute does not set a deadline for signing a renewal of a rental agreement. Therefore, you do not have to sign the renewal by October 15. (nothing quoted)"},
+  {"reply": 2, "category": "ID", "evidence": "shows no deadline until \"planning_to_stay\" is confirmed"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: the statute does not automatically create a new tenancy when you stay after the term ends"},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: you have stated December 31, 2026, but this has not been confirmed on the sheet (the sheet confirms 2026-12-31)"},
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "If the landlord has given you permission to stay, you could be liable for an additional month's rent under 83.575(3). (leaves out 'fails to give notice required under s. 83.57(3)')"}
+]},
+{"code": "R012", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: for a lease with a specific duration, the notice period comes from the lease (83.575(1) not quoted)"},
+  {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: If the landlord did give you permission (for example, by accepting rent), then a different rule could apply (one staying_on reading given as the example)"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "under Fla. Stat. 83.575(3) and 83.57(3), you might owe an additional month's rent if you fail to give the required notice for a month-to-month tenancy (neither quoted)"}
+]},
+{"code": "R047", "scenario": "eval_lease_end_renewal", "replies": 2, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "QUOTE_WRONG", "evidence": "\"... without the permission of the landlord, the landlord may also recover double the amount of rent ...\" (83.58's possession sentence dropped inside the quote without an ellipsis)"},
+  {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: the quote and 'So' leave out 'the landlord may recover possession of the dwelling unit in the manner provided for in s. 83.59'"},
+  {"reply": 2, "category": "ID", "evidence": "(planning_to_stay false, ELEMENT STATUS) ... (end_notice_given false, ELEMENT STATUS) ... (lease_end_notice_terms known from user)"},
+  {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "You said you do not plan to stay after the lease or rental period ends (planning_to_stay false, ELEMENT STATUS). (only suggested, never confirmed on the sheet)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you may also be subject to any liquidated damages the lease provides for missing that notice, if the landlord gives you the written notice described in 83.575(2) (not quoted)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: Because you have not given the 60-day notice you said the lease requires for non-renewal, you may also be subject to any liquidated damages (notice not yet due)"}
+]},
+{"code": "R069", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 2, "applied_well": 1, "slips": [
+  {"reply": 2, "category": "QUOTES_ONLY", "evidence": "borderline: The lease and statute text I have do not answer that. (to the last day to give notice; the sheet's lease notice words and the end date speak to it)"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "fail to give 30 days' written notice to end a month-to-month tenancy (83.57(3) not quoted)"}
+]},
+{"code": "R072", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "CONFIRM_IN_CHAT", "evidence": "Do you plan to stay after the lease or rental period ends?"},
+  {"reply": 3, "category": "DATE_MADE", "evidence": "then staying in January 2027 is before the lease ends"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: You are still within the lease term and must continue to pay rent and comply with all lease terms."},
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "With the landlord's permission to stay, you may be liable to the landlord for an additional month's rent. (leaves out 'fails to give notice required under s. 83.57(3)')"},
+  {"reply": 3, "category": "CONFIRM_IN_CHAT", "evidence": "you would need to confirm the lease end date and whether the landlord has agreed to let you stay"}
+]}
+]}

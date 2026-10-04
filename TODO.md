@@ -37,6 +37,12 @@ structural ones first.
     source, so a case's, the lease's, or the tool's words, or a phrase of 83.60 followed by "83.51(1)" in the
     reply, are checked against the wrong section (`citations.quoted_passages`). An option: a quote cited to a
     section it is not in, but word for word in what the model was given, is not flagged for the section.
+71. What the blind scoring of 2026-10-03 left (`docs/evals/2026-10-03-blind/`; 36 of 115 legal answers applied
+    well, against 21 of 103 on 2026-10-02): rules restated without their quote (46.5, unchanged), conditions
+    applied wrong (30.5, unchanged; item 63 holds the ones for the author), quotes without marks (26) and facts
+    not confirmed (21.5, both up, mostly borderline), dates worked out (13), cases misread or one-sided (17.5,
+    13.5). Two stories went down: the late claim (Plakhov v. Serova left out or misread, days counted) and
+    retaliation (83.64(1)'s examples read as the only protected acts).
 67. The eval's "cases not given" (`CASE_NAME` in `dev/eval.py`) counts part of a given case's name as another
     case: "Inc. v. Varnado", "Income Realty v. Bentley", "Follows Durene v. Alcime" (3 turns, eval of
     2026-10-03). Match against the names `get_cases` printed (`agent.named_cases`) instead.

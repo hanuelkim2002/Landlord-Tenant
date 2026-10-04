@@ -1,0 +1,103 @@
+{"scorer": "B6_b", "runs": [
+{"code": "R020", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "'ELEMENT STATUS shows this as known from your statement' ... '(DEADLINE STATUS for claim_notice_deadline)'"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: 'The tenant's failure to object in writing does not waive any right to seek damages in a separate action.' (83.49(3)(b) restated; not quoted anywhere in the reply)"},
+  {"reply": 2, "category": "ONE_SIDED", "evidence": "'So: Under Durene, the landlord must return your deposit.' (relies on Durene but leaves out its half that helps the landlord, the independent action for damages; no line in the reply says the landlord may still sue)"},
+  {"reply": 2, "category": "ID", "evidence": "'ELEMENT STATUS shows lease term end from lease_profile.term_end'"},
+  {"reply": 2, "category": "DATE_MADE", "evidence": "borderline: 'You said you moved out on 2026-06-30, while the lease term ends September 30, 2027' (the model's own comparison of two dates; the term end is not in a lease quote)"},
+  {"reply": 3, "category": "OVERCLAIM", "evidence": "'So you would get the full $1,850 back.'"},
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: 'The landlord must return the deposit. The deposit amount is $1,850.' (reply 2 said the seven-day vacating notice was not known yet and could excuse the landlord's notice; that condition is dropped here)"},
+  {"reply": 3, "category": "ID", "evidence": "'(LEASE PROFILE, security_deposit)' ... '(DEADLINE STATUS for claim_notice_deadline)'"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: 'The lease says your deposit is ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00)' (lease text with no quote marks)"}
+]},
+{"code": "R027", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "DATE_MADE", "evidence": "'The landlord gave notice 51 days after the tenancy ended'"},
+  {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: 'you can demand the return of the full $1,000 deposit' (amount only in the intake description; not on a SHEET line or in a lease quote in this chat)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: 'Your failure to object in writing within 15 days does not waive that right to sue for damages' (83.49(3)(b) keeps the tenant's rights; here applied to the landlord's right to sue)"},
+  {"reply": 2, "category": "DATE_MADE", "evidence": "'Your facts show the notice was dated 51 days after the tenancy ended'"},
+  {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "'Like you, the tenants sued for return of the deposit and the landlord counterclaimed for damages.' (the tenant has not sued; no counterclaim in the record)"},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "borderline: 'Unlike you, the tenant filed suit shortly after vacating (October 6, 1982) before receiving any notice' (the printed Durene facts do not say the tenant received no notice)"},
+  {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: 'So the rule would mean you should receive the full $1,000 deposit'"},
+  {"reply": 3, "category": "DATE_MADE", "evidence": "'The landlord gave notice 51 days after the tenancy ended'"},
+  {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: 'The landlord must return the full $1,000 deposit' (amount not on a SHEET line or in a lease quote in this chat)"},
+  {"reply": 4, "category": "CONDITION_WRONG", "evidence": "'If the landlord sues you for damages (cleaning and painting) and prevails, the landlord would be entitled to attorney fees and court costs.' (83.49(3)(c) reaches an action to adjudicate the right to the security deposit, not a separate damages action)"}
+]},
+{"code": "R037", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "DATE_MADE", "evidence": "'The 30‑day period after June 30, 2026 ends July 30, 2026'"},
+  {"reply": 1, "category": "QUOTE_WRONG", "evidence": "You said: \"the tenancy ended on June 30, 2026\" (in quote marks but not the tenant's words; likewise \"the landlord's notice is dated August 20, 2026\")"},
+  {"reply": 2, "category": "ONE_SIDED", "evidence": "Quotes Durene, Malagon, Casey only; Plakhov v. Serova, in the same get_cases result and against the tenant (notice excused when the tenant vacates early without the 7-day notice), is left out"},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "'So: Under the rule in those cases, the landlord forfeits the right to impose a claim upon the deposit' (no word on how alike any case's facts are)"},
+  {"reply": 2, "category": "DATE_MADE", "evidence": "'The 30‑day period after June 30, 2026 ends July 30, 2026'"},
+  {"reply": 3, "category": "DATE_MADE", "evidence": "'The 30‑day period after June 30, 2026 ends July 30, 2026'"},
+  {"reply": 3, "category": "OVERCLAIM", "evidence": "'So you receive the full deposit of $1,850.00; the $700 claim is not deducted.'"},
+  {"reply": 4, "category": "DATE_MADE", "evidence": "'The 30‑day period after June 30, 2026 ends July 30, 2026'"},
+  {"reply": 4, "category": "OVERCLAIM", "evidence": "'So you receive the full deposit of $1,850.00; the $700 claim is not deducted.'"},
+  {"reply": 4, "category": "QUOTE_WRONG", "evidence": "Lease Section 4.3 quoted as '... on the Deposit and the reason for the lease.' (the same quote in reply 3 reads 'the reason for the claim')"}
+]},
+{"code": "R038", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "DATE_MADE", "evidence": "'the 30‑day period after move‑out ended on 2026‑07‑30'"},
+  {"reply": 1, "category": "CASE_MISREAD", "evidence": "'(Durene v. Alcime, Malagon v. Solari, Casey v. Picinich, Plakhov v. Serova) all hold that a late notice forfeits the landlord’s right to claim the deposit' (Plakhov held the landlord's notice obligation excused)"},
+  {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "'your case mirrors this—tenants sued for deposit return, landlord counterclaimed for damages (cleaning and painting)' (no suit or counterclaim in the record)"},
+  {"reply": 2, "category": "OVERCLAIM", "evidence": "'under Malagon, the court would likely award you the full deposit'"},
+  {"reply": 2, "category": "DATE_MADE", "evidence": "borderline: 'your move‑out date was 2026‑06‑30, the landlord’s notice is dated 2026‑08‑20 and you received it on 2026‑08‑24, so the notice was given after the 30‑day period' (the model's own comparison)"},
+  {"reply": 3, "category": "DATE_MADE", "evidence": "'the 30‑day period after move‑out ended on 2026‑07‑30'"},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "'(Durene v. Alcime, Malagon v. Solari, Casey v. Picinich, Plakhov v. Serova) all hold that a late notice forfeits the landlord’s right to claim the deposit' (Plakhov held the notice obligation excused)"},
+  {"reply": 4, "category": "CONDITION_WRONG", "evidence": "'Applied: The statute controls attorney‑fee awards; the lease does not alter it.' resting on 83.49(3)(d), which speaks of conflicting provisions in other Florida Statutes, not a lease"}
+]},
+{"code": "R068", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "DATE_MADE", "evidence": "'The notice was sent about 52 days after the tenancy ended'"},
+  {"reply": 2, "category": "ID", "evidence": "'(tenancy_terminated known from user, lease says September 30, 2027)' ... 'ELEMENT STATUS does not show whether you gave that seven‑day notice'"},
+  {"reply": 2, "category": "DATE_MADE", "evidence": "'The notice was sent about 52 days after the tenancy ended' ... '(June 30, 2026 vs. lease end September 30, 2027)'"},
+  {"reply": 2, "category": "QUOTE_WRONG", "evidence": "Plakhov quoted as 'Second, the Landlord's obligation to provide this notice was excused by the Tenant's failure to give the notice required by section 83.49(5).' (at 1223); the printed rule reads 'failure to give the seven-day notice implicated when a “tenant ... vacates ...'"},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "'Your facts: same as above (late notice).' ... 'So: Under Casey, the landlord forfeited the right to impose any claim on your security deposit.' (Durene, Malagon, Casey applied with no word on how alike their facts are)"},
+  {"reply": 2, "category": "OVERCLAIM", "evidence": "'So: Under Malagon, the court would award you the full deposit'"},
+  {"reply": 3, "category": "ID", "evidence": "'(DEADLINE STATUS shows claim_notice_deadline passed)'"},
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: 'Therefore they cannot keep the $700 (or any part) based on that notice; they must return the deposit' (reply 2 said the seven-day vacating notice was not known and could change the outcome; dropped here)"}
+]},
+{"code": "R081", "scenario": "eval_cases_late_claim", "replies": 4, "law_replies": 4, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "DATE_MADE", "evidence": "'The rule requires notice within 30 days after termination (by July 30, 2026).'"},
+  {"reply": 2, "category": "DATE_MADE", "evidence": "'received 2026-08-24, after July 30, 2026 deadline'"},
+  {"reply": 2, "category": "ONE_SIDED", "evidence": "Covers Durene, Malagon, Casey; leaves out Plakhov v. Serova from the same get_cases result (notice obligation excused by the tenant's failure to give the 7-day notice). 'These cases show judges have made landlords return the deposit when the notice of claim was late'"},
+  {"reply": 3, "category": "DATE_MADE", "evidence": "'The rule requires notice within 30 days after termination (by July 30, 2026).'"},
+  {"reply": 3, "category": "OVERCLAIM", "evidence": "borderline: 'Thus, you should receive the full $1,000 deposit back, not just the $700.'"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: 'You confirmed the security deposit is ONE THOUSAND AND 00/100 DOLLARS ($1,000.00).' (lease text with no quote marks or source)"},
+  {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: 'whether attorney fees are actually awarded depends on the court's discretion and the specific circumstances of the case' (no quote behind it; also 'the statute says the right to attorney fees may not be waived in a lease agreement' with that sentence not quoted)"}
+]},
+{"code": "R005", "scenario": "eval_noise_neighbors", "replies": 4, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "'WHAT THE STATUTE DOES NOT SETTLE reads:'"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: 'The rule requires the upstairs tenant to materially fail to comply with s. 83.52(7) by unreasonably disturbing neighbors.' (83.52(7) not quoted in the reply)"},
+  {"reply": 2, "category": "ID", "evidence": "'WHAT THE STATUTE DOES NOT SETTLE reads:'"},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "'Applied: The case shows that termination requires written notice and a waiting period' (Morse is a motel manager's verbal eviction in a criminal search case; its rule is applied to the tenant's own 83.56(1) termination with no word on how alike the facts are)"},
+  {"reply": 4, "category": "QUOTES_ONLY", "evidence": "borderline: 'This tool has no cases on that.' (Morse, printed in this chat, speaks to ending a tenancy for 'creating a disturbance' and 'continued unreasonable disturbance')"}
+]},
+{"code": "R039", "scenario": "eval_noise_neighbors", "replies": 5, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "'(no such quote in YOUR LEASE)'"},
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 'The facts show the neighbor’s disturbance is ongoing and likely unreasonable' (the open question on what is unreasonable decided on one measure, readings not given)"},
+  {"reply": 2, "category": "ID", "evidence": "'YOUR LEASE sections: ... move_out_requirements, forwarding_address_requirement, notices_to_landlord'"},
+  {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: 'Since YOUR LEASE contains no such clause, reading 2 applies' (one reading picked by name; with no lease clause both readings reach the same result)"}
+]},
+{"code": "R040", "scenario": "eval_noise_neighbors", "replies": 4, "law_replies": 3, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "'(source_rents_from_landlord)' ... '(whose_duty, remedy_not_duty, what_is_unreasonable)'"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: 'you may have other options (e.g., a notice to terminate if the landlord materially fails to comply with s.83.51(1) or material lease provisions)' (83.56(1) not quoted in the reply)"},
+  {"reply": 2, "category": "ID", "evidence": "'(disturbance_description, disturbance_source, disturbance_frequency, disturbance_started)' ... 'Open question (ending_own_lease)'"},
+  {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "'you have not sent a notice to cure under 83.56(1) specifying noncompliance and intention to terminate' (the record does not say what the written complaint stated)"}
+]},
+{"code": "R045", "scenario": "eval_noise_neighbors", "replies": 4, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "'ELEMENT STATUS shows source_rents_from_landlord: true (from user)' ... 'PLAYBOOKS, remedy_not_duty'"},
+  {"reply": 1, "category": "CONDITION_MISSED", "evidence": "'the disturbance occurs almost every night, indicating a continued disturbance (met)' then 'The landlord may deliver a written notice' (the rule's 'unreasonable' is left out)"},
+  {"reply": 2, "category": "ID", "evidence": "'PLAYBOOKS, ending_own_lease'"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: 'not a failure to comply with s. 83.51(1) (that section concerns building maintenance)' (83.51(1) not quoted)"},
+  {"reply": 4, "category": "QUOTES_ONLY", "evidence": "borderline: 'This tool has no cases on that.' (Morse, printed in this chat, speaks to ending a tenancy for a disturbance)"}
+]},
+{"code": "R060", "scenario": "eval_noise_neighbors", "replies": 4, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 'The rule’s condition of a \"subsequent or continued unreasonable disturbance\" is met by the nightly loud parties lasting until early morning.' (whether it is unreasonable is a playbook open question; called met, readings not given)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: 'The landlord's duty under s. 83.51(1) is to comply with building, housing, health codes and maintain structural components, not to control other tenants' noise.' (83.51(1) not quoted)"},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "borderline: 'it does not directly address neighbor disturbance but supports the notice requirement in 83.56(1)' (Morse read 83.56(2)(a), 83.56(3), 83.57 on a landlord ending a motel tenancy, not a tenant's 83.56(1) notice)"},
+  {"reply": 4, "category": "QUOTES_ONLY", "evidence": "borderline: 'This tool has no cases on that.' (Morse, printed in this chat, speaks to ending a tenancy for a disturbance)"}
+]},
+{"code": "R066", "scenario": "eval_noise_neighbors", "replies": 5, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "'You did not state in that complaint an intention to terminate the lease.' ... 'your complaint did not indicate an intention to terminate. Thus, neither condition is satisfied.'"},
+  {"reply": 2, "category": "CASE_MISREAD", "evidence": "borderline: 'These cases reinforce that the notice specified in 83.56(1) is required for lease termination based on landlord noncompliance.' (Lakeway read 83.60(1) on a constructive-eviction defense; neither case is a lease termination; no word on how alike)"},
+  {"reply": 5, "category": "CASE_MISREAD", "evidence": "borderline: 'So: The court has said a landlord may terminate for continued unreasonable disturbance with proper notice; here the landlord has not given such notice' (no word on how Morse's motel facts compare)"}
+]}
+]}

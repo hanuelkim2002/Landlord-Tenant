@@ -5,6 +5,15 @@ session can see why the code is the way it is.
 
 ## 2026-10-03
 
+- Blind scoring of the applying code of 2026-10-02 against today's (`docs/evals/2026-10-03-blind/`). 84 transcripts,
+  42 a side, mixed under one set of codes with the program's cautions taken out, scored by sixteen agents with the
+  rubric; the old side scored again came out as on 2026-10-02 (21 of 103 legal answers applied well, 270.5
+  slips; then 21.5 of 101.5, 270), and the two scorers of a batch agreed on 76% of slips. Legal answers applied
+  well: 21 of 103 (20%) to 36 of 115 (31%); firm slips 192 to 141. Fell: ids and prompt names 46 to 20.5, quotes
+  wrong 13.5 to 5.5, conditions missed 19.5 to 13.5, open questions closed 19.5 to 15. Unchanged: rules restated
+  without their quote, conditions applied wrong, dates worked out. New method scripts: `blind_mixed.py`,
+  `blind_summary_mixed.py`. TODO item 71. Chart shown in the session.
+
 - Eval of items 60, 66, and 65 (`docs/evals/2026-10-03-items60-66/`; three runs: the old shared lease, each
   story's own lease, and own leases with items 66 and 65; code-scored). Questions about when with their
   deadlines printed 35, 36, 39 of 39 (the program printed 4); section-retold cautions 45 in 170 replies; runs

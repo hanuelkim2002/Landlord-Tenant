@@ -1,0 +1,103 @@
+{"scorer": "B3_a", "runs": [
+{"code": "R013", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "The rule: If the tenant breaches the rental agreement for the dwelling unit and the landlord has obtained a writ of possession -- the whole of 83.595(1)-(4) reproduced with no quote marks"},
+  {"reply": 1, "category": "ID", "evidence": "(lease Profile.rent) -- field ids also shown as (fixed term lease: true), (leave notice given: false)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "you would owe $2,100, provided you have given the required seven days’ notice before vacating -- 83.595(4) asks whether the agreement requires no more than 60 days' notice, not whether the tenant gives it; the lease 4.3 deposit-notice clause is used as the fee's notice period"},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "you would owe $2,100 -- leaves out 83.595(4)(a), rent and charges accrued through the end of the month the landlord retakes possession plus damages"},
+  {"reply": 1, "category": "CHOICE_MADE", "evidence": "borderline: You may wish to consider giving the seven days’ notice in writing (by certified mail or personal delivery) to preserve your rights -- also suggests documenting the premises to limit deductions"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: (by certified mail or personal delivery) -- 83.49(5) delivery rule stated, not quoted in this reply"},
+  {"reply": 2, "category": "ID", "evidence": "(leave notice given: false)"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: The notice must be in writing and include the address where you may be reached (your forwarding address). -- 83.49(5) not quoted in this reply; also cites 83.49(2)(d) as a requirement without quoting it"},
+  {"reply": 3, "category": "QUOTE_WRONG", "evidence": "Fla. Stat. 83.49(3)(a): \"Unless the tenant objects to the imposition of the landlord’s claim -- that sentence is 83.49(3)(b), joined in one quote to a (3)(a) sentence and cited to (3)(a)"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "the deposit is for security against damages, not for liquidated damages unless the lease expressly states so -- no quote behind it"},
+  {"reply": 3, "category": "ONE_SIDED", "evidence": "borderline: In Plakhov v. Serova, the court held that a tenant's failure to give the 7-day notice of vacating excuses the landlord's obligation -- relies on Plakhov but leaves out its holding that the deposit was applied to the damages owed where the lease did not limit its use"},
+  {"reply": 3, "category": "ID", "evidence": "(leave notice given: false)"},
+  {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "the statute permits it if the amount does not exceed two months’ rent and the addendum is signed at the same time as the lease -- 83.595(4) not quoted in this reply"},
+  {"reply": 4, "category": "CONDITION_MISSED", "evidence": "borderline: the statute permits it if the amount does not exceed two months’ rent and the addendum is signed at the same time as the lease -- leaves out the no-more-than-60-days notice condition for a fee"},
+  {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: You have not confirmed whether the addendum was executed at the same time as the lease. -- SHEET: 'When you signed the lease, did you also sign a separate addendum ...' -> True"},
+  {"reply": 4, "category": "CASE_MISREAD", "evidence": "borderline: Wilson shows a judge enforced a two‑month‑rent fee -- Wilson's addendum was $4,500, 'an amount that does not exceed two months’ rent', not shown to equal two months"},
+  {"reply": 4, "category": "ID", "evidence": "(early termination addendum: true)"}
+]},
+{"code": "R057", "scenario": "eval_leave_early_family", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "If you give the required seven days' notice, the landlord may choose to charge the early termination fee of $2,100 under Fla. Stat. 83.595(4). -- fee made to depend on the tenant giving notice; 83.595(4) turns on what the agreement requires"},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: possible costs include: the early termination fee of $2,100 if the landlord chooses that option and you give proper notice -- leaves out 83.595(4)(a) rent accrued through the end of the month of retaking"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: (1) treat the rental agreement as terminated and retake possession, terminating any further liability of the tenant -- near-verbatim 83.595 text without quote marks"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "The landlord may claim damages beyond ordinary wear and tear."},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "(3) if you do not object in writing within 15 days of receiving that notice, they may deduct the claim and return the balance -- 83.49(3)(b) not quoted"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "(4) if they fail to send that notice within 30 days, they forfeit the right to make a claim from the deposit -- leaves out the quoted 83.49(5) relief when the tenant gives no 7-day notice (record: no notice given)"},
+  {"reply": 3, "category": "QUOTE_WRONG", "evidence": "\"The statute does not allow for the creation of a liquidated damages remedy to bypass the statutory provisions.\" (at 560) -- the printed case gives this at 561"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "whether the amount is permissible under section 83.595(4) (not exceeding 2 months' rent, which $2,100 does not) -- statute not quoted in this reply"},
+  {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: Whether your specific fee of $2,100 is allowed depends on whether it was agreed in an addendum signed at the same time as the lease and whether the amount is permissible -- leaves out the 60-day notice condition"},
+  {"reply": 3, "category": "ID", "evidence": "Apply them as rule 8 says."}
+]},
+{"code": "R063", "scenario": "eval_leave_early_family", "replies": 3, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: treating the agreement as terminated and retaking possession for their own account (no further liability) -- 83.595(1)-(3) stated without a quote"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "Your failure to give the seven‑day vacate notice does not affect the landlord’s statutory duty to give notice of a deposit claim. -- forfeiture applied without, and against, the 83.49(5) relief"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "a lease term that waives a statutory right is void under Fla. Stat. 83.47 -- 83.47 not quoted"},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "The Olen Properties rule bars liquidated damages that exceed two months’ rent -- Olen read the 2007 statute and struck the 3-month clause under Lefemine and 83.595(1), not a two-month cap"},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: You did not state whether the addendum was executed at the same time as the lease. -- SHEET: addendum signed 'When you signed the lease' -> True"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: You said the monthly rent is ONE THOUSAND EIGHT HUNDRED FIFTY AND 00/100 DOLLARS ($1,850.00) per month. -- lease words without quote marks"}
+]},
+{"code": "R065", "scenario": "eval_leave_early_family", "replies": 3, "law_replies": 3, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "ELEMENT STATUS shows early_termination_addendum true"},
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "plus possibly rent and charges for damages through the end of the month in which the landlord retakes possession, unless your addendum includes a waiver of additional rent beyond that month -- 83.595(4)(a) and the form not quoted"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "- (1) Treat the rental agreement as terminated and retake possession for his or her own account, thereby terminating any further liability of the tenant. -- 83.595(1)-(3) verbatim without quote marks"},
+  {"reply": 2, "category": "ID", "evidence": "ELEMENT STATUS does not show claim_notice_received"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "(2) whether you objected to that notice within 15 days of receiving it -- 83.49(3)(b) not quoted"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "If the landlord did not give such notice, they forfeit the right to make a claim against the deposit and must return it -- leaves out the lease/83.49(5) relief when the 7-day notice is not given (record: not given)"},
+  {"reply": 3, "category": "ID", "evidence": "ELEMENT STATUS shows early_termination_amount 2100"},
+  {"reply": 3, "category": "CASE_MISREAD", "evidence": "The cases show that a judge has said a fee exceeding two months’ rent is not allowed (Olen Properties). -- Olen did not apply a two-month limit"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "The $2100 amount is less than two months’ rent ($3,700), so it meets the amount limit in 83.595(4). -- statute not quoted in this reply"},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: or whether it was executed contemporaneously with the lease -- SHEET: addendum signed 'When you signed the lease' -> True"}
+]},
+{"code": "R075", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 2, "slips": [
+  {"reply": 1, "category": "ID", "evidence": "borderline: The rule: the sentence that answers it, quoted, source first. -- the prompt's template wording shown to the tenant"},
+  {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: The lease says your monthly rent is ONE THOUSAND FIFTY AND 00/100 DOLLARS ($1,050.00) per month."},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: Because all conditions are met, the landlord may choose to charge you the early termination fee of $2,100 under 83.595(4). -- cost answer leaves out 83.595(4)(a) rent through the month of retaking and damages"},
+  {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "borderline: The lease says notices to landlord must be in writing and delivered by hand, by certified mail, return receipt requested, or by nationally recognized overnight courier."},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: but you may still have rights to your security deposit -- second sentence of 83.49(5) not quoted in this reply"},
+  {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: You confirmed your security deposit is ONE THOUSAND FIFTY AND 00/100 DOLLARS ($1,050.00)."},
+  {"reply": 4, "category": "CASE_MISREAD", "evidence": "the court struck down a liquidated damage provision of three months rent because it exceeded the statutory limit of two months’ rent -- Olen's stated grounds were Lefemine and 83.595(1)"},
+  {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: you have not confirmed when the addendum was signed relative to the lease -- SHEET: addendum signed 'When you signed the lease' -> True"},
+  {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "the fee must still satisfy the statutory requirements (amount ≤ 2 months’ rent, tenant required to give no more than 60 days’ notice -- 83.595(4) not quoted in this reply"}
+]},
+{"code": "R079", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 1, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "though the landlord could still seek damages for waste or unpaid utilities -- not in the quoted 83.595(1)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "However, you have not given any leave notice yet. Therefore, the notice condition is not currently met. -- 83.595(4) turns on the notice the agreement requires, not on notice given"},
+  {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: If you give the required notice, the landlord may choose to charge the $2,100 fee. -- leaves out 83.595(4)(a) rent through the month of retaking and damages"},
+  {"reply": 3, "category": "ID", "evidence": "(leave_notice_given false)"},
+  {"reply": 3, "category": "CONDITION_WRONG", "evidence": "Because you failed to give the seven‑day notice, the statute says the landlord’s notice requirement under paragraph (3)(a) is relieved. -- record shows notice not given yet with the deadline upcoming, not a failure"},
+  {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: (for example, waste, unpaid utilities, or costs to re‑let)"},
+  {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: You did not confirm when the addendum was signed relative to the lease. -- SHEET: addendum signed 'When you signed the lease' -> True"},
+  {"reply": 4, "category": "CASE_MISREAD", "evidence": "borderline: a liquidated damages addendum for two months’ rent is enforceable if executed at the same time as the lease -- Wilson's $4,500 was 'an amount that does not exceed two months’ rent'"}
+]},
+{"code": "R011", "scenario": "eval_nc_mixed_heater", "replies": 2, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "ID", "evidence": "(written_notice_delivered false)"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: For the rule to protect your complaint, you must have complained to the landlord pursuant to 83.56(1). -- 83.64(1) lists examples that 'include, but are not limited to'; the reply still ends at not known"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "That requires written notice specifying the noncompliance and indicating the intention to terminate the rental agreement. -- 83.56(1) not quoted"}
+]},
+{"code": "R019", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "your complaint must fall into one of the listed examples -- the quoted text says the examples 'include, but are not limited to'"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "which requires a written notice specifying the noncompliance and indicating the intention to terminate the rental agreement -- 83.56(1) not quoted"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "whether refusing to renew your lease because of that complaint is illegal depends on whether your complaint qualifies as protected conduct -- leaves out that 83.64(1) reaches only raising rent, decreasing services, or bringing or threatening an action"}
+]},
+{"code": "R025", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "QUOTE_WRONG", "evidence": "You said: \"the landlord keeps saying he will fix it\" -- the tenant's words were 'he keeps saying he will fix it'"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: the condition that the tenant complained to the landlord pursuant to s. 83.56(1) is not known yet -- an example treated as a condition, and the SHEET shows no written notice delivered"}
+]},
+{"code": "R035", "scenario": "eval_nc_mixed_heater", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+  {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "which prohibits a landlord from discriminatorily increasing rent or decreasing services, or from bringing or threatening to bring an action for possession, primarily because the landlord is retaliating against the tenant for exercising rights under local, state, or federal fair housing laws -- unquoted, and merges 83.64(1) with example (f)"},
+  {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: to see if it may be unlawful under Fla. Stat. 83.64 -- the retaliation section applied to a remark its words do not reach"},
+  {"reply": 2, "category": "ID", "evidence": "ELEMENT STATUS shows written_notice_delivered false"},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "For the retaliation protection to apply, you must show your complaint was either (1) made pursuant to 83.56(1) -- examples read as an exhaustive requirement"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "(written notice specifying noncompliance and intention to terminate) -- 83.56(1) not quoted"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "the landlord’s refusal to renew your lease because you complained about the heater may not be unlawful retaliation under 83.64, because your complaint does not appear to be a protected activity -- leaves out whether non-renewal is among the acts 83.64(1) reaches"}
+]},
+{"code": "R078", "scenario": "eval_nc_mixed_heater", "replies": 2, "law_replies": 1, "applied_well": 0, "slips": [
+  {"reply": 2, "category": "ID", "evidence": "ELEMENT STATUS shows you have paid rent since you knew about the problem (rent_paid_since_known true)."},
+  {"reply": 2, "category": "CONDITION_WRONG", "evidence": "The rule’s protection applies only if the complaint was made pursuant to s. 83.56(1) -- examples 'include, but are not limited to'"},
+  {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "which requires a written notice specifying the noncompliance and indicating the intention to terminate the lease or withhold rent -- 83.56(1) not quoted, and 'withhold rent' is 83.60(1)(b)"},
+  {"reply": 2, "category": "CONDITION_MISSED", "evidence": "your landlord may refuse to renew your lease because you complained about the heater, unless you can show the complaint was a written notice under 83.56(1) or another protected activity -- leaves out whether non-renewal is among the acts 83.64(1) reaches"}
+]},
+{"code": "R083", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 1, "applied_well": 1, "slips": []}
+]}
