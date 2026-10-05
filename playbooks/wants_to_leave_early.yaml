@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.595.txt, statutes/83.49.txt, statutes/83.682.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.3
+  version: 0.4
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -129,6 +129,96 @@ spec:
       text: >-
         If the tenant is leaving because the unit was damaged or destroyed (for example, by fire or a storm), 83.63
         may be the relevant section. There is no playbook for it; fetch it with get_statute_section before applying it.
+
+  # What the tenant can do, and what decides whether it is open (TODO items 81 and 84): checked by code
+  # (deterministic.check_options) from the confirmed facts, the clocks, and the lease profile, and given to the model
+  # before any step toward it. A gate is met through any of its ways. The gates are the author's to check.
+  options:
+    - id: servicemember_termination
+      label: End the lease as a servicemember with military orders, by written notice with the orders, effective at least 30 days after the landlord receives it
+      cite: "83.682(1)"
+      gates:
+        - says: the tenant is a servicemember
+          cite: "83.682(1)"
+          quote: "Any servicemember may terminate his or her rental agreement"
+          ways:
+            - fact: servicemember
+              equals: true
+              when_otherwise: The tenant confirmed not being a servicemember.
+        - says: the orders meet one of the criteria the statute lists, such as a move of 35 miles or more
+          cite: "83.682(1)"
+          quote: "if any of the following criteria are met"
+          ways:
+            - check: the military orders, against the criteria in 83.682(1) (a permanent change of station of 35 miles or more, a discharge or release from active duty, orders into government quarters, temporary orders of more than 60 days to 35 miles or more away, and the others)
+      steps:
+        - says: a written notice of termination to the landlord, with a copy of the orders or a letter from the commanding officer
+          cite: "83.682(2)"
+          quote: "The notice to the landlord must be accompanied by either a copy of the official military orders or a written verification signed by the servicemember’s commanding officer."
+          fact: servicemember_notice_given
+          equals: true
+        - says: the termination takes effect at least 30 days after the landlord receives the notice
+          cite: "83.682(1)"
+          quote: "at least 30 days after the landlord’s receipt of the notice"
+          clock: servicemember_earliest_termination
+      also_open: [servicemember_criteria]
+
+    - id: early_termination_fee
+      label: Leave early and pay the early termination fee or liquidated damages the lease sets, in place of the landlord's other remedies
+      cite: "83.595(4)"
+      gates:
+        - says: the tenant signed a separate addendum agreeing to the fee or liquidated damages when the lease was made
+          cite: "83.595(4)"
+          quote: "This remedy is available only if the tenant and the landlord, at the time the rental agreement was made, indicated acceptance of liquidated damages or an early termination fee."
+          ways:
+            - fact: early_termination_addendum
+              equals: true
+              when_otherwise: The tenant confirmed signing no such addendum, so the landlord's other remedies in 83.595 apply.
+        - says: the amount is no more than 2 months' rent
+          cite: "83.595(4)"
+          quote: "if the amount does not exceed 2 months’ rent"
+          ways:
+            - check: the amount the addendum sets, beside two months' rent
+        - says: for a fee, the lease asks for no more than 60 days' notice before the early termination
+          cite: "83.595(4)"
+          quote: "the tenant is required to give no more than 60 days’ notice, as provided in the rental agreement, prior to the proposed date of early termination"
+          ways:
+            - check: the notice the lease asks for before an early termination
+              lease: notice_before_vacating
+      steps:
+        - says: the notice the lease asks for, given to the landlord
+          cite: "83.595(4)"
+          quote: "as provided in the rental agreement, prior to the proposed date of early termination"
+          fact: leave_notice_given
+          equals: true
+      also_open: [fee_notice_period, landlord_choice]
+
+    - id: deposit_notice_before_leaving
+      label: Give the landlord 7 days' written notice before leaving, by certified mail or in person, with an address, so the landlord stays held to the deposit's notice of a claim
+      cite: "83.49(5)"
+      gates:
+        - says: the last day to give that notice has not passed, or the notice already went out by it
+          cite: "83.49(5)"
+          quote: "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises"
+          ways:
+            - says: the last day has not passed
+              clock: seven_day_notice_before_leaving
+              equals: upcoming
+              when_otherwise: The program's deadlines show the last day to give the notice before the planned move-out has passed.
+            - says: the notice already given went out by the last day, by certified mail or in person, with an address
+              applies_if: leave_notice_given
+              check: the date the notice was delivered and how, beside the last day the program's deadlines show
+        - says: the lease does not provide otherwise on notice before moving out
+          cite: "83.49(5)"
+          quote: "Except when otherwise provided by the terms of a written rental agreement"
+          ways:
+            - check: whether the lease sets its own terms on notice before moving out early
+              lease: notice_before_vacating
+      steps:
+        - says: the written notice, with the address where the tenant can be reached, delivered to the landlord
+          cite: "83.49(5)"
+          quote: "which notice must include the address where the tenant may be reached"
+          fact: leave_notice_given
+          equals: true
 
 # ---------- read by the model ----------
 guidance:

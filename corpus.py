@@ -75,6 +75,9 @@ class Way(BaseModel):
     - check: nothing the tool holds decides it, but the tenant can check it (a part of the lease, a local code, a
       document): what, and where. lease, if given, names the lease clause the check is about.
     - outside: law the tool does not hold, in plain words.
+    - open_question alone: the stored text does not settle it (whether a violation could be cured); not settled.
+    applies_if, a yes/no fact, limits a way to when that fact is confirmed true (an objection already sent): confirmed
+    otherwise, the way is not met; not confirmed, the tenant can tell the tool (TODO item 84).
     A fact or clock confirmed against the way: otherwise "closed" (the default; the way fails), "unsettled" (the
     stored text does not settle what follows: open_question names the open question), or "later" (not met yet:
     it may still happen, such as a case not filed yet or a period still running). when_otherwise says why, in plain
@@ -92,6 +95,7 @@ class Way(BaseModel):
     otherwise: Literal["closed", "unsettled", "later"] = "closed"
     when_otherwise: Optional[str] = None
     open_question: Optional[str] = None
+    applies_if: Optional[str] = None
 
 
 class Gate(BaseModel):
@@ -159,20 +163,27 @@ class Playbook(BaseModel):
 
 def way_problem(w, facts, clocks, questions):
     """What is wrong with a gate's way, in words, or None: it must be decided by exactly one of a fact, a clock, a
-    check, or law outside the tool; a fact needs equals; a clock's equals is "passed" or "upcoming"; a fact or clock
-    needs when_otherwise; "unsettled" needs an open question; and every fact, clock, open question, and lease clause
-    named must exist."""
-    deciders = [w.fact, w.clock, w.check, w.outside]
-    if sum(d is not None for d in deciders) != 1:
-        return "needs exactly one of fact, clock, check, or outside"
+    check, or law outside the tool, or else by an open question alone; a fact needs equals; a clock's equals is
+    "passed" or "upcoming"; a fact or clock needs when_otherwise, and an open question exactly when otherwise is
+    "unsettled"; a check or outside way names none; applies_if is a yes/no fact; and every fact, clock, open question,
+    and lease clause named must exist. facts: the playbook's element ids with their types."""
+    deciders = sum(d is not None for d in [w.fact, w.clock, w.check, w.outside])
+    if deciders > 1 or (deciders == 0 and not w.open_question):
+        return "needs exactly one of fact, clock, check, or outside, or an open question alone"
+    if w.open_question and w.open_question not in questions:
+        return f"names an open question the playbook lacks ({w.open_question})"
     if w.fact is not None and (w.fact not in facts or w.equals is None):
         return f"names a fact the playbook lacks, or no equals ({w.fact})"
     if w.clock is not None and (w.clock not in clocks or w.equals not in (None, "passed", "upcoming")):
         return f"names a clock the playbook lacks, or an equals other than passed or upcoming ({w.clock})"
     if (w.fact or w.clock) and not w.when_otherwise:
         return "needs when_otherwise"
-    if (w.otherwise == "unsettled") != bool(w.open_question) or (w.open_question and w.open_question not in questions):
-        return "needs an open question of the playbook exactly when otherwise is unsettled"
+    if (w.fact or w.clock) and (w.otherwise == "unsettled") != bool(w.open_question):
+        return "needs an open question exactly when otherwise is unsettled"
+    if (w.check or w.outside) and w.open_question:
+        return "is a check or outside way, which names no open question"
+    if w.applies_if is not None and facts.get(w.applies_if) != "bool":
+        return f"applies_if names no yes/no fact of the playbook ({w.applies_if})"
     if w.lease is not None and w.lease not in LeaseProfile.model_fields:
         return f"names a lease clause that is not a lease profile field ({w.lease})"
     return None
@@ -196,7 +207,7 @@ def load_playbook(path):
             raise ValueError(f"clock {c.id}: shown_with {c.shown_with} is not a date element")
         if c.count == "court_business_days" and "premises_county" not in [e.id for e in pb.spec.elements]:
             raise ValueError(f"clock {c.id}: court business days need a premises_county element")
-    facts = {e.id for e in pb.spec.elements}
+    facts = {e.id: e.type for e in pb.spec.elements}
     clocks = {c.id for c in pb.spec.clocks}
     questions = {q.get("id") for q in pb.spec.open_questions if isinstance(q, dict)}
     for o in pb.spec.options:                                # every gate and step names a fact or clock it has

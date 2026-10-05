@@ -42,7 +42,7 @@ from agent import RULES as RULES_TEXT
 from agent import (CASE_RULE, CITED_HEAD, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, cited_words, command, given_text, print_blocks,
                    printed_cases, retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn,
                    turn_blocks)
-from tools import unknowns_status
+from tools import options_status, unknowns_status
 from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
 
@@ -1023,6 +1023,51 @@ try:
 finally:
     remove_scratch("t-smoke-options")
 
+# options for every playbook (TODO item 84): each has options, every status comes out on no facts, and the new kinds of
+# way decide as they should: a way for a case the record does not show (applies_if), an open question alone, a fact
+# whose own question does not apply; an undecided condition of an option another condition closes changes nothing
+check("item 84: every playbook lists options, each with a status on no facts",
+      all(pb.spec.options and {o["status"] for o in check_options(pb, {}, today, old_profile)} <= {"not known yet"}
+          for pb in playbooks.values()))
+claim = by_id(playbooks["deposit_claim_received"], {"tenancy_terminated": str(today - timedelta(days=35)),
+              "claim_notice_dated": str(today - timedelta(days=8)), "claim_notice_date": str(today - timedelta(days=5)),
+              "objected": False})
+late_claim = by_id(playbooks["deposit_claim_received"], {"claim_notice_date": str(today - timedelta(days=20)), "objected": True})
+check("item 84: a claim: objecting is open while the 15 days run; after them, an objection already sent is the tenant's to check against the date",
+      claim["object_to_claim"]["status"] == "open" and claim["whole_deposit_back"]["gates"][1]["state"] == "check"
+      and [w["state"] for w in late_claim["object_to_claim"]["gates"][0]["ways"]] == ["not met", "check"]
+      and by_id(playbooks["deposit_claim_received"], {"claim_notice_date": str(today - timedelta(days=20)), "objected": False}
+                )["object_to_claim"]["status"] == "closed")
+dog = by_id(playbooks["notice_received_violation"], {"violation_notice_delivered": str(today - timedelta(days=8)),
+            "notice_offers_cure": True, "notice_terminates_now": False, "prior_written_warning": False,
+            "violation_corrected": False, "landlord_accepted_rent_after_notice": True, "eviction_action_filed": False})
+check("item 84: a violation notice: the 7 days passed and nothing fixed closes the cure; an open question alone is not settled; rent taken leaves a check",
+      dog["cure_the_violation"]["status"] == "closed"
+      and dog["cure_the_violation"]["gates"][1]["ways"][1]["why"] == "it does not apply on the confirmed facts"
+      and dog["contest_termination_notice"]["gates"][1]["state"] == "not settled"
+      and dog["landlord_waived_by_rent"]["status"] == "not known yet")
+shower = by_id(playbooks["landlord_entered_unannounced"], {"entry_notice_given": False, "tenant_consented": False,
+               "emergency_claimed": False, "tenant_absent": False, "access_or_utilities_cut": False})
+check("item 84: an entry with no notice: damages not known yet, the purpose not settled, the rest the tenant's to check; a lockout's damages closed",
+      shower["entry_damages"]["status"] == "not known yet"
+      and [g["state"] for g in shower["entry_damages"]["gates"]] == ["met", "met", "not settled", "check", "met", "met", "check"]
+      and shower["prohibited_practice_damages"]["status"] == "closed")
+check("item 84: a fact whose own question does not apply decides its way as not met (a stay asked of a tenant not planning one)",
+      by_id(playbooks["lease_ending"], {"planning_to_stay": False})["stay_with_permission"]["gates"][0]["ways"][0]["why"]
+      == "it does not apply on the confirmed facts")
+make_scratch("t-smoke-closed", issues=["notice_received_violation"], proposed={},
+             facts={"violation_notice_delivered": str(today - timedelta(days=8)), "notice_offers_cure": True,
+                    "notice_terminates_now": False, "prior_written_warning": False, "violation_corrected": False,
+                    "landlord_accepted_rent_after_notice": True, "eviction_action_filed": False})
+try:
+    load_matter("t-smoke-closed", "m-001")
+    check("item 84: a condition of an option another condition closes is printed without what follows, and left out of what the tool does not know",
+          "if this condition is met, the option is closed" not in options_status()
+          and "of a nature the tenant should be given a chance to fix" not in unknowns_status()
+          and "whether the violation did not go on after the rent was accepted" in unknowns_status())
+finally:
+    remove_scratch("t-smoke-closed")
+
 # what the tool does not know (TODO item 83, tools.unknowns_status): each point an option turns on that the tool has
 # not decided, once, with its state and what it would change, in a prompt part after YOUR OPTIONS; rule 1 asks for it
 # before any step, with "Not:" lines from three stories
@@ -1136,10 +1181,13 @@ try:
         dated = [d["clock"] for d in json.loads(listed)["deadlines"] if "deadline" in d] if not listed.startswith("Not yet") else []
         letter = draft_letter.invoke({"issue": issue, "posture": "preserve", "ask": "Confirm receipt of this letter",
                                       "respond_within_days": 10, "delivery_method": "certified mail"})
-        check(f"{issue}: the sheet asks every fact, every clock gets a date, a letter carries its note",
+        options_now = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
+        check(f"{issue}: the sheet asks every fact, every clock gets a date, a letter carries its note, its options are in words",
               not pending_rows() and sorted(set(dated)) == sorted(set(clocks))
               and playbooks[issue].guidance["postures"]["notice_sufficiency"] in letter
-              and f"issue: {issue}" in system_prompt())
+              and f"issue: {issue}" in system_prompt()
+              and all(f"- {o.label} (Fla. Stat. {o.cite}): " in options_now for o in playbooks[issue].spec.options)
+              and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", options_now.replace("search_lease", "")))
 finally:
     remove_scratch("t-smoke-playbooks")
 check("the playbook scratch matter is removed", not (MATTERS / "t-smoke-playbooks").exists())

@@ -202,7 +202,8 @@ def options_status():
     status; then each condition that decides it with its state in words (state_words): met, not met, not met yet,
     or not known yet because the tenant can tell the tool or can check, not settled, or outside the tool, and why;
     for a condition not met that has several ways to be met, each way with its own state; for one not yet decided,
-    what the option would be were it met (were it not, the option is closed; TODO item 81); each step and whether it
+    what the option would be were it met, unless another condition closes it anyway (were it not, the option is
+    closed; TODO item 81); each step and whether it
     is done, waiting, or to do; and the open questions that bear on it even so, by their first sentence. In words,
     never an id (TODO item 53). Logs nothing: the prompt is rebuilt on every call."""
     facts = record.matter["facts"]
@@ -218,7 +219,7 @@ def options_status():
                              + (f"{g['status']}, met through any of these:" if several else state_words(g)))
                 if several:
                     lines += [f"      - {w['says']} ({w['cite']}): {state_words(w)}" for w in g["ways"]]
-                if g["state"] not in ("met", "not met"):
+                if g["state"] not in ("met", "not met") and g["if_met"] != "closed":   # else another closes it
                     lines.append(f"      if this condition is met, the option is {g['if_met']}; if it is not, the "
                                  "option is closed")
             for s in o["steps"]:
@@ -239,8 +240,8 @@ KNOWN_AS = {"tell": "the tenant can tell the tool", "check": "the tenant can che
 
 def unknowns_status():
     """WHAT THE TOOL DOES NOT KNOW, for the system prompt (agent.PARTS): each point an option of an active issue turns
-    on that the tool has not decided (deterministic.check_options: a way of a gate not decided, UNDECIDED), once, in
-    words: what it is, with its cite and issue; what the tool knows of it (the tenant can tell the tool, the tenant can
+    on that the tool has not decided (deterministic.check_options: a way of a gate not decided, UNDECIDED) and that
+    could change an option (one another condition closes is left out), once, in words: what it is, with its cite and issue; what the tool knows of it (the tenant can tell the tool, the tenant can
     check, not settled, outside the tool, not yet) and why; then, for each option it decides, what the option would be
     if it holds, and what is left if it does not (the condition's other undecided ways, or the option closed). Then
     the lease: the parts the tool has not read, and that search_lease searches the rest. Logs nothing."""
@@ -248,7 +249,7 @@ def unknowns_status():
     for pb in active_playbooks():
         for o in check_options(pb, record.matter["facts"], date.today(), record.profile):
             for g in o["gates"]:
-                if g["state"] not in UNDECIDED:
+                if g["state"] not in UNDECIDED or g["if_met"] == "closed":   # decided, or another condition closes it
                     continue
                 undecided = [w for w in g["ways"] if w["state"] in UNDECIDED]
                 for w in undecided:

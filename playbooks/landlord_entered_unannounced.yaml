@@ -1,13 +1,13 @@
 issue: landlord_entered_unannounced
 description: The landlord, or someone sent by the landlord, entered the tenant's unit without notice or at an unreasonable time.
-sections: ["83.53", "83.67", "83.64", "83.42"]   # the statute sections this playbook rests on; loaded into the prompt
+sections: ["83.53", "83.67", "83.64", "83.55", "83.42"]   # the statute sections this playbook rests on; loaded into the prompt
 
 provenance:
   statute_year: 2026
   verified_against: statutes/83.53.txt, statutes/83.67.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.5
+  version: 0.6
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -105,6 +105,88 @@ spec:
         - >-
           Entries each allowed on its own can still abuse the right, or harass, by their number, timing, or purpose,
           since 83.53(3) is a sentence of its own after the ways in.
+
+  # What the tenant can do, and what decides whether it is open (TODO items 81 and 84): checked by code
+  # (deterministic.check_options) from the confirmed facts, the clocks, and the lease profile, and given to the model
+  # before any step toward it. A gate is met through any of its ways. The gates are the author's to check.
+  options:
+    - id: prohibited_practice_damages
+      label: Seek damages of at least 3 months' rent for a utility cut off, a lockout, or doors, windows, or belongings removed
+      cite: "83.67(6)"
+      gates:
+        - says: the landlord cut off a utility, blocked the tenant's access (such as by changing the locks), or removed doors, windows, or the tenant's belongings
+          cite: "83.67(6)"
+          quote: "A landlord who violates any provision of this section shall be liable to the tenant for actual and consequential damages or 3 months’ rent, whichever is greater, and costs, including attorney’s fees."
+          ways:
+            - fact: access_or_utilities_cut
+              equals: true
+              when_otherwise: The tenant confirmed the landlord has done none of these.
+        - says: anything removed was not removed for maintenance, repair, or replacement, nor after a surrender, abandonment, or lawful eviction
+          cite: "83.67(5)"
+          quote: "shall not remove the outside doors, locks, roof, walls, or windows of the unit except for purposes of maintenance, repair, or replacement"
+          ways:
+            - check: what the landlord cut off, locked, or removed, and why; a removal for maintenance, repair, or replacement, and of the tenant's belongings after a surrender, abandonment, or lawful eviction, are the ones the statute allows
+      steps: []
+
+    - id: entry_damages
+      label: Recover the damages caused by an entry the statute does not allow
+      cite: "83.55"
+      gates:
+        - says: the tenant did not agree to the entry
+          cite: "83.53(2)"
+          quote: "With the consent of the tenant"
+          ways:
+            - fact: tenant_consented
+              equals: false
+              when_otherwise: The tenant confirmed agreeing to the entry.
+        - says: it was not an emergency
+          cite: "83.53(2)"
+          quote: "In case of emergency"
+          ways:
+            - fact: emergency_claimed
+              equals: false
+              otherwise: unsettled
+              open_question: purpose_of_entry
+              when_otherwise: The landlord said it was an emergency; whether it was is not settled on the record.
+        - says: the entry was not for the protection or preservation of the premises
+          cite: "83.53(2)"
+          quote: "The landlord may enter the dwelling unit at any time for the protection or preservation of the premises."
+          ways:
+            - open_question: purpose_of_entry
+        - says: the tenant had not unreasonably refused to let the landlord in
+          cite: "83.53(2)"
+          quote: "When the tenant unreasonably withholds consent"
+          ways:
+            - check: whether the landlord asked to come in before and the tenant refused, and why
+        - says: for a repair, the landlord did not give at least 24 hours' notice and come between 7:30 a.m. and 8:00 p.m.
+          cite: "83.53(2)"
+          quote: "“Reasonable notice” for the purpose of repair is notice given at least 24 hours prior to the entry, and reasonable time for the purpose of repair shall be between the hours of 7:30 a.m. and 8:00 p.m."
+          ways:
+            - says: the landlord gave no notice
+              fact: entry_notice_given
+              equals: false
+              when_otherwise: The tenant confirmed the landlord gave notice.
+            - says: the notice came less than 24 hours before, or the entry was outside 7:30 a.m. to 8:00 p.m.
+              applies_if: entry_notice_given
+              check: when the landlord's notice came and when the entry happened; the tool does not count hours
+        - says: the tenant was not away for half a rent period, or, with the rent current, had told the landlord of the absence
+          cite: "83.53(2)"
+          quote: "If the tenant is absent from the premises for a period of time equal to one-half the time for periodic rental payments"
+          ways:
+            - says: the tenant was not away
+              fact: tenant_absent
+              equals: false
+              when_otherwise: The tenant confirmed being away.
+            - says: the absence was shorter than half a rent period, or the rent was current and the tenant had told the landlord of it
+              applies_if: tenant_absent
+              check: how long the tenant was away, beside half the rent period, and whether the rent was current and the landlord had been told of the absence
+        - says: the entry caused the tenant damages
+          cite: "83.55"
+          quote: "the aggrieved party may recover the damages caused by the noncompliance"
+          ways:
+            - check: what the entry cost the tenant, with receipts or other proof
+      steps: []
+      also_open: [notice_in_hours, abuse_of_access]
 
 # ---------- read by the model ----------
 guidance:

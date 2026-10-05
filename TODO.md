@@ -13,11 +13,17 @@ can do (README, Purpose and non-negotiables). Seen on 2026-10-04: "the lease doe
 on the statute alone while the lease's Article 7.2 promised the repair. Rule pairs alone did not change such
 behavior (items 54, 76); what the program computed did (options, deadlines). So the knowledge is computed by code.
 
-84. Options with knowledge-state gates for the other playbooks, each gate quoted from `statutes/` and checked by
-    the author: the deposit playbooks (the landlord missed the 30-day notice), the notices, entry, rent increase,
-    leaving early, lease ending, neighbor. The author's check of repair_not_made's gates is in this too (whether
-    a problem 83.51(1)(b) does not name leaves ending the lease not settled; rent paid with knowledge as a gate on
-    ending the lease only; the open question on that waiver and its two readings).
+84. For the author: check the options' gates in all ten playbooks against `statutes/` (written 2026-10-04, items
+    72, 81, and 84; CHANGELOG says what each holds), then sign off as for item 2. In repair_not_made: whether a
+    problem 83.51(1)(b) does not name leaves ending the lease not known yet (the lease's promise, then a code the
+    tenant can check) rather than not settled; the new gate, the duty not changed in writing, which 83.51(1) allows
+    only for a single-family home or duplex; rent paid with knowledge as a gate on ending the lease only; the open
+    question on that waiver and its two readings. Elsewhere: 83.55 added to landlord_entered_unannounced's sections
+    for damages from an entry the statute does not allow, and that option's seven gates read from 83.53(2); the
+    retaliation defense's gates (83.64), including good cause, which the landlord must prove; whether a neighbor's
+    disturbance can end the tenant's lease only through a lease promise. A limit to decide on: wants_to_leave_early's
+    fee "no more than 2 months' rent" is left to the tenant to check, though both amounts are on the record (the
+    rent may come from the lease's words); a computed comparison would make it known.
 85. Eval: a story per state where the deciding point is in that state (a fact the tenant has not given, a lease
     clause the profile does not hold but the lease has, a lease that has no such clause, a local code, an open
     question, law outside the tool), across playbooks; a rubric category for a gap stated as a fact and for an

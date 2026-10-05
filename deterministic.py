@@ -214,15 +214,27 @@ def way_state(w, playbook, facts, clock_rows, profile):
     """One way's state (STATES) and why, in plain words: a fact or clock confirmed one way or the other is known (or
     not settled, through its open question); a fact not confirmed is one the tenant can tell the tool on the sheet,
     or can check when it rests on a lease clause the tool has not read; a clock waits for its start date (the tenant
-    can tell it) or cannot be counted (outside the tool); a check is the tenant's to check; outside is outside."""
+    can tell it) or cannot be counted (outside the tool); a check is the tenant's to check; outside is outside; an open
+    question alone is not settled. A way with applies_if is not met when that fact is confirmed false, and the
+    tenant's to tell while it is not confirmed."""
     questions = playbook.guidance["questions"]
     note = lease_note(w.lease, profile) if w.lease else ""
     otherwise = {"closed": "not met", "unsettled": "not settled", "later": "not met yet"}[w.otherwise]
+    if w.applies_if and w.applies_if not in facts:             # a way for a case the record does not show yet
+        return "tell", f"the sheet asks: {questions[w.applies_if]}"
+    if w.applies_if and not facts[w.applies_if]:
+        return "not met", "it does not apply on the confirmed facts"
+    if not (w.fact or w.clock or w.check or w.outside):        # an open question alone decides it
+        text = next(q["text"] for q in playbook.spec.open_questions if q.get("id") == w.open_question)
+        return "not settled", "the statute does not settle it: " + " ".join(text.split()).split(". ")[0] + "."
     if w.check:
         return "check", " ".join(w.check.split()) + (f"; {note}" if note else "")
     if w.outside:
         return "outside", " ".join(w.outside.split())
     if w.fact:
+        element = next(e for e in playbook.spec.elements if e.id == w.fact)
+        if element.applies_if and element.applies_if in facts and not facts[element.applies_if]:
+            return "not met", "it does not apply on the confirmed facts"      # a question the sheet never asks
         if w.fact in facts:
             return ("met", "") if facts[w.fact] == w.equals else (otherwise, " ".join(w.when_otherwise.split()))
         if w.lease and (profile is None or getattr(profile, w.lease, None) is None):     # a part of the lease not read

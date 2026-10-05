@@ -5,6 +5,28 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- Options with knowledge-state gates for the other seven playbooks (TODO item 84, done but for the author's check).
+  Was: only repair_not_made, deposit_not_returned, and notice_received_nonpayment had options; for the others the
+  model decided for itself whether something was open. Now every playbook has them, each gate and way quoted from
+  `statutes/` (playbook checks: 0 failures): deposit_claim_received 0.4 (object within the 15 days; the whole
+  deposit back over a late or wrongly sent notice), notice_received_violation 0.5 (fix the problem within the 7
+  days; defend a case over a notice that gave no chance to cure; the landlord's waiver by taking rent),
+  landlord_entered_unannounced 0.6 (damages for a utility cut, a lockout, or a removal, 83.67(6); damages for an
+  entry the statute does not allow, 83.55, added to its sections), rent_increased 0.4 (the retaliation defense;
+  ending a month-to-month tenancy), wants_to_leave_early 0.4 (a servicemember's termination; the early termination
+  fee; the 7-day notice before leaving), lease_ending 0.5 (ending a month-to-month tenancy; leaving without the
+  lease's liquidated damages when the landlord skipped the 83.575(2) notice; staying with permission),
+  neighbor_disturbance 0.4 (ending the lease over a lease promise the tenant can check with `search_lease`). New
+  facts on the sheet, each with the question another playbook already asks: the rent paid into the court registry
+  (violation), whether an eviction case is filed (rent increase), whether the written notice says the tenant will
+  end the lease (neighbor). Two new kinds of way (`corpus.Way`): `applies_if`, for a case the record may show (an
+  objection already sent: then whether it went out in time is the tenant's to check against the printed date),
+  and an open question alone (whether a violation could be cured). A fact way whose fact's own question does not
+  apply on the confirmed facts is not met. A condition of an option another condition already closes is no longer
+  printed with "closed if it holds; if not, closed" in YOUR OPTIONS, nor listed in WHAT THE TOOL DOES NOT KNOW. Smoke:
+  six item 84 checks, and each playbook's options in words on the every-playbook run. The author's check of all the
+  gates stays in TODO as item 84.
+
 - What the tool does not know, as a part of the prompt (TODO item 83, done). Was: the options' states (item 81) were
   spread over YOUR OPTIONS, an option at a time, and rule 1 asked only whether an option is open. Now
   `tools.unknowns_status` gathers, from `deterministic.check_options`, each point an option turns on that the tool

@@ -717,12 +717,14 @@ rules forbade it.
    several ways lists each way with its own state; a condition not decided adds "if this condition is met, the
    option is <status>; if it is not, the option is closed" (TODO item 81); a line per step with "done", "waiting",
    or "to do"; and "also, from what the statute does not settle:" with the first sentence of each open question the
-   option names in `also_open`. In words, no id. "none: no active issue lists its options yet" otherwise (the
-   playbooks with options so far: repair_not_made, deposit_not_returned, notice_received_nonpayment). Rule 1 asks
-   for an option's status before any of its steps (TODO item 72).
+   option names in `also_open`. In words, no id. A condition of an option that another condition closes gets no "if
+   this condition is met" line (TODO item 84: "closed if it holds; if not, closed" said nothing). "none: no active
+   issue lists its options yet" with no active playbook (every playbook has options since item 84). Rule 1 asks for
+   an option's status before any of its steps (TODO item 72).
 9. `WHAT THE TOOL DOES NOT KNOW` (TODO item 83): `tools.unknowns_status()`: each point an option of an active issue
    turns on that the tool has not decided (a way of a gate in a state of `UNDECIDED`: tell, check, not settled,
-   outside, not met yet), once however many options it decides, as "- whether <the way's condition> (<cite>)
+   outside, not met yet) and that could change an option (a condition of an option another condition closes is
+   left out), once however many options it decides, as "- whether <the way's condition> (<cite>)
    [<issues>]: <what the tool knows of it, `KNOWN_AS`: the tenant can tell the tool, the tenant can check, not
    settled, outside the tool, not yet>: <why>", then a line per option it decides, "<label>: <status> if it holds; if
    not, the condition turns on whether <the gate's other undecided ways>" (or "closed"); then the lease parts the
@@ -749,14 +751,17 @@ for conditions the model missed or misapplied (TODO item 55, 2026-10-03): versio
 deposit_not_returned, lease_ending, and notice_received_violation 0.4, notice_received_nonpayment 0.5, and
 landlord_entered_unannounced 0.5 (its purpose_of_entry open question reworded the same day, item 56); repair_not_made
 0.5 since its options' knowledge states (2026-10-04, items 72 and 81), deposit_not_returned 0.5 and
-notice_received_nonpayment 0.6 since their options (item 81). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
+notice_received_nonpayment 0.6 since their options (item 81); the other seven one step up since theirs (item 84):
+deposit_claim_received and rent_increased and wants_to_leave_early and neighbor_disturbance 0.4,
+notice_received_violation and lease_ending 0.5, landlord_entered_unannounced 0.6. Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
 (83.53(2) is in hours), rent_increased (no section on notice of a rent increase), neighbor_disturbance (no
 deadline for a landlord to act on one tenant's complaint about another; its open questions: whose duty
 83.52(7) states, 83.56(2)(a) as a remedy not a duty, what is unreasonable, and whether 83.56(1) lets the
 tenant leave over it). notice_received_nonpayment computes 83.56(3) in court business days
 and leaves 83.60(2) uncomputed. Facts shared across playbooks by id: `claim_notice_date`,
 `tenancy_terminated`, `deposit_amount`, `eviction_action_filed`, `fixed_term_lease`, `term_end_date`,
-`month_to_month`, `monthly_rent`.
+`month_to_month`, `monthly_rent`, `registry_paid` (notice_received_nonpayment and notice_received_violation),
+`notice_states_termination_intent` (repair_not_made and neighbor_disturbance).
 
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
 section is not in `statutes/`, a clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field.
@@ -792,12 +797,16 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     `check_playbook` against the section in its `cite`. Otherwise not read by code.
   - `related_issues`: list of `{issue, when: {fact, equals}}`. Read by `record.add_related_issues`: once
     `fact` is confirmed with the value `equals`, `issue` is added to the matter. Not shown to the model.
-  - `options` (TODO items 72 and 81; repair_not_made, deposit_not_returned, notice_received_nonpayment so far): each
+  - `options` (TODO items 72, 81, and 84; every playbook): each
     `id`, `label` (plain words), `cite`, `gates`, `steps`, and `also_open` (open questions that bear on it even when
     every gate is met). A gate (`corpus.Gate`) is a condition, `says`, `cite`, `quote`, met through any of its `ways`
     (`corpus.Way`), each decided by exactly one of: a `fact` with `equals`; a `clock` with `equals` "passed" (the
     default) or "upcoming"; `check` (what the tenant can check, and where: a part of the lease, a local code, a
-    document); or `outside` (law the tool does not hold). A fact or clock way has `when_otherwise` and `otherwise`
+    document); `outside` (law the tool does not hold); or an `open_question` alone (not settled: whether a violation
+    could be cured). A way may have `applies_if`, a yes/no fact: it counts only when that fact is confirmed true
+    (an objection already sent), is not met when it is confirmed false, and is the tenant's to tell before (item 84).
+    A fact way whose fact's own `applies_if` is confirmed false is not met (a question the sheet never asks). A fact
+    or clock way has `when_otherwise` and `otherwise`
     for a value against it: "closed" (the default), "unsettled" with an `open_question`, or "later" (not met yet). A
     way may name a lease clause, `lease`, a `LeaseProfile` field: for a fact way, a clause not read makes the fact
     the tenant's to check rather than to tell, and the sheet shows the clause beside the fact's question
@@ -823,7 +832,33 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     days end (83.56(3); the clock upcoming; outside the tool with no court calendar for the county), defending in
     an eviction case on a ground other than payment (83.60(2); not open yet until a case is filed; step: the rent
     into the court registry, `registry_paid`, added for it), and defending on a defective notice (the notice
-    against 83.56(3)'s form, the tenant's to check; `notice_form` also open).
+    against 83.56(3)'s form, the tenant's to check; `notice_form` also open). Item 84, the other seven:
+    deposit_claim_received (0.4): object within the 15 days (83.49(3)(b); the clock upcoming, or an objection
+    already sent, the tenant's to check against the printed date; step: the objection), and the whole deposit back
+    (83.49(3)(a): the 30 days passed, and a notice sent after them, the tenant's to check against the postmark, or
+    one not sent as 83.49(3)(a) names, not settled through `email_notice_conditions`). notice_received_violation
+    (0.5): fix the problem within the 7 days (83.56(2)(b)); defend a case over a notice that ended the lease
+    without a chance to cure (whether the violation is curable not settled, `which_paragraph`; no warning of a
+    similar violation in 12 months, or one the tenant can check; a case filed; step: the rent into the court
+    registry, `registry_paid`, added for it, as 83.56(5)(b) requires); and the landlord's waiver by rent taken
+    (83.56(5)(a), whether the violation went on the tenant's to check). landlord_entered_unannounced (0.6, 83.55
+    added to its sections): damages of at least 3 months' rent for a utility cut, a lockout, or a removal
+    (83.67(6)); damages for an entry the statute does not allow (83.55, 83.53(2): no consent, no emergency, not for
+    protection or preservation, not settled through `purpose_of_entry`, no unreasonable refusal, no 24 hours' notice
+    for a repair, not away half a rent period, and damages, the tenant's to check). rent_increased (0.4): the
+    retaliation defense (83.64: protected conduct before the increase, good faith, treated differently, primarily
+    retaliating, not settled through `retaliation`, no good cause, a case filed; `eviction_action_filed` added for
+    it), and ending a month-to-month tenancy (83.57(3)). wants_to_leave_early (0.4): a servicemember's termination
+    (83.682; the orders against the criteria, the tenant's to check; steps: the notice with the orders, the 30 days),
+    the early termination fee (83.595(4): the separate addendum; the amount against two months' rent and the lease's
+    notice, the tenant's to check), and the 7-day notice before leaving (83.49(5): the last day not passed, or a
+    notice already given; the lease's own term to check). lease_ending (0.5): ending a month-to-month tenancy
+    (83.57(3); the last day for this period not passed, or a notice already given), leaving at the end without the
+    lease's liquidated damages when the landlord did not send the 83.575(2) notice, and staying with permission
+    (83.575(3)). neighbor_disturbance (0.4): ending the lease (83.56(1): a lease promise the tenant can check with
+    `search_lease`, or the failure to act itself, not settled through `ending_own_lease`; the source a tenant of the
+    same landlord, else not settled through `remedy_not_duty`; the disturbance unreasonable, not settled; steps: the
+    written complaint and its stating the intent to end the lease, `notice_states_termination_intent`, added for it).
   - `open_questions`: each `id`, `sections`, `text` (what the stored text lets the model apply, and what stays
     open), and, for a point the stored text does not settle, `readings` (two or more readings of it, which the
     model gives side by side; a question about a limit of the tool, such as a period in hours or months, has
