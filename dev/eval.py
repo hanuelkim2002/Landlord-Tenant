@@ -90,7 +90,8 @@ OFFER_WORDS = re.compile(r"\b(would you like|do you want me|if you(?:'d| would) 
                          r"prepare|write)|next steps?|you (?:could|might) (?:consider|want))\b", re.I)
 FIELD_NAME = re.compile(r"\b[a-z]+(?:_[a-z]+)+\b")          # forwarding_address_given; file names have digits
 # The lease said to lack something (TODO item 85): "the lease does not mention any late fee" was said from the clauses
-# the tool reads, though the lease had one. Counted when no search_lease call came before it in the session.
+# the tool reads, though the lease had one. Counted when no search_lease call came before it in the session. A screen,
+# not a verdict: a reply repeating what the tenant confirmed ("your lease does not say the landlord repairs mold") counts.
 LEASE_ABSENT = re.compile(r"\b(?:your|the) lease (?:does not|doesn't|did not|has no|contains no|says nothing|is silent|"
                           r"makes no)\b|\bno (?:clause|provision|term|mention)\b[^.\n]{0,40}\b(?:in|of) (?:your|the) lease\b",
                           re.I)
