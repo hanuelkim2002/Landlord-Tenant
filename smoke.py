@@ -42,6 +42,7 @@ from agent import RULES as RULES_TEXT
 from agent import (CASE_RULE, CITED_HEAD, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, cited_words, command, given_text, print_blocks,
                    printed_cases, retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn,
                    turn_blocks)
+from tools import unknowns_status
 from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
 
@@ -1021,6 +1022,41 @@ try:
           and "air -conditioning" in row_notes(lease_row)[0])
 finally:
     remove_scratch("t-smoke-options")
+
+# what the tool does not know (TODO item 83, tools.unknowns_status): each point an option turns on that the tool has
+# not decided, once, with its state and what it would change, in a prompt part after YOUR OPTIONS; rule 1 asks for it
+# before any step, with "Not:" lines from three stories
+make_scratch("t-smoke-unknown", issues=["repair_not_made", "notice_received_nonpayment"],
+             facts={**ac, "nonpayment_notice_delivered": str(today - timedelta(days=1)), "premises_county": "Orange",
+                    "rent_unpaid": True, "eviction_action_filed": False}, proposed={})
+try:
+    load_matter("t-smoke-unknown", "m-001")
+    prompt_now = system_prompt()
+    unknown_part = prompt_now.split("\n\n" + PARTS["unknown"] + ":\n")[1].split("\n\n")[0]
+    check("item 83: the part comes after the options and names each point once, with its state and each option it decides",
+          prompt_now.index(PARTS["options"]) < prompt_now.index(PARTS["unknown"]) < prompt_now.index(PARTS["deadlines"])
+          and "- whether the lease says the landlord repairs this problem (83.56(1)) [repair not made]: the tenant can check: the tool has not read the part of the lease on maintenance and repairs" in unknown_part
+          and unknown_part.count("- whether a building, housing, or health code where the unit is requires the landlord to fix it") == 1
+          and "    Not pay rent because of the problem, and raise it as a defense if the landlord sues for possession: open if it holds; if not, closed" in unknown_part
+          and "    End the lease because the landlord has not made the repair: not settled if it holds; if not, the condition turns on whether a building" in unknown_part
+          and "[repair not made]: not settled: The tenant confirmed paying rent" in unknown_part)
+    check("item 83: a county with no court calendar is outside the tool, a case not filed is not yet, and the lease parts not read are named; no id",
+          "[notice received nonpayment]: outside the tool: not computed: no court holiday calendar for Orange County" in unknown_part
+          and "- whether the landlord has filed an eviction case (83.60(2)) [notice received nonpayment]: not yet:" in unknown_part
+          and "- the parts of the lease on maintenance and repairs: not read from this lease" in unknown_part
+          and "search_lease searches the whole text" in unknown_part
+          and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", unknown_part.replace("search_lease", "")))
+    record.matter["facts"] = roof
+    record.matter["issues"] = ["repair_not_made"]
+    check("item 83: with every condition decided, the part holds only the lease lines",
+          [line.split(":")[0] for line in unknowns_status().splitlines()]
+          == ["- the parts of the lease on maintenance and repairs", "- anything else in the lease"])
+finally:
+    remove_scratch("t-smoke-unknown")
+check("item 83: rule 1 asks for each point the tool does not know, as the part gives it, before any step, with Not lines from three stories",
+      "When the answer turns on a point in WHAT THE TOOL DOES NOT KNOW, name it as that part gives it" in RULES_TEXT
+      and "never such a point stated as a fact" in RULES_TEXT
+      and all(story in RULES_TEXT for story in ("(a repair)", "(a deposit)", "(a 3-day notice)", "(a code the tool does not hold)")))
 
 # a story no playbook covers (sheet.stop_text, lease.clauses_about): the stop lists what the tool covers and shows
 # the lease's own clauses on the subject, word for word; nothing from the lease when no clause is on it

@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- What the tool does not know, as a part of the prompt (TODO item 83, done). Was: the options' states (item 81) were
+  spread over YOUR OPTIONS, an option at a time, and rule 1 asked only whether an option is open. Now
+  `tools.unknowns_status` gathers, from `deterministic.check_options`, each point an option turns on that the tool
+  has not decided, once however many options it decides: what it is, its cite and issue, what the tool knows of it
+  (the tenant can tell the tool, the tenant can check, not settled, outside the tool, not yet) and why, and for each
+  option what the option would be if it holds and what is left if not; then the lease parts the profile did not
+  read, and that only a point `search_lease` finds nowhere is known to be absent. A new part, WHAT THE TOOL DOES NOT
+  KNOW, after YOUR OPTIONS. Rule 1's first point asks for such a point as the part gives it, with what the option
+  would be either way, before any step, and never as a fact; its new "Not:" lines come from four stories (a repair
+  whose lease clause the tool has not read, a deposit with the lease's own notice term, a 3-day notice's form, a code
+  the tool does not hold), with two "Instead:" lines. RULES is 2,410 words (2,055 before items 82 and 83). The eval's
+  prompt names (`dev/eval.py`, `PROMPT_NAME`) take YOUR OPTIONS, missed since item 72, and the new part. Smoke: four
+  item 83 checks.
+
 - A search of the whole lease, `search_lease(phrase)` (TODO item 82, done). Was: the model saw only the sixteen
   clauses the profile holds, and said "the lease does not contain a holdover clause" and "the lease does not mention
   any late fee" in 4 turns of 12 runs (`dev/eval_runs/2026-10-04-items76-77`), though the test lease has both (2.4,

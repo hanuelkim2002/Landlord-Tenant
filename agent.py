@@ -29,7 +29,7 @@ from record import (active_playbooks, add_issues, add_related_issues, append_eve
                     element_status, matter_dir, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from tools import deadline_listing, deadline_status, offered_topics, options_status, tools
+from tools import deadline_listing, deadline_status, offered_topics, options_status, tools, unknowns_status
 
 
 # ---- Rules: the fixed part of the system prompt. The lease profile, the playbooks' notes and open questions,
@@ -48,7 +48,7 @@ Each "Not:" is a kind of past mistake: never write anything like it; write the "
 Not: three statute quotes, then "This tool does not decide that." (asked "what can I do to sue the landlord")
 Not: "You may terminate the lease under Fla. Stat. 83.56(1)." (a conclusion with no rule and no facts)
 Instead: answer a question about the law in this order, each part short:
-- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not known yet, not settled, outside the tool, or not open yet), and the condition it turns on. Never a step of an option before this.
+- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not known yet, not settled, outside the tool, or not open yet), and the condition it turns on. When the answer turns on a point in WHAT THE TOOL DOES NOT KNOW, name it as that part gives it: one the tenant can tell the tool (the sheet asks), one the tenant can check (say what and where), one not settled (with its readings), one outside the tool, or one not yet; and what the option would be if it holds and if it does not. Never a step of an option before this, and never such a point stated as a fact.
 - The rule: in one plain sentence, with its cite.
 - Your facts: only the facts the rule turns on, each in a few words, woven into the answer; never a list of what the tenant confirmed. Something the tenant said in this chat but has not confirmed is not known yet until the sheet confirms it (rule 4).
 - Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
@@ -57,6 +57,12 @@ Instead: answer a question about the law in this order, each part short:
 - Not settled: an open question in the way, with its readings (rule 5).
 Not: "To terminate the lease, deliver a new written notice that states your intention, wait 7 days, then terminate." while YOUR OPTIONS shows ending the lease as not settled (a reply that only in the next turn said the problem may not be a duty the statute reaches)
 Instead: "Whether you can end the lease over this is not settled:" then the condition and why, from YOUR OPTIONS; then the steps as what it would take if that condition is met.
+Not: "Your lease does not say the landlord repairs the AC, so you cannot end the lease." while the tool has not read that part of the lease (a repair)
+Not: "Because you moved out early without the 7-day notice, the landlord did not have to send a claim notice." while the lease's own term on notice before moving out is the tenant's to check (a deposit)
+Not: "Your notice adds a late fee, so it is defective and the case would be dismissed." while the notice's form is the tenant's to check and how far it may differ is not settled (a 3-day notice)
+Not: "Your county's housing code requires a working AC." (a code the tool does not hold)
+Instead: "That turns on whether your lease promises this repair, which the sheet asks you. If it does, ending the lease turns next on whether paying rent waived it, which the statute does not settle; if it does not, on a local housing code, which the city or county code enforcement office can tell you about."
+Instead: "Whether the landlord still had to send that notice turns on your lease's own term on notice before moving out (Lease Section 4.3), which you can check against what you did. If you followed it, getting the whole deposit back turns on the other conditions; if not, the landlord was relieved of the notice (Fla. Stat. 83.49(5))."
 Not: "No written claim notice received: claim_notice_received false (user)" or "(YOUR FACTS shows eviction_action_filed: true)" (ids, and part names as this prompt writes them)
 Instead: "Since you got no written notice from the landlord, ..." and "The program's deadlines show the 30-day deadline has passed."
 Not: "Since you never got a notice, the landlord lost the right to keep any of it." while YOUR FACTS does not show that fact.
@@ -242,6 +248,12 @@ PARTS = {
                 "clauses the tool has read: whether each option is open, closed, not known yet, not settled, outside the "
                 "tool, or not open yet; each condition that decides it, with what the tool knows of it and, while it is "
                 "not decided, what the option would be were it met; and how far its steps have got)"),
+    # TODO item 83: each point an option turns on that the tool has not decided, gathered from YOUR OPTIONS once, with
+    # what it would change; the model had stated such gaps as facts ("the lease does not mention any late fee").
+    "unknown": ("WHAT THE TOOL DOES NOT KNOW (worked out by the program: each point an option turns on that the tool has "
+                "not decided from the confirmed facts, a lease clause it read, or the statute; whether the tenant can "
+                "tell the tool, can check it, it is not settled, it is outside the tool, or it is not yet; and what "
+                "each would change)"),
     # Was THE PROGRAM'S DEADLINES (item 61, 2026-10-03), until the eval the same day: read as the deadlines
     # themselves, it was answered from ("You have until the upcoming deadline shown in THE PROGRAM'S DEADLINES")
     # and get_deadlines went uncalled on 5 of 39 questions about when.
@@ -253,8 +265,8 @@ PARTS = {
 def system_prompt(messages=()):
     """The rules (rules_for the chat so far, `messages`), then each part under its name in PARTS: the lease
     profile, each active issue's guidance, its open questions, the statute sections, the case topics, the element
-    status, and the deadline status (tools.deadline_status: passed or upcoming, no dates), as the record stands
-    now."""
+    status, the options (tools.options_status), what the tool does not know (tools.unknowns_status), and the
+    deadline status (tools.deadline_status: passed or upcoming, no dates), as the record stands now."""
     sections = sorted({s for pb in active_playbooks() for s in pb.sections})   # an issue with no playbook adds none
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
     # Only the model-facing part of each playbook: the guidance half, and the open questions rule 5 refers to,
@@ -275,6 +287,7 @@ def system_prompt(messages=()):
             + f"\n\n{PARTS['cases']}:\n" + case_topics_text()
             + f"\n\n{PARTS['facts']}:\n" + json.dumps(element_status(), indent=2)
             + f"\n\n{PARTS['options']}:\n" + options_status()
+            + f"\n\n{PARTS['unknown']}:\n" + unknowns_status()
             + f"\n\n{PARTS['deadlines']}:\n" + deadline_status())
 
 

@@ -190,9 +190,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `timeline full` a corrected fact reads "corrected from <how> <suggested value>". Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
   `deterministic`, `sheet` (for `shown`). Imported by `agent`, `smoke`.
 - `tools.py`: the nine `@tool` functions and the `tools` list (see Tools the model can call), plus the
-  plain helpers `pretty`, `quote_is_real`, `build_letter`, `deadline_status` and `options_status` (with `state_words`; two parts of
-  the system prompt), and `deadline_receipt`. Imports `record`, `config`, `corpus`,
-  `deterministic`, `sheet`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
+  plain helpers `pretty`, `quote_is_real`, `build_letter`, `deadline_status`, `options_status` (with `state_words`), and
+  `unknowns_status` (with `UNDECIDED` and `KNOWN_AS`; three parts of
+  the system prompt), and `deadline_receipt`. Imports `record`, `citations`, `config`, `corpus`,
+  `deterministic`, `lease`, `sheet`, `wiki`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
 - `agent.py`: `RULES` (the fixed part of the system prompt; if the environment sets `RULES_FILE`, that
   file's text replaces it for the run, for trying versions of the rules), `rules_for(messages)` (`RULES`
   with its two markers filled: `[RULE 6]` with `LETTER_RULE` once a letter is in play, i.e. a tenant
@@ -630,7 +631,7 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 1,964 words always, plus rule 6 on letters (174 words) once a letter is in
+1. `RULES`, through `rules_for`: 2,410 words always (2,055 before TODO items 82 and 83), plus rule 6 on letters (174 words) once a letter is in
    play, and rule 8 on cases in full (271 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
    the statute to the record in YOUR FACTS and WHICH DEADLINES HAVE PASSED and say what they mean for the tenant,
@@ -646,7 +647,12 @@ this order:
    61), then nine numbered rules, each with
    "Not:" examples and the "Instead:" form: 1 apply the law to the tenant's facts, in order: first, asked what
    they can do or how, whether that option is open, as YOUR OPTIONS gives it, never a step before it (TODO item
-   72, with the author's AC reply of 2026-10-04 as its "Not:"); the rule in one plain sentence with its cite;
+   72, with the author's AC reply of 2026-10-04 as its "Not:"), and a point the answer turns on that is in WHAT THE
+   TOOL DOES NOT KNOW named as that part gives it (the tenant can tell the tool, can check it, not settled, outside
+   the tool, not yet) with what the option would be if it holds and if not, never stated as a fact (TODO item 83;
+   its "Not:" lines from four stories: a repair whose lease clause the tool has not read, a deposit with the lease's
+   own notice term, a 3-day notice's form, a code the tool does not hold; two "Instead:" lines); the rule in one
+   plain sentence with its cite;
    every rule the answer turns on cited to a section whose words say it, each condition and consequence relied
    on, never a rule no cite gives (TODO items 54 and 73; the author's recited reply of 2026-10-04 as its "Not:");
    only the facts it turns on, in a few words, never listed back, never an id or a prompt section's name (a
@@ -714,7 +720,15 @@ rules forbade it.
    option names in `also_open`. In words, no id. "none: no active issue lists its options yet" otherwise (the
    playbooks with options so far: repair_not_made, deposit_not_returned, notice_received_nonpayment). Rule 1 asks
    for an option's status before any of its steps (TODO item 72).
-9. `WHICH DEADLINES HAVE PASSED`, whose name line says it has no dates and that any question about when calls
+9. `WHAT THE TOOL DOES NOT KNOW` (TODO item 83): `tools.unknowns_status()`: each point an option of an active issue
+   turns on that the tool has not decided (a way of a gate in a state of `UNDECIDED`: tell, check, not settled,
+   outside, not met yet), once however many options it decides, as "- whether <the way's condition> (<cite>)
+   [<issues>]: <what the tool knows of it, `KNOWN_AS`: the tenant can tell the tool, the tenant can check, not
+   settled, outside the tool, not yet>: <why>", then a line per option it decides, "<label>: <status> if it holds; if
+   not, the condition turns on whether <the gate's other undecided ways>" (or "closed"); then the lease parts the
+   profile did not read, and a last line: YOUR LEASE holds only the clauses the tool reads, `search_lease` searches
+   the whole text, and only a point no wording finds there is known to be absent. In words, no id.
+10. `WHICH DEADLINES HAVE PASSED`, whose name line says it has no dates and that any question about when calls
    `get_deadlines` (named THE PROGRAM'S DEADLINES for a few hours on 2026-10-03, which the model read as the
    deadlines themselves and answered from): `tools.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
    notice deadline", not the clock's id) with its issues, whose it is, what it counts from (the fact's label,
@@ -964,8 +978,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   "dl-prog" in the table: a transcript `printed` line marked `"what": "deadlines"`; an expectation that a turn
   calls `get_deadlines` still counts only the model's call; TODO item 65), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
   `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: a prompt
-  part's name as the prompt writes it, before TODO item 61 or since, in capitals, or a rule's number such as
-  "rule 8"; TODO items 53 and 61). Since 2026-10-02 (TODO item 49) a legal question's
+  part's name as the prompt writes it, before TODO item 61 or since, YOUR OPTIONS and WHAT THE TOOL DOES NOT KNOW
+  included, in capitals, or a rule's number such as "rule 8"; TODO items 53, 61, and 83). Since 2026-10-02 (TODO item 49) a legal question's
   turn expects `applied` instead of "does not decide", and the `LAW_WORDS` screen and the `must_not` patterns
   against "entitled", "allowed", "forfeit", and case names are gone. The blind scorers' rubric is
   `dev/eval_rubric.md` (applied answers: OPTION_BEFORE_OPEN and RECITED since TODO items 72 and 73, QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,

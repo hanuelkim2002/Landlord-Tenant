@@ -13,9 +13,6 @@ can do (README, Purpose and non-negotiables). Seen on 2026-10-04: "the lease doe
 on the statute alone while the lease's Article 7.2 promised the repair. Rule pairs alone did not change such
 behavior (items 54, 76); what the program computed did (options, deadlines). So the knowledge is computed by code.
 
-83. A prompt part, computed from item 81, of what the answer depends on that the tool does not know, each with
-    its state and its effect on the options; rule 1 asks for it before any step, and a gap is never stated as a
-    fact. The rules' "Not:" lines come from several stories, not one.
 84. Options with knowledge-state gates for the other playbooks, each gate quoted from `statutes/` and checked by
     the author: the deposit playbooks (the landlord missed the 30-day notice), the notices, entry, rent increase,
     leaving early, lease ending, neighbor. The author's check of repair_not_made's gates is in this too (whether

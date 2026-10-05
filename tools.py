@@ -19,7 +19,7 @@ import config
 from config import squash
 from corpus import playbooks, statute
 from deterministic import check_options, matter_deadlines
-from lease import find_in_lease
+from lease import LABELS, find_in_lease
 from record import active_playbooks, append_event, element_status, matter_dir, read_events, save
 from sheet import parse_answer, shown
 import wiki
@@ -226,6 +226,51 @@ def options_status():
             for q in o["also_open"]:
                 lines.append(f"    also, from what the statute does not settle: {first_sentence.get(q, '')}")
     return "\n".join(lines) or "none: no active issue lists its options yet"
+
+
+# What the answer depends on that the tool does not know (TODO item 83, the author's decision of 2026-10-04): every
+# point an option turns on that is not settled from the confirmed facts, a lease clause the tool read, or the statute,
+# once, with what the tool knows of it and what it would change. In the eval of 2026-10-04 the model stated such gaps
+# as facts ("the lease does not mention any late fee") or left them out of the answer.
+UNDECIDED = ("tell", "check", "not settled", "outside", "not met yet")
+KNOWN_AS = {"tell": "the tenant can tell the tool", "check": "the tenant can check", "not settled": "not settled",
+            "outside": "outside the tool", "not met yet": "not yet"}
+
+
+def unknowns_status():
+    """WHAT THE TOOL DOES NOT KNOW, for the system prompt (agent.PARTS): each point an option of an active issue turns
+    on that the tool has not decided (deterministic.check_options: a way of a gate not decided, UNDECIDED), once, in
+    words: what it is, with its cite and issue; what the tool knows of it (the tenant can tell the tool, the tenant can
+    check, not settled, outside the tool, not yet) and why; then, for each option it decides, what the option would be
+    if it holds, and what is left if it does not (the condition's other undecided ways, or the option closed). Then
+    the lease: the parts the tool has not read, and that search_lease searches the rest. Logs nothing."""
+    points = {}
+    for pb in active_playbooks():
+        for o in check_options(pb, record.matter["facts"], date.today(), record.profile):
+            for g in o["gates"]:
+                if g["state"] not in UNDECIDED:
+                    continue
+                undecided = [w for w in g["ways"] if w["state"] in UNDECIDED]
+                for w in undecided:
+                    point = points.setdefault((w["says"], w["cite"], w.get("why", "")), {"issues": [], "effects": [], **w})
+                    if pb.issue.replace("_", " ") not in point["issues"]:
+                        point["issues"].append(pb.issue.replace("_", " "))
+                    others = [x["says"] for x in undecided if x is not w]
+                    point["effects"].append(f"{o['label']}: {g['if_met']} if it holds; if not, "
+                                            + (f"the condition turns on whether {' or whether '.join(others)}" if others
+                                               else "closed"))
+    lines = []
+    for (says, cite, why), point in points.items():
+        lines.append(f"- whether {says} ({cite}) [{', '.join(point['issues'])}]: {KNOWN_AS[point['state']]}"
+                     + (f": {why}" if why else ""))
+        lines += [f"    {effect}" for effect in point["effects"]]
+    if record.profile is not None:
+        unread = [LABELS[name] for name in type(record.profile).model_fields if getattr(record.profile, name) is None]
+        if unread:
+            lines.append(f"- the parts of the lease on {', '.join(unread)}: not read from this lease")
+    lines.append("- anything else in the lease: YOUR LEASE holds only the clauses the tool reads; search_lease searches the "
+                 "whole text, and only a point no wording finds there is known to be absent")
+    return "\n".join(lines)
 
 
 def deadline_receipt(listing):
