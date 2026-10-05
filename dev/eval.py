@@ -69,6 +69,7 @@ SCENARIOS = HERE / "dev" / "scenarios"
 SEED = HERE / "matters" / "t-test" / "test-001"
 
 QUOTED = re.compile(r"\"[^\"]*\"|“[^”]*”")                  # quoted passages, left out of the word screens
+PLAIN = str.maketrans({"\u00a0": " ", "\u202f": " ", "\u2007": " ", "\u2011": "-"})   # no-break spaces and hyphen
 # Choosing for the tenant, which an applied answer never does (README, Purpose): it lays out the options.
 CHOOSE_WORDS = re.compile(r"(?<!what )(?<!whether )\byou should\b|\byour best (option|choice|move|bet)\b|"
                           r"\bI (would )?(recommend|suggest|advise)\b|\bthe best (thing|option|choice) (is|would be)\b",
@@ -284,7 +285,10 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
     """What one turn did: tools called, case topics asked for, replies, and the generic measures. known_dates:
     every date the record holds (facts, the tenant's lines, printed deadlines, the session's days); fetched:
     every get_cases result in the session up to and including this turn."""
-    replies = [e["text"].strip() for e in turn["entries"] if e["role"] == "model" and (e.get("text") or "").strip()]
+    # replies with the model's no-break spaces and hyphens read as plain ones ("Lease Section\u202f7.2"), so the patterns
+    # match what the tenant reads (TODO item 85)
+    replies = [e["text"].strip().translate(PLAIN) for e in turn["entries"]
+               if e["role"] == "model" and (e.get("text") or "").strip()]
     calls = [c for e in turn["entries"] if e["role"] == "model" for c in e.get("tool_calls", [])]
     printed = [d for e in turn["entries"] if e["role"] == "tool" and e["name"] == "get_deadlines"
                for d in deadline_dates(e.get("shown") or e["text"])]

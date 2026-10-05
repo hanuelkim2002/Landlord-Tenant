@@ -438,8 +438,10 @@ def check_case_quotes(text, messages):
 # profile, so the tenant has the exact text to point to and the reply does not recite it. Was, from item 54 to 66:
 # every rule quoted in the reply, and a caution for a section cited without a quote (item 66's RETOLD).
 
-# a lease cite as YOUR LEASE gives it (lease.lease_cite): "Lease Section 4.3", "Lease Article 7", "Lease, page 1"
-LEASE_CITE = re.compile(r"\bLease (?:Section|Article|Paragraph) (\d+(?:\.\d+)*)|\bLease,? page (\d+)", re.I)
+# a lease cite as YOUR LEASE gives it (lease.lease_cite): "Lease Section 4.3", "Lease Article 7", "Lease, page 1", with any
+# space between the words: the model wrote "Lease Section\u202f7.2", a narrow no-break space, and the program printed
+# nothing under the reply (eval of 2026-10-04, TODO item 85)
+LEASE_CITE = re.compile(r"\bLease\s+(?:Section|Article|Paragraph)\s+(\d+(?:\.\d+)*)|\bLease,?\s+page\s+(\d+)", re.I)
 CITED_MAX = 1500                                         # characters of one passage printed; the rest is named
 CITED_HEAD = "The words the reply above cites, printed by the program from the stored statute and your lease:"
 

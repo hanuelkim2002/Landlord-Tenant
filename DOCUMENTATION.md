@@ -66,7 +66,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `(3)` or `(b)` starts a subsection when a space and a capital letter or an opening quote follow it, or a
   lettered marker first, as in `(5)(a) If`; not after "subsection", "paragraph", "subparagraph"),
   `subsections(section)` (every `"(3)"` and `"(3)(a)"` of a stored section with its start and end in the
-  text), `cites_in(text)` (every `83.x` cite with its parenthesized parts, spaces removed, each once),
+  text), `cites_in(text)` (every `83.x` cite with its parenthesized parts, spaces removed, a no-break space too, each once),
   `check_cites(text, shown)` (returns `(cite, problem)` for a section not in `statutes/`, a section not in
   `shown`, or a subsection the section does not have; cites inside a quoted passage are skipped, since they
   belong to the quoted text and `check_quoted` checks those words). Quotes: `quote_spans(text)` (quote marks paired in order, as a reader pairs
@@ -249,7 +249,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   cite outside quote marks that the stored statutes hold, the subsection's words (or the section's), the
   narrowest once (83.56(1) cited, 83.56 alone adds nothing), cut at `CITED_MAX` (1,500) characters with the cite
   for the rest; then each lease clause the profile holds under a lease cite (`LEASE_CITE`: "Lease Section 4.3",
-  "Lease Article 7", "Lease, page 1"; `cited_clause` matches a numbered clause, one holding the cited number,
+  "Lease Article 7", "Lease, page 1", with any space between the words, since the model wrote "Lease Section\u202f7.2"
+  with a narrow no-break space and nothing was printed, TODO item 85; `cited_clause` matches a numbered clause, one holding the cited number,
   such as Article 7 for "Lease Section 7.2", or for a page cite the clauses with no number on that page), each
   with its cite, page, and `lease.LABELS` label; and for a numbered cite no profile clause holds, the clause of that
   number in the lease's own text (`lease.lease_clauses`), or every clause of a cited article, each with its page and
@@ -1002,7 +1003,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   a case a `get_cases` result in the session gave, `case_given` matching it with or without leading words such
   as "In"; a court question answered from cases given earlier also counts as calling `get_cases`), and
   `screen_must_not`. Every reply is also
-  measured: empty turns, program cautions, field names, lease searches (turns calling `search_lease`) and "absent"
+  measured, with the model's no-break spaces and hyphens read as plain ones (`PLAIN`): empty turns, program cautions,
+  field names, lease searches (turns calling `search_lease`) and "absent"
   (`LEASE_ABSENT`: a reply saying the lease lacks something, "the lease does not mention", with no `search_lease` call
   before it in the session; TODO item 85), a computed deadline the program printed found in the reply
   (the model never sees one, so it counted it; not when the date is also a fact the record holds), recited

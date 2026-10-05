@@ -1161,6 +1161,9 @@ try:
           and "Lease Section 7.2, page 4 (Systems and Appliances): Landlord shall repair the heating" in printed
           and "Lease Section 4.3, page 2 (notice before moving out early)" in printed
           and "(Return of Deposit and Claims)" not in printed)
+    nbsp = cited_words("The landlord must repair the air conditioning (Lease Section\u202f7.2), and see Fla. Stat.\u00a083.60\u00a0(1)(b).")
+    check("item 85: a cite written with a no-break space still gets its words printed (lease and statute)",
+          "Lease Section 7.2, page 4 (Systems and Appliances)" in nbsp and "Fla. Stat. 83.60(1)(b):" in nbsp)
     check("item 82: rule 2 asks for a search before saying the lease lacks something, and the model has the tool",
           "call search_lease first" in RULES_TEXT and "search_lease" in [tl.name for tl in model_tools]
           and "search_lease searches the whole lease's text" in PARTS["lease"])

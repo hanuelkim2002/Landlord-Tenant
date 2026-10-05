@@ -3,6 +3,15 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-05
+
+- A cite written with a no-break space is read as a cite (found by the eval of TODO item 85). Was: in one run of the
+  AC story the model wrote "(Lease Section\u202f7.2)" with a narrow no-break space; `agent.LEASE_CITE` matched a plain
+  space only, so the program printed neither the clause nor the reading line under the reply, and
+  `citations.cites_in` kept a no-break space inside a statute cite ("83.60\u00a0(1)(b)"), a cite the program could
+  not look up. Now both take any space. The eval reads the model's no-break spaces and hyphens as plain ones
+  (`dev/eval.py`, `PLAIN`), so its patterns match what the tenant reads. Smoke: one check.
+
 ## 2026-10-04
 
 - Options with knowledge-state gates for the other seven playbooks (TODO item 84, done but for the author's check).

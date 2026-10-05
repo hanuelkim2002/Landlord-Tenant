@@ -43,10 +43,11 @@ CITE = re.compile(r"\b83\.\d+(?:\s?\((?:\d+|[a-z])\))*")
 
 
 def cites_in(text):
-    """Every ch. 83 cite in the text, spaces removed, in order, each once: ["83.49(3)(a)", "83.56"]."""
+    """Every ch. 83 cite in the text, spaces removed (a no-break space too, which the model sometimes writes), in
+    order, each once: ["83.49(3)(a)", "83.56"]."""
     found = []
     for m in CITE.finditer(text):
-        cite = m.group(0).replace(" ", "")
+        cite = "".join(m.group(0).split())
         if cite not in found:
             found.append(cite)
     return found
