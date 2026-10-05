@@ -5,6 +5,21 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- A search of the whole lease, `search_lease(phrase)` (TODO item 82, done). Was: the model saw only the sixteen
+  clauses the profile holds, and said "the lease does not contain a holdover clause" and "the lease does not mention
+  any late fee" in 4 turns of 12 runs (`dev/eval_runs/2026-10-04-items76-77`), though the test lease has both (2.4,
+  3.3). Now the model's ninth tool finds every numbered clause of the matter's lease text (`pages.json`, through
+  `record.lease_pages` and `lease.find_in_lease`) that holds a phrase, ignoring the PDF's broken words ("air
+  -conditioning"), with the cite to use and the clause's words; found nowhere, it says so and asks for another
+  wording, and a phrase no wording finds is a known absence, unlike a clause the profile did not read. A reply citing
+  a clause the profile does not hold gets that clause's words printed under it from the lease text, as a profile
+  clause's are (`agent.cited_words`). Rule 2's "Not:" adds the holdover line, its "Instead:" asks for the search and a
+  second wording first and "The tool found nothing on that in your lease's text." only after; YOUR LEASE's name line
+  names the tool. Also fixed: `lease.FOOTER`, the running header "Residential Lease Agreement (Florida) | Page 2 of
+  12", was matched anywhere in the joined pages and took up to 80 characters of the lease before it ("the tenancy
+  shall become mont by either Party", Section 2.4, also in the stop text's clauses); now it is taken off each page's
+  start or end before the pages are joined (`lease.lease_text`). Smoke: five item 82 checks.
+
 - What the tool knows of each condition of an option, computed by code (TODO item 81, done). Was (item 72): a gate was
   one confirmed fact, so a condition was met, closed, not settled, or not known yet, and ending the lease over an AC
   came out not settled on the statute alone though the lease's Article 7.2 promised the repair (83.56(1) also reaches

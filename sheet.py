@@ -10,7 +10,6 @@ In pieces, so the terminal and the web page (app.py) ask the same rows the same 
 Every answer is checked against the element's type before it is saved. A suggestion (from fill_facts) is
 shown with the tenant's own words and accepted with Enter. "?" skips a fact for now; it stays missing.
 """
-import json
 from datetime import datetime
 
 import record
@@ -219,8 +218,8 @@ def stop_text():
     lines += ["If one of them is part of what happened, open this matter again (choose existing) and describe that part."]
     told = " ".join([record.matter.get("description", "")]
                     + [ev["text"] for ev in read_events() if ev["kind"] == "tenant_update"])
-    pages = record.matter_dir() / "pages.json"
-    found = clauses_about(told, json.loads(pages.read_text())) if pages.exists() else []
+    pages = record.lease_pages()
+    found = clauses_about(told, pages) if pages else []
     if found:
         lines += ["", "Parts of your lease that may be on the subject, as printed in the lease:"]
         for c in found:

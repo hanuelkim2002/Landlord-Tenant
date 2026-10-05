@@ -19,6 +19,7 @@ import config
 from config import squash
 from corpus import playbooks, statute
 from deterministic import check_options, matter_deadlines
+from lease import find_in_lease
 from record import active_playbooks, append_event, element_status, matter_dir, read_events, save
 from sheet import parse_answer, shown
 import wiki
@@ -44,6 +45,38 @@ def search_statute(phrase: str) -> str:
             hits.append(f"{sec}: ...{text[max(0, i-80):i+120]}...")
     append_event("fetch", search=phrase)
     return "\n".join(hits) or "No matches."
+
+
+# ---- Lease Search (TODO item 82): YOUR LEASE holds the clauses the tool reads, not the whole lease, and from them the
+# model said the test lease had no holdover clause and no late fee (it has both, 2.4 and 3.3). The model searches the
+# whole lease text before it says the lease does or does not say something.
+
+SEARCH_SHOWN = 1500                                      # characters of one clause the model gets
+
+
+@tool
+def search_lease(phrase: str) -> str:
+    """Find where the tenant's lease says something: every numbered clause in the whole lease text that holds the
+    word or phrase (spacing, hyphens, and capitals ignored), with the cite to use and its words. YOUR LEASE holds
+    only the clauses the tool reads; call this before you say the lease does or does not say something, and try a
+    second wording ("holdover", then "month-to-month") before you say it has no such term. Cite a clause it finds as
+    given, (Lease Section 2.4); the program prints its words under your reply."""
+    pages = record.lease_pages()
+    if not pages:
+        return "No lease text is stored for this matter."
+    clauses, outside = find_in_lease(phrase, pages)
+    append_event("fetch", lease_search=phrase, found=[c["number"] for c in clauses] + [f"page {pg}" for pg, _ in outside])
+    if not clauses and not outside:
+        return (f"No clause or page of the lease's text ({len(pages)} pages) holds \"{phrase}\". The lease may say it in "
+                "other words: try another wording before you say the lease has no such term. If no wording is found, "
+                "the tool found nothing on it in the lease's text.")
+    lines = [f"\"{phrase}\" is in the lease's text ({len(pages)} pages searched):"]
+    for c in clauses:
+        words = c["text"] if len(c["text"]) <= SEARCH_SHOWN else c["text"][:SEARCH_SHOWN].rsplit(" ", 1)[0] + " ..."
+        lines.append(f"- Lease Section {c['number']}, {c['title']}, page {c['page']}: \"{words}\"")
+    lines += [f"- Lease, page {pg}, outside any numbered clause: \"...{words}...\"" for pg, words in outside]
+    lines.append("Cite a clause as given here; the program prints its words under your reply.")
+    return "\n".join(lines)
 
 
 # ---- Propose Facts: the model can suggest a fact, never confirm one. It reads the status in its prompt.
@@ -386,5 +419,5 @@ def add_communication(sent_on: str, sender: str, recipient: str, channel: str, t
 
 # ---- Tools List: what the agent may call. A new tool goes here after it is defined above.
 
-tools = [get_statute_section, search_statute, propose_facts, get_deadlines, get_cases, draft_letter, add_artifact,
+tools = [get_statute_section, search_statute, search_lease, propose_facts, get_deadlines, get_cases, draft_letter, add_artifact,
          add_communication]

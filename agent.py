@@ -24,7 +24,7 @@ from citations import (caution, check_case_cites, check_cites, check_quoted, cit
 from config import agent_llm
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
-from lease import LABELS, SECTION_NUMBER, check_quotes, extract_profile, ingest_pdf, lease_cite, lease_lines
+from lease import LABELS, SECTION_NUMBER, check_quotes, extract_profile, ingest_pdf, lease_cite, lease_clauses, lease_lines
 from record import (active_playbooks, add_issues, add_related_issues, append_event, candidate_playbooks,
                     element_status, matter_dir, prune_proposals, read_events, reject_issue, save)
 from sheet import pending_rows, run_sheet, stop_text
@@ -72,8 +72,8 @@ When the lease and the statute differ on a point, cite both; say which controls 
 2. Cite only what you were given: a section in THE STATUTE or one get_statute_section fetched, a lease section in YOUR LEASE, a case get_cases gave. Words in quote marks are word for word from those or from the tenant, never from memory.
 Not: The lease says the deposit comes back after inspection. (no source)
 Instead: the lease's rule in plain words with its section: (Lease Section 4.3).
-Not: "The lease does not mention air conditioning." (YOUR LEASE holds only the clauses the tool reads, not the whole lease)
-Instead: "The parts of your lease the tool has read do not cover that; the rest of your lease may." Then what the statute says on it.
+Not: "The lease does not mention air conditioning." or "The lease does not contain a holdover clause." (said from YOUR LEASE, which holds only the clauses the tool reads, not the whole lease)
+Instead: call search_lease first, and a second wording when the first finds nothing ("holdover", then "month-to-month"); cite a clause it finds, (Lease Section 2.4). Only when no wording is found anywhere in the lease's text: "The tool found nothing on that in your lease's text." Then what the statute says on it.
 Not: "(Lease notice_before_vacating)" or "(term_end)" (this tool's name for a clause, as a cite)
 Instead: the cite YOUR LEASE gives the clause: (Lease Section 3.1), (Lease Article 7), or (Lease, page 1).
 Not: the "repair within 5 days" you requested (the tenant wrote "Give them 5 days to reply")
@@ -231,7 +231,7 @@ def resume(update_text):
 # the rules forbade it (TODO item 61). Under these names, a source named in plain words reads right to the tenant.
 PARTS = {
     "lease": ("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease: each in plain "
-              "words, with the cite to use and its words)"),
+              "words, with the cite to use and its words; search_lease searches the whole lease's text)"),
     "notes": "THE TOOL'S NOTES ON YOUR ISSUES (by issue: questions, lease checks, evidence, postures, mistakes to avoid)",
     "open": ("WHAT THE STATUTE DOES NOT SETTLE (by issue: each open question, its sections, and its readings; the "
              "stored text settles none of them, so give every reading and pick none)"),
@@ -446,7 +446,9 @@ def cited_words(text):
     narrowest once (83.56(1) cited, 83.56 alone adds nothing), cut at CITED_MAX characters with the cite for the
     rest; then each lease clause the profile holds under a lease cite (LEASE_CITE): a numbered one, or one inside it
     ("Lease Section 7.2" in "Lease Article 7"), or, for "Lease, page 1", the clauses on that page with no number;
-    each with its cite, page, and label."""
+    each with its cite, page, and label; and for a numbered cite the profile holds no clause for, the clause of that
+    number in the lease's text (lease.lease_clauses), or each clause of a cited article, as search_lease finds them
+    (TODO item 82), with its title."""
     parts = []
     cites = [c for c in cites_in(unquoted(text)) if c.partition("(")[0] in statute
              and (not c.partition("(")[2] or "(" + c.partition("(")[2] in subsections(c.partition("(")[0]))]
@@ -458,11 +460,19 @@ def cited_words(text):
             words = words[:CITED_MAX].rsplit(" ", 1)[0] + f" ... (the rest is in Fla. Stat. {cite})"
         parts.append(f"Fla. Stat. {cite}: {words}")
     clauses = [(n, c) for n, c in record.profile.clauses() if c.present and c.quote] if record.profile else []
+    numbered = None                                      # the lease text's own clauses, read once if needed
     for number, page in dict.fromkeys(LEASE_CITE.findall(text)):
-        for quote, (name, clause) in {c.quote: (n, c) for n, c in clauses if cited_clause(c, number, page)}.items():
+        held = {c.quote: (n, c) for n, c in clauses if cited_clause(c, number, page)}
+        for quote, (name, clause) in held.items():
             cite = lease_cite(clause)
             where = cite if cite.startswith("Lease, page") else f"{cite}, page {clause.page}"
             parts.append(f"{where} ({LABELS[name]}): {' '.join(quote.split())}")
+        if number and not held:                          # a clause the profile does not hold, found in the lease text
+            numbered = lease_clauses(record.lease_pages()) if numbered is None else numbered
+            for c in [c for c in numbered if c["number"] == number or c["number"].startswith(number + ".")]:
+                words = c["text"] if len(c["text"]) <= CITED_MAX else c["text"][:CITED_MAX].rsplit(" ", 1)[0] + \
+                    f" ... (the rest is in Lease Section {c['number']})"
+                parts.append(f"Lease Section {c['number']}, page {c['page']} ({c['title']}): {words}")
     return CITED_HEAD + "\n\n" + "\n\n".join(parts) if parts else ""
 
 

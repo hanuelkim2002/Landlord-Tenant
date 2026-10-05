@@ -28,10 +28,16 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   a line per clause, label, cite, and words, or that the reading found no such clause, or that it was not read;
   no field name, since given the profile as JSON the model cited clauses by field name), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
-  or start there and run onto the next). Lease clauses, no model: `lease_clauses(pages)` (the lease split at
-  its numbered headings, `HEADING`, "5.4. Vehicles."; a heading counts only if its number closely follows the
-  last one's, so a cross-reference is not taken for one; each clause's number, title, page, and text, with a
-  running page footer, `FOOTER`, and a following article heading, `ARTICLE`, removed) and
+  or start there and run onto the next). Lease clauses, no model: `lease_text(pages)` (the pages joined, each
+  page's running header or footer, `FOOTER`, "... | Page 2 of 12" at its start or end, taken off first, and where each
+  page starts; until TODO item 82 `FOOTER` was matched anywhere in the joined text and took up to 80 characters of the
+  lease's words before the bar with it), `lease_clauses(pages)` (the lease split at its numbered headings, `HEADING`,
+  "5.4. Vehicles."; a heading counts only if its number closely follows the last one's, so a cross-reference is not
+  taken for one; each clause's number, title, page, text with a following article heading, `ARTICLE`, removed, and
+  `start` and `end` in `lease_text`), `find_in_lease(phrase, pages, limit=5)` (TODO item 82: the numbered clauses
+  holding a phrase, and the pages holding it outside any clause with a passage around it; compared by `plain`,
+  letters and digits only, lowercase, since the PDF text breaks words, "air -conditioning"; a phrase of three
+  letters or digits or fewer must stand as a whole word), and
   `clauses_about(text, pages, limit=3)` (the clauses on the subject of a tenant's text: a title using one of
   the tenant's words or a `LEASE_WORDS` word, everyday words mapped to lease words such as roommate to joint
   and several, or a text using two `LEASE_WORDS` words; ranked by how few clauses use each word, a title match
@@ -158,7 +164,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   fact is confirmed with the rule's value; skips a rejected issue unless `renewed_fact` is the rule's fact,
   just confirmed with a new value; returns what it suggested), `candidate_playbooks()` (active playbooks,
   then those of suggested issues),
-  `matter_dir` (the only function that knows the folder layout),
+  `matter_dir` (the only function that knows the folder layout), `lease_pages()` (the matter's `pages.json`, or []
+  with none; read by `search_lease`, `agent.cited_words`, and `sheet.stop_text`),
   `new_tenant_id` (random `t-` plus six hex characters), `new_matter_id(tenant_id)` (`m-001`, `m-002`, ...
   counting the tenant's `m-*` folders), `list_matters` (every saved matter as `{"tenant", "id", "issues"}`,
   nothing else read out), `load_matter(tenant_id, matter_id)` (replaces `matter` from `matter.json` and
@@ -182,7 +189,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   and `confirmation_of`. A confirmed date's SOURCE reads "tenant (corrected, ...)" when corrected, and in
   `timeline full` a corrected fact reads "corrected from <how> <suggested value>". Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
   `deterministic`, `sheet` (for `shown`). Imported by `agent`, `smoke`.
-- `tools.py`: the seven `@tool` functions and the `tools` list (see Tools the model can call), plus the
+- `tools.py`: the nine `@tool` functions and the `tools` list (see Tools the model can call), plus the
   plain helpers `pretty`, `quote_is_real`, `build_letter`, `deadline_status` and `options_status` (with `state_words`; two parts of
   the system prompt), and `deadline_receipt`. Imports `record`, `config`, `corpus`,
   `deterministic`, `sheet`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
@@ -243,7 +250,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   for the rest; then each lease clause the profile holds under a lease cite (`LEASE_CITE`: "Lease Section 4.3",
   "Lease Article 7", "Lease, page 1"; `cited_clause` matches a numbered clause, one holding the cited number,
   such as Article 7 for "Lease Section 7.2", or for a page cite the clauses with no number on that page), each
-  with its cite, page, and `lease.LABELS` label; under
+  with its cite, page, and `lease.LABELS` label; and for a numbered cite no profile clause holds, the clause of that
+  number in the lease's own text (`lease.lease_clauses`), or every clause of a cited article, each with its page and
+  title, cut at `CITED_MAX` (TODO item 82: a clause `search_lease` found is printed as a profile clause is); under
   `CITED_HEAD`, "The words the reply above cites, printed by the program from the stored statute and your
   lease:". `turn_blocks` shows them as a `sources` block right under the reply and writes them to the transcript
   as a `printed` line marked `"what": "sources"`. It also runs `check_case_quotes(text,
@@ -320,7 +329,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `timeline`.
 - `sheet.py`: the intake sheet, asked and saved by code with no model. `stop_text()` (what the tenant reads
   when nothing the tool covers is left: `STOP_LINE`, every playbook's description with how to come back to one
-  (open the matter again and describe that part), then up to three lease clauses `lease.clauses_about` finds
+  (open the matter again and describe that part), then up to three lease clauses `lease.clauses_about` finds (in
+  `record.lease_pages`)
   for the description and any updates, each as "Lease Section <number>, <title>, page <n>:" and its words in
   quote marks, cut at `CLAUSE_CHARS` with "...", and "This tool does not decide what they mean for you.").
   `NOT_COVERED` (the note shown after intake or an update when `other` came in next to a covered issue).
@@ -451,7 +461,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `fact_confirmed`: `id`, `value`, `how` (stated, inferred, or asked), `basis`, `proposed_value`,
     `confirmed_in` ("sheet" or "chat"; missing on events from before 2026-09-27). Written by
     `record.confirm_fact`.
-  - `fetch`: `section` (from `get_statute_section`) or `search` (from `search_statute`).
+  - `fetch`: `section` (from `get_statute_section`), `search` (from `search_statute`), or `lease_search` and `found`
+    (from `search_lease`: the phrase, and the clause numbers and pages that hold it).
   - `cite_flagged`: `cite` (e.g. "83.64"), `problem` (not a stored section, not shown or fetched in this
     chat, or no such subsection). Written by `agent.check_reply` after a reply. `timeline full` only.
   - `reply_empty`: `recovered` (true if the model's second turn showed the tenant something), `finish`
@@ -558,6 +569,13 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   listing what is available. Writes a `fetch` event.
 - `search_statute(phrase)`: every section containing the phrase (case-insensitive), with a snippet.
   Writes a `fetch` event.
+- `search_lease(phrase)` (TODO item 82): every numbered clause of the matter's whole lease text (`record.lease_pages`,
+  through `lease.find_in_lease`) that holds the phrase, spacing, hyphens, and capitals ignored, each as "Lease Section
+  <number>, <title>, page <n>:" with its words (cut at `SEARCH_SHOWN`, 1,500 characters), then any page holding it
+  outside a numbered clause, then a line to cite a clause as given; or, found nowhere, that no clause or page of the
+  lease's text holds it, to try another wording, and that if none is found the tool found nothing on it in the
+  lease's text (a known absence, unlike a clause the profile did not read). Its docstring asks for it before the
+  model says the lease does or does not say something. Writes a `fetch` event.
 - `propose_facts(facts_json)`: JSON object keyed by element id, each `{"value", "how", "said"}`. Puts a
   suggestion in `proposed` only if the id is a user-sourced element of an active playbook, the value fits
   the element's type (`sheet.parse_answer`, and it is stored as parsed), `how` is stated or inferred, and
@@ -670,7 +688,10 @@ rules forbade it.
 2. `YOUR LEASE`, whose name line says it holds only the clauses the tool reads, not the whole lease (TODO item 76;
    rule 2's "Not:" is the eval's "The lease does not mention air conditioning."): `lease.lease_lines`, a line per
    clause in plain words with the cite to use and its words (TODO item 77; was the profile as JSON, whose field
-   names the model used as cites; rule 2's "Not:" is "(Lease notice_before_vacating)").
+   names the model used as cites; rule 2's "Not:" is "(Lease notice_before_vacating)"). The name line also says
+   `search_lease` searches the whole lease's text, and rule 2 asks for it, with a second wording, before the model
+   says the lease lacks something, and for "The tool found nothing on that in your lease's text." only when no wording
+   is found (TODO item 82; the "Not:" adds the eval's "The lease does not contain a holdover clause.").
 3. `THE TOOL'S NOTES ON YOUR ISSUES`: for each active playbook, YAML of its `issue` and its `guidance`
    (questions, lease checks, evidence, postures, failure modes).
 4. `WHAT THE STATUTE DOES NOT SETTLE`, whose name line says the stored text settles none of them, so every

@@ -35,7 +35,7 @@ import wiki
 from wiki import lint, read_pages, verified, verify
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
-from lease import FOOTER, lease_clauses
+from lease import lease_clauses, lease_text
 from sheet import STOP_LINE, pending_rows, row_notes, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
 from agent import RULES as RULES_TEXT
@@ -1033,7 +1033,7 @@ try:
     check("the test lease splits into its numbered clauses, in order, a cross-reference not taken for one",
           len(numbers) == 78 and numbers[:3] == ["1.1", "1.2", "1.3"] and numbers[-1] == "22.2"
           and numbers.index("3.2") + 1 == numbers.index("3.3"))
-    page_words = FOOTER.sub(" ", " ".join(" ".join(p["text"] for p in lease_pages).split()))
+    page_words = " ".join(lease_text(lease_pages)[0].split())
     def stop_for(story):
         record.matter["description"] = story
         return stop_text()
@@ -1050,6 +1050,41 @@ try:
 finally:
     remove_scratch("t-smoke-stop")
 check("the stop scratch matter is removed", not (MATTERS / "t-smoke-stop").exists())
+
+# the lease search (TODO item 82): the model searches the whole lease text before it says the lease lacks something;
+# the test lease's holdover clause (2.4) and late charge (3.3), which the profile does not hold, are found through the
+# PDF's broken words, a phrase found nowhere says so, and a reply citing a found clause gets its words printed
+from tools import search_lease
+make_scratch("t-smoke-lease")
+try:
+    (MATTERS / "t-smoke-lease" / "m-001" / "events.jsonl").write_text("")
+    load_matter("t-smoke-lease", "m-001")
+    holdover = next(c for c in lease_clauses(record.lease_pages()) if c["number"] == "2.4")
+    check("item 82: the running header comes off each page with no word of the lease (Section 2.4 reads whole)",
+          "become month -to-month on the same terms, terminable by either Party" in holdover["text"]
+          and "Page 2 of 12" not in holdover["text"])
+    found = {phrase: search_lease.invoke({"phrase": phrase}) for phrase in ("holdover", "late charge", "air conditioning", "hot tub")}
+    check("item 82: search_lease finds the holdover clause, the late charge, and the air-conditioning repair, which the profile does not hold",
+          "- Lease Section 2.4, Month -to-Month Holdover With Consent, page 1: \"If Landlord accepts Rent" in found["holdover"]
+          and "- Lease Section 3.3, Late Charge, page 2:" in found["late charge"]
+          and "- Lease Section 7.2, Systems and Appliances, page 4:" in found["air conditioning"]
+          and not any(name == "maintenance_and_repairs" for name, _ in record.profile.clauses()))
+    check("item 82: a phrase found nowhere in the lease's text says so, and asks for another wording; each search is logged",
+          found["hot tub"].startswith("No clause or page of the lease's text (12 pages) holds \"hot tub\"")
+          and "try another wording" in found["hot tub"]
+          and [ev.get("lease_search") for ev in read_events() if ev["kind"] == "fetch"] == list(found))
+    printed = cited_words("Your lease turns month to month if the landlord takes rent after the term (Lease Section 2.4), "
+                          "and the deposit comes back as the lease says (Lease Section 4.3). See also Lease Article 7.")
+    check("item 82: a reply citing a clause the profile does not hold gets its words printed from the lease's text; a held one only from the profile",
+          "Lease Section 2.4, page 1 (Month -to-Month Holdover With Consent): If Landlord accepts Rent" in printed
+          and "Lease Section 7.2, page 4 (Systems and Appliances): Landlord shall repair the heating" in printed
+          and "Lease Section 4.3, page 2 (notice before moving out early)" in printed
+          and "(Return of Deposit and Claims)" not in printed)
+    check("item 82: rule 2 asks for a search before saying the lease lacks something, and the model has the tool",
+          "call search_lease first" in RULES_TEXT and "search_lease" in [tl.name for tl in model_tools]
+          and "search_lease searches the whole lease's text" in PARTS["lease"])
+finally:
+    remove_scratch("t-smoke-lease")
 
 make_scratch("t-smoke-playbooks")
 try:

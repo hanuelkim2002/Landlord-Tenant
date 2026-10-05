@@ -183,19 +183,31 @@ def check_quotes(profile, pages):
 # on the subject, as printed. No model involved.
 
 HEADING = re.compile(r"(?<![\d.])(\d{1,2})\.(\d{1,2})\.\s+([A-Z][A-Za-z ,'’&/-]{2,50}?)\.")
-FOOTER = re.compile(r"[^.|]{0,80}\|\s*Page \d+ of \d+\s*")    # a page's running footer, where a clause runs over pages
+# A page's running header or footer ("Residential Lease Agreement (Florida) | Page 2 of 12"), at the start or the end of
+# its text. Was matched anywhere in the joined text, up to 80 characters before the bar, which took real words with it
+# ("the tenancy shall become mont by either Party", Section 2.4; TODO item 82); now taken off each page before the
+# pages are joined.
+FOOTER = re.compile(r"^\s*[^.|\n]{0,80}\|\s*Page \d+ of \d+\s*|\s*[^.|\n]{0,80}\|\s*Page \d+ of \d+\s*$")
 ARTICLE = re.compile(r"\s*ARTICLE \d+\b.*$")                  # the next article's heading, after a clause
 
 
+def lease_text(pages):
+    """The lease's pages joined into one text, each page's running header or footer taken off (FOOTER), and where
+    each page starts in it, as [(offset, page number)]."""
+    text, starts = "", []
+    for p in pages:
+        starts.append((len(text), p["page"]))
+        text += FOOTER.sub(" ", p["text"]) + "\n"
+    return text, starts
+
+
 def lease_clauses(pages):
-    """The lease's numbered clauses, in order: [{"number": "5.4", "title": "Vehicles", "page": 2, "text": ...}].
+    """The lease's numbered clauses, in order: [{"number": "5.4", "title": "Vehicles", "page": 2, "text": ...,
+    "start": ..., "end": ...}], start and end being where the clause sits in lease_text.
     A heading counts only if its number follows the last one closely (the same section a little further on,
     or the next section or two from its start), so a cross-reference inside a clause ("Section 22.1. Landlord
     may refuse cash" in 3.2) is not taken for a new clause."""
-    text, starts = "", []                              # the pages joined, and where each page begins
-    for p in pages:
-        starts.append((len(text), p["page"]))
-        text += p["text"] + "\n"
+    text, starts = lease_text(pages)
     heads, last = [], (0, 0)
     for m in HEADING.finditer(text):
         number = (int(m.group(1)), int(m.group(2)))
@@ -208,10 +220,48 @@ def lease_clauses(pages):
     for i, (m, number) in enumerate(heads):
         end = heads[i + 1][0].start() if i + 1 < len(heads) else len(text)
         page = max(pg for at, pg in starts if at <= m.start())
-        body = ARTICLE.sub("", FOOTER.sub(" ", " ".join(text[m.end():end].split()))).strip()
+        body = ARTICLE.sub("", " ".join(text[m.end():end].split())).strip()
         clauses.append({"number": f"{number[0]}.{number[1]}", "title": " ".join(m.group(3).split()),
-                        "page": page, "text": body})
+                        "page": page, "text": body, "start": m.start(), "end": end})
     return clauses
+
+
+# ---- Search the lease (TODO item 82): the profile holds sixteen clauses, not the whole lease, and from them the model
+# said "the lease does not contain a holdover clause" and "the lease does not mention any late fee" though the test
+# lease has both (2.4, 3.3). The model searches the whole text first; a phrase found nowhere in it is a known absence.
+
+def plain(text):
+    """The text's letters and digits only, lowercase, with where each sits in the text: the PDF text breaks words
+    ("air -conditioning", "warra nty"), so spaces, hyphens, and punctuation are left out of a search."""
+    kept = [(ch.lower(), i) for i, ch in enumerate(text) if ch.isalnum()]
+    return "".join(ch for ch, _ in kept), [i for _, i in kept]
+
+
+def find_in_lease(phrase, pages, limit=5):
+    """Where a phrase is in the lease's text: the numbered clauses that hold it, in order, at most `limit`
+    (lease_clauses' dicts), and the pages that hold it outside any numbered clause, as [(page, a passage around
+    it)]. Spaces, hyphens, punctuation, and capitals are ignored (plain); a phrase of three letters or digits or
+    fewer ("AC") must stand as a whole word."""
+    text, starts = lease_text(pages)
+    wanted, _ = plain(phrase)
+    if not wanted:
+        return [], []
+    if len(wanted) <= 3:
+        hits = [m.start() for m in re.finditer(r"(?<![A-Za-z0-9])" + re.escape(phrase.strip()) + r"(?![A-Za-z0-9])", text, re.I)]
+    else:
+        flat, where = plain(text)
+        hits = [where[m.start()] for m in re.finditer(re.escape(wanted), flat)]
+    clauses, outside = [], []
+    for c in lease_clauses(pages):
+        if any(c["start"] <= h < c["end"] for h in hits) and len(clauses) < limit:
+            clauses.append(c)
+    covered = [(c["start"], c["end"]) for c in lease_clauses(pages)]
+    for h in hits:
+        if not any(a <= h < b for a, b in covered):
+            page = max(pg for at, pg in starts if at <= h)
+            if page not in [pg for pg, _ in outside]:
+                outside.append((page, " ".join(text[max(0, h - 200):h + 300].split())))
+    return clauses, outside
 
 
 # Everyday words a tenant uses, and the words a lease uses for the same thing. Small and explicit: extend it when

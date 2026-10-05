@@ -30,6 +30,13 @@ def matter_dir():
     return MATTERS / matter["tenant"] / matter["id"]
 
 
+def lease_pages():
+    """The open matter's lease text, page by page, as lease.ingest_pdf stored it (pages.json), or [] when none is
+    stored. Read by the lease search, the words a reply cites, and the stop text."""
+    path = matter_dir() / "pages.json"
+    return json.loads(path.read_text()) if path.exists() else []
+
+
 def new_tenant_id():
     """A random id like 't-3f9a2c'. Never built from a name or an email, so no folder name says who it is."""
     return "t-" + secrets.token_hex(3)
