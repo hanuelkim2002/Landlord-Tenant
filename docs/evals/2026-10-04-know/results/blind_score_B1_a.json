@@ -1,0 +1,129 @@
+{
+  "scorer": "B1_a",
+  "runs": [
+    {
+      "code": "R005",
+      "scenario": "eval_repair_mold_apt",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: \"and seven days passed without cure (Fla. Stat. 83.60(1)(b))\" (the printed 83.60(1)(b) says only that 7 days have elapsed after delivery of the notice; no cure condition)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "\"is not settled because you said it is not structural or plumbing and we have no building, housing, or health code text to apply\" ... \"whether the problem is a material noncompliance under 83.51(1) remains open\" (no word on what follows if a code does or does not apply, or who can check the code)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: \"that provision concerns termination or suit for that noncompliance, not the rent‑withholding defense\" (rent_paid_waiver treated as answered one way, no readings)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "\"You gave notice of the condition; the landlord did not repair it. So the landlord may have breached that duty.\" and \"that violation could be evidence of negligence\" (Mansur is a gas-line explosion case, Paterson a locks case; no word on how alike the facts are)"},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "Mansur quoted as \"continuing duty to exercise reasonable care to repair dangerous defective conditions upon notice of their existence by the tenant\" with the \"unless waived by the tenant\" half left out; Solomon v. Gentry (no implied warranty under a lease of real property) in the same get_cases result is not mentioned"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "borderline: \"which could be a violation of the landlord’s maintenance duty under 83.51\" (no word that 83.51(1) turns on codes or structure/plumbing, which the tenant said this is not)"},
+        {"reply": 4, "category": "RECITED", "evidence": "borderline: \"You notified the landlord of black mold and AC leak on 2026-08-22 ... the landlord painted over the mold but it returned. You gave notice of the condition; the landlord did not repair it.\" then \"You confirmed the mold and AC leak persist ... The condition persists despite notice.\" (same confirmed facts listed back in both paragraphs)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "\"To recover for breach of lease, you must show the landlord had a duty to repair, breached that duty, and you suffered damages (Lease Article 7; 83.51(1)(b)).\" (neither cite's words state these elements)"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "\"The duty to repair the air‑conditioning system is met under the lease and statute; the breach is shown by your notice and the lack of a lasting repair.\" (83.51(1)(b) reaches structure and plumbing, which the tenant said this is not; air conditioning is in neither 83.51(1) nor 83.51(2); breach treated as shown)"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "\"you have paid rent since you knew of the problem ... Thus, you may have a viable claim for the AC leak\" (83.56(5)(a) waiver for a civil action, which the facts turn on, is not applied in this reply)"},
+        {"reply": 5, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"which this tool does not have, so that point is not settled\" ... \"would depend on proving damages and whether the mold claim succeeds\" (no word on who can settle the code question)"}
+      ]
+    },
+    {
+      "code": "R014",
+      "scenario": "eval_repair_mold_apt",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "\"Your facts: the problem is black mold on the bathroom ceiling and AC leak on the floor, not structure or plumbing; you delivered written notice via the online resident portal on 2026-08-22; you have paid rent since you knew of the problem; your notice does not state that you intend to withhold rent.\""},
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: \"by the tenant specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof (Fla. Stat. 83.60(1)(b))\" (statute clause word for word, no quote marks)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: \"that turns on how serious the condition is, how long it has lasted, and how it affects living in the unit\" (only the degree reading of material_noncompliance given; the listed-duty reading is left out)"},
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: \"Cases: Mansur v. Eubanks ... holds that after notice the landlord has a continuing duty to repair dangerous defective conditions unless waived\" (relies on Mansur alone from an eight-case result; Solomon v. Gentry, no implied warranty under a lease, not mentioned)"},
+        {"reply": 2, "category": "OFFER", "evidence": "borderline: \"You can check your lease’s maintenance clause (Lease Article 7) or ask the tool to search it.\""},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "borderline: Paterson rule \"A landlord’s violation of the act is at least evidence of negligence.\" glossed as \"about locks and criminal‑attack prevention\" and \"the case does not address mold or habitability repairs\" (the quoted rule is general; Paterson also calls the Act a statutory warranty of habitability); Solomon glossed as only \"about implied warranty of fitness for a mobile home\" though it holds \"no such warranty arises under a lease of real property\""},
+        {"reply": 4, "category": "OPEN_CLOSED", "evidence": "borderline: \"That determination turns on the open question of materiality (how serious the condition is, how long it has lasted, and how it affects living in the unit)\" (one reading of material_noncompliance only)"},
+        {"reply": 5, "category": "RECITED", "evidence": "\"Your facts: you delivered a written repair request through the online resident portal on 2026‑08‑22; ...\" repeated under each claim and again under \"What the record shows now\""},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "borderline: \"the landlord painted over the mold but the AC leak persisted\" and \"the landlord’s response did not eliminate the source of the water, so the duty remains unfulfilled\" (the record holds that the mold came back, not what the landlord did or did not do about the AC leak)"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "\"the notice you sent does not state an intention to withhold rent, so the precondition for this remedy is not met\" (83.56(1)(b) abatement sits under 83.56(1), whose notice is of intent to terminate; withhold-rent notice is 83.60(1)(b)); also \"For rent abatement: (a) the landlord’s failure is not beyond its control\" (83.56(1) reaches failure due to causes beyond the landlord’s control, so the condition is reversed); \"the statutory duty under 83.51(1) is not yet established\" because the lease promise is unconfirmed (a lease promise is not a condition of 83.51(1))"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "\"A tenant may claim constructive eviction when the landlord’s breach is so substantial that it deprives the tenant of the beneficial enjoyment of the premises, and the tenant vacates within a reasonable time after the breach (see case law on constructive eviction).\"; also \"(d) you suffered damages caused by that failure\""},
+        {"reply": 5, "category": "OVERCLAIM", "evidence": "borderline: \"Because you remain in possession, the element of vacating is missing, so a constructive‑eviction claim would not succeed on these facts.\""},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "borderline: \"whether the problem is material (serious enough to affect habitability)\" and \"Whether the mold and AC leak constitute a continuing noncompliance is not settled by the statute (see open question on materiality)\" (one reading of materiality; rent_paid_waiver tied to the wrong open question, no readings)"}
+      ]
+    },
+    {
+      "code": "R018",
+      "scenario": "eval_repair_mold_apt",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "\"If a code requires the repair, you would need a new notice stating the intention to withhold rent and then wait 7 days\" (83.60(1)(b) is a defense of a material noncompliance; the material condition is left out and never applied)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"it turns on whether a building, housing, or health code where the unit is requires the landlord to fix the mold and AC leak\" (consequences given, but no word on who can settle the code question)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "\"whether paying rent after you knew of the problem waived your right to withhold rent\" (no cite; 83.56(5)(a) speaks of waiving the right to terminate or bring a civil action, not to withhold rent)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "\"the answer turns on whether your lease says the landlord must repair this problem, whether a building, housing, or health code where the unit is requires the repair, and whether paying rent ... waived your right to withhold rent. Those facts are not confirmed.\" (no word on what each changes or who can settle it)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "\"Courts have spoken about a landlord’s duty to repair after notice, which bears on your mold and AC‑leak complaint.\"; Bennett (a common-area slip under 83.51(2)(a)3) applied as \"If the landlord’s failure to fully remediate the mold and fix the AC leak violates § 83.51(1) ... that violation could be evidence of negligence\"; \"they treat the landlord’s obligation to repair after notice as a continuing statutory duty that can support negligence or habitability claims\" (no word on how alike the facts are)"},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "relies on Mansur, Bennett, Paterson, Smith and says the cases \"can support negligence or habitability claims\"; Solomon v. Gentry (\"no such warranty arises under a lease of real property\"), Haynes and Menendez in the same result are not mentioned"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "\"(either the plumbing duty or a housing code)\" and \"the AC system may be considered a structural component\" (the tenant confirmed the problem is not structural or plumbing)"},
+        {"reply": 4, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"Whether paying rent after you knew of the problem waived your right to rely on that duty is not settled by the statute or the cases in this tool.\" (no cite to 83.56(5)(a), no readings, no what follows)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "borderline: \"you would need to prove the landlord materially failed to comply after your written notice ... and that you suffered damages\" (no cite for the elements; only 83.56(5)(a) cited for waiver)"}
+      ]
+    },
+    {
+      "code": "R037",
+      "scenario": "eval_repair_mold_apt",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "\"the problem must be a failure of a duty under 83.51(1) (the codes, the structure, the plumbing) or a material provision of the lease\" (83.60(1)(b) reaches only a material noncompliance with 83.51(1)); also \"The problem was not caused by you: met.\" treated as a condition of the rule"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "\"Paying rent with knowledge of the problem may waive your right (not settled).\" and \"If an eviction case is filed, you would need to pay rent into the court registry.\" (no cite for either; 83.56(5)(a) and 83.60(2) not cited)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "\"Paying rent with knowledge of the problem may waive your right (not settled).\" (no word on which right, what follows if it does or does not)"},
+        {"reply": 1, "category": "CASE_MISREAD", "evidence": "\"This shows that a proper notice is required for rent‑related defenses.\" (K.D. Lewis concerns recovering the diminished value of premises under 83.56); \"These cases support that your notice must specify the noncompliance and indicate your intention not to pay rent, and must be delivered in a manner allowed by the lease and statute.\" (neither case says this; no word on how alike the facts are)"},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: \"The problem was not caused by you, your household, or anyone you let in.\" and the paragraph of confirmed facts, then restated in the \"Applied\" bullets (\"Written notice delivered: done.\")"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "\"This rule would mean the landlord has a duty to repair the mold and AC leak upon your notice\" (Mansur, a gas explosion with a non-tenant plaintiff, no word on how alike); Varnado quoted as \"the court held\" though the words are \"The duty, noted the court, corresponds to ...\" and extended to \"conditions that affect habitability, such as mold and AC leaks\""},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "\"Another case distinguished Mansur on the ground that the injured person was not a tenant in the unit\" (leaves out K.D. Lewis's second ground: Mansur \"did not create a new cause of action in tort for the diminution in value of the premises\"); Solomon v. Gentry (no implied warranty under a lease) not mentioned"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "\"unless you waived that duty by paying rent with knowledge of the problem (not settled)\" (Mansur says only \"unless waived by the tenant\"; 83.56(5)(a) not cited)"},
+        {"reply": 4, "category": "UNKNOWN_UNTIED", "evidence": "\"which this tool does not settle because it depends on building, housing, or health codes not in the stored text\" (no word on who can check the code or what follows either way)"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "borderline: \"This rule would mean the landlord has a duty to repair the mold and AC leak upon your notice\" (the rule's \"dangerous defective conditions\" condition left out of the application)"},
+        {"reply": 5, "category": "RECITED", "evidence": "\"You delivered a written notice via the online resident portal on 2026-08-22 describing black mold ... ; the landlord painted over the mold on September 3 and it returned; you have paid rent since learning of the problem; no eviction action has been filed.\" then restated under \"Applied\""},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "\"Rent paid since known may waive your right to sue for that noncompliance but not for any subsequent or continuing noncompliance (not settled).\" (no cite to 83.56(5)(a); printed cited words hold only 83.51(1) and 83.55)"},
+        {"reply": 5, "category": "QUOTE_UNMARKED", "evidence": "borderline: \"but not for any subsequent or continuing noncompliance\" (statute words, no quote marks, no source)"},
+        {"reply": 5, "category": "CASE_MISREAD", "evidence": "borderline: \"These cases support that landlords have a duty to repair upon notice\" (drops Mansur's \"dangerous defective conditions\"; Bennett was a common-area slip under 83.51(2)(a)3; no word on how alike the facts are)"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "\"Cases: - In Mansur ... - In Bennett ...\" (Solomon v. Gentry, \"no such warranty arises under a lease of real property\", and K.D. Lewis, notice under 83.56 needed to recover diminished value, both cut against a damages suit and are left out)"}
+      ]
+    },
+    {
+      "code": "R098",
+      "scenario": "eval_repair_mold_apt",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: \"Paying rent since you knew of the problem does not waive this defense under § 83.60(1)(b) (the waiver rule in § 83.56(5)(a) applies only to terminating the lease or suing for that noncompliance).\" (rent_paid_waiver stated as settled, no readings)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: \"then wait 7 days after delivery without repair before you may withhold rent and raise the defense\" (83.60(1)(b) says 7 days elapsed after delivery; no \"without repair\" condition)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "\"Bennett v. Mattison is overruled in part by Mansur’s adoption of the Alexander rule\" (the printed Mansur overrules Brooks v. Peters, not Bennett); Solomon \"Distinguished: later cases (e.g., Mansur v. Eubanks) focus on the statutory duty to repair, not implied warranties\" (the printout lists no case distinguishing Solomon); Haynes dissent said to \"support a duty under § 83.51(1)\" (the dissent is about the common-area duty of 83.51(2)(a)3)"},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "\"Mansur’s duty‑to‑repair rule is followed by later cases.\" (leaves out K.D. Lewis, listed under Mansur: it \"did not create a new cause of action in tort for the diminution in value of the premises\")"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "borderline: \"the landlord has a duty to exercise reasonable care to repair those conditions unless you waived that duty\" and \"the duty to repair dangerous, defective conditions upon notice applies to your mold and AC leak if you gave notice (you did)\" (the dangerous-defective condition is dropped in these bullets, though the closing paragraph calls it unsettled)"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "borderline: \"Menendez distinguishes Paterson because no statutory violation was alleged; here you allege a violation of § 83.51.\" (the record holds no confirmed violation of 83.51)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: \"the landlord must act within a reasonable time; the cases do not specify a exact period, but the statute’s 7‑day period for termination or rent withholding begins after a notice ...\" (\"reasonable time\" is not in the quoted rules; statute not cited by section here)"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "\"the landlord’s failure to fix the mold and AC leak after notice could be a noncompliance under § 83.55, allowing you to recover damages\" (the tenant paid rent knowing of the problem; 83.56(5)(a) waiver of a civil action is not mentioned in this reply)"},
+        {"reply": 5, "category": "QUOTE_WRONG", "evidence": "\"Your lease requires repair requests to be in writing via the resident portal or email (Lease Section 22.1)\" (22.1's printed words list hand, certified mail, courier, or routine email; the portal is in 7.3)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "borderline: \"allowing you to recover damages such as remediation costs or diminished value\" (83.55 says only \"the damages caused by the noncompliance\")"}
+      ]
+    },
+    {
+      "code": "R099",
+      "scenario": "eval_repair_mold_apt",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "\"Your facts: you confirmed the problem is black mold on the bathroom ceiling and AC leaks water on the floor; you confirmed the problem is not structure or plumbing; you delivered written notice via the online resident portal on 2026-08-22; ... no eviction case has been filed.\""},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "\"so duty depends on a code\" and \"Whether paying rent with knowledge waives the defense is not addressed by 83.60(1)(b).\" (no word on who can check the code or what follows either way; waiver left with no rule or readings)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: \"and 7 days passed without the landlord fixing the problem\" (83.60(1)(b) has no fixing condition)"},
+        {"reply": 1, "category": "ID", "evidence": "\"(If you need a deadline for any step, call get_deadlines.)\""},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "borderline: Mansur applied as \"the duty may not be satisfied if the condition is dangerous defective\" with no word on how alike the facts are (gas-line explosion, non-tenant plaintiff), while Bennett gets \"its facts differ\""},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "only Mansur and Bennett given from an eight-case result; Solomon v. Gentry (no implied warranty under a lease), Haynes and Menendez are left out, and K.D. Lewis (listed under Mansur, no tort cause of action for diminished value) is not mentioned"},
+        {"reply": 5, "category": "CHOICE_MADE", "evidence": "\"Avoid paying rent after you have given such a notice if you wish to rely on the non‑waiver argument\""},
+        {"reply": 5, "category": "GAP_AS_FACT", "evidence": "\"(the lease does not mention mold, so you would rely on statutory duty)\" (no search of the lease; the lease's Article 7 on repairs was not looked at in this chat)"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "borderline: \"If you sued to end the lease (Fla. Stat. 83.56(1))\" and \"If you sued to withhold rent and raise the problem as a defense (Fla. Stat. 83.60(1)(b))\" (83.56(1) ends the lease by notice, 83.60(1)(b) is a defense to the landlord's possession action; neither is the tenant's suit, and 83.55 damages is not discussed)"},
+        {"reply": 5, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"Be ready to prove that the condition violates a building, housing, or health code\" and \"whether the failure is “material” is not defined by the statute\" (no word on who can check the code or what follows if it does or does not)"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "\"What the cases show: Mansur ... Bennett ...\" (Solomon v. Gentry, no implied warranty under a lease, and K.D. Lewis's note on Mansur not in the same result are left out)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "borderline: \"Avoid paying rent after you have given such a notice if you wish to rely on the non‑waiver argument\" (no cite; 83.56(5)(a) turns on paying rent with actual knowledge of the noncompliance, not on rent paid after a notice) and \"7 days passed without repair\""}
+      ]
+    }
+  ]
+}

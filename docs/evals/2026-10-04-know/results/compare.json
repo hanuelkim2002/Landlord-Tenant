@@ -1,0 +1,694 @@
+{
+ "before": {
+  "totals": {
+   "replies": 216,
+   "lease_searches": 0,
+   "lease_absent": 24,
+   "recited": 7,
+   "quotes_only": 0,
+   "field_names": 9,
+   "prompt_names": 8,
+   "dates_made": 2,
+   "echo": 0,
+   "choose_screen": 0,
+   "offer_screen": 4,
+   "cases_not_given": 1,
+   "empty_turns": 0,
+   "footers": 145,
+   "deadlines_by_program": 4,
+   "crashed": 0,
+   "gateway_trouble": 0,
+   "runs": 69,
+   "expected_ok": 51
+  },
+  "kinds": {
+   "Legal question: answer applies the law": [
+    94,
+    96
+   ],
+   "Option: whether it is open comes first": [
+    12,
+    12
+   ],
+   "Point the tool does not know: said as it is": [
+    31,
+    39
+   ],
+   "Lease point: searched": [
+    0,
+    9
+   ],
+   "Lease point: the clause cited": [
+    3,
+    9
+   ],
+   "Court question: get_cases called": [
+    18,
+    18
+   ],
+   "Court question: its cases used in the answer": [
+    18,
+    18
+   ],
+   "Deadline question: get_deadlines called": [
+    44,
+    48
+   ],
+   "Deadlines computed": [
+    15,
+    15
+   ],
+   "Letters as asked": [
+    42,
+    42
+   ],
+   "Not-covered stop or note right": [
+    69,
+    69
+   ],
+   "Forbidden words absent": [
+    35,
+    42
+   ]
+  },
+  "cautions": {
+   "case left out": 25,
+   "cite": 9,
+   "quote": 8
+  },
+  "know": {
+   "eval_know_deposit_unsure": {
+    "runs": 3,
+    "all_ok": 3,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'Can my landlord keep my deposi' has /(?i)not known|turns on|depends on|whether you (got|received|were sent)|if (you|a notice|no notice|the landlord)/": [
+      3,
+      3
+     ],
+     "'Can my landlord keep my deposi' applied": [
+      3,
+      3
+     ],
+     "'What are my deadlines?' calls get_deadlines": [
+      3,
+      3
+     ]
+    }
+   },
+   "eval_know_lease_holdover": {
+    "runs": 3,
+    "all_ok": 0,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'keep paying rent after it ends' calls search_lease": [
+      0,
+      3
+     ],
+     "'keep paying rent after it ends' has /(?i)Lease Section 2\\.4/": [
+      0,
+      3
+     ],
+     "'keep paying rent after it ends' lacks /(?i)lease (does not|doesn't|did not) (mention|say|contain|address|include|have)/": [
+      2,
+      3
+     ],
+     "'late fee' calls search_lease": [
+      0,
+      3
+     ],
+     "'late fee' has /(?i)Lease Section 3\\.3/": [
+      0,
+      3
+     ],
+     "'late fee' lacks /(?i)lease (does not|doesn't|did not) (mention|say|contain|address|include|have)/": [
+      2,
+      3
+     ]
+    }
+   },
+   "eval_know_nonpayment_orange": {
+    "runs": 3,
+    "all_ok": 2,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'When is my last day to pay?' calls get_deadlines": [
+      3,
+      3
+     ],
+     "'If I pay on October 9' has /(?i)not comput|cannot (count|compute|say)|can't (count|compute|say)|does not (count|compute|hold|have)|doesn't (count|compute|hold|have)|no court (holiday )?calendar|outside/": [
+      2,
+      3
+     ],
+     "'If I pay on October 9' applied": [
+      3,
+      3
+     ]
+    }
+   },
+   "eval_know_repair_mold_code": {
+    "runs": 3,
+    "all_ok": 1,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'break my lease because of the ' has /(?i)\\bcodes?\\b/": [
+      2,
+      3
+     ],
+     "'break my lease because of the ' applied": [
+      3,
+      3
+     ],
+     "'break my lease because of the ' says whether it is open first": [
+      3,
+      3
+     ],
+     "'Who can tell me' has /(?i)code enforcement|health department|city|county/": [
+      1,
+      3
+     ]
+    }
+   },
+   "eval_know_violation_guest": {
+    "runs": 3,
+    "all_ok": 2,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'without giving me a chance to ' has /(?i)not settled|does not settle|doesn't settle/": [
+      2,
+      3
+     ],
+     "'without giving me a chance to ' applied": [
+      3,
+      3
+     ]
+    }
+   },
+   "eval_know_violation_waterbed": {
+    "runs": 3,
+    "all_ok": 0,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'anything about waterbeds' calls search_lease": [
+      0,
+      3
+     ],
+     "'anything about waterbeds' has /(?i)found nothing|no clause|did not find|didn't find|does not find|nothing (on|about)|no (mention|term|provision)/": [
+      0,
+      3
+     ],
+     "'Can they end my lease over thi' applied": [
+      3,
+      3
+     ],
+     "'Can they end my lease over thi' says whether it is open first": [
+      3,
+      3
+     ]
+    }
+   }
+  },
+  "scenarios": {
+   "eval_cases_3day_cash": [
+    3,
+    3
+   ],
+   "eval_cases_late_claim": [
+    3,
+    3
+   ],
+   "eval_cases_retaliation": [
+    3,
+    3
+   ],
+   "eval_claim_carpet": [
+    3,
+    3
+   ],
+   "eval_deposit_ghosted": [
+    0,
+    3
+   ],
+   "eval_entry_shower": [
+    3,
+    3
+   ],
+   "eval_know_deposit_unsure": [
+    3,
+    3
+   ],
+   "eval_know_lease_holdover": [
+    0,
+    3
+   ],
+   "eval_know_nonpayment_orange": [
+    2,
+    3
+   ],
+   "eval_know_repair_mold_code": [
+    1,
+    3
+   ],
+   "eval_know_violation_guest": [
+    2,
+    3
+   ],
+   "eval_know_violation_waterbed": [
+    0,
+    3
+   ],
+   "eval_lease_end_renewal": [
+    0,
+    3
+   ],
+   "eval_leave_early_family": [
+    2,
+    3
+   ],
+   "eval_nc_mixed_heater": [
+    3,
+    3
+   ],
+   "eval_nc_roommate": [
+    3,
+    3
+   ],
+   "eval_nc_towing": [
+    3,
+    3
+   ],
+   "eval_noise_neighbors": [
+    3,
+    3
+   ],
+   "eval_nonpayment_taped": [
+    3,
+    3
+   ],
+   "eval_rent_hike_duplex": [
+    3,
+    3
+   ],
+   "eval_repair_ac_terminate": [
+    3,
+    3
+   ],
+   "eval_repair_mold_apt": [
+    3,
+    3
+   ],
+   "eval_violation_dog": [
+    2,
+    3
+   ]
+  }
+ },
+ "after": {
+  "totals": {
+   "replies": 216,
+   "lease_searches": 38,
+   "lease_absent": 4,
+   "recited": 11,
+   "quotes_only": 3,
+   "field_names": 17,
+   "prompt_names": 15,
+   "dates_made": 5,
+   "echo": 1,
+   "choose_screen": 1,
+   "offer_screen": 4,
+   "cases_not_given": 0,
+   "empty_turns": 1,
+   "footers": 140,
+   "deadlines_by_program": 6,
+   "crashed": 0,
+   "gateway_trouble": 0,
+   "runs": 69,
+   "expected_ok": 55
+  },
+  "kinds": {
+   "Legal question: answer applies the law": [
+    94,
+    96
+   ],
+   "Option: whether it is open comes first": [
+    10,
+    12
+   ],
+   "Point the tool does not know: said as it is": [
+    39,
+    39
+   ],
+   "Lease point: searched": [
+    9,
+    9
+   ],
+   "Lease point: the clause cited": [
+    9,
+    9
+   ],
+   "Court question: get_cases called": [
+    18,
+    18
+   ],
+   "Court question: its cases used in the answer": [
+    18,
+    18
+   ],
+   "Deadline question: get_deadlines called": [
+    44,
+    48
+   ],
+   "Deadlines computed": [
+    15,
+    15
+   ],
+   "Letters as asked": [
+    42,
+    42
+   ],
+   "Not-covered stop or note right": [
+    68,
+    69
+   ],
+   "Forbidden words absent": [
+    36,
+    42
+   ]
+  },
+  "cautions": {
+   "case left out": 16,
+   "quote": 19,
+   "cite": 10
+  },
+  "know": {
+   "eval_know_deposit_unsure": {
+    "runs": 3,
+    "all_ok": 3,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'Can my landlord keep my deposi' has /(?i)not known|turns on|depends on|whether you (got|received|were sent)|if (you|a notice|no notice|the landlord)/": [
+      3,
+      3
+     ],
+     "'Can my landlord keep my deposi' applied": [
+      3,
+      3
+     ],
+     "'What are my deadlines?' calls get_deadlines": [
+      3,
+      3
+     ]
+    }
+   },
+   "eval_know_lease_holdover": {
+    "runs": 3,
+    "all_ok": 3,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'keep paying rent after it ends' calls search_lease": [
+      3,
+      3
+     ],
+     "'keep paying rent after it ends' has /(?i)Lease Section 2\\.4/": [
+      3,
+      3
+     ],
+     "'keep paying rent after it ends' lacks /(?i)lease (does not|doesn't|did not) (mention|say|contain|address|include|have)/": [
+      3,
+      3
+     ],
+     "'late fee' calls search_lease": [
+      3,
+      3
+     ],
+     "'late fee' has /(?i)Lease Section 3\\.3/": [
+      3,
+      3
+     ],
+     "'late fee' lacks /(?i)lease (does not|doesn't|did not) (mention|say|contain|address|include|have)/": [
+      3,
+      3
+     ]
+    }
+   },
+   "eval_know_nonpayment_orange": {
+    "runs": 3,
+    "all_ok": 3,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'When is my last day to pay?' calls get_deadlines": [
+      3,
+      3
+     ],
+     "'If I pay on October 9' has /(?i)not comput|cannot (count|compute|say)|can't (count|compute|say)|does not (count|compute|hold|have)|doesn't (count|compute|hold|have)|no court (holiday )?calendar|outside/": [
+      3,
+      3
+     ],
+     "'If I pay on October 9' applied": [
+      3,
+      3
+     ]
+    }
+   },
+   "eval_know_repair_mold_code": {
+    "runs": 3,
+    "all_ok": 3,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'break my lease because of the ' has /(?i)\\bcodes?\\b/": [
+      3,
+      3
+     ],
+     "'break my lease because of the ' applied": [
+      3,
+      3
+     ],
+     "'break my lease because of the ' says whether it is open first": [
+      3,
+      3
+     ],
+     "'Who can tell me' has /(?i)code enforcement|health department|city|county/": [
+      3,
+      3
+     ]
+    }
+   },
+   "eval_know_violation_guest": {
+    "runs": 3,
+    "all_ok": 3,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'without giving me a chance to ' has /(?i)not settled|does not settle|doesn't settle/": [
+      3,
+      3
+     ],
+     "'without giving me a chance to ' applied": [
+      3,
+      3
+     ]
+    }
+   },
+   "eval_know_violation_waterbed": {
+    "runs": 3,
+    "all_ok": 3,
+    "expectations": {
+     "issues": [
+      3,
+      3
+     ],
+     "not_covered_note": [
+      3,
+      3
+     ],
+     "'anything about waterbeds' calls search_lease": [
+      3,
+      3
+     ],
+     "'anything about waterbeds' has /(?i)found nothing|no clause|did not find|didn't find|does not find|nothing (on|about)|no (mention|term|provision)/": [
+      3,
+      3
+     ],
+     "'Can they end my lease over thi' applied": [
+      3,
+      3
+     ],
+     "'Can they end my lease over thi' says whether it is open first": [
+      3,
+      3
+     ]
+    }
+   }
+  },
+  "scenarios": {
+   "eval_cases_3day_cash": [
+    2,
+    3
+   ],
+   "eval_cases_late_claim": [
+    1,
+    3
+   ],
+   "eval_cases_retaliation": [
+    3,
+    3
+   ],
+   "eval_claim_carpet": [
+    3,
+    3
+   ],
+   "eval_deposit_ghosted": [
+    1,
+    3
+   ],
+   "eval_entry_shower": [
+    3,
+    3
+   ],
+   "eval_know_deposit_unsure": [
+    3,
+    3
+   ],
+   "eval_know_lease_holdover": [
+    3,
+    3
+   ],
+   "eval_know_nonpayment_orange": [
+    3,
+    3
+   ],
+   "eval_know_repair_mold_code": [
+    3,
+    3
+   ],
+   "eval_know_violation_guest": [
+    3,
+    3
+   ],
+   "eval_know_violation_waterbed": [
+    3,
+    3
+   ],
+   "eval_lease_end_renewal": [
+    2,
+    3
+   ],
+   "eval_leave_early_family": [
+    1,
+    3
+   ],
+   "eval_nc_mixed_heater": [
+    3,
+    3
+   ],
+   "eval_nc_roommate": [
+    3,
+    3
+   ],
+   "eval_nc_towing": [
+    3,
+    3
+   ],
+   "eval_noise_neighbors": [
+    3,
+    3
+   ],
+   "eval_nonpayment_taped": [
+    2,
+    3
+   ],
+   "eval_rent_hike_duplex": [
+    2,
+    3
+   ],
+   "eval_repair_ac_terminate": [
+    2,
+    3
+   ],
+   "eval_repair_mold_apt": [
+    3,
+    3
+   ],
+   "eval_violation_dog": [
+    0,
+    3
+   ]
+  }
+ }
+}

@@ -1,0 +1,239 @@
+{
+  "scorer": "B7_a",
+  "runs": [
+    {
+      "code": "R033",
+      "scenario": "eval_violation_dog",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: \"Your facts: the notice gave you 7 days to cure the pet violation (you confirmed)\" - the same confirmed facts were already stated in the opening paragraph of the reply"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: \"the condition “the violation did not continue after the rent was accepted and has not happened again” is not known yet\" - the sheet holds that the problem is not fixed and the reply itself says the dog is still in the unit"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: \"If the dog was removed before the landlord accepted rent, then the landlord may have waived the right to terminate for that past violation.\" - rent is already accepted and the dog is not yet removed on the record"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "\"The lease and statute do not prohibit sending an explanatory letter\" (also \"the lease does not forbid it\"); no search of the lease for this was made in the reply"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: \"whether it will stop the landlord from terminating depends on whether the landlord views it as a cure or as a waiver of the right to terminate\" - no cite behind it"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: \"if you choose to send one, you must use one of the methods listed in the lease\" - Lease Section 22.1 reaches notices required under the lease or chapter 83, not an explanatory letter"}
+      ]
+    },
+    {
+      "code": "R041",
+      "scenario": "eval_violation_dog",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "\"So the landlord cannot terminate the lease for this dog violation; they would need to rely on a new or continuing noncompliance.\" - the sheet holds the dog problem is not fixed, i.e. continuing, which 83.56(5)(a) leaves out of the waiver"},
+        {"reply": 1, "category": "OVERCLAIM", "evidence": "\"The landlord’s option to end the lease over this is closed on your facts.\""},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: \"If the dog is removed this weekend, the noncompliance will end and there will be no continuing violation, so the landlord cannot terminate the lease for this dog violation based on that notice.\" - the dog stays after the rent was accepted until then"},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: \"so the landlord cannot terminate the lease for this dog violation based on that notice\""},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: \"If the dog is removed this weekend, the noncompliance ends and there is no continuing violation, so the landlord cannot terminate the lease for this dog violation based on that notice.\""},
+        {"reply": 4, "category": "OVERCLAIM", "evidence": "borderline: \"Whether you send a letter does not change those outcomes.\""}
+      ]
+    },
+    {
+      "code": "R056",
+      "scenario": "eval_violation_dog",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "\"YOUR OPTIONS does not list options for this issue\""},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: \"Your facts: The notice was delivered on 2026-09-26, handed to you, states you are keeping a dog in violation of the no‑pets rule, offers a cure period, and does not terminate the lease immediately.\" - lists back more confirmed facts than the answer turns on"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "\"The lease allows notices to be delivered by hand (Lease Section 22.1), which matches how you received the notice.\" - 22.1 is where and how the tenant sends notices to the landlord; also \"if you remove the dog, the violation is cured\" after the reply says the 7 days have passed"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"The parts of your lease the tool has read do not cover pet rules; the rest of your lease may.\" - nothing on what follows either way or who checks"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: \"Your facts: The notice was delivered on 2026-09-26, handed to you, states you are keeping a dog in violation of the no‑pets rule\""},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "\"If the dog remains after removal, there is no continuing noncompliance, so the waiver is not defeated.\" (reverses the reply's own Applied paragraph; also repeats the Lease Section 22.1 misuse)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: \"If you remove the dog before the landlord takes any further step to end the lease (such as filing an eviction)\" - a condition no cited text states"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"The parts of your lease the tool has read do not cover pet rules; the rest of your lease may.\""},
+        {"reply": 4, "category": "OPEN_CLOSED", "evidence": "borderline: \"The 7‑day period to cure a violation runs from the date the landlord’s written notice is delivered, not from when you receive or respond to it (Fla. Stat. 83.56(2)(b))\" - picks the delivered reading of delivered_or_received (the question does not arise when handed over)"}
+      ]
+    },
+    {
+      "code": "R082",
+      "scenario": "eval_violation_dog",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "\"If you are not responsible for the dog and the lease does not make you liable for a guest’s pet, there may be no material failure to comply, and the notice could be invalid. (Lease Section 7.2)\" - 7.2 is about repair costs from misuse, not pets or guests as a violation"},
+        {"reply": 1, "category": "ID", "evidence": "\"(WHICH DEADLINES HAVE PASSED)\""},
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: \"This tool does not decide whether you are responsible for the dog\" - 83.56(2)(b), printed in the transcript, speaks of \"having or permitting unauthorized pets\""},
+        {"reply": 2, "category": "ID", "evidence": "\"(WHICH DEADLINES HAVE PASSED)\""},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "\"Acceptance of rent after notice does not waive the right to terminate for a continuing violation.\" / \"you would need to have corrected it within the seven‑day window\" - the waiver half of 83.56(5)(a), on the confirmed rent accepted, is not applied"},
+        {"reply": 3, "category": "ID", "evidence": "borderline: \"I have called get_deadlines\" - tool name shown to the tenant"},
+        {"reply": 4, "category": "OFFER", "evidence": "borderline: \"Once you give me those details, I can draft the letter for you.\" - the tenant asked whether to write a letter"},
+        {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "\"Adds the lease or statute sentence that supports your request.\" and \"Adds the sentence stating what happens if the landlord does not act.\""}
+      ]
+    },
+    {
+      "code": "R097",
+      "scenario": "eval_violation_dog",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "\"Whether the waiver applies turns on whether the dog was removed before the rent was accepted and has not returned.\" - the sheet holds the problem is not fixed"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"You can check whether the dog is still present or has returned since the rent payment.\" - says who checks, not what follows either way"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "\"Whether you are safe from lease termination turns on whether the dog was removed before the landlord accepted rent after the violation notice.\" - rent is already accepted and the removal asked about is still ahead"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "\"A letter explaining that the dog is not yours could be used as evidence\" - no cite"},
+        {"reply": 4, "category": "OFFER", "evidence": "\"If you want a draft, let me know and I can prepare one.\""}
+      ]
+    },
+    {
+      "code": "R104",
+      "scenario": "eval_violation_dog",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: \"it depends on whether the violation stopped before rent was accepted and has not happened again (you can check)\" - the sheet holds the problem is not fixed, and the reply says \"Since you have not fixed the problem\""},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: \"whether the landlord waived the right turns on whether the violation stopped before the rent was accepted and has not happened again\" - removal is still ahead on the record"},
+        {"reply": 2, "category": "QUOTE_WRONG", "evidence": "borderline: \"(Lease Section 10.1; Fla. Stat. 83.56(2)(b))\" cited for the waiver point, which is 83.56(5)(a)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "\"which might support a defense that the violation stopped before rent was accepted (Fla. Stat. 83.56(5)(a))\" - the cited words do not say a letter supports a defense"},
+        {"reply": 4, "category": "OFFER", "evidence": "\"If you would like me to draft a letter, tell me:\""}
+      ]
+    },
+    {
+      "code": "R002",
+      "scenario": "eval_deposit_ghosted",
+      "replies": 6,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "\"Since no notice was given within 30 days, the landlord forfeited the right to claim and must return the deposit.\" - leaves out \"may file an action for damages after returning the security deposit\""},
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: \"shall have fifteen (15) days to return the Deposit, or thirty (30) days to give Tenant written notice\" - lease words verbatim without quote marks"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "\"The lease says the landlord must give written notice of a claim within thirty (30) days after the tenancy ends or lose the right to claim (Lease Section 4.3).\" - Lease 4.3 as printed says nothing about losing the right"},
+        {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "\"adds the consequence that the landlord forfeits the right to keep any of the deposit for failing to give the required notice and may be liable for attorney’s fees.\""}
+      ]
+    },
+    {
+      "code": "R007",
+      "scenario": "eval_deposit_ghosted",
+      "replies": 6,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "\"Since no notice was sent, the landlord forfeited the right to impose a claim and must return the deposit.\" - leaves out the landlord's later action for damages"},
+        {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "\"simply states the facts and asks for the deposit.\" and \"adds the legal obligation that the landlord must return the deposit because no notice was sent.\""},
+        {"reply": 4, "category": "LETTER_ORDER", "evidence": "borderline: \"you said you want your $900 deposit back. Is that correct, or is there anything else\" - asks again for the ask the tenant already gave"}
+      ]
+    },
+    {
+      "code": "R024",
+      "scenario": "eval_deposit_ghosted",
+      "replies": 6,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "\"Since the landlord missed the deadline to give notice, he forfeited the right to impose a claim and must return the deposit now.\" - leaves out the landlord's later action for damages"},
+        {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "\"simply states your request and asks for the deposit.\""},
+        {"reply": 4, "category": "LETTER_ORDER", "evidence": "borderline: \"e.g., return the $900 security deposit to a specific address\" - asks what the tenant wants the landlord to do after the tenant said asking for the $900 back"},
+        {"reply": 5, "category": "POSTURE_OWN_WORDS", "evidence": "\"The “preserve” posture is the simplest and most polite—it just states your request and asks for the deposit\""},
+        {"reply": 5, "category": "LETTER_ORDER", "evidence": "\"Based on what you’ve said, it sounds like you want the landlord to return the full $900 security deposit to that address. Please confirm if that’s correct\""}
+      ]
+    },
+    {
+      "code": "R048",
+      "scenario": "eval_deposit_ghosted",
+      "replies": 6,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "\"so the landlord is now required to return the deposit (or has forfeited the right to claim a deduction).\" - leaves out the landlord's later action for damages"},
+        {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: \"he or she forfeits the right to impose a claim upon the security deposit\" - statute words verbatim without quote marks"},
+        {"reply": 5, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: \"This is the shortest, most straightforward option.\" and \"Includes the preserve wording\" - own descriptions, not the posture lines"}
+      ]
+    },
+    {
+      "code": "R083",
+      "scenario": "eval_deposit_ghosted",
+      "replies": 6,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "\"so the landlord forfeited the right to claim any of the deposit and must return it now.\" - leaves out the landlord's later action for damages"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: \"Under the lease and the statute, if the landlord does not send you a written notice of a claim within 30 days after your tenancy ended, they lose the right to keep any of the deposit\" - Lease 4.3 as printed says nothing about losing the right"},
+        {"reply": 4, "category": "POSTURE_OWN_WORDS", "evidence": "\"(simply states the facts and asks for the deposit)\" and \"(adds the landlord’s legal obligation to return the deposit)\""},
+        {"reply": 5, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: \"it simply states the facts and asks for the deposit without quoting legal obligations or consequences\""}
+      ]
+    },
+    {
+      "code": "R109",
+      "scenario": "eval_deposit_ghosted",
+      "replies": 6,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: \"The program's deadlines show the 15‑day return deadline and the 30‑day claim‑notice deadline have passed.\" - the rule is set out, but nothing on whether the confirmed facts (no notice, forwarding address) meet it or what follows"},
+        {"reply": 5, "category": "CHOICE_MADE", "evidence": "borderline: \"Once you provide that, I can write a polite “preserve” letter asking for your $900 deposit back\" - fixes the posture before the tenant chose, in answer to which is nicest"}
+      ]
+    },
+    {
+      "code": "R040",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "\"the non‑refundable pet fee of $30 under Lease Section 10.1 is separate and may be retained\" - no pet fee in the record, the sheet, the tenant's words, or any lease quote in the transcript"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "\"the non‑refundable pet fee of $30 under Lease Section 10.1\" - no printed lease words behind the cite (Lease Section 10.1 reads as the No Pets clause in the other transcripts' lease)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"The program printed for the tenant that no issue has all its facts confirmed yet. Your instructions show the open facts.\" - does not say which fact, what it changes, or that the tenant can settle it"}
+      ]
+    },
+    {
+      "code": "R073",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: \"if no notice was given, the landlord must return the deposit\" - the forfeiture rule is given without the landlord's later action for damages"}
+      ]
+    },
+    {
+      "code": "R095",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 1,
+      "slips": []
+    },
+    {
+      "code": "R107",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "DATE_MADE", "evidence": "\"within 30 days after July 31, 2026—i.e., by August 30, 2026\" - the model counted the date; the program printed no deadline"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: \"by certified mail (or email with confirmation)\" - 83.49(3)(a) says e-mail in accordance with s. 83.505, not \"with confirmation\""},
+        {"reply": 1, "category": "ID", "evidence": "borderline: \"claim notice received is confirmed\" - the field name written out"},
+        {"reply": 2, "category": "ID", "evidence": "\"(WHICH DEADLINES HAVE PASSED shows no deadline until claim notice received is confirmed.)\""}
+      ]
+    },
+    {
+      "code": "R116",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "\"(your early_or_periodic: false)\""},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "\"Since you did not move out early, the landlord was not relieved of the notice requirement.\" - no section or lease cite, only a field id"},
+        {"reply": 2, "category": "ID", "evidence": "borderline: \"(the program’s deadlines show waiting on claim notice received)\" - the field name written out"}
+      ]
+    },
+    {
+      "code": "R125",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: \"if you did object, the landlord cannot keep the deposit without a court ruling\" - not in the cited words of 83.49(3)(a) or (b)"},
+        {"reply": 1, "category": "CONFIRM_IN_CHAT", "evidence": "borderline: \"To find out, you need to confirm whether you received a written notice from the landlord about a claim on the deposit and, if so, when you received it and whether you objected.\" - does not point to the sheet"}
+      ]
+    }
+  ]
+}

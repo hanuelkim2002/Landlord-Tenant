@@ -3,7 +3,7 @@
 The working list. Move an item to CHANGELOG.md when it is done, with the date. Reorder freely. Keep the
 "Open questions" section for things that need a decision before code is written.
 
-## What the tool knows (the author's decision of 2026-10-04; do these first, in order)
+## What the tool knows (the author's decision of 2026-10-04)
 
 After items 72 to 77 the author asked for a general theme, not fixes aimed at the example that showed each one
 (an AC): the chatbot must be aware of what it knows and does not know, and of whether that changes what the tenant
@@ -12,6 +12,8 @@ can do (README, Purpose and non-negotiables). Seen on 2026-10-04: "the lease doe
 16 clauses the profile holds while the lease had the clause; and ending the lease over an AC shown as not settled
 on the statute alone while the lease's Article 7.2 promised the repair. Rule pairs alone did not change such
 behavior (items 54, 76); what the program computed did (options, deadlines). So the knowledge is computed by code.
+Items 81 to 85 were done 2026-10-04 and 05 (CHANGELOG; the eval in `docs/evals/2026-10-04-know/`). What is left here
+is the author's.
 
 84. For the author: check the options' gates in all ten playbooks against `statutes/` (written 2026-10-04, items
     72, 81, and 84; CHANGELOG says what each holds), then sign off as for item 2. In repair_not_made: whether a
@@ -24,10 +26,13 @@ behavior (items 54, 76); what the program computed did (options, deadlines). So 
     disturbance can end the tenant's lease only through a lease promise. A limit to decide on: wants_to_leave_early's
     fee "no more than 2 months' rent" is left to the tenant to check, though both amounts are on the record (the
     rent may come from the lease's words); a computed comparison would make it known.
-85. Eval: a story per state where the deciding point is in that state (a fact the tenant has not given, a lease
-    clause the profile does not hold but the lease has, a lease that has no such clause, a local code, an open
-    question, law outside the tool), across playbooks; a rubric category for a gap stated as a fact and for an
-    unknown not tied to what the tenant can do; then a full eval and a blind scoring.
+86. For the author, from the eval of items 81 to 85 (`docs/evals/2026-10-04-know/`): a lease clause the tool has read
+    whose words plainly cover the problem (the test lease's 7.2, "Landlord shall repair the heating,
+    air-conditioning ...") still leaves the lease's way of the duty condition "not known yet: the sheet asks" until
+    the tenant confirms it; in one AC run the model searched the lease, found 7.2, and treated the duty as met ("the
+    lease duty exists") against the program's state. Decide whether the tenant's confirmation stays the only way a
+    lease clause decides a condition, or whether a clause the tool has read can (and then how code, not the model,
+    would read it).
 
 ## Applying the law
 
@@ -68,7 +73,9 @@ lease clause pasted), so an answer cites and the program prints the cited words.
     83.64(1) cited to 83.64(1)(a)). About 12 are false: a quote takes the cite next to it in the prose as its
     source, so a case's, the lease's, or the tool's words, or a phrase of 83.60 followed by "83.51(1)" in the
     reply, are checked against the wrong section (`citations.quoted_passages`). An option: a quote cited to a
-    section it is not in, but word for word in what the model was given, is not flagged for the section.
+    section it is not in, but word for word in what the model was given, is not flagged for the section. Since
+    `search_lease` (item 82) more lease words are quoted beside statute cites: in the eval of 2026-10-04 quote cautions
+    rose 8 to 19, among them "If Landlord accepts Rent from Tenant..." (Lease 2.4) checked against 83.58.
 71. What the blind scoring of 2026-10-03 left (`docs/evals/2026-10-03-blind/`; 36 of 115 legal answers applied
     well, against 21 of 103 on 2026-10-02): rules restated without their quote (46.5, unchanged), conditions
     applied wrong (30.5, unchanged; item 63 holds the ones for the author), quotes without marks (26) and facts
@@ -82,6 +89,11 @@ lease clause pasted), so an answer cites and the program prints the cited words.
 ## Harness and code
 
 Code-side checks and bookkeeping that hold whatever the model does. Ahead of model behavior.
+
+87. Eval checks that count a right answer as a slip (eval of 2026-10-04, items 81 to 85): the dog story's must_not
+    "you (are|will be) safe" matches "Whether you are safe turns on ..." (3 of 3 runs after, 1 before); the lease
+    absence screen (`dev/eval.py`, `LEASE_ABSENT`) counts a reply repeating what the tenant confirmed ("your lease does
+    not say the landlord repairs this kind of problem", 3 mold runs). Narrow both.
 
 1. Clocks `compute_deadlines` cannot compute yet: (a) court business days are done for 83.56(3) in the
    Eighth Judicial Circuit, 2026 and 2027; other circuits need their own memoranda (add a county's circuit
@@ -185,6 +197,16 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     has no time limit, so a stalled gateway would spin forever.
 
 ## Model behavior (later)
+
+88. Prompt parts named and ids written rose with items 81 to 84 (eval of 2026-10-04): turns with a prompt part's name
+    8 to 15, mostly "(WHAT THE STATUTE DOES NOT SETTLE)" written as a source (12 turns, 2 before); field ids 9 to 17;
+    the blind scorers' ID 15.5 to 24.5 (firm 12.5 to 21.5). The options and the part of what the tool does not know
+    point to the other parts by name. Also the options' own plain words put in quote marks (the dog story: "the
+    violation did not continue after...", 3 quote cautions in 3 runs).
+89. A lease searched and then misread (eval of 2026-10-04): "The lease does not state a specific late-fee amount; it
+    only mentions late charges in ... Lease Section 3.4" (3.3 sets $75); "The lease does not provide a specific
+    holdover penalty" (15.1 sets double rent); "the lease does not forbid it" with no search (a letter, the dog story).
+    The blind scorers' firm GAP_AS_FACT fell 21.5 to 5.5; these are most of what is left.
 
 Slips seen in live runs and not fixed yet. Rule numbers are the current rules (version F, adopted
 2026-10-01). Items 4 to 23, logged under earlier rule sets, were taken off on 2026-10-01: most are now

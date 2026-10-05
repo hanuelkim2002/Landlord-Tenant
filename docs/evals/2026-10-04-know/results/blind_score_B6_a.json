@@ -1,0 +1,175 @@
+{
+  "scorer": "B6_a",
+  "runs": [
+    {
+      "code": "R003",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: the notice was delivered on 2026-09-28 (taped to your door), stated the payment date as 2026-10-01, demanded $1,175, your monthly rent is $1,100, you confirmed rent is unpaid, you paid part of the rent after the notice but the landlord gave no receipt, and no eviction case has been filed yet."},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: it remains open for you to verify the notice's exact wording and any lease provisions about late fees (the lease unknown is handed to the tenant, not tied to the 'lease calls it rent' reading, and the lease search tried only one wording)"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: you could argue the notice is defective and that the landlord must cure the deficiency before dismissal (see 83.60(1)(a)) (83.60(1)(a) speaks of a deficiency in a notice or pleadings; the words do not make a missing receipt a notice defect)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: you still have the option to pay the remaining balance (if you wish to avoid any further notice) or to wait and see (no cite behind it; also at odds with the reply 1 statement that the pay option is closed)"}
+      ]
+    },
+    {
+      "code": "R036",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "the sections the tool has read do not mention a late fee ... since your lease does not call the late fee rent (no lease search made; the lease holds a late charge clause in Section 3.3)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Thus, whether the landlord may include a late fee depends on how the open question is resolved. (no word on who settles it or what a noncompliant notice does for the tenant)"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "borderline: After accepting partial rent, the landlord must either give you that receipt, place the amount in the court registry when filing an action for possession, or post a new 3-day notice (leaves out the statute's condition that the partial rent was accepted after posting the notice)"}
+      ]
+    },
+    {
+      "code": "R054",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "you would only have to move out if the landlord obtains a court order for possession. (Lease Section 4.3 shows the landlord's notice requirement; ... (no cite behind the court-order rule; the printed Section 4.3 words are about the deposit, forwarding address and early move-out, not a landlord notice)"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "your notice was taped to your door, which the lease allows as a delivery method (nothing in the record or the printed lease words says so)"},
+        {"reply": 3, "category": "ID", "evidence": "the statute leaves open how far the notice may differ from that form (WHAT THE STATUTE DOES NOT SETTLE)."},
+        {"reply": 3, "category": "QUOTES_ONLY", "evidence": "Thus, based on the lease and statute we have, we cannot say yes or no. (rule set out, nothing on the tenant's $1,175 against $1,100 or what follows)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "Whether the notice may also demand charges such as a late fee is not settled ... we cannot say yes or no. (no readings, nothing on what it changes for the tenant or who can settle it)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: The tool found nothing on a late fee in your lease's text. (only the wording 'late fee' was searched; the tool's own result said to try another wording; the lease holds Section 3.3 Late Charge)"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "(Lease Section 4.3 shows the notice requirement; your notice was taped to your door, which the lease allows.)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "Lease Section 4.3 shows the notice requirement (cite whose printed words do not say it)"}
+      ]
+    },
+    {
+      "code": "R074",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "(see WHAT THE STATUTE DOES NOT SETTLE, notice_received_nonpayment, readings); (partial_payment_receipt false); (eviction_action_filed false)"},
+        {"reply": 1, "category": "CONFIRM_IN_CHAT", "evidence": "borderline: You would need to examine the notice's exact wording, confirm whether you sent a maintenance-related notice and waited seven days, and check whether the landlord has filed an eviction case (the sheet already holds eviction filed = False)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: and if the lease itself calls the extra charge rent ... the tool cannot decide if the notice is valid on that basis. (what the lease says about the late charge is left unresolved, no one named to settle it; the lease holds a late charge clause in Section 3.3)"},
+        {"reply": 4, "category": "ID", "evidence": "or has filed an eviction action (eviction_action_filed false)"}
+      ]
+    },
+    {
+      "code": "R111",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You confirmed the notice was delivered on 2026-09-28, stated payment date 2026-10-01, demanded $1,175, and your monthly rent is $1,100. You also confirmed you paid some rent after the notice but did not receive a receipt."},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "you confirmed no receipt, but it is not known yet whether the partial rent was accepted after the notice (the sheet confirms the partial payment was made and accepted after the notice was delivered)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: If the notice is defective or the period miscalculated, the landlord may not be able to end the rental agreement on this notice. (consequence of a defect with no cite; 83.60(1)(a) lets the landlord cure)"},
+        {"reply": 2, "category": "ID", "evidence": "The program printed the tenant's deadlines: 1 dated, for ['notice_received_nonpayment']."},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "The lease does not state a specific late-fee amount; it only mentions 'late charges' in the section on returned payments (Lease Section 3.4). ... Since your lease does not characterize a late fee as rent (the lease holds Section 3.3 Late Charge, $75 plus $10 a day; the search tried 'late fee' and 'fee' only)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: the notice likely may not include it, but this point remains unsettled (leans to one reading of the open notice_form question)"}
+      ]
+    },
+    {
+      "code": "R114",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: the notice was delivered on 2026-09-28, taped to your door, stated the payment date as 2026-10-01, demanded $1,175, your monthly rent is $1,100, you have paid partial rent but received no receipt, and no eviction case has been filed."},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "you are not required to leave unless a court orders possession; ... you could still avoid eviction by paying the full rent due before the landlord files a suit (no cite behind either rule; the reply also ends by saying the text does not answer whether you must move out)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "the parts of your lease the tool has read do not mention a late fee ... because your lease does not characterize the late fee as rent (no lease search; the lease holds Section 3.3 Late Charge)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Under the other reading, only charges that the lease itself calls rent may be demanded as rent; because your lease does not characterize the late fee as rent, the notice would also be defective. (both readings end at 'defective', so the open notice_form question is made settled, and the second reading is reworded)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "the landlord has not yet satisfied any of the three required steps (no receipt, no registry deposit because no suit has been filed, and no new 3-day notice) (whether a new 3-day notice was posted is not known)"},
+        {"reply": 4, "category": "QUOTE_UNMARKED", "evidence": "borderline: (2) place the amount of partial rent accepted from the tenant in the registry of the court upon filing the action for possession, or (3) post a new 3-day notice reflecting the new amount due (statute wording reproduced without quote marks)"}
+      ]
+    },
+    {
+      "code": "R023",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "(notice_states_termination_intent: false) ... (rent_paid_since_known: true) ... (problem_is_structure_or_plumbing: false) ... (lease_promises_repair: missing)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "deliver a new written notice to the landlord (by hand, certified mail, or email with confirmation) ... (Lease Section 22.1) (the printed 22.1 allows email with confirmation only for routine (non-statutory) communications)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "the waiver question is unsettled ... ensure the duty exists and that paying rent did not waive your right (no readings, nothing on what follows either way)"},
+        {"reply": 3, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE); (problem_is_structure_or_plumbing: false); (notice_states_withholding_intent: false)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "Deliver a written notice to the landlord (by hand, certified mail, or email with confirmation) ... (Lease Section 22.1) (email is for routine (non-statutory) communications only)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: If a code does require the repair, then the condition for the rent-withholding defense is met (leaves out that the noncompliance must be material, an open question)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "Ensure you have not waived the defense (the statute does not settle whether paying rent while knowing of the problem waives this defense). (no readings, nothing on what it changes)"}
+      ]
+    },
+    {
+      "code": "R030",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "whether that waives your right to terminate is not settled by the statute. (no readings, nothing on what follows either way, though the reply tells the tenant to send a new notice)"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: deliver a new written notice to the landlord (by email, certified mail, or another method allowed by the lease) (no lease search of how notices may be sent; the lease allows email only for routine communications)"},
+        {"reply": 3, "category": "OPTION_BEFORE_OPEN", "evidence": "So: to stop paying rent, you must first deliver a new written notice ... Additionally, whether the AC repair duty is a statutory duty under 83.51(1) depends on whether a building, housing, or health code ... (the gate on the option comes after its steps)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "whether paying rent with knowledge waives your right to withhold is not settled by the statute. (no readings, nothing on what follows either way)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: if the landlord does not repair the AC within that period, you may then withhold rent and raise it as a defense (leaves out that the noncompliance must be material)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: (by email, certified mail, or another method allowed by the lease) (same as reply 1)"}
+      ]
+    },
+    {
+      "code": "R045",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 3,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: Your lease requires notices to the landlord to be in writing and delivered by hand, certified mail, return receipt requested, or a nationally recognized overnight courier, or by email with confirmation of receipt for routine (non-statutory) communications (Lease Section 22.1). (lease wording reproduced nearly word for word, no quote marks)"},
+        {"reply": 3, "category": "RECITED", "evidence": "- You confirmed you delivered a written notice by email on 2026-09-03. - You confirmed that notice did not state you intend not to pay rent ... - You confirmed you have paid rent since you knew of the problem. - You confirmed no eviction case has been filed."}
+      ]
+    },
+    {
+      "code": "R061",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "If the landlord materially fails to comply with 83.51(1) within 7 days ... you may terminate the lease (Fla. Stat. 83.56(1)). / it depends on whether the AC failure is a breach of the landlord's duty under Fla. Stat. 83.51(1) (leaves out 'or material provisions of the rental agreement', the lease route that Article 7.2 may open)"},
+        {"reply": 1, "category": "RECITED", "evidence": "You confirmed the AC stopped working on 2026-09-01, you delivered a written notice by email to the leasing office on 2026-09-03, the notice did not state that you intend to end the lease, you have paid rent ... (then restated again in the bullets)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "building, housing, or health codes the tool does not hold ... are not settled by the tool (no one named who can settle the code question; waiver given with no readings)"},
+        {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "borderline: The lease says the landlord shall repair the heating, air-conditioning, electrical, and plumbing systems, except when the need for repair results from your misuse, neglect, or negligence (lease wording nearly word for word, no quote marks)"},
+        {"reply": 3, "category": "RECITED", "evidence": "You confirmed the AC stopped working on 2026-09-01, you delivered a written notice by email ... the notice did not state that you intend to withhold rent, you have paid rent ... you did not cause the problem, and no eviction case has been filed. (then restated in the bullets)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "building, housing, or health codes the tool does not hold ... whether paying rent waived your right are not settled by the tool. (no one named who can settle the code question; waiver given with no readings)"}
+      ]
+    },
+    {
+      "code": "R112",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 2,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: The lease requires notices to be sent by hand, certified mail, return receipt requested, or overnight courier, or by email with confirmation of receipt for routine communications (Lease Section 22.1). (lease wording nearly word for word, no quote marks)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "it is not yet known whether the air-conditioning system is covered by that duty (it depends on any applicable building, housing, or health code, which the tool does not have) (no one named who can settle it, e.g. the code enforcement office; waiver 'not settled per the statute' with no readings)"},
+        {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: Notices to the landlord must be sent by hand, certified mail, return receipt requested, or overnight courier, or by email with confirmation of receipt for routine communications (Lease Section 22.1)."}
+      ]
+    },
+    {
+      "code": "R113",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "If the landlord materially fails to comply with s. 83.51(1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement (Fla. Stat. 83.56(1)). (whole statute sentence, no quote marks)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "whether the landlord had a duty to fix the AC under 83.51(1) or the lease is not known yet; ... whether paying rent after knowing of the problem waived your right ... is not settled. (no one named who can settle the duty question, waiver without readings)"},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: Your facts: the AC stopped working and does not cool; you delivered a written notice by email; the notice did not say you intend to end the lease; you have paid rent since you knew about the problem; the problem was not caused by you; the landlord said they would send someone but nobody came."},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "whether the landlord had a duty to fix the AC under 83.51(1) or the lease is not known yet (the 83.60(1)(b) defense reaches only a material noncompliance with 83.51(1), not a lease duty; reply 2 had already shown Article 7.2)"},
+        {"reply": 3, "category": "CASE_MISREAD", "evidence": "Cases on tenant's notice of landlord's noncompliance confirm that a written notice specifying the noncompliance and indicating the intention not to pay rent is required to raise the defense (K.D. Lewis ... 1038; Lakeway ... 951). (K.D. Lewis at 1038 is about damages for lost value of the premises needing the 83.56 notice; Lakeway at 951 is about a written complaint as a condition for constructive eviction; neither speaks of an intention not to pay rent, and nothing on how alike the facts are)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "whether the landlord had a duty to fix the AC under 83.51(1) or the lease is not known yet; ... whether paying rent after knowing of the problem waives your right to raise the defense is not settled. (no one named who can settle it, no readings)"},
+        {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: the tenant must have delivered written notice specifying the noncompliance and indicating the intention not to pay rent by reason thereof (statute wording reproduced without quote marks)"}
+      ]
+    }
+  ]
+}

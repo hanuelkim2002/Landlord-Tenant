@@ -1,0 +1,149 @@
+{
+  "scorer": "B3_b",
+  "runs": [
+    {
+      "code": "R028", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "it depends on whether the amount is no more than 2 months' rent and whether the lease asks for no more than 60 days' notice before early termination (the 83.595(4) rule is stated with no cite; the only cites nearby are 83.682(1), Lease 4.3 and 83.595(1)-(3))"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "The lease does require seven days' written notice before vacating early (Lease Section 4.3), so the option is closed; however, giving that notice is still required (the tenant has not given notice and the deadline is upcoming, so the option is not closed)"},
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: on a 'how much' question, 'you may owe the $2,100 fee you confirmed' with nothing on the rent and damages charges that 83.595(4)(a) adds to the fee"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: If you do not give the notice, the landlord may be relieved of that deposit-notice requirement but may still seek damages after returning the deposit (the 'sue after returning the deposit' half belongs to the landlord's missed 30-day notice, not to the tenant's missing 7-day notice)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: (You are not a servicemember, so the 30-day military-notice rule does not apply.) (rule referred to with no cite in this reply)"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "Whether the addendum was executed at the same time as the lease is not known yet; you can check when you signed it relative to the lease. (the sheet question and the tenant's own words say the addendum was signed when the lease was signed)"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "If both conditions are met, the fee may be enforceable under the statute (only the amount and same-time signing are named; the 60-day notice condition of 83.595(4) is left out)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "borderline: In Olen Properties Corp. v. Moss, the court said a liquidated-damage provision of three months' rent ... (no word that the case read the 2007 statute and a default clause in the lease body, versus the tenant's separate addendum at two months' rent)"}
+      ]
+    },
+    {
+      "code": "R063", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your lease shows a fixed term from August 1, 2026 to July 31, 2027 (Lease Section 2.1), monthly rent of $1,050 (Lease Section 3.1), and a security deposit of $1,050 (Lease Section 4.1). You confirmed you have signed an early termination addendum ... You have not given the landlord written notice of leaving."},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "the remaining lease term (approximately seven and a half months)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: you would owe $2,100 only if the addendum satisfies the notice requirement and you give the required notice before vacating (83.595(4) makes no such condition on the tenant's giving notice); also option (3) 'unless the landlord reletts the unit' mixes in option (2)"},
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "If the landlord chooses option (4), you would owe $2,100 only if ... (leaves out 83.595(4)(a): rent and other charges through the end of the month the landlord retakes possession, and damages)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "The parts of your lease the tool has read do not specify a notice period for an early termination fee; the rest of your lease may. (no word on what follows if the lease asks 60 days or less, or more, nor that the tenant can check the lease)"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: This tool has no cases on that. (the tool's get_cases later returns two cases on early termination fees)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "The lease does not specify a different notice period for an early termination fee (stated flat, with no lease search, and after reply 1 hedged the same point)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "At this point the landlord cannot keep any of your deposit ... After you move out, whether they can retain any portion will turn on whether they comply with the 30-day notice requirement (leaves out 83.49(5): the landlord is relieved of that requirement if the tenant gives no 7-day notice, which the tenant has not yet given)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "it does not automatically allow the landlord to keep the deposit, but the deposit may still be applied to any actual damages (e.g., unpaid rent, damage beyond normal wear and tear) (no cite)"},
+        {"reply": 3, "category": "RECITED", "evidence": "borderline: You have confirmed you plan to move out on 2026-12-15 and you have not yet given the landlord written notice of leaving. (facts listed back, and the lease deposit clause re-worded)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "Yes. In Olen Properties Corp. v. Moss, the court said a liquidated-damages provision that amounted to three months' rent was not allowed because it exceeded the statutory limit (the printed case rests on Lefemine and 83.595(1) under the 2007 statute, not a two-month limit; 'not barred by the rule in Olen' with no word on how unlike the facts are)"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "That amount is within the statutory cap of not exceeding two months' rent, so the fee itself is not barred (the 60-day notice condition of 83.595(4) is not applied)"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "you have not said whether you signed it when you signed the lease, so that fact is not known yet (the sheet question asks 'When you signed the lease, did you also sign a separate addendum' and the tenant answered True)"},
+        {"reply": 4, "category": "OVERCLAIM", "evidence": "borderline: If the addendum was signed together with the lease, the fee is likely enforceable"}
+      ]
+    },
+    {
+      "code": "R072", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "a landlord may charge an early termination fee if the lease requires no more than 60 days' notice and the tenant has signed a separate addendum agreeing to the fee (the 2-months'-rent cap is left out)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Seven days is no more than 60 days, so the notice condition is met. ... you can terminate early by paying the $2,100 fee (fee_notice_period settled, and the landlord's choice among the 83.595 remedies not given)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "You will also owe rent for the days you occupy the unit ... Dec 1-15 (83.595(4)(a) says rent accrued through the end of the month in which the landlord retakes possession)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "you would still owe the fee and rent for the time you remain in possession; the daily rate derived from your monthly rent (no cite behind either rule)"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "borderline: The exact rent amount for Dec 1-15 (the Dec 1 start is not in the record)"},
+        {"reply": 2, "category": "RECITED", "evidence": "Your lease says: \"If Tenant vacates or abandons the Premises before the end of the Term, Tenant shall give Landlord seven (7) days' written notice of the date of vacating\" ... The statute requires the same: \"...must give at least 7 days' written notice by certified mail or personal delivery ...\""},
+        {"reply": 3, "category": "ONE_SIDED", "evidence": "If the landlord misses that 30-day deadline, they forfeit the right to make a claim and must return the deposit (leaves out 'may file an action for damages after returning the security deposit')"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "the landlord cannot keep your deposit ... they must ... follow the statutory notice procedure (leaves out 83.49(5): no 7-day notice from the tenant relieves the landlord of the 83.49(3)(a) notice)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Your lease requires seven days' notice (Lease Section 4.3), so those conditions are met."},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "Unless you cause damage beyond normal wear and tear or owe unpaid rent ... the landlord would have no basis to claim; they must prove a valid deposit claim (no cite)"},
+        {"reply": 3, "category": "RECITED", "evidence": "You confirmed you will move out on 2026-12-15, you have not yet given the landlord the required seven-day written notice, and you said the reason for leaving is not the landlord's failure to repair."},
+        {"reply": 3, "category": "OVERCLAIM", "evidence": "the landlord must return your $1,050 deposit after move-out unless they send you a timely notice ...; they must return the full deposit regardless of any other claims"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: owe unpaid rent (for the days you actually occupy the unit) (83.595(4)(a): rent through the end of the month the landlord retakes possession)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "Judges have said a fee that exceeds two months' rent is not allowed ...; In Olen ... the court held a liquidated-damages provision of three months' rent invalid because it exceeded the statutory limit and violated the lease-waiver rule (the printed case says Lefemine and 83.595(1) under the 2007 statute; no 'statutory limit' or 'lease-waiver rule'; no word on how alike the facts are)"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "a judge would likely say the fee is allowed because it meets the statutory cap and the addendum requirement (the 60-day notice condition of 83.595(4) and same-time signing are left out)"},
+        {"reply": 4, "category": "OVERCLAIM", "evidence": "Thus, a judge would likely say the fee is allowed"}
+      ]
+    },
+    {
+      "code": "R100", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Your lease requires seven days' notice before vacating (Lease Section 4.3), which satisfies the notice condition. ... Thus this option is open"},
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "Thus this option is open; the possible cost would be the $2,100 fee. (leaves out 83.595(4)(a): rent and charges through the end of the month, and damages)"},
+        {"reply": 3, "category": "ONE_SIDED", "evidence": "the landlord forfeits the right to impose any claim against the deposit and must return the full amount to you (leaves out 'may file an action for damages after returning the security deposit')"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Your lease already requires a seven-day notice before vacating (Lease Section 4.3), which satisfies the notice condition."},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: Regardless of notice, the landlord may also elect to charge the early-termination fee of $2,100 under the addendum, which could absorb or exceed the deposit amount (a landlord who misses the 30-day claim notice may not set off against the deposit)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "Thus a judge has said a fee like that (exceeding two months' rent or not meeting the addendum requirements) isn't allowed. (Olen struck a three-month default clause under the 2007 statute; neither case says that; no word on how alike the facts are)"},
+        {"reply": 4, "category": "QUOTES_ONLY", "evidence": "the three bullets on Olen and Wilson, then 'Thus a judge has said a fee like that ... isn't allowed' with nothing on whether the tenant's $2,100 addendum meets the rules"}
+      ]
+    },
+    {
+      "code": "R103", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "The addendum was signed at the same time as the lease, so the condition for enforceability is met. If the addendum is enforceable, the landlord may charge you $2100 (the 2-months'-rent cap and the 60-day notice condition of 83.595(4) are never applied)"},
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "borderline: the landlord may charge you $2100 as an early termination fee (no word on the rent and charges 83.595(4)(a) adds)"},
+        {"reply": 3, "category": "ONE_SIDED", "evidence": "they forfeit the right to impose a claim and must return the deposit (leaves out 'may file an action for damages after returning the security deposit')"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "the deposit is not yet due and the landlord cannot keep it until after you move out and they comply with the notice requirement (leaves out 83.49(5): no 7-day notice from the tenant relieves the landlord of that requirement)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "A judge has said a fee that exceeds two months' rent is not allowed (Olen Properties Corp. v. Moss, 984 So. 2d 558, 560). (Olen struck a three-month default clause under the 2007 statute, not on a two-month cap)"},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "relies on Olen alone and leaves out Wilson v. Terwillinger in the same get_cases result, which enforced an addendum fee"}
+      ]
+    },
+    {
+      "code": "R110", "scenario": "eval_leave_early_family", "replies": 4, "law_replies": 4, "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "If you pay the early termination fee set in the addendum you signed, the cost would be $2,100. (leaves out 83.595(4)(a): rent through the end of the month and damages)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "it does not exceed the limit allowed for such a fee under Fla. Stat. 83.595(4) (the 60-day notice condition is not applied)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "you may avoid losing your deposit for lack of notice ... If you leave without giving the required notice, the landlord may retain your deposit (83.49(5) only relieves the landlord of the claim-notice duty and does not waive the tenant's rights to the deposit)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Seven days is no more than the sixty days the statute mentions for an early-termination fee, so the lease's notice period satisfies that condition."},
+        {"reply": 3, "category": "QUOTE_WRONG", "evidence": "If the landlord fails to give that notice within the thirty-day period, they forfeit the right to keep any of the deposit (Fla. Stat. 83.49(3)(b)) (the forfeiture is in 83.49(3)(a))"},
+        {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "borderline: Your lease says the rent is ONE THOUSAND FIFTY AND 00/100 DOLLARS ($1,050.00) per month (Lease Section 3.1). (lease words word for word, no quote marks)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: charges for damages to the dwelling unit beyond ordinary wear and tear (83.595(4)(a) does not say 'beyond ordinary wear and tear'); the landlord would then need to prove a valid claim ... for example by suing you (no cite)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "under Olen, only amounts over two months' rent have been struck down (Olen struck a three-month default clause under the 2007 statute; the reply never says which statute version it read)"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "so it does not exceed the statutory cap; under Wilson, such an addendum is enforceable (Wilson turns on same-time signing; the 60-day notice condition is also left out)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "Thus, a judge has not said a fee of two months' rent is not allowed (the tool holds two cases; it cannot say what no judge has said)"}
+      ]
+    },
+    {
+      "code": "R008", "scenario": "eval_know_violation_waterbed", "replies": 2, "law_replies": 1, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: The parts of your lease the tool has read do not mention waterbeds; the rest of your lease may. (no lease search made; no word on who can settle it or what follows either way)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: it was handed to you, which is an allowed delivery method (Lease Section 22.1) (22.1 is where and how the tenant sends notices to the landlord)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "Whether having a waterbed is a violation that allows cure depends on your lease (83.56(2) ties cure to the nature of the noncompliance; no cite supports 'depends on your lease')"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: the parts of your lease the tool has read do not mention waterbeds, so the rest of your lease may. (no word on what follows if the lease does or does not)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: If you do not correct the waterbed violation within 7 days after the notice was delivered, the landlord may deem the lease terminated. (the 83.56(2) condition that the tenant materially fail to comply with 83.52, a material lease provision or reasonable rules is not applied, though the lease search shows nothing on waterbeds)"}
+      ]
+    },
+    {
+      "code": "R029", "scenario": "eval_know_violation_waterbed", "replies": 2, "law_replies": 1, "applied_well": 0,
+      "slips": [
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: Your lease does not mention waterbeds (the tool found nothing ...) ... If you do not fix it within 7 days, the landlord may terminate the lease after the period ends. (the lease gap is never tied to 83.56(2)'s condition of a material noncompliance with a lease provision, 83.52 or reasonable rules)"}
+      ]
+    },
+    {
+      "code": "R069", "scenario": "eval_know_violation_waterbed", "replies": 2, "law_replies": 1, "applied_well": 0,
+      "slips": [
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: The lease does not mention waterbeds (the tool found nothing on that in your lease's text). (never tied to the 83.56(2) condition of a material noncompliance with a lease provision, 83.52 or reasonable rules)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: if it is not curable, the notice offering cure may be defective and the landlord may not rely on it to end the lease (neither printed paragraph says this)"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: Since you have not corrected the violation (you confirmed it remains) and the landlord has not accepted rent after the notice (you confirmed they have not) (confirmed facts listed back, not tied to a stated rule)"}
+      ]
+    },
+    {
+      "code": "R085", "scenario": "eval_know_violation_waterbed", "replies": 2, "law_replies": 1, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: The lease clauses the tool has read do not mention waterbeds. (no lease search made, and no word that the rest of the lease is unread)"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: You got a notice on 2026-09-29 handed to you that says you have a waterbed and offers 7 days to correct; you have not corrected it yet ... you have not corrected yet"},
+        {"reply": 2, "category": "ID", "evidence": "see WHAT THE STATUTE DOES NOT SETTLE, issue notice_received_violation, open question about whether the violation is like 83.56(2)(a)'s examples"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: The statute does not settle whether having a waterbed is a violation that denies the tenant a cure opportunity (no word on what follows for the tenant if it is such a violation)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: Whether the landlord can end the lease over this is closed unless you fail to correct ...; The notice offers cure, so the rule's 7-day cure period applies; The landlord cannot end the lease yet (then calls the same question not settled)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "they may do so only if you do not correct the violation within the 7-day period (the 83.56(2) condition of a material noncompliance with a lease provision, 83.52 or reasonable rules is not applied; the lease's silence on waterbeds is not mentioned in this reply)"}
+      ]
+    },
+    {
+      "code": "R094", "scenario": "eval_know_violation_waterbed", "replies": 2, "law_replies": 1, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: The lease clauses the tool has read do not mention waterbeds; the rest of your lease may. (no lease search made; no word on who can settle it or what follows)"},
+        {"reply": 2, "category": "RECITED", "evidence": "You received a written notice on 2026-09-29 handed to you stating you have a waterbed in the unit, the notice offers you 7 days to correct it, you have not corrected the waterbed, you have not received a prior written warning about a similar issue, and the landlord has not accepted rent from you since the notice."},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: The notice was delivered by hand, which the lease allows for notices (Lease Section 22.1) (22.1 is where and how the tenant sends notices to the landlord)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: is not shown by the lease or statute (stated of the whole lease with no lease search; reply 1 had said the rest of the lease may)"}
+      ]
+    },
+    {
+      "code": "R117", "scenario": "eval_know_violation_waterbed", "replies": 2, "law_replies": 1, "applied_well": 0,
+      "slips": [
+        {"reply": 2, "category": "RECITED", "evidence": "Your facts: notice delivered 2026-09-29, handed to you, says you have a waterbed, notice offers cure, you have not corrected it, no prior written warning, landlord has not accepted rent after notice."},
+        {"reply": 2, "category": "ID", "evidence": "(see WHAT THE STATUTE DOES NOT SETTLE for notice_received_violation)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "the landlord may end the lease only if you fail to correct it within 7 days (the 83.56(2) condition of a material noncompliance with a lease provision, 83.52 or reasonable rules is not applied; the lease's silence on waterbeds is not mentioned in this reply)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: if it is not, the landlord may end the lease immediately after notice (the 83.56(2)(a) rule, stated with no cite to it)"}
+      ]
+    }
+  ]
+}

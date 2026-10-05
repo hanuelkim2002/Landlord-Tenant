@@ -1,0 +1,183 @@
+{
+  "scorer": "B5_b",
+  "runs": [
+    {
+      "code": "R017",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: the landlord may not simply take the money without your objection (83.49(3)(b) says that unless the tenant objects the landlord may deduct; the sentence reads reversed)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: Unless you object to the landlord’s claim or its amount within 15 days after you receive the notice, the landlord may deduct it (notice came by e-mail; no word on the 83.505(1) addendum condition)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: You must object in writing within 15 days after you receive the landlord’s notice (Fla. Stat. 83.49(3)(b)) (the printed (3)(b) words do not say in writing; that is in (3)(a)'s form)"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "If the landlord’s notice is defective, Malagon says the landlord loses the ability to use the deposit to cover that claim and must return the deposit (leaves out Durene's independent action for damages, the 'may file an action for damages after returning the security deposit' half, and Plakhov v. Serova)"},
+        {"reply": 5, "category": "CASE_MISREAD", "evidence": "Yes, judges have made landlords return the security deposit when they failed to give the required written notice of claim, regardless of whether the damage was pre‑existing or not. / If the notice was defective in form or service, Casey suggests the same forfeiture rule applies. (none of the cases speaks to pre-existing damage; Casey was an untimely notice, no word on how alike the facts are)"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "If that notice was not the required written notice (e.g., email without an addendum under § 83.505), then under Durene the landlord would forfeit the right to impose a claim on the deposit and must return it. (one reading of email_notice_conditions picked; the 83.505(6) reading is not given)"},
+        {"reply": 5, "category": "DATE_MADE", "evidence": "borderline: received the landlord’s notice September 21, 2026 (within 30 days) / so the notice is timely on its face (the model compared the dates itself)"},
+        {"reply": 5, "category": "OVERCLAIM", "evidence": "borderline: under these cases the judge would likely order the landlord to return the full deposit, even if the landlord claims the damage was pre‑existing"}
+      ]
+    },
+    {
+      "code": "R064",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "return the Premises in the same condition as at the Commencement Date, ordinary wear and tear excepted, broom‑clean, with carpets professionally cleaned, all personal property removed, all keys and remotes returned, and utilities left on through the date keys are returned (Lease Section 15.2) (lease sentence word for word, no quote marks)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: If you do not object, the landlord may deduct the $650 and remit the balance within 30 days after the notice (notice came by e-mail; no word on whether the 83.505(1) addendum was signed)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: If you object in writing within that period, the landlord may not deduct the amount unless a court later finds the claim proper. (not in the printed 83.49(3)(b) words)"},
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: The lease and statute text I have do not answer whether pre‑existing stains defeat a claim for carpet replacement or repainting (Lease 15.2, quoted in the same reply, speaks to it, and the reply had just applied it)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: you must object in writing within 15 days after receipt of the landlord’s notice (Fla. Stat. 83.49(3)(b)) (cite's printed words do not say in writing)"}
+      ]
+    },
+    {
+      "code": "R068",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "OFFER", "evidence": "(If you would like to explore case law on deposit claims, let me know and I can retrieve relevant cases.)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "If you object, you must do so in writing to the landlord’s address within that period (Fla. Stat. 83.49(3)(b)). (objection_form: picks the reading that only a writing sent to the address counts)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: if they were not, the landlord may deduct for damages beyond ordinary wear and tear (notice came by e-mail; no word on the 83.505(1) addendum condition)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: you must do so in writing to the landlord’s address within that period (Fla. Stat. 83.49(3)(b)) (printed (3)(b) words name neither writing nor an address)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: You have 15 days after you received the landlord’s notice to object in writing (Fla. Stat. 83.49(3)(b))"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "if the landlord does not give the required written notice within 30 days after tenancy ends, they forfeit the right to impose a claim on the deposit (Fla. Stat. 83.49(3)(a)) (leaves out 'may file an action for damages after returning the security deposit', Durene's independent-action point, and Plakhov v. Serova)"},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "The landlord’s notice was sent by e‑mail on 2026‑09‑18 and you received it on 2026‑09‑21 (record holds 9-18 only as the date printed on the notice; send date not confirmed)"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "borderline: whether e‑mail notice is valid without an addendum is not settled by the statute (83.505(1) does set the addendum condition; what is not known is whether one was signed)"},
+        {"reply": 5, "category": "UNKNOWN_UNTIED", "evidence": "borderline: whether e‑mail notice is valid without an addendum is not settled by the statute (does not say the tenant can settle it by checking whether an addendum was signed)"},
+        {"reply": 5, "category": "CASE_MISREAD", "evidence": "borderline: In Malagon v. Solari, the court affirmed that failure to give the required notice penalizes the landlord ... / If the notice is deficient, the landlord may forfeit the right to claim against the deposit under the rule above. (printed text shows no affirmance; no word on how alike late-notice cases are to an e-mail defect)"}
+      ]
+    },
+    {
+      "code": "R084",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "If you object in time, the landlord may not simply deduct the amount and must either return the deposit or file a lawsuit to justify the claim. (not in the printed 83.49(3)(b) words)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: If you object in time, the landlord may not simply deduct the amount... (notice came by e-mail; no word on the 83.505(1) addendum condition; nothing on what follows if no objection)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: You have 15 days after you received the notice to object in writing (Fla. Stat. 83.49(3)(b))"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "if it was sent within the 30 days, the landlord may impose a claim unless you object in writing within 15 days after receipt (Fla. Stat. 83.49(3)(b)) (notice came by e-mail; the required-notice condition under 83.49(3)(a) and 83.505 is left out)"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "borderline: Whether the landlord’s notice was timely turns on the date the notice was sent (its postmark or the e‑mail’s date), which you can check beside the last day of the 30 days (record shows receipt on 2026-09-21, before the program's 30-day last day, so timeliness is not open)"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "the judge can order the landlord to return the deposit and forfeit their right to make a claim against it (leaves out Durene's 'independent action for damages is immaterial' half and Plakhov v. Serova)"}
+      ]
+    },
+    {
+      "code": "R119",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "The landlord’s notice claims $650 for carpet replacement and repainting due to stains. / No, you are not required to allow the deduction for pre‑existing stains. (record holds the reason as carpet replacement and repainting only; stains pre-existing is not confirmed)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: You can object to this claim in writing within 15 days after you received the notice (Fla. Stat. 83.49(3)(b)) (cite's printed words do not say in writing)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: If you do not object in time, the landlord may deduct the amount but you may later sue for a refund (notice came by e-mail; no word on the 83.505(1) addendum condition)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: You must object in writing within 15 days after you receive the landlord's notice (Fla. Stat. 83.49(3)(b))"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "a landlord who fails to give the required notice of claim forfeits the right to impose a claim on the security deposit (only Durene given; leaves out its independent-action-for-damages half and Plakhov v. Serova)"},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "The landlord’s notice claims $650 for carpet replacement and repainting due to stains."},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "borderline: If you do not object in time, the landlord may deduct the amount but you may later sue for a refund (no word on the e-mail addendum condition)"},
+        {"reply": 5, "category": "CASE_MISREAD", "evidence": "borderline: If the landlord's claim is for pre‑existing damage and they fail to give proper notice, they may not be able to deduct from the deposit. (Durene was a late notice; no word on whether this tenant's notice fails or how alike the facts are)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "borderline: You can object to this claim in writing within 15 days after you received the notice (Fla. Stat. 83.49(3)(b))"}
+      ]
+    },
+    {
+      "code": "R120",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "The landlord’s claim is for carpet replacement and repainting because of stains. (the notice's reason on the record has no word on stains)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: The lease says notices required by Chapter 83 must be delivered by hand, certified mail, or a nationally recognized overnight courier ... (Lease Section 22.1) (22.1 is on how the tenant sends notices to the landlord; applied here to the landlord's notice to the tenant)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: If you did not sign such an addendum, the notice may not be the required written notice, and the landlord may have forfeited the right to impose a claim (Fla. Stat. 83.49(3)(a)). (only the forfeiture reading; the 83.505(6) reading is not given)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: If the notice is proper, you must object in writing to prevent the landlord from deducting the claim ... (Fla. Stat. 83.49(3)(b)) (cite's printed words do not say in writing)"},
+        {"reply": 2, "category": "ID", "evidence": "(see WHAT THE STATUTE DOES NOT SETTLE)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: You have 15 days after you receive the landlord’s notice to object in writing (Fla. Stat. 83.49(3)(b))"},
+        {"reply": 4, "category": "ID", "evidence": "you can record the communication using add_communication with sender \"tenant\", recipient \"landlord\", sent_on the date you send it, channel \"email\""},
+        {"reply": 4, "category": "OFFER", "evidence": "Once you send it, you can record the communication using add_communication ... (action the tenant did not ask for)"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "if you did not sign an addendum agreeing to electronic delivery of notices, the notice may not be proper and the landlord forfeits the right to impose a claim and must return the deposit (leaves out 'may file an action for damages after returning the security deposit', and Plakhov v. Serova)"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "borderline: the notice may not be proper and the landlord forfeits the right to impose a claim and must return the deposit (one reading of email_notice_conditions; the 83.505(6) reading is not given)"},
+        {"reply": 5, "category": "CASE_MISREAD", "evidence": "borderline: the court held that the landlord’s violation of the notice requirement forfeited his access to the security deposit, and the landlord had to return the deposit (Durene: landlord had already returned it; a late-notice case, no word on how alike an e-mail defect is)"}
+      ]
+    },
+    {
+      "code": "R022",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: you observed black mold on the bedroom wall (not structural or plumbing per you), you emailed a written notice to the property manager on 2026‑09‑10, that notice did not say you intend to end the lease, you have paid rent since you learned of the mold, and the landlord said keeping the house dry is your job."},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Whether the mold triggers a landlord duty under § 83.51(1) (building, housing, or health codes) or a lease provision is not known yet—the tool does not hold those codes (no word on who can settle it, e.g. a code office)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "Whether paying rent with knowledge of the mold waives your right to terminate depends on whether the mold is a continuing noncompliance, which is not settled. (waiver rule with no cite to 83.56(5)(a))"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: (4) paying rent with knowledge does not waive the right (e.g., if the mold persists as a continuing issue) (one reading of rent_paid_waiver offered as the way through; the other is not given)"}
+      ]
+    },
+    {
+      "code": "R038",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: the mold is on the bedroom wall and is not a structural or plumbing issue; your lease does not say the landlord repairs this kind of problem; you paid rent after you knew about the mold; you gave the landlord an email notice but it did not state that you intend to end the lease; the landlord said it is your job to keep the house dry."},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: whether paying rent waived your right to end the lease is not settled because it turns on whether the mold continues (frames the open question on one reading; the other reading is not given)"}
+      ]
+    },
+    {
+      "code": "R044",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: the mold is not a structural or plumbing issue, the lease does not say the landlord repairs mold, you paid rent after learning of the mold, and your notice did not say you intended to end the lease."},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: the statute does not decide whether paying rent with knowledge waives the right when the problem continues (waiver stated with no cite to 83.56(5)(a))"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: you can check with the city or county code enforcement office, which can tell you whether one covers this problem and can inspect the unit (what the office can do is not in the record)"}
+      ]
+    },
+    {
+      "code": "R046",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "whether the mold triggers a landlord duty under 83.51(1) and whether paying rent after learning of the mold waives your right remain open questions under the statute (no word on what follows either way, or who can settle the code question)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: it does not decide whether paying rent after learning of the mold waives your right to terminate (statement of what the statute says on waiver, no cite to 83.56(5)(a))"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "The lease and statute text I have do not answer that. (no word on who can settle whether the mold breaks a code, e.g. a code office, or what follows)"}
+      ]
+    },
+    {
+      "code": "R065",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: the problem is black mold on a bedroom wall (not a structural or plumbing issue), your lease does not say the landlord repairs this kind of problem, you emailed notice to the property manager on 2026-09-10 and that notice did not say you intend to end the lease, and you have paid rent since you learned of the mold."},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: it depends on whether a building, housing, or health code where you live requires the landlord to fix mold (no word on who can settle the code point; the writing point does name the tenant)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: it may not waive the right if the mold continues (one reading of rent_paid_waiver given, not the other)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "(the statute says it does not waive a continuing noncompliance) (waiver rule attributed to the statute with no section cited; 83.56(5)(a) not printed)"},
+        {"reply": 2, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE)"}
+      ]
+    },
+    {
+      "code": "R096",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: the lease does not expressly cover mold (no search of the lease was made; Section 8.5 speaks to mold)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "it depends on building, housing, or health codes not in the tool ... and whether paying rent after knowing of the problem waives your right is not settled (no who can settle the code point; no what follows for the waiver point)"},
+        {"reply": 1, "category": "RECITED", "evidence": "Your notice did not state that intention, and you confirmed paying rent after you knew of the mold. The landlord said it’s your job to keep the house dry, and the problem is black mold on the bedroom wall."},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: If the landlord had a duty to fix the mold and you delivered a notice stating you intend to end the lease, you could terminate after 7 days without repair. (leaves out the rent-waiver condition the reply itself named above)"}
+      ]
+    }
+  ]
+}

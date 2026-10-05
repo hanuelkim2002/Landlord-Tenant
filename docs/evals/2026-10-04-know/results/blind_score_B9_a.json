@@ -1,0 +1,142 @@
+{"scorer": "B9_a", "runs": [
+{"code": "R009", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 1, "slips": [
+ {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: 'However, the landlord may argue the notice is for good cause (lease violation regarding the unauthorized cat)' is cited only '(Fla. Stat. 83.64(1))'; the good-cause rule is in 83.64(3), not in the printed words of (1)"},
+ {"reply": 2, "category": "QUOTES_ONLY", "evidence": "borderline: gives the Salmonte holding and the 'good cause' words with nothing on whether this tenant's facts meet them"},
+ {"reply": 2, "category": "CASE_MISREAD", "evidence": "'Courts have held that a landlord may still pursue eviction for lease violations even if the tenant reported code violations' - one case, whose tenant admitted the breach; no word on how alike this tenant's facts are"}
+]},
+{"code": "R020", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "CONDITION_MISSED", "evidence": "'under Fla. Stat. 83.64(1) the landlord may not retaliate by bringing or threatening an action for possession primarily because of that complaint' - leaves out the good-faith requirement and the good-cause exception in 83.64(1) and (3), though the notice is for a lease violation"},
+ {"reply": 2, "category": "QUOTES_ONLY", "evidence": "'The court held the retaliatory eviction defense \"does not apply when the landlord proves that the eviction is for good cause\"...' - the holding set out, nothing on this tenant's facts or how alike they are"}
+]},
+{"code": "R034", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 1, "slips": [
+ {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'then it may be unlawful retaliation under Fla. Stat. 83.64(1)' with no word on the good-cause exception (83.64(3)), though the notice is for a lease violation; good faith is mentioned"}
+]},
+{"code": "R060", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'If you did complain, the landlord may not retaliate by threatening an eviction action...' - no good-faith requirement of 83.64(1)"},
+ {"reply": 1, "category": "CASE_MISREAD", "evidence": "borderline: 'the landlord may not retaliate by threatening an eviction action for a lease violation because the defense does not apply when the landlord proves the eviction is for good cause' (Salmonte) - garbled statement of the holding, no word on how alike (the tenant there admitted the breach)"},
+ {"reply": 2, "category": "CASE_MISREAD", "evidence": "borderline: 'Therefore, the case does not bar the landlord from acting even if you had reported them.' - Salmonte's tenant admitted the breach; reply does not say this tenant has not"}
+]},
+{"code": "R076", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'if you did report him to the city and the landlord's notice is primarily because of that report, it may be unlawful retaliation' - no good-faith requirement of 83.64(1)"},
+ {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: 'if you did report him and the landlord's notice is primarily because of that report, the statute makes it unlawful' - no good-faith requirement of 83.64(1)"}
+]},
+{"code": "R081", "scenario": "eval_cases_retaliation", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'If you did not report him, or if the landlord's actions are for another reason, then this statute does not apply.' - nothing on good faith (83.64(1)) or good cause (83.64(3))"},
+ {"reply": 2, "category": "QUOTES_ONLY", "evidence": "borderline: Salmonte holding and two quoted sentences, nothing on whether this tenant (who has not admitted the violation) is like the case's tenant"},
+ {"reply": 3, "category": "ID", "evidence": "'According to WHICH DEADLINES HAVE PASSED, the seven-day period to correct the notice received violation has passed.'"}
+]},
+{"code": "R012", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 3, "applied_well": 2, "slips": [
+ {"reply": 2, "category": "ID", "evidence": "'turns on whether you plan to stay after the lease ends (planning_to_stay)'"},
+ {"reply": 3, "category": "OPEN_CLOSED", "evidence": "'If you stay in January without paying rent or without the landlord's acceptance of rent, you are holding over without the landlord's permission.' - picks a reading on what counts as permission (staying_on)"},
+ {"reply": 3, "category": "QUOTE_WRONG", "evidence": "borderline: 83.58 quoted as '...the landlord may recover double the amount of rent due...'; the statute says 'The landlord may also recover double', 'also' dropped with no ellipsis"}
+]},
+{"code": "R077", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 3, "applied_well": 1, "slips": [
+ {"reply": 1, "category": "ID", "evidence": "'Your lease term ends December 31, 2026 (YOUR FACTS).'"},
+ {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: 'If you wish to stay after that date, you must negotiate a new lease; there is no statutory or lease deadline for signing it.' - no cite, and lease 2.4 lets a tenant stay month-to-month"},
+ {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: 'there is no statutory ... deadline for signing it' said with no statute search (only the lease was searched)"},
+ {"reply": 2, "category": "ID", "evidence": "'Your lease term ends December 31, 2026 (YOUR FACTS).'"},
+ {"reply": 3, "category": "OPEN_CLOSED", "evidence": "'If the landlord does not accept rent (or treats your stay as unauthorized), you are a holdover tenant without the landlord's permission.' - and 'exposes you to holdover liability and possible eviction (if rent is not accepted)'; what counts as permission is the staying_on question"},
+ {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: 'The lease does not provide a specific holdover penalty' and 'The lease does not impose a separate penalty for simply staying past the expiration date' - no search for a holdover clause shown"},
+ {"reply": 3, "category": "QUOTE_WRONG", "evidence": "borderline: 83.58 quoted as 'the landlord may recover double the amount of rent due' - statute says 'may also recover double', 'also' dropped with no ellipsis"}
+]},
+{"code": "R093", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "ID", "evidence": "'(your lease_end_notice_terms: ...)' and '(Lease_end_notice_terms from your facts; ...)'"},
+ {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: 'No, you are not required to sign the renewal by October 15' said with no lease search, and 'you can still decide whether to renew or not' with no program count of the notice period"},
+ {"reply": 2, "category": "CONFIRM_IN_CHAT", "evidence": "'Do you plan to stay after the lease or rental period ends? ... Once you confirm, I can tell you the last day you can give notice.' - the sheet asks planning_to_stay"},
+ {"reply": 2, "category": "CONDITION_WRONG", "evidence": "'Lease Section 4.3 requires written notice before vacating' - 4.3's 7-day notice is for vacating before the end of the Term; the 60-day end-of-term notice is Section 2.3"},
+ {"reply": 3, "category": "OPEN_CLOSED", "evidence": "'If the landlord did give you permission (for example, by agreeing to let you stay or by accepting rent for January), you become a tenant at sufferance with the landlord's permission' - picks the reading that taking rent is permission"},
+ {"reply": 3, "category": "GAP_AS_FACT", "evidence": "'Your lease does not contain a holdover clause, so the statute controls the outcome.' - lease Sections 2.4 and 15.1 hold holdover terms; no lease search"},
+ {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: 'you become a tenant at sufferance with the landlord's permission' - not in the stored text"}
+]},
+{"code": "R101", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The lease and statute text I have do not answer that.' - nothing on what follows or who can settle it (lease never searched)"},
+ {"reply": 2, "category": "ID", "evidence": "'(planning_to_stay not confirmed)'"},
+ {"reply": 2, "category": "RECITED", "evidence": "'You confirmed your lease requires 60 days written notice if you are not renewing. You confirmed the lease ends December 31, 2026.'"},
+ {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: 'you must give that notice within that period (Fla. Stat. 83.575(1))' - leaves out the condition that the lease also require the landlord's notice"},
+ {"reply": 3, "category": "GAP_AS_FACT", "evidence": "'(The lease does not address holdover, so the statute governs.)' - lease Sections 2.4 and 15.1 hold holdover terms; no lease search"},
+ {"reply": 3, "category": "CONDITION_MISSED", "evidence": "'If you have the landlord's permission, you may be liable for an additional month's rent under Fla. Stat. 83.575(3).' - leaves out that it applies only if the tenant fails to give the 83.57(3) notice"}
+]},
+{"code": "R106", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 3, "applied_well": 1, "slips": [
+ {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The lease and statute text I have do not answer that.' - nothing on what follows or who can settle it (lease never searched)"},
+ {"reply": 2, "category": "DATE_MADE", "evidence": "'the last day to give notice is 60 days before December 31, 2026, which is November 1, 2026'"},
+ {"reply": 2, "category": "GAP_AS_FACT", "evidence": "'which is November 1, 2026' (a date for a period the program does not count) and 'depends on today's date, which the tool does not have'"},
+ {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: 'you become a month-to-month tenant under Fla. Stat. 83.57(3)' - 83.57(3) sets the notice for a month-to-month tenancy, it does not say permission creates one"}
+]},
+{"code": "R124", "scenario": "eval_lease_end_renewal", "replies": 3, "law_replies": 3, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "DATE_MADE", "evidence": "'so the notice to terminate would need to be given by around November 1, 2026'"},
+ {"reply": 1, "category": "GAP_AS_FACT", "evidence": "'by around November 1, 2026' (a date for a period the program does not count); 'The program's deadlines show no deadline is currently waiting on this point' (the program says no deadlines yet, waiting on planning to stay)"},
+ {"reply": 2, "category": "ID", "evidence": "'(end_notice_given false)' and '(see WHAT THE STATUTE DOES NOT SETTLE for lease_ending)'"},
+ {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: 'If the landlord did not send the written notice the statute requires first, you may still leave without owing those damages' - the sheet confirms the landlord sent no such notice, yet it is treated as unknown"},
+ {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: 'The program's deadlines show no deadline is currently waiting on this point.' - the program printed 'No deadlines yet ... waiting [lease_ending]: planning to stay'"},
+ {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: 'The program's deadlines show no deadline is currently waiting on this point.'"}
+]},
+{"code": "R031", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The lease and statute text I have do not answer that.' - nothing on what follows or who can settle it (fair housing law is outside the tool)"},
+ {"reply": 2, "category": "CONDITION_WRONG", "evidence": "'it is unlawful for a landlord to refuse to renew a lease or take other adverse action primarily because the landlord is retaliating against the tenant (Fla. Stat. 83.64(1))' - 83.64(1) names rent increases, decreased services, an action for possession or other civil action, not refusing to renew"},
+ {"reply": 2, "category": "CONDITION_MISSED", "evidence": "'If the landlord's refusal to renew is primarily because you made that complaint, then that condition of the rule is met' - leaves out 83.64(1)(c)'s complaint 'pursuant to s. 83.56(1)' (sheet: no written notice delivered), good faith, good cause"},
+ {"reply": 2, "category": "RECITED", "evidence": "'You confirmed you complained to the landlord that the heater does not work, the landlord said he will fix it, you have paid rent since you knew about the problem, and no eviction case has been filed.'"},
+ {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: 'the refusal would likely be unlawful under the statute'"}
+]},
+{"code": "R032", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The lease and statute text I have do not answer that.' - nothing on what follows or who can settle it"},
+ {"reply": 2, "category": "CONDITION_WRONG", "evidence": "'is closed; the statute protects only complaints made under 83.56(1)' - 83.64(1)(c) is one example in a list that 'include[s], but [is] not limited to'; and the reply never considers the other examples"},
+ {"reply": 3, "category": "ID", "evidence": "'(WHICH DEADLINES HAVE PASSED)'"}
+]},
+{"code": "R052", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The lease and statute text I have do not answer that.' - nothing on what follows or who can settle it"},
+ {"reply": 2, "category": "QUOTES_ONLY", "evidence": "'The lease and statute text I have do not answer that.' to the non-renewal question, though 83.64 (in the playbook's sections) speaks to retaliation"}
+]},
+{"code": "R058", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The lease and statute text I have do not answer that.' - nothing on what follows or who can settle it"},
+ {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: calls it 'open' then 'Refusing to renew a lease is not an action for possession or other civil action, so the statute does not make that refusal illegal on those facts' - picks one reading"}
+]},
+{"code": "R066", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The lease and statute text I have do not answer that.' - nothing on what follows or who can settle it"},
+ {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The statute and case law we have do not answer whether refusing to renew for that reason is unlawful.' - no readings, no word on what follows either way or who can settle it"}
+]},
+{"code": "R121", "scenario": "eval_nc_mixed_heater", "replies": 3, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'The lease and statute text I have do not answer that.' - nothing on what follows or who can settle it"},
+ {"reply": 2, "category": "CONDITION_WRONG", "evidence": "'not illegal under Florida Statute 83.64(1) because your complaint was not a written notice specifying the noncompliance and indicating the intention to terminate the rental agreement or to withhold rent, as required for protection under that statute' - 83.64(1)'s list is not limited to 83.56(1) complaints, and 83.56(1) says nothing of withholding rent"},
+ {"reply": 2, "category": "ID", "evidence": "'(You confirmed written_notice_delivered false)'"}
+]},
+{"code": "R021", "scenario": "eval_know_violation_guest", "replies": 1, "law_replies": 1, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "OPEN_CLOSED", "evidence": "'No, they cannot end your lease without giving you a chance to fix it.' - picks the (2)(b) reading; 'the condition for immediate termination under the statute is not met'"},
+ {"reply": 1, "category": "ONE_SIDED", "evidence": "'No, they cannot end your lease without giving you a chance to fix it' - leaves out 83.56(2)(a), where the landlord may terminate with 7 days to vacate when the noncompliance is not one to cure"},
+ {"reply": 1, "category": "OVERCLAIM", "evidence": "borderline: 'Therefore, the lease is not terminated on that basis.'"}
+]},
+{"code": "R043", "scenario": "eval_know_violation_guest", "replies": 1, "law_replies": 1, "applied_well": 1, "slips": [
+ {"reply": 1, "category": "RECITED", "evidence": "borderline: 'Your notice says your boyfriend is an unauthorized occupant ..., it does not offer a chance to fix the problem, and it states the lease is terminated effective immediately. You have not received a prior written warning ..., and the landlord has not accepted rent after the notice.'"},
+ {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: 'If the violation is of a type that should allow a cure (like having unauthorized guests), the landlord must give you 7 days to correct the problem' - no cite to 83.56(2)(b); only (2)(a) is cited"}
+]},
+{"code": "R055", "scenario": "eval_know_violation_guest", "replies": 1, "law_replies": 1, "applied_well": 1, "slips": [
+ {"reply": 1, "category": "RECITED", "evidence": "borderline: 'Your notice states that your boyfriend is an unauthorized occupant ..., does not offer a cure period, was handed to you on 2026-09-30, and you have not received a prior written warning about a similar violation.'"},
+ {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: 'if the violation is curable, the landlord would first need to give you a written notice offering seven days to correct the issue' - no cite to 83.56(2)(b)"}
+]},
+{"code": "R067", "scenario": "eval_know_violation_guest", "replies": 1, "law_replies": 1, "applied_well": 1, "slips": [
+ {"reply": 1, "category": "RECITED", "evidence": "borderline: 'You received the landlord's notice on 2026-09-30, handed to you, stating your boyfriend is an unauthorized occupant ..., the notice does not offer a chance to fix the problem, you have not received a prior written warning ..., and the landlord has not accepted rent since the notice.'"}
+]},
+{"code": "R086", "scenario": "eval_know_violation_guest", "replies": 1, "law_replies": 1, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "RECITED", "evidence": "borderline: 'Your facts: the notice you received says ... The notice describes the violation as ... You have not received a prior written warning ..., and the landlord has not accepted rent after the notice.'"},
+ {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: 'This tool has no cases on whether an unauthorized-occupant violation is curable or not.' - no get_cases search in the transcript"}
+]},
+{"code": "R105", "scenario": "eval_know_violation_guest", "replies": 1, "law_replies": 1, "applied_well": 1, "slips": [
+ {"reply": 1, "category": "RECITED", "evidence": "borderline: 'Your facts: the notice says your boyfriend is an unauthorized occupant ...; you received no prior written warning; the notice does not offer a chance to cure; it was handed to you on 2026-09-30.'"}
+]},
+{"code": "R013", "scenario": "eval_know_lease_holdover", "replies": 2, "law_replies": 2, "applied_well": 2, "slips": []},
+{"code": "R035", "scenario": "eval_know_lease_holdover", "replies": 2, "law_replies": 2, "applied_well": 2, "slips": []},
+{"code": "R047", "scenario": "eval_know_lease_holdover", "replies": 2, "law_replies": 2, "applied_well": 2, "slips": []},
+{"code": "R087", "scenario": "eval_know_lease_holdover", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: 'the lease clauses the tool has read do not mention holding over or post-term rent' - no search_lease; Sections 2.4 and 15.1 hold it"},
+ {"reply": 1, "category": "RECITED", "evidence": "'You plan to stay after the lease ends, you have not given the landlord written notice of leaving, and you said you need to give 60 days' written notice before the end.'"},
+ {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: 'The parts of your lease the tool has read do not mention a late fee; the rest of your lease may' - no search_lease; Section 3.3 (Late Charge) holds it"}
+]},
+{"code": "R090", "scenario": "eval_know_lease_holdover", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "GAP_AS_FACT", "evidence": "'The lease does not say what happens if you keep paying rent after it ends' - no search_lease; Sections 2.4 and 15.1 say it"},
+ {"reply": 2, "category": "GAP_AS_FACT", "evidence": "'The lease does not say it charges a late fee if you pay rent a few days late (Lease Section 3.1).' - Section 3.3 (Late Charge) holds it; no search_lease"},
+ {"reply": 2, "category": "ID", "evidence": "borderline: '(no section in THE STATUTE says it)' - a prompt part name in capitals"}
+]},
+{"code": "R092", "scenario": "eval_know_lease_holdover", "replies": 2, "law_replies": 2, "applied_well": 0, "slips": [
+ {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: 'The parts of your lease the tool has read do not cover what happens if you keep paying rent after it ends; the rest of your lease may.' - no search_lease; Sections 2.4 and 15.1 hold it"},
+ {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: 'The parts of your lease the tool has read do not mention a late fee for paying rent a few days late; the rest of your lease may.' - no search_lease; Section 3.3 holds it"}
+]}
+]}

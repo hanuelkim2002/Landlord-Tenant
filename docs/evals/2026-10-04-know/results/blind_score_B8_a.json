@@ -1,0 +1,191 @@
+{
+  "scorer": "B8_a",
+  "runs": [
+    {
+      "code": "R015", "scenario": "eval_noise_neighbors", "replies": 5, "law_replies": 3, "applied_well": 2,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: Your facts: the upstairs tenant rents from the same landlord (you confirmed), you complained in writing about loud parties until 3‑4 am almost every night (you confirmed), the landlord said they can't do anything (you confirmed)."},
+        {"reply": 2, "category": "RECITED", "evidence": "Your facts: the upstairs tenant rents from the same landlord (you confirmed), you complained in writing about loud parties until 3‑4 am almost every night (you confirmed), the landlord said they can’t do anything (you confirmed)."}
+      ]
+    },
+    {
+      "code": "R049", "scenario": "eval_noise_neighbors", "replies": 5, "law_replies": 3, "applied_well": 2,
+      "slips": []
+    },
+    {
+      "code": "R057", "scenario": "eval_noise_neighbors", "replies": 5, "law_replies": 3, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: you complained in writing on 2026‑09‑08 (the sheet holds that some complaint was in writing and that the first complaint was 2026-09-08, not that the 09-08 one was written)"},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: Your facts show loud parties until 3 or 4 am almost every night, the source rents from the same landlord, and you complained in writing on 2026‑09‑08."},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "The lease does not contain a quiet‑hours clause, so it does not create a duty for the landlord to act. (no search of the lease in the transcript)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: (You confirmed you complained in writing on 2026‑09‑08 and the landlord said there’s nothing they can do; ...)"},
+        {"reply": 2, "category": "RECITED", "evidence": "(You confirmed you complained in writing on 2026‑09‑08 and the landlord said there’s nothing they can do; the disturbance is loud parties until 3 or 4 am almost every night, and the source rents from the same landlord.)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "Since your lease does not contain that duty, the answer remains unsettled. (only Article 7 was read; no search)"}
+      ]
+    },
+    {
+      "code": "R071", "scenario": "eval_noise_neighbors", "replies": 5, "law_replies": 3, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Thus, the statute does not tell us if the landlord must or may act. (no word on what follows either way, e.g. a lease clause, or who can settle it)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "Whether you can end the lease over the neighbor’s noise is closed: the lease does not require the landlord to address another tenant’s disturbance, so the landlord’s inaction is not a material failure under 83.56(1)."},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "the lease does not require the landlord to address another tenant’s disturbance ... because there is no lease provision for the landlord to comply with regarding this issue, the condition of a material failure is not met (no lease search before the reply)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "Your facts: you have not given a written notice stating you intend to end the lease"}
+      ]
+    },
+    {
+      "code": "R079", "scenario": "eval_noise_neighbors", "replies": 5, "law_replies": 3, "applied_well": 1,
+      "slips": [
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: Third, the person causing the disturbance must rent from the same landlord (you confirmed they do). If all three are met, you may end the lease ... (83.56(1) has no such condition for the tenant's own termination; that point goes to the landlord's remedy against the neighbor)"}
+      ]
+    },
+    {
+      "code": "R088", "scenario": "eval_noise_neighbors", "replies": 5, "law_replies": 3, "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: Whether the landlord must act is not settled ... Therefore, the landlord is not required to act, but may choose to act if they deem the disturbance unreasonable."},
+        {"reply": 2, "category": "CONFIRM_IN_CHAT", "evidence": "you can also let the tool know whether your notice says you intend to end the lease."}
+      ]
+    },
+    {
+      "code": "R016", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE, rent_increased)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "For a month‑to‑month tenancy, the statute allows the landlord to change the rent on the same notice required to end the tenancy ... [then] The statute does not settle whether any notice is required for a rent increase"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: the statute allows the landlord to change the rent on the same notice required to end the tenancy: not less than 30 days’ notice ... (Fla. Stat. 83.57(3)) (the cited words speak of ending the tenancy); also: during a fixed term the rent cannot be changed without your agreement (no cite)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: (e) the landlord has no good cause for the increase, such as unpaid rent or a lease violation (83.64(3) speaks of good cause for the eviction)"},
+        {"reply": 2, "category": "RECITED", "evidence": "You complained about the roof on September 12 and paid rent after knowing of the problem; you received a written rent‑increase notice on September 27 effective November 1; your lease is month‑to‑month and contains no rent‑increase clause; you do not know whether other tenants received the same increase."},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: The tenant may raise retaliation as a defense if the landlord sues for possession only when ... (only the defense reading; the 83.64(1)-unlawful-on-its-own and 83.55 reading is left out)"},
+        {"reply": 2, "category": "CASE_MISREAD", "evidence": "borderline: however, the defense is unavailable if the landlord proves good cause, such as a lease violation (Salmonte v. Eilertson, ...) (case's rule said to reach the tenant, no word on how alike its facts are: eviction suit, tenant admitted breaches)"}
+      ]
+    },
+    {
+      "code": "R027", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "Your lease does not contain a clause allowing a rent increase (no search of the lease in the transcript)"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "and you have not agreed to the new amount."},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "So, absent your agreement or a lease amendment, the increase would not be enforceable under the lease and the statute’s default rule. (month-to-month and 83.57 readings left open in the next paragraph)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "the increase would not be enforceable under ... the statute’s default rule (cites 83.46(1), whose words say only that rent is payable without demand and apportionable from day to day)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: Applied: the complaint is a protected activity (83.64(1)(c) speaks of a complaint to the landlord pursuant to s. 83.56(1); the sheet says the notice did not state an intent to end the lease)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: a landlord may not increase rent primarily because the tenant complained to the landlord about a housing‑code violation (the cited words do not say this)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "The statute does not settle this: 83.64 works only as a defense in an action for possession; a tenant facing only a rent increase has nothing to raise until such an action is brought."},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: the rule is set out without the good-cause half (83.64(3)) and Salmonte, in the get_cases result and cutting against the tenant, is left out"}
+      ]
+    },
+    {
+      "code": "R053", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Therefore, on these facts the increase is permissible. (no_increase_section presented as settled)"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "Your notice of September 27 for a November 1 increase provides more than 30 days before the end of the October monthly period, so the notice meets the statutory rule."},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "so the notice meets the statutory rule (a period the program does not count; rent day not in record); The lease does not contain any clause limiting rent increases during a month‑to‑month term (no lease search)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: a month‑to‑month tenancy may be changed by giving not less than 30 days’ notice before the end of any monthly period (83.57(3) speaks of terminating)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: if your roof complaint is not protected activity under 83.64(1), the statute does not prohibit the increase (the statute's list is not exclusive)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: The statute also notes that 83.64(2) allows raising retaliation only as a defense in an action for possession, which you are not currently facing. (one reading)"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: good-cause half of 83.64 and Salmonte (get_cases result, cuts against the tenant) left out"}
+      ]
+    },
+    {
+      "code": "R059", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "the landlord must give at least 30 days’ notice prior to the end of any monthly period to change the rent (Fla. Stat. 83.57(3)) [after saying the statute does not set a notice requirement for a rent increase]"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: the landlord must give at least 30 days’ notice ... to change the rent (83.57(3) speaks of terminating)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: whether that meets the 30‑day rule turns on which monthly period the notice relates to—a point the statute does not settle and the tool does not compute (no word on who can settle it, e.g. the tenant's rent dates)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "You complained in writing about a leaking roof on September 12, which is a protected activity under 83.64(1)(c). (the sheet says the notice did not state an intent to end the lease)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: Whether you can raise retaliation as a defense if the landlord sues for possession after the increase is not known yet. (only the defense reading; 83.64(1) unlawful on its own and 83.55 not given)"}
+      ]
+    },
+    {
+      "code": "R080", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "the reading that applies is that the same 30‑day notice used for termination governs a rent increase for a month‑to‑month tenancy."},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "which is at least 30 days before the end of the October monthly period (the notice predates 2026‑10‑01)."},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "Therefore the notice satisfies the statutory requirement. (a period the program does not count; rent day not in record)"},
+        {"reply": 1, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE, rent_increased, readings)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: a landlord may change the rent on the same notice required to end the tenancy (83.57(3) speaks of ending the tenancy)"},
+        {"reply": 2, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE, rent_increased, open question 83.64)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: the landlord has no good cause for the increase, such as unpaid rent or a lease violation (83.64(3) speaks of good cause for the eviction)"}
+      ]
+    },
+    {
+      "code": "R123", "scenario": "eval_rent_hike_duplex", "replies": 3, "law_replies": 2, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: the lease shows the original rent as $950 per month (Lease, page 1). You confirmed you received a written notice of the increase on September 27, 2026, stating the new rent of $1,150 ... You also confirmed your tenancy is month‑to‑month"},
+        {"reply": 1, "category": "ID", "evidence": "(fixed_term_lease false, month_to_month true)"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "borderline: for the monthly period ending October 31 (a period end not in the record)"},
+        {"reply": 1, "category": "QUOTE_WRONG", "evidence": "borderline: (Lease, page 1) (the rent clause is printed elsewhere as Lease Section 3.1, page 2)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 83.64(2) says retaliation may be raised only as a defense in an action for possession; a tenant facing only a rent increase has nothing to raise until such an action is brought. (one reading)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "Applied: you confirmed you complained, which shows good‑faith conduct"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: So: you cannot conclude the increase is unlawful retaliation on these facts alone. (the 83.64(4) different-treatment prerequisite, which the sheet answers 'don't know', is never applied)"},
+        {"reply": 2, "category": "QUOTE_WRONG", "evidence": "borderline: “Evidence of retaliatory conduct … to be raised by the tenant as a defense” (source: may be raised)"}
+      ]
+    },
+    {
+      "code": "R004", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "For a repair entry such as changing the AC filter, the statute requires the landlord to give reasonable notice ... so the entry was not allowed (purpose_of_entry settled as repair)"},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: you got no notice and did not consent, it was not an emergency, you were present and rent was current"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "the landlord may recover at least three months’ rent only if he cut off a utility ... (Fla. Stat. 83.67(6)) (the printed words make the landlord liable to the tenant)"},
+        {"reply": 3, "category": "RECITED", "evidence": "Your facts show the landlord entered to change the AC filter at 8 a.m. on 2026‑09‑30, gave no notice, you did not consent, it was not an emergency, you were present, rent was current, and this has happened repeatedly."}
+      ]
+    },
+    {
+      "code": "R019", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 2,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: You said the landlord entered to change the AC filter, gave no notice, you did not consent, there was no emergency, you were present, your rent is current, and this has happened before."},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "You may seek injunctive relief to stop further unauthorized entries ...; a violation of the prohibited practices section constitutes irreparable harm for injunctive relief (Fla. Stat. 83.67(7)). (an entry under 83.53 is not a 83.67 violation)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: You may not withhold rent for these entries; the statute does not allow rent withholding for a landlord’s failure to give notice before entry (no cite); if you show the landlord’s conduct ... is likely to continue (standard not in stored text)"},
+        {"reply": 3, "category": "ID", "evidence": "(see WHAT THE STATUTE DOES NOT SETTLE for landlord_entered_unannounced)"}
+      ]
+    },
+    {
+      "code": "R025", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: The landlord may enter to make a repair only if he gives reasonable notice ... or if one of the statutory exceptions applies (the (a)-(d) circumstances are for the further purposes in 83.53(1), not repair)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Since no notice was given and none of the exceptions apply, the entry was not allowed. (purpose taken as repair)"},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: You said the landlord gave no notice, did not claim an emergency, you did not consent, you were present, and your rent is current."},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "Your lease also requires repair requests in writing and limits landlord entry to emergencies or requested repairs (Lease Article 7.3). (7.3 as printed says no such thing)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: Changing the locks to keep the landlord out would be withholding consent to entry for repairs, which is unreasonable on these facts. (after saying the entry was not allowed)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "Your lease requires you to return the premises at move‑out in the same condition ... and it does not authorize you to change the locks. (no search of the lease in the transcript)"},
+        {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "Ask for future compliance (preserve) ... Seek money for the past entry (assert)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Since none of the statutory exceptions for entry apply, the entry was not allowed under the notice rule."},
+        {"reply": 3, "category": "RECITED", "evidence": "Your facts that matter for the notice rule: the landlord gave no notice, did not claim an emergency, you did not consent, you were present, and your rent is current."},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: The lease also requires repair requests in writing and limits landlord entry to emergencies or requested repairs (Lease Article 7.3); also emotional distress and file a claim in court (not in stored text)"}
+      ]
+    },
+    {
+      "code": "R091", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: (Lease Article 7.3 requires written repair requests and a landlord response within 24 hours ... reinforcing the notice requirement.) (7.3 is about the tenant's repair requests, not entry notice)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "you would be withholding consent without a statutory excuse (consent, emergency, tenant’s unreasonable withholding, or absence for half the rental period), so the withholding would be unreasonable. (the 83.53(2)(a)-(d) circumstances are when the landlord may enter, not excuses for the tenant)"},
+        {"reply": 2, "category": "RECITED", "evidence": "Your facts: you received no notice, you did not consent, no emergency was claimed, you were present, and the landlord said the purpose was to change the AC filter."},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "Since you have complained in good faith, the condition is met. (good faith is not on the record); You have not yet sent such a notice."},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "You have complained about the entry in this chat. ... So you may raise that defense if an eviction action is filed. (a chat remark is not a complaint to the landlord under 83.56(1))"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Since the landlord entered without notice or consent, the condition is met. So you may sue for actual and consequential damages. (purpose of entry left open elsewhere, treated as settled here)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: So you may sue for actual and consequential damages. (83.55 cited; those words are in 83.67(6)); A landlord who violates the prohibited‑practices section is liable for irreparable harm"},
+        {"reply": 3, "category": "RECITED", "evidence": "borderline: You got no written notice, you did not consent, no emergency was claimed, and you were present."}
+      ]
+    },
+    {
+      "code": "R102", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 2,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Your facts show the entry was to change the AC filter (a repair) (purpose_of_entry settled as repair)"},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: you got no notice, you did not consent, it was not an emergency, you were present and rent was current."}
+      ]
+    },
+    {
+      "code": "R108", "scenario": "eval_entry_shower", "replies": 4, "law_replies": 3, "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Whether the landlord may enter without notice to change an AC filter is closed ... The repair purpose triggers the notice requirement"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "and you did not make a request."},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: (Lease Article 7.3 says the landlord shall respond to repair requests within seven days, and you did not make a request.) (7.3 is not an entry rule)"},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: You said the entry was at 8 am to change the AC filter, you got no notice, you did not consent, and it was not an emergency."},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "Changing the locks would be withholding consent to a lawful repair entry (the entry was without notice, which reply 1 called not allowed)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "You said the entry was to change the AC filter (a repair) ... the landlord’s purpose was still a repair."},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "you did not make a request, but the landlord’s purpose was still a repair"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: You said the entry was to change the AC filter (a repair), you got no notice, you did not consent, and it was not an emergency."},
+        {"reply": 3, "category": "OPTION_BEFORE_OPEN", "evidence": "You may sue the landlord for any harm caused by the entry without notice (Fla. Stat. 83.55). / You may send the landlord a written notice ... you may terminate the lease under Fla. Stat. 83.56(1) (no word on whether either option is open)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "any harm caused by the entry without notice (the entry treated as noncompliant although the purpose is open)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "if the landlord does not give proper notice for future entries within seven days, you may terminate the lease under Fla. Stat. 83.56(1) (83.56(1) reaches 83.51(1) and material lease provisions, not 83.53 entry notice)"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "scorer": "B2_a",
+  "runs": [
+    {
+      "code": "R026",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: pastes the whole statutory form into the reply: \"You are hereby notified that you are indebted to me in the sum of dollars for the rent and use of the premises (address of leased premises, including county), Florida, now occupied by you and that I demand payment ...\" (one long sentence the program prints under the reply anyway)"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "\"Your facts: your lease does not specify how rent must be paid; it only states the amount as $1,300 per month. (Lease Section 3.1)\" (said flatly; no lease search was made, only the statute was searched for \"cash\")"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "\"Your facts: the lease does not specify how rent must be paid; it only states the amount as $1,300 per month. (Lease Section 3.1)\" (same unsearched lease claim repeated as fact)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: \"you must pay rent into the registry or file a motion to determine the amount within 5 days after service of process\" (leaves out \"excluding Saturdays, Sundays, and legal holidays\" and the open question on how the 5 days are counted, which the tenant's 2026-09-30 service date turns on)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "\"If you do, the rule requires you to pay rent into the registry or file a motion within 5 days after service; if you do not, you waive those defenses.\" (waiver follows from raising a defense and not paying in time, not from not raising a defense)"}
+      ]
+    },
+    {
+      "code": "R050",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: \"The statute does not settle whether a notice may demand cash only; 83.56(3) and 83.60(2) leave the form of the notice open.\" (no rule in plain words, no readings, nothing on what follows; stored text and cases on cash-only were not looked at)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "\"Since that fact is not known yet, whether you can be required to pay cash only depends on it.\" (says it depends, not what follows if the notice did or did not say cash only, nor who settles it)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: \"83.56(3) and 83.60(2) leave the form of the notice open. (Fla. Stat. 83.56(3); Fla. Stat. 83.60(2))\" (83.60(2)'s printed words say nothing about the form of the notice)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "\"Since that fact is not known yet, whether the notice was defective depends on it.\" (no what-follows either way, no word on who can settle it, and no word on the open form question)"}
+      ]
+    },
+    {
+      "code": "R051",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 2,
+      "slips": [
+        {"reply": 3, "category": "QUOTE_WRONG", "evidence": "\"[t]he tenant is required to deposit the disputed rent into the court registry to assert any defense other than payment. The plain language of the statute requires it. The court correctly entered the default judgment.\" (Stanley v. Quest International Investment, 50 So. 3d 672, 673 ...) (the printed case puts these words at 674)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: \"The statute does not settle how the five days are counted regarding weekends and holidays, so you should check the specific deadline with the clerk or compute it using the tool's deadline function.\" (the open question says the tool does not compute this date; the statute does exclude weekends, what is open is which holidays)"}
+      ]
+    },
+    {
+      "code": "R062",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: \"Your facts: you are being asked to pay in cash only.\" (not on a SHEET line; reply 2 itself says \"the tool does not know whether it said cash only\")"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: \"You received a notice demanding $1,300 by September 30, 2026, handed to you\" (confirmed facts listed back that the cash-only question does not turn on)"},
+        {"reply": 3, "category": "ID", "evidence": "\"(registry_paid missing)\""},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: \"you have not yet paid rent into the registry or filed a motion to determine the amount\" (the next sentence says whether you have paid \"is not known yet\")"}
+      ]
+    },
+    {
+      "code": "R078",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_WRONG", "evidence": "\"whether a notice demanding cash only is considered “substantially the form” required by 83.56(3)\" (the statute reads \"substantially the following form\")"},
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: \"Your facts: you confirmed the notice demanded $1,300 and gave a payment date of 2026-09-30; you did not confirm it demanded cash only.\" (amount and date listed back, not used in the application)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"The parts of your lease the tool has read do not cover payment method; the rest of your lease may.\" (no word on what follows if the lease does or does not cover it, or that the tenant can check the lease)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "\"The lease does not regulate payment method; the parts of your lease the tool has read do not cover that; the rest of your lease may.\" (first clause is flat and no lease search was made; also \"No other case in the tool's collection addresses a cash-only demand\" said from one topic's result)"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: \"You confirmed the notice demanded $1,300 and gave a payment date of 2026-09-30\" (confirmed facts listed back, not used)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: \"The lease does not govern court-registry deposits; the parts of your lease the tool has read do not cover that; the rest of your lease may.\" (flat first clause, no lease search)"}
+      ]
+    },
+    {
+      "code": "R118",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 2,
+      "slips": [
+        {"reply": 2, "category": "ID", "evidence": "\"(See WHAT THE STATUTE DOES NOT SETTLE: whether a notice may add terms the form does not have, such as cash only, is an open question.)\""},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: \"Your facts: your notice stated payment date 2026-09-30 and amount demanded $1300\" (confirmed facts listed back, not used in the application)"},
+        {"reply": 3, "category": "CASE_MISREAD", "evidence": "\"you waive all defenses other than payment and the landlord is entitled to an immediate default judgment for removal. (McGuire v. Nelson, 388 So. 2d 42 ...\" (McGuire's printed rule is that the circuit court should have reviewed the appeal on the merits, expressly with no opinion on the tenant's argument; it does not say this)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: \"your lease shows a standard residential tenancy\" (no lease search for a contract for sale) and \"you can check exactly how many days remain by having the tool compute the deadlines once the registry-paid fact is confirmed\" (the open question says the tool does not compute this date)"},
+        {"reply": 4, "category": "ID", "evidence": "borderline: \"(get_deadlines)\" (tool name given as a source in the reply)"}
+      ]
+    }
+  ]
+}

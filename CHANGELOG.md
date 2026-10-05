@@ -5,6 +5,21 @@ session can see why the code is the way it is.
 
 ## 2026-10-05
 
+- Eval of items 81 to 84, with a story per knowledge state, a full eval, and a blind scoring (TODO item 85, done;
+  `docs/evals/2026-10-04-know/`). Six new stories, one per state, each where the deciding point is in that state,
+  across five playbooks (a fact not given, lease clauses the profile does not hold, a lease with no such clause, a
+  local code, an open question, a county with no court calendar; a new test lease, `current_orange`); the rubric's
+  GAP_AS_FACT and UNKNOWN_UNTIED; the eval's lease search count and lease-absence screen. The code before item 81
+  (6a30473, from a git worktree) and after (c71c87b), 23 stories, 3 runs each. By code: the six new stories met
+  every expectation in 18 of 18 runs (8 before); a lease point searched and its clause cited 9 of 9 (0 and 3 of 9);
+  turns saying the lease lacks something with no search 24 to 4 (those 4 the screen's false positives); the 17 older
+  stories 43 to 37 of 51, in turns known to vary between runs and none on a knowledge state. Blind, 18 scorers, both
+  sides mixed: legal answers applied well 20% to 28%; firm slips 181.5 to 138.5; GAP_AS_FACT firm 21.5 to 5.5;
+  UNKNOWN_UNTIED firm 17 to 7; ids and prompt names up, 12.5 to 21.5 firm. Found and fixed: the no-break space in a
+  cite (entry above). TODO: items 86 (whether a lease clause the tool has read can decide a condition without the
+  tenant), 87 (two eval checks counting right answers), 88 (prompt names and ids up), 89 (a lease searched and
+  misread), and a note on item 64. Chart shown in the session.
+
 - A cite written with a no-break space is read as a cite (found by the eval of TODO item 85). Was: in one run of the
   AC story the model wrote "(Lease Section\u202f7.2)" with a narrow no-break space; `agent.LEASE_CITE` matched a plain
   space only, so the program printed neither the clause nor the reading line under the reply, and

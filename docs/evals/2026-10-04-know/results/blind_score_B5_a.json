@@ -1,0 +1,185 @@
+{
+  "scorer": "B5_a",
+  "runs": [
+    {
+      "code": "R017",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: 'the landlord may not simply take the money without your objection' (reads the reverse of 83.49(3)(b): without an objection the landlord may deduct)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'Unless you object ... the landlord may deduct it' with nothing on whether the e-mailed notice meets 83.49(3)(a) / 83.505(1) (addendum not known)"},
+        {"reply": 3, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 4, "category": "OFFER", "evidence": "borderline: 'Let me know if you need any changes.'"},
+        {"reply": 5, "category": "CASE_MISREAD", "evidence": "'regardless of whether the damage was pre‑existing or not' (no printed case speaks to pre-existing damage); 'If the notice was defective in form or service, Casey suggests the same forfeiture rule applies' (Casey is about an untimely notice; no word on how alike)"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "forfeiture and 'must return it' given without the landlord's right to sue for damages after returning the deposit (Durene: 'independent action for damages is immaterial'); Plakhov v. Serova, in the same result and cutting the other way, left out"},
+        {"reply": 5, "category": "DATE_MADE", "evidence": "borderline: 'received the landlord’s notice September 21, 2026 (within 30 days)'; 'so the notice is timely on its face' (the model compared the dates itself)"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "borderline: 'If that notice was not the required written notice (e.g., email without an addendum under § 83.505), then under Durene the landlord would forfeit' (the other reading, a notice actually received in time under 83.505(6), is not given)"},
+        {"reply": 5, "category": "OVERCLAIM", "evidence": "borderline: 'then under these cases the judge would likely order the landlord to return the full deposit'"},
+        {"reply": 5, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'email without the addendum § 83.505 requires' is the turning point, but the reply never says the tenant can say whether an addendum was signed"}
+      ]
+    },
+    {
+      "code": "R064",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "'return the Premises in the same condition as at the Commencement Date, ordinary wear and tear excepted, broom‑clean, with carpets professionally cleaned, all personal property removed, all keys and remotes returned, and utilities left on through the date keys are returned (Lease Section 15.2)' (lease sentence copied word for word, no quote marks)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "'If you object in writing within that period, the landlord may not deduct the amount unless a court later finds the claim proper' (the cited 83.49(3)(b) words do not say it); 'the landlord may not deduct for carpet replacement or repainting based on them' (no cite, and the reply itself ends 'The lease and statute text I have do not answer whether pre‑existing stains defeat a claim')"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'If you do not object, the landlord may deduct the $650' with no word on whether the e-mailed notice meets 83.49(3)(a) / 83.505(1) (addendum not known)"},
+        {"reply": 3, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 4, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 5, "category": "GAP_AS_FACT", "evidence": "borderline: 'This tool has no cases on that.' (no search run for this question; the cases already printed in the chat bear on a judge returning the deposit)"}
+      ]
+    },
+    {
+      "code": "R068",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "'If you object, you must do so in writing to the landlord’s address within that period (Fla. Stat. 83.49(3)(b))' (objection_form reading picked as settled; the cited (3)(b) names no method or address)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: same sentence, 'in writing to the landlord’s address' cited to 83.49(3)(b), whose printed words do not say it"},
+        {"reply": 1, "category": "OFFER", "evidence": "'(If you would like to explore case law on deposit claims, let me know and I can retrieve relevant cases.)'"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'the landlord may deduct for damages beyond ordinary wear and tear' with no word on whether the e-mailed notice meets 83.49(3)(a) / 83.505(1)"},
+        {"reply": 3, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 4, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "'The landlord’s notice was sent by e‑mail on 2026‑09‑18' (09-18 is the date printed on the notice; when it was sent is not confirmed)"},
+        {"reply": 5, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'whether e‑mail notice is valid without an addendum is not settled by the statute' (83.505(1) does speak; the real unknown, whether the tenant signed an addendum, is not named and the reply does not say the tenant can settle it)"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "borderline: 'If the notice is deficient, the landlord may forfeit the right to claim against the deposit under the rule above.' (other reading, notice actually received in time, not given)"},
+        {"reply": 5, "category": "CASE_MISREAD", "evidence": "borderline: 'In Malagon v. Solari, the court affirmed that failure to give the required notice penalizes the landlord' (printed text does not show an affirmance); cases on late or missing notice applied to a 'deficient' e-mail notice with no word on how alike"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "'they forfeit the right to impose a claim on the deposit' given without the statute's 'may file an action for damages after returning the security deposit'; Plakhov v. Serova (same result, cuts against the tenant) left out"}
+      ]
+    },
+    {
+      "code": "R084",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "'the landlord may not simply deduct the amount and must either return the deposit or file a lawsuit to justify the claim' (no cite; not in the stored text)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'If you object in time, the landlord may not simply deduct' with no word on whether the e-mailed notice meets 83.49(3)(a) / 83.505(1)"},
+        {"reply": 3, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 4, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "'the judge can order the landlord to return the deposit and forfeit their right to make a claim against it' with no word that Durene lets the landlord keep an independent action for damages, and Plakhov v. Serova left out"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "the reply tests only timing ('Whether the landlord’s notice was timely turns on the date the notice was sent'); the e-mail / addendum condition (83.49(3)(a), 83.505(1)) is never mentioned though the notice came by e-mail"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "borderline: 'If the notice was sent after the 30 days, the judge could order the deposit returned' (the record shows the notice dated 09-18 and received 09-21, both before the 09-30 the program shows, so this is not an open point)"}
+      ]
+    },
+    {
+      "code": "R119",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "'The landlord’s notice claims $650 for carpet replacement and repainting due to stains.' (the SHEET reason is 'carpet replacement and repainting'; 'due to stains' is not in the record)"},
+        {"reply": 1, "category": "OVERCLAIM", "evidence": "borderline: 'No, you are not required to allow the deduction for pre‑existing stains.' (flat answer; the stains are not confirmed and the statute lets the landlord deduct unless the tenant objects)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'If you do not object in time, the landlord may deduct the amount' with no word on whether the e-mailed notice meets 83.49(3)(a) / 83.505(1)"},
+        {"reply": 3, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 4, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "'a landlord who fails to give the required notice of claim forfeits the right to impose a claim' with no word on the landlord's independent action for damages; Plakhov v. Serova left out"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "'If the landlord's claim is for pre‑existing damage and they fail to give proper notice, they may not be able to deduct' while the e-mail / addendum condition (83.49(3)(a), 83.505(1)) that the facts turn on is never named"},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "'The landlord’s notice claims $650 for carpet replacement and repainting due to stains.' (repeated; 'due to stains' is not in the record)"},
+        {"reply": 5, "category": "RECITED", "evidence": "borderline: paragraphs 2 to 4 repeat reply 1 ('You said the stains were there before you moved in and you have pictures', the $650 claim, the 15-day objection)"}
+      ]
+    },
+    {
+      "code": "R120",
+      "scenario": "eval_claim_carpet",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "'The landlord’s claim is for carpet replacement and repainting because of stains.' (the SHEET reason is 'carpet replacement and repainting'; 'because of stains' is not in the record)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: 'The lease says notices required by Chapter 83 must be delivered by hand, certified mail ... (Lease Section 22.1)' set in the paragraph on the landlord's e-mail notice; 22.1 is where and how the tenant sends notices to the landlord"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 'If you did not sign such an addendum, the notice may not be the required written notice, and the landlord may have forfeited the right to impose a claim' (the other reading, a notice actually received in time under 83.505(6), is not given)"},
+        {"reply": 2, "category": "ID", "evidence": "'(see WHAT THE STATUTE DOES NOT SETTLE)' (a prompt part's name in capitals)"},
+        {"reply": 3, "category": "OFFER", "evidence": "borderline: 'tell me if you want changes'"},
+        {"reply": 4, "category": "OFFER", "evidence": "'Once you send it, you can record the communication using add_communication ...' (an action the tenant did not ask for); also 'tell me if you want changes'"},
+        {"reply": 4, "category": "ID", "evidence": "'add_communication with sender \"tenant\", recipient \"landlord\", sent_on the date you send it, channel \"email\"' (tool and field names)"},
+        {"reply": 5, "category": "CASE_MISREAD", "evidence": "borderline: 'the court held that the landlord’s violation of the notice requirement forfeited his access to the security deposit, and the landlord had to return the deposit' (Durene's printed facts say the landlord returned the deposit himself; 'Yes' to a question about pre-existing damage with no word on how alike Durene's facts are)"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "'the landlord forfeits the right to impose a claim and must return the deposit' with no word that the landlord may still sue for damages (Durene: 'independent action for damages is immaterial'); Plakhov v. Serova left out"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "borderline: 'if you did not sign an addendum ... the notice may not be proper and the landlord forfeits the right to impose a claim' (other reading, 83.505(6), not given)"}
+      ]
+    },
+    {
+      "code": "R022",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'Whether the mold triggers a landlord duty under § 83.51(1) ... is not known yet—the tool does not hold those codes' (does not say who can settle it; reply 2 does)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: '(4) paying rent with knowledge does not waive the right (e.g., if the mold persists as a continuing issue)' (one reading of 83.56(5)(a) hinted; the other not given)"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: 'does not specifically mention mold. The statute and lease do not settle whether mold is a covered duty.' (no lease search; the lease's Section 8.5 does speak of mold)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'So you could end the lease only if (1) the mold is a landlord duty ...' leaves out that 83.51(1)'s duty 'may be altered or modified in writing' for a single-family home or duplex (SHEET: True)"}
+      ]
+    },
+    {
+      "code": "R038",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 'whether paying rent waived your right to end the lease is not settled because it turns on whether the mold continues' and '(which depends on whether the mold persists)' (one reading's test given as the hinge; the other reading not given)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'you cannot end the lease unless (1) you confirm a code or lease term makes the landlord responsible ...' leaves out that 83.51(1)'s duty 'may be altered or modified in writing' for a single-family home or duplex (SHEET: True)"}
+      ]
+    },
+    {
+      "code": "R044",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: 'If the landlord materially fails to comply with s. 83.51(1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention to terminate, the tenant may terminate the rental agreement' (83.56(1) copied almost word for word, no quote marks)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: 'The statute does not settle whether a building, housing, or health code requires the landlord to fix the mold; ... can tell you whether one covers this problem and can inspect the unit' (no cite; what a code office can do is not in the stored text)"}
+      ]
+    },
+    {
+      "code": "R046",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: 'Your notice was sent by email, but the lease requires statutory notices to be delivered by hand, certified mail, or overnight courier (Lease Section 22.1)' and 'If those notice problems were fixed' (e-mail called a defect from the lease alone; 83.56(4)'s allowance of e-mail under 83.505 not weighed)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'If those notice problems were fixed ... you could terminate the lease' leaves out that 83.51(1)'s duty 'may be altered or modified in writing' for a single-family home or duplex (SHEET: True)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "'whether the mold triggers a landlord duty under 83.51(1) and whether paying rent after learning of the mold waives your right remain open questions under the statute' (no word on who can settle the code point, and no word on what follows if the rent waives or does not)"},
+        {"reply": 2, "category": "QUOTES_ONLY", "evidence": "borderline: 'The lease and statute text I have do not answer that.' (83.51(1)(a), printed in reply 1, points to applicable codes and the tool lacks them; the reply says nothing of it)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "'The lease and statute text I have do not answer that.' (the question asks who can tell; the reply names no one, such as a code enforcement office)"}
+      ]
+    },
+    {
+      "code": "R065",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 'it may not waive the right if the mold continues' and '(the statute says it does not waive a continuing noncompliance)' (one reading of 83.56(5)(a) given as what the statute says; the other not given)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "'(the statute says it does not waive a continuing noncompliance)' (no cite; 83.56(5)(a) is not among the words the program printed for this reply)"},
+        {"reply": 2, "category": "ID", "evidence": "'(WHAT THE STATUTE DOES NOT SETTLE)' (a prompt part's name in capitals)"}
+      ]
+    },
+    {
+      "code": "R096",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: 'If the landlord had a duty to fix the mold and you delivered a notice stating you intend to end the lease, you could terminate after 7 days without repair.' leaves out the rent-waiver condition it names above and that 83.51(1)'s duty 'may be altered or modified in writing' for a single-family home or duplex"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'it depends on building, housing, or health codes not in the tool' (no word on who can settle it) and 'whether paying rent after knowing of the problem waives your right is not settled' (no word on what follows either way)"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: 'the lease does not expressly cover mold' (no lease search; the lease's Section 8.5 does speak of mold)"}
+      ]
+    }
+  ]
+}

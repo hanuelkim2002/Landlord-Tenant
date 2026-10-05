@@ -1,0 +1,89 @@
+{
+  "scorer": "B2_b",
+  "runs": [
+    {
+      "code": "R026",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "“You are hereby notified that you are indebted to me in the sum of dollars for the rent and use of the premises (address of leased premises, including county), Florida, now occupied by you and that I demand payment of the rent or possession of the premises within 3 days ..."},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "Your facts: your lease does not specify how rent must be paid; it only states the amount as $1,300 per month. (Lease Section 3.1) (no search of the lease for payment method was made; said flat from one clause)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: (the program’s record does not confirm whether your notice included a cash‑only demand, so that fact is not known yet.) what follows is given; who can settle it (tenant on the form, the notice) is not named"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "Your facts: the lease does not specify how rent must be paid; it only states the amount as $1,300 per month. (Lease Section 3.1)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: the record does not confirm whether your notice said cash only, so that fact is not known yet. (what follows both ways is given; who can settle it is not named)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: you must pay rent into the registry or file a motion to determine the amount within 5 days after service of process (leaves out the statute's \"excluding Saturdays, Sundays, and legal holidays\" and says nothing of the open count of the 5 days)"}
+      ]
+    },
+    {
+      "code": "R050",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: The statute does not settle whether a notice may demand cash only; 83.56(3) and 83.60(2) leave the form of the notice open. (no rule in plain words, no readings, nothing applied, where the stored form in 83.56(3) and the open question's readings speak to it)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Since that fact is not known yet, whether you can be required to pay cash only depends on it. (no word on what follows if the notice did and if it did not)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "Since that fact is not known yet, whether the notice was defective depends on it. (no word on what follows either way, though the case just quoted says a cash demand does not invalidate the notice)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: you would need to count 5 court business days after 2026-09-30 excluding weekends and holidays to know. (picks the court-business-day count for the 83.60(2) period; whether 83.60(2) uses the same holiday list is the open registry_count question)"}
+      ]
+    },
+    {
+      "code": "R051",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: Your lease says the landlord may refuse cash, so he cannot require you to pay in cash only (Lease Section 3.2). (flat answer from the lease alone; the notice-form question of a cash-only term in the 3-day notice, and Moskowitz, are not mentioned)"},
+        {"reply": 3, "category": "QUOTE_WRONG", "evidence": "“[t]he tenant is required to deposit the disputed rent into the court registry to assert any defense other than payment. The plain language of the statute requires it. The court correctly entered the default judgment.” (Stanley v. Quest International Investment, 50 So. 3d 672, 673 (Fla. 4th DCA 2010)) (the printed case puts this passage at 674)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: so you should check the specific deadline with the clerk or compute it using the tool’s deadline function. (the tool does not compute the registry date; the reply had just said the statute does not settle the count)"}
+      ]
+    },
+    {
+      "code": "R062",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "Your facts: you are being asked to pay in cash only. (not on a SHEET line; the next reply itself says the tool does not know whether the notice said cash only)"},
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "The lease says rent shall be paid by ACH transfer, electronic payment through the landlord’s designated resident portal, cashier’s check, or money order, and the landlord may refuse cash. (Lease Section 3.2) (lease words reproduced without quote marks)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: So: the landlord cannot require you to pay in cash only because the lease limits payment to those methods (flat answer from the lease alone; the notice-form open question and Moskowitz not mentioned)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: but the tool does not know whether it said cash only. / whether the notice demanded cash only is not known yet. (what follows both ways is given; who can settle it is not named)"},
+        {"reply": 3, "category": "ID", "evidence": "you have not yet paid rent into the registry or filed a motion to determine the amount (registry_paid missing)"},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Your facts: you were served with court papers on 2026-09-30, and you have not yet paid rent into the registry or filed a motion (registry_paid missing) (stated as a fact, then \"whether you have paid ... is not known yet\")"}
+      ]
+    },
+    {
+      "code": "R078",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: The lease does not regulate payment method; the parts of your lease the tool has read do not cover that; the rest of your lease may. (flat first clause; also \"No other case in the tool’s collection addresses a cash‑only demand\" said from one topic's result)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: The lease does not govern court‑registry deposits; the parts of your lease the tool has read do not cover that; the rest of your lease may. (flat first clause, hedged after)"}
+      ]
+    },
+    {
+      "code": "R118",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "The lease says rent shall be paid by ACH transfer, electronic payment through the landlord’s designated resident portal, cashier’s check, or money order, and the landlord may refuse cash. (Lease Section 3.2) (lease words reproduced without quote marks)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: Since the lease does not authorize a cash‑only requirement and the landlord may refuse cash, he cannot require you to pay in cash only. (flat answer from the lease alone; the notice-form open question and Moskowitz not mentioned)"},
+        {"reply": 2, "category": "ID", "evidence": "(See WHAT THE STATUTE DOES NOT SETTLE: whether a notice may add terms the form does not have, such as cash only, is an open question.)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: the record does not show whether it demanded cash only. (what follows both ways is given; who can settle it is not named)"},
+        {"reply": 3, "category": "CASE_MISREAD", "evidence": "you waive all defenses other than payment and the landlord is entitled to an immediate default judgment for removal. (McGuire v. Nelson, 388 So. 2d 42 (Fla. 5th DCA 1980); ... (the printed McGuire holds only that the circuit court wrongly refused to hear the appeal and says it expresses no opinion on the merits; it does not hold the waiver or default rule)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: you can check exactly how many days remain by having the tool compute the deadlines once the registry‑paid fact is confirmed. (the tool does not compute the registry date, per the open registry_count question)"},
+        {"reply": 3, "category": "ID", "evidence": "borderline: once the registry‑paid fact is confirmed (field name in hyphenated form)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Whether the five‑day period uses the same legal‑holiday list as the three‑day notice is an open question the statute does not settle. (does not say what it changes for the tenant or who can settle it; points to the tool, which does not compute it)"},
+        {"reply": 4, "category": "ID", "evidence": "until you confirm whether you have paid the rent the court papers claim into the court registry ... (get_deadlines)"}
+      ]
+    }
+  ]
+}

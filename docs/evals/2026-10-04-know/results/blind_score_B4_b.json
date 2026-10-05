@@ -1,0 +1,160 @@
+{
+  "scorer": "B4_b",
+  "runs": [
+    {
+      "code": "R001",
+      "scenario": "eval_cases_late_claim",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 2,
+      "slips": [
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "\"The lease and statute text I have do not answer whether the landlord may still sue you separately for damages\" (the printed 83.49(3)(a) says the landlord \"may file an action for damages after returning the security deposit\", Durene at 1210 says an independent damages action is immaterial; reply 1 had said it; Plakhov v. Serova from the same result is also left out)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: \"the notice was untimely, so the landlord's claim is barred regardless of objection\" (rule that the missed 15-day objection does not matter is stated with no cite to 83.49(3)(b) or any other source)"}
+      ]
+    },
+    {
+      "code": "R011",
+      "scenario": "eval_cases_late_claim",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 2,
+      "slips": [
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: \"So, based on these cases, the landlord likely forfeited the right to keep your deposit\" (relies on Durene, Malagon, Casey and leaves out Plakhov v. Serova, the case in the same result where the landlord's notice duty was excused by the tenant's missing 7-day notice, with no word on why it does not reach this tenant)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "\"Your lease does not contain a different attorney‑fees provision, so this statute controls.\" (no search of the lease; the lease clauses the tool printed say nothing on fees)"}
+      ]
+    },
+    {
+      "code": "R042",
+      "scenario": "eval_cases_late_claim",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "\"Therefore, the landlord may not keep any of the deposit; you are entitled to the full return of the deposit.\" (forfeiture stated without 83.49(3)(a)'s \"may file an action for damages after returning the security deposit\")"},
+        {"reply": 2, "category": "CASE_MISREAD", "evidence": "\"In Durene the tenant vacated, asked for the deposit back, and the landlord mailed the notice two months later\" (the printed Durene facts say nothing of a notice mailed two months later)"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: \"the court said the landlord could not use the deposit to offset damages and must return it\" (leaves out Durene's holding at 1210 that the landlord's independent action for damages is unaffected)"},
+        {"reply": 3, "category": "ONE_SIDED", "evidence": "\"Therefore, the landlord may not keep any of the deposit; you are entitled to the full return of the $1,000 deposit.\" (same omission of the landlord's right to sue for damages after returning the deposit)"},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "borderline: \"if the landlord were to prevail (which the statute bars given the late notice)\" (the statute bars only a claim on the deposit and a set-off; it still lets the landlord file an action for damages)"}
+      ]
+    },
+    {
+      "code": "R070",
+      "scenario": "eval_cases_late_claim",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: \"The landlord must return the deposit unless they sue separately\" (83.49(3)(a) lets the landlord sue for damages after returning the deposit, not instead of returning it)"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: \"the rule would mean the landlord must return the deposit\" (no word that Durene at 1210 leaves the landlord's independent damages action open)"}
+      ]
+    },
+    {
+      "code": "R115",
+      "scenario": "eval_cases_late_claim",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: \"If the notice was sent on or before July 30, 2026, the notice was timely\" and \"the key is the date it was actually sent (postmark or email date), which you can check\" (the record has the notice dated 2026-08-20, received 2026-08-24 by certified mail, so a send date on or before July 30 is not a live possibility; the 30-day condition is called not known against the record)"},
+        {"reply": 1, "category": "DEADLINE_REPEAT", "evidence": "\"If the notice was sent after July 30, 2026, the landlord forfeited the right to impose a claim\" and \"the 30‑day deadline has passed and the 15‑day objection deadline has passed\" (restates the printed deadline date and statuses)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: \"Your facts turn on whether the notice was sent after July 30, 2026\" (same invented unknown against the dated and received notice on the record)"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: \"If the notice was sent after that date, the rule above means the landlord cannot keep any of the deposit and must return the full amount.\" (no word that the landlord may still sue for damages after returning it, Durene at 1210)"},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: \"the cases indicate a judge would likely order the landlord to return your deposit\" (a prediction of what a judge will do)"},
+        {"reply": 2, "category": "DEADLINE_REPEAT", "evidence": "\"the 30‑day period after you moved out on June 30, 2026\" with \"after July 30, 2026\" (restates the printed deadline date)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: \"you will get your $700 back only if the notice was sent after July 30, 2026\" (the 30-day condition treated as turning on a send date the record contradicts)"},
+        {"reply": 3, "category": "ONE_SIDED", "evidence": "borderline: \"then the landlord forfeited the right to claim any of the deposit and must return the full $1,000\" (forfeiture stated without the landlord's right to sue for damages after returning the deposit)"},
+        {"reply": 3, "category": "DEADLINE_REPEAT", "evidence": "\"so the 30‑day period ended on July 30, 2026\" (restates the printed deadline date)"}
+      ]
+    },
+    {
+      "code": "R126",
+      "scenario": "eval_cases_late_claim",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "QUOTE_WRONG", "evidence": "(Fla. Stat. 83.49(3)(a) “within 30 days after termination”) reads \"within 30 days after the termination of the rental agreement\"; and Lease Section 4.3 “thirty (30) days to give written notice” reads \"thirty (30) days to give Tenant written notice\""},
+        {"reply": 2, "category": "CASE_MISREAD", "evidence": "\"the court said the landlord's late notice “forfeited his right to state a cause of action for damages” against the deposit\" (those words are the trial court's finding that the appellate panel reversed, Durene at 1209; Durene held the landlord's independent damages action survives; also \"Your facts match those cases\" with no word on how the facts differ)"},
+        {"reply": 2, "category": "QUOTE_WRONG", "evidence": "“forfeited his right to state a cause of action for damages” cited to (Durene v. Alcime, 448 So. 2d 1208, 1210); the words are at 1209"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: \"Judges have ruled that a landlord who sends the notice of claim after the 30‑day deadline loses the right to keep any of the deposit\" (relies on Durene, Malagon, Casey and leaves out Plakhov v. Serova, which cuts against a tenant who gave no 7-day notice)"},
+        {"reply": 3, "category": "QUOTE_WRONG", "evidence": "(Fla. Stat. 83.49(3)(a) “within 30 days after termination”) and Lease Section 4.3 “thirty (30) days to give written notice” are not word for word (statute: \"after the termination of the rental agreement\"; lease: \"to give Tenant written notice\")"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "\"the lease does not provide any other automatic deduction that survives a late notice\" (no search of the lease behind it)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "\"Your lease does not contain any attorney‑fee provision that alters this rule, so the statute controls.\" (no search of the lease behind it)"}
+      ]
+    },
+    {
+      "code": "R006",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"The tool cannot compute the date because it lacks a court holiday calendar for Orange County.\" and \"your last day to pay could be different\" (names no one who can settle it, such as the court clerk or the circuit's holiday list, and says little on what follows)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: \"Depending on whether the delivery day counts, whether weekends and holidays are excluded, and which holidays are considered\" (83.56(3) excludes Saturday, Sunday, and legal holidays; that is not an open point)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"The statute does not settle how the three days are counted, and the tool has no further information to resolve this.\" (gives both branches but names no one who can settle it)"}
+      ]
+    },
+    {
+      "code": "R010",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"So the last day to pay is not settled by the tool.\" (points to the notice's date but names no one who can settle the Orange County count)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"Because the tool cannot compute the 3‑day period, it cannot tell you which of those two situations applies to your facts.\" (both branches given, no one named who can settle it)"}
+      ]
+    },
+    {
+      "code": "R039",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "\"depends on excluding Saturdays, Sundays, and legal holidays\" (the rule is stated with no cite)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "\"which the tool cannot determine without that calendar\" (no what-follows either way, no one named who can settle it)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"Since the tool cannot say which is true, it cannot give a definitive answer.\" (both branches given, no one named who can settle it)"}
+      ]
+    },
+    {
+      "code": "R075",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "\"The rule: If the tenant fails to pay rent when due and the default continues for 3 days, excluding Saturday, Sunday, and legal holidays, after delivery of written demand ... the landlord may terminate the rental agreement\" followed by the form statement “You are hereby notified that you are indebted to me ...” (statute passages pasted)"},
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: the rule sentence \"If the tenant fails to pay rent when due and the default continues for 3 days, excluding Saturday, Sunday, and legal holidays, after delivery of written demand by the landlord for payment of the rent, the landlord may terminate the rental agreement\" is statute text word for word without quote marks"},
+        {"reply": 2, "category": "RECITED", "evidence": "\"The rule: If the tenant fails to pay rent when due and the default continues for 3 days ...\" pasted again, then the form's contents listed"},
+        {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "borderline: same 83.56(3) sentence reproduced without quote marks"},
+        {"reply": 2, "category": "QUOTES_ONLY", "evidence": "borderline: \"but it does not settle whether accepting the full rent after the notice period waives the right\" (the printed 83.56(5)(a) first sentence says that if the landlord accepts rent with actual knowledge of a noncompliance the right to terminate is waived; stored text answers)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"because it needs the Orange County court‑holiday calendar to count the three days\" (no one named who can settle it in this reply, unlike reply 1's clerk's office)"}
+      ]
+    },
+    {
+      "code": "R089",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: \"depends on the open question of whether the count excludes the delivery day, weekends, legal holidays, and when the last day ends\" (83.56(3) excludes Saturday, Sunday, and legal holidays; not an open point)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"so the last day to pay is not known yet\" (points to the notice's date, names no one who can settle the Orange County count)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"it is not known yet whether the three‑day period had run by October 9\" (both branches given, no one named who can settle it)"}
+      ]
+    },
+    {
+      "code": "R122",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"The tool could not compute your last day to pay because it lacks a court holiday calendar for Orange County.\" (no one named who can settle it)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: \"the tool cannot determine that because it lacks a court holiday calendar for Orange County\" (both branches given, no one named who can settle it)"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: \"you have not paid any of the demanded rent and have not withheld rent for repairs\" (confirmed sheet answers listed back, not all turned on)"}
+      ]
+    }
+  ]
+}
