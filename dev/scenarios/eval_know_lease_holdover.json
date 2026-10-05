@@ -1,0 +1,124 @@
+{
+  "about": "lease_ending. The state: a lease clause the profile does not hold but the lease has. The lease ends 2026-12-31; asked whether the lease says what happens if the tenant keeps paying after it ends (the test lease's Section 2.4, a month-to-month holdover with consent) and whether it charges a late fee (Section 3.3); neither is a profile clause. The answers must search the lease and cite 2.4 and 3.3, never saying the lease does not mention them. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": [
+    "new",
+    "t-test",
+    "dev/leases/ends_2026-12-31.pdf",
+    "My lease ends December 31, 2026 and I haven't decided yet if I'll stay. I might just keep paying rent after that without signing anything new.",
+    ""
+  ],
+  "sheet": {
+    "Tenant has received the landlord's written notice that the landlord intends to keep all or part of the security deposit (a claim on the deposit)": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has not returned the tenant's security deposit and has not sent a written claim against it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord, or someone sent by the landlord, entered the tenant's unit without notice or at an unreasonable time": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The lease is ending or the tenancy is being ended; notice to leave or renew, and staying on after the end": [
+      "yes",
+      "yes",
+      "yes"
+    ],
+    "A neighbor or another tenant keeps disturbing the tenant (noise, parties, or similar), and the tenant wants the landlord to deal with it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written demand for unpaid rent or possession (the 3-day notice)": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written notice about a lease violation other than unpaid rent (the 7-day notice)": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has raised the rent or says the rent will go up": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Something in the unit needs repair and the landlord has not fixed it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant wants to move out before the lease term ends": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Does your lease have a fixed end date": [
+      "yes"
+    ],
+    "What date does your lease term end": [
+      "12/31/2026"
+    ],
+    "require notice before moving out at the end": [
+      "yes"
+    ],
+    "What does the lease say about that notice": [
+      "60 days written notice before the end"
+    ],
+    "landlord sent you a written notice listing that requirement": [
+      "no"
+    ],
+    "given the landlord written notice that you are leaving": [
+      "no"
+    ],
+    "plan to stay after": [
+      "yes"
+    ],
+    "landlord agreed that you may stay": [
+      "?",
+      "?",
+      "?"
+    ]
+  },
+  "chat": [
+    "Does my lease say what happens if I keep paying rent after it ends?",
+    "Does my lease charge a late fee if I pay a few days late?"
+  ],
+  "expect": {
+    "issues": [
+      "lease_ending"
+    ],
+    "turns": [
+      {
+        "say": "keep paying rent after it ends",
+        "called": [
+          "search_lease"
+        ],
+        "must": [
+          "(?i)Lease Section 2\\.4"
+        ],
+        "must_not": [
+          "(?i)lease (does not|doesn't|did not) (mention|say|contain|address|include|have)"
+        ]
+      },
+      {
+        "say": "late fee",
+        "called": [
+          "search_lease"
+        ],
+        "must": [
+          "(?i)Lease Section 3\\.3"
+        ],
+        "must_not": [
+          "(?i)lease (does not|doesn't|did not) (mention|say|contain|address|include|have)"
+        ]
+      }
+    ],
+    "not_covered_note": false
+  }
+}

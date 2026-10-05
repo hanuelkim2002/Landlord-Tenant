@@ -39,7 +39,9 @@ cases not given (a "Name v. Name" in a reply that no get_cases result in the ses
 ch. 83 cite outside quote marks whose words no quote in the same reply holds, citations.cites_without_quote:
 a rule retold instead of quoted, TODO item 54; since item 73 the wanted form, the program printing the words),
 recited (more than RECITED_CHARS quoted characters, or RECITED_FACTS lines listing what the tenant confirmed or
-said, TODO item 73), deadlines the program printed itself (asked when, the model
+said, TODO item 73), lease searches (turns calling search_lease) and a lease said to lack something with no
+search_lease call before it in the session (LEASE_ABSENT, "absent", TODO item 85), deadlines the program printed
+itself (asked when, the model
 did not call get_deadlines, TODO item 65; the turn's "calls get_deadlines" still counts only the model), and two word
 screens that mark a reply for a person to read: CHOOSE_WORDS (you should, your best option, I recommend ...)
 and OFFER_WORDS (would you like me to ...). The screens find candidates; they are not verdicts. Since
@@ -87,6 +89,11 @@ CASE_NAME = re.compile(r"\b[A-Z][A-Za-z.&'’]+(?: [A-Z][A-Za-z.&'’]+)* v\. [A
 OFFER_WORDS = re.compile(r"\b(would you like|do you want me|if you(?:'d| would) like|i can (?:draft|help|"
                          r"prepare|write)|next steps?|you (?:could|might) (?:consider|want))\b", re.I)
 FIELD_NAME = re.compile(r"\b[a-z]+(?:_[a-z]+)+\b")          # forwarding_address_given; file names have digits
+# The lease said to lack something (TODO item 85): "the lease does not mention any late fee" was said from the clauses
+# the tool reads, though the lease had one. Counted when no search_lease call came before it in the session.
+LEASE_ABSENT = re.compile(r"\b(?:your|the) lease (?:does not|doesn't|did not|has no|contains no|says nothing|is silent|"
+                          r"makes no)\b|\bno (?:clause|provision|term|mention)\b[^.\n]{0,40}\b(?:in|of) (?:your|the) lease\b",
+                          re.I)
 # the names of the system prompt's parts as the prompt writes them, which a reply never copies (TODO item 53): the
 # names before item 61, the names since (agent.PARTS, in capitals; "your lease" in plain words is the wanted form),
 # and a rule's number ("rule 8"; not a court rule's "Rule 1.070")
@@ -301,6 +308,7 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
         "cases_used": sorted({m.group(0) for m in CASE_NAME.finditer(text) if case_given(m.group(0), fetched)}),
         "offer_words": sorted({m.group(0) for m in OFFER_WORDS.finditer(bare)}),
         "field_names": sorted(set(FIELD_NAME.findall(bare))),
+        "lease_absent": sorted({m.group(0) for m in LEASE_ABSENT.finditer(bare)}),
         "prompt_names": sorted(set(PROMPT_NAME.findall(text))),
         # a section named outside quote marks with none of its words quoted in the same reply: retold (item 54)
         "cites_unquoted": sorted({c for r in replies for c in cites_without_quote(r)}),
@@ -429,10 +437,12 @@ def score_run(entry, scenario, out):
     for e in entries:                                  # not the printed deadlines: the model never sees them
         if e["role"] in ("tenant", "sheet"):
             known |= dates_in(" ".join(str(e.get(k) or "") for k in ("text", "value", "typed")))
-    measured, fetched = [], ""
+    measured, fetched, searched = [], "", False
     for t in turns:
         fetched += "\n".join((e.get("text") or "") for e in t["entries"] if e["role"] == "tool" and e["name"] == "get_cases")
         measured.append(measure_turn(t, frozenset(known), fetched))
+        searched = searched or "search_lease" in measured[-1]["called"]
+        measured[-1]["lease_absent_unsearched"] = bool(measured[-1]["lease_absent"]) and not searched   # item 85
     unrecovered = [not t["replies"] and any(e["role"] == "check" and "no reply came back" in e["text"]
                                             for e in turn["entries"]) for t, turn in zip(measured, turns)]
     gateway = any(sign in screen for sign in GATEWAY_SIGNS) or any(a and b for a, b in zip(unrecovered, unrecovered[1:]))
@@ -455,6 +465,8 @@ def score_run(entry, scenario, out):
         "cases_not_given": sum(bool(t["cases_not_given"]) for t in measured),
         "offer_screen": sum(bool(t["offer_words"]) for t in measured),
         "field_names": sum(bool(t["field_names"]) for t in measured),
+        "lease_searches": sum("search_lease" in t["called"] for t in measured),
+        "lease_absent": sum(bool(t.get("lease_absent_unsearched")) for t in measured),
         "prompt_names": sum(bool(t.get("prompt_names")) for t in measured),
         "cites_unquoted": sum(bool(t["cites_unquoted"]) for t in measured),
         "deadlines_by_program": sum(t["deadlines_by_program"] for t in measured),
@@ -475,13 +487,13 @@ def score(out):
                                                  "empty_turns": 0, "cautions": 0, "quotes_only": 0, "choose_screen": 0,
                                                  "dates_made": 0, "cases_not_given": 0,
                                                  "offer_screen": 0, "field_names": 0, "prompt_names": 0, "cites_unquoted": 0, "echo": 0, "recited": 0,
-                                                 "deadlines_by_program": 0,
+                                                 "deadlines_by_program": 0, "lease_searches": 0, "lease_absent": 0,
                                                  "footers": 0,
                                                  "failed": {}})
         row["runs"] += 1
         for key in ("crashed", "gateway_trouble", "expected_ok", "replies", "empty_turns", "cautions", "quotes_only",
                     "choose_screen", "dates_made", "cases_not_given", "offer_screen", "field_names", "prompt_names",
-                    "cites_unquoted", "echo", "footers", "deadlines_by_program", "recited"):
+                    "cites_unquoted", "echo", "footers", "deadlines_by_program", "recited", "lease_searches", "lease_absent"):
             row[key] += int(s[key])
         for x in s["expect"]:
             if not x["ok"]:
@@ -489,13 +501,14 @@ def score(out):
     (out / "summary.json").write_text(json.dumps(summary, indent=2))
     print(f"\n{'scenario':<28}{'runs':>5}{'gw':>4}{'ok':>4}{'replies':>8}{'empty':>6}{'caut':>5}{'qonly':>6}"
           f"{'choose?':>8}{'dates':>6}{'cases':>6}{'offer?':>7}{'field':>6}{'prompt':>7}{'retold':>7}{'echo':>5}{'footer':>7}"
-          f"{'dl-prog':>8}{'recite':>7}")
+          f"{'dl-prog':>8}{'recite':>7}{'search':>7}{'absent':>7}")
     for name, row in summary.items():
         print(f"{name:<28}{row['runs']:>5}{row['gateway_trouble']:>4}{row['expected_ok']:>4}{row['replies']:>8}{row['empty_turns']:>6}"
               f"{row['cautions']:>5}{row['quotes_only']:>6}{row['choose_screen']:>8}{row['dates_made']:>6}"
               f"{row['cases_not_given']:>6}{row['offer_screen']:>7}{row['field_names']:>6}{row['prompt_names']:>7}"
               f"{row['cites_unquoted']:>7}"
-              f"{row['echo']:>5}{row['footers']:>7}{row['deadlines_by_program']:>8}{row['recited']:>7}")
+              f"{row['echo']:>5}{row['footers']:>7}{row['deadlines_by_program']:>8}{row['recited']:>7}"
+              f"{row.get('lease_searches', 0):>7}{row.get('lease_absent', 0):>7}")
         for what, n in row["failed"].items():
             print(f"    failed {n}x: {what}")
 

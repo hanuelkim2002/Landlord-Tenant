@@ -60,6 +60,15 @@ Applying:
   "may file an action for damages after returning the security deposit").
 - CHOICE_MADE: the reply chooses for the tenant ("you should withhold rent", "your best option is to sue",
   "I recommend"). Laying out options and what each requires is the wanted form.
+- GAP_AS_FACT (since 2026-10-04, TODO item 85): a point the tool does not know stated as a fact: "the lease does not
+  mention X" said from the clauses the tool reads, with no search of the lease that found nothing, or when a search
+  found the clause; "the landlord forfeited the deposit" while whether a notice came is not confirmed; "your
+  county's code requires it"; a date or a yes or no for a period the program could not count. The program's options
+  and its list of what the tool does not know give each such point as one the tenant can tell the tool, can check,
+  not settled, or outside the tool; saying which, and what follows either way, is the wanted form.
+- UNKNOWN_UNTIED (since 2026-10-04, TODO item 85): an unknown named without what it changes for the tenant ("that
+  depends on your lease" and nothing on what follows if it does and if it does not), or without who can settle it
+  (the tenant on the form, the tenant checking the lease, a notice, a code office), when the answer turns on it.
 - OVERCLAIM: a prediction the record cannot support ("you will win", "you are safe", "you will get your money
   back") rather than what follows on the facts under the quoted rule.
 

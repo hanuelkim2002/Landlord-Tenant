@@ -61,6 +61,13 @@ NO_PETS = [('10.1. Authorized Pet. Tenant may keep one (1) spayed or neutered do
             "10.1. No Pets. No animal of any kind may be kept on the Premises, even for a short time, without a \n"
             "written Pet Addendum signed by Landlord.")]
 
+# A house in a county with no court holiday calendar in calendars/ (TODO item 85): the 3-day notice's period cannot be
+# counted there, so whether it has passed is outside the tool.
+ORANGE = [("located at 2217 SW 35th Place, Gainesville, Alachua County, Florida 32608",
+           "located at 1450 Lake Baldwin Lane, Orlando, Orange County, Florida 32814"),
+          ("storm warning for Alachua \nCounty, Tenant shall", "storm warning for Orange \nCounty, Tenant shall"),
+          ("exclusively in the courts of Alachua \nCounty, Florida.", "exclusively in the courts of Orange \nCounty, Florida.")]
+
 # A tenancy under way when the stories happen (September 2026): from August 1, 2026, a year.
 CURRENT = term("August 1, 2026", "July 31, 2027", "July 15, 2026")
 
@@ -71,8 +78,11 @@ CURRENT = term("August 1, 2026", "July 31, 2027", "July 15, 2026")
 LEASES = {
     "current": CURRENT,                                                   # entry_shower, noise_neighbors,
                                                                           # repair_mold_apt, nc_mixed_heater,
-                                                                          # nc_roommate, nc_towing
+                                                                          # nc_roommate, nc_towing,
+                                                                          # know_violation_waterbed,
+                                                                          # know_violation_guest, know_repair_mold_code
     "current_no_pets": CURRENT + NO_PETS,                                 # violation_dog, cases_retaliation
+    "current_orange": CURRENT + ORANGE,                                   # know_nonpayment_orange
     "cash_1300": CURRENT + rent("ONE THOUSAND THREE HUNDRED", "1,300.00", "2,600.00")
                  + deposit("ONE THOUSAND THREE HUNDRED", "1,300.00"),     # cases_3day_cash
     "taped_1100": CURRENT + rent("ONE THOUSAND ONE HUNDRED", "1,100.00", "2,200.00")
@@ -84,11 +94,12 @@ LEASES = {
                         + deposit("ONE THOUSAND", "1,000.00"),            # cases_late_claim
     "ended_2026-07-31": term("August 1, 2025", "July 31, 2026", "July 15, 2025")
                         + rent("NINE HUNDRED", "900.00", "1,800.00")
-                        + deposit("NINE HUNDRED", "900.00"),              # deposit_ghosted
+                        + deposit("NINE HUNDRED", "900.00"),              # deposit_ghosted, know_deposit_unsure
     "ended_2026-08-31": term("September 1, 2025", "August 31, 2026", "August 15, 2025")
                         + rent("ONE THOUSAND TWO HUNDRED", "1,200.00", "2,400.00")
                         + deposit("ONE THOUSAND TWO HUNDRED", "1,200.00"),  # claim_carpet
-    "ends_2026-12-31": term("January 1, 2026", "December 31, 2026", "December 15, 2025"),  # lease_end_renewal
+    "ends_2026-12-31": term("January 1, 2026", "December 31, 2026", "December 15, 2025"),  # lease_end_renewal,
+                                                                          # know_lease_holdover
     # a year's term that ended on 2025-09-30: month to month since, under the lease's own Section 2.4
     "month_to_month_950": term("October 1, 2024", "September 30, 2025", "September 15, 2024")
                           + rent("NINE HUNDRED FIFTY", "950.00", "1,900.00")

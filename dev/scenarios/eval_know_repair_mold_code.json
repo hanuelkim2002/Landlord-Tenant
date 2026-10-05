@@ -1,0 +1,130 @@
+{
+  "about": "repair_not_made. The state: a local code. Mold on a bedroom wall of a single-family house since 2026-09-08, reported by e-mail 2026-09-10; the landlord says it is the tenant's job; the tenant says the lease does not promise that repair, and the problem is not the structure or the plumbing. Whether the landlord had a duty to fix it then turns on a building, housing, or health code the tool does not hold: the answer must say so and point to the code enforcement office, with what ending the lease would be either way. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": [
+    "new",
+    "t-test",
+    "dev/leases/current.pdf",
+    "Black mold has been growing on my bedroom wall since September 8, 2026. I emailed the property manager about it on September 10, 2026 and they told me it's my job to keep the house dry. I have asthma. I'm still paying rent.",
+    ""
+  ],
+  "sheet": {
+    "Tenant has received the landlord's written notice that the landlord intends to keep all or part of the security deposit (a claim on the deposit)": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has not returned the tenant's security deposit and has not sent a written claim against it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord, or someone sent by the landlord, entered the tenant's unit without notice or at an unreasonable time": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The lease is ending or the tenancy is being ended; notice to leave or renew, and staying on after the end": [
+      "no",
+      "no",
+      "no"
+    ],
+    "A neighbor or another tenant keeps disturbing the tenant (noise, parties, or similar), and the tenant wants the landlord to deal with it": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written demand for unpaid rent or possession (the 3-day notice)": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Tenant received a landlord's written notice about a lease violation other than unpaid rent (the 7-day notice)": [
+      "no",
+      "no",
+      "no"
+    ],
+    "The landlord has raised the rent or says the rent will go up": [
+      "no",
+      "no",
+      "no"
+    ],
+    "Something in the unit needs repair and the landlord has not fixed it": [
+      "yes",
+      "yes",
+      "yes"
+    ],
+    "Tenant wants to move out before the lease term ends": [
+      "no",
+      "no",
+      "no"
+    ],
+    "What is the problem that needs repair": [
+      "black mold growing on the bedroom wall"
+    ],
+    "roof, windows, doors, floors": [
+      "no"
+    ],
+    "must repair this kind of problem": [
+      "no"
+    ],
+    "problem start": [
+      "9/8/2026"
+    ],
+    "single-family house or a duplex": [
+      "yes"
+    ],
+    "caused by you": [
+      "no"
+    ],
+    "delivered a written notice to the landlord": [
+      "yes"
+    ],
+    "written notice delivered to the landlord": [
+      "9/10/2026"
+    ],
+    "How did you deliver the written notice": [
+      "email to the property manager"
+    ],
+    "intend to end the lease": [
+      "no"
+    ],
+    "intend not to pay rent": [
+      "no"
+    ],
+    "paid rent since you knew": [
+      "yes"
+    ],
+    "What has the landlord said or done": [
+      "they said it's my job to keep the house dry"
+    ],
+    "filed an eviction case": [
+      "no"
+    ]
+  },
+  "chat": [
+    "Can I break my lease because of the mold?",
+    "Who can tell me whether the mold breaks a housing code?"
+  ],
+  "expect": {
+    "issues": [
+      "repair_not_made"
+    ],
+    "turns": [
+      {
+        "say": "break my lease because of the mold",
+        "applied": true,
+        "open_first": true,
+        "must": [
+          "(?i)\\bcodes?\\b"
+        ]
+      },
+      {
+        "say": "Who can tell me",
+        "must": [
+          "(?i)code enforcement|health department|city|county"
+        ]
+      }
+    ],
+    "not_covered_note": false
+  }
+}

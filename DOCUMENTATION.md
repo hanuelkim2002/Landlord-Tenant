@@ -892,8 +892,9 @@ Offline checks (no model call, no key needed):
   signed)`, `rent(words, figure, fee)` (with the early termination fee, two months' rent), `deposit(words,
   figure)`, `NO_PETS`. A change whose old words are not in the text exactly once stops the build. `pdf_bytes`
   writes a plain PDF (each line in order, Helvetica, WinAnsiEncoding), and `build` reads it back and checks its
-  text is the changed text. Ten leases: `current` (2026-08-01 to 2027-07-31, the old rent and deposit), with
-  `_no_pets`, `cash_1300`, `taped_1100`, `family_1050`, three ended ones (`ended_2026-06-30`, `-07-31`,
+  text is the changed text. Eleven leases: `current` (2026-08-01 to 2027-07-31, the old rent and deposit), with
+  `_no_pets`, `_orange` (the house in Orlando, Orange County, whose 3-day period the tool cannot count: no court
+  calendar for that county; `ORANGE`, TODO item 85), `cash_1300`, `taped_1100`, `family_1050`, three ended ones (`ended_2026-06-30`, `-07-31`,
   `-08-31`), `ends_2026-12-31`, and `month_to_month_950` (a term that ended 2025-09-30, month to month since
   under the lease's Section 2.4). Gemma reads each with the story's term, rent, and deposit (checked
   2026-10-03).
@@ -1001,7 +1002,9 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   a case a `get_cases` result in the session gave, `case_given` matching it with or without leading words such
   as "In"; a court question answered from cases given earlier also counts as calling `get_cases`), and
   `screen_must_not`. Every reply is also
-  measured: empty turns, program cautions, field names, a computed deadline the program printed found in the reply
+  measured: empty turns, program cautions, field names, lease searches (turns calling `search_lease`) and "absent"
+  (`LEASE_ABSENT`: a reply saying the lease lacks something, "the lease does not mention", with no `search_lease` call
+  before it in the session; TODO item 85), a computed deadline the program printed found in the reply
   (the model never sees one, so it counted it; not when the date is also a fact the record holds), recited
   (`recited`: more than `RECITED_CHARS`, 300, characters in quote marks, or `RECITED_FACTS`, 3, lines of "You
   confirmed" or "You said"; TODO item 73), quotes only (a quote
@@ -1017,7 +1020,8 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   included, in capitals, or a rule's number such as "rule 8"; TODO items 53, 61, and 83). Since 2026-10-02 (TODO item 49) a legal question's
   turn expects `applied` instead of "does not decide", and the `LAW_WORDS` screen and the `must_not` patterns
   against "entitled", "allowed", "forfeit", and case names are gone. The blind scorers' rubric is
-  `dev/eval_rubric.md` (applied answers: OPTION_BEFORE_OPEN and RECITED since TODO items 72 and 73, QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,
+  `dev/eval_rubric.md` (applied answers: OPTION_BEFORE_OPEN and RECITED since TODO items 72 and 73, GAP_AS_FACT and
+  UNKNOWN_UNTIED since item 85, QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,
   OPEN_CLOSED, CASE_MISREAD, ONE_SIDED, CHOICE_MADE, OVERCLAIM, LAW_UNSOURCED, DATE_MADE, ID, and the quoting
   and letter categories). A run with signs that the gateway failed
   (the driver's timeout, an empty answer where JSON was expected, or two unrecovered empty turns in a row) is
@@ -1034,7 +1038,15 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   covered problem next to an uncovered one (`nc_mixed_heater`), and three with facts like a case in the wiki
   and plain questions about judges (`cases_late_claim`, `cases_3day_cash`, `cases_retaliation`), and the
   author's AC story of 2026-10-04 (`repair_ac_terminate`: asked how to end the lease, the answer must say it is
-  not settled; TODO items 72 and 73); run with
+  not settled; TODO items 72 and 73), and six stories of what the tool knows (TODO item 85), one per state, each
+  where the deciding point is in that state: `know_deposit_unsure` (a fact the tenant has not given: whether a notice
+  of a claim came, skipped on the sheet), `know_lease_holdover` (lease clauses the profile does not hold but the
+  lease has: the holdover, 2.4, and the late charge, 3.3; `search_lease` must be called and each cited),
+  `know_violation_waterbed` (a lease with no such clause: the search finds nothing on waterbeds),
+  `know_repair_mold_code` (a local code: mold, the lease not promising the repair, so the duty turns on a code the
+  tenant can check with code enforcement), `know_violation_guest` (an open question: whether a guest staying over is
+  a violation the tenant should be given a chance to cure), and `know_nonpayment_orange` (outside the tool: a 3-day
+  notice in Orange County, which has no court calendar); run with
   `WIKI_UNVERIFIED=1` until pages are verified. Each scenario's `about` says what it tests.
 - `streamlit run app.py`: the web page (see `app.py` in Modules), on http://localhost:8501 only. The same
   model calls as `run.py`. Stop it with Ctrl-C in its terminal.
