@@ -14,8 +14,8 @@ import json
 from datetime import datetime
 
 import record
-from corpus import playbooks
-from lease import clauses_about
+from corpus import fact_lease, playbooks
+from lease import LABELS, clauses_about, lease_cite
 from record import confirm_fact, confirm_issue, element_status, read_events, reject_issue, save
 
 
@@ -26,7 +26,8 @@ def pending_rows():
     active issues in playbook order (kind "fact"). Each row: kind, issue, id, type, question, status,
     suggested (a value or None), basis (the tenant's words behind the suggestion, or why an issue was
     suggested), confirmed (for changed), lease_says (the lease's words, when the lease field named in the
-    playbook differs from the suggestion)."""
+    playbook differs from the suggestion), lease_clause (the lease clause the question is about, corpus.fact_lease,
+    or None; TODO item 81)."""
     rows = [{"kind": "issue", "issue": p["issue"], "id": "issue:" + p["issue"], "type": "bool",
              "question": f"This looks like: {playbooks[p['issue']].description} Is that part of your situation?",
              "status": "suggested", "suggested": None, "basis": p["because"], "confirmed": None, "lease_says": None}
@@ -46,6 +47,7 @@ def pending_rows():
                 "basis": s.get("basis"),
                 "confirmed": s.get("value") if s["status"] == "changed" else None,
                 "lease_says": s.get("lease_says"),
+                "lease_clause": fact_lease.get(s["id"]),
             })
     return rows
 
@@ -102,9 +104,22 @@ def suggestion(r):
     return parse_answer(r["type"], shown(r["suggested"]))[0]
 
 
+def clause_note(field):
+    """The lease clause a question is about, for the sheet (TODO item 81): its words as the tool read them, with
+    the cite; or that the tool's reading found no such clause, or did not read that part of the lease, so the tenant
+    checks the lease itself."""
+    clause = getattr(record.profile, field, None) if record.profile is not None else None
+    if clause is None:
+        return f"the tool has not read the part of your lease on {LABELS[field]}: check your lease itself"
+    if not clause.present:
+        return f"the tool's reading of your lease found no clause on {LABELS[field]}; check your lease itself"
+    return f"your lease's clause on {LABELS[field]} ({lease_cite(clause)}), as the tool read it: \"{' '.join(clause.quote.split())}\""
+
+
 def row_notes(r):
     """The lines shown under a row's question: a confirmed value next to the update's, the suggestion with the
-    tenant's words it came from, the lease's words where they differ, and why an issue was suggested."""
+    tenant's words it came from, the lease's words where they differ, the lease clause the question is about
+    (clause_note), and why an issue was suggested."""
     notes = []
     if r["status"] == "changed":
         notes.append(f"you confirmed: {shown(r['confirmed'])}   your update says: {shown(r['suggested'])}")
@@ -112,6 +127,8 @@ def row_notes(r):
         notes.append(f"suggested: {shown(suggestion(r))}, from your words: \"{r['basis']}\"")
     if r["lease_says"]:
         notes.append(f"your lease says: \"{r['lease_says']}\" (shown for comparison; this tool does not decide which is right)")
+    if r.get("lease_clause"):
+        notes.append(clause_note(r["lease_clause"]))
     if r["kind"] == "issue":
         notes.append(f"suggested because of: {r['basis']}")
     return notes

@@ -6,6 +6,7 @@ from datetime import date, datetime, timedelta
 
 from calendars import court_calendar, holidays_in
 from config import agent_llm, squash
+from lease import LABELS, lease_cite
 
 
 # ---- Element Status
@@ -180,37 +181,108 @@ def matter_deadlines(playbooks, facts, today):
 # ---- Options: whether each thing the statute lets the tenant do is open on the confirmed facts, and how far its
 # steps have got (TODO item 72). A reply had told the tenant how to end the lease over an AC not repaired, and only
 # the next reply said an AC may not be a duty 83.56(1) reaches; so the program decides openness first.
+#
+# What the tool knows (TODO item 81, the author's decision of 2026-10-04): each condition (gate) is met through one
+# of its ways (a confirmed fact, a clock, a lease clause, something the tenant can check, law outside the tool), and
+# the program says which of five things it is: known (met, not met, or not met yet), something the tenant can tell
+# the tool (a fact the sheet asks), something the tenant can check (a part of the lease the tool has not read, a
+# local code, a document), not settled (an open question), or outside the tool. The model said "the lease does not
+# mention air conditioning" from a lease it had not read whole, and called ending the lease over an AC not settled
+# on the statute alone while the lease promised the repair.
 
-def check_options(playbook, facts, today):
-    """Each option of the playbook with its status, from the confirmed facts only: "closed" when a gate's fact is
-    confirmed against it and that closes it; else "not known yet" while a gate's fact is not confirmed; else "not
-    settled" when a gate's fact points to an open question; else "open". Each gate is "met", "closed", "not
-    settled", or "not known yet"; each step "done" (its fact confirmed with its value, or its clock's date
-    passed), "waiting" (its clock's date upcoming), or "to do". Returns [{"option", "label", "cite", "status",
-    "gates", "steps", "also_open"}]."""
-    clocks = {row["clock"]: row.get("status") for row in compute_deadlines(playbook, facts, today)}
+# The state of a way or a gate, best first: a gate takes the best state among its ways, since any way meets it.
+STATES = ["met", "tell", "check", "not settled", "outside", "not met yet", "not met"]
+# What each state means for the condition, and what the tool knows of it, in words for the prompt.
+STATUS = {"met": "met", "not met": "not met", "not met yet": "not met yet", "tell": "not known yet",
+          "check": "not known yet", "not settled": "not settled", "outside": "outside the tool"}
+KNOWLEDGE = {"met": "known", "not met": "known", "not met yet": "known", "tell": "the tenant can tell the tool",
+             "check": "the tenant can check", "not settled": "not settled", "outside": "outside the tool"}
+
+
+def lease_note(field, profile):
+    """Whether the tool read the lease clause a way rests on, in words: read (with the cite to use), read and found
+    no such clause, or not read (a profile read before the clause was added, or no profile)."""
+    clause = getattr(profile, field, None) if profile is not None else None
+    if clause is None:
+        return f"the tool has not read the part of the lease on {LABELS[field]}"
+    if not clause.present:
+        return f"the tool's reading of the lease found no clause on {LABELS[field]}"
+    return f"the tool has read the lease's clause on {LABELS[field]}, {lease_cite(clause)}"
+
+
+def way_state(w, playbook, facts, clock_rows, profile):
+    """One way's state (STATES) and why, in plain words: a fact or clock confirmed one way or the other is known (or
+    not settled, through its open question); a fact not confirmed is one the tenant can tell the tool on the sheet,
+    or can check when it rests on a lease clause the tool has not read; a clock waits for its start date (the tenant
+    can tell it) or cannot be counted (outside the tool); a check is the tenant's to check; outside is outside."""
+    questions = playbook.guidance["questions"]
+    note = lease_note(w.lease, profile) if w.lease else ""
+    otherwise = {"closed": "not met", "unsettled": "not settled", "later": "not met yet"}[w.otherwise]
+    if w.check:
+        return "check", " ".join(w.check.split()) + (f"; {note}" if note else "")
+    if w.outside:
+        return "outside", " ".join(w.outside.split())
+    if w.fact:
+        if w.fact in facts:
+            return ("met", "") if facts[w.fact] == w.equals else (otherwise, " ".join(w.when_otherwise.split()))
+        if w.lease and (profile is None or getattr(profile, w.lease, None) is None):     # a part of the lease not read
+            return "check", f"{note}, so the tenant can look there; the sheet asks: {questions[w.fact]}"
+        return "tell", f"the sheet asks: {questions[w.fact]}" + (f"; {note}" if note else "")
+    row = clock_rows.get(w.clock)
+    clock = next(c for c in playbook.spec.clocks if c.id == w.clock)
+    if row is None and clock.applies_if in facts:              # the clock does not apply on the confirmed facts
+        return "not met", "the period does not apply on the confirmed facts"
+    if row is None or row["status"].startswith("need date"):   # its start date (or applies_if fact) not confirmed
+        return "tell", f"the sheet asks: {questions[clock.trigger if row is not None else clock.applies_if]}"
+    if row["status"].startswith("not computed"):
+        return "outside", row["status"]
+    return ("met", "") if row["status"] == (w.equals or "passed") else (otherwise, " ".join(w.when_otherwise.split()))
+
+
+def option_status(states):
+    """An option's status from its gates' states: closed when one is not met, else not known yet while one is the
+    tenant's to tell or check, else not settled, outside the tool, not open yet, or open."""
+    for state, status in (("not met", "closed"), ("tell", "not known yet"), ("check", "not known yet"),
+                          ("not settled", "not settled"), ("outside", "outside the tool"), ("not met yet", "not open yet")):
+        if state in states:
+            return status
+    return "open"
+
+
+def check_options(playbook, facts, today, profile=None):
+    """Each option of the playbook with its status, from the confirmed facts, the clocks, and the lease profile only
+    (option_status: open, closed, not known yet, not settled, outside the tool, or not open yet). Each gate takes the best
+    state among its ways (STATES): its status and what the tool knows of it (STATUS, KNOWLEDGE), why, its ways with
+    theirs, and, while it is not met, if_met: what the option's status would be were it met (were it not met, the
+    option is closed). Each step is "done" (its fact confirmed with its value, or its clock's date passed), "waiting"
+    (its clock's date upcoming), or "to do". Returns [{"option", "label", "cite", "status", "gates", "steps",
+    "also_open"}]."""
+    clock_rows = {row["clock"]: row for row in compute_deadlines(playbook, facts, today)}
     results = []
     for o in playbook.spec.options:
         gates = []
         for g in o.gates:
-            if g.fact not in facts:
-                state = "not known yet"
-            elif facts[g.fact] == g.equals:
-                state = "met"
-            else:
-                state = "not settled" if g.otherwise == "unsettled" else "closed"
-            gates.append({"says": g.says, "cite": g.cite, "status": state,
-                          **({"why": " ".join(g.when_otherwise.split())} if state in ("closed", "not settled") else {})})
+            ways = []
+            for w in g.ways:
+                state, why = way_state(w, playbook, facts, clock_rows, profile)
+                ways.append({"says": w.says or g.says, "cite": w.cite or g.cite, "state": state, "status": STATUS[state],
+                             "knowledge": KNOWLEDGE[state], **({"why": why} if why else {})})
+            best = min(ways, key=lambda x: STATES.index(x["state"]))
+            gates.append({"says": g.says, "cite": g.cite, "state": best["state"], "status": best["status"],
+                          "knowledge": best["knowledge"], **({"why": best["why"]} if "why" in best else {}),
+                          "ways": ways})
+        for i, gate in enumerate(gates):                    # what the option would be were this condition met
+            if gate["state"] != "met":
+                gate["if_met"] = option_status([x["state"] for j, x in enumerate(gates) if j != i])
         steps = []
         for s in o.steps:
             if s.clock:
-                state = {"passed": "done", "upcoming": "waiting"}.get(clocks.get(s.clock), "to do")
+                state = {"passed": "done", "upcoming": "waiting"}.get(clock_rows.get(s.clock, {}).get("status"), "to do")
             else:
                 state = "done" if facts.get(s.fact) == s.equals else "to do"
             steps.append({"says": s.says, "cite": s.cite, "status": state})
-        states = {g["status"] for g in gates}
-        status = next((s for s in ("closed", "not known yet", "not settled") if s in states), "open")
-        results.append({"option": o.id, "label": o.label, "cite": o.cite, "status": status, "gates": gates,
+        results.append({"option": o.id, "label": o.label, "cite": o.cite,
+                        "status": option_status([gate["state"] for gate in gates]), "gates": gates,
                         "steps": steps, "also_open": list(o.also_open)})
     return results
 

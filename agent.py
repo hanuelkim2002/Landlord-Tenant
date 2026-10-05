@@ -48,7 +48,7 @@ Each "Not:" is a kind of past mistake: never write anything like it; write the "
 Not: three statute quotes, then "This tool does not decide that." (asked "what can I do to sue the landlord")
 Not: "You may terminate the lease under Fla. Stat. 83.56(1)." (a conclusion with no rule and no facts)
 Instead: answer a question about the law in this order, each part short:
-- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not settled, or not known yet), and the condition it turns on. Never a step of an option before this.
+- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not known yet, not settled, outside the tool, or not open yet), and the condition it turns on. Never a step of an option before this.
 - The rule: in one plain sentence, with its cite.
 - Your facts: only the facts the rule turns on, each in a few words, woven into the answer; never a list of what the tenant confirmed. Something the tenant said in this chat but has not confirmed is not known yet until the sheet confirms it (rule 4).
 - Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
@@ -238,8 +238,10 @@ PARTS = {
     "statute": "THE STATUTE (the sections for your issues, Fla. Stat. ch. 83, part II)",
     "cases": "COURT CASES THIS TOOL HAS (topics for get_cases; number of cases on each)",
     "facts": "YOUR FACTS (by issue: known, changed, proposed, missing, or n/a, and where each came from)",
-    "options": ("YOUR OPTIONS (checked by the program from the confirmed facts: whether each option is open, closed, "
-                "not settled, or not known yet, the conditions that decide it, and how far its steps have got)"),
+    "options": ("YOUR OPTIONS (checked by the program from the confirmed facts, the program's deadlines, and the lease "
+                "clauses the tool has read: whether each option is open, closed, not known yet, not settled, outside the "
+                "tool, or not open yet; each condition that decides it, with what the tool knows of it and, while it is "
+                "not decided, what the option would be were it met; and how far its steps have got)"),
     # Was THE PROGRAM'S DEADLINES (item 61, 2026-10-03), until the eval the same day: read as the deadlines
     # themselves, it was answered from ("You have until the upcoming deadline shown in THE PROGRAM'S DEADLINES")
     # and get_deadlines went uncalled on 5 of 39 questions about when.

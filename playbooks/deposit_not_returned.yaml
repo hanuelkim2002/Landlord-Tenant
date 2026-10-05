@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.49.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.4
+  version: 0.5
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -108,6 +108,53 @@ spec:
         - >-
           The move-out date: the disclosure 83.49(2)(d) requires tells the tenant that the landlord must give notice
           "WITHIN 30 DAYS AFTER YOU MOVE OUT", which reads the same clock as running from the day the tenant leaves.
+
+  # What the tenant can do, and what decides whether it is open (TODO item 81): checked by code
+  # (deterministic.check_options) from the confirmed facts, the clocks, and the lease profile, and given to the model
+  # before any step toward it. A gate is met through any of its ways. The gates are the author's to check.
+  options:
+    - id: whole_deposit_back
+      label: Get the whole deposit back because the landlord gave no notice of a claim within the 30 days
+      cite: "83.49(3)(a)"
+      gates:
+        - says: the landlord gave the tenant no written notice of a claim on the deposit
+          cite: "83.49(3)(a)"
+          quote: "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit"
+          ways:
+            - fact: claim_notice_received
+              equals: false
+              when_otherwise: >-
+                The tenant confirmed receiving a written notice of a claim. Whether it came in time and in the form the
+                statute gives belongs to the landlord's claim, its own issue.
+        - says: the 30 days after the end of the rental agreement have passed
+          cite: "83.49(3)(a)"
+          quote: "within 30 days after the termination of the rental agreement"
+          ways:
+            - clock: claim_notice_deadline
+              equals: passed
+              otherwise: later
+              when_otherwise: The program's deadlines show the 30 days have not passed yet, so a notice of a claim may still come in time.
+        - says: the landlord was not relieved of that notice, as 83.49(5) relieves the landlord of a tenant who left early, or on a periodic tenancy, without 7 days' written notice
+          cite: "83.49(5)"
+          quote: "Failure to give such notice relieves the landlord of the notice requirement of paragraph (3)(a)"
+          ways:
+            - says: the tenant did not move out before the lease's end, and the tenancy was not month to month or another periodic one
+              fact: early_or_periodic
+              equals: false
+              when_otherwise: The tenant confirmed moving out before the lease's end, or a periodic tenancy.
+            - says: the tenant gave the landlord 7 days' written notice, by certified mail or in person, with an address
+              cite: "83.49(5)"
+              quote: "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"
+              fact: seven_day_notice_given
+              equals: true
+              when_otherwise: The tenant confirmed not giving that notice.
+            - says: the lease provides otherwise on notice before moving out, and the tenant followed it
+              cite: "83.49(5)"
+              quote: "Except when otherwise provided by the terms of a written rental agreement"
+              check: whether the lease sets its own terms on notice before moving out, and whether the tenant followed them
+              lease: notice_before_vacating
+      steps: []
+      also_open: [termination_date_meaning]
 
 # ---------- read by the model ----------
 guidance:

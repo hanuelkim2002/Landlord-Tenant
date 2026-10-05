@@ -154,21 +154,40 @@ def deadline_status():
     return "\n".join(lines) or "none: no active issue has a deadline this tool computes"
 
 
+def state_words(x):
+    """A gate's or a way's state in words: its status, then what the tool knows of it when that says more (the tenant
+    can tell the tool, the tenant can check), then why."""
+    words = x["status"]
+    if x["knowledge"] not in ("known", x["status"]):
+        words += f", {x['knowledge']}"
+    return words + (f": {x['why']}" if "why" in x else "")
+
+
 def options_status():
     """YOUR OPTIONS, for the system prompt (agent.PARTS): for each active issue's options
-    (deterministic.check_options, from the confirmed facts), the option, its cite, and whether it is open, closed,
-    not settled, or not known yet; then each condition that decides it, with why when it is not met; each step
-    and whether it is done, waiting, or to do; and the open questions that bear on it even so, by their first
-    sentence. In words, never an id (TODO item 53). Logs nothing: the prompt is rebuilt on every call."""
+    (deterministic.check_options, from the confirmed facts and the lease profile), the option, its cite, and its
+    status; then each condition that decides it with its state in words (state_words): met, not met, not met yet,
+    or not known yet because the tenant can tell the tool or can check, not settled, or outside the tool, and why;
+    for a condition not met that has several ways to be met, each way with its own state; for one not yet decided,
+    what the option would be were it met (were it not, the option is closed; TODO item 81); each step and whether it
+    is done, waiting, or to do; and the open questions that bear on it even so, by their first sentence. In words,
+    never an id (TODO item 53). Logs nothing: the prompt is rebuilt on every call."""
     facts = record.matter["facts"]
     lines = []
     for pb in active_playbooks():
         first_sentence = {q["id"]: " ".join(q["text"].split()).split(". ")[0] + "."
                           for q in pb.spec.open_questions if isinstance(q, dict)}
-        for o in check_options(pb, facts, date.today()):
+        for o in check_options(pb, facts, date.today(), record.profile):
             lines.append(f"- {o['label']} (Fla. Stat. {o['cite']}): {o['status'].upper()}")
             for g in o["gates"]:
-                lines.append(f"    condition: {g['says']} ({g['cite']}): {g['status']}" + (f". {g['why']}" if "why" in g else ""))
+                several = len(g["ways"]) > 1 and g["state"] != "met"
+                lines.append(f"    condition: {g['says']} ({g['cite']}): "
+                             + (f"{g['status']}, met through any of these:" if several else state_words(g)))
+                if several:
+                    lines += [f"      - {w['says']} ({w['cite']}): {state_words(w)}" for w in g["ways"]]
+                if g["state"] not in ("met", "not met"):
+                    lines.append(f"      if this condition is met, the option is {g['if_met']}; if it is not, the "
+                                 "option is closed")
             for s in o["steps"]:
                 lines.append(f"    step: {s['says']} ({s['cite']}): {s['status']}")
             for q in o["also_open"]:

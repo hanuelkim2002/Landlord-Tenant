@@ -5,6 +5,29 @@ session can see why the code is the way it is.
 
 ## 2026-10-04
 
+- What the tool knows of each condition of an option, computed by code (TODO item 81, done). Was (item 72): a gate was
+  one confirmed fact, so a condition was met, closed, not settled, or not known yet, and ending the lease over an AC
+  came out not settled on the statute alone though the lease's Article 7.2 promised the repair (83.56(1) also reaches
+  "material provisions of the rental agreement"). Now a gate (`corpus.Gate`) is met through any of its `ways`
+  (`corpus.Way`): a fact, a clock, something the tenant can check (a part of the lease, a local code, a document),
+  or law outside the tool; a way may name a lease clause. `deterministic.check_options` gives each way and gate one
+  of the five states of the author's decision: known (met, not met, or not met yet), the tenant can tell the tool (a
+  fact the sheet asks), the tenant can check (a fact resting on a lease clause the tool has not read, a code, the
+  notice itself), not settled (an open question), or outside the tool (a county with no court calendar); an
+  option's status follows (open, closed, not known yet, not settled, outside the tool, or not open yet), and each
+  undecided gate says what the option would be were it met ("if this condition is met, the option is not
+  settled; if it is not, the option is closed"). YOUR OPTIONS prints the states and, for a condition with several
+  ways, each way. The sheet shows the lease clause a question is about beside it, or says the tool has not read it
+  (`sheet.clause_note`, `corpus.fact_lease`). Proved on three playbooks: repair_not_made 0.5 (its gates rewritten:
+  the duty to repair through the structure or plumbing, the lease, a new sheet question, or a code the tenant can
+  check with code enforcement; a new gate, the duty not changed in writing, which 83.51(1) allows only for a
+  single-family home or duplex), deposit_not_returned 0.5 (the whole deposit back: no claim notice, the 30 days
+  passed as a clock gate, and 83.49(5) with the lease's own notice term to check), notice_received_nonpayment 0.6
+  (paying within the 3 days, defending in a case, defending on a defective notice; a new sheet question, the rent
+  paid into the court registry). Rule 1 and the part's name line name the new statuses. Playbook checks: 0
+  failures. Smoke: twelve item 81 checks in place of item 72's four (each state on each playbook, the prompt in
+  words, the sheet's clause, a malformed way refused).
+
 - The plan updated for the author's decision that the tool knows what it knows, as a general theme (README,
   Purpose and non-negotiables): each condition an answer turns on is known, something the tenant can tell it,
   something the tenant can check, not settled, or outside the tool, worked out by the program; a gap is never

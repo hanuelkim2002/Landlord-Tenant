@@ -36,7 +36,7 @@ from wiki import lint, read_pages, verified, verify
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
 from lease import FOOTER, lease_clauses
-from sheet import STOP_LINE, pending_rows, run_sheet, stop_text
+from sheet import STOP_LINE, pending_rows, row_notes, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
 from agent import RULES as RULES_TEXT
 from agent import (CASE_RULE, CITED_HEAD, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, cited_words, command, given_text, print_blocks,
@@ -921,41 +921,104 @@ check("item 77: YOUR LEASE names each clause in words with its cite, and no fiel
       and not cited_clause(article, "17.2", "")
       and 'Not: "(Lease notice_before_vacating)" or "(term_end)"' in RULES_TEXT)
 
-# options before steps (TODO item 72, deterministic.check_options): the author's AC story of 2026-10-04 leaves
-# ending the lease not settled; a roof leak with every step taken is open; caused by the tenant, closed; a gate's
-# fact not confirmed, not known yet. The prompt gives the statuses in words.
+# options before steps (TODO item 72), and what the tool knows of each condition (TODO item 81,
+# deterministic.check_options): a condition is met through any of its ways, and is known (met, not met, not met yet),
+# the tenant's to tell (a fact the sheet asks), the tenant's to check (a part of the lease the tool has not read, a
+# code, a document), not settled (an open question), or outside the tool. Proved on three playbooks.
 repair = playbooks["repair_not_made"]
 today = date.today()
-ac = {"problem_is_structure_or_plumbing": False, "caused_by_tenant_side": False, "rent_paid_since_known": True,
-      "written_notice_delivered": True, "written_notice_date": str(today - timedelta(days=30)),
+ac = {"problem_is_structure_or_plumbing": False, "single_family_or_duplex": False, "caused_by_tenant_side": False,
+      "rent_paid_since_known": True, "written_notice_delivered": True, "written_notice_date": str(today - timedelta(days=30)),
       "notice_states_termination_intent": False, "notice_states_withholding_intent": False}
 roof = {**ac, "problem_is_structure_or_plumbing": True, "rent_paid_since_known": False,
         "notice_states_termination_intent": True, "written_notice_date": str(today - timedelta(days=10))}
-by_id = lambda facts: {o["option"]: o for o in check_options(repair, facts, today)}
-ac_options, roof_options = by_id(ac), by_id(roof)
-roof_soon = by_id({**roof, "written_notice_date": str(today - timedelta(days=2))})
-check("item 72: an AC not repaired leaves ending the lease and withholding rent not settled, each gate and step in its state",
-      ac_options["end_the_lease"]["status"] == "not settled" and ac_options["withhold_rent"]["status"] == "not settled"
-      and [g["status"] for g in ac_options["end_the_lease"]["gates"]] == ["not settled", "met", "not settled"]
-      and [s["status"] for s in ac_options["end_the_lease"]["steps"]] == ["done", "to do", "to do"]
-      and "turns on a building" in ac_options["end_the_lease"]["gates"][0]["why"])
-check("item 72: a roof leak with the notice given and the 7 days passed is open; with the 7 days still running, open and waiting",
+read_profile = old_profile.model_copy(update={"maintenance_and_repairs": Clause(
+    present=True, quote="7.2. Systems and Appliances. Landlord shall repair the heating, air -conditioning, electrical, and plumbing systems",
+    page=4, section="ARTICLE 7")})
+by_id = lambda pb, facts, profile=old_profile: {o["option"]: o for o in check_options(pb, facts, today, profile)}
+ac_unread, ac_read = by_id(repair, ac), by_id(repair, ac, read_profile)
+duty_unread, duty_read = ac_unread["end_the_lease"]["gates"][0], ac_read["end_the_lease"]["gates"][0]
+check("item 81: an AC, the lease's repairs clause not read: ending the lease is not known yet, the tenant can check the lease or a code",
+      ac_unread["end_the_lease"]["status"] == "not known yet" and duty_unread["state"] == "check"
+      and [w["state"] for w in duty_unread["ways"]] == ["not met", "check", "check"]
+      and "has not read the part of the lease on maintenance and repairs" in duty_unread["ways"][1]["why"]
+      and "code enforcement office" in duty_unread["ways"][2]["why"]
+      and duty_unread["if_met"] == "not settled" and ac_unread["end_the_lease"]["gates"][3]["state"] == "not settled")
+check("item 81: the clause read: the sheet asks whether it promises the repair; once confirmed, the lease meets the duty (83.56(1))",
+      duty_read["state"] == "tell" and "Lease Article 7" in duty_read["ways"][1]["why"]
+      and by_id(repair, {**ac, "lease_promises_repair": True}, read_profile)["end_the_lease"]["gates"][0]["state"] == "met"
+      and by_id(repair, {**ac, "lease_promises_repair": True}, read_profile)["end_the_lease"]["status"] == "not settled")
+check("item 81: a lease that does not promise it leaves a code to check; withholding rent, which the lease does not reach, the same",
+      by_id(repair, {**ac, "lease_promises_repair": False}, read_profile)["end_the_lease"]["gates"][0]["state"] == "check"
+      and [w["state"] for w in ac_read["withhold_rent"]["gates"][0]["ways"]] == ["not met", "check"]
+      and ac_read["withhold_rent"]["gates"][0]["if_met"] == "open")
+roof_options, roof_soon = by_id(repair, roof), by_id(repair, {**roof, "written_notice_date": str(today - timedelta(days=2))})
+check("item 81: a roof leak with the notice given and the 7 days passed is open; with the 7 days still running, open and waiting",
       roof_options["end_the_lease"]["status"] == "open"
       and [s["status"] for s in roof_options["end_the_lease"]["steps"]] == ["done", "done", "done"]
       and [s["status"] for s in roof_soon["end_the_lease"]["steps"]] == ["done", "done", "waiting"]
       and roof_options["end_the_lease"]["also_open"] == ["material_noncompliance"])
-check("item 72: caused on the tenant's side closes both options; a gate's fact not confirmed leaves them not known yet",
-      {o["status"] for o in by_id({**roof, "caused_by_tenant_side": True}).values()} == {"closed"}
-      and by_id({k: v for k, v in roof.items() if k != "problem_is_structure_or_plumbing"})["end_the_lease"]["status"] == "not known yet")
+check("item 81: caused on the tenant's side closes both; a duplex leaves the lease to check; a fact not confirmed is the tenant's to tell",
+      {o["status"] for o in by_id(repair, {**roof, "caused_by_tenant_side": True}).values()} == {"closed"}
+      and by_id(repair, {**roof, "single_family_or_duplex": True})["end_the_lease"]["gates"][1]["state"] == "check"
+      and by_id(repair, {k: v for k, v in roof.items() if k != "caused_by_tenant_side"})["end_the_lease"]["gates"][2]["state"] == "tell")
+deposit = playbooks["deposit_not_returned"]
+ghosted = {"tenancy_terminated": str(today - timedelta(days=60)), "vacated": str(today - timedelta(days=60)),
+           "claim_notice_received": False, "forwarding_address_given": True, "early_or_periodic": False}
+early = {**ghosted, "tenancy_terminated": str(today - timedelta(days=10)), "early_or_periodic": True, "seven_day_notice_given": False}
+early_whole = by_id(deposit, early)["whole_deposit_back"]
+check("item 81: the deposit: open when nothing came in 30 days; the 30 days still running is not met yet; a notice received closes it",
+      by_id(deposit, ghosted)["whole_deposit_back"]["status"] == "open"
+      and early_whole["gates"][1]["state"] == "not met yet" and early_whole["gates"][1]["if_met"] == "not known yet"
+      and by_id(deposit, {**ghosted, "claim_notice_received": True})["whole_deposit_back"]["status"] == "closed"
+      and by_id(deposit, {k: v for k, v in ghosted.items() if k != "tenancy_terminated"})["whole_deposit_back"]["gates"][1]["state"] == "tell")
+check("item 81: the deposit: left early without the 7-day notice leaves the lease's own notice term to check, with the clause the tool read",
+      early_whole["status"] == "not known yet" and [w["state"] for w in early_whole["gates"][2]["ways"]] == ["not met", "not met", "check"]
+      and "the tool has read the lease's clause on notice before moving out early" in early_whole["gates"][2]["ways"][2]["why"])
+nonpayment = playbooks["notice_received_nonpayment"]
+taped = {"nonpayment_notice_delivered": str(today - timedelta(days=8)), "premises_county": "Alachua", "rent_unpaid": True,
+         "eviction_action_filed": False}
+taped_options = by_id(nonpayment, taped)
+orange = by_id(nonpayment, {**taped, "premises_county": "Orange", "eviction_action_filed": True})
+check("item 81: a 3-day notice: the days passed close paying in time; no case filed leaves defending not open yet; the notice's form is the tenant's to check",
+      taped_options["pay_within_three_days"]["status"] == "closed"
+      and taped_options["defend_in_court"]["status"] == "not open yet"
+      and taped_options["defective_notice_defense"]["gates"][0]["state"] == "check"
+      and "the notice itself" in taped_options["defective_notice_defense"]["gates"][0]["why"])
+check("item 81: a county with no court calendar is outside the tool; a case filed opens defending, with the registry step to do",
+      orange["pay_within_three_days"]["status"] == "outside the tool"
+      and "no court holiday calendar for Orange County" in orange["pay_within_three_days"]["gates"][0]["why"]
+      and orange["defend_in_court"]["status"] == "open" and orange["defend_in_court"]["steps"][0]["status"] == "to do")
+bad_way = (Path("playbooks") / "repair_not_made.yaml").read_text().replace(
+    "- fact: caused_by_tenant_side\n", "- fact: caused_by_tenant_side\n              check: the lease\n", 1)
+with tempfile.TemporaryDirectory() as tmp:
+    (Path(tmp) / "bad.yaml").write_text(bad_way)
+    try:
+        load_playbook(Path(tmp) / "bad.yaml")
+        refused = False
+    except ValueError as e:
+        refused = "exactly one of fact, clock, check, or outside" in str(e)
+check("item 81: a way decided by two things is refused when the playbook loads", refused)
 make_scratch("t-smoke-options", issues=["repair_not_made"], facts=ac, proposed={})
 try:
     load_matter("t-smoke-options", "m-001")
     options_part = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
-    check("item 72: the prompt gives each option's status, conditions, and steps in words, with no id, and rule 1 asks for it first",
-          "End the lease because the landlord has not made the repair (Fla. Stat. 83.56(1)): NOT SETTLED" in options_part
+    check("item 81: the prompt gives each option's status, each condition's state and ways, and what follows, in words with no id",
+          "End the lease because the landlord has not made the repair (Fla. Stat. 83.56(1)): NOT KNOWN YET" in options_part
+          and "(83.56(1)): not known yet, met through any of these:" in options_part
+          and "      - a building, housing, or health code where the unit is requires the landlord to fix it (83.51(1)(a)): not known yet, the tenant can check: " in options_part
+          and "      if this condition is met, the option is not settled; if it is not, the option is closed" in options_part
           and "    step: the notice names the problem and says the tenant intends to end the lease because of it (83.56(1)): to do" in options_part
           and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", options_part)
           and "- Open or not: asked what they can do" in system_prompt())
+    lease_row = next(r for r in pending_rows() if r["id"] == "lease_promises_repair")
+    unread_note = row_notes(lease_row)
+    record.profile = read_profile
+    check("item 81: the sheet shows the lease clause the question is about, or says the tool has not read it",
+          lease_row["lease_clause"] == "maintenance_and_repairs"
+          and unread_note == ["the tool has not read the part of your lease on maintenance and repairs: check your lease itself"]
+          and row_notes(lease_row)[0].startswith("your lease's clause on maintenance and repairs (Lease Article 7), as the tool read it: \"7.2.")
+          and "air -conditioning" in row_notes(lease_row)[0])
 finally:
     remove_scratch("t-smoke-options")
 

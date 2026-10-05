@@ -13,16 +13,6 @@ can do (README, Purpose and non-negotiables). Seen on 2026-10-04: "the lease doe
 on the statute alone while the lease's Article 7.2 promised the repair. Rule pairs alone did not change such
 behavior (items 54, 76); what the program computed did (options, deadlines). So the knowledge is computed by code.
 
-81. Knowledge states for the conditions of an option, computed by code. A gate (`corpus.Gate`, item 72) is decided
-    by a confirmed fact, a lease clause (read and present, read and absent, or not read), an open question, or
-    nothing the tool holds; `deterministic.check_options` gives each gate one of five states: known (met or
-    failed), the tenant can tell us (a fact the sheet asks), the tenant can check (an unread part of the lease, a
-    local code, a document; say what and where), not settled (an open question, its readings), outside the tool
-    (law it does not hold). An option's status follows from its gates, and each unknown gate says what the option
-    would be either way ("if your lease promises the repair, ending the lease may be open; if not, it turns on a
-    local code the tool cannot check"). Prove it on repair_not_made (its gates of 2026-10-04 rewritten, and a
-    gate met by a lease clause promising the repair, as 83.56(1) also reaches "material provisions of the rental
-    agreement"), deposit_not_returned, and notice_received_nonpayment, before the other playbooks (item 84).
 82. `search_lease(phrase)`, a tool over the matter's `pages.json` like `search_statute`, so the model looks before
     it says the lease lacks something, and a found clause's words are printed as a cited clause's are. Then a
     lease point is: in a clause read, found by search, or not found anywhere in the lease's text (which is a
