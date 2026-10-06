@@ -1,0 +1,98 @@
+{
+  "landlord_name_and_address": {
+    "present": true,
+    "quote": "MR Gainesville Owner, LLC, by its managing agent, Hartwell Residential Management, LLC, 2600 SW Hartwell Lane, Gainesville, Florida 32608",
+    "page": 1,
+    "section": "1.1"
+  },
+  "tenant_names": {
+    "present": true,
+    "quote": "Morgan Davis (\"Resident\")",
+    "page": 1,
+    "section": "1.1"
+  },
+  "premises_address": {
+    "present": true,
+    "quote": "Bedroom A in Unit 3110, a four-bedroom, four-bathroom apartment at Magnolia Row Student Apartments, 2600 SW Hartwell Lane, Unit 3110, Gainesville, Florida 32608",
+    "page": 1,
+    "section": "1.2"
+  },
+  "term_start": {
+    "present": true,
+    "quote": "The term of this Lease begins on August 15, 2026",
+    "page": 1,
+    "section": "2.1"
+  },
+  "term_end": {
+    "present": true,
+    "quote": "ends at 12:00 noon on July 31, 2027",
+    "page": 1,
+    "section": "2.1"
+  },
+  "rent": {
+    "present": true,
+    "quote": "Resident shall pay total rent of $9,468.00 for the term, payable in twelve (12) installments of $789.00 each.",
+    "page": 1,
+    "section": "3.1"
+  },
+  "security_deposit": {
+    "present": true,
+    "quote": "Resident shall pay a security deposit of $300.00.",
+    "page": 2,
+    "section": "4.1"
+  },
+  "deposit_deductions": {
+    "present": true,
+    "quote": "Landlord may deduct from the security deposit unpaid rent, late charges, the cost of repairing damage beyond normal wear and tear to Resident's bedroom and bathroom, Resident's equal share of damage to the shared areas of the Unit under Section 3.4, cleaning charges, and any other amount due under this Lease.",
+    "page": 2,
+    "section": "4.2"
+  },
+  "nonrefundable_fees": {
+    "present": true,
+    "quote": "Resident shall pay a non-refundable application fee of $50.00, a non-refundable administrative fee of $200.00, and a non-refundable amenity fee of $150.00, each due at signing. The amenity fee is for access to the Community amenities and is not refundable for any reason, including the closure of any amenity.",
+    "page": 1,
+    "section": "3.3"
+  },
+  "move_out_requirements": {
+    "present": true,
+    "quote": "At the end of the term Resident shall remove all personal property, clean Resident's bedroom and bathroom, return all keys and access cards to the leasing office, and complete a move-out inspection form. Each key or access card not returned is charged at $75.00.",
+    "page": 3,
+    "section": "9.1"
+  },
+  "forwarding_address_requirement": {
+    "present": true,
+    "quote": "Resident shall give Landlord a written forwarding address before moving out.",
+    "page": 2,
+    "section": "4.4"
+  },
+  "notices_to_landlord": {
+    "present": true,
+    "quote": "Every notice from Resident to Landlord under this Lease or Florida law must be in writing and delivered by hand to the leasing office at 2600 SW Hartwell Lane, Gainesville, Florida 32608, sent by certified mail to that address, or sent by e-mail to office@magnoliarow.example.",
+    "page": 3,
+    "section": "13.1"
+  },
+  "joint_and_several_liability": {
+    "present": true,
+    "quote": "Resident is responsible only for the Rent and charges under this Lease and is not responsible for the rent of any roommate. However, Resident and all residents of the Unit are jointly and severally liable for damage to the Unit's shared areas (kitchen, living room, laundry closet, and hallways) and its shared appliances when Landlord cannot determine which resident caused the damage, and such charges will be divided equally among the residents of the Unit.",
+    "page": 1,
+    "section": "3.4"
+  },
+  "signatures": {
+    "present": true,
+    "quote": "RESIDENT: Morgan Davis Date: July 20, 2026 LANDLORD: Hartwell Residential Management, LLC, as agent for MR Gainesville Owner, LLC By: Dana Whitfield, Community Manager Date: July 22, 2026",
+    "page": 3,
+    "section": "ARTICLE 14"
+  },
+  "notice_before_vacating": {
+    "present": true,
+    "quote": "If Resident vacates the Premises before the end of the term, Resident shall give Landlord at least seven (7) days' written notice by certified mail or personal delivery before vacating. If Resident does not give this notice, Resident shall forfeit the security deposit as permitted by Section 83.49(5), Florida Statutes.",
+    "page": 3,
+    "section": "9.2"
+  },
+  "maintenance_and_repairs": {
+    "present": true,
+    "quote": "7.1. Landlord's Repairs. Landlord shall maintain in good working order and repair the heating, air-conditioning, plumbing, and electrical systems serving the Unit and the appliances Landlord furnishes, including the refrigerator, range, dishwasher, microwave, washer, and dryer, except for damage caused by Resident, a roommate, or their guests. 7.2. Maintenance Requests. Resident shall report every repair need by submitting a maintenance request through the online resident portal, except in an emergency, which Resident shall report by calling the after-hours emergency line at (352) 555-0147.",
+    "page": 2,
+    "section": "7.1"
+  }
+}

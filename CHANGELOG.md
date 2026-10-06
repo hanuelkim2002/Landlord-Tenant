@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-10-06
 
+- Eval: college students with a broken AC (and other things), simulated (the author's request;
+  `docs/evals/2026-10-06-students/`). No gateway key in the session, so the real program ran end to end with each
+  model call answered by a stand-in agent, through a replay harness kept with the eval (`method/harness.py`), on a
+  made-up by-the-bed student lease (`method/make_lease.py`). Six students, each an agent seeing only the tenant's
+  screen: AC reported only by portal; AC and a roommates' rent strike; no hot water and an AC cutting out; closed
+  amenities and Wi-Fi (twice: a no that ended the visit, and a yes); a washer a roommate broke and an $85 split charge;
+  AC, mold, and asthma, wanting out. Found: first replies of 12,000 to 75,000 characters, 51% to 72% case listings,
+  with the answer last; 23 of 29 quote cautions false (TODO 64's pairing, and now the posture lines `LETTER_RULE` says
+  to quote); a sheet yes taken as a done 83.56(1) notice, its e-mail delivery unchecked against 83.56(4) and 83.505;
+  withholding shown open for hot water (83.51(2)(c)); a roommate read as "household" under 83.51(4); one fact set for
+  two repair problems; `tools.build_letter`'s "I request that you" and "sent by by", and fact lines the chat cannot
+  fix; questions left unanswered after a draft. Every student asked for a short "what to do next" first. Findings and
+  recommendations are in the eval's README for the author; TODO.md is unchanged. No program code changed.
+
 - Cleanup, part 3: smoke.py split by area. Was: one script of 1,268 lines, its checks in sections that shared a few
   helpers. Now `smoke.py` (18 lines) imports five parts from `smoke_parts/`, in the order the checks ran:
   `pieces` (330 lines), `writing_to_a_matter` (321), `issues_and_turns` (229), `playbooks_options_lease` (353), and
