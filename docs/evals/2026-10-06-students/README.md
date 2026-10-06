@@ -123,7 +123,7 @@ them).
 Found in the program's own output; module and function named. Ordered by what it could cost a tenant.
 
 1. A yes on the sheet becomes a done legal step (F). Morgan's e-mail said "If this isn't fixed I'm going to have to
-   move out." She answered yes to `notice_states_termination_intent`. `deterministic.check_options` then marked the
+   move out." Morgan answered yes to `notice_states_termination_intent`. `deterministic.check_options` then marked the
    83.56(1) notice steps done and `compute_deadlines` showed `seven_days_after_termination_notice` passed, and the
    reply said "no new step from the statute, since the notice and the 7 days are done." Two things nothing checks: the
    words of the notice (the sheet asks the tenant to characterize them; `add_communication` was never used to record
@@ -152,7 +152,7 @@ Found in the program's own output; module and function named. Ordered by what it
 6. "After draft_letter, reply only" (`prompt.LETTER_RULE`). A question asked in the same message as a requested change
    went unanswered: Jordan's "is the written notice date line ok?" and, twice, Morgan's "does this letter count as my
    notice to end the lease?" and "what happens with 4 days' notice instead of 7?", the two questions that mattered
-   most before she moved out.
+   most before moving out.
 7. The quote checker (`replies.check_reply`, `citations.quoted_passages`). 23 of 29 cautions were false, mostly the
    pairing in TODO 64 (a lease or case quote beside a statute cite). New kinds: `LETTER_RULE` tells the model to quote
    the posture lines word for word, and they hold a cite ("Adds the 83.51(1) duty, quoted."), so the program flags
