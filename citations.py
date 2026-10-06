@@ -1,7 +1,7 @@
 """Citations: find the statute cites and the quotes in a reply the model wrote and check them against the
 stored statutes and what the model was given.
 
-Nothing here calls a model or writes to a matter. The chat loop (agent.check_reply) runs check_cites and
+Nothing here calls a model or writes to a matter. The chat loop (replies.check_reply) runs check_cites and
 check_quoted on every reply and prints a caution for each one that fails; the reply itself is still shown.
 """
 import re

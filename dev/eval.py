@@ -96,7 +96,7 @@ LEASE_ABSENT = re.compile(r"\b(?:your|the) lease (?:does not|doesn't|did not|has
                           r"makes no)\b|\bno (?:clause|provision|term|mention)\b[^.\n]{0,40}\b(?:in|of) (?:your|the) lease\b",
                           re.I)
 # the names of the system prompt's parts as the prompt writes them, which a reply never copies (TODO item 53): the
-# names before item 61, the names since (agent.PARTS, in capitals; "your lease" in plain words is the wanted form),
+# names before item 61, the names since (prompt.PARTS, in capitals; "your lease" in plain words is the wanted form),
 # and a rule's number ("rule 8"; not a court rule's "Rule 1.070")
 PROMPT_NAME = re.compile(r"\b(LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS|"
                          r"YOUR LEASE|THE TOOL['’]S NOTES|WHAT THE STATUTE DOES NOT SETTLE|THE STATUTE|"

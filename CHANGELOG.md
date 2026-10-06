@@ -5,6 +5,17 @@ session can see why the code is the way it is.
 
 ## 2026-10-06
 
+- Cleanup, part 2: agent.py split by job. Was: agent.py (724 lines) held the rules text and the system prompt, the
+  checks and printing under each reply, and the chat, and tools.py held three of the prompt's parts beside the tools.
+  Now `prompt.py` (what the model reads: `RULES` and the rules put in when they apply, `PARTS`, `system_prompt`, and
+  the parts the program works out, `deadline_status`, `options_status`, `unknowns_status`, moved from tools.py),
+  `replies.py` (what the program checks and prints under a reply: `check_reply`, `cited_words`, `reading_line`, the
+  case checks, `given_text`), and agent.py keeps reading the lease, intake and resume, the agent, and the chat (332
+  lines); tools.py keeps the tools (360 lines). Code moved as it was, no line rewritten but the imports; the system
+  prompt is the same, character for character, before and after (checked on two matters of issues, with and without
+  a letter in play). The timeline's source for a reply that left out printed cases now names `replies.cases_left_out`.
+  Smoke imports from the new modules.
+
 - Cleanup, part 1: speed and tidy-ups (the author's request, before pushing main). Was: every prompt build read and
   parsed all 122 wiki pages twice (for the case topics), and checking one reply built the whole prompt three times,
   so about 90% of the program's own time in a turn went to re-reading files that had not changed. Now

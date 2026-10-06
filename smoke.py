@@ -38,11 +38,10 @@ from record import (append_event, append_transcript, end_session, list_matters, 
 from lease import lease_clauses, lease_text
 from sheet import STOP_LINE, pending_rows, row_notes, run_sheet, stop_text
 from timeline import render_deadlines, render_timeline
-from agent import RULES as RULES_TEXT
-from agent import (CASE_RULE, CITED_HEAD, LETTER_RULE, NO_CASES_RULE, PARTS, READING_LINE, check_reply, cited_words, command, given_text, print_blocks,
-                   printed_cases, retry_empty, sections_shown, sheet_note, system_prompt, thread_config, turn,
-                   turn_blocks)
-from tools import options_status, unknowns_status
+from prompt import RULES as RULES_TEXT
+from prompt import CASE_RULE, LETTER_RULE, NO_CASES_RULE, PARTS, options_status, system_prompt, unknowns_status
+from replies import CITED_HEAD, READING_LINE, check_reply, cited_clause, cited_words, given_text, printed_cases, sections_shown
+from agent import command, print_blocks, retry_empty, sheet_note, thread_config, turn, turn_blocks
 from tools import build_letter, deadline_listing, draft_letter, get_cases, get_deadlines, get_statute_section, offered_topics, propose_facts, topic_named
 from tools import tools as model_tools
 
@@ -374,7 +373,7 @@ def screen(blocks):
 
 
 def prompt_part(key):
-    """One part of the system prompt as it stands now (agent.PARTS), without its name."""
+    """One part of the system prompt as it stands now (prompt.PARTS), without its name."""
     after = system_prompt().split("\n\n" + PARTS[key] + ":\n")[1]
     later = list(PARTS.values())[list(PARTS).index(key) + 1:]
     return after.split("\n\n" + later[0] + ":\n")[0] if later else after
@@ -557,7 +556,7 @@ try:
     # topics, prints by code, and is logged; an untagged page never shows; a case cite must be one shown
     check("no case topic is offered while no page is verified, and the prompt says so",
           offered_topics() == {} and prompt_part("cases") == "none for these issues")
-    # rules that can apply only sometimes (agent.rules_for): letters once a letter is in play, cases in full
+    # rules that can apply only sometimes (prompt.rules_for): letters once a letter is in play, cases in full
     # only with a topic to offer
     check("the letter rule is in when a letter is in play: a letter drafted (this matter has one), or asked for",
           any(ev["kind"] == "draft" for ev in read_events()) and LETTER_RULE in system_prompt()
@@ -920,7 +919,6 @@ check("item 76: the lease part says it is not the whole lease, and rule 2 forbid
 # lease cites (TODO item 77): YOUR LEASE gives each clause in words with the cite to use, no field name; the program
 # prints the words for a section cite, a page cite (the clauses on that page with no number), and a cite inside an
 # article
-from agent import cited_clause
 from lease import Clause, lease_cite, lease_lines
 article = Clause(present=True, quote="7.1. Statutory Duties. ...", page=4, section="ARTICLE 7")
 lines_now = lease_lines(old_profile)
@@ -1078,7 +1076,7 @@ try:
 finally:
     remove_scratch("t-smoke-closed")
 
-# what the tool does not know (TODO item 83, tools.unknowns_status): each point an option turns on that the tool has
+# what the tool does not know (TODO item 83, prompt.unknowns_status): each point an option turns on that the tool has
 # not decided, once, with its state and what it would change, in a prompt part after YOUR OPTIONS; rule 1 asks for it
 # before any step, with "Not:" lines from three stories
 make_scratch("t-smoke-unknown", issues=["repair_not_made", "notice_received_nonpayment"],

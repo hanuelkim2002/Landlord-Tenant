@@ -84,7 +84,7 @@ lease clause pasted), so an answer cites and the program prints the cited words.
     retaliation (83.64(1)'s examples read as the only protected acts).
 67. The eval's "cases not given" (`CASE_NAME` in `dev/eval.py`) counts part of a given case's name as another
     case: "Inc. v. Varnado", "Income Realty v. Bentley", "Follows Durene v. Alcime" (3 turns, eval of
-    2026-10-03). Match against the names `get_cases` printed (`agent.named_cases`) instead.
+    2026-10-03). Match against the names `get_cases` printed (`replies.named_cases`) instead.
 
 ## Harness and code
 

@@ -92,7 +92,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   fits a claim made in the reply's own words, and a paraphrase outside quote marks is not checked.
   `cites_without_quote(text)` (each cite outside quote marks whose words no quoted passage in the same text
   holds: a section or subsection retold instead of quoted; a quote in a narrower subsection counts for the
-  wider cite; measured by `dev/eval.py` since TODO item 54; shown to the tenant by `agent.check_reply` from item
+  wider cite; measured by `dev/eval.py` since TODO item 54; shown to the tenant by `replies.check_reply` from item
   66 until item 73, when a rule in plain words with its cite became the wanted form). `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
   given)` (each reporter cite in a reply, outside quote marks, must appear in what the model was given, i.e.
   a `get_cases` receipt; returns `(cite, problem)`). Imports `corpus`. Imported by `agent`, `smoke`, `wiki`, `dev/eval.py`.
@@ -168,7 +168,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   just confirmed with a new value; returns what it suggested), `candidate_playbooks()` (active playbooks,
   then those of suggested issues),
   `matter_dir` (the only function that knows the folder layout), `lease_pages()` (the matter's `pages.json`, or []
-  with none; read by `search_lease`, `agent.cited_words`, and `sheet.stop_text`),
+  with none; read by `search_lease`, `replies.cited_words`, and `sheet.stop_text`),
   `new_tenant_id` (random `t-` plus six hex characters), `new_matter_id(tenant_id)` (`m-001`, `m-002`, ...
   counting the tenant's `m-*` folders), `list_matters` (every saved matter as `{"tenant", "id", "issues"}`,
   nothing else read out), `load_matter(tenant_id, matter_id)` (replaces `matter` from `matter.json` and
@@ -193,54 +193,23 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `timeline full` a corrected fact reads "corrected from <how> <suggested value>". Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
   `deterministic`, `sheet` (for `shown`). Imported by `agent`, `smoke`.
 - `tools.py`: the nine `@tool` functions and the `tools` list (see Tools the model can call), plus the
-  plain helpers `pretty`, `quote_is_real`, `build_letter`, `deadline_status`, `options_status` (with `state_words`), and
-  `unknowns_status` (with `UNDECIDED` and `KNOWN_AS`; three parts of
-  the system prompt), and `deadline_receipt`. Imports `record`, `citations`, `config`, `corpus`,
-  `deterministic`, `lease`, `sheet`, `wiki`. Imported by `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
-- `agent.py`: `RULES` (the fixed part of the system prompt; if the environment sets `RULES_FILE`, that
+  plain helpers `pretty`, `quote_is_real`, `build_letter`, `open_facts_by_issue`, `deadline_listing`, and
+  `deadline_receipt`. Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `lease`, `sheet`, `wiki`.
+  Imported by `prompt`, `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
+- `prompt.py`: what the model reads (split out of `agent.py` and `tools.py` on 2026-10-06, unchanged). `RULES` (the fixed part of the system prompt; if the environment sets `RULES_FILE`, that
   file's text replaces it for the run, for trying versions of the rules), `rules_for(messages)` (`RULES`
   with its two markers filled: `[RULE 6]` with `LETTER_RULE` once a letter is in play, i.e. a tenant
   message in the chat matches `LETTER_WORDS` (letter, draft, write, writing) or the matter has a `draft`
   event, else nothing; `[RULE 8]` with `CASE_RULE` when there is a case topic (`tools.offered_topics`), else `NO_CASES_RULE`, one
-  line saying there are none; a `RULES_FILE` without the markers is used as is), `read_lease(pdf_path)` (store
-  the PDF, read it into the lease profile with the extraction model, check every quote, save the profile; for a
-  new matter), `intake` (classify, propose facts, save; for a
-  new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
-  add new issues, propose facts from the update, save; returns the issues it added). Neither builds the agent: `run.py` runs the intake
-  sheet first, then `build_agent`.
-  `system_prompt(messages=())` (the whole system prompt, built from the record as it stands and, for the
-  rules, the chat's messages so far), `prompt_from_record` (LangChain `dynamic_prompt` middleware that
-  calls `system_prompt(request.messages)` before every model call), `build_agent` (a LangChain agent with that middleware and an in-memory checkpointer; no
-  model call), `transcript_entry` (one thread message as a transcript line).
-  The chat is in pieces both front ends call (the terminal's `chat`, the web page `app.py`). Each returns
-  blocks, the parts the tenant sees in order, each `{"kind", "text"}` made by `block`: `reply` is the model's
-  words; every other kind is the program's: `letter` (a `draft_letter` result as is), `cases` (a `get_cases`
-  listing), `deadlines` (the turn's last `get_deadlines` listing through `render_deadlines`), `caution` (failed
-  cite or quote checks, or `NO_REPLY`), `footer` (`READING_LINE`), `timeline`, `notice` (a command's answer), and
-  `stop`. `turn(agent, config, text, note="")` is one turn of the model: the tenant's message goes to the
-  transcript before the model runs (so `propose_facts` can check the tenant's words), then the note, if any; the
-  turn's new messages are the thread after what the checkpointer held before it; it returns the blocks and
-  whether the model called `propose_facts`, so the sheet comes next. When the tenant's message asks about when
-  (`WHEN_QUESTION`: "when do", "when is", and the like, "how long", "how many days", "last day", "deadline", "by
-  when"; not "when I moved out") and the turn holds no `get_deadlines` call, `deadlines_unasked` puts the
-  deadlines first, as a `deadlines` block printed by the program (`render_deadlines(deadline_listing())`, which
-  logs `deadlines_computed` as the tool does), written to the transcript as a `printed` line marked `"what":
-  "deadlines"` (TODO item 65: the model answered 1, then 4 of 39 such questions without the tool). The model is
-  not told. `turn_blocks(new, messages)` transcribes a
-  turn's new messages and builds its blocks; other tool results are not shown. Under each reply come the words
-  it cites, then its cautions, then, if the reply cites or quotes the statute (a quoted passage with a ch. 83 cite,
-  `citations.quoted_passages`, or a ch. 83 cite outside quote marks) or the lease (a quoted passage found in a
-  lease profile quote, or a `LEASE_CITE`, "Lease Section 4.3") and does not
-  already carry it (after `CUT_OFF`, "[Check: this reply was cut off at the model's length limit. Ask again for
-  the rest.]", when the gateway's `finish_reason` was "length"), `READING_LINE` ("This is the tool's reading of the stored law and your confirmed
-  facts, not a lawyer's advice.", from `reading_line`), also written to the transcript as a `footer` line
-  (TODO item 46; was `NOT_DECIDED`, "This tool does not decide whether any of this applies to you."). When a turn has no blocks (the reply was empty
-  or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and returns that
-  second turn's blocks; if it is empty too, a `NO_REPLY` caution ("[Check: no reply came back from the model. Please
-  ask again.]"). Either way it logs `reply_empty`, with `finish`: the `finish_reason` the gateway gave for each
-  empty answer ("stop", "length", or none). The model's `reasoning_content` is never shown in its
-  place: LangChain drops it, and it is the model's unchecked working, not a reply.
-  `check_reply(text, messages)` (which builds `given_text` once for its checks) runs
+  line saying there are none; a `RULES_FILE` without the markers is used as is);
+  `PARTS` (each part's name, as the model names it to the tenant), `system_prompt(messages=())` (the whole system prompt, built from the record as it stands and, for the
+  rules, the chat's messages so far), `case_topics_text`
+  (one line per case topic, or none), and three parts the program works out: `deadline_status` (WHICH DEADLINES
+  HAVE PASSED), `options_status` with `state_words` (YOUR OPTIONS), and `unknowns_status` with `UNDECIDED` and
+  `KNOWN_AS` (WHAT THE TOOL DOES NOT KNOW); see The system prompt. Imports `record`, `corpus`, `deterministic`,
+  `lease`, `tools`. Imported by `replies`, `agent`, `smoke`.
+- `replies.py`: what the program checks and prints under each reply (split out of `agent.py` on 2026-10-06,
+  unchanged). `check_reply(text, messages)` (which builds `given_text` once for its checks) runs
   `citations.check_cites` against `sections_shown(messages)` (the active playbooks' `sections` plus every
   section fetched with `get_statute_section` in the thread) and `citations.check_quoted` against
   `given_text(messages)` (the system prompt, the lease quotes as plain text, the tenant's description and
@@ -259,7 +228,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   number in the lease's own text (`lease.lease_clauses`), or every clause of a cited article, each with its page and
   title, cut at `CITED_MAX` (TODO item 82: a clause `search_lease` found is printed as a profile clause is); under
   `CITED_HEAD`, "The words the reply above cites, printed by the program from the stored statute and your
-  lease:". `turn_blocks` shows them as a `sources` block right under the reply and writes them to the transcript
+  lease:". `agent.turn_blocks` shows them as a `sources` block right under the reply and writes them to the transcript
   as a `printed` line marked `"what": "sources"`. It also runs `check_case_quotes(text,
   messages)`: a quote credited to a printed case whose part of the printed text (`printed_cases(messages)`,
   `[(name, part)]` from each `get_cases` artifact through `wiki.cases_printed`) does not hold it while another
@@ -268,7 +237,47 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   are named at that same place, and words a statute section also holds are left to `check_quoted`.
   `named_cases(text, names)` finds where a text names each case, by its short name or its first party's name
   alone, a name inside a longer one being the longer one's ("Bennett" in "Bennett M. Lifter" names Bennett M.
-  Lifter, Inc. v. Varnado). After a turn's replies, `turn_blocks` adds one more caution when a case `get_cases`
+  Lifter, Inc. v. Varnado). `cases_left_out(new)`: the printed cases no reply after them names,
+  for `CASES_LEFT_OUT` (see `agent.turn_blocks`). Imports `record`, `wiki`, `citations`, `config`, `corpus`, `lease`,
+  `prompt`. Imported by `agent`, `smoke`.
+- `agent.py`: reading the lease, intake and resume, the agent, and the chat. `read_lease(pdf_path)` (store
+  the PDF, read it into the lease profile with the extraction model, check every quote, save the profile; for a
+  new matter), `intake` (classify, propose facts, save; for a
+  new matter only), `resume` (for an existing matter: log a `tenant_update` event, classify the update only,
+  add new issues, propose facts from the update, save; returns the issues it added). Neither builds the agent: `run.py` runs the intake
+  sheet first, then `build_agent`.
+  `prompt_from_record` (LangChain `dynamic_prompt` middleware that
+  calls `system_prompt(request.messages)` before every model call), `build_agent` (a LangChain agent with that middleware and an in-memory checkpointer; no
+  model call), `transcript_entry` (one thread message as a transcript line).
+  The chat is in pieces both front ends call (the terminal's `chat`, the web page `app.py`). Each returns
+  blocks, the parts the tenant sees in order, each `{"kind", "text"}` made by `block`: `reply` is the model's
+  words; every other kind is the program's: `letter` (a `draft_letter` result as is), `cases` (a `get_cases`
+  listing), `deadlines` (the turn's last `get_deadlines` listing through `render_deadlines`), `caution` (failed
+  cite or quote checks, or `NO_REPLY`), `footer` (`READING_LINE`), `timeline`, `notice` (a command's answer), and
+  `stop`. `turn(agent, config, text, note="")` is one turn of the model: the tenant's message goes to the
+  transcript before the model runs (so `propose_facts` can check the tenant's words), then the note, if any; the
+  turn's new messages are the thread after what the checkpointer held before it; it returns the blocks and
+  whether the model called `propose_facts`, so the sheet comes next. When the tenant's message asks about when
+  (`WHEN_QUESTION`: "when do", "when is", and the like, "how long", "how many days", "last day", "deadline", "by
+  when"; not "when I moved out") and the turn holds no `get_deadlines` call, `deadlines_unasked` puts the
+  deadlines first, as a `deadlines` block printed by the program (`render_deadlines(deadline_listing())`, which
+  logs `deadlines_computed` as the tool does), written to the transcript as a `printed` line marked `"what":
+  "deadlines"` (TODO item 65: the model answered 1, then 4 of 39 such questions without the tool). The model is
+  not told. `turn_blocks(new, messages)` transcribes a
+  turn's new messages and builds its blocks; other tool results are not shown. Under each reply come the words
+  it cites (`replies.cited_words`), then its cautions (`replies.check_reply`), then, if the reply cites or quotes the statute (a quoted passage with a ch. 83 cite,
+  `citations.quoted_passages`, or a ch. 83 cite outside quote marks) or the lease (a quoted passage found in a
+  lease profile quote, or a `LEASE_CITE`, "Lease Section 4.3") and does not
+  already carry it (after `CUT_OFF`, "[Check: this reply was cut off at the model's length limit. Ask again for
+  the rest.]", when the gateway's `finish_reason` was "length"), `READING_LINE` ("This is the tool's reading of the stored law and your confirmed
+  facts, not a lawyer's advice.", from `replies.reading_line`), also written to the transcript as a `footer` line
+  (TODO item 46; was `NOT_DECIDED`, "This tool does not decide whether any of this applies to you."). When a turn has no blocks (the reply was empty
+  or blank), `retry_empty` sends the model `EMPTY_REPLY`, a program note asking it to reply, and returns that
+  second turn's blocks; if it is empty too, a `NO_REPLY` caution ("[Check: no reply came back from the model. Please
+  ask again.]"). Either way it logs `reply_empty`, with `finish`: the `finish_reason` the gateway gave for each
+  empty answer ("stop", "length", or none). The model's `reasoning_content` is never shown in its
+  place: LangChain drops it, and it is the model's unchecked working, not a reply.
+  After a turn's replies, `turn_blocks` adds one more caution when a case `get_cases`
   printed in the turn is named by no reply after it (`cases_left_out(new)`): `CASES_LEFT_OUT`, "[Check: the
   program printed cases above that this reply does not discuss: <names>. Read them too before relying on the
   reply.]", a `check` transcript line, and a `cases_left_out` event (TODO item 57: every mold-story answer of
@@ -285,7 +294,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   command or runs a turn, prints the blocks, ends after a drop leaves no covered issue, and after a turn that
   proposed facts runs `sheet.run_sheet` if `pending_rows()` has anything, keeping its `sheet_note` for the
   next message.
-  Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `lease`, `sheet`, `timeline`, `tools`, `wiki`. Imported by `run`, `app`, `smoke`.
+  Imports `record`, `config`, `corpus`, `deterministic`, `lease`, `prompt`, `replies`, `sheet`, `timeline`, `tools`.
+  Imported by `run`, `app`, `smoke`, `smoke_online`.
 - `run.py`: entry point. `start()` asks new or existing. `start_new` picks an existing tenant id or makes one
   (`new_tenant_id`), calls `new_matter` and `start_session("new")`, asks for the lease path (`ask_path`, which accepts a path dragged
   into the terminal), reads the lease (`agent.read_lease`), asks for the description (`ask_text`, several lines
@@ -469,12 +479,12 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `fetch`: `section` (from `get_statute_section`), `search` (from `search_statute`), or `lease_search` and `found`
     (from `search_lease`: the phrase, and the clause numbers and pages that hold it).
   - `cite_flagged`: `cite` (e.g. "83.64"), `problem` (not a stored section, not shown or fetched in this
-    chat, or no such subsection). Written by `agent.check_reply` after a reply. `timeline full` only.
+    chat, or no such subsection). Written by `replies.check_reply` after a reply. `timeline full` only.
   - `reply_empty`: `recovered` (true if the model's second turn showed the tenant something), `finish`
     (the gateway's `finish_reason` for each empty answer). Written by
     `agent.retry_empty`. `timeline full` only.
   - `quote_flagged`: `quote` (the quoted words), `cite` (the cite next to it, or ""), `problem` (e.g. "is in
-    83.49(3)(a), not 83.49(3)(b)"). Written by `agent.check_reply`. `timeline full` only.
+    83.49(3)(a), not 83.49(3)(b)"). Written by `replies.check_reply`. `timeline full` only.
   - `cases_left_out`: `cases` (the names of printed cases no reply after them named). Written by
     `agent.turn_blocks`. `timeline full` only.
   - `cases_shown`: `topic`, `cases` (the cites printed, oldest first), `unverified` (true, only in a
@@ -630,7 +640,7 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
 
 ## The system prompt
 
-Built by `agent.system_prompt()` on every model call (through the `prompt_from_record` middleware), so it
+Built by `prompt.system_prompt()` on every model call (through the `prompt_from_record` middleware), so it
 always matches the record: facts confirmed on the sheet and issues added mid-chat show up on the model's
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
@@ -688,7 +698,7 @@ this order:
    required, rights, or options about anyone outside quote marks; quote, then "This tool does not decide
    that."), is in git history at commit a3b0b13. Rules 1 to 7 cover the same ground as the seven rules of
    2026-09-30 (whose numbers TODO.md items 15 to 22 use).
-Then the parts, each under its name in `agent.PARTS`, a name a tenant can read, with a short line saying what
+Then the parts, each under its name in `prompt.PARTS`, a name a tenant can read, with a short line saying what
 it holds. A reply that names its source in plain words ("your facts show", "the program's deadlines show")
 reads right to the tenant. Until TODO item 61 (2026-10-03) the parts were LEASE PROFILE, PLAYBOOKS (guidance
 and open questions together), STATUTE SECTIONS, CASE TOPICS, ELEMENT STATUS, and DEADLINE STATUS, and the
@@ -711,10 +721,10 @@ rules forbade it.
    playbook has one. The rest of `spec` never enters the context.
 5. `THE STATUTE`: the text of every section the active playbooks list in `sections`, once each. An
    issue with no playbook yet adds none.
-6. `COURT CASES THIS TOOL HAS`: `agent.case_topics_text()`, one line per topic with its number of cases,
+6. `COURT CASES THIS TOOL HAS`: `prompt.case_topics_text()`, one line per topic with its number of cases,
    from `tools.offered_topics()`, or "none for these issues" (always, until the author verifies pages).
 7. `YOUR FACTS`: `element_status()` as JSON at the moment of the call.
-8. `YOUR OPTIONS`: `tools.options_status()`: for each active issue's options (`deterministic.check_options`,
+8. `YOUR OPTIONS`: `prompt.options_status()`: for each active issue's options (`deterministic.check_options`,
    from the confirmed facts, the clocks, and the lease profile), "- <label> (Fla. Stat. <cite>): <STATUS>", then a
    line per condition (gate) with its state in words (`state_words`: its status, what the tool knows of it when
    that says more, "the tenant can tell the tool" or "the tenant can check", and why); a condition not met with
@@ -725,7 +735,7 @@ rules forbade it.
    this condition is met" line (TODO item 84: "closed if it holds; if not, closed" said nothing). "none: no active
    issue lists its options yet" with no active playbook (every playbook has options since item 84). Rule 1 asks for
    an option's status before any of its steps (TODO item 72).
-9. `WHAT THE TOOL DOES NOT KNOW` (TODO item 83): `tools.unknowns_status()`: each point an option of an active issue
+9. `WHAT THE TOOL DOES NOT KNOW` (TODO item 83): `prompt.unknowns_status()`: each point an option of an active issue
    turns on that the tool has not decided (a way of a gate in a state of `UNDECIDED`: tell, check, not settled,
    outside, not met yet) and that could change an option (a condition of an option another condition closes is
    left out), once however many options it decides, as "- whether <the way's condition> (<cite>)
@@ -736,7 +746,7 @@ rules forbade it.
    the whole text, and only a point no wording finds there is known to be absent. In words, no id.
 10. `WHICH DEADLINES HAVE PASSED`, whose name line says it has no dates and that any question about when calls
    `get_deadlines` (named THE PROGRAM'S DEADLINES for a few hours on 2026-10-03, which the model read as the
-   deadlines themselves and answered from): `tools.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
+   deadlines themselves and answered from): `prompt.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
    notice deadline", not the clock's id) with its issues, whose it is, what it counts from (the fact's label,
    not its date), its cite, and "passed" or "upcoming" (or why it has
    no date); then each issue still waiting, with the facts it waits for. Logs nothing. So the model can apply a
