@@ -17,7 +17,7 @@ session can see why the code is the way it is.
   withholding shown open for hot water (83.51(2)(c)); a roommate read as "household" under 83.51(4); one fact set for
   two repair problems; `tools.build_letter`'s "I request that you" and "sent by by", and fact lines the chat cannot
   fix; questions left unanswered after a draft. Every student asked for a short "what to do next" first. Findings and
-  recommendations are in the eval's README for the author; TODO.md is unchanged. No program code changed.
+  recommendations are in the eval's README; TODO: items 90 to 101 and a note on item 64. No program code changed.
 
 - Cleanup, part 3: smoke.py split by area. Was: one script of 1,268 lines, its checks in sections that shared a few
   helpers. Now `smoke.py` (18 lines) imports five parts from `smoke_parts/`, in the order the checks ran:

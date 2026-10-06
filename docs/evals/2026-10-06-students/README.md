@@ -183,7 +183,7 @@ Found in the program's own output; module and function named. Ordered by what it
 
 ## Recommendations, for the author to decide
 
-Nothing in the program was changed by this eval.
+Nothing in the program was changed by this eval. TODO.md holds these as items 90 to 101 and a note on item 64.
 
 High:
 1. A short plain answer first, in every reply: what this means and what can be done now, a few lines, then the rule,

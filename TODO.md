@@ -33,6 +33,19 @@ is the author's.
     lease duty exists") against the program's state. Decide whether the tenant's confirmation stays the only way a
     lease clause decides a condition, or whether a clause the tool has read can (and then how code, not the model,
     would read it).
+90. For the author, from the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`): a tenant's yes or
+    no settles whether a notice works. In story F the e-mail said "If this isn't fixed I'm going to have to move
+    out."; asked "Does your written notice say that you intend to end the lease because of the problem?", the student
+    said yes. `deterministic.check_options` then showed the 83.56(1) steps done, `compute_deadlines` the 7 days
+    passed, and the reply said there was no new step. Two things no code reads: the notice's words (the sheet asks the
+    tenant to characterize them, and nothing records them; `add_communication` was not called), and how it was
+    delivered (`written_notice_method` is free text no gate reads, while 83.56(4) allows "e-mailing in accordance with
+    s. 83.505", which needs a signed addendum, and the 83.56(1) clock's `delivery` lists it). The same path counted
+    portal maintenance requests as a delivered notice (stories A, D2, E), though the test lease says "A maintenance
+    request is a request for service and is not by itself a notice under Section 13.1" (7.2), and the letter then
+    printed a "Written notice date" for one (item 95). Whether these stay something the tenant tells the tool, or
+    become something the tenant can check (the notice's words beside the statute's, the method beside 83.56(4) and the
+    lease's notice clause), as item 86 asks of a lease clause.
 
 ## Applying the law
 
@@ -76,6 +89,11 @@ lease clause pasted), so an answer cites and the program prints the cited words.
     section it is not in, but word for word in what the model was given, is not flagged for the section. Since
     `search_lease` (item 82) more lease words are quoted beside statute cites: in the eval of 2026-10-04 quote cautions
     rose 8 to 19, among them "If Landlord accepts Rent from Tenant..." (Lease 2.4) checked against 83.58.
+    In the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`), with a stand-in model: 23 of 29
+    cautions false, 8 a lease quote and 9 a case quote beside a statute cite. New kinds: the posture lines rule 6 says
+    to quote word for word ("Adds the 83.51(1) duty, quoted.", which holds a cite), the playbook's note on notice
+    sufficiency, and the tenant's own letter. Students read the cautions as the tool being broken; one learned to
+    ignore them all.
 71. What the blind scoring of 2026-10-03 left (`docs/evals/2026-10-03-blind/`; 36 of 115 legal answers applied
     well, against 21 of 103 on 2026-10-02): rules restated without their quote (46.5, unchanged), conditions
     applied wrong (30.5, unchanged; item 63 holds the ones for the author), quotes without marks (26) and facts
@@ -85,6 +103,20 @@ lease clause pasted), so an answer cites and the program prints the cited words.
 67. The eval's "cases not given" (`CASE_NAME` in `dev/eval.py`) counts part of a given case's name as another
     case: "Inc. v. Varnado", "Income Realty v. Bentley", "Follows Durene v. Alcime" (3 turns, eval of
     2026-10-03). Match against the names `get_cases` printed (`replies.named_cases`) instead.
+96. Rule 6 (`prompt.LETTER_RULE`): "After draft_letter, reply only: "The letter appears above; tell me if you want
+    changes."" In the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`), a question asked in the
+    same message as a change went unanswered: "is the written notice date line ok?" (story A), and twice in story F
+    whether the letter counts as the notice to end the lease and what 4 days' notice instead of 7 means for the
+    move-out, the two questions that mattered most before moving out. The stand-in model kept the rule exactly. Let
+    the reply after a draft answer a question asked with the change.
+97. For the author, the shape of an answer (README, Purpose): in the student simulation of 2026-10-06
+    (`docs/evals/2026-10-06-students/`) every student asked, in some form, "so can I or can't I?", and every one asked
+    for the same change, a few plain lines first on what this means and what can be done now, then the rest. Rule 1's
+    order (open or not, the rule, the facts, applied, so) held in every answer, but on an open point it ends in two
+    readings and "The tool picks neither", which students read as no answer ("I never got what it meant for me", story
+    B); asked which letter posture to pick, "The choice is yours; I cannot pick it for you" (stories C, F). Whether a
+    short plain summary of the options and the next step for each, still not a choice among them, leads every answer.
+    (A stand-in model, not nemotron; item 101.)
 
 ## Harness and code
 
@@ -113,6 +145,27 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     JSON (now asked for again) and a line break inside a quoted JSON string (the mixed story; now accepted,
     `strict=False`). The other screens were written over; the eval now keeps a crashed first attempt's screen.
     Read the next ones before changing anything.
+94. One set of facts per issue, from the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`), story
+    C: no hot water since Sept 28 and an AC cutting out since about Sept 14 are two repair problems, but
+    repair_not_made holds one `problem_started`, one notice, and one set of options per matter. A later message
+    proposed the AC's date, the sheet asked the student to pick one, and the letter's "Problem started" was then wrong
+    for the other problem. Options: a matter per problem, or an issue that can repeat with its facts kept per problem.
+95. `tools.build_letter`, from the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`) (every story
+    that drafted a letter): `f"I request that you {ask[0].lower() + ask[1:]}."` turned a first-person ask into "I
+    request that you i, Morgan Davis, ... am ending my lease" (story F); `f"This letter is sent by
+    {delivery_method}."` printed "sent by by hand" when the model wrote "by hand ..." (C, E, F); every confirmed date
+    fact prints under its id, so "Written notice date" showed the date of a portal request the chat had just said is
+    not a notice (A, D2, E; item 90), "Problem started" was wrong for one of two problems (C; item 94), and the model
+    cannot change those lines ("I cannot fix those two lines from here", D2); the signature is the profile's
+    `tenant_names` quote, `Jordan Reyes ("Resident")`; and there is no field for the tenant's own facts (the
+    technician's visit, the temperature, the doctor's note), which the stand-in model put into `ask`. Smoke: a check
+    per fix.
+101. Run the stories of the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`) on nemotron: that
+    eval ran with a stand-in model, since the session had no gateway key. Each story's typed lines are in its
+    `results/*/inputs.json`; turned into `dev/scenarios` files (sheet answers and chat lines) they would run under
+    `dev/eval.py`, no longer adapting to the replies. The eval's `method/harness.py` replays the whole program with
+    the model's answers read from a file, a way to run the program end to end offline if the smoke checks ever want
+    one.
 
 ## Playbooks
 
@@ -136,6 +189,29 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     5.4), so the model cannot quote the lease's own rule in a neighbor_disturbance chat or letter; only the
     stop text shows such clauses, by code. Consider a `conduct_and_use` field in `lease.LeaseProfile` (a
     change to extraction: every lease would be read again).
+91. For the author, with item 84: repair_not_made's `withhold_rent` showed OPEN for no hot water (story C of the
+    student simulation of 2026-10-06, `docs/evals/2026-10-06-students/`). The student called the broken water heater
+    plumbing, which meets the first condition's only fact way (`problem_is_structure_or_plumbing`). Hot water is in
+    83.51(2)(a)5., and 83.51(2)(c) says part II does not let a tenant raise a noncompliance with subsection (2) as a
+    defense to an action for possession. The open question `subsection_one_or_two` is on this point, but
+    `withhold_rent`'s `also_open` lists only `material_noncompliance` and `court_procedure`, so the options part gave
+    no flag. Whether an item 83.51(2) names needs its own fact or way, and whether `end_the_lease` needs the same.
+92. For the author: the question for `caused_by_tenant_side` reads "Was the problem caused by you, a member of your
+    household, or someone you let in?"; 83.51(4) says "a member of the tenant’s family, or other person on the
+    premises with the tenant’s consent". In a by-the-bed lease the landlord assigns the roommates (the test lease's
+    1.3). In story E of the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`) a roommate broke the
+    washer; `fill_facts` suggested yes, the student accepted it, and both repair options showed closed until the
+    student changed it mid-chat. Whether a roommate the landlord placed is on the premises "with the tenant’s consent"
+    may need an open question; "household" answers it for the tenant.
+93. For the author: situations the stories of the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`)
+    brought that no playbook covers. A charge on the tenant's ledger they dispute (story E, $85 for a roommate's
+    damage, under the lease's joint liability for shared appliances); a roommate who caused the damage; closed
+    amenities and an amenity fee (D); a service the rent includes, Wi-Fi (D2); the guarantor's exposure (A, C, F; the
+    guaranty is a separate paper the tool does not read); and rent back for the time without a repair, which "is not
+    one of the options the program checks" (A, B, C), though 83.56(1)(b), the reduction in 83.60(1)(b), and 83.55
+    speak to it. In story D a no to the only suggested issue stopped the visit after one question, with no warning,
+    and the stop text quoted three clauses (6.2, 3.3, 5.1) it does not apply. Two students (D, F) also asked where to
+    find free help (a legal aid office, student legal services). A new playbook changes README's list.
 
 ## Case law
 
@@ -184,6 +260,14 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     tenant's facts (README, Purpose), so the question to bring is what supervision or review it needs before
     any tenant uses it. (Was: whether computing a tenant's own deadline, `compute_deadlines`, came close to
     applying law to facts.)
+98. Case listings came first and whole, in the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`):
+    first replies ran 12,000 to 75,000 characters, 51% to 72% of them `get_cases` listings (`wiki.render_cases`: each
+    case's facts, question, rule, reasoning, and related cases), printed above the reply, and rule 8 has the model
+    discuss "every case it gives", so the reply grows with the listing. An AC question drew "Landlord's maintenance
+    duties under 83.51", whose cases are mostly injury suits ("one was a gas explosion, one a kid cut on glass, one a
+    guy shot at his door", story A). Every student skipped them. Options: the reply first and the cases after it,
+    folded on the web page as the cited words are, or cases only when asked (item 36); fewer topics per issue (item
+    35). Run with `WIKI_UNVERIFIED=1`; a tenant today sees no cases.
 
 ## Interface
 
@@ -195,6 +279,21 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     57-page lease (2026-10-04): reading it took about four minutes with no sign of progress, a second click
     on start began a second matter and a second request to the gateway (both ran), and the extraction call
     has no time limit, so a stalled gateway would spin forever.
+99. Small things students tripped on, in the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`): an
+    issue row says "suggested because of" but has no suggested value, so Enter gives "Please type yes or no" (stories
+    A, C); "Skipped for now: lease_promises_repair. Deadlines wait until these are answered." shows a field id (D2,
+    F); "Taken out of your matter; logged." (D); nothing says before a no that it will end the visit (D; item 93); a
+    sheet mid-chat changes a fact and nothing says what that changed until the student writes again (E);
+    `agent.deadlines_unasked` printed "No deadlines: none of the deadlines this tool computes applies to your
+    confirmed facts." above a letter, for "idk how many days is normal, 3?" (A), and as the first line of the answer
+    to "how long are they allowed to leave us without hot water?" (C); and no student typed `timeline` or `issues`
+    (nothing on screen names them; B wanted a list of dates to watch).
+100. Words students did not know, in the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`): the
+    postures, preserve, assert, and escalate (stories A, C, F); the note under a letter, "ask in the chat to have this
+    applied to your letter before you send it" ("Applied how?", D2; also B, E); "the landlord's duty is met" (read as
+    the landlord having done their job, A); "possession", "registry of the court", "material noncompliance", "waived"
+    (C); and "matter" and "playbook" in the stop text (D). Options: plain names for the postures, each with when it
+    fits; a word list the program prints under a reply that uses one.
 
 ## Model behavior (later)
 
