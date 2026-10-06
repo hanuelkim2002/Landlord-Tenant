@@ -19,7 +19,7 @@ is a law student, not admitted.
 
 1. Make the one change asked for. Nothing else.
 2. Run the offline checks (see DOCUMENTATION.md, Running and testing). Playbook checks and the
-   named smoke checks must all be OK. A change to code that writes to a matter gets a check in `smoke.py`.
+   named smoke checks must all be OK. A change to code that writes to a matter gets a check in `smoke_parts/` (run by `smoke.py`).
 3. Add a CHANGELOG.md entry saying what was added and what it replaced.
 4. Update DOCUMENTATION.md if a function, tool, file, event kind, or rule changed.
 5. Move the finished TODO.md item to the changelog.

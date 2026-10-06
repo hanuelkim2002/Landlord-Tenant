@@ -373,7 +373,15 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   failures, `summary()` prints the last line, `make_scratch(tenant_id, **changes)` copies the test matter
   (without its transcripts) to `matters/<tenant_id>/m-001` and changes `matter.json` keys, and
   `remove_scratch(tenant_id)` removes it; it refuses any tenant id not starting with `t-smoke`.
-- `smoke.py`: entry point. Checks each piece without the agent or a model (see Running and testing).
+- `smoke.py`: entry point. Runs the offline checks, which are in `smoke_parts/` (split out of smoke.py on 2026-10-06),
+  by importing each part in order, then prints `summary()` (see Running and testing).
+- `smoke_parts/`: the smoke checks in five parts, each run when imported: `pieces` (each piece on its own, on the
+  test matter in memory), `writing_to_a_matter` (on `matters/t-smoke/m-001`), `issues_and_turns` (on
+  `matters/t-smoke-related/m-001`: issues suggested and dropped, and turns with a stand-in model),
+  `playbooks_options_lease` (every playbook, and the checks of items 72 to 84 on their own scratch matters), and
+  `web_page`; and `common.py`, what more than one part uses: `FORFEIT` (a phrase of 83.49(3)(a)), `scripted`,
+  `stated`, `screen`, `prompt_part`, and `StandIn` (a stand-in model that takes any tools). Each part imports what it
+  uses; named checks and scratch matters come from `checks.py`.
 - `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description, then `resume`
   checks on a scratch matter.
 - `dev/live_run.py`: entry point for live tests. Starts `run.py` itself and drives a whole session from a
@@ -926,7 +934,8 @@ Offline checks (no model call, no key needed):
   Westlaw-built files carry, so the case-file smoke checks hold for it. Spaces the PDF loses where lines
   join ("outlegal") stay lost; quote checks ignore spaces.
 
-- `python smoke.py`: needs the saved test matter `matters/t-test/test-001/` with its lease profile. Opens it
+- `python smoke.py`: runs the parts in `smoke_parts/`, in order (a new check goes in the part on its subject).
+  Needs the saved test matter `matters/t-test/test-001/` with its lease profile. Opens it
   with `load_matter` and prints `list_matters()`, then runs the playbook checks (one named check, "every
   playbook check is OK", fails if any line of `check_all_playbooks` does), element status and deadlines on hand-typed facts with today fixed at 2026-09-08, the case corpus (every file in `cases/`
   named for the cite on its first line, none of Westlaw's material, no headnote marker opening a line,

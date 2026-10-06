@@ -5,6 +5,14 @@ session can see why the code is the way it is.
 
 ## 2026-10-06
 
+- Cleanup, part 3: smoke.py split by area. Was: one script of 1,268 lines, its checks in sections that shared a few
+  helpers. Now `smoke.py` (18 lines) imports five parts from `smoke_parts/`, in the order the checks ran:
+  `pieces` (330 lines), `writing_to_a_matter` (321), `issues_and_turns` (229), `playbooks_options_lease` (353), and
+  `web_page` (88); what more than one part uses is in `smoke_parts/common.py` (`FORFEIT`, `scripted`, `stated`,
+  `screen`, `prompt_part`, and `StandIn`, the stand-in model two parts define the same way). Each part imports only what
+  it uses. The checks moved as they were: the same 647 lines, in the same order, all OK. CLAUDE.md points to
+  `smoke_parts/` for a new check.
+
 - Cleanup, part 2: agent.py split by job. Was: agent.py (724 lines) held the rules text and the system prompt, the
   checks and printing under each reply, and the chat, and tools.py held three of the prompt's parts beside the tools.
   Now `prompt.py` (what the model reads: `RULES` and the rules put in when they apply, `PARTS`, `system_prompt`, and
