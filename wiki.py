@@ -35,13 +35,24 @@ REQUIRED = {"case": ["cite", "file", "court", "decided", "statute_read", "topics
 SIGN_OFF = ("verified_by:", "verified_on:", "verified_hash:")   # set by verify, left out of the page's hash
 
 
+# The pages read, by folder, with what the folder held when they were read (each file, its time, its size). The chat
+# builds its prompt on every model call, and read and parsed all 122 pages twice each time: about 90% of the
+# program's own time in a turn. A page written, added, or removed since is read again.
+_read = {}
+
+
 def read_pages(root=WIKI):
-    """Every page under root/cases and root/topics, by name: {"name", "path", "meta", "body"}."""
-    pages = {}
-    for path in sorted(root.glob("cases/*.md")) + sorted(root.glob("topics/*.md")):
-        _, front, body = path.read_text().split("---\n", 2)
-        pages[path.stem] = {"name": path.stem, "path": path, "meta": yaml.safe_load(front) or {}, "body": body}
-    return pages
+    """Every page under root/cases and root/topics, by name: {"name", "path", "meta", "body"}. Parsed once and
+    reused while no file under them changes; callers read the pages and never change them."""
+    paths = sorted(root.glob("cases/*.md")) + sorted(root.glob("topics/*.md"))
+    held = [(path, path.stat().st_mtime_ns, path.stat().st_size) for path in paths]
+    if root not in _read or _read[root][0] != held:
+        pages = {}
+        for path in paths:
+            _, front, body = path.read_text().split("---\n", 2)
+            pages[path.stem] = {"name": path.stem, "path": path, "meta": yaml.safe_load(front) or {}, "body": body}
+        _read[root] = (held, pages)
+    return _read[root][1]
 
 
 def linked(value):

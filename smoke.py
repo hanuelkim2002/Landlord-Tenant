@@ -184,6 +184,16 @@ check("a case page with no section tag must say why (scope_note)",
                                              'sections: []\nscope_note: Reads part I only.'))
 check("a case missing from the Cases list of a topic it names is caught", "whose Cases list does not have it" in
       wiki_fault("Constructive eviction", "- [[Plakhov v. Serova]], Fla. 4th DCA", "- Plakhov v. Serova, Fla. 4th DCA"))
+# read_pages reuses the pages it parsed while no file changes, and reads a page again once it is written
+first_read, second_read = read_pages(wiki_copy), read_pages(wiki_copy)
+fees = wiki_copy / "topics" / "Fees and costs in a suit over the deposit.md"
+fees_text = fees.read_text()
+fees.write_text(fees_text + "\n")
+after_write = read_pages(wiki_copy)
+check("the wiki's pages are parsed once and reused, and read again after a page is written",
+      second_read is first_read and after_write is not first_read
+      and after_write["Fees and costs in a suit over the deposit"]["body"].endswith("\n\n"))
+fees.write_text(fees_text)
 verify("Casey v. Picinich", "Smoke", wiki_copy)
 signed = verified(read_pages(wiki_copy)["Casey v. Picinich"])
 casey = wiki_copy / "cases" / "Casey v. Picinich.md"

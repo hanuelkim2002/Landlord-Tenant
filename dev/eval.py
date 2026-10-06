@@ -56,7 +56,6 @@ transcript, copied out; the scratch tenant is then removed from the project's ma
 transcripts/ (each run as text: who produced each part), scores.json (per run), summary.json (per scenario).
 """
 import json
-import os
 import re
 import shutil
 import subprocess

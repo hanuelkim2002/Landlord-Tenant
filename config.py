@@ -50,3 +50,11 @@ def require_key():
 def squash(text):
     """Collapse all whitespace to single spaces, lowercase. For comparing quotes."""
     return " ".join(text.split()).lower()
+
+
+def shorten(text, limit, rest=""):
+    """The text as is, or, when it runs past `limit` characters, its words up to there, then " ..." and `rest` (where
+    to read the rest, e.g. "(the rest is in Fla. Stat. 83.49(3)(a))"). For a passage printed or shown in full."""
+    if len(text) <= limit:
+        return text
+    return text[:limit].rsplit(" ", 1)[0] + " ..." + (f" {rest}" if rest else "")

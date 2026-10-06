@@ -3,6 +3,19 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-06
+
+- Cleanup, part 1: speed and tidy-ups (the author's request, before pushing main). Was: every prompt build read and
+  parsed all 122 wiki pages twice (for the case topics), and checking one reply built the whole prompt three times,
+  so about 90% of the program's own time in a turn went to re-reading files that had not changed. Now
+  `wiki.read_pages` parses the pages once and reuses them until a file under them changes, and `agent.check_reply`
+  builds what the model was given once. The prompt build went from 74 to 8 ms, a reply check from 140 to 8 ms, and
+  a smoke run from about 28 to 18 seconds (a model reply still takes seconds). Tidy-ups: `config.shorten`, one helper
+  for cutting a long passage, in place of the same line written out in four places (`agent.cited_words` twice,
+  `tools.search_lease`, `sheet.stop_text`); `lease.find_in_lease` splits the lease into clauses once, not twice; an
+  unused import out of `dev/eval.py`. Nothing the tenant or the model sees changes. Smoke: one check, the pages
+  reused and read again after a write.
+
 ## 2026-10-05
 
 - Eval of items 81 to 84, with a story per knowledge state, a full eval, and a blind scoring (TODO item 85, done;

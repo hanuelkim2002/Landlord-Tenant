@@ -251,11 +251,11 @@ def find_in_lease(phrase, pages, limit=5):
     else:
         flat, where = plain(text)
         hits = [where[m.start()] for m in re.finditer(re.escape(wanted), flat)]
-    clauses, outside = [], []
-    for c in lease_clauses(pages):
+    every, clauses, outside = lease_clauses(pages), [], []
+    for c in every:
         if any(c["start"] <= h < c["end"] for h in hits) and len(clauses) < limit:
             clauses.append(c)
-    covered = [(c["start"], c["end"]) for c in lease_clauses(pages)]
+    covered = [(c["start"], c["end"]) for c in every]
     for h in hits:
         if not any(a <= h < b for a, b in covered):
             page = max(pg for at, pg in starts if at <= h)

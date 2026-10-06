@@ -16,7 +16,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   model in one run; it drives the chat, `classify`, and `fill_facts`), and `squash`
   (collapse whitespace, lowercase; used for every quote comparison). Reads `.env` with python-dotenv. The
   two clients are `None` when `UF_API_KEY` is missing; `require_key()` raises with a clear message then,
-  and `run.py` and `smoke_online.py` call it first. Imports nothing from the project.
+  and `run.py` and `smoke_online.py` call it first. `shorten(text, limit, rest="")` (a passage cut at its last word
+  before `limit` characters, with " ..." and where to read the rest; for the printed words, the lease search, and the
+  stop text). Imports nothing from the project.
 - `lease.py`: lease intake. `ingest_pdf(pdf_path, matter_dir)` (store the PDF under its hash in the folder
   it is given, extract page text with PyPDF2, write `pages.json`), the `Clause` and `LeaseProfile` shapes (sixteen named clauses; `maintenance_and_repairs`, added 2026-10-04 for
   TODO item 76, is optional, so a profile read before it loads with it `None`, not read; `LeaseProfile.clauses()`
@@ -96,7 +98,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   a `get_cases` receipt; returns `(cite, problem)`). Imports `corpus`. Imported by `agent`, `smoke`, `wiki`, `dev/eval.py`.
 - `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
   `cases/` and `topics/` under the wiki folder, by name: `name`, `path`, `meta` from the YAML front matter,
-  `body`), `linked` (page names in a front matter field), `opinion(page)` (a case page's opinion from
+  `body`; parsed once and reused, in `_read`, while no file there changes its time or size or is added or removed,
+  since the chat builds its prompt on every model call; callers never change the pages), `linked` (page names in a front matter field), `opinion(page)` (a case page's opinion from
   `cases/` with its star pages taken out, so a quote may run across a page break, and where each page
   starts; a star outside the opinion's own page range is the court's and stays), `pin` (the page a quote
   starts on), `case_list(topic)` (a topic page's "## Cases" section), `check_quotes` (every quote is
@@ -237,7 +240,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   ask again.]"). Either way it logs `reply_empty`, with `finish`: the `finish_reason` the gateway gave for each
   empty answer ("stop", "length", or none). The model's `reasoning_content` is never shown in its
   place: LangChain drops it, and it is the model's unchecked working, not a reply.
-  `check_reply(text, messages)` runs
+  `check_reply(text, messages)` (which builds `given_text` once for its checks) runs
   `citations.check_cites` against `sections_shown(messages)` (the active playbooks' `sections` plus every
   section fetched with `get_statute_section` in the thread) and `citations.check_quoted` against
   `given_text(messages)` (the system prompt, the lease quotes as plain text, the tenant's description and

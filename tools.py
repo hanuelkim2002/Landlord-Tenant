@@ -16,7 +16,7 @@ from langchain.tools import tool
 import record
 from citations import is_in
 import config
-from config import squash
+from config import shorten, squash
 from corpus import playbooks, statute
 from deterministic import check_options, matter_deadlines
 from lease import LABELS, find_in_lease
@@ -72,7 +72,7 @@ def search_lease(phrase: str) -> str:
                 "the tool found nothing on it in the lease's text.")
     lines = [f"\"{phrase}\" is in the lease's text ({len(pages)} pages searched):"]
     for c in clauses:
-        words = c["text"] if len(c["text"]) <= SEARCH_SHOWN else c["text"][:SEARCH_SHOWN].rsplit(" ", 1)[0] + " ..."
+        words = shorten(c["text"], SEARCH_SHOWN)
         lines.append(f"- Lease Section {c['number']}, {c['title']}, page {c['page']}: \"{words}\"")
     lines += [f"- Lease, page {pg}, outside any numbered clause: \"...{words}...\"" for pg, words in outside]
     lines.append("Cite a clause as given here; the program prints its words under your reply.")

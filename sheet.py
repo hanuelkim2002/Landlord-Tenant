@@ -13,6 +13,7 @@ shown with the tenant's own words and accepted with Enter. "?" skips a fact for 
 from datetime import datetime
 
 import record
+from config import shorten
 from corpus import fact_lease, playbooks
 from lease import LABELS, clauses_about, lease_cite
 from record import confirm_fact, confirm_issue, element_status, read_events, reject_issue, save
@@ -223,7 +224,7 @@ def stop_text():
     if found:
         lines += ["", "Parts of your lease that may be on the subject, as printed in the lease:"]
         for c in found:
-            words = c["text"] if len(c["text"]) <= CLAUSE_CHARS else c["text"][:CLAUSE_CHARS].rsplit(" ", 1)[0] + " ..."
+            words = shorten(c["text"], CLAUSE_CHARS)
             lines.append(f'  Lease Section {c["number"]}, {c["title"]}, page {c["page"]}: "{words}"')
         lines.append("This tool has no playbook for this situation, so it does not apply them to your facts.")
     return "\n".join(lines)

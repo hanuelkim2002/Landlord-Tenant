@@ -21,7 +21,7 @@ import record
 import wiki
 from citations import (caution, check_case_cites, check_cites, check_quoted, cites_in, is_in, quote_label, quote_spans,
                        quoted_passages, subsections, unquoted)
-from config import agent_llm
+from config import agent_llm, shorten
 from corpus import issue_menu, playbooks, statute
 from deterministic import classify, fill_facts
 from lease import LABELS, SECTION_NUMBER, check_quotes, extract_profile, ingest_pdf, lease_cite, lease_clauses, lease_lines
@@ -470,9 +470,7 @@ def cited_words(text):
     for cite in [c for c in cites if not any(o != c and o.startswith(c) for o in cites)]:
         section, _, rest = cite.partition("(")
         words = statute[section][slice(*subsections(section)["(" + rest])] if rest else statute[section]
-        words = " ".join(words.split()).split(" History. —")[0]
-        if len(words) > CITED_MAX:
-            words = words[:CITED_MAX].rsplit(" ", 1)[0] + f" ... (the rest is in Fla. Stat. {cite})"
+        words = shorten(" ".join(words.split()).split(" History. —")[0], CITED_MAX, f"(the rest is in Fla. Stat. {cite})")
         parts.append(f"Fla. Stat. {cite}: {words}")
     clauses = [(n, c) for n, c in record.profile.clauses() if c.present and c.quote] if record.profile else []
     numbered = None                                      # the lease text's own clauses, read once if needed
@@ -485,8 +483,7 @@ def cited_words(text):
         if number and not held:                          # a clause the profile does not hold, found in the lease text
             numbered = lease_clauses(record.lease_pages()) if numbered is None else numbered
             for c in [c for c in numbered if c["number"] == number or c["number"].startswith(number + ".")]:
-                words = c["text"] if len(c["text"]) <= CITED_MAX else c["text"][:CITED_MAX].rsplit(" ", 1)[0] + \
-                    f" ... (the rest is in Lease Section {c['number']})"
+                words = shorten(c["text"], CITED_MAX, f"(the rest is in Lease Section {c['number']})")
                 parts.append(f"Lease Section {c['number']}, page {c['page']} ({c['title']}): {words}")
     return CITED_HEAD + "\n\n" + "\n\n".join(parts) if parts else ""
 
@@ -498,11 +495,12 @@ def check_reply(text, messages):
     caution lines. The reply itself is not changed. A section cited without a quote is no longer cautioned
     (TODO item 73): the program prints its words (cited_words)."""
     flagged = []
+    given = given_text(messages)                         # built once: it holds the whole system prompt
     for cite, problem in check_cites(text, sections_shown(messages)):
         flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
-    for cite, problem in check_case_cites(text, given_text(messages)):
+    for cite, problem in check_case_cites(text, given):
         flagged.append((caution(cite, problem), "cite_flagged", {"cite": cite, "problem": problem}))
-    for quote, cite, problem in check_quoted(text, given_text(messages)) + check_case_quotes(text, messages):
+    for quote, cite, problem in check_quoted(text, given) + check_case_quotes(text, messages):
         flagged.append((caution(quote_label(quote, cite), problem), "quote_flagged",
                         {"quote": quote, "cite": cite, "problem": problem}))
     for line, kind, data in flagged:
