@@ -3,6 +3,14 @@
 The working list. Move an item to CHANGELOG.md when it is done, with the date. Reorder freely. Keep the
 "Open questions" section for things that need a decision before code is written.
 
+When an item is taken up, solve the underlying issue it is an instance of, not only the example that showed it (the
+author's rule of 2026-10-06, in CLAUDE.md). Items 90 to 100 came from one eval and share a few causes: the sheet asks
+the tenant for legal characterizations as plain yes or no facts, and the program then treats the answer as known (90,
+91, 92; also 86); what the tenant reads is built for checking, not for a reader with no legal training, in its order,
+length, and words, and in program blocks and cautions it does not explain (97, 98, 99, 100, the note on 64); text the
+program builds cannot carry the tenant's own facts or be corrected from the chat (95, 96); and the record holds one
+problem per issue and only the situations the playbooks name (93, 94).
+
 ## What the tool knows (the author's decision of 2026-10-04)
 
 After items 72 to 77 the author asked for a general theme, not fixes aimed at the example that showed each one

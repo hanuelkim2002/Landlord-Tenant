@@ -5,6 +5,12 @@ session can see why the code is the way it is.
 
 ## 2026-10-06
 
+- Working rule: fix the cause, not the instance (the author's request). Was: TODO items were often fixed for the
+  example that showed them. Now CLAUDE.md (How to work with the author) asks that a fix name the underlying issue,
+  find its other instances across the playbooks, the prompt, and the code, and solve the issue as a whole, its
+  CHANGELOG entry naming the issue and the instances covered; TODO.md's opening says the same and names the causes
+  items 90 to 100 share. No code changed.
+
 - Eval: college students with a broken AC (and other things), simulated (the author's request;
   `docs/evals/2026-10-06-students/`). No gateway key in the session, so the real program ran end to end with each
   model call answered by a stand-in agent, through a replay harness kept with the eval (`method/harness.py`), on a

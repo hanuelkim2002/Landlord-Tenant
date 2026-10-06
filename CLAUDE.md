@@ -62,6 +62,11 @@ is a law student, not admitted.
 ## How to work with the author
 
 - Build collaboratively, one change at a time. Do not run ahead autonomously.
+- Fix the cause, not the instance (the author's rule, 2026-10-06). A TODO item usually comes from one example (an AC,
+  a portal request, one story). Before changing anything, name the underlying issue the example shows, find its other
+  instances across the playbooks, the prompt, and the code, and propose a fix for the issue as a whole; a fix fitted
+  to the example alone is not done. That fix is the one change. Its CHANGELOG entry names the underlying issue and the
+  instances it covers.
 - Push back on architecture choices you think are wrong.
 - Simple code, one convention, no clever tricks. Explain line by line when asked.
 - Refer to code by module and function name.
