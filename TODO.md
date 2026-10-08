@@ -6,7 +6,7 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 When an item is taken up, solve the underlying issue it is an instance of, not only the example that showed it (the
 author's rule of 2026-10-06, in CLAUDE.md). Items 90 to 100 came from one eval and share a few causes: the sheet asks
 the tenant for legal characterizations as plain yes or no facts, and the program then treats the answer as known (90,
-91, 92; also 86; done 2026-10-08 for repair_not_made and neighbor_disturbance, the rest is item 102); what the tenant
+91, 92; also 86; done 2026-10-08 in every playbook, CHANGELOG); what the tenant
 reads is built for checking, not for a reader with no legal training, in its order, length, and words, and in program blocks and cautions it does not explain (97, 98, 99, 100; the cautions on real quotes, item 64, done 2026-10-08); text the
 program builds cannot carry the tenant's own facts or be corrected from the chat (95, 96); and the record holds one
 problem per issue and only the situations the playbooks name (93, 94).
@@ -44,6 +44,21 @@ is the author's.
     the eval lease's 13.1, is enough, given 83.505(6) and "may not be waived in the rental agreement"); the lease's repair
     promise as the tenant's check (item 86's decision, taken on the session's recommendation); the questions' and the
     choices' wording; 83.505 added to both playbooks' sections; and rule 1's two changed "Instead:" examples.
+    And part 2's (item 102, the same day): in deposit_not_returned, a claim notice that came some other way than by
+    certified mail not settled through `email_notice_conditions` (now in that playbook too), and the notice before
+    moving out read against 83.49(5)'s certified mail or personal delivery (regular mail, a portal message, or a text
+    not a way it names; e-mail only under an 83.505 addendum); in deposit_claim_received, an objection done only as a
+    letter to the address the notice gives, any other way not settled through `objection_form`; in lease_ending, the
+    tenant's month-to-month notice read against 83.56(4) as repair_not_made reads it, and the 83.575(2) gate met on
+    nothing in writing from the landlord about the end of the lease; in rent_increased, `complaint_kind` read against
+    83.64(1)(a) to (c) (a written repair notice to check against 83.56(1)); in wants_to_leave_early, a fee written only in
+    the lease itself closing the fee route under 83.595(4)'s separate addendum; the earlier-warning question in
+    notice_received_violation asked about any written warning or notice; 83.505 added to deposit_not_returned's,
+    lease_ending's, and wants_to_leave_early's sections. Left as they were, borderline: the tenant reporting what a paper
+    literally says (`notice_offers_cure`, `notice_terminates_now`, `violation_corrected`, `lease_requires_end_notice`,
+    `tenant_consented`, `access_or_utilities_cut`), and the 3-day notice's delivery (`nonpayment_notice_method` is still
+    read by nothing; whether the defective-notice defense gets a way for a notice not delivered as 83.56(4)
+    allows is yours).
 
 ## Applying the law
 
@@ -153,26 +168,6 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     `eval_student_roommate`; CHANGELOG); A, B, D, and D2 are left.
 
 ## Playbooks
-
-102. The sheet asks plain facts, part 2 (part 1, 2026-10-08, did the code and repair_not_made and neighbor_disturbance;
-    CHANGELOG): the same cause in the other playbooks, each to rewrite as part 1 did (a plain question or a choice, the
-    reading in the playbook, a check, or an open question). deposit_not_returned: `claim_notice_received` ("any written
-    notice") closes the whole deposit back, though 83.49(3)(a) names "certified mail ... or by e-mail in accordance with
-    s. 83.505" and deposit_claim_received's same option leaves the method not settled; `seven_day_notice_given` folds
-    83.49(5)'s four conditions (written, 7 days before, the method, the address) into one yes, while wants_to_leave_early
-    does it as a clock and a check. deposit_claim_received: `objected` marks done a step whose address the question does
-    not ask. lease_ending: a no to `landlord_sent_notice_terms` meets its gate (the tenant judges whether a paper
-    "listing that requirement" came); `end_notice_given` marks done a step naming 83.56(4)'s ways with no way asked.
-    notice_received_nonpayment: the tenant's date is taken as 83.56(3)'s delivery and `nonpayment_notice_method` is read
-    by nothing (83.56(4) allows leaving a copy only "if the tenant is absent"); whether the defective-notice defense
-    gets a delivery way is the author's. notice_received_violation: a no to `prior_written_warning` meets its gate (the
-    tenant judges "similar" and counts 12 months). rent_increased: `complained_before_increase` has the tenant sort their
-    own acts into 83.64(1)'s. wants_to_leave_early: `early_termination_addendum` ("a separate addendum"; the eval lease
-    put the fee in the lease itself); `leave_notice_given` marks two steps done on a bare yes. The clocks' `delivery`
-    lists there are read by nothing; `condition` replaces them. Borderline, the tenant reporting what a paper literally
-    says, the words not kept: `notice_offers_cure`, `notice_terminates_now`, `violation_corrected`,
-    `lease_requires_end_notice`, `tenant_consented`, `access_or_utilities_cut`; for the author whether any should move.
-    Re-key the scenarios that answer these questions, as part 1 did.
 
 2. Hand check of the seven playbooks written 2026-09-27 (repair_not_made, notice_received_nonpayment,
    notice_received_violation, landlord_entered_unannounced, rent_increased, wants_to_leave_early,

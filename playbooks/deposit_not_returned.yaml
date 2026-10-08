@@ -1,13 +1,13 @@
 issue: deposit_not_returned
 description: The landlord has not returned the tenant's security deposit and has not sent a written claim against it.
-sections: ["83.49"]          # the statute sections this playbook rests on; loaded into the prompt
+sections: ["83.49", "83.505"]          # the statute sections this playbook rests on; loaded into the prompt
 
 provenance:
   statute_year: 2026
-  verified_against: statutes/83.49.txt
+  verified_against: statutes/83.49.txt, statutes/83.505.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.5
+  version: 0.6
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -33,16 +33,40 @@ spec:
       type: date
       source: [user]
       applies_if: claim_notice_received
+    - id: claim_delivery                     # same id as in deposit_claim_received: asked once, shared
+      type: choice
+      source: [user]
+      applies_if: claim_notice_received
+      choices:
+        - certified mail
+        - regular mail
+        - e-mail
+        - handed to you
+        - a text or a resident portal message
+        - something else
+        - I don't know
     - id: forwarding_address_given
       type: bool
       source: [user]
     - id: early_or_periodic
       type: bool
       source: [user]
-    - id: seven_day_notice_given
+    - id: leave_notice_given                 # same id as in wants_to_leave_early: one notice, asked once
       type: bool
       source: [user]
       applies_if: early_or_periodic
+    - id: leave_notice_sent_by
+      type: choice
+      source: [user]
+      applies_if: leave_notice_given
+      choices:
+        - handed to the landlord or the office
+        - regular mail
+        - certified mail
+        - e-mail
+        - a resident portal request or message
+        - a text message
+        - something else
 
   clocks:
     - id: return_if_no_claim
@@ -58,7 +82,6 @@ spec:
       trigger: tenancy_terminated
       days: 30
       direction: after
-      delivery: [certified mail to last known mailing address, e-mail per 83.505]
       cite: "83.49(3)(a)"
       quote: "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."
       consequence: "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
@@ -69,7 +92,6 @@ spec:
       days: 7
       direction: before
       applies_if: early_or_periodic
-      delivery: [certified mail, personal delivery]
       cite: "83.49(5)"
       quote: "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"
       consequence: "Failure to give such notice relieves the landlord of the notice requirement of paragraph (3)(a) but does not waive any right the tenant may have to the security deposit or any part of it."
@@ -112,6 +134,23 @@ spec:
   # What the tenant can do, and what decides whether it is open (TODO item 81): checked by code
   # (deterministic.check_options) from the confirmed facts, the clocks, and the lease profile, and given to the model
   # before any step toward it. A gate is met through any of its ways. The gates are the author's to check.
+    - id: email_notice_conditions
+      sections: ["83.49", "83.505"]
+      text: >-
+        83.49(3)(a) names two ways to give the notice of claim: "by certified mail to the tenant’s last known mailing
+        address or by e-mail in accordance with s. 83.505". 83.505(1) allows e-mail only "if the parties have signed an
+        addendum to the rental agreement". Apply these to how the record says the notice came; if
+        the tenant has not said whether they signed such an addendum, that condition is not known yet. What stays
+        open is a notice that reached the tenant in time some other way.
+      readings:
+        - >-
+          A notice given another way is not "the required written notice", and "If the landlord fails to give the
+          required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the
+          security deposit".
+        - >-
+          A notice the tenant actually received in time is enough: 83.505(6) says the section "does not preclude
+          service of notices by any other means permitted by law", and the tenant had what the notice is for.
+
   options:
     - id: whole_deposit_back
       label: Get the whole deposit back because the landlord gave no notice of a claim within the 30 days
@@ -124,8 +163,26 @@ spec:
             - fact: claim_notice_received
               equals: false
               when_otherwise: >-
-                The tenant confirmed receiving a written notice of a claim. Whether it came in time and in the form the
-                statute gives belongs to the landlord's claim, its own issue.
+                The tenant confirmed receiving something in writing about keeping part of the deposit, by certified mail;
+                whether it came in time belongs to the landlord's claim, its own issue.
+            - says: the notice came some other way than by certified mail, and whether a notice given that way is the required written notice is not settled
+              cite: "83.49(3)(a)"
+              quote: "by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505"
+              open_question: email_notice_conditions
+              applies_if:
+                fact: claim_delivery
+                equals:
+                  - regular mail
+                  - e-mail
+                  - handed to you
+                  - a text or a resident portal message
+                  - something else
+            - says: how the notice came is not known yet
+              check: how the notice came; the envelope (a certified mail label or receipt) or the e-mail shows it
+              applies_if:
+                fact: claim_delivery
+                equals:
+                  - I don't know
         - says: the 30 days after the end of the rental agreement have passed
           cite: "83.49(3)(a)"
           quote: "within 30 days after the termination of the rental agreement"
@@ -145,9 +202,28 @@ spec:
             - says: the tenant gave the landlord 7 days' written notice, by certified mail or in person, with an address
               cite: "83.49(5)"
               quote: "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"
-              fact: seven_day_notice_given
-              equals: true
-              when_otherwise: The tenant confirmed not giving that notice.
+              check: >-
+                whether the notice reached the landlord at least 7 days before you moved out (the program's deadlines
+                show the last day) and gave the address where you can be reached
+              applies_if:
+                fact: leave_notice_sent_by
+                equals:
+                  - handed to the landlord or the office
+                  - certified mail
+            - says: the tenant e-mailed that notice, which counts only as 83.505 allows
+              check: >-
+                whether you and the landlord signed an addendum agreeing to notices by e-mail, as 83.505 describes, and
+                whether the notice reached the landlord at least 7 days before you moved out with the address where you
+                can be reached
+              lease: notices_to_landlord
+              applies_if:
+                fact: leave_notice_sent_by
+                equals: [e-mail]
+            - says: the notice went some other way
+              check: how your notice reached the landlord, beside the ways 83.49(5) names, certified mail or personal delivery
+              applies_if:
+                fact: leave_notice_sent_by
+                equals: [something else]
             - says: the lease provides otherwise on notice before moving out, and the tenant followed it
               cite: "83.49(5)"
               quote: "Except when otherwise provided by the terms of a written rental agreement"
@@ -162,11 +238,13 @@ guidance:
     deposit_amount: How much was your security deposit?
     tenancy_terminated: What date did the lease end, or what date was it terminated?
     vacated: What date did you move out and return the keys?
-    claim_notice_received: Have you received any written notice from the landlord about keeping part of the deposit?
+    claim_notice_received: Have you received anything in writing from the landlord about keeping part of the deposit (a letter, an e-mail, a text, a portal message)?
     claim_notice_date: What date did you receive the landlord's written notice about keeping part of the deposit?
+    claim_delivery: How did the landlord's notice about keeping part of the deposit reach you?
     forwarding_address_given: Did you give the landlord your new mailing address in writing?
     early_or_periodic: Did you move out before the lease end date, or was this a month-to-month arrangement?
-    seven_day_notice_given: Before moving out, did you send the landlord written notice at least 7 days ahead, by certified mail or in person, with your new address?
+    leave_notice_given: Have you given the landlord anything in writing saying you are moving out?
+    leave_notice_sent_by: How did that written notice reach the landlord?
 
   lease_checks:
     security_deposit: Confirms the amount and that it was called a deposit.

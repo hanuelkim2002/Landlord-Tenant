@@ -44,12 +44,20 @@ def lease_differs(e, profile, tenant_value):
     return clause.quote
 
 
+def listed(playbook, facts):
+    """The confirmed facts with any answer a choice fact does not list left out: an answer kept from before its question
+    was a choice (claim_delivery was words until 2026-10-08), which the sheet then asks again and no condition reads."""
+    choices = {e.id: e.choices for e in playbook.spec.elements if e.type == "choice"}
+    return {k: v for k, v in facts.items() if k not in choices or v in choices[k]}
+
+
 def check_elements(playbook, profile, facts, proposed):
     """For each element: known (confirmed), changed (confirmed, but a later update suggests a different value),
     proposed (needs the tenant's confirmation), missing, or n/a. A row whose tenant value differs from the
     lease field named in compare_to also carries lease_says, the lease's exact words.
     facts = confirmed answers keyed by element id. proposed = unconfirmed answers with how and basis."""
     rows = []
+    facts = listed(playbook, facts)                       # an answer its choice does not list is asked again
     for e in playbook.spec.elements:
         # Elements that only matter if another CONFIRMED fact is true. n/a until then.
         if e.applies_if and not facts.get(e.applies_if):
@@ -324,6 +332,7 @@ def check_options(playbook, facts, today, profile=None):
     "not settled", or "to do", with why when it says more; a clock's step whose date has passed while a step above it is
     not done is "passed", not done: the period counts only if the steps above are done (a notice whose words the tenant
     checks). Returns [{"option", "label", "cite", "status", "gates", "steps", "also_open"}]."""
+    facts = listed(playbook, facts)                       # an answer its choice does not list decides nothing
     clock_rows = {row["clock"]: row for row in compute_deadlines(playbook, facts, today)}
     results = []
     for o in playbook.spec.options:

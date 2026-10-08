@@ -125,16 +125,17 @@ check("item 81: caused on the tenant's side closes both; a duplex leaves the lea
 deposit = playbooks["deposit_not_returned"]
 ghosted = {"tenancy_terminated": str(today - timedelta(days=60)), "vacated": str(today - timedelta(days=60)),
            "claim_notice_received": False, "forwarding_address_given": True, "early_or_periodic": False}
-early = {**ghosted, "tenancy_terminated": str(today - timedelta(days=10)), "early_or_periodic": True, "seven_day_notice_given": False}
+early = {**ghosted, "tenancy_terminated": str(today - timedelta(days=10)), "early_or_periodic": True, "leave_notice_given": False}
 early_whole = by_id(deposit, early)["whole_deposit_back"]
-check("item 81: the deposit: open when nothing came in 30 days; the 30 days still running is not met yet; a notice received closes it",
+check("item 81: the deposit: open when nothing came in 30 days; the 30 days still running is not met yet; a notice by certified mail closes it",
       by_id(deposit, ghosted)["whole_deposit_back"]["status"] == "open"
       and early_whole["gates"][1]["state"] == "not met yet" and early_whole["gates"][1]["if_met"] == "not known yet"
-      and by_id(deposit, {**ghosted, "claim_notice_received": True})["whole_deposit_back"]["status"] == "closed"
+      and by_id(deposit, {**ghosted, "claim_notice_received": True, "claim_delivery": "certified mail"})["whole_deposit_back"]["status"] == "closed"
       and by_id(deposit, {k: v for k, v in ghosted.items() if k != "tenancy_terminated"})["whole_deposit_back"]["gates"][1]["state"] == "tell")
 check("item 81: the deposit: left early without the 7-day notice leaves the lease's own notice term to check, with the clause the tool read",
-      early_whole["status"] == "not known yet" and [w["state"] for w in early_whole["gates"][2]["ways"]] == ["not met", "not met", "check"]
-      and "the tool has read the lease's clause on notice before moving out early" in early_whole["gates"][2]["ways"][2]["why"])
+      early_whole["status"] == "not known yet"
+      and [w["state"] for w in early_whole["gates"][2]["ways"]] == ["not met", "not met", "not met", "not met", "check"]
+      and "the tool has read the lease's clause on notice before moving out early" in early_whole["gates"][2]["ways"][4]["why"])
 nonpayment = playbooks["notice_received_nonpayment"]
 taped = {"nonpayment_notice_delivered": str(today - timedelta(days=8)), "premises_county": "Alachua", "rent_unpaid": True,
          "eviction_action_filed": False}
@@ -221,6 +222,53 @@ check("items 90 to 92: a choice is answered by its number or its words, spacing 
       parse_answer("choice", "9", answers) == ("hot water", None) and parse_answer("choice", "  Hot   Water ", answers) == ("hot water", None)
       and parse_answer("choice", "18", answers) == (None, "a number from the list, or its words")
       and parse_answer("choice", "the water heater", answers)[0] is None)
+# part 2 of the sheet asking plain facts (TODO item 102): the other playbooks ask how a paper went, where a fee is
+# written, what the tenant did, and read the answers in their gates and steps
+from deterministic import check_elements
+dep, claim_pb, ending_pb, rent_pb, leave_pb = (playbooks[i] for i in ("deposit_not_returned", "deposit_claim_received",
+                                                                       "lease_ending", "rent_increased", "wants_to_leave_early"))
+came = lambda how: by_id(dep, {**ghosted, "claim_notice_received": True, "claim_delivery": how})["whole_deposit_back"]
+check("item 102: a claim notice by regular mail leaves the whole deposit not settled, not closed; by certified mail closed; not known, to check",
+      came("regular mail")["status"] == "not settled" and came("regular mail")["gates"][0]["state"] == "not settled"
+      and came("certified mail")["status"] == "closed" and came("I don't know")["gates"][0]["state"] == "check")
+left = lambda how: by_id(dep, {**early, "leave_notice_given": True, "leave_notice_sent_by": how})["whole_deposit_back"]["gates"][2]["ways"]
+check("item 102: a notice before leaving early by certified mail is the tenant's to check against the 7 days; by e-mail, for the addendum too; by regular mail not a way 83.49(5) names",
+      [w["state"] for w in left("certified mail")][1] == "check" and "7 days before you moved out" in left("certified mail")[1]["why"]
+      and [w["state"] for w in left("e-mail")][2] == "check" and "83.505" in left("e-mail")[2]["why"]
+      and [w["state"] for w in left("regular mail")][1:4] == ["not met", "not met", "not met"])
+claim_facts = {"tenancy_terminated": str(today - timedelta(days=35)), "claim_notice_dated": str(today - timedelta(days=8)),
+               "claim_notice_date": str(today - timedelta(days=5)), "objected": True}
+objection = lambda how: by_id(claim_pb, {**claim_facts, "objection_sent_by": how})["object_to_claim"]["steps"][0]["status"]
+notice_way = lambda how: by_id(claim_pb, {**claim_facts, "claim_delivery": how})["whole_deposit_back"]["gates"][1]["ways"][1]["state"]
+check("item 102: an objection by letter to the notice's address is done, by e-mail not settled; a claim notice by certified mail is the way 83.49(3)(a) names, by regular mail not settled",
+      objection("a letter mailed to the address the notice gives") == "done" and objection("e-mail") == "not settled"
+      and notice_way("certified mail") == "not met" and notice_way("regular mail") == "not settled")
+ended = lambda how: by_id(ending_pb, {"month_to_month": True, "period_end_date": str(today + timedelta(days=40)),
+                                      "end_notice_given": True, "end_notice_sent_by": how})["end_month_to_month"]["steps"][0]["status"]
+check("item 102: a notice ending a month-to-month tenancy by hand is done, by e-mail the tenant's to check, by text to do",
+      [ended(h) for h in ("handed to the landlord or the office", "e-mail", "a text message")] == ["done", "the tenant can check", "to do"])
+did = lambda **f: by_id(rent_pb, {"eviction_action_filed": True, **f})["retaliation_defense"]["gates"][0]["state"]
+check("item 102: a complaint to a code office meets 83.64(1)'s example, a written repair notice is to check, another step or none not settled",
+      did(complained_before_increase=True, complaint_kind=rent_pb.spec.elements[[e.id for e in rent_pb.spec.elements].index("complaint_kind")].choices[0]) == "met"
+      and did(complained_before_increase=True, complaint_kind="a written notice to the landlord about a repair") == "check"
+      and did(complained_before_increase=True, complaint_kind="something else") == "not settled"
+      and did(complained_before_increase=False) == "not settled")
+fee = lambda where: by_id(leave_pb, {"fee_in_writing": True, "fee_written_where": where})["early_termination_fee"]
+gone = lambda how: by_id(leave_pb, {"leave_notice_given": True, "leave_notice_sent_by": how,
+                                     "planned_move_out": str(today + timedelta(days=20))})["deposit_notice_before_leaving"]["steps"][0]
+check("item 102: a fee written only in the lease closes the fee route, a separate paper meets it, not knowing is to check; a notice by certified mail is to check for its address, by text to do",
+      fee("only in the lease itself")["status"] == "closed" and fee("in a separate paper I signed with the lease")["gates"][0]["state"] == "met"
+      and fee("I don't know")["gates"][0]["state"] == "check"
+      and gone("certified mail")["status"] == "the tenant can check" and "address" in gone("certified mail")["why"]
+      and gone("a text message")["status"] == "to do")
+check("item 102: one notice before moving out, asked once: the deposit and leaving-early playbooks share its facts",
+      {"leave_notice_given", "leave_notice_sent_by"} <= {e.id for e in dep.spec.elements} & {e.id for e in leave_pb.spec.elements}
+      and "about a similar problem" not in playbooks["notice_received_violation"].guidance["questions"]["prior_written_warning"])
+old_answer = {"claim_delivery": "it came in the mail I think", "objected": False}
+check("item 102: an old free-text answer to a question that is now a choice is asked again, and decides nothing",
+      next(r for r in check_elements(claim_pb, old_profile, old_answer, {}) if r["id"] == "claim_delivery")["status"] == "missing"
+      and by_id(claim_pb, {**claim_facts, **old_answer})["whole_deposit_back"]["gates"][1]["ways"][1]["state"] == "tell")
+
 make_scratch("t-smoke-choice", issues=["repair_not_made"], proposed={},
              facts={k: v for k, v in {**story_f, "problem_description": "the AC blows warm air", "problem_started": "2026-09-10",
                                       "landlord_response": "nothing", "eviction_action_filed": False}.items() if k != "problem_is_with"})
@@ -285,7 +333,7 @@ check("item 84: every playbook lists options, each with a status on no facts",
           for pb in playbooks.values()))
 claim = by_id(playbooks["deposit_claim_received"], {"tenancy_terminated": str(today - timedelta(days=35)),
               "claim_notice_dated": str(today - timedelta(days=8)), "claim_notice_date": str(today - timedelta(days=5)),
-              "objected": False})
+              "claim_delivery": "regular mail", "objected": False})
 late_claim = by_id(playbooks["deposit_claim_received"], {"claim_notice_date": str(today - timedelta(days=20)), "objected": True})
 check("item 84: a claim: objecting is open while the 15 days run; after them, an objection already sent is the tenant's to check against the date",
       claim["object_to_claim"]["status"] == "open" and claim["whole_deposit_back"]["gates"][1]["state"] == "check"

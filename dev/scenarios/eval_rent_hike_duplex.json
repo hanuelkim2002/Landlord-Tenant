@@ -75,7 +75,7 @@
     "Is your tenancy month-to-month": [
       "yes"
     ],
-    "complained about the condition": [
+    "complained to anyone about the unit": [
       "yes"
     ],
     "make that complaint or take that step": [
@@ -128,6 +128,9 @@
     ],
     "Copy the sentences of that message": [
       "Please fix the roof. It leaks into my bedroom when it rains."
+    ],
+    "What was it? If more than one": [
+      "a written notice to the landlord about a repair"
     ]
   },
   "chat": [

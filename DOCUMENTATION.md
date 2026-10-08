@@ -138,7 +138,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
   read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
   deadlines, with one that two playbooks share listed once, tagged with both issues), `check_options(playbook,
-  facts, today, profile=None)` (TODO items 72 and 81: each option of the playbook with its status from the
+  facts, today, profile=None)` (TODO items 72 and 81; facts through `listed`, which leaves out an answer a choice fact
+  does not list, kept from before its question was a choice, as `check_elements` does, so the sheet asks it again: each option of the playbook with its status from the
   confirmed facts, the clocks, and the lease profile). Each way of a gate gets a state from `way_state`: a fact
   confirmed with the way's value (`matches`: one of them, for a choice fact's list of answers) is "met", with another
   value its `otherwise` ("not met", or "not settled" through an open question, or "not met yet"); a fact not confirmed
@@ -794,14 +795,18 @@ landlord_entered_unannounced 0.5 (its purpose_of_entry open question reworded th
 notice_received_nonpayment 0.6 since their options (item 81); the other seven one step up since theirs (item 84):
 deposit_claim_received and rent_increased and wants_to_leave_early and neighbor_disturbance 0.4,
 notice_received_violation and lease_ending 0.5, landlord_entered_unannounced 0.6; repair_not_made 0.6 and
-neighbor_disturbance 0.5 since the sheet asks them plain facts (2026-10-08, TODO items 86 and 90 to 92). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
+neighbor_disturbance 0.5 since the sheet asks them plain facts (2026-10-08, TODO items 86 and 90 to 92), and the same day
+deposit_not_returned, lease_ending, and notice_received_violation 0.6, deposit_claim_received, rent_increased, and
+wants_to_leave_early 0.5 (TODO item 102). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
 (83.53(2) is in hours), rent_increased (no section on notice of a rent increase), neighbor_disturbance (no
 deadline for a landlord to act on one tenant's complaint about another; its open questions: whose duty
 83.52(7) states, 83.56(2)(a) as a remedy not a duty, what is unreasonable, and whether 83.56(1) lets the
 tenant leave over it). notice_received_nonpayment computes 83.56(3) in court business days
 and leaves 83.60(2) uncomputed. Facts shared across playbooks by id: `claim_notice_date`,
 `tenancy_terminated`, `deposit_amount`, `eviction_action_filed`, `fixed_term_lease`, `term_end_date`,
-`month_to_month`, `monthly_rent`, `registry_paid` (notice_received_nonpayment and notice_received_violation).
+`month_to_month`, `monthly_rent`, `registry_paid` (notice_received_nonpayment and notice_received_violation),
+`claim_delivery` (the two deposit playbooks), `leave_notice_given` and `leave_notice_sent_by` (deposit_not_returned and
+wants_to_leave_early: one notice before moving out, asked once).
 
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
 section is not in `statutes/`, a clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field.
@@ -827,7 +832,7 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     `check_elements`, `fill_facts` (only elements with `user` in `source`), `build_letter` and
     `render_timeline` (date elements).
   - `clocks`: `id`, `actor` (landlord, tenant), `trigger` (a date element id), `days`, `direction`
-    (before, after), `cite`, `quote`, optional `consequence`, `delivery` (read by nothing), `condition` (what the date
+    (before, after), `cite`, `quote`, optional `consequence` (`delivery`, a list read by nothing, went on 2026-10-08), `condition` (what the date
     counts only if, in words, printed with it: a notice whose sufficiency the tool does not decide), `applies_if`, `shown_with` (a
     date element shown beside the computed date once confirmed, e.g. the date a notice itself states;
     checked by `load_playbook`), `count`
@@ -863,8 +868,7 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     no id in the prose (a way's `says`, `when_otherwise`, `check`, `outside` included). Read by
     `deterministic.check_options`; the gates are the author's to check (TODO item 84). The sheet asks only what the
     tenant saw, did, or holds; which answers meet a condition is the playbook's reading, and what no answer settles
-    is a check or an open question (2026-10-08, TODO items 86 and 90 to 92; repair_not_made and neighbor_disturbance so
-    far). repair_not_made (0.6): end the lease (83.56(1)), gated on a duty to fix the problem, met through what the
+    is a check or an open question (2026-10-08, TODO items 86, 90 to 92, and 102; every playbook). repair_not_made (0.6): end the lease (83.56(1)), gated on a duty to fix the problem, met through what the
     problem is with (`problem_is_with`, a choice): the roof, a window or a door, a floor, steps, or a porch, an outside
     wall or the foundation, another structural part, or pipes, drains, toilets, or faucets meet 83.51(1)(b); running
     water and hot water are not settled through `subsection_one_or_two`; something else is the tenant's to check; or
@@ -882,20 +886,25 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     `condition`). Withhold rent (83.60(1)(b)): the duty through the structure or plumbing (the same reading) or a code
     (the lease does not reach it), the duty not changed, the same cause; steps: the message delivered (by hand or by
     mail done; any other way not settled through `withholding_notice_delivery`, since 83.60(1)(b) names no way), its
-    words stating the intent not to pay rent (to check, when `message_mentions_rent`), the 7 days. deposit_not_returned (0.5): the
-    whole deposit back (83.49(3)(a)), gated on no notice of a claim received, the 30 days passed (the
-    `claim_notice_deadline` clock; not met yet while upcoming), and the landlord not relieved of the notice by
-    83.49(5) (not early or periodic, or the 7-day notice given, or the lease's own notice term, the tenant's to
-    check); no steps; `termination_date_meaning` also open. notice_received_nonpayment (0.6): paying before the 3
+    words stating the intent not to pay rent (to check, when `message_mentions_rent`), the 7 days. deposit_not_returned (0.6): the
+    whole deposit back (83.49(3)(a)), gated on no notice of a claim received (nothing in writing received; by certified
+    mail, closed; another way, `claim_delivery`, not settled through `email_notice_conditions`, added for it; not known
+    how, the tenant's to check), the 30 days passed (the `claim_notice_deadline` clock; not met yet while upcoming), and
+    the landlord not relieved of the notice by 83.49(5) (not early or periodic, or the 7-day notice, `leave_notice_sent_by`:
+    by certified mail or by hand the tenant's to check against the last day and for the address, by e-mail for the
+    83.505 addendum too, something else to check, or the lease's own notice term, the tenant's to check); no steps;
+    `termination_date_meaning` also open. notice_received_nonpayment (0.6): paying before the 3
     days end (83.56(3); the clock upcoming; outside the tool with no court calendar for the county), defending in
     an eviction case on a ground other than payment (83.60(2); not open yet until a case is filed; step: the rent
     into the court registry, `registry_paid`, added for it), and defending on a defective notice (the notice
     against 83.56(3)'s form, the tenant's to check; `notice_form` also open). Item 84, the other seven:
-    deposit_claim_received (0.4): object within the 15 days (83.49(3)(b); the clock upcoming, or an objection
-    already sent, the tenant's to check against the printed date; step: the objection), and the whole deposit back
+    deposit_claim_received (0.5): object within the 15 days (83.49(3)(b); the clock upcoming, or an objection
+    already sent, the tenant's to check against the printed date; step: the objection, done for a letter to the address
+    the notice gives, `objection_sent_by`, otherwise not settled through `objection_form`), and the whole deposit back
     (83.49(3)(a): the 30 days passed, and a notice sent after them, the tenant's to check against the postmark, or
-    one not sent as 83.49(3)(a) names, not settled through `email_notice_conditions`). notice_received_violation
-    (0.5): fix the problem within the 7 days (83.56(2)(b)); defend a case over a notice that ended the lease
+    one not sent as 83.49(3)(a) names, `claim_delivery` other than certified mail, not settled through
+    `email_notice_conditions`, or not known how, to check). notice_received_violation
+    (0.6; the question on an earlier warning asks about any written warning or notice, 2026-10-08): fix the problem within the 7 days (83.56(2)(b)); defend a case over a notice that ended the lease
     without a chance to cure (whether the violation is curable not settled, `which_paragraph`; no warning of a
     similar violation in 12 months, or one the tenant can check; a case filed; step: the rent into the court
     registry, `registry_paid`, added for it, as 83.56(5)(b) requires); and the landlord's waiver by rent taken
@@ -903,16 +912,22 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     added to its sections): damages of at least 3 months' rent for a utility cut, a lockout, or a removal
     (83.67(6)); damages for an entry the statute does not allow (83.55, 83.53(2): no consent, no emergency, not for
     protection or preservation, not settled through `purpose_of_entry`, no unreasonable refusal, no 24 hours' notice
-    for a repair, not away half a rent period, and damages, the tenant's to check). rent_increased (0.4): the
-    retaliation defense (83.64: protected conduct before the increase, good faith, treated differently, primarily
+    for a repair, not away half a rent period, and damages, the tenant's to check). rent_increased (0.5): the
+    retaliation defense (83.64: protected conduct before the increase, `complaint_kind`: a complaint to a code office or
+    a tenant group met, a written repair notice to the landlord the tenant's to check against 83.56(1), anything else or
+    nothing not settled through `retaliation`; good faith, treated differently, primarily
     retaliating, not settled through `retaliation`, no good cause, a case filed; `eviction_action_filed` added for
-    it), and ending a month-to-month tenancy (83.57(3)). wants_to_leave_early (0.4): a servicemember's termination
+    it), and ending a month-to-month tenancy (83.57(3)). wants_to_leave_early (0.5): a servicemember's termination
     (83.682; the orders against the criteria, the tenant's to check; steps: the notice with the orders, the 30 days),
-    the early termination fee (83.595(4): the separate addendum; the amount against two months' rent and the lease's
-    notice, the tenant's to check), and the 7-day notice before leaving (83.49(5): the last day not passed, or a
-    notice already given; the lease's own term to check). lease_ending (0.5): ending a month-to-month tenancy
-    (83.57(3); the last day for this period not passed, or a notice already given), leaving at the end without the
-    lease's liquidated damages when the landlord did not send the 83.575(2) notice, and staying with permission
+    the early termination fee (83.595(4): the separate addendum, `fee_written_where`: a separate paper met, only the
+    lease closed, not known to check; the amount against two months' rent and the lease's notice, the tenant's to check;
+    step: the notice the lease asks for, to check), and the 7-day notice before leaving (83.49(5): the last day not
+    passed, or a notice already given; the lease's own term to check; step: the notice by certified mail or by hand,
+    to check for its address, by e-mail for the 83.505 addendum too, another way to do). lease_ending (0.6): ending a
+    month-to-month tenancy (83.57(3); the last day for this period not passed, or a notice already given; step: the
+    notice, `end_notice_sent_by` read as 83.56(4) is for repair_not_made's message), leaving at the end without the
+    lease's liquidated damages when the landlord did not send the 83.575(2) notice (nothing in writing from the
+    landlord about the end of the lease meets it; anything is the tenant's to check), and staying with permission
     (83.575(3)). neighbor_disturbance (0.5): ending the lease (83.56(1): a lease promise the tenant can check with
     `search_lease`, or the failure to act itself, not settled through `ending_own_lease`; the source a tenant of the
     same landlord, else not settled through `remedy_not_duty`; the disturbance unreasonable, not settled; steps: the

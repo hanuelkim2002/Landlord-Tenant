@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.46.txt, statutes/83.57.txt, statutes/83.64.txt, statutes/83.425.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.4
+  version: 0.5
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -46,6 +46,16 @@ spec:
     - id: complained_before_increase
       type: bool
       source: [user]
+    - id: complaint_kind
+      type: choice
+      source: [user]
+      applies_if: complained_before_increase
+      choices:
+        - a complaint to a city or county office that enforces building, housing, or health codes
+        - taking part in a tenant group
+        - a written notice to the landlord about a repair
+        - another complaint to the landlord (in person, by phone, a portal request)
+        - something else
     - id: complaint_date
       type: date
       source: [user]
@@ -118,11 +128,20 @@ spec:
           cite: "83.64(1)"
           quote: "Examples of conduct for which the landlord may not retaliate include, but are not limited to, situations where:"
           ways:
-            - fact: complained_before_increase
-              equals: true
-              otherwise: unsettled
+            - says: the tenant complained to a code enforcement office, or took part in a tenant group, as 83.64(1) names
+              fact: complaint_kind
+              equals:
+                - a complaint to a city or county office that enforces building, housing, or health codes
+                - taking part in a tenant group
+              when_otherwise: The tenant's step is not one of the examples 83.64(1) names outright.
+            - says: the tenant gave the landlord a written notice about a repair, which 83.64(1) names when it is a complaint under 83.56(1)
+              check: whether that notice was one 83.56(1) describes, since 83.64(1) names a complaint to the landlord pursuant to 83.56(1)
+              applies_if:
+                fact: complaint_kind
+                equals:
+                  - a written notice to the landlord about a repair
+            - says: the statute's examples are not the only conduct it protects
               open_question: retaliation
-              when_otherwise: The tenant confirmed no such complaint or tenant organization before the increase; the statute's examples are not the only conduct it protects.
         - says: the tenant acted in good faith
           cite: "83.64(1)"
           quote: "In order for the tenant to raise the defense of retaliatory conduct, the tenant must have acted in good faith."
@@ -178,7 +197,8 @@ guidance:
     fixed_term_lease: Does your lease have a fixed end date (for example, a one-year lease)?
     term_end_date: What date does your lease term end?
     month_to_month: Is your tenancy month-to-month (no fixed end date, rent paid monthly)?
-    complained_before_increase: Before the increase, had you complained about the condition of the unit (to the landlord in writing or to a government agency), or taken part in a tenant organization?
+    complained_before_increase: Before the increase, had you complained to anyone about the unit (the landlord, the office, a city or county office), or taken part in a tenant group?
+    complaint_kind: What was it? If more than one, pick the first in this list that fits.
     complaint_date: What date did you make that complaint or take that step?
     other_tenants_increase: What do you know about whether other tenants got the same increase? Type "don't know" if you don't know.
     eviction_action_filed: Has the landlord filed an eviction case in court against you?

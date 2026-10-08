@@ -110,6 +110,18 @@
     ],
     "servicemember": [
       "no"
+    ],
+    "set an early termination fee or liquidated damages": [
+      "yes"
+    ],
+    "Where is that fee written": [
+      "only in the lease itself"
+    ],
+    "What amount does it set": [
+      "1578"
+    ],
+    "anything in writing saying you are moving out": [
+      "no"
     ]
   },
   "chat": [

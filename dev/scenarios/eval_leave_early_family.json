@@ -72,17 +72,20 @@
     "landlord has not made repairs": [
       "no"
     ],
-    "addendum": [
-      "yes"
-    ],
-    "What amount does that addendum set": [
+    "What amount does it set": [
       "2100"
     ],
-    "written notice that you are leaving": [
+    "anything in writing saying you are": [
       "no"
     ],
     "servicemember": [
       "no"
+    ],
+    "set an early termination fee or liquidated damages": [
+      "yes"
+    ],
+    "Where is that fee written": [
+      "in a separate paper I signed with the lease"
     ]
   },
   "chat": [

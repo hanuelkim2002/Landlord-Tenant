@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.56.txt, statutes/83.52.txt, statutes/83.42.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.5
+  version: 0.6
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -185,7 +185,7 @@ spec:
             - says: no earlier written warning
               fact: prior_written_warning
               equals: false
-              when_otherwise: The tenant confirmed an earlier written warning.
+              when_otherwise: The tenant confirmed an earlier written warning or notice from the landlord.
             - says: the earlier warning came more than 12 months before, or was about a different kind of violation
               applies_if: prior_written_warning
               check: the date of the earlier warning and what it was about, beside this notice; the tool does not count months
@@ -231,8 +231,8 @@ guidance:
     violation_described: What does the notice say you did? Copy the words from the notice.
     notice_offers_cure: Does the notice give you 7 days to fix the problem, saying the lease will end if you do not?
     notice_terminates_now: Does the notice say your lease is terminated and give you 7 days to move out?
-    prior_written_warning: Have you received a written warning from the landlord about a similar problem in the last 12 months?
-    prior_warning_date: What date was that earlier written warning delivered?
+    prior_written_warning: Before this notice, had the landlord ever given you a written warning or notice about anything?
+    prior_warning_date: What date did you get that earlier warning or notice?
     violation_corrected: Have you fixed the problem the notice describes?
     violation_corrected_date: What date did you fix it?
     landlord_accepted_rent_after_notice: Has the landlord accepted rent from you since the notice was delivered?

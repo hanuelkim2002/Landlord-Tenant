@@ -7,7 +7,7 @@ provenance:
   verified_against: statutes/83.49.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.4
+  version: 0.5
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -29,9 +29,17 @@ spec:
     - id: claim_notice_date                  # same id as in deposit_not_returned: asked once, shared
       type: date
       source: [user]
-    - id: claim_delivery
-      type: text
+    - id: claim_delivery                     # same id as in deposit_not_returned: asked once, shared
+      type: choice
       source: [user]
+      choices:
+        - certified mail
+        - regular mail
+        - e-mail
+        - handed to you
+        - a text or a resident portal message
+        - something else
+        - I don't know
     - id: claim_amount
       type: money
       source: [user]
@@ -48,10 +56,17 @@ spec:
       type: date
       source: [user]
       applies_if: objected
-    - id: objection_delivery
-      type: text
+    - id: objection_sent_by
+      type: choice
       source: [user]
       applies_if: objected
+      choices:
+        - a letter mailed to the address the notice gives
+        - a letter handed in at the address the notice gives
+        - a letter to another address
+        - e-mail
+        - a text or a resident portal message
+        - something else
 
   clocks:
     - id: claim_notice_deadline
@@ -59,7 +74,6 @@ spec:
       trigger: tenancy_terminated
       days: 30
       direction: after
-      delivery: [certified mail to last known mailing address, e-mail per 83.505]
       cite: "83.49(3)(a)"
       quote: "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."
       consequence: "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
@@ -69,7 +83,6 @@ spec:
       trigger: claim_notice_date
       days: 15
       direction: after
-      delivery: [in writing, to the address stated in the landlord's notice]
       cite: "83.49(3)(b)"
       quote: "Unless the tenant objects to the imposition of the landlord’s claim or the amount thereof within 15 days after receipt of the landlord’s notice of intention to impose a claim, the landlord may then deduct the amount of his or her claim and shall remit the balance of the deposit to the tenant within 30 days after the date of the notice of intention to impose a claim for damages."
       consequence: "The failure of the tenant to make a timely objection does not waive any rights of the tenant to seek damages in a separate action."
@@ -167,8 +180,15 @@ spec:
         - says: a written objection to the claim or its amount, sent to the address the notice gives
           cite: "83.49(3)(a)"
           quote: "You are hereby notified that you must object in writing to this deduction from your security deposit within 15 days after the time you receive this notice"
-          fact: objected
-          equals: true
+          ways:
+            - says: the objection went as a letter to the address the notice gives
+              fact: objection_sent_by
+              equals:
+                - a letter mailed to the address the notice gives
+                - a letter handed in at the address the notice gives
+              otherwise: unsettled
+              open_question: objection_form
+              when_otherwise: The objection went another way or to another address; whether that counts is not settled.
       also_open: [receipt_date, objection_form]
 
     - id: whole_deposit_back
@@ -193,6 +213,20 @@ spec:
               cite: "83.49(3)(a)"
               quote: "by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505"
               open_question: email_notice_conditions
+              applies_if:
+                fact: claim_delivery
+                equals:
+                  - regular mail
+                  - e-mail
+                  - handed to you
+                  - a text or a resident portal message
+                  - something else
+            - says: how the notice came is not known yet
+              check: how the notice came; the envelope (a certified mail label or receipt) or the e-mail shows it
+              applies_if:
+                fact: claim_delivery
+                equals:
+                  - I don't know
       steps: []
       also_open: [receipt_date]
 
@@ -203,13 +237,13 @@ guidance:
     tenancy_terminated: What date did the lease end, or what date was it terminated?
     claim_notice_dated: What date is printed on the landlord's notice?
     claim_notice_date: What date did you receive the landlord's written notice about keeping part of the deposit?
-    claim_delivery: How did the notice reach you (certified mail, regular mail, e-mail, hand delivery, something else)?
+    claim_delivery: How did the landlord's notice about keeping part of the deposit reach you?
     claim_amount: How much does the notice say the landlord is claiming from the deposit?
     claim_reason: What reason does the notice give for the claim? Copy the words from the notice.
     notice_states_objection_window: Does the notice tell you that you must object in writing within 15 days, and give an address to send the objection to?
     objected: Have you already sent the landlord a written objection to the claim?
     objection_date: What date did you send the objection?
-    objection_delivery: How did you send the objection, and to what address?
+    objection_sent_by: How did your objection reach the landlord?
 
   lease_checks:
     security_deposit: Confirms the amount and that it was called a deposit.

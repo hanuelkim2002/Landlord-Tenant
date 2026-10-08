@@ -5,6 +5,52 @@ session can see why the code is the way it is.
 
 ## 2026-10-08
 
+- The sheet asks plain facts, part 2: the other playbooks (TODO item 102; the author's go-ahead of 2026-10-08). The same
+  cause as part 1, in the questions part 1 listed: a yes or no that made the tenant apply a term of the statute, which
+  code then treated as known. Now:
+  - deposit_not_returned 0.6. Was: "any written notice ... about keeping part of the deposit" closed the whole
+    deposit back whatever the notice was, and `seven_day_notice_given` folded 83.49(5)'s four conditions into one yes.
+    Now the question asks for anything in writing, `claim_delivery` (a choice, shared with deposit_claim_received, was
+    words there) says how it came: certified mail closes the option as before, another way is not settled through
+    `email_notice_conditions` (copied in from deposit_claim_received), not knowing is to check. The notice before
+    moving out is `leave_notice_given` and `leave_notice_sent_by` (a choice), shared with wants_to_leave_early since it
+    is one paper: by certified mail or by hand the tenant's to check against the last day and for the address, by e-mail
+    for the 83.505 addendum too, another way to check, regular mail, a portal message, or a text not a way 83.49(5)
+    names.
+  - deposit_claim_received 0.5. Was: a yes to "already sent the landlord a written objection" marked done a step whose
+    address it did not ask, and `objection_delivery` was words read by nothing; the 83.49(3)(a) method way was not
+    settled whatever the notice's way. Now `objection_sent_by` (a choice): a letter to the address the notice gives is
+    done, any other way not settled through `objection_form`; the method way applies only to a notice by another way
+    than certified mail, and not knowing how it came is to check.
+  - lease_ending 0.6. Was: a no to "a written notice listing that requirement and the date the lease ends" met the
+    83.575(2) gate, and a yes to "given the landlord written notice" marked done a step naming 83.56(4)'s ways. Now the
+    landlord question asks for anything in writing about the end of the lease (no meets the gate, yes is the existing
+    check), and `end_notice_sent_by` (a choice) is read as repair_not_made reads its message: by hand or by mail done,
+    e-mail to check for the 83.505 addendum, something else to check, a portal message or a text to do.
+  - notice_received_violation 0.6. Was: "a written warning ... about a similar problem in the last 12 months", where a
+    no met the gate (the tenant judged "similar" and counted months). Now any earlier written warning or notice; no
+    meets it, yes is the existing check.
+  - rent_increased 0.5. Was: one yes for "complained ... (to the landlord in writing or to a government agency), or
+    taken part in a tenant organization" met the protected-conduct gate. Now a broad yes, then `complaint_kind` (a
+    choice): a complaint to a code office or a tenant group meets 83.64(1)'s examples, a written repair notice to the
+    landlord is to check against 83.56(1) (83.64(1)(c)), anything else or nothing not settled through `retaliation`, as
+    a no was.
+  - wants_to_leave_early 0.5. Was: "did you also sign a separate addendum" met the fee gate on a yes, and a yes to
+    "given the landlord written notice" marked two steps done. Now `fee_in_writing` and `fee_written_where` (a choice):
+    a separate paper meets 83.595(4)'s "separate addendum", only the lease closes the fee route, not knowing is to check;
+    the lease's notice step is to check against the lease, and the 83.49(5) step is read from `leave_notice_sent_by`.
+  - Code: `deterministic.listed` leaves out an answer a choice fact does not list, kept from before its question was a
+    choice (`claim_delivery` was words), in `check_elements` (so the sheet asks it again) and `check_options` (so it
+    decides nothing). The clocks' `delivery` lists, read by nothing, are gone from every playbook and from
+    `corpus.Clock`. 83.505 added to deposit_not_returned's, lease_ending's, and wants_to_leave_early's sections.
+  - Left as they were: the borderline questions where the tenant reports what a paper literally says, and the 3-day
+    notice's delivery, whose reading is the author's (TODO item 84).
+  - Smoke (`playbooks_options_lease`): a check per reading above, the shared notice, and an old free-text answer
+    asked again; the item 81 checks, the scripted sheets in `writing_to_a_matter` and `issues_and_turns`, and the
+    deposit test data updated to the new questions. 699 lines, all OK. Scenarios: 15 re-keyed to the new questions
+    (`eval_lease_end_renewal` now answers yes to anything in writing about the end of the lease, as its story has the
+    office's renewal e-mail), and the student e-mail story given the new leaving-early questions.
+
 - Quote cautions on a legal bracket (the author's go-ahead of 2026-10-08, after item 64). The cause: square brackets
   are how a legal quotation marks an alteration ("[t]he tenant is required ...", "upon [the tenant’s] security
   deposit", "specif[y] the noncompliance and indicat[e] the intention"), and the checker read the bracketed letters as

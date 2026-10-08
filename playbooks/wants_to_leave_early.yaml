@@ -1,13 +1,13 @@
 issue: wants_to_leave_early
 description: Tenant wants to move out before the lease term ends.
-sections: ["83.595", "83.49", "83.682", "83.575", "83.42"]   # the statute sections this playbook rests on; loaded into the prompt
+sections: ["83.595", "83.49", "83.682", "83.575", "83.42", "83.505"]   # the statute sections this playbook rests on; loaded into the prompt
 
 provenance:
   statute_year: 2026
-  verified_against: statutes/83.595.txt, statutes/83.49.txt, statutes/83.682.txt, statutes/83.42.txt
+  verified_against: statutes/83.595.txt, statutes/83.49.txt, statutes/83.682.txt, statutes/83.42.txt, statutes/83.505.txt
   verified_by: null          # your name, once you've read each quote against the file
   verified_on: null
-  version: 0.4
+  version: 0.5
 
 counting:
   convention: calendar days, trigger day not counted, no weekend or holiday adjustment
@@ -36,16 +36,37 @@ spec:
     - id: reason_is_landlord_noncompliance
       type: bool
       source: [user]
-    - id: early_termination_addendum
+    - id: fee_in_writing
       type: bool
       source: [user]
+    - id: fee_written_where
+      type: choice
+      source: [user]
+      applies_if: fee_in_writing
+      choices:
+        - in a separate paper I signed with the lease
+        - only in the lease itself
+        - in the lease and in a separate paper
+        - I don't know
     - id: early_termination_amount
       type: money
       source: [user]
-      applies_if: early_termination_addendum
-    - id: leave_notice_given
+      applies_if: fee_in_writing
+    - id: leave_notice_given                 # same id as in deposit_not_returned: one notice, asked once
       type: bool
       source: [user]
+    - id: leave_notice_sent_by
+      type: choice
+      source: [user]
+      applies_if: leave_notice_given
+      choices:
+        - handed to the landlord or the office
+        - regular mail
+        - certified mail
+        - e-mail
+        - a resident portal request or message
+        - a text message
+        - something else
     - id: leave_notice_date
       type: date
       source: [user]
@@ -68,7 +89,6 @@ spec:
       trigger: planned_move_out
       days: 7
       direction: before
-      delivery: [certified mail, personal delivery]
       cite: "83.49(5)"
       quote: "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"
       consequence: "Failure to give such notice relieves the landlord of the notice requirement of paragraph (3)(a) but does not waive any right the tenant may have to the security deposit or any part of it."
@@ -170,14 +190,25 @@ spec:
           cite: "83.595(4)"
           quote: "This remedy is available only if the tenant and the landlord, at the time the rental agreement was made, indicated acceptance of liquidated damages or an early termination fee."
           ways:
-            - fact: early_termination_addendum
-              equals: true
-              when_otherwise: The tenant confirmed signing no such addendum, so the landlord's other remedies in 83.595 apply.
+            - says: the fee is written in a separate paper the tenant signed with the lease
+              cite: "83.595(4)"
+              quote: "The tenant must indicate acceptance of liquidated damages or an early termination fee by signing a separate addendum to the rental agreement"
+              fact: fee_written_where
+              equals:
+                - in a separate paper I signed with the lease
+                - in the lease and in a separate paper
+              when_otherwise: The tenant said the fee is written only in the lease itself, not in a separate paper, so the landlord's other remedies in 83.595 apply.
+            - says: where the fee is written is not known yet
+              check: the papers signed with the lease, for a separate one agreeing to the fee or liquidated damages
+              applies_if:
+                fact: fee_written_where
+                equals:
+                  - I don't know
         - says: the amount is no more than 2 months' rent
           cite: "83.595(4)"
           quote: "if the amount does not exceed 2 months’ rent"
           ways:
-            - check: the amount the addendum sets, beside two months' rent
+            - check: the amount the fee or liquidated damages come to, beside two months' rent
         - says: for a fee, the lease asks for no more than 60 days' notice before the early termination
           cite: "83.595(4)"
           quote: "the tenant is required to give no more than 60 days’ notice, as provided in the rental agreement, prior to the proposed date of early termination"
@@ -188,8 +219,10 @@ spec:
         - says: the notice the lease asks for, given to the landlord
           cite: "83.595(4)"
           quote: "as provided in the rental agreement, prior to the proposed date of early termination"
-          fact: leave_notice_given
-          equals: true
+          ways:
+            - check: whether your notice is the one the lease asks for before an early termination, in its time and way
+              applies_if: leave_notice_given
+              lease: notice_before_vacating
       also_open: [fee_notice_period, landlord_choice]
 
     - id: deposit_notice_before_leaving
@@ -206,7 +239,7 @@ spec:
               when_otherwise: The program's deadlines show the last day to give the notice before the planned move-out has passed.
             - says: the notice already given went out by the last day, by certified mail or in person, with an address
               applies_if: leave_notice_given
-              check: the date the notice was delivered and how, beside the last day the program's deadlines show
+              check: the date the notice reached the landlord, beside the last day the program's deadlines show
         - says: the lease does not provide otherwise on notice before moving out
           cite: "83.49(5)"
           quote: "Except when otherwise provided by the terms of a written rental agreement"
@@ -214,11 +247,30 @@ spec:
             - check: whether the lease sets its own terms on notice before moving out early
               lease: notice_before_vacating
       steps:
-        - says: the written notice, with the address where the tenant can be reached, delivered to the landlord
+        - says: the written notice, with the address where the tenant can be reached, delivered to the landlord by certified mail or in person
           cite: "83.49(5)"
           quote: "which notice must include the address where the tenant may be reached"
-          fact: leave_notice_given
-          equals: true
+          ways:
+            - says: the notice went by certified mail or by hand
+              check: whether the notice gave the address where you can be reached
+              applies_if:
+                fact: leave_notice_sent_by
+                equals:
+                  - handed to the landlord or the office
+                  - certified mail
+            - says: the notice went by e-mail, which counts only as 83.505 allows
+              check: >-
+                whether you and the landlord signed an addendum agreeing to notices by e-mail, as 83.505 describes, and
+                whether the notice gave the address where you can be reached
+              lease: notices_to_landlord
+              applies_if:
+                fact: leave_notice_sent_by
+                equals: [e-mail]
+            - says: the notice went some other way
+              check: how your notice reached the landlord, beside the ways 83.49(5) names, certified mail or personal delivery
+              applies_if:
+                fact: leave_notice_sent_by
+                equals: [something else]
 
 # ---------- read by the model ----------
 guidance:
@@ -229,9 +281,11 @@ guidance:
     monthly_rent: How much is your monthly rent?
     reason_for_leaving: Why do you want to leave early? In your own words.
     reason_is_landlord_noncompliance: Is part of the reason that the landlord has not made repairs or kept the unit as required?
-    early_termination_addendum: When you signed the lease, did you also sign a separate addendum choosing to pay liquidated damages or an early termination fee?
-    early_termination_amount: What amount does that addendum set?
-    leave_notice_given: Have you given the landlord written notice that you are leaving?
+    fee_in_writing: Does your lease, or another paper you signed with it, set an early termination fee or liquidated damages for leaving early?
+    fee_written_where: Where is that fee written?
+    early_termination_amount: What amount does it set?
+    leave_notice_given: Have you given the landlord anything in writing saying you are moving out?
+    leave_notice_sent_by: How did that written notice reach the landlord?
     leave_notice_date: What date was that notice delivered to the landlord?
     servicemember: Are you a servicemember (including the National Guard or reserves) with military orders that affect where you live?
     servicemember_notice_given: Have you given the landlord a written notice of termination with a copy of your orders or a letter from your commanding officer?

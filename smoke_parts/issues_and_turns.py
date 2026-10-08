@@ -41,7 +41,7 @@ try:
         issue, skip the rest."""
         last_question = [line for line in shown_sheet.getvalue().splitlines() if line.startswith("  ") and
                          not line.startswith("    ")][-1]
-        if "received any written notice" in last_question:
+        if "received anything in writing from the landlord" in last_question:
             return ""
         return "yes" if "Is that part of your situation?" in last_question else "?"
     with contextlib.redirect_stdout(shown_sheet):
@@ -68,7 +68,7 @@ try:
           in render_timeline(full=True) and "issue confirmed: deposit claim received" in render_timeline(full=True))
     # deadlines per issue: deposit_not_returned complete, deposit_claim_received still open (its facts skipped)
     record.matter["facts"].update(tenancy_terminated="2026-07-31", vacated="2026-07-30", claim_notice_date="2026-09-25",
-                                  forwarding_address_given=True, early_or_periodic=False)
+                                  claim_delivery="certified mail", forwarding_address_given=True, early_or_periodic=False)
     per_issue = json.loads(deadline_listing())
     check("an issue with open facts does not block another issue's deadlines",
           {d["clock"] for d in per_issue["deadlines"]} == {"return_if_no_claim", "claim_notice_deadline"}

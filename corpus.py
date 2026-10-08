@@ -50,7 +50,6 @@ class Clock(BaseModel):
     cite: str
     quote: str
     consequence: Optional[str] = None
-    delivery: Optional[List[str]] = None
     applies_if: Optional[str] = None
     count: Literal["calendar_days", "court_business_days"] = "calendar_days"
     shown_with: Optional[str] = None

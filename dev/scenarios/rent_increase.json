@@ -40,7 +40,7 @@
     "month-to-month": [
       "no"
     ],
-    "complained about the condition": [
+    "complained to anyone about the unit": [
       "yes"
     ],
     "make that complaint": [
@@ -51,6 +51,9 @@
     ],
     "The landlord has raised the rent or says the rent will go up": [
       "yes"
+    ],
+    "What was it? If more than one": [
+      "a written notice to the landlord about a repair"
     ]
   },
   "chat": [
