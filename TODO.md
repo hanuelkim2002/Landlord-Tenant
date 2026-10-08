@@ -90,7 +90,9 @@ lease clause pasted), so an answer cites and the program prints the cited words.
     In the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`), with a stand-in model: 23 of 29
     cautions false, 8 a lease quote and 9 a case quote beside a statute cite. New kinds: the posture lines rule 6 says
     to quote word for word ("Adds the 83.51(1) duty, quoted.", which holds a cite), the playbook's note on notice
-    sufficiency, and the tenant's own letter. Students read the cautions as the tool being broken; one learned to
+    sufficiency, and the tenant's own letter. Since the sheet asks plain facts (2026-10-08) the check on a notice's
+    words gives the model the tenant's own sentence to set beside the statute, so this pairing grows: in the e-mail
+    story 3 of 5 cautions flagged "If this isn't fixed I'm going to have to move out." as not in 83.51 or 83.56. Students read the cautions as the tool being broken; one learned to
     ignore them all.
 71. What the blind scoring of 2026-10-03 left (`docs/evals/2026-10-03-blind/`; 36 of 115 legal answers applied
     well, against 21 of 103 on 2026-10-02): rules restated without their quote (46.5, unchanged), conditions
@@ -163,7 +165,8 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     `results/*/inputs.json`; turned into `dev/scenarios` files (sheet answers and chat lines) they would run under
     `dev/eval.py`, no longer adapting to the replies. The eval's `method/harness.py` replays the whole program with
     the model's answers read from a file, a way to run the program end to end offline if the smoke checks ever want
-    one.
+    one. Stories F, C, and E became scenarios on 2026-10-08 (`eval_student_notice_email`, `eval_student_hot_water`,
+    `eval_student_roommate`; CHANGELOG); A, B, D, and D2 are left.
 
 ## Playbooks
 
@@ -300,6 +303,16 @@ built 2026-10-01, 81 opinions) comes first; then these, in order.
     fits; a word list the program prints under a reply that uses one.
 
 ## Model behavior (later)
+
+103. Slips left after the sheet asked plain facts (eval of 2026-10-08, `dev/eval_runs/2026-10-08-plain-facts-after/`,
+    3 runs per story on nemotron): told an e-mail's delivery is the tenant's to check for an 83.505 addendum, 2 of 3
+    replies in the e-mail story read the lease's notice clause (the student lease's 13.1, e-mail to the office) as
+    settling it ("Your lease permits notices to be sent by e-mail ... so delivery by e-mail is allowed"), a reading the
+    playbook leaves to the author (item 84). In the roommate story, 1 of 3 applied the lease's own exception as settled
+    ("Because the damage is traceable to the roommate, the lease excludes the landlord's repair duty") and wrote a field
+    id ("caused_by: a roommate"). Asked "Doesn't that count as written notice?" of a portal request, 2 of 3 hot-water
+    replies said plainly that it does not satisfy 83.56(4), which is the playbook's reading of a portal request (to do).
+    Keep counting.
 
 88. Prompt parts named and ids written rose with items 81 to 84 (eval of 2026-10-04): turns with a prompt part's name
     8 to 15, mostly "(WHAT THE STATUTE DOES NOT SETTLE)" written as a source (12 turns, 2 before); field ids 9 to 17;

@@ -1,0 +1,163 @@
+{
+  "about": "repair_not_made and wants_to_leave_early, story F of the student simulation of 2026-10-06 (docs/evals/2026-10-06-students/, the student's own description and chat lines): an AC broken since 2026-09-10, mold, asthma; an e-mail to the leasing office on 2026-09-26 saying \"If this isn't fixed I'm going to have to move out.\" On the code before 2026-10-08 the student's yes to \"Does your written notice say that you intend to end the lease\" marked the 83.56(1) notice steps done and the reply said there was no new step. Since the sheet asks plain facts (TODO items 86 and 90 to 92) the e-mail's delivery and its words are the tenant's to check, and no reply may say the notice steps are done. Sheet rules answer both the old questions and the new ones, so the same file runs before and after.",
+  "start": [
+    "new",
+    "t-test",
+    "docs/evals/2026-10-06-students/results/F_ac_mold_leave/program/magnolia_lease.pdf",
+    "hi sorry this is long. the AC in my apartment (Magnolia Row, unit 3110) broke on Sept 10 and its been 4 weeks. it blows warm air and water leaks out of the air handler closet in the hallway. i put in 3 requests on the portal and techs came twice but they just say they need parts",
+    "since like Sept 24 theres black spots (i think mold) on the hallway ceiling and in my bathroom and it smells musty. i have asthma and its getting way worse, i went to student health on Sept 30 and the doctor wrote a note saying the mold and heat are making my asthma worse and that i should live somewhere else",
+    "i emailed the leasing office Sept 26 saying i might have to move out and the manager said they cant release me from my lease but i could look into reassignment. i just want to get out of here without paying some huge fee and without my mom (she cosigned) getting stuck with it. i already paid October rent. what can i do??",
+    ""
+  ],
+  "sheet": {
+    "Something in the unit needs repair": [
+      "yes"
+    ],
+    "Tenant wants to move out before the lease term ends": [
+      "yes"
+    ],
+    "Is that part of your situation?": [
+      "no",
+      "no",
+      "no"
+    ],
+    "What is the problem that needs repair": [
+      "The AC blows warm air and water leaks from the air handler closet; there is mold on the ceiling."
+    ],
+    "problem start": [
+      "9/10/2026"
+    ],
+    "single-family house or a duplex": [
+      "no"
+    ],
+    "paid rent since you knew": [
+      "yes"
+    ],
+    "filed an eviction case": [
+      "no"
+    ],
+    "What has the landlord said or done": [
+      "Techs came twice but say they need parts; the manager said they cannot release me from the lease."
+    ],
+    "roof, windows, doors, floors": [
+      "no"
+    ],
+    "must repair this kind of problem": [
+      "yes"
+    ],
+    "caused by you": [
+      "no"
+    ],
+    "delivered a written notice to the landlord": [
+      "yes"
+    ],
+    "written notice delivered to the landlord": [
+      "9/26/2026"
+    ],
+    "How did you deliver the written notice": [
+      "emailed it to the leasing office"
+    ],
+    "intend to end the lease": [
+      "yes"
+    ],
+    "intend not to pay rent": [
+      "no"
+    ],
+    "Which of these is the problem with": [
+      "the air conditioning"
+    ],
+    "Who or what caused the problem": [
+      "nothing anyone did (age, wear, weather)"
+    ],
+    "anything in writing about the problem": [
+      "yes"
+    ],
+    "How did that written message reach the landlord": [
+      "e-mail"
+    ],
+    "What date did that message reach the landlord": [
+      "9/26/2026"
+    ],
+    "Does that message say anything about ending": [
+      "yes"
+    ],
+    "say anything about not paying rent": [
+      "no"
+    ],
+    "Copy the sentences of that message": [
+      "If this isn't fixed I'm going to have to move out."
+    ],
+    "plan to move out": [
+      "10/11/2026"
+    ],
+    "fixed end date": [
+      "yes"
+    ],
+    "lease term end": [
+      "7/31/2027"
+    ],
+    "Why do you want to leave early": [
+      "The AC and the mold are making my asthma worse, and my doctor says I should live somewhere else."
+    ],
+    "landlord has not made repairs or kept": [
+      "yes"
+    ],
+    "separate addendum": [
+      "no"
+    ],
+    "written notice that you are leaving": [
+      "no"
+    ],
+    "servicemember": [
+      "no"
+    ]
+  },
+  "chat": [
+    "ok so sorry for rambling but im kind of freaking out. my asthma is really bad right now and i cant live here anymore. can i just move out and stop paying without getting charged the early termination fee? i heard its like $1,578 and i honestly cant afford that, and my mom cosigned so i dont want her to get stuck paying it either. do i have any right to leave since the landlord hasnt fixed the AC or the mold for almost 4 weeks??",
+    "sorry i read all that and im really lost. so can i leave or not?? it keeps saying not settled / not known yet. and when it says the fee route is \"closed\" if i didnt sign a separate addendum, is that good or bad for me?? like does that mean i dont have to pay the $1,578 or that i cant leave at all. i dont remember signing anything separate, just the lease and my mom signed some guaranty thing, but im not 100% sure. and it said paying october rent might have messed it up?? i paid it on oct 1 because i didnt know i wasnt supposed to. i just need to know what i should do first, like tomorrow, i have clinicals in the morning and cant think straight",
+    "Did my e-mail to the leasing office on September 26 count as the notice to end my lease, or do I still need to send one?"
+  ],
+  "expect": {
+    "issues": [
+      "repair_not_made",
+      "wants_to_leave_early"
+    ],
+    "not_covered_note": false,
+    "turns": [
+      {
+        "say": "can i just move out and stop paying",
+        "applied": true,
+        "must_not": [
+          "(?i)\\bsteps? (are|is|were) (already )?(done|complete|completed)\\b",
+          "(?i)\\bno (new|further|other|more) steps?\\b",
+          "(?i)\\bnotice and the 7 days (are|were) done\\b"
+        ]
+      },
+      {
+        "say": "so can i leave or not",
+        "applied": true,
+        "must_not": [
+          "(?i)\\bsteps? (are|is|were) (already )?(done|complete|completed)\\b",
+          "(?i)\\bno (new|further|other|more) steps?\\b",
+          "(?i)\\bnotice and the 7 days (are|were) done\\b"
+        ],
+        "must": [
+          "(?i)\\b(check|not settled|not known yet|turns on|depends on)\\b"
+        ]
+      },
+      {
+        "say": "count as the notice to end my lease",
+        "applied": true,
+        "must_not": [
+          "(?i)\\bsteps? (are|is|were) (already )?(done|complete|completed)\\b",
+          "(?i)\\bno (new|further|other|more) steps?\\b",
+          "(?i)\\bnotice and the 7 days (are|were) done\\b",
+          "(?i)\\byes,? (it|your e-?mail|that) (counts?|counted|did)\\b"
+        ],
+        "must": [
+          "(?i)\\b(check|addendum|83\\.505|not settled|turns on|depends on)\\b"
+        ]
+      }
+    ]
+  }
+}

@@ -5,6 +5,22 @@ session can see why the code is the way it is.
 
 ## 2026-10-08
 
+- Eval: part 1 of the sheet asking plain facts, on nemotron (the author's request). Three new scenarios from the student
+  simulation of 2026-10-06, with the students' own description and chat lines and sheet rules for both the old and the
+  new questions: `eval_student_notice_email` (F), `eval_student_hot_water` (C), `eval_student_roommate` (E), each with
+  `must_not` patterns for the slip the simulation found. Run 3 times each on the code before part 1 (a worktree at
+  5957d00) and after, with `WIKI_UNVERIFIED=1` (`dev/eval_runs/2026-10-08-plain-facts-before/` and `-after/`, not
+  committed). Before: the reply made the slip in 6 of 9 runs; every e-mail run said the e-mail counted as the notice to
+  end the lease ("yes, it counts", "satisfies the written-notice requirement", "did count as the notice"), 2 hot-water
+  runs said "you may withhold" or that withholding "is open", and 1 roommate run said "the landlord is not
+  responsible". After: 0 of 9; the e-mail replies say whether it counts "turns on" or "is not known yet", with the
+  student's words to check. The 2 hot-water runs the patterns flagged after are false: "Whether a resident-portal
+  request counts as written notice turns on ...". The eight older repair and neighbor scenarios, re-keyed in part 1,
+  met their expectations in 23 of 24 runs (one noise run drafted no letter, item 39), and `repair_notice` still dated
+  the withholding period from the hand-delivered notice. Left: TODO item 103 (the lease's e-mail clause read as
+  settling delivery, 2 of 3 e-mail runs) and a note on item 64 (the tenant's words, now given beside the statute,
+  flagged as misquotes). TODO item 101 notes the three stories done.
+
 - The sheet asks plain facts, part 1: the code and repair_not_made and neighbor_disturbance (TODO items 86, 90, 91,
   92; the author's go-ahead of 2026-10-08, the second part is item 102). The cause: the sheet asked the tenant for
   legal calls as yes or no facts ("Does your written notice say that you intend to end the lease?", "Is the problem

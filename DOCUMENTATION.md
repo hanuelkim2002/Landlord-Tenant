@@ -1105,10 +1105,14 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   of a claim came, skipped on the sheet), `know_lease_holdover` (lease clauses the profile does not hold but the
   lease has: the holdover, 2.4, and the late charge, 3.3; `search_lease` must be called and each cited),
   `know_violation_waterbed` (a lease with no such clause: the search finds nothing on waterbeds),
-  `know_repair_mold_code` (a local code: mold, the lease not promising the repair, so the duty turns on a code the
-  tenant can check with code enforcement), `know_violation_guest` (an open question: whether a guest staying over is
+  `know_repair_mold_code` (a local code: mold, not the structure or the plumbing, so the duty turns on a code or the
+  lease's clause, each the tenant's to check), `know_violation_guest` (an open question: whether a guest staying over is
   a violation the tenant should be given a chance to cure), and `know_nonpayment_orange` (outside the tool: a 3-day
-  notice in Orange County, which has no court calendar); run with
+  notice in Orange County, which has no court calendar), and three stories of the student simulation of 2026-10-06
+  with the students' own lines, each with sheet rules for the questions before and after the sheet asked plain facts
+  (2026-10-08, TODO items 86 and 90 to 92), so the same file runs on either code: `student_notice_email` (an e-mail
+  saying "I'm going to have to move out": no reply may say the notice steps are done or that it counts), `student_hot_water`
+  (no reply may call withholding open), `student_roommate` (no reply may call the repair options closed); run with
   `WIKI_UNVERIFIED=1` until pages are verified. Each scenario's `about` says what it tests.
 - `streamlit run app.py`: the web page (see `app.py` in Modules), on http://localhost:8501 only. The same
   model calls as `run.py`. Stop it with Ctrl-C in its terminal.
