@@ -8,7 +8,7 @@ import re
 import record
 import wiki
 from citations import (caution, check_case_cites, check_cites, check_quoted, cites_in, is_in, quote_label, quote_spans,
-                       quoted_passages, subsections, unquoted)
+                       quoted_passages, subsections, unbracketed, unquoted)
 from config import shorten
 from corpus import statute
 from lease import LABELS, SECTION_NUMBER, lease_cite, lease_clauses
@@ -92,8 +92,9 @@ def check_case_quotes(text, messages):
     cases = printed_cases(messages)
     problems = []
     for start, _, quote in quote_spans(text):
-        holding = [name for name, part in cases if is_in(quote, part)]
-        if not holding or any(is_in(quote, words) for words in statute.values()):
+        words = unbracketed(quote)                       # "[t]he tenant": the brackets are the quoter's alteration
+        holding = [name for name, part in cases if is_in(words, part)]
+        if not holding or any(is_in(words, section) for section in statute.values()):
             continue
         paragraph = text[max(0, text.rfind("\n\n", 0, start)):start]
         named = named_cases(paragraph, [name for name, _ in cases])

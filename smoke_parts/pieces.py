@@ -308,6 +308,16 @@ check("item 64: statute words cited to the wrong section, and words found nowher
       check_quoted(f'"{FORFEIT}" (83.56)', given_now)[0][2] == "is not in 83.56; it is in 83.49"
       and check_quoted(f'"{FORFEIT}" (83.49(3)(b))', given_now)[0][2] == "is in 83.49(3)(a), not 83.49(3)(b)"
       and check_quoted('"Unless the tenant objects in writing within 15 days" (83.49(3)(b))', given_now)[0][2] == "is not in 83.49")
+# a legal bracket marks the quoter's alteration ("[t]he", "specif[y]"): set aside as an ellipsis is, the words around
+# it must still be word for word, and the cite check still holds
+INTENT = "the noncompliance and indicat[e] the intention of the tenant to terminate the rental agreement"
+check("brackets: a statute quote and a case quote with bracketed alterations pass",
+      check_quoted(f'"specif[y] {INTENT}" (83.56(1))', "") == []
+      and check_quoted(f'"{CASE_WORDS.replace("appellant’s", "[the tenant’s]")}"', given_now) == []
+      and check_quoted(f'"[h]{FORFEIT[1:]}" (Fla. Stat. 83.49(3)(a))', "") == [])
+check("brackets: a word changed outside the brackets, and a bracketed quote cited to the wrong subsection, are still flagged",
+      check_quoted(f'"specif[y] {INTENT.replace("indicat[e]", "indicates")}" (83.56(1))', "")[0][2] == "is not in 83.56"
+      and check_quoted(f'"[h]{FORFEIT[1:]}" (83.49(3)(b))', "")[0][2] == "is in 83.49(3)(a), not 83.49(3)(b)")
 check("a quote with no cite passes when it is in what the model was given",
       check_quoted('You wrote "I will not pay rent until it is fixed."', "saying I will not pay rent until it is fixed") == [])
 check("a quote with no cite is flagged when it is nowhere",

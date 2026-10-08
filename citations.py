@@ -158,6 +158,18 @@ def is_in(quote, text):
     return bool(pieces) and all(compact(p) in compact(text) for p in pieces)
 
 
+# An alteration a legal quotation marks in square brackets: "[t]he tenant", "upon [the tenant's] security deposit",
+# "specif[y] the noncompliance". In the nemotron evals of 2026-10-04 and 2026-10-08, 7 of 36 quote cautions were such
+# quotes, every one word for word once its brackets were set aside.
+BRACKET = re.compile(r"\[[^\]]*\]")
+
+
+def unbracketed(quote):
+    """The quote with each bracketed alteration set aside as an ellipsis is, so the words around it must still be
+    word for word (is_in); the brackets show the reader what was changed."""
+    return BRACKET.sub("...", quote)
+
+
 def where_in(quote, section):
     """The narrowest subsection of a stored section that holds the quote, as a cite ("83.49(3)(a)"); the
     section alone if it is in no single subsection; None if it is not in the section."""
@@ -175,23 +187,25 @@ def check_quoted(text, given):
       statute's and are word for word in what the model was given: then it is someone else's quote (the tenant's, the
       lease's, a case's, the tool's own) next to a cite that is not its source, and passes (TODO item 64);
     - a quote without a cite must be in the stored statutes or in what the model was given.
-    A cite to a section or subsection that does not exist is left to check_cites."""
+    A bracketed alteration ("[t]he", "specif[y]") is set aside first (unbracketed). A cite to a section or subsection
+    that does not exist is left to check_cites."""
     problems = []
     for quote, cite in quoted_passages(text):
         section, _, rest = cite.partition("(")
+        words = unbracketed(quote)                       # a bracketed alteration is the quoter's, not a misquote
         if not cite:
-            if not (is_in(quote, given) or any(is_in(quote, t) for t in statute.values())):
+            if not (is_in(words, given) or any(is_in(words, t) for t in statute.values())):
                 problems.append((quote, cite, "is not word for word in the statute, your lease, your own words, "
                                               "or anything else the tool gave the model"))
         elif section not in statute or (rest and "(" + rest not in subsections(section)):
             continue
-        elif not is_in(quote, statute[section]):
-            elsewhere = [s for s in statute if is_in(quote, statute[s])]
-            if not elsewhere and is_in(quote, given):          # real words, not the statute's: the cite is not theirs
+        elif not is_in(words, statute[section]):
+            elsewhere = [s for s in statute if is_in(words, statute[s])]
+            if not elsewhere and is_in(words, given):          # real words, not the statute's: the cite is not theirs
                 continue
             problems.append((quote, cite, f"is not in {section}" + (f"; it is in {elsewhere[0]}" if elsewhere else "")))
-        elif rest and not is_in(quote, statute[section][slice(*subsections(section)["(" + rest])]):
-            problems.append((quote, cite, f"is in {where_in(quote, section)}, not {cite}"))
+        elif rest and not is_in(words, statute[section][slice(*subsections(section)["(" + rest])]):
+            problems.append((quote, cite, f"is in {where_in(words, section)}, not {cite}"))
     return problems
 
 

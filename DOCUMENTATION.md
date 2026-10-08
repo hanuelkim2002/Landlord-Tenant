@@ -90,7 +90,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   section and that subsection, and the problem names where it really is, unless its words are in no stored section
   and are word for word in `given`: then it is someone else's quote, the tenant's, the lease's, a case's, or the
   tool's own, next to a cite that is not its source, and passes (TODO item 64, 2026-10-08); a quote with no cite must
-  be in `given` or any stored section). `caution(what, problem)` is the line printed to the tenant and
+  be in `given` or any stored section; first, a bracketed alteration, "[t]he", "specif[y]", is set aside as an
+  ellipsis is, `unbracketed` with `BRACKET`, so the words around it must still be word for word, 2026-10-08). `caution(what, problem)` is the line printed to the tenant and
   `quote_label` names a quote in it by its first six words. These check that a cite exists and was
   available, and that quoted words are real and sit where they are cited. They cannot tell whether a cite
   fits a claim made in the reply's own words, and a paraphrase outside quote marks is not checked.
@@ -241,7 +242,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   lease:". `agent.turn_blocks` shows them as a `sources` block right under the reply and writes them to the transcript
   as a `printed` line marked `"what": "sources"`. It also runs `check_case_quotes(text,
   messages)`: a quote credited to a printed case whose part of the printed text (`printed_cases(messages)`,
-  `[(name, part)]` from each `get_cases` artifact through `wiki.cases_printed`) does not hold it while another
+  `[(name, part)]` from each `get_cases` artifact through `wiki.cases_printed`; its brackets set aside, `unbracketed`) does not hold it while another
   case's part does is flagged "is in X's text, not Y's" as a `quote_flagged` event with the case as `cite`; the
   credit goes to the printed case the reply names last before the quote in the same paragraph, none when two
   are named at that same place, and words a statute section also holds are left to `check_quoted`.

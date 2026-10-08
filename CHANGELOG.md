@@ -5,6 +5,19 @@ session can see why the code is the way it is.
 
 ## 2026-10-08
 
+- Quote cautions on a legal bracket (the author's go-ahead of 2026-10-08, after item 64). The cause: square brackets
+  are how a legal quotation marks an alteration ("[t]he tenant is required ...", "upon [the tenant’s] security
+  deposit", "specif[y] the noncompliance and indicat[e] the intention"), and the checker read the bracketed letters as
+  a misquote. 7 of the 36 quote cautions in the nemotron evals of 2026-10-04 and 2026-10-08, and 1 in the student
+  simulation, were such quotes, each word for word in a case or the statute once its brackets were set aside. Was: a
+  quote compared as written. Now `citations.unbracketed` sets each bracketed part aside as an ellipsis is (`BRACKET`),
+  in `citations.check_quoted` and `replies.check_case_quotes`, so the words around it must still be word for word and
+  the cite check (section, subsection) still holds. Not in the wiki's checks or `propose_facts`, which keep quotes
+  exact. Left as it is: a bracket can carry a change of meaning ("[not]"); the brackets show the reader, and the
+  program prints the cited statute words under the reply. Smoke: a statute and a case quote with brackets pass; a
+  word changed outside the brackets, and a bracketed quote cited to the wrong subsection, are still flagged. 675
+  lines, all OK.
+
 - Quote cautions on real words next to a cite (TODO item 64; the author's go-ahead of 2026-10-08). The cause: the
   checker takes a quote's source from its position, the cite next to it (`citations.quoted_passages`), and holds the
   words to that section (`citations.check_quoted`), while an applied answer sets several sources side by side. Of the
