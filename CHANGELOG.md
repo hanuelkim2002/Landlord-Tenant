@@ -3,6 +3,66 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-08
+
+- The sheet asks plain facts, part 1: the code and repair_not_made and neighbor_disturbance (TODO items 86, 90, 91,
+  92; the author's go-ahead of 2026-10-08, the second part is item 102). The cause: the sheet asked the tenant for
+  legal calls as yes or no facts ("Does your written notice say that you intend to end the lease?", "Is the problem
+  ... structural ... or ... the plumbing?", "caused by ... a member of your household"), and code then treated the
+  answer as known: a gate met or closed, a step done, a clock started, a date line in the letter. In the student
+  simulation of 2026-10-06, an e-mail saying "I'm going to have to move out" became a done 83.56(1) notice with the 7
+  days passed (F), portal requests became delivered notices (A, D2, E), withholding showed open for hot water (C), and
+  a roommate closed both repair options (E). Now the sheet asks only what the tenant saw or did, and the playbook
+  applies the statute:
+  - Code: a `choice` fact (`Element.choices`), answered on the sheet by number or words (`sheet.parse_answer`, the
+    terminal's numbered list, the web page's list to pick from), suggested by `fill_facts` and `propose_facts` only
+    among its answers; a way's `equals` may list answers, and its `applies_if` may name answers of a choice
+    (`deterministic.holds`, `matches`); a step may be decided through ways (`Step.ways`, `step_status`: done, the tenant
+    can check, not settled, or to do), and a clock's step whose date has passed while a step above it is not done is
+    "passed", "counts only if the steps above are done", not done; a check may give the tenant's words from the record
+    (`Way.beside`); a clock may carry what its date counts only if (`Clock.condition`), printed with the deadline, in
+    the prompt's deadlines part, and marked in the timeline; `corpus.load_playbook` refuses a way naming an answer its
+    choice does not list (`answers_problem`), and `check_all_playbooks` compares a shared fact's answers. A way whose
+    `applies_if` fact is never asked is not met (was: the tenant's to tell), and the prompt's options part leaves out a
+    way for another case (`NOT_APPLY`) when another remains. Was: facts were dates, amounts, yes/no, or words; steps
+    were done on a fact's value or a clock.
+  - repair_not_made 0.6. Was: `problem_is_structure_or_plumbing`, `lease_promises_repair`, `caused_by_tenant_side`,
+    `written_notice_delivered`, `written_notice_date`, `written_notice_method` (free text read by nothing), and
+    `notice_states_termination_intent` and `notice_states_withholding_intent` (yes/no, deciding the steps and the
+    clocks). Now `problem_is_with` (a choice: the structural parts and pipes, drains, toilets, or faucets meet
+    83.51(1)(b); running water and hot water are not settled through `subsection_one_or_two`, whose text and first
+    reading now name the plumbing; something else is to check; item 91); `caused_by` (a choice: nothing anyone did, the
+    landlord or its workers, or someone the tenant did not let in meet 83.51(4); the tenant, a family member, or a guest
+    close it, as a yes did; a roommate is not settled through the new open question `roommate_consent`; not knowing is to
+    check; the gate's words now 83.51(4)'s people, not "household"; item 92); the lease's repair promise is the
+    tenant's to check against the clause the tool read and its exceptions, never met on a sheet answer (item 86, the
+    recommendation the author left open); and `wrote_to_landlord`, `message_sent_by` (a choice), `message_date`,
+    `message_mentions_ending`, `message_mentions_rent`, `message_words`. Ending the lease: the delivery step reads
+    83.56(4) (by hand or by mail done, e-mail the tenant's to check for an 83.505 addendum, a portal request or a text
+    to do, something else to check), the intention step is the tenant's to check with their own words beside it, and
+    the 7-day clock counts from `message_date` when the message mentions ending the lease, with its condition.
+    Withholding: delivery by hand or by mail done, any other way not settled through the new open question
+    `withholding_notice_delivery` (83.60(1)(b) names no way of delivering; 83.56(4)'s ways are for 83.56(1) to (3)).
+    83.505 added to its sections, since the e-mail check and the open question rest on it. The clock's unread
+    `delivery` list is replaced by `condition`.
+  - neighbor_disturbance 0.5. Was: `complaint_in_writing` (its question counts a portal request as writing) marked the
+    83.56(1) notice step done, and `notice_states_termination_intent`, shared with repair_not_made, so one yes counted
+    for two different papers. Now `complaint_sent_by` (a choice), `complaint_mentions_ending`, `complaint_words`, read
+    as repair_not_made reads its message; 83.505 added to its sections.
+  - Prompt: rule 1's two "Instead:" examples said "which the sheet asks you" of the lease's promise and "Your notice
+    did not say that." (a sheet answer stated as the notice's content); now the clause the tenant can check, and the
+    tenant's words to check. The options part gives each step's why (the check, with the tenant's words).
+  - The rule, in CLAUDE.md (Conventions) and DOCUMENTATION.md (Playbook schema): the sheet asks only what the tenant
+    saw, did, or holds; the playbook applies the term (answers that meet it on the statute's words, a check, or an open
+    question).
+  - Smoke (`playbooks_options_lease`, `web_page`): the eval's stories F, A, C, and E through the repair gates and steps;
+    a neighbor complaint by hand and by the portal, and no fact shared with the repair notice; an unlisted answer refused
+    on load, by `propose_facts`, and on the sheet; a choice by number and by words; the letter's date line; the
+    prompt's step lines and deadline condition; the web page's list. The item 81 checks now use the new facts. 670
+    lines, all OK (647 before). Scenarios: the eight that answer repair or neighbor questions re-keyed to the new
+    questions, `dev/live_run.py` reading the "number or words" hint. For the author: the readings above, the new open
+    questions, the questions' wording, and 83.505 in the sections, with item 84.
+
 ## 2026-10-06
 
 - Working rule: fix the cause, not the instance (the author's request). Was: TODO items were often fixed for the

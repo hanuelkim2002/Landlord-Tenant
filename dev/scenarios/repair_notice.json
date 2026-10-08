@@ -19,24 +19,6 @@
     "single-family house or a duplex": [
       "yes"
     ],
-    "caused by you": [
-      "no"
-    ],
-    "delivered a written notice": [
-      "yes"
-    ],
-    "written notice delivered to the landlord": [
-      "9/10/2026"
-    ],
-    "How did you deliver the written notice": [
-      "by hand, to the landlord"
-    ],
-    "intend to end the lease": [
-      "no"
-    ],
-    "intend not to pay rent": [
-      "yes"
-    ],
     "paid rent since you knew": [
       "no"
     ],
@@ -51,6 +33,30 @@
       "yes",
       "yes",
       "yes"
+    ],
+    "Which of these is the problem with": [
+      "the air conditioning"
+    ],
+    "Who or what caused the problem": [
+      "nothing anyone did (age, wear, weather)"
+    ],
+    "anything in writing about the problem": [
+      "yes"
+    ],
+    "How did that written message reach the landlord": [
+      "handed to the landlord or the office"
+    ],
+    "What date did that message reach the landlord": [
+      "9/10/2026"
+    ],
+    "Does that message say anything about ending": [
+      "no"
+    ],
+    "say anything about not paying rent": [
+      "yes"
+    ],
+    "Copy the sentences of that message": [
+      "The air conditioning has been broken since September 1, 2026. I will not pay rent until it is fixed."
     ]
   },
   "chat": [

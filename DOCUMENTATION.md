@@ -53,7 +53,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `corpus.py`: the stored corpus, loaded once at import. `statute` (dict, section number to text, from
   `statutes/83.*.txt`), the playbook shapes (`Element`, `Clock`, `Spec`, `Playbook`), `load_playbook`,
   `Way` and `Gate` (an option's condition and the ways it can be met; TODO item 81), `way_problem` (what is wrong with a
-  way's shape, or None), `check_playbook` (one playbook: every spec quote verbatim in its cited section, every
+  way's shape, or None; `answers_problem`: a way or an `applies_if` naming an answer its choice fact does not list),
+  `option_ways` (every way of an option, its gates' and its steps'), `check_playbook` (one playbook: every spec quote verbatim in its cited section, every
   quotation of 20 or more characters in the guidance and open questions verbatim in a stored section, a
   question for every element and an element for every question, `applies_if` naming a yes/no fact, clock
   cites among `sections`, each open question's shape, no id from `playbook_ids` (every fact, clock, and open
@@ -61,8 +62,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   parts the tool reads; prints a line per check via `report`, returns the failures), `check_all_playbooks`
   (all of them, checking ids against every playbook's, plus a fact id shared by playbooks having the same type
   and question; returns the failures), and `playbooks` (dict, issue to `Playbook`, from
-  `playbooks/*.yaml`), and `fact_lease` (fact id to the lease clause that a gate's way decided by the fact names, e.g.
-  `lease_promises_repair` to `maintenance_and_repairs`: the sheet shows that clause beside the question). No model
+  `playbooks/*.yaml`), and `fact_lease` (fact id to the lease clause that a way decided by the fact names: the sheet
+  shows that clause beside the question; no playbook names one since `lease_promises_repair` left the sheet,
+  2026-10-08). No model
   calls. Imports `config`, `lease` (for `LeaseProfile`, to check `compare_to` and a way's `lease`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
 - `citations.py`: checks the ch. 83 cites and the quotes in a reply the model wrote. `SUBSECTION_START` (a marker such as
   `(3)` or `(b)` starts a subsection when a space and a capital letter or an opening quote follow it, or a
@@ -135,20 +137,25 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   deadlines, with one that two playbooks share listed once, tagged with both issues), `check_options(playbook,
   facts, today, profile=None)` (TODO items 72 and 81: each option of the playbook with its status from the
   confirmed facts, the clocks, and the lease profile). Each way of a gate gets a state from `way_state`: a fact
-  confirmed with the way's value is "met", with another value its `otherwise` ("not met", or "not settled" through
-  an open question, or "not met yet"); a fact not confirmed is "tell" (the sheet asks it), or "check" when the way
-  names a lease clause the profile did not read; a clock is met when its status is the way's `equals`, "tell" while
-  its start date is not confirmed, "outside" when it cannot be counted (no court calendar); a `check` way is
-  "check", an `outside` way "outside"; a way naming a lease clause says whether the tool read it, found none, or did
-  not read it (`lease_note`). A gate takes the best state among its ways (`STATES`: met, tell, check, not settled,
+  confirmed with the way's value (`matches`: one of them, for a choice fact's list of answers) is "met", with another
+  value its `otherwise` ("not met", or "not settled" through an open question, or "not met yet"); a fact not confirmed
+  is "tell" (the sheet asks it), or "check" when the way names a lease clause the profile did not read; a way whose
+  `applies_if` does not hold (`holds`: a yes/no fact true, or a choice fact with one of the answers listed), or whose
+  fact's own question is never asked (`asked_never`), is "not met", why `NOT_APPLY`; a clock is met when its status is
+  the way's `equals`, "tell" while its start date is not confirmed, "outside" when it cannot be counted (no court
+  calendar); a `check` way is "check", with the tenant's words from the record when it names a text fact in `beside`
+  ("your words, as you gave them: ..."), an `outside` way "outside"; a way naming a lease clause says whether the tool
+  read it, found none, or did not read it (`lease_note`). A gate takes the best state among its ways (`STATES`: met, tell, check, not settled,
   outside, not met yet, not met), with its status and what the tool knows of it in words (`STATUS`, `KNOWLEDGE`: known,
   the tenant can tell the tool, the tenant can check, not settled, outside the tool), why, its ways, and, while
   not met, `if_met`: the option's status were it met (were it not, the option is closed). `option_status`: closed
   when a gate is not met, else not known yet (a gate to tell or check), not settled, outside the tool, not open yet
-  (a gate not met yet), or open. Each step "done" (its fact confirmed with its value, or its clock's date passed,
-  through `compute_deadlines`), "waiting" (the date upcoming), or "to do"),
+  (a gate not met yet), or open. Each step (`step_status`) "done" (its fact confirmed with its value, its clock's date
+  passed, through `compute_deadlines`, or a way of its met), "waiting" (the date upcoming), "the tenant can check" or
+  "not settled" (through its ways, `STEP_STATUS`, with why), or "to do"; a clock's step whose date has passed while a
+  step above it is not done is "passed", with "counts only if the steps above are done" (TODO items 86 and 90 to 92)),
   `ISSUE_LABELS` (the labels `classify` can pick), and the two one-shot intake calls `classify` and
-  `fill_facts`, both through `ask_json` on `agent_llm` (an answer that is not valid JSON is asked for again
+  `fill_facts` (a choice fact's answers go with its question, and a suggestion it does not list is dropped), both through `ask_json` on `agent_llm` (an answer that is not valid JSON is asked for again
   with `NOT_JSON` added, three answers at most, then the error is raised; parsed with `strict=False`, so a line
   break inside a quoted string is kept). `classify` adds "other" next to the covered labels
   when a separate problem fits none of them (so `run.py` prints `NOT_COVERED`), and gives "other" alone
@@ -186,7 +193,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `smoke`, `smoke_online`.
 - `timeline.py`: `render_deadlines(result)` (a `get_deadlines` result as the tenant reads it: per deadline
   its date, actor, clock, issues, status, rule and start, cite, and counting line; a clock with no date
-  shows why; a clock's `shown_with` fact, when confirmed, on a line "beside it, from your record: ..."; with no deadline at all, one line saying so; then each waiting issue with its open facts; also the "Not yet." refusal), and
+  shows why; a clock's `shown_with` fact, when confirmed, on a line "beside it, from your record: ..."; a clock's
+  `condition` on a line "counts only if ..." (TODO items 90 to 92); with no deadline at all, one line saying so; then each waiting issue with its open facts; also the "Not yet." refusal), and
   `render_timeline(issue, full)`, the DATE / EVENT / SOURCE / FILE table, plus helpers
   `label`, `corrected` (the tenant confirmed a different value from the suggestion, compared as shown),
   and `confirmation_of`. A confirmed date's SOURCE reads "tenant (corrected, ...)" when corrected, and in
@@ -324,7 +332,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   existing one or a new id; the lease PDF, written to a temporary folder for `agent.read_lease`, which keeps
   its own copy under its hash; the description; then `intake`, and `sheet.NOT_COVERED` when it applies),
   `update_form` (what is new, through `resume`), `sheet_form` (one row at a time from `pending_rows`: the
-  question, `row_notes`, an input by type, a date picker, yes/no, an amount, words, filled in with the
+  question, `row_notes`, an input by type, a date picker, yes/no, an amount, words, a list of a choice's answers to
+  pick from, filled in with the
   suggestion; Save goes through `value_of` and `save_answer`, an accepted suggestion logged as typed ""; Skip
   for now), `finish_sheet` (mid-chat: back to the chat with the note; after the first sheet: the agent is
   built, or `agent.stop_block()` and the session ends when no covered issue is left), then the chat:
@@ -352,9 +361,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `pending_rows()` (first every
   suggested issue as a yes/no row, "This looks like: <description> Is that part of your situation?", with
   why it was suggested; then every changed, proposed, or missing fact of the active issues, once per fact
-  id, with its question, type, and any suggestion; a yes to an issue calls `confirm_issue` and its
-  questions follow, a no calls `reject_issue`), `parse_answer(kind, text)` (checks an answer against the element's type: dates as
-  `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and commas, non-empty text), `shown`.
+  id, with its question, type, a choice fact's answers (`choices`), and any suggestion; a yes to an issue calls
+  `confirm_issue` and its questions follow, a no calls `reject_issue`), `parse_answer(kind, text, choices=None)` (checks
+  an answer against the element's type: dates as `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and
+  commas, non-empty text, and for a choice its number in the list or its words, spacing and capitals aside, saved as
+  the words; TODO items 90 to 92), `shown`.
   The sheet's pieces, so the terminal and the web page ask a row the same way: `suggestion(r)` (a row's
   suggested value if it fits the type, else `None`), `row_notes(r)` (the lines under a row's question: the
   confirmed value next to the update's, the suggestion with the tenant's words, "your lease says" for a row
@@ -366,7 +377,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `save_answer(r, answer, value)` (an issue row: `confirm_issue` or `reject_issue`; a fact row:
   `record.confirm_fact`, which may suggest a related issue; saves `matter.json`, writes a `sheet` transcript
   line; returns the pair for the model's note and the lines to show). `run_sheet(ask=input)` is the
-  terminal's sheet: asks one row at a time with those pieces, rebuilding the list after each answer so an
+  terminal's sheet: asks one row at a time with those pieces (a choice's answers numbered under its question, hint
+  "number or words"), rebuilding the list after each answer so an
   `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; returns the saved pairs.
   Imports `record`, `corpus`, `lease`. Imported by `run`, `app`, `agent`, `tools` (for `parse_answer` and `shown`).
 - `checks.py`: helpers for the smoke scripts. `check(name, condition)` prints `OK` or `FAIL` and keeps the
@@ -601,7 +613,8 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   model says the lease does or does not say something. Writes a `fetch` event.
 - `propose_facts(facts_json)`: JSON object keyed by element id, each `{"value", "how", "said"}`. Puts a
   suggestion in `proposed` only if the id is a user-sourced element of an active playbook, the value fits
-  the element's type (`sheet.parse_answer`, and it is stored as parsed), `how` is stated or inferred, and
+  the element's type (`sheet.parse_answer`, a choice's answer among its choices, and it is stored as parsed), `how` is
+  stated or inferred, and
   `said` appears in what the tenant typed this session (`record.tenant_words`, by `citations.is_in`: an
   ellipsis may join pieces, each of which must appear; spacing, quote-mark style, and end punctuation are
   ignored).
@@ -737,8 +750,10 @@ rules forbade it.
    line per condition (gate) with its state in words (`state_words`: its status, what the tool knows of it when
    that says more, "the tenant can tell the tool" or "the tenant can check", and why); a condition not met with
    several ways lists each way with its own state; a condition not decided adds "if this condition is met, the
-   option is <status>; if it is not, the option is closed" (TODO item 81); a line per step with "done", "waiting",
-   or "to do"; and "also, from what the statute does not settle:" with the first sentence of each open question the
+   option is <status>; if it is not, the option is closed" (TODO item 81); a way for another case (its why
+   `NOT_APPLY`: hot water when the problem is the AC) is left out of a condition's list when another way remains; a
+   line per step with "done", "waiting", "passed", "the tenant can check", "not settled", or "to do", and why when it
+   has one (the tenant's notice's words beside the check; TODO items 90 to 92); and "also, from what the statute does not settle:" with the first sentence of each open question the
    option names in `also_open`. In words, no id. A condition of an option that another condition closes gets no "if
    this condition is met" line (TODO item 84: "closed if it holds; if not, closed" said nothing). "none: no active
    issue lists its options yet" with no active playbook (every playbook has options since item 84). Rule 1 asks for
@@ -757,7 +772,7 @@ rules forbade it.
    deadlines themselves and answered from): `prompt.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
    notice deadline", not the clock's id) with its issues, whose it is, what it counts from (the fact's label,
    not its date), its cite, and "passed" or "upcoming" (or why it has
-   no date); then each issue still waiting, with the facts it waits for. Logs nothing. So the model can apply a
+   no date), with "(counts only if ...)" for a clock with a `condition`; then each issue still waiting, with the facts it waits for. Logs nothing. So the model can apply a
    condition such as "within the 30-day period" without seeing or comparing a date.
 
 The program note after a sheet still tells the model, in the conversation, that a sheet just ran.
@@ -775,15 +790,15 @@ landlord_entered_unannounced 0.5 (its purpose_of_entry open question reworded th
 0.5 since its options' knowledge states (2026-10-04, items 72 and 81), deposit_not_returned 0.5 and
 notice_received_nonpayment 0.6 since their options (item 81); the other seven one step up since theirs (item 84):
 deposit_claim_received and rent_increased and wants_to_leave_early and neighbor_disturbance 0.4,
-notice_received_violation and lease_ending 0.5, landlord_entered_unannounced 0.6. Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
+notice_received_violation and lease_ending 0.5, landlord_entered_unannounced 0.6; repair_not_made 0.6 and
+neighbor_disturbance 0.5 since the sheet asks them plain facts (2026-10-08, TODO items 86 and 90 to 92). Three have no clocks, and say why in `counting.note`: landlord_entered_unannounced
 (83.53(2) is in hours), rent_increased (no section on notice of a rent increase), neighbor_disturbance (no
 deadline for a landlord to act on one tenant's complaint about another; its open questions: whose duty
 83.52(7) states, 83.56(2)(a) as a remedy not a duty, what is unreasonable, and whether 83.56(1) lets the
 tenant leave over it). notice_received_nonpayment computes 83.56(3) in court business days
 and leaves 83.60(2) uncomputed. Facts shared across playbooks by id: `claim_notice_date`,
 `tenancy_terminated`, `deposit_amount`, `eviction_action_filed`, `fixed_term_lease`, `term_end_date`,
-`month_to_month`, `monthly_rent`, `registry_paid` (notice_received_nonpayment and notice_received_violation),
-`notice_states_termination_intent` (repair_not_made and neighbor_disturbance).
+`month_to_month`, `monthly_rent`, `registry_paid` (notice_received_nonpayment and notice_received_violation).
 
 One YAML file per issue in `playbooks/`. `load_playbook` validates it against `Playbook` and raises if a
 section is not in `statutes/`, a clock's `trigger` is not a date element or an element's `compare_to` is not a `LeaseProfile` field.
@@ -800,7 +815,8 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
 - `counting.convention`: copied into every `compute_deadlines` result. `counting.status` and the optional
   `counting.note` (why a playbook computes fewer dates than its sections mention): not read by code.
 - `spec` (typed, read by code):
-  - `elements`: `id`, `type` (date, money, bool, text), `source` (list; `user` and/or
+  - `elements`: `id`, `type` (date, money, bool, text, choice; a choice lists its answers in `choices`, in plain words:
+    what the tenant saw or did, never a term of the statute, TODO items 86 and 90 to 92), `source` (list; `user` and/or
     `lease_profile.<field>`, tried in order), `applies_if` (id of a bool element), `compare_to` (optional,
     `lease_profile.<field>`: the lease field to show next to the tenant's value when they differ; the
     deposit playbooks set `tenancy_terminated` against `term_end`; rent_increased, wants_to_leave_early, and
@@ -808,7 +824,8 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     `check_elements`, `fill_facts` (only elements with `user` in `source`), `build_letter` and
     `render_timeline` (date elements).
   - `clocks`: `id`, `actor` (landlord, tenant), `trigger` (a date element id), `days`, `direction`
-    (before, after), `cite`, `quote`, optional `consequence`, `delivery`, `applies_if`, `shown_with` (a
+    (before, after), `cite`, `quote`, optional `consequence`, `delivery` (read by nothing), `condition` (what the date
+    counts only if, in words, printed with it: a notice whose sufficiency the tool does not decide), `applies_if`, `shown_with` (a
     date element shown beside the computed date once confirmed, e.g. the date a notice itself states;
     checked by `load_playbook`), `count`
     (`calendar_days`, the default, or `court_business_days`; a playbook with a court-day clock must have a
@@ -825,28 +842,44 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     (`corpus.Way`), each decided by exactly one of: a `fact` with `equals`; a `clock` with `equals` "passed" (the
     default) or "upcoming"; `check` (what the tenant can check, and where: a part of the lease, a local code, a
     document); `outside` (law the tool does not hold); or an `open_question` alone (not settled: whether a violation
-    could be cured). A way may have `applies_if`, a yes/no fact: it counts only when that fact is confirmed true
-    (an objection already sent), is not met when it is confirmed false, and is the tenant's to tell before (item 84).
-    A fact way whose fact's own `applies_if` is confirmed false is not met (a question the sheet never asks). A fact
+    could be cured). For a choice fact, `equals` may list several answers, any of which meets the way. A way may have
+    `applies_if`, a yes/no fact, or `{fact, equals}` naming answers of a choice fact: it counts only when that holds
+    (an objection already sent, a message sent by e-mail), is not met when it does not, and is the tenant's to tell
+    before (item 84). A way whose fact's own `applies_if` is confirmed false is not met (a question the sheet never
+    asks). A check may name a text fact in `beside`, whose words from the record are given with it. A fact
     or clock way has `when_otherwise` and `otherwise`
     for a value against it: "closed" (the default), "unsettled" with an `open_question`, or "later" (not met yet). A
     way may name a lease clause, `lease`, a `LeaseProfile` field: for a fact way, a clause not read makes the fact
     the tenant's to check rather than to tell, and the sheet shows the clause beside the fact's question
     (`corpus.fact_lease`). A way's own `says`, `cite`, and `quote` are optional; a single-way gate leaves them to
-    the gate. Steps: `says`, `cite`, `quote`, and one `fact` with `equals` or one `clock`. `load_playbook` checks
-    each way's shape (`way_problem`) and that every fact, clock, open question, and lease clause named exists;
+    the gate. Steps: `says`, `cite`, `quote`, and one `fact` with `equals`, one `clock`, or `ways` (decided as a
+    gate's condition is: done through a way met, the tenant can check, not settled, or to do). `load_playbook` checks
+    each way's shape (`way_problem`, a step's ways too) and that every fact, clock, open question, lease clause, and
+    choice answer named exists;
     `check_playbook` that every quote (a way's too) is in its section, every cite among the playbook's sections, and
     no id in the prose (a way's `says`, `when_otherwise`, `check`, `outside` included). Read by
-    `deterministic.check_options`; the gates are the author's to check (TODO item 84). repair_not_made (0.5): end
-    the lease (83.56(1)), gated on a duty to fix the problem, met through the structure or plumbing that 83.51(1)(b)
-    names (`problem_is_structure_or_plumbing`), the lease (`lease_promises_repair`, added for it, shown beside the
-    lease's repairs clause; 83.56(1) also reaches "material provisions of the rental agreement"), or a code
+    `deterministic.check_options`; the gates are the author's to check (TODO item 84). The sheet asks only what the
+    tenant saw, did, or holds; which answers meet a condition is the playbook's reading, and what no answer settles
+    is a check or an open question (2026-10-08, TODO items 86 and 90 to 92; repair_not_made and neighbor_disturbance so
+    far). repair_not_made (0.6): end the lease (83.56(1)), gated on a duty to fix the problem, met through what the
+    problem is with (`problem_is_with`, a choice): the roof, a window or a door, a floor, steps, or a porch, an outside
+    wall or the foundation, another structural part, or pipes, drains, toilets, or faucets meet 83.51(1)(b); running
+    water and hot water are not settled through `subsection_one_or_two`; something else is the tenant's to check; or
+    the lease, the tenant's to check against its repairs clause and its exceptions (83.56(1) also reaches "material
+    provisions of the rental agreement"; the sheet no longer asks whether the lease promises it, item 86), or a code
     (83.51(1)(a), the tenant's to check with the code enforcement office); on the duty not changed in writing (only
-    for a single-family home or duplex, 83.51(1)); on its not being caused on the tenant's side (83.51(4)); and on
+    for a single-family home or duplex, 83.51(1)); on who caused it (`caused_by`, a choice; 83.51(4)): nothing anyone
+    did, the landlord or its workers, or someone the tenant did not let in meet it; the tenant, a family member, or a
+    guest close it; a roommate is not settled through `roommate_consent`; not knowing is the tenant's to check; and on
     no waiver by rent paid with knowledge (83.56(5)(a); not settled when rent was paid, `rent_paid_waiver`); steps:
-    the written notice, its stating the intent to end the lease, the 7 days. Withhold rent (83.60(1)(b)): the duty
-    through the structure or plumbing or a code (the lease does not reach it), the duty not changed, not caused on
-    the tenant's side; the notice stating the intent not to pay rent, the 7 days. deposit_not_returned (0.5): the
+    the message delivered as 83.56(4) allows (`message_sent_by`: by hand or by mail done, e-mail the tenant's to check
+    for an 83.505 addendum, something else to check, a portal request or a text to do), its words stating the intent
+    to end the lease (the tenant's to check, `message_words` beside it, when `message_mentions_ending`), the 7 days
+    (passed, not done, while the steps above are not done; the clock counts from `message_date` and carries its
+    `condition`). Withhold rent (83.60(1)(b)): the duty through the structure or plumbing (the same reading) or a code
+    (the lease does not reach it), the duty not changed, the same cause; steps: the message delivered (by hand or by
+    mail done; any other way not settled through `withholding_notice_delivery`, since 83.60(1)(b) names no way), its
+    words stating the intent not to pay rent (to check, when `message_mentions_rent`), the 7 days. deposit_not_returned (0.5): the
     whole deposit back (83.49(3)(a)), gated on no notice of a claim received, the 30 days passed (the
     `claim_notice_deadline` clock; not met yet while upcoming), and the landlord not relieved of the notice by
     83.49(5) (not early or periodic, or the 7-day notice given, or the lease's own notice term, the tenant's to
@@ -877,10 +910,12 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     notice already given; the lease's own term to check). lease_ending (0.5): ending a month-to-month tenancy
     (83.57(3); the last day for this period not passed, or a notice already given), leaving at the end without the
     lease's liquidated damages when the landlord did not send the 83.575(2) notice, and staying with permission
-    (83.575(3)). neighbor_disturbance (0.4): ending the lease (83.56(1): a lease promise the tenant can check with
+    (83.575(3)). neighbor_disturbance (0.5): ending the lease (83.56(1): a lease promise the tenant can check with
     `search_lease`, or the failure to act itself, not settled through `ending_own_lease`; the source a tenant of the
     same landlord, else not settled through `remedy_not_duty`; the disturbance unreasonable, not settled; steps: the
-    written complaint and its stating the intent to end the lease, `notice_states_termination_intent`, added for it).
+    written complaint delivered as 83.56(4) allows, read from `complaint_sent_by` as repair_not_made reads its message,
+    and its words stating the intent to end the lease, the tenant's to check, `complaint_words` beside it, when
+    `complaint_mentions_ending`; its own facts, so a repair notice and a neighbor complaint are not one paper).
   - `open_questions`: each `id`, `sections`, `text` (what the stored text lets the model apply, and what stays
     open), and, for a point the stored text does not settle, `readings` (two or more readings of it, which the
     model gives side by side; a question about a limit of the tool, such as a period in hours or months, has
@@ -965,12 +1000,15 @@ Offline checks (no model call, no key needed):
   timeline. Then related issues on `matters/t-smoke-related/m-001`, and every playbook through the real
   code path on `matters/t-smoke-playbooks/m-001`: for each, the sheet is answered by type ("yes" to every
   yes/no, so every `applies_if` question comes up), every clock must get a date, and a preserve letter must
-  carry the playbook's `notice_sufficiency` note. A new playbook is covered without a new check. Last, the
+  carry the playbook's `notice_sufficiency` note. A new playbook is covered without a new check. Then the
+  sheet asking plain facts (TODO items 86 and 90 to 92): the eval's stories F, A, C, and E through the repair gates and
+  steps, a neighbor complaint, a choice answered by number and by words, an unlisted answer refused on load, by
+  `propose_facts`, and on the sheet, the letter's date line, and the prompt's step lines, on `matters/t-smoke-choice/m-001`. Last, the
   web page, run headless by Streamlit's `AppTest` on `matters/t-smoke-app/m-001` with a stand-in model: a
   saved matter opened from the list, nothing new, a reply in a speech bubble with the program's caution and
   line outside it and its `$` and `*` shown as written, a command, a proposed fact asked on the page's
   sheet with its related issue next, the note with the next message, deadlines in a program box, a model
-  error shown as a caution, End session. Every line
+  error shown as a caution, End session; then, on `matters/t-smoke-app-choice/m-001`, a choice picked from a list. Every line
   must be OK; the last line says "all checks OK" or lists the failures. The test matter itself is not
   changed by a smoke run.
 
@@ -985,7 +1023,7 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   lines typed before the sheet (`start`), rules for the sheet (`sheet`: a piece of a question's text to a
   list of answers used in order, so a bad answer then a good one tests the re-ask; a question no rule
   matches gets "?"), and the chat lines (`chat`, then "bye"). Questions are found on screen by their type
-  hint, since each prints on the same line as the previous prompt. A sheet that appears mid-chat is answered
+  hint (a choice's is "number or words"; answer it with its words), since each prints on the same line as the previous prompt. A sheet that appears mid-chat is answered
   by the same rules. Prints the whole screen and the answers typed. Calls the model and writes a real matter:
   use the test tenant `t-test`; every "new" scenario adds a matter. When several rules match a question,
   the longest one with answers left is used. Scenarios, each with its expected results in `about`:

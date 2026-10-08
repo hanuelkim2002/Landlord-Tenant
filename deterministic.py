@@ -158,6 +158,8 @@ def compute_deadlines(playbook, facts, today):
         }
         if c.shown_with and c.shown_with in facts:          # e.g. the date the notice itself states, beside ours
             row["shown_with"] = f"{c.shown_with} {facts[c.shown_with]}"
+        if c.condition:                                     # what the date counts only if, which the tool does not decide
+            row["condition"] = " ".join(c.condition.split())
         out.append(row)
     return out
 
@@ -210,33 +212,66 @@ def lease_note(field, profile):
     return f"the tool has read the lease's clause on {LABELS[field]}, {lease_cite(clause)}"
 
 
+# Why a way is not met when it is for a case the record does not show (its applies_if does not hold, or its fact's
+# question is never asked); options_status leaves such a way out of a condition's list.
+NOT_APPLY = "it does not apply on the confirmed facts"
+
+
+def matches(value, equals):
+    """Whether a confirmed value is the one a way or a condition asks for: one of them when it lists several (a
+    choice's answers), else that one."""
+    return value in equals if isinstance(equals, list) else value == equals
+
+
+def asked_never(fact, playbook, facts):
+    """True when a fact's own question does not apply on the confirmed facts (its applies_if fact is confirmed
+    false), so the sheet never asks it."""
+    element = next(e for e in playbook.spec.elements if e.id == fact)
+    return bool(element.applies_if and element.applies_if in facts and not facts[element.applies_if])
+
+
+def holds(applies_if, facts):
+    """Whether a way's applies_if holds on the confirmed facts: True, False, or None while its fact is not
+    confirmed. A fact id alone is a yes/no fact confirmed true; {fact, equals} is a choice fact confirmed with one of
+    the answers listed."""
+    fact = applies_if if isinstance(applies_if, str) else applies_if.fact
+    if fact not in facts:
+        return None
+    return bool(facts[fact]) if isinstance(applies_if, str) else matches(facts[fact], applies_if.equals)
+
+
 def way_state(w, playbook, facts, clock_rows, profile):
     """One way's state (STATES) and why, in plain words: a fact or clock confirmed one way or the other is known (or
     not settled, through its open question); a fact not confirmed is one the tenant can tell the tool on the sheet,
     or can check when it rests on a lease clause the tool has not read; a clock waits for its start date (the tenant
-    can tell it) or cannot be counted (outside the tool); a check is the tenant's to check; outside is outside; an open
-    question alone is not settled. A way with applies_if is not met when that fact is confirmed false, and the
-    tenant's to tell while it is not confirmed."""
+    can tell it) or cannot be counted (outside the tool); a check is the tenant's to check, with the tenant's own
+    words when it names a fact to set beside the statute (beside); outside is outside; an open question alone is not
+    settled. A way with applies_if is not met when it does not hold on the confirmed facts, and the tenant's to tell
+    while its fact is not confirmed."""
     questions = playbook.guidance["questions"]
     note = lease_note(w.lease, profile) if w.lease else ""
     otherwise = {"closed": "not met", "unsettled": "not settled", "later": "not met yet"}[w.otherwise]
-    if w.applies_if and w.applies_if not in facts:             # a way for a case the record does not show yet
-        return "tell", f"the sheet asks: {questions[w.applies_if]}"
-    if w.applies_if and not facts[w.applies_if]:
-        return "not met", "it does not apply on the confirmed facts"
+    if w.applies_if is not None:                               # a way for a case the record may not show yet
+        fact = w.applies_if if isinstance(w.applies_if, str) else w.applies_if.fact
+        held = holds(w.applies_if, facts)
+        if held is False or asked_never(fact, playbook, facts):       # its question is never asked: an answer kept
+            return "not met", NOT_APPLY                                # from before does not count
+        if held is None:
+            return "tell", f"the sheet asks: {questions[fact]}"
     if not (w.fact or w.clock or w.check or w.outside):        # an open question alone decides it
         text = next(q["text"] for q in playbook.spec.open_questions if q.get("id") == w.open_question)
         return "not settled", "the statute does not settle it: " + " ".join(text.split()).split(". ")[0] + "."
     if w.check:
-        return "check", " ".join(w.check.split()) + (f"; {note}" if note else "")
+        words = f'; your words, as you gave them: "{" ".join(str(facts[w.beside]).split())}"' \
+            if w.beside and w.beside in facts else ""
+        return "check", " ".join(w.check.split()) + (f"; {note}" if note else "") + words
     if w.outside:
         return "outside", " ".join(w.outside.split())
     if w.fact:
-        element = next(e for e in playbook.spec.elements if e.id == w.fact)
-        if element.applies_if and element.applies_if in facts and not facts[element.applies_if]:
-            return "not met", "it does not apply on the confirmed facts"      # a question the sheet never asks
+        if asked_never(w.fact, playbook, facts):
+            return "not met", NOT_APPLY                     # a question the sheet never asks
         if w.fact in facts:
-            return ("met", "") if facts[w.fact] == w.equals else (otherwise, " ".join(w.when_otherwise.split()))
+            return ("met", "") if matches(facts[w.fact], w.equals) else (otherwise, " ".join(w.when_otherwise.split()))
         if w.lease and (profile is None or getattr(profile, w.lease, None) is None):     # a part of the lease not read
             return "check", f"{note}, so the tenant can look there; the sheet asks: {questions[w.fact]}"
         return "tell", f"the sheet asks: {questions[w.fact]}" + (f"; {note}" if note else "")
@@ -261,14 +296,34 @@ def option_status(states):
     return "open"
 
 
+# What a step's ways make of it (TODO items 86 and 90 to 92): done through a way met, the tenant's to check through a
+# check, not settled through an open question; any other state leaves it to do.
+STEP_STATUS = {"met": "done", "check": "the tenant can check", "not settled": "not settled"}
+
+
+def step_status(s, playbook, facts, clock_rows, profile):
+    """One step's status and why: through its ways, the best of them (STEP_STATUS), with why unless it is to do; a
+    clock's step "done" once the date has passed, "waiting" while it is upcoming; a fact's step "done" when the fact is
+    confirmed with its value; "to do" otherwise."""
+    if s.ways:
+        state, why = min((way_state(w, playbook, facts, clock_rows, profile) for w in s.ways),
+                         key=lambda x: STATES.index(x[0]))
+        status = STEP_STATUS.get(state, "to do")
+        return status, (why if status != "to do" else "")
+    if s.clock:
+        return {"passed": "done", "upcoming": "waiting"}.get(clock_rows.get(s.clock, {}).get("status"), "to do"), ""
+    return ("done" if s.fact in facts and matches(facts[s.fact], s.equals) else "to do"), ""
+
+
 def check_options(playbook, facts, today, profile=None):
     """Each option of the playbook with its status, from the confirmed facts, the clocks, and the lease profile only
     (option_status: open, closed, not known yet, not settled, outside the tool, or not open yet). Each gate takes the best
     state among its ways (STATES): its status and what the tool knows of it (STATUS, KNOWLEDGE), why, its ways with
     theirs, and, while it is not met, if_met: what the option's status would be were it met (were it not met, the
-    option is closed). Each step is "done" (its fact confirmed with its value, or its clock's date passed), "waiting"
-    (its clock's date upcoming), or "to do". Returns [{"option", "label", "cite", "status", "gates", "steps",
-    "also_open"}]."""
+    option is closed). Each step (step_status) is "done", "waiting" (its clock's date upcoming), "the tenant can check",
+    "not settled", or "to do", with why when it says more; a clock's step whose date has passed while a step above it is
+    not done is "passed", not done: the period counts only if the steps above are done (a notice whose words the tenant
+    checks). Returns [{"option", "label", "cite", "status", "gates", "steps", "also_open"}]."""
     clock_rows = {row["clock"]: row for row in compute_deadlines(playbook, facts, today)}
     results = []
     for o in playbook.spec.options:
@@ -288,11 +343,11 @@ def check_options(playbook, facts, today, profile=None):
                 gate["if_met"] = option_status([x["state"] for j, x in enumerate(gates) if j != i])
         steps = []
         for s in o.steps:
-            if s.clock:
-                state = {"passed": "done", "upcoming": "waiting"}.get(clock_rows.get(s.clock, {}).get("status"), "to do")
-            else:
-                state = "done" if facts.get(s.fact) == s.equals else "to do"
-            steps.append({"says": s.says, "cite": s.cite, "status": state})
+            status, why = step_status(s, playbook, facts, clock_rows, profile)
+            if s.clock and status in ("done", "waiting") and any(x["status"] != "done" for x in steps):
+                status = "passed" if status == "done" else status          # counts only from steps that hold
+                why = "counts only if the steps above are done"
+            steps.append({"says": s.says, "cite": s.cite, "status": status, **({"why": why} if why else {})})
         results.append({"option": o.id, "label": o.label, "cite": o.cite,
                         "status": option_status([gate["state"] for gate in gates]), "gates": gates,
                         "steps": steps, "also_open": list(o.also_open)})
@@ -366,7 +421,8 @@ TENANT SAID:
 def fill_facts(description, playbook):
     """Pull answers out of the description. Each is tagged stated or inferred and must rest on the tenant's
     own words. Nothing here is confirmed; the tenant confirms each one on the intake sheet (sheet.py)."""
-    slots = [{"id": e.id, "type": e.type, "question": playbook.guidance["questions"][e.id]}
+    slots = [{"id": e.id, "type": e.type, "question": playbook.guidance["questions"][e.id],
+              **({"choices": e.choices} if e.choices else {})}
              for e in playbook.spec.elements if "user" in e.source]
     prompt = f"""Read what the tenant said and answer each question if you can.
 Return ONLY a JSON object. For each id: {{"value": ..., "how": "stated" or "inferred", "said": "exact words copied from the tenant"}}.
@@ -374,7 +430,8 @@ Return ONLY a JSON object. For each id: {{"value": ..., "how": "stated" or "infe
 tenant said (for example, comparing two dates they gave). Either way, "said" must be the tenant's exact words
 that the answer rests on. If nothing the tenant said supports an answer, omit the id.
 Rules: date -> "YYYY-MM-DD" only if the tenant gave day, month, and year. bool -> true/false.
-money -> number without $ or commas. Never compute a date; only copy one the tenant gave.
+money -> number without $ or commas. choice -> one of its choices, copied exactly. Never compute a date; only copy
+one the tenant gave.
 
 QUESTIONS:
 {json.dumps(slots, indent=2)}
@@ -383,13 +440,14 @@ TENANT SAID:
 {description}"""
     answers = ask_json(agent_llm, prompt)
 
-    slot_ids = [s["id"] for s in slots]
+    choices = {s["id"]: s.get("choices") for s in slots}
     proposed = {}
     for slot_id, a in answers.items():
         said = squash(a.get("said", ""))
         how = a.get("how")
-        if slot_id in slot_ids and how in ("stated", "inferred") and said and said in squash(description):
+        listed = slot_id in choices and (choices[slot_id] is None or a.get("value") in choices[slot_id])
+        if listed and how in ("stated", "inferred") and said and said in squash(description):
             proposed[slot_id] = {"value": a["value"], "how": how, "basis": a["said"]}
         else:
-            print(f"  dropped {slot_id}: no supporting quote or tag")
+            print(f"  dropped {slot_id}: no supporting quote or tag, or an answer its choices do not list")
     return proposed

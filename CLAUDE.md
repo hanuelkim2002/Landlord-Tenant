@@ -35,6 +35,11 @@ is a law student, not admitted.
   can only propose (`propose_facts`). Issues work the same way: `record.add_issues` only suggests (the
   classifier, a related rule), `record.confirm_issue` (a yes on the sheet) makes one active, and
   `record.reject_issue` logs a no or a drop. Nothing is deleted from the history. `compute_deadlines` is the only date arithmetic.
+- The sheet asks only what the tenant saw, did, or holds (what happened, when, how something was sent, who did it, a
+  paper's own words), never whether something meets a term of the statute or the lease. The playbook applies the term:
+  answers that meet it on the statute's words (the author's reading, a choice's answers), a check with both texts side
+  by side, or an open question. A sheet answer never meets a gate, finishes a step, or starts a clock by a legal reading
+  (2026-10-08).
 - Every quote (lease, statute, tenant's words) is checked by substring against its source before use.
 - Letters are a code template (`build_letter`). The timeline is printed by the chat loop, never by the model.
 

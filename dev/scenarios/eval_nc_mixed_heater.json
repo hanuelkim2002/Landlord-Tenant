@@ -57,20 +57,11 @@
     "What is the problem that needs repair": [
       "the heater does not work"
     ],
-    "roof, windows, doors, floors": [
-      "no"
-    ],
     "problem start": [
       "9/15/2026"
     ],
     "single-family house or a duplex": [
       "yes"
-    ],
-    "caused by you": [
-      "no"
-    ],
-    "delivered a written notice to the landlord": [
-      "no"
     ],
     "paid rent since you knew": [
       "yes"
@@ -79,6 +70,15 @@
       "he keeps saying he will fix it"
     ],
     "filed an eviction case": [
+      "no"
+    ],
+    "Which of these is the problem with": [
+      "heat"
+    ],
+    "Who or what caused the problem": [
+      "nothing anyone did (age, wear, weather)"
+    ],
+    "anything in writing about the problem": [
       "no"
     ]
   },

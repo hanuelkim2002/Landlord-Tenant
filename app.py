@@ -231,6 +231,10 @@ def answer_widget(r):
         return picked.isoformat() if picked else ""
     if r["type"] == "money":
         return st.text_input("Amount", value="" if offered is None else shown(offered), placeholder="1850 or $1,850.00")
+    if r["type"] == "choice":                            # its answers in plain words; the closest one is picked
+        picked = st.selectbox("Your answer", r["choices"], placeholder="Pick the closest one",
+                              index=None if offered is None else r["choices"].index(offered))
+        return picked or ""
     return st.text_area("Your answer", value=offered or "", height=90)
 
 

@@ -88,13 +88,13 @@ def propose_facts(facts_json: str) -> str:
     confirms each suggestion on a sheet the program shows right after your reply. Do not ask them to confirm
     it in the chat. Input: JSON object keyed by element id, each {"value": ..., "how": "stated" or "inferred",
     "said": "the tenant's exact words the value rests on", shortened only with "..." between exact pieces}.
-    Dates as YYYY-MM-DD, yes/no as true/false, money as a number. Returns which suggestions were taken and why
-    any were refused."""
+    Dates as YYYY-MM-DD, yes/no as true/false, money as a number, a choice as one of its answers, copied exactly.
+    Returns which suggestions were taken and why any were refused."""
     try:
         proposals = json.loads(facts_json)
     except json.JSONDecodeError:
         return "facts_json is not valid JSON."
-    kinds = {e.id: e.type for pb in active_playbooks() for e in pb.spec.elements if "user" in e.source}
+    kinds = {e.id: e for pb in active_playbooks() for e in pb.spec.elements if "user" in e.source}
     said_by_tenant = " ".join(record.tenant_words())
     taken, refused = [], []
     for fact_id, p in proposals.items():
@@ -104,7 +104,7 @@ def propose_facts(facts_json: str) -> str:
         if p.get("value") is None:
             refused.append(f"{fact_id}: no value given")
             continue
-        value, expected = parse_answer(kinds[fact_id], shown(p["value"]))
+        value, expected = parse_answer(kinds[fact_id].type, shown(p["value"]), kinds[fact_id].choices)
         if expected:
             refused.append(f"{fact_id}: value must be {expected}")
         elif p.get("how") not in ("stated", "inferred"):

@@ -87,32 +87,11 @@
     "What is the problem that needs repair": [
       "the roof leaks into my bedroom when it rains"
     ],
-    "roof, windows, doors, floors": [
-      "yes"
-    ],
     "problem start": [
       "9/5/2026"
     ],
     "single-family house or a duplex": [
       "yes"
-    ],
-    "caused by you": [
-      "no"
-    ],
-    "delivered a written notice to the landlord": [
-      "yes"
-    ],
-    "written notice delivered to the landlord": [
-      "9/12/2026"
-    ],
-    "How did you deliver the written notice": [
-      "e-mail to the landlord"
-    ],
-    "intend to end the lease": [
-      "no"
-    ],
-    "intend not to pay rent": [
-      "no"
     ],
     "paid rent since you knew": [
       "yes"
@@ -125,6 +104,30 @@
     ],
     "last day of the current monthly rent period": [
       "10/31/2026"
+    ],
+    "Which of these is the problem with": [
+      "the roof"
+    ],
+    "Who or what caused the problem": [
+      "nothing anyone did (age, wear, weather)"
+    ],
+    "anything in writing about the problem": [
+      "yes"
+    ],
+    "How did that written message reach the landlord": [
+      "e-mail"
+    ],
+    "What date did that message reach the landlord": [
+      "9/12/2026"
+    ],
+    "Does that message say anything about ending": [
+      "no"
+    ],
+    "say anything about not paying rent": [
+      "no"
+    ],
+    "Copy the sentences of that message": [
+      "Please fix the roof. It leaks into my bedroom when it rains."
     ]
   },
   "chat": [

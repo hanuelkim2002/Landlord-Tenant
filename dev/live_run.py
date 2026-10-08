@@ -22,7 +22,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent            # the project folder
-QUESTION = re.compile(r"([A-Z][^\n>]*?\((?:YYYY-MM-DD|yes/no|amount|words)\))")
+QUESTION = re.compile(r"([A-Z][^\n>]*?\((?:YYYY-MM-DD|yes/no|amount|words|number or words)\))")
 
 
 def wait_for_prompt(log, after, process, seconds=600):

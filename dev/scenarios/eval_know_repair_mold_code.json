@@ -1,5 +1,5 @@
 {
-  "about": "repair_not_made. The state: a local code. Mold on a bedroom wall of a single-family house since 2026-09-08, reported by e-mail 2026-09-10; the landlord says it is the tenant's job; the tenant says the lease does not promise that repair, and the problem is not the structure or the plumbing. Whether the landlord had a duty to fix it then turns on a building, housing, or health code the tool does not hold: the answer must say so and point to the code enforcement office, with what ending the lease would be either way. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "about": "repair_not_made. The state: a local code. Mold on a bedroom wall of a single-family house since 2026-09-08, reported by e-mail 2026-09-10; the landlord says it is the tenant's job; the problem is mold, not the structure or the plumbing, and whether the lease promises the repair is the tenant's to check against its clause (since 2026-10-08 the sheet no longer asks it). Whether the landlord had a duty to fix it then turns on a building, housing, or health code the tool does not hold: the answer must say so and point to the code enforcement office, with what ending the lease would be either way. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
   "start": [
     "new",
     "t-test",
@@ -61,35 +61,11 @@
     "What is the problem that needs repair": [
       "black mold growing on the bedroom wall"
     ],
-    "roof, windows, doors, floors": [
-      "no"
-    ],
-    "must repair this kind of problem": [
-      "no"
-    ],
     "problem start": [
       "9/8/2026"
     ],
     "single-family house or a duplex": [
       "yes"
-    ],
-    "caused by you": [
-      "no"
-    ],
-    "delivered a written notice to the landlord": [
-      "yes"
-    ],
-    "written notice delivered to the landlord": [
-      "9/10/2026"
-    ],
-    "How did you deliver the written notice": [
-      "email to the property manager"
-    ],
-    "intend to end the lease": [
-      "no"
-    ],
-    "intend not to pay rent": [
-      "no"
     ],
     "paid rent since you knew": [
       "yes"
@@ -99,6 +75,30 @@
     ],
     "filed an eviction case": [
       "no"
+    ],
+    "Which of these is the problem with": [
+      "mold"
+    ],
+    "Who or what caused the problem": [
+      "nothing anyone did (age, wear, weather)"
+    ],
+    "anything in writing about the problem": [
+      "yes"
+    ],
+    "How did that written message reach the landlord": [
+      "e-mail"
+    ],
+    "What date did that message reach the landlord": [
+      "9/10/2026"
+    ],
+    "Does that message say anything about ending": [
+      "no"
+    ],
+    "say anything about not paying rent": [
+      "no"
+    ],
+    "Copy the sentences of that message": [
+      "Black mold is growing on my bedroom wall. Please fix it."
     ]
   },
   "chat": [

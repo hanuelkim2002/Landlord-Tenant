@@ -14,7 +14,7 @@ import yaml
 
 import record
 from corpus import statute
-from deterministic import check_options, matter_deadlines
+from deterministic import NOT_APPLY, check_options, matter_deadlines
 from lease import LABELS, lease_lines
 from record import active_playbooks, element_status, read_events
 from tools import offered_topics, open_facts_by_issue
@@ -49,7 +49,7 @@ Not: "Your lease does not say the landlord repairs the AC, so you cannot end the
 Not: "Because you moved out early without the 7-day notice, the landlord did not have to send a claim notice." while the lease's own term on notice before moving out is the tenant's to check (a deposit)
 Not: "Your notice adds a late fee, so it is defective and the case would be dismissed." while the notice's form is the tenant's to check and how far it may differ is not settled (a 3-day notice)
 Not: "Your county's housing code requires a working AC." (a code the tool does not hold)
-Instead: "That turns on whether your lease promises this repair, which the sheet asks you. If it does, ending the lease turns next on whether paying rent waived it, which the statute does not settle; if it does not, on a local housing code, which the city or county code enforcement office can tell you about."
+Instead: "That turns on whether your lease promises this repair, which you can check in its clause on repairs (Lease Section 7.2). If it does, ending the lease turns next on whether paying rent waived it, which the statute does not settle; if it does not, on a local housing code, which the city or county code enforcement office can tell you about."
 Instead: "Whether the landlord still had to send that notice turns on your lease's own term on notice before moving out (Lease Section 4.3), which you can check against what you did. If you followed it, getting the whole deposit back turns on the other conditions; if not, the landlord was relieved of the notice (Fla. Stat. 83.49(5))."
 Not: "No written claim notice received: claim_notice_received false (user)" or "(YOUR FACTS shows eviction_action_filed: true)" (ids, and part names as this prompt writes them)
 Instead: "Since you got no written notice from the landlord, ..." and "The program's deadlines show the 30-day deadline has passed."
@@ -58,7 +58,7 @@ Instead: a fact YOUR FACTS does not show as known is not known yet: name it and 
 Not: "You should withhold rent." or "Your best option is to sue."
 Instead: lay out the options and what each requires; the tenant chooses.
 Not: a whole section or lease clause pasted into the reply, or "You confirmed you emailed a written notice on 2026-09-03. You confirmed the notice did not state that you intend to end the lease. You confirmed you have paid rent since you knew about the problem." (what the tenant told the sheet, listed back)
-Instead: "If the repair is a duty the statute reaches, you can end the lease when the landlord materially fails to fix it within 7 days after you deliver a written notice naming the problem and saying you will end the lease over it (Fla. Stat. 83.56(1)). Your notice did not say that." The program prints the words of 83.56(1) under the reply.
+Instead: "If the repair is a duty the statute reaches, you can end the lease when the landlord materially fails to fix it within 7 days after you deliver a written notice naming the problem and saying you will end the lease over it (Fla. Stat. 83.56(1)). Your message says you may have to move out; whether that says you will end the lease over it is yours to check against those words." The program prints the words of 83.56(1) under the reply.
 Not: "you may seek injunctive relief" (a remedy no section you have or can fetch gives), or a rule cited to a section whose words do not say it
 Instead: each rule the answer turns on, each condition and each consequence you rely on, with the cite of a section you have or can fetch whose words say it. A rule you cannot cite stays out of the answer.
 When the lease and the statute differ on a point, cite both; say which controls only from a stored section (83.47 on lease terms that waive a right in part II).
@@ -249,7 +249,7 @@ def deadline_status():
             continue
         start = d["from"].split()[0]                       # the trigger; its date stays out
         lines.append(f"- {words(d['clock'])} [{issues}]: the {d['actor']}'s, {d['rule']} {words(start)}, Fla. Stat. "
-                     f"{d['cite']}: {d['status']}")
+                     f"{d['cite']}: {d['status']}" + (f" (counts only if {d['condition']})" if "condition" in d else ""))
     lines += [f"- waiting [{words(issue)}]: no deadline until these are confirmed: {', '.join(words(i) for i in ids)}"
               for issue, ids in waiting.items()]
     return "\n".join(lines) or "none: no active issue has a deadline this tool computes"
@@ -282,16 +282,17 @@ def options_status():
         for o in check_options(pb, facts, date.today(), record.profile):
             lines.append(f"- {o['label']} (Fla. Stat. {o['cite']}): {o['status'].upper()}")
             for g in o["gates"]:
-                several = len(g["ways"]) > 1 and g["state"] != "met"
+                ways = [w for w in g["ways"] if w.get("why") != NOT_APPLY] or g["ways"]    # a way for another case: out
+                several = len(ways) > 1 and g["state"] != "met"
                 lines.append(f"    condition: {g['says']} ({g['cite']}): "
                              + (f"{g['status']}, met through any of these:" if several else state_words(g)))
                 if several:
-                    lines += [f"      - {w['says']} ({w['cite']}): {state_words(w)}" for w in g["ways"]]
+                    lines += [f"      - {w['says']} ({w['cite']}): {state_words(w)}" for w in ways]
                 if g["state"] not in ("met", "not met") and g["if_met"] != "closed":   # else another closes it
                     lines.append(f"      if this condition is met, the option is {g['if_met']}; if it is not, the "
                                  "option is closed")
             for s in o["steps"]:
-                lines.append(f"    step: {s['says']} ({s['cite']}): {s['status']}")
+                lines.append(f"    step: {s['says']} ({s['cite']}): {s['status']}" + (f": {s['why']}" if "why" in s else ""))
             for q in o["also_open"]:
                 lines.append(f"    also, from what the statute does not settle: {first_sentence.get(q, '')}")
     return "\n".join(lines) or "none: no active issue lists its options yet"

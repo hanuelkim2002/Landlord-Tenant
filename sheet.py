@@ -13,7 +13,7 @@ shown with the tenant's own words and accepted with Enter. "?" skips a fact for 
 from datetime import datetime
 
 import record
-from config import shorten
+from config import shorten, squash
 from corpus import fact_lease, playbooks
 from lease import LABELS, clauses_about, lease_cite
 from record import confirm_fact, confirm_issue, element_status, read_events, reject_issue, save
@@ -23,8 +23,8 @@ from record import confirm_fact, confirm_issue, element_status, read_events, rej
 
 def pending_rows():
     """What needs the tenant: first every suggested issue (a yes/no row, kind "issue"), then the facts of the
-    active issues in playbook order (kind "fact"). Each row: kind, issue, id, type, question, status,
-    suggested (a value or None), basis (the tenant's words behind the suggestion, or why an issue was
+    active issues in playbook order (kind "fact"). Each row: kind, issue, id, type, choices (a choice fact's
+    answers), question, status, suggested (a value or None), basis (the tenant's words behind the suggestion, or why an issue was
     suggested), confirmed (for changed), lease_says (the lease's words, when the lease field named in the
     playbook differs from the suggestion), lease_clause (the lease clause the question is about, corpus.fact_lease,
     or None; TODO item 81)."""
@@ -35,13 +35,14 @@ def pending_rows():
     seen = set()
     for issue, statuses in element_status().items():
         pb = playbooks[issue]
-        types = {e.id: e.type for e in pb.spec.elements}
+        elements = {e.id: e for e in pb.spec.elements}
         for s in statuses:
             if s["status"] not in ("changed", "proposed", "missing") or s["id"] in seen:
                 continue
             seen.add(s["id"])                          # a fact two issues share is asked once
             rows.append({
-                "kind": "fact", "issue": issue, "id": s["id"], "type": types[s["id"]],
+                "kind": "fact", "issue": issue, "id": s["id"], "type": elements[s["id"]].type,
+                "choices": elements[s["id"]].choices,
                 "question": pb.guidance["questions"][s["id"]], "status": s["status"],
                 "suggested": s.get("new_value") if s["status"] == "changed" else s.get("value"),
                 "basis": s.get("basis"),
@@ -54,10 +55,16 @@ def pending_rows():
 
 # ---- Checking an answer against the element's type.
 
-def parse_answer(kind, text):
+def parse_answer(kind, text, choices=None):
     """Turn what the tenant typed into a value of the element's type. Returns (value, None) if it fits,
-    or (None, a short message saying what is expected) if it does not."""
+    or (None, a short message saying what is expected) if it does not. A choice is answered by its number in the
+    list or by its words (spacing and capitals aside), and saved as its words."""
     text = text.strip()
+    if kind == "choice":
+        if text.isdigit() and 1 <= int(text) <= len(choices):
+            return choices[int(text) - 1], None
+        named = [c for c in choices if squash(c) == squash(text)]
+        return (named[0], None) if named else (None, "a number from the list, or its words")
     if kind == "date":
         for fmt in ("%Y-%m-%d", "%m/%d/%Y"):           # 2026-07-31 or 7/31/2026
             try:
@@ -94,14 +101,15 @@ def shown(value):
 # ---- Asking: one row at a time. The list is rebuilt after each answer, so a fact that only applies once
 # another is confirmed (applies_if) appears as soon as it does.
 
-HINT = {"date": "YYYY-MM-DD", "bool": "yes/no", "money": "amount", "text": "words"}
+HINT = {"date": "YYYY-MM-DD", "bool": "yes/no", "money": "amount", "text": "words", "choice": "number or words"}
 
 
 def suggestion(r):
-    """A row's suggested value, offered only if it fits the type; a malformed one counts as no suggestion."""
+    """A row's suggested value, offered only if it fits the type (for a choice, one of its answers); a malformed one
+    counts as no suggestion."""
     if r["suggested"] is None:
         return None
-    return parse_answer(r["type"], shown(r["suggested"]))[0]
+    return parse_answer(r["type"], shown(r["suggested"]), r.get("choices"))[0]
 
 
 def clause_note(field):
@@ -139,7 +147,7 @@ def value_of(r, answer):
     answer parsed by the row's type. Returns (value, None), or (None, what is expected) if it does not fit."""
     if answer == "" and suggestion(r) is not None:
         return suggestion(r), None
-    return parse_answer(r["type"], answer)
+    return parse_answer(r["type"], answer, r.get("choices"))
 
 
 def save_answer(r, answer, value):
@@ -178,6 +186,8 @@ def run_sheet(ask=input):
             print(f"[{r['issue']}]")
             last_issue = r["issue"]
         print(f"  {r['question']} ({HINT[r['type']]})")
+        for number, words in enumerate(r.get("choices") or [], 1):     # a choice's answers, to pick by number
+            print(f"    {number}. {words}")
         for line in row_notes(r):
             print("    " + line)
 

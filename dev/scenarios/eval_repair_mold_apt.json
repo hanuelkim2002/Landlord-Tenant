@@ -57,31 +57,10 @@
     "What is the problem that needs repair": [
       "black mold on the bathroom ceiling and the AC leaks water on the floor"
     ],
-    "roof, windows, doors, floors": [
-      "no"
-    ],
     "problem start": [
       "8/20/2026"
     ],
     "single-family house or a duplex": [
-      "no"
-    ],
-    "caused by you": [
-      "no"
-    ],
-    "delivered a written notice to the landlord": [
-      "yes"
-    ],
-    "written notice delivered to the landlord": [
-      "8/22/2026"
-    ],
-    "How did you deliver the written notice": [
-      "the online resident portal"
-    ],
-    "intend to end the lease": [
-      "no"
-    ],
-    "intend not to pay rent": [
       "no"
     ],
     "paid rent since you knew": [
@@ -92,6 +71,30 @@
     ],
     "filed an eviction case": [
       "no"
+    ],
+    "Which of these is the problem with": [
+      "mold"
+    ],
+    "Who or what caused the problem": [
+      "nothing anyone did (age, wear, weather)"
+    ],
+    "anything in writing about the problem": [
+      "yes"
+    ],
+    "How did that written message reach the landlord": [
+      "a resident portal request or message"
+    ],
+    "What date did that message reach the landlord": [
+      "8/22/2026"
+    ],
+    "Does that message say anything about ending": [
+      "no"
+    ],
+    "say anything about not paying rent": [
+      "no"
+    ],
+    "Copy the sentences of that message": [
+      "There is black mold on the bathroom ceiling and the AC leaks water onto the floor. Please fix it."
     ]
   },
   "chat": [

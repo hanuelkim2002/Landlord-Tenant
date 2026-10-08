@@ -56,6 +56,8 @@ def render_deadlines(result):
             lines.append(f"              counting: {d['counting']}")
             if "shown_with" in d:                          # a confirmed date shown beside the computed one
                 lines.append(f"              beside it, from your record: {label(d['shown_with'])}")
+            if "condition" in d:                           # what it counts only if, which the tool does not decide
+                lines.append(f"              counts only if {d['condition']}")
     for issue, fact_ids in waiting.items():
         lines.append(f"  waiting [{issue}]: {', '.join(label(f) for f in fact_ids)}")
     return "\n".join(lines)
@@ -81,7 +83,7 @@ def render_timeline(issue=None, full=False):
     for d in matter_deadlines(active_playbooks(), facts, date.today()):   # a shared deadline once, both issues
         if "deadline" in d and (not issue or issue in d["issues"]):
             rows.append((str(d["deadline"]), f"[{', '.join(d['issues'])}] {d['actor']} deadline: {label(d['clock'])}",
-                         f"computed, {d['cite']}, {d['status']}", ""))
+                         f"computed, {d['cite']}, {d['status']}" + (", if it counts" if "condition" in d else ""), ""))
 
     for ev in events:
         if issue and ev.get("issue") not in (None, issue):

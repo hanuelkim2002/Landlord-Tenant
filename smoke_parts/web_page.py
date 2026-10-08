@@ -86,3 +86,27 @@ try:
 finally:
     remove_scratch("t-smoke-app")
 check("the page's scratch matter is removed", not (MATTERS / "t-smoke-app").exists())
+
+# a choice on the page's sheet (TODO items 90 to 92): its answers in a list to pick from, saved as the words picked
+make_scratch("t-smoke-app-choice", issues=["repair_not_made"], proposed={},
+             facts={"problem_description": "no hot water", "problem_started": "2026-09-28", "single_family_or_duplex": False,
+                    "caused_by": "nothing anyone did (age, wear, weather)", "wrote_to_landlord": False,
+                    "rent_paid_since_known": True, "landlord_response": "nothing", "eviction_action_filed": False})
+try:
+    page = AppTest.from_file(str(Path(__file__).resolve().parent.parent / "app.py"), default_timeout=60)
+    page.run()
+    listed = page.sidebar.selectbox[0]
+    listed.select_index(listed.options.index("t-smoke-app-choice / m-001")).run()
+    next(b for b in page.sidebar.button if b.label == "Open").click().run()
+    page.session_state["agent"] = create_agent(StandIn(messages=iter([])), tools=model_tools, checkpointer=InMemorySaver())
+    next(b for b in page.button if b.label == "Continue").click().run()
+    picker = next(s for s in page.selectbox if s.label == "Your answer")
+    shown_answers = list(picker.options)
+    picker.set_value("hot water")
+    next(b for b in page.button if b.label == "Save").click().run()
+    check("the page asks a choice from a list of its answers and saves the one picked",
+          "hot water" in shown_answers and "the air conditioning" in shown_answers
+          and record.matter["facts"]["problem_is_with"] == "hot water" and page.session_state["stage"] == "chat")
+finally:
+    remove_scratch("t-smoke-app-choice")
+check("the page's choice scratch matter is removed", not (MATTERS / "t-smoke-app-choice").exists())

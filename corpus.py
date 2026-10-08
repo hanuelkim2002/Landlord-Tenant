@@ -23,12 +23,16 @@ statute = {p.stem: p.read_text() for p in STATUTES.glob("83.*.txt")}
 class Element(BaseModel):
     """One fact the tool needs before it can say anything about this issue.
     check_elements reads these to decide what is known and what to ask. compare_to names a lease field
-    (e.g. "lease_profile.term_end") to set next to the tenant's answer when the two differ."""
+    (e.g. "lease_profile.term_end") to set next to the tenant's answer when the two differ.
+    A choice fact (TODO items 86 and 90 to 92) lists its answers in plain words in choices: what the tenant saw or
+    did (how a message was sent, who caused a problem), never a term of the statute; the playbook's ways say what
+    each answer means for a condition."""
     id: str
-    type: Literal["date", "money", "bool", "text"]
+    type: Literal["date", "money", "bool", "text", "choice"]
     source: List[str]
     applies_if: Optional[str] = None
     compare_to: Optional[str] = None
+    choices: Optional[List[str]] = None
 
 
 class Clock(BaseModel):
@@ -36,7 +40,8 @@ class Clock(BaseModel):
     days, and the sentence it comes from. compute_deadlines reads these. count: calendar days (the default)
     or court business days, which skip Saturdays, Sundays, and the county's court holidays (calendars.py).
     shown_with names a date element printed next to the computed date once confirmed, such as the date the
-    notice itself states, so the tenant sees both."""
+    notice itself states, so the tenant sees both. condition: what the date counts only if, in words, printed with
+    it, when it counts from a paper whose sufficiency the tool does not decide (a notice the tenant sent)."""
     id: str
     actor: Literal["landlord", "tenant"]
     trigger: str
@@ -49,12 +54,14 @@ class Clock(BaseModel):
     applies_if: Optional[str] = None
     count: Literal["calendar_days", "court_business_days"] = "calendar_days"
     shown_with: Optional[str] = None
+    condition: Optional[str] = None
 
 
 class Condition(BaseModel):
-    """A confirmed fact and the value it must have, e.g. claim_notice_received equals true."""
+    """A confirmed fact and the value it must have, e.g. claim_notice_received equals true; for a choice fact, a
+    list of answers, any of which holds."""
     fact: str
-    equals: Union[bool, str, int, float]
+    equals: Union[bool, str, int, float, List[str]]
 
 
 class RelatedIssue(BaseModel):
@@ -76,18 +83,21 @@ class Way(BaseModel):
       document): what, and where. lease, if given, names the lease clause the check is about.
     - outside: law the tool does not hold, in plain words.
     - open_question alone: the stored text does not settle it (whether a violation could be cured); not settled.
-    applies_if, a yes/no fact, limits a way to when that fact is confirmed true (an objection already sent): confirmed
+    For a choice fact, equals may list several answers, any of which meets the way.
+    applies_if limits a way to when it holds: a yes/no fact confirmed true (an objection already sent), or, as
+    {fact, equals}, a choice fact confirmed with one of the answers listed (a message sent by e-mail). Confirmed
     otherwise, the way is not met; not confirmed, the tenant can tell the tool (TODO item 84).
     A fact or clock confirmed against the way: otherwise "closed" (the default; the way fails), "unsettled" (the
     stored text does not settle what follows: open_question names the open question), or "later" (not met yet:
     it may still happen, such as a case not filed yet or a period still running). when_otherwise says why, in plain
     words. says, cite, and quote, when given, are the way's own condition and the statute's words for it; a gate
-    with one way leaves them to the gate."""
+    with one way leaves them to the gate. beside, on a check, names a text fact whose words (the tenant's notice,
+    copied) are given with the check, to set beside the statute's."""
     says: Optional[str] = None
     cite: Optional[str] = None
     quote: Optional[str] = None
     fact: Optional[str] = None
-    equals: Optional[Union[bool, str, int, float]] = None
+    equals: Optional[Union[bool, str, int, float, List[str]]] = None
     clock: Optional[str] = None
     lease: Optional[str] = None
     check: Optional[str] = None
@@ -95,7 +105,8 @@ class Way(BaseModel):
     otherwise: Literal["closed", "unsettled", "later"] = "closed"
     when_otherwise: Optional[str] = None
     open_question: Optional[str] = None
-    applies_if: Optional[str] = None
+    applies_if: Optional[Union[str, Condition]] = None
+    beside: Optional[str] = None
 
 
 class Gate(BaseModel):
@@ -111,14 +122,17 @@ class Gate(BaseModel):
 
 
 class Step(BaseModel):
-    """A step toward an option the tenant takes or waits for: done when its fact is confirmed with the value in
-    equals, or when its clock's date has passed; waiting while the clock's date is upcoming; to do otherwise."""
+    """A step toward an option the tenant takes or waits for, decided by one of: a fact (done when confirmed with the
+    value in equals), a clock (done when its date has passed, waiting while upcoming), or ways, as a gate's condition
+    is (TODO items 86 and 90 to 92): done through a way met, the tenant can check through a check (whether a notice's
+    words state the intention the statute names), not settled through an open question; to do otherwise."""
     says: str
     cite: str
     quote: str
     fact: Optional[str] = None
     equals: Optional[Union[bool, str, int, float]] = None
     clock: Optional[str] = None
+    ways: List[Way] = []
 
 
 class Option(BaseModel):
@@ -161,12 +175,23 @@ class Playbook(BaseModel):
 
 # ---- Load and Check Playbook
 
+def answers_problem(element, equals):
+    """What is wrong with the answers a way or an applies_if names for a fact, or None: a list only for a choice fact,
+    and every answer named one the choice lists."""
+    named = equals if isinstance(equals, list) else [equals]
+    if element.type != "choice":
+        return None if not isinstance(equals, list) else f"lists answers for a fact that is not a choice ({element.id})"
+    unknown = [a for a in named if a not in element.choices]
+    return f"names an answer {element.id} does not list ({unknown[0]})" if unknown else None
+
+
 def way_problem(w, facts, clocks, questions):
-    """What is wrong with a gate's way, in words, or None: it must be decided by exactly one of a fact, a clock, a
-    check, or law outside the tool, or else by an open question alone; a fact needs equals; a clock's equals is
-    "passed" or "upcoming"; a fact or clock needs when_otherwise, and an open question exactly when otherwise is
-    "unsettled"; a check or outside way names none; applies_if is a yes/no fact; and every fact, clock, open question,
-    and lease clause named must exist. facts: the playbook's element ids with their types."""
+    """What is wrong with a gate's or a step's way, in words, or None: it must be decided by exactly one of a fact, a
+    clock, a check, or law outside the tool, or else by an open question alone; a fact needs equals, an answer its
+    choice lists (answers_problem); a clock's equals is "passed" or "upcoming"; a fact or clock needs when_otherwise,
+    and an open question exactly when otherwise is "unsettled"; a check or outside way names none; applies_if is a
+    yes/no fact, or a choice fact with answers it lists; beside, only on a check, a text fact; and every fact, clock,
+    open question, and lease clause named must exist. facts: the playbook's elements by id."""
     deciders = sum(d is not None for d in [w.fact, w.clock, w.check, w.outside])
     if deciders > 1 or (deciders == 0 and not w.open_question):
         return "needs exactly one of fact, clock, check, or outside, or an open question alone"
@@ -174,6 +199,8 @@ def way_problem(w, facts, clocks, questions):
         return f"names an open question the playbook lacks ({w.open_question})"
     if w.fact is not None and (w.fact not in facts or w.equals is None):
         return f"names a fact the playbook lacks, or no equals ({w.fact})"
+    if w.fact is not None and answers_problem(facts[w.fact], w.equals):
+        return answers_problem(facts[w.fact], w.equals)
     if w.clock is not None and (w.clock not in clocks or w.equals not in (None, "passed", "upcoming")):
         return f"names a clock the playbook lacks, or an equals other than passed or upcoming ({w.clock})"
     if (w.fact or w.clock) and not w.when_otherwise:
@@ -182,8 +209,15 @@ def way_problem(w, facts, clocks, questions):
         return "needs an open question exactly when otherwise is unsettled"
     if (w.check or w.outside) and w.open_question:
         return "is a check or outside way, which names no open question"
-    if w.applies_if is not None and facts.get(w.applies_if) != "bool":
+    if isinstance(w.applies_if, str) and (w.applies_if not in facts or facts[w.applies_if].type != "bool"):
         return f"applies_if names no yes/no fact of the playbook ({w.applies_if})"
+    if isinstance(w.applies_if, Condition):
+        if w.applies_if.fact not in facts or facts[w.applies_if.fact].type != "choice":
+            return f"applies_if names no choice fact of the playbook ({w.applies_if.fact})"
+        if answers_problem(facts[w.applies_if.fact], w.applies_if.equals):
+            return "applies_if " + answers_problem(facts[w.applies_if.fact], w.applies_if.equals)
+    if w.beside is not None and (not w.check or w.beside not in facts or facts[w.beside].type != "text"):
+        return f"beside names no text fact of the playbook, or is not on a check ({w.beside})"
     if w.lease is not None and w.lease not in LeaseProfile.model_fields:
         return f"names a lease clause that is not a lease profile field ({w.lease})"
     return None
@@ -199,6 +233,8 @@ def load_playbook(path):
     for e in pb.spec.elements:
         if e.compare_to and e.compare_to.replace("lease_profile.", "") not in LeaseProfile.model_fields:
             raise ValueError(f"element {e.id}: compare_to {e.compare_to} is not a lease profile field")
+        if (e.type == "choice") != bool(e.choices) or (e.choices and len(set(e.choices)) != len(e.choices)):
+            raise ValueError(f"element {e.id}: a choice needs its answers, each once, and only a choice has them")
     date_ids = [e.id for e in pb.spec.elements if e.type == "date"]
     for c in pb.spec.clocks:
         if c.trigger not in date_ids:
@@ -207,7 +243,7 @@ def load_playbook(path):
             raise ValueError(f"clock {c.id}: shown_with {c.shown_with} is not a date element")
         if c.count == "court_business_days" and "premises_county" not in [e.id for e in pb.spec.elements]:
             raise ValueError(f"clock {c.id}: court business days need a premises_county element")
-    facts = {e.id: e.type for e in pb.spec.elements}
+    facts = {e.id: e for e in pb.spec.elements}
     clocks = {c.id for c in pb.spec.clocks}
     questions = {q.get("id") for q in pb.spec.open_questions if isinstance(q, dict)}
     for o in pb.spec.options:                                # every gate and step names a fact or clock it has
@@ -219,11 +255,21 @@ def load_playbook(path):
                 if problem:
                     raise ValueError(f"option {o.id}: a way of the gate '{g.says[:40]}' {problem}")
         for s in o.steps:
-            if (s.fact is None) == (s.clock is None) or (s.fact and s.fact not in facts) or (s.clock and s.clock not in clocks):
-                raise ValueError(f"option {o.id}: a step needs one fact or one clock of the playbook")
+            if sum([s.fact is not None, s.clock is not None, bool(s.ways)]) != 1 or (s.fact and s.fact not in facts) \
+                    or (s.clock and s.clock not in clocks):
+                raise ValueError(f"option {o.id}: a step needs one fact, one clock, or ways, of the playbook")
+            for w in s.ways:
+                problem = way_problem(w, facts, clocks, questions)
+                if problem:
+                    raise ValueError(f"option {o.id}: a way of the step '{s.says[:40]}' {problem}")
         if not set(o.also_open) <= questions:
             raise ValueError(f"option {o.id}: also_open names an open question the playbook lacks")
     return pb
+
+
+def option_ways(o):
+    """Every way of an option: its gates' and its steps'."""
+    return [w for g in o.gates for w in g.ways] + [w for s in o.steps for w in s.ways]
 
 
 def report(name, ok):
@@ -269,13 +315,14 @@ def check_playbook(playbook, statute, ids=None):
         if item.get("quote"):
             quotes.append((item["cite"], item["cite"], item["quote"]))
     for o in playbook.spec.options:                          # each gate, way, and step quotes the section it rests on
-        for part in o.gates + o.steps + [w for g in o.gates for w in g.ways if w.quote]:
+        for part in o.gates + o.steps + [w for w in option_ways(o) if w.quote]:
             quotes.append((f"option {o.id}: {(part.says or '')[:40]}", part.cite, part.quote))
     for name, cite, quote in quotes:
         section = cite.split("(")[0]                    # "83.49(3)(a)" -> "83.49"
         fails += report(f"{name} {cite}", squash(quote) in squash(statute[section]))
 
-    for text in prose_strings([playbook.guidance, playbook.spec.open_questions]):
+    conditions = [c.condition for c in playbook.spec.clocks if c.condition]
+    for text in prose_strings([playbook.guidance, playbook.spec.open_questions, conditions]):
         for quoted in re.findall(r'"([^"]*)"', text):
             if len(quoted) >= 20:                        # shorter ones are words in quotes, not statute text
                 fails += report(f'prose quote "{quoted[:50]}..."',
@@ -291,11 +338,11 @@ def check_playbook(playbook, statute, ids=None):
     for c in playbook.spec.clocks:
         fails += report(f"clock {c.id}: {c.cite} is among the playbook's sections", c.cite.split("(")[0] in playbook.sections)
     for o in playbook.spec.options:
-        cites = [o.cite] + [part.cite for part in o.gates + o.steps] + [w.cite for g in o.gates for w in g.ways if w.cite]
+        cites = [o.cite] + [part.cite for part in o.gates + o.steps] + [w.cite for w in option_ways(o) if w.cite]
         fails += report(f"option {o.id}: every cite is among the playbook's sections",
                         all(c.split("(")[0] in playbook.sections for c in cites))
         fails += report(f"option {o.id}: a way with its own quote has its own cite and says",
-                        all(w.cite and w.says for g in o.gates for w in g.ways if w.quote))
+                        all(w.cite and w.says for w in option_ways(o) if w.quote))
     # Open questions (rule 5): each says what applies and what stays open; an open point carries two or more
     # readings, which the model gives side by side instead of settling it.
     fails += report("open questions: each has an id, sections in statutes/, and text; readings, if any, two or more",
@@ -310,7 +357,7 @@ def check_playbook(playbook, statute, ids=None):
     texts = list(prose_strings(playbook.guidance)) + [q.get("text", "") for q in playbook.spec.open_questions] \
         + [r for q in playbook.spec.open_questions for r in q.get("readings", [])] \
         + [x for o in playbook.spec.options for x in [o.label] + [p.says for p in o.gates + o.steps]
-           + [t for g in o.gates for w in g.ways for t in (w.says, w.when_otherwise, w.check, w.outside) if t]]
+           + [t for w in option_ways(o) for t in (w.says, w.when_otherwise, w.check, w.outside) if t]] + conditions
     named = sorted({w for t in texts for w in re.findall(r"\b[a-z]+(?:_[a-z]+)+\b", t) if w in ids})
     fails += report("no fact, clock, or open question id in the model's prose" + (f": {named}" if named else ""), not named)
     postures = playbook.guidance.get("postures", {})
@@ -330,11 +377,11 @@ def check_all_playbooks():
         fails += check_playbook(pb, statute, ids)
     print("--- facts shared across playbooks")
     for fact_id in sorted({e.id for pb in playbooks.values() for e in pb.spec.elements}):
-        uses = [(pb.issue, e.type, pb.guidance["questions"].get(fact_id)) for pb in playbooks.values()
-                for e in pb.spec.elements if e.id == fact_id]
+        uses = [(pb.issue, e.type, pb.guidance["questions"].get(fact_id), tuple(e.choices or ()))
+                for pb in playbooks.values() for e in pb.spec.elements if e.id == fact_id]
         if len(uses) > 1:
-            fails += report(f"{fact_id}: same type and question in {[u[0] for u in uses]}",
-                            len({u[1] for u in uses}) == 1 and len({u[2] for u in uses}) == 1)
+            fails += report(f"{fact_id}: same type, question, and answers in {[u[0] for u in uses]}",
+                            all(len({u[k] for u in uses}) == 1 for k in (1, 2, 3)))
     print(len(playbooks), "playbooks loaded:", list(playbooks))
     return fails
 
@@ -357,7 +404,7 @@ for pb in playbooks.values():
 # The lease clause a fact's question is about, from a gate's way that the fact decides and that names one (TODO item
 # 81): the sheet shows the clause, as the tool read it, beside the question (whether the lease promises the repair,
 # beside the lease's repairs clause), or says the tool has not read it.
-fact_lease = {w.fact: w.lease for pb in playbooks.values() for o in pb.spec.options for g in o.gates for w in g.ways
+fact_lease = {w.fact: w.lease for pb in playbooks.values() for o in pb.spec.options for w in option_ways(o)
               if w.fact and w.lease}
 
 

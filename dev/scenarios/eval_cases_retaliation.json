@@ -84,19 +84,10 @@
     "What is the problem that needs repair": [
       "broken smoke detectors and mold"
     ],
-    "roof, windows, doors, floors": [
-      "no"
-    ],
     "problem start": [
       "9/1/2026"
     ],
     "single-family house or a duplex": [
-      "no"
-    ],
-    "caused by you": [
-      "no"
-    ],
-    "delivered a written notice to the landlord": [
       "no"
     ],
     "paid rent since you knew": [
@@ -104,6 +95,15 @@
     ],
     "What has the landlord said or done": [
       "nothing"
+    ],
+    "Which of these is the problem with": [
+      "something else"
+    ],
+    "Who or what caused the problem": [
+      "nothing anyone did (age, wear, weather)"
+    ],
+    "anything in writing about the problem": [
+      "no"
     ]
   },
   "chat": [

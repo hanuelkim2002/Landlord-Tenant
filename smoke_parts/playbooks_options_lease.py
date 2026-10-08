@@ -21,8 +21,9 @@ from sheet import STOP_LINE, pending_rows, row_notes, run_sheet, stop_text
 from prompt import RULES as RULES_TEXT
 from prompt import LETTER_RULE, PARTS, options_status, system_prompt, unknowns_status
 from replies import cited_clause, cited_words
-from tools import deadline_listing, draft_letter
+from tools import build_letter, deadline_listing, draft_letter, pretty, propose_facts
 from tools import tools as model_tools
+from smoke_parts.common import scripted
 
 # ---- Every playbook through the real code path, on a scratch matter: the sheet asks every question (a "yes"
 # to every yes/no, so every applies_if question comes up), every clock gets a date, and a letter carries the
@@ -34,7 +35,8 @@ def answer_by_type(shown_so_far):
                 not line.startswith("    ")][-1]
         if "What county" in last:
             return "Alachua"                             # a county with a stored court holiday calendar
-        for hint, answer in (("(YYYY-MM-DD)", "2026-10-31"), ("(yes/no)", "yes"), ("(amount)", "1200"), ("(words)", "a test answer")):
+        for hint, answer in (("(YYYY-MM-DD)", "2026-10-31"), ("(yes/no)", "yes"), ("(amount)", "1200"), ("(words)", "a test answer"),
+                             ("(number or words)", "1")):
             if last.endswith(hint):
                 return answer
         return "?"
@@ -84,11 +86,13 @@ check("item 77: YOUR LEASE names each clause in words with its cite, and no fiel
 # code, a document), not settled (an open question), or outside the tool. Proved on three playbooks.
 repair = playbooks["repair_not_made"]
 today = date.today()
-ac = {"problem_is_structure_or_plumbing": False, "single_family_or_duplex": False, "caused_by_tenant_side": False,
-      "rent_paid_since_known": True, "written_notice_delivered": True, "written_notice_date": str(today - timedelta(days=30)),
-      "notice_states_termination_intent": False, "notice_states_withholding_intent": False}
-roof = {**ac, "problem_is_structure_or_plumbing": True, "rent_paid_since_known": False,
-        "notice_states_termination_intent": True, "written_notice_date": str(today - timedelta(days=10))}
+ac = {"problem_is_with": "the air conditioning", "single_family_or_duplex": False,
+      "caused_by": "nothing anyone did (age, wear, weather)", "rent_paid_since_known": True, "wrote_to_landlord": True,
+      "message_sent_by": "e-mail", "message_date": str(today - timedelta(days=30)), "message_mentions_ending": False,
+      "message_mentions_rent": False, "message_words": "The AC is broken. Please fix it."}
+roof = {**ac, "problem_is_with": "the roof", "rent_paid_since_known": False, "message_sent_by": "certified mail",
+        "message_mentions_ending": True, "message_date": str(today - timedelta(days=10)),
+        "message_words": "Please fix the roof within 7 days or I will end my lease because of it."}
 read_profile = old_profile.model_copy(update={"maintenance_and_repairs": Clause(
     present=True, quote="7.2. Systems and Appliances. Landlord shall repair the heating, air -conditioning, electrical, and plumbing systems",
     page=4, section="ARTICLE 7")})
@@ -97,28 +101,27 @@ ac_unread, ac_read = by_id(repair, ac), by_id(repair, ac, read_profile)
 duty_unread, duty_read = ac_unread["end_the_lease"]["gates"][0], ac_read["end_the_lease"]["gates"][0]
 check("item 81: an AC, the lease's repairs clause not read: ending the lease is not known yet, the tenant can check the lease or a code",
       ac_unread["end_the_lease"]["status"] == "not known yet" and duty_unread["state"] == "check"
-      and [w["state"] for w in duty_unread["ways"]] == ["not met", "check", "check"]
-      and "has not read the part of the lease on maintenance and repairs" in duty_unread["ways"][1]["why"]
-      and "code enforcement office" in duty_unread["ways"][2]["why"]
+      and [w["state"] for w in duty_unread["ways"]] == ["not met", "not met", "not met", "check", "check"]
+      and "has not read the part of the lease on maintenance and repairs" in duty_unread["ways"][3]["why"]
+      and "code enforcement office" in duty_unread["ways"][4]["why"]
       and duty_unread["if_met"] == "not settled" and ac_unread["end_the_lease"]["gates"][3]["state"] == "not settled")
-check("item 81: the clause read: the sheet asks whether it promises the repair; once confirmed, the lease meets the duty (83.56(1))",
-      duty_read["state"] == "tell" and "Lease Article 7" in duty_read["ways"][1]["why"]
-      and by_id(repair, {**ac, "lease_promises_repair": True}, read_profile)["end_the_lease"]["gates"][0]["state"] == "met"
-      and by_id(repair, {**ac, "lease_promises_repair": True}, read_profile)["end_the_lease"]["status"] == "not settled")
-check("item 81: a lease that does not promise it leaves a code to check; withholding rent, which the lease does not reach, the same",
-      by_id(repair, {**ac, "lease_promises_repair": False}, read_profile)["end_the_lease"]["gates"][0]["state"] == "check"
-      and [w["state"] for w in ac_read["withhold_rent"]["gates"][0]["ways"]] == ["not met", "check"]
+check("items 81 and 86: the clause read: whether it promises this repair is the tenant's to check against it, never met on a sheet answer",
+      duty_read["state"] == "check" and duty_read["ways"][3]["state"] == "check"
+      and "Lease Article 7" in duty_read["ways"][3]["why"] and "an exception in it" in duty_read["ways"][3]["why"]
+      and "lease_promises_repair" not in [e.id for e in repair.spec.elements])
+check("item 81: withholding rent, which the lease does not reach, leaves a code to check",
+      [w["state"] for w in ac_read["withhold_rent"]["gates"][0]["ways"]] == ["not met", "not met", "not met", "check"]
       and ac_read["withhold_rent"]["gates"][0]["if_met"] == "open")
-roof_options, roof_soon = by_id(repair, roof), by_id(repair, {**roof, "written_notice_date": str(today - timedelta(days=2))})
-check("item 81: a roof leak with the notice given and the 7 days passed is open; with the 7 days still running, open and waiting",
+roof_options, roof_soon = by_id(repair, roof), by_id(repair, {**roof, "message_date": str(today - timedelta(days=2))})
+check("item 81: a roof leak is open; a notice by certified mail is delivered, its words the tenant's to check, so the 7 days are passed, not done",
       roof_options["end_the_lease"]["status"] == "open"
-      and [s["status"] for s in roof_options["end_the_lease"]["steps"]] == ["done", "done", "done"]
-      and [s["status"] for s in roof_soon["end_the_lease"]["steps"]] == ["done", "done", "waiting"]
+      and [s["status"] for s in roof_options["end_the_lease"]["steps"]] == ["done", "the tenant can check", "passed"]
+      and [s["status"] for s in roof_soon["end_the_lease"]["steps"]] == ["done", "the tenant can check", "waiting"]
       and roof_options["end_the_lease"]["also_open"] == ["material_noncompliance"])
 check("item 81: caused on the tenant's side closes both; a duplex leaves the lease to check; a fact not confirmed is the tenant's to tell",
-      {o["status"] for o in by_id(repair, {**roof, "caused_by_tenant_side": True}).values()} == {"closed"}
+      {o["status"] for o in by_id(repair, {**roof, "caused_by": "you"}).values()} == {"closed"}
       and by_id(repair, {**roof, "single_family_or_duplex": True})["end_the_lease"]["gates"][1]["state"] == "check"
-      and by_id(repair, {k: v for k, v in roof.items() if k != "caused_by_tenant_side"})["end_the_lease"]["gates"][2]["state"] == "tell")
+      and by_id(repair, {k: v for k, v in roof.items() if k != "caused_by"})["end_the_lease"]["gates"][2]["state"] == "tell")
 deposit = playbooks["deposit_not_returned"]
 ghosted = {"tenancy_terminated": str(today - timedelta(days=60)), "vacated": str(today - timedelta(days=60)),
            "claim_notice_received": False, "forwarding_address_given": True, "early_or_periodic": False}
@@ -147,7 +150,7 @@ check("item 81: a county with no court calendar is outside the tool; a case file
       and "no court holiday calendar for Orange County" in orange["pay_within_three_days"]["gates"][0]["why"]
       and orange["defend_in_court"]["status"] == "open" and orange["defend_in_court"]["steps"][0]["status"] == "to do")
 bad_way = (Path("playbooks") / "repair_not_made.yaml").read_text().replace(
-    "- fact: caused_by_tenant_side\n", "- fact: caused_by_tenant_side\n              check: the lease\n", 1)
+    "- fact: rent_paid_since_known\n", "- fact: rent_paid_since_known\n              check: the lease\n", 1)
 with tempfile.TemporaryDirectory() as tmp:
     (Path(tmp) / "bad.yaml").write_text(bad_way)
     try:
@@ -156,6 +159,97 @@ with tempfile.TemporaryDirectory() as tmp:
     except ValueError as e:
         refused = "exactly one of fact, clock, check, or outside" in str(e)
 check("item 81: a way decided by two things is refused when the playbook loads", refused)
+
+# the sheet asks what the tenant saw or did, never a legal call (TODO items 86 and 90 to 92, the student simulation of
+# 2026-10-06): the tenant picks what the problem is with, who caused it, and how a message went, and copies its words;
+# the playbook reads those answers against the statute, and what no answer settles is a check or an open question.
+# The stories: F (an e-mail saying "I'm going to have to move out"), A (a portal request), C (hot water), E (a roommate).
+from deterministic import compute_deadlines, matter_deadlines
+from timeline import render_deadlines
+story_f = {**ac, "message_date": str(today - timedelta(days=10)), "message_mentions_ending": True,
+           "message_words": "If this isn't fixed I'm going to have to move out."}
+f_end, f_keep = by_id(repair, story_f)["end_the_lease"], by_id(repair, story_f)["withhold_rent"]
+f_listing = render_deadlines(json.dumps({"deadlines": matter_deadlines([repair], story_f, today)}, default=str))
+check("items 90 to 92: an e-mail that mentions moving out is no done notice: its delivery and its words are the tenant's to check, the 7 days passed, not done",
+      [s["status"] for s in f_end["steps"]] == ["the tenant can check", "the tenant can check", "passed"]
+      and "83.505" in f_end["steps"][0]["why"]
+      and "your words, as you gave them: \"If this isn't fixed I'm going to have to move out.\"" in f_end["steps"][1]["why"]
+      and f_end["steps"][2]["why"] == "counts only if the steps above are done"
+      and f_keep["steps"][0]["status"] == "not settled" and f_keep["steps"][1]["status"] == "to do")
+check("items 90 to 92: the deadline from that e-mail is printed with what it counts only if",
+      "seven days after termination notice" in f_listing
+      and "counts only if your message was delivered in a way 83.56(4) allows and says you intend to end the lease" in f_listing)
+portal = {**ac, "message_sent_by": "a resident portal request or message"}
+check("items 90 to 92: a portal request that mentions neither ending the lease nor rent starts no 7-day period, and no notice step is done",
+      [s["status"] for s in by_id(repair, portal)["end_the_lease"]["steps"]] == ["to do", "to do", "to do"]
+      and compute_deadlines(repair, portal, today) == [])
+hot = by_id(repair, {**roof, "problem_is_with": "hot water"})
+pipes = by_id(repair, {**roof, "problem_is_with": "pipes, drains, toilets, or faucets"})
+check("item 91: hot water is not settled under 83.51(1)(b), for both options, so withholding is never open on it; a leaking pipe is the plumbing",
+      [w["state"] for w in hot["withhold_rent"]["gates"][0]["ways"]] == ["not met", "not settled", "not met", "check"]
+      and hot["withhold_rent"]["status"] != "open" and hot["end_the_lease"]["gates"][0]["ways"][1]["state"] == "not settled"
+      and pipes["withhold_rent"]["gates"][0]["state"] == "met")
+mate, unsure = by_id(repair, {**roof, "caused_by": "a roommate"}), by_id(repair, {**roof, "caused_by": "I don't know"})
+check("item 92: a roommate leaves the cause not settled under 83.51(4), closing neither option; not knowing who is the tenant's to check",
+      [o["gates"][2]["state"] for o in mate.values()] == ["not settled", "not settled"]
+      and "closed" not in {o["status"] for o in mate.values()}
+      and unsure["end_the_lease"]["gates"][2]["state"] == "check"
+      and "work order" in unsure["end_the_lease"]["gates"][2]["why"])
+neighbor = playbooks["neighbor_disturbance"]
+loud = {"source_rents_from_landlord": True, "complained_to_landlord": True, "complaint_in_writing": True,
+        "complaint_sent_by": "handed to the landlord or the office", "complaint_mentions_ending": True,
+        "complaint_words": "If the parties do not stop I will end my lease."}
+loud_steps = by_id(neighbor, loud)["end_the_lease"]["steps"]
+check("items 90 to 92: a neighbor complaint by hand is delivered, its words the tenant's to check; by the portal, to do; and it shares no fact with the repair notice",
+      [s["status"] for s in loud_steps] == ["done", "the tenant can check"]
+      and "I will end my lease" in loud_steps[1]["why"]
+      and by_id(neighbor, {**loud, "complaint_sent_by": "a resident portal request or message"})["end_the_lease"]["steps"][0]["status"] == "to do"
+      and {e.id for e in repair.spec.elements} & {e.id for e in neighbor.spec.elements} == {"landlord_response"})
+bad_answer = (Path("playbooks") / "repair_not_made.yaml").read_text().replace("equals: [running water, hot water]",
+                                                                               "equals: [running water, warm water]", 1)
+with tempfile.TemporaryDirectory() as tmp:
+    (Path(tmp) / "bad.yaml").write_text(bad_answer)
+    try:
+        load_playbook(Path(tmp) / "bad.yaml")
+        refused = False
+    except ValueError as e:
+        refused = "names an answer problem_is_with does not list (warm water)" in str(e)
+check("items 90 to 92: a way naming an answer its choice does not list is refused when the playbook loads", refused)
+from sheet import parse_answer
+answers = repair.spec.elements[1].choices
+check("items 90 to 92: a choice is answered by its number or its words, spacing and capitals aside; anything else is refused",
+      parse_answer("choice", "9", answers) == ("hot water", None) and parse_answer("choice", "  Hot   Water ", answers) == ("hot water", None)
+      and parse_answer("choice", "18", answers) == (None, "a number from the list, or its words")
+      and parse_answer("choice", "the water heater", answers)[0] is None)
+make_scratch("t-smoke-choice", issues=["repair_not_made"], proposed={},
+             facts={k: v for k, v in {**story_f, "problem_description": "the AC blows warm air", "problem_started": "2026-09-10",
+                                      "landlord_response": "nothing", "eviction_action_filed": False}.items() if k != "problem_is_with"})
+try:
+    load_matter("t-smoke-choice", "m-001")
+    shown_sheet = io.StringIO()
+    with contextlib.redirect_stdout(shown_sheet):
+        run_sheet(scripted(["99", "Hot  Water"]))
+    refused_answer = propose_facts.invoke({"facts_json": json.dumps({"caused_by": {"value": "my cat", "how": "stated", "said": "x"}})})
+    letter = build_letter("Repair the air conditioning", 7, "certified mail", [])
+    options_now = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
+    check("items 90 to 92: the sheet lists a choice's answers by number, asks again for one not listed, and saves the words",
+          "Which of these is the problem with? Pick the closest one. (number or words)" in shown_sheet.getvalue()
+          and "    9. hot water" in shown_sheet.getvalue() and "Please type a number from the list, or its words" in shown_sheet.getvalue()
+          and record.matter["facts"]["problem_is_with"] == "hot water")
+    check("items 90 to 92: propose_facts refuses an answer the choice does not list",
+          "caused_by: value must be a number from the list, or its words" in refused_answer)
+    check("items 90 to 92: the letter's date line says when the tenant wrote, not that it was a notice",
+          f"Message date: {pretty(story_f['message_date'])}" in letter and "notice date" not in letter.lower())
+    check("items 90 to 92: the prompt gives each step's check with the tenant's words, the 7 days as passed if they count, and leaves out a way for another case",
+          "    step: the notice names the problem and says the tenant intends to end the lease because of it (83.56(1)): the tenant can check: whether the words of your message" in options_now
+          and "If this isn't fixed I'm going to have to move out." in options_now
+          and "(83.56(1)): passed: counts only if the steps above are done" in options_now
+          and "the problem is running water or hot water" in options_now
+          and "the problem may be with the structure or the plumbing" not in options_now
+          and "(counts only if your message was delivered in a way 83.56(4) allows" in system_prompt())
+finally:
+    remove_scratch("t-smoke-choice")
+check("the choice scratch matter is removed", not (MATTERS / "t-smoke-choice").exists())
 make_scratch("t-smoke-options", issues=["repair_not_made"], facts=ac, proposed={})
 try:
     load_matter("t-smoke-options", "m-001")
@@ -168,12 +262,12 @@ try:
           and "    step: the notice names the problem and says the tenant intends to end the lease because of it (83.56(1)): to do" in options_part
           and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", options_part)
           and "- Open or not: asked what they can do" in system_prompt())
-    lease_row = next(r for r in pending_rows() if r["id"] == "lease_promises_repair")
+    lease_row = {"kind": "fact", "status": "missing", "suggested": None, "lease_says": None,
+                 "lease_clause": "maintenance_and_repairs"}             # a row whose question is about a lease clause
     unread_note = row_notes(lease_row)
     record.profile = read_profile
-    check("item 81: the sheet shows the lease clause the question is about, or says the tool has not read it",
-          lease_row["lease_clause"] == "maintenance_and_repairs"
-          and unread_note == ["the tool has not read the part of your lease on maintenance and repairs: check your lease itself"]
+    check("item 81: the sheet shows the lease clause a question is about, or says the tool has not read it",
+          unread_note == ["the tool has not read the part of your lease on maintenance and repairs: check your lease itself"]
           and row_notes(lease_row)[0].startswith("your lease's clause on maintenance and repairs (Lease Article 7), as the tool read it: \"7.2.")
           and "air -conditioning" in row_notes(lease_row)[0])
 finally:
@@ -236,7 +330,8 @@ try:
     unknown_part = prompt_now.split("\n\n" + PARTS["unknown"] + ":\n")[1].split("\n\n")[0]
     check("item 83: the part comes after the options and names each point once, with its state and each option it decides",
           prompt_now.index(PARTS["options"]) < prompt_now.index(PARTS["unknown"]) < prompt_now.index(PARTS["deadlines"])
-          and "- whether the lease says the landlord repairs this problem (83.56(1)) [repair not made]: the tenant can check: the tool has not read the part of the lease on maintenance and repairs" in unknown_part
+          and "- whether the lease says the landlord repairs this problem (83.56(1)) [repair not made]: the tenant can check: whether the lease's clause on maintenance and repairs says" in unknown_part
+          and "(such as damage caused by a roommate or a guest); the tool has not read the part of the lease on maintenance and repairs" in unknown_part
           and unknown_part.count("- whether a building, housing, or health code where the unit is requires the landlord to fix it") == 1
           and "    Not pay rent because of the problem, and raise it as a defense if the landlord sues for possession: open if it holds; if not, closed" in unknown_part
           and "    End the lease because the landlord has not made the repair: not settled if it holds; if not, the condition turns on whether a building" in unknown_part

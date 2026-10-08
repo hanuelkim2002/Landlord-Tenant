@@ -6,8 +6,8 @@ The working list. Move an item to CHANGELOG.md when it is done, with the date. R
 When an item is taken up, solve the underlying issue it is an instance of, not only the example that showed it (the
 author's rule of 2026-10-06, in CLAUDE.md). Items 90 to 100 came from one eval and share a few causes: the sheet asks
 the tenant for legal characterizations as plain yes or no facts, and the program then treats the answer as known (90,
-91, 92; also 86); what the tenant reads is built for checking, not for a reader with no legal training, in its order,
-length, and words, and in program blocks and cautions it does not explain (97, 98, 99, 100, the note on 64); text the
+91, 92; also 86; done 2026-10-08 for repair_not_made and neighbor_disturbance, the rest is item 102); what the tenant
+reads is built for checking, not for a reader with no legal training, in its order, length, and words, and in program blocks and cautions it does not explain (97, 98, 99, 100, the note on 64); text the
 program builds cannot carry the tenant's own facts or be corrected from the chat (95, 96); and the record holds one
 problem per issue and only the situations the playbooks name (93, 94).
 
@@ -34,26 +34,16 @@ is the author's.
     disturbance can end the tenant's lease only through a lease promise. A limit to decide on: wants_to_leave_early's
     fee "no more than 2 months' rent" is left to the tenant to check, though both amounts are on the record (the
     rent may come from the lease's words); a computed comparison would make it known.
-86. For the author, from the eval of items 81 to 85 (`docs/evals/2026-10-04-know/`): a lease clause the tool has read
-    whose words plainly cover the problem (the test lease's 7.2, "Landlord shall repair the heating,
-    air-conditioning ...") still leaves the lease's way of the duty condition "not known yet: the sheet asks" until
-    the tenant confirms it; in one AC run the model searched the lease, found 7.2, and treated the duty as met ("the
-    lease duty exists") against the program's state. Decide whether the tenant's confirmation stays the only way a
-    lease clause decides a condition, or whether a clause the tool has read can (and then how code, not the model,
-    would read it).
-90. For the author, from the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`): a tenant's yes or
-    no settles whether a notice works. In story F the e-mail said "If this isn't fixed I'm going to have to move
-    out."; asked "Does your written notice say that you intend to end the lease because of the problem?", the student
-    said yes. `deterministic.check_options` then showed the 83.56(1) steps done, `compute_deadlines` the 7 days
-    passed, and the reply said there was no new step. Two things no code reads: the notice's words (the sheet asks the
-    tenant to characterize them, and nothing records them; `add_communication` was not called), and how it was
-    delivered (`written_notice_method` is free text no gate reads, while 83.56(4) allows "e-mailing in accordance with
-    s. 83.505", which needs a signed addendum, and the 83.56(1) clock's `delivery` lists it). The same path counted
-    portal maintenance requests as a delivered notice (stories A, D2, E), though the test lease says "A maintenance
-    request is a request for service and is not by itself a notice under Section 13.1" (7.2), and the letter then
-    printed a "Written notice date" for one (item 95). Whether these stay something the tenant tells the tool, or
-    become something the tenant can check (the notice's words beside the statute's, the method beside 83.56(4) and the
-    lease's notice clause), as item 86 asks of a lease clause.
+    Also the readings of 2026-10-08, when the sheet began asking plain facts (CHANGELOG; items 86 and 90 to 92):
+    in repair_not_made, which answers of `problem_is_with` meet 83.51(1)(b), and running water and hot water not
+    settled through `subsection_one_or_two` (its text and first reading now name the plumbing); `caused_by`'s answers
+    against 83.51(4) (the tenant, a family member, or a guest close both options, as a yes did, though 83.51(4) speaks of
+    a "negligent or wrongful act or omission"; a check is the other way); the new open questions `roommate_consent` and
+    `withholding_notice_delivery`, their text and readings; the delivery reading of 83.56(4) (a portal request or a text
+    to do, e-mail the tenant's to check for an 83.505 addendum, and whether a lease clause allowing e-mail notices, like
+    the eval lease's 13.1, is enough, given 83.505(6) and "may not be waived in the rental agreement"); the lease's repair
+    promise as the tenant's check (item 86's decision, taken on the session's recommendation); the questions' and the
+    choices' wording; 83.505 added to both playbooks' sections; and rule 1's two changed "Instead:" examples.
 
 ## Applying the law
 
@@ -177,6 +167,26 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 
 ## Playbooks
 
+102. The sheet asks plain facts, part 2 (part 1, 2026-10-08, did the code and repair_not_made and neighbor_disturbance;
+    CHANGELOG): the same cause in the other playbooks, each to rewrite as part 1 did (a plain question or a choice, the
+    reading in the playbook, a check, or an open question). deposit_not_returned: `claim_notice_received` ("any written
+    notice") closes the whole deposit back, though 83.49(3)(a) names "certified mail ... or by e-mail in accordance with
+    s. 83.505" and deposit_claim_received's same option leaves the method not settled; `seven_day_notice_given` folds
+    83.49(5)'s four conditions (written, 7 days before, the method, the address) into one yes, while wants_to_leave_early
+    does it as a clock and a check. deposit_claim_received: `objected` marks done a step whose address the question does
+    not ask. lease_ending: a no to `landlord_sent_notice_terms` meets its gate (the tenant judges whether a paper
+    "listing that requirement" came); `end_notice_given` marks done a step naming 83.56(4)'s ways with no way asked.
+    notice_received_nonpayment: the tenant's date is taken as 83.56(3)'s delivery and `nonpayment_notice_method` is read
+    by nothing (83.56(4) allows leaving a copy only "if the tenant is absent"); whether the defective-notice defense
+    gets a delivery way is the author's. notice_received_violation: a no to `prior_written_warning` meets its gate (the
+    tenant judges "similar" and counts 12 months). rent_increased: `complained_before_increase` has the tenant sort their
+    own acts into 83.64(1)'s. wants_to_leave_early: `early_termination_addendum` ("a separate addendum"; the eval lease
+    put the fee in the lease itself); `leave_notice_given` marks two steps done on a bare yes. The clocks' `delivery`
+    lists there are read by nothing; `condition` replaces them. Borderline, the tenant reporting what a paper literally
+    says, the words not kept: `notice_offers_cure`, `notice_terminates_now`, `violation_corrected`,
+    `lease_requires_end_notice`, `tenant_consented`, `access_or_utilities_cut`; for the author whether any should move.
+    Re-key the scenarios that answer these questions, as part 1 did.
+
 2. Hand check of the seven playbooks written 2026-09-27 (repair_not_made, notice_received_nonpayment,
    notice_received_violation, landlord_entered_unannounced, rent_increased, wants_to_leave_early,
    lease_ending): read each quote against `statutes/`, then set `provenance.verified_by` and `verified_on`.
@@ -197,20 +207,6 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
     5.4), so the model cannot quote the lease's own rule in a neighbor_disturbance chat or letter; only the
     stop text shows such clauses, by code. Consider a `conduct_and_use` field in `lease.LeaseProfile` (a
     change to extraction: every lease would be read again).
-91. For the author, with item 84: repair_not_made's `withhold_rent` showed OPEN for no hot water (story C of the
-    student simulation of 2026-10-06, `docs/evals/2026-10-06-students/`). The student called the broken water heater
-    plumbing, which meets the first condition's only fact way (`problem_is_structure_or_plumbing`). Hot water is in
-    83.51(2)(a)5., and 83.51(2)(c) says part II does not let a tenant raise a noncompliance with subsection (2) as a
-    defense to an action for possession. The open question `subsection_one_or_two` is on this point, but
-    `withhold_rent`'s `also_open` lists only `material_noncompliance` and `court_procedure`, so the options part gave
-    no flag. Whether an item 83.51(2) names needs its own fact or way, and whether `end_the_lease` needs the same.
-92. For the author: the question for `caused_by_tenant_side` reads "Was the problem caused by you, a member of your
-    household, or someone you let in?"; 83.51(4) says "a member of the tenant’s family, or other person on the
-    premises with the tenant’s consent". In a by-the-bed lease the landlord assigns the roommates (the test lease's
-    1.3). In story E of the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`) a roommate broke the
-    washer; `fill_facts` suggested yes, the student accepted it, and both repair options showed closed until the
-    student changed it mid-chat. Whether a roommate the landlord placed is on the premises "with the tenant’s consent"
-    may need an open question; "household" answers it for the tenant.
 93. For the author: situations the stories of the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`)
     brought that no playbook covers. A charge on the tenant's ledger they dispute (story E, $85 for a roommate's
     damage, under the lease's joint liability for shared appliances); a roommate who caused the damage; closed
