@@ -7,7 +7,7 @@ When an item is taken up, solve the underlying issue it is an instance of, not o
 author's rule of 2026-10-06, in CLAUDE.md). Items 90 to 100 came from one eval and share a few causes: the sheet asks
 the tenant for legal characterizations as plain yes or no facts, and the program then treats the answer as known (90,
 91, 92; also 86; done 2026-10-08 for repair_not_made and neighbor_disturbance, the rest is item 102); what the tenant
-reads is built for checking, not for a reader with no legal training, in its order, length, and words, and in program blocks and cautions it does not explain (97, 98, 99, 100, the note on 64); text the
+reads is built for checking, not for a reader with no legal training, in its order, length, and words, and in program blocks and cautions it does not explain (97, 98, 99, 100; the cautions on real quotes, item 64, done 2026-10-08); text the
 program builds cannot carry the tenant's own facts or be corrected from the chat (95, 96); and the record holds one
 problem per issue and only the situations the playbooks name (93, 94).
 
@@ -78,22 +78,6 @@ lease clause pasted), so an answer cites and the program prints the cited words.
     applied to the 83.60(1)(b) defense; a rent increase read as a decrease against the test lease's rent (item 60).
     Also wants_to_leave_early's fee_notice_period, which has no readings: in 3 of 3 runs the model took the
     lease's 7-day notice of vacating as the fee's notice period (scored borderline). Whether it needs readings.
-64. Quote cautions left after item 58 (replayed on the runs of 2026-10-03, 54 under the replay's approximate
-    given text): most are real (the tenant's words reworded inside quote marks, "I have not sent a written
-    objection to the landlord's claim."; the statute misquoted, "decrease in services"; a sentence in
-    83.64(1) cited to 83.64(1)(a)). About 12 are false: a quote takes the cite next to it in the prose as its
-    source, so a case's, the lease's, or the tool's words, or a phrase of 83.60 followed by "83.51(1)" in the
-    reply, are checked against the wrong section (`citations.quoted_passages`). An option: a quote cited to a
-    section it is not in, but word for word in what the model was given, is not flagged for the section. Since
-    `search_lease` (item 82) more lease words are quoted beside statute cites: in the eval of 2026-10-04 quote cautions
-    rose 8 to 19, among them "If Landlord accepts Rent from Tenant..." (Lease 2.4) checked against 83.58.
-    In the student simulation of 2026-10-06 (`docs/evals/2026-10-06-students/`), with a stand-in model: 23 of 29
-    cautions false, 8 a lease quote and 9 a case quote beside a statute cite. New kinds: the posture lines rule 6 says
-    to quote word for word ("Adds the 83.51(1) duty, quoted.", which holds a cite), the playbook's note on notice
-    sufficiency, and the tenant's own letter. Since the sheet asks plain facts (2026-10-08) the check on a notice's
-    words gives the model the tenant's own sentence to set beside the statute, so this pairing grows: in the e-mail
-    story 3 of 5 cautions flagged "If this isn't fixed I'm going to have to move out." as not in 83.51 or 83.56. Students read the cautions as the tool being broken; one learned to
-    ignore them all.
 71. What the blind scoring of 2026-10-03 left (`docs/evals/2026-10-03-blind/`; 36 of 115 legal answers applied
     well, against 21 of 103 on 2026-10-02): rules restated without their quote (46.5, unchanged), conditions
     applied wrong (30.5, unchanged; item 63 holds the ones for the author), quotes without marks (26) and facts

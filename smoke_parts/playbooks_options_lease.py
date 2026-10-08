@@ -20,7 +20,7 @@ from lease import lease_clauses, lease_text
 from sheet import STOP_LINE, pending_rows, row_notes, run_sheet, stop_text
 from prompt import RULES as RULES_TEXT
 from prompt import LETTER_RULE, PARTS, options_status, system_prompt, unknowns_status
-from replies import cited_clause, cited_words
+from replies import check_reply, cited_clause, cited_words
 from tools import build_letter, deadline_listing, draft_letter, pretty, propose_facts
 from tools import tools as model_tools
 from smoke_parts.common import scripted
@@ -247,6 +247,10 @@ try:
           and "the problem is running water or hot water" in options_now
           and "the problem may be with the structure or the plumbing" not in options_now
           and "(counts only if your message was delivered in a way 83.56(4) allows" in system_prompt())
+    reply_cautions = check_reply("Your message says \"If this isn't fixed I'm going to have to move out.\" Set those words "
+                                 "beside Fla. Stat. 83.56(1). It also says \"I will end my lease on Friday\" (83.56(1)).", [])
+    check("item 64: a whole reply quoting the tenant's own sentence beside 83.56(1) gets no caution; words the tenant never wrote still do",
+          len(reply_cautions) == 1 and "\"I will end my lease on...\" (83.56(1)) is not in 83.56" in reply_cautions[0])
 finally:
     remove_scratch("t-smoke-choice")
 check("the choice scratch matter is removed", not (MATTERS / "t-smoke-choice").exists())

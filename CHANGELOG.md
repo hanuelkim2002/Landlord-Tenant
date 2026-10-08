@@ -5,6 +5,23 @@ session can see why the code is the way it is.
 
 ## 2026-10-08
 
+- Quote cautions on real words next to a cite (TODO item 64; the author's go-ahead of 2026-10-08). The cause: the
+  checker takes a quote's source from its position, the cite next to it (`citations.quoted_passages`), and holds the
+  words to that section (`citations.check_quoted`), while an applied answer sets several sources side by side. Of the
+  36 quote cautions in the nemotron evals of 2026-10-04 (before and after) and 2026-10-08 (after), 12 were someone
+  else's words next to a statute cite: the tenant's own (the notice words the sheet now keeps, "If this isn't fixed
+  I'm going to have to move out." next to 83.56(1)), the lease's, a case's or a lease search's; in the student
+  simulation of 2026-10-06 (a stand-in model), 17 lease or case quotes, 3 posture lines rule 6 says to quote, and the
+  tenant's own letter. Was: a quote with a cite not in that section was flagged "is not in <section>". Now it passes
+  when its words are in no stored section and are word for word in what the model was given (`replies.given_text`:
+  the prompt, the lease, the tenant's messages, the tool results). Kept: statute words cited to the wrong section
+  ("is not in 83.56; it is in 83.49") or subsection, and words found nowhere. Of the 36, 12 would no longer print;
+  of the rest, 7 are a legal bracket ("[t]he", "specif[y]"; the next change) and 17 real (the model's own words in
+  quote marks: "indicates" for "indicating", "your consent" for "the tenant's consent"). Smoke: the tenant's, the
+  lease's, a case's, and a posture line's words next to a statute cite pass; statute words cited to the wrong section
+  or subsection and invented words are still flagged with text given; a whole reply through `replies.check_reply` on
+  a matter holding story F's facts flags only the words the tenant never wrote. 673 lines, all OK.
+
 - Eval: part 1 of the sheet asking plain facts, on nemotron (the author's request). Three new scenarios from the student
   simulation of 2026-10-06, with the students' own description and chat lines and sheet rules for both the old and the
   new questions: `eval_student_notice_email` (F), `eval_student_hot_water` (C), `eval_student_roommate` (E), each with

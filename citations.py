@@ -171,7 +171,9 @@ def where_in(quote, section):
 def check_quoted(text, given):
     """Check each quoted passage in a reply. given: everything the model was given for it, as one string (its
     system prompt, the tenant's messages, the tool results). Returns [(quote, cite, problem)]:
-    - a quote with a cite must be in that section, and in that subsection when one is named;
+    - a quote with a cite must be in that section, and in that subsection when one is named, unless its words are no
+      statute's and are word for word in what the model was given: then it is someone else's quote (the tenant's, the
+      lease's, a case's, the tool's own) next to a cite that is not its source, and passes (TODO item 64);
     - a quote without a cite must be in the stored statutes or in what the model was given.
     A cite to a section or subsection that does not exist is left to check_cites."""
     problems = []
@@ -185,6 +187,8 @@ def check_quoted(text, given):
             continue
         elif not is_in(quote, statute[section]):
             elsewhere = [s for s in statute if is_in(quote, statute[s])]
+            if not elsewhere and is_in(quote, given):          # real words, not the statute's: the cite is not theirs
+                continue
             problems.append((quote, cite, f"is not in {section}" + (f"; it is in {elsewhere[0]}" if elsewhere else "")))
         elif rest and not is_in(quote, statute[section][slice(*subsections(section)["(" + rest])]):
             problems.append((quote, cite, f"is in {where_in(quote, section)}, not {cite}"))

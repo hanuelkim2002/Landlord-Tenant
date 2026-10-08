@@ -292,6 +292,22 @@ check("item 5: words the statute does not have, inside quote marks, are flagged"
       check_quoted('"Unless the tenant objects in writing within 15 days" (83.49(3)(b))', "")[0][2] == "is not in 83.49")
 check("a quote cited to the wrong section names the section that has it",
       check_quoted(f'"{FORFEIT}" (83.56)', "")[0][2] == "is not in 83.56; it is in 83.49")
+# TODO item 64: a quote is held to the cite next to it only when its words are the statute's; someone else's words
+# that the model was given (the tenant's, the lease's, a case's, the tool's own) pass beside any cite
+CASE_WORDS = "untimely notice forfeited their right to impose any claim upon appellant’s security deposit"   # 573 So. 2d 76
+MOVE_OUT = "If this isn't fixed I'm going to have to move out."                     # the tenant's e-mail (student story F)
+LEASE_WORDS = "Tenant shall notify Landlord in writing of a forwarding address"
+POSTURE = "Adds the 83.51(1) duty, quoted."
+given_now = "\n".join([CASE_WORDS, MOVE_OUT, LEASE_WORDS, "assert: " + POSTURE, statute["83.49"]])
+check("item 64: the tenant's words, the lease's, a case's, and the tool's own pass next to a statute cite they are not from",
+      check_quoted(f'Your e-mail says "{MOVE_OUT}" Set that beside Fla. Stat. 83.56(1).', given_now) == []
+      and check_quoted(f'Lease Section 4.3: "{LEASE_WORDS}" (Fla. Stat. 83.49(3)(a))', given_now) == []
+      and check_quoted(f'The court said the landlords\' "{CASE_WORDS}" (83.49(3)(a))', given_now) == []
+      and check_quoted(f'assert: "{POSTURE}" (Fla. Stat. 83.51(1))', given_now) == [])
+check("item 64: statute words cited to the wrong section, and words found nowhere, are still flagged though the model was given text",
+      check_quoted(f'"{FORFEIT}" (83.56)', given_now)[0][2] == "is not in 83.56; it is in 83.49"
+      and check_quoted(f'"{FORFEIT}" (83.49(3)(b))', given_now)[0][2] == "is in 83.49(3)(a), not 83.49(3)(b)"
+      and check_quoted('"Unless the tenant objects in writing within 15 days" (83.49(3)(b))', given_now)[0][2] == "is not in 83.49")
 check("a quote with no cite passes when it is in what the model was given",
       check_quoted('You wrote "I will not pay rent until it is fixed."', "saying I will not pay rent until it is fixed") == [])
 check("a quote with no cite is flagged when it is nowhere",
