@@ -12,7 +12,9 @@ is a law student, not admitted.
 - README.md: the fixed plan. Purpose, four goals, three parts, non-negotiables. Do not edit unless the
   project's purpose or architecture changes.
 - DOCUMENTATION.md: how the code works now. Read this instead of every module. Keep it current.
-- TODO.md: the working list, in order. Do the top item unless told otherwise.
+- TODO.md: the work Claude Code can do, in priority order (Now, Next, Later). Do the top of Now unless told otherwise.
+- AUTHOR.md: what only the author can do: decisions, legal sign-offs, research, open questions.
+- SLIPS.md: the mistake log, model slips seen in live runs, counted per eval.
 - CHANGELOG.md: what changed and what it replaced. Add an entry for every change.
 
 ## Duties on every change
@@ -23,6 +25,10 @@ is a law student, not admitted.
 3. Add a CHANGELOG.md entry saying what was added and what it replaced.
 4. Update DOCUMENTATION.md if a function, tool, file, event kind, or rule changed.
 5. Move the finished TODO.md item to the changelog.
+6. Log what the change or an eval finds by TODO.md's rules (the author's decision of 2026-10-09): work Claude Code can
+   do in TODO.md, at most about four lines with a link to the record instead of eval history; what needs the author in
+   AUTHOR.md; a model slip in SLIPS.md, never TODO.md unless it has a code-side fix. A finding seen again updates its
+   entry's count; it is never a new item. A finding fixed in the same change goes only in the CHANGELOG.
 
 ## Conventions
 

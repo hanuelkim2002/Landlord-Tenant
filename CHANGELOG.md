@@ -3,6 +3,21 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-09
+
+- The TODO list split in three (the author's request: too many items, so the important ones were overlooked). Was:
+  TODO.md, 379 lines and 48 numbered items in topic sections, mixing work Claude Code can do, the author's decisions
+  and sign-offs, model slips being counted, and research questions, with each eval's counts appended inside items. Now:
+  TODO.md holds only work Claude Code can do, in priority tiers (Now, Next, Later), each item at most about four lines
+  with a link to the record (72 lines; 29, 35, and 36 merged, 87 and 67 merged, 33 folded into 104, 95 and 96 joined);
+  AUTHOR.md holds decisions that hold up work (97, 93, 1, 26), sign-offs (84, now a checklist by playbook; 2, 34, 63, 24,
+  49), research (3, 27, 28, 37), and the open questions; SLIPS.md is the mistake log, one entry per kind of model slip
+  with an example, its counts per eval, and a status (103, 89, 70, 59, 12, 39, 38, 88, 68, 69, 40, 62, 41, 42, the blind
+  scoring's summary of item 71, and a new count for 65, the model not calling `get_deadlines`). TODO.md's header and
+  CLAUDE.md's new duty 6 say what goes where: a slip moves to TODO.md only with a code-side fix or when it hurts a tenant
+  and keeps recurring; a finding seen again updates a count, never a new item; a finding fixed in the same change goes
+  only here. Item numbers are kept and still never reused. No code changed.
+
 ## 2026-10-08
 
 - Eval: part 2 of the sheet asking plain facts, on nemotron (the author's request). The 12 scored scenarios through
