@@ -5,6 +5,23 @@ session can see why the code is the way it is.
 
 ## 2026-10-08
 
+- Eval: part 2 of the sheet asking plain facts, on nemotron (the author's request). The 12 scored scenarios through
+  the six rewritten playbooks, 3 runs each, and 5 older scripted ones, 2 each, with `WIKI_UNVERIFIED=1`
+  (`dev/eval_runs/2026-10-08-part2*`, not committed). The first batch stopped at the 2-hour limit with 31 of 36
+  done; during a network outage 8 of them crashed on both attempts ("Connection error", "nodename nor servname
+  provided"), which `dev/eval.py` scored as the tool's runs (TODO item 104), so they were set aside and run again, as
+  were the 5 cut off. Two scenarios answered the deposit notice's delivery with a rule now matching only the
+  violation playbook's question ("How did the notice reach you"), so the question was skipped; fixed in
+  `eval_claim_carpet` and `eval_cases_late_claim` and run again. Result: 37 of 46 runs met their expectations, every
+  list question answered by its words, no session ended early. The 9 misses are model behavior or a scoring pattern,
+  none a new question: the model not calling `get_deadlines` when asked when (4, the program printing them itself), the
+  "you are safe" pattern on a conditional answer (2, item 87), an empty reply on a scored turn (2), and a letter not
+  drafted with a posture called "nicest" (1, items 38, 39). On the new readings: in the lease-renewal story the
+  model's own intake suggested yes to "anything in writing about the end of your lease" from the office's e-mail (the
+  old scripted answer was no); with a claim notice by e-mail, 2 of 3 replies said its validity turns on an 83.505
+  addendum, not known yet; with one by certified mail, the replies turned to the postmark against the 30 days. New:
+  a cite caution on a statute version year, "83.49(3)(a) (1981)" (TODO item 105).
+
 - The sheet asks plain facts, part 2: the other playbooks (TODO item 102; the author's go-ahead of 2026-10-08). The same
   cause as part 1, in the questions part 1 listed: a yes or no that made the tenant apply a term of the statute, which
   code then treated as known. Now:

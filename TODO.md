@@ -124,7 +124,18 @@ Code-side checks and bookkeeping that hold whatever the model does. Ahead of mod
 87. Eval checks that count a right answer as a slip (eval of 2026-10-04, items 81 to 85): the dog story's must_not
     "you (are|will be) safe" matches "Whether you are safe turns on ..." (3 of 3 runs after, 1 before); the lease
     absence screen (`dev/eval.py`, `LEASE_ABSENT`) counts a reply repeating what the tenant confirmed ("your lease does
-    not say the landlord repairs this kind of problem", 3 mold runs). Narrow both.
+    not say the landlord repairs this kind of problem", 3 mold runs). Narrow both. Again in the eval of part 2 of the
+    plain-facts change (2026-10-08): 2 of 3 dog runs, "Whether you are safe turns on ..." and "you are safe from
+    termination over this violation only if ...".
+104. `dev/eval.py` scores a run that crashed on the network as the tool's run (eval of 2026-10-08, part 2 of the
+    plain-facts change): `run_one` keeps the second attempt whatever happened, and `GATEWAY_SIGNS` does not list a
+    connection failure ("OpenAIConnectionError: Connection error.", "nodename nor servname provided, or not known",
+    "APIStatusError: Client Closed Request"), so 8 of 31 runs that crashed twice during an outage were scored as
+    sessions with no issues. Add those signs. Also: a run stopped by a time limit leaves no `runs.json` (it is written
+    only at the end), so a long eval's finished runs had to be filed away by hand.
+105. A statute version year after a cite read as a subsection: the model wrote "83.49(3)(a) (1981)" (the version a case
+    read), and `citations.CITE` took "(1981)" as a marker, so `check_cites` printed "names a subsection that 83.49 does
+    not have" (6 cautions in 2 `deposit_cases` runs, 2026-10-08). A false caution on a right cite, as item 64's were.
 
 1. Clocks `compute_deadlines` cannot compute yet: (a) court business days are done for 83.56(3) in the
    Eighth Judicial Circuit, 2026 and 2027; other circuits need their own memoranda (add a county's circuit
