@@ -19,14 +19,9 @@ author's rule of 2026-10-06, in CLAUDE.md).
 
 ## Now
 
-The student simulation's remaining causes (`docs/evals/2026-10-06-students/`): the reply after a letter cannot answer
-what the tenant asked with it (96; the template itself was item 95, CHANGELOG 2026-10-11), and what the tenant reads is
-built for checking, not for a reader with no legal training (98, 99, 100; the shape of an answer, 97, is the author's
-call in AUTHOR.md).
-
-96. Rule 6 (`prompt.LETTER_RULE`): "After draft_letter, reply only: ..." left unanswered a question asked with a
-    change (story F: whether the letter counts as the notice, what 4 days' notice instead of 7 means). Done: the reply
-    after a draft answers it, and still never retells or rewrites the letter.
+The student simulation's remaining cause (`docs/evals/2026-10-06-students/`): what the tenant reads is built for
+checking, not for a reader with no legal training (98, 99, 100; the shape of an answer, 97, is the author's call in
+AUTHOR.md). The letters (95, 96) are in the CHANGELOG, 2026-10-11.
 98. Case listings come first and whole: 51% to 72% of first replies, mostly unrelated injury cases, and every student
     skipped them. The reply first and the cases after it (folded on the web page), or cases only when asked; fewer
     topics per issue joins item 29. Done: the answer is the first thing a tenant reads.

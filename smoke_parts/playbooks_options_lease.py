@@ -52,6 +52,10 @@ try:
           and LETTER_RULE in system_prompt([HumanMessage(content="Can you help me write something to send them?")]))
 finally:
     remove_scratch("t-smoke-rules")
+check("item 96: after a draft, rule 6 has the reply answer anything else asked with it, then the one line, never the letter retold",
+      'after draft_letter, answer anything else the tenant asked in that message, as any answer, then end with "The '
+      'letter appears above; tell me if you want changes." Never retell the letter.' in LETTER_RULE
+      and "reply only" not in LETTER_RULE)
 
 # the lease profile's repairs clause (TODO item 76): a profile read before the slot was added loads, with the slot
 # not read (None) and left out of clauses(); the extraction asks for it; the prompt says the lease part is not the

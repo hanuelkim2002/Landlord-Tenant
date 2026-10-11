@@ -686,7 +686,7 @@ always matches the record: facts confirmed on the sheet and issues added mid-cha
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 2,410 words always (2,055 before TODO items 82 and 83), plus rule 6 on letters (174 words) once a letter is in
+1. `RULES`, through `rules_for`: 2,437 words always (2,055 before TODO items 82 and 83), plus rule 6 on letters (219 words; 174 before TODO 96) once a letter is in
    play, and rule 8 on cases in full (271 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
    the statute to the record in YOUR FACTS and WHICH DEADLINES HAVE PASSED and say what they mean for the tenant,
@@ -727,7 +727,7 @@ this order:
    tenant confirms them on the sheet; 5 open questions stay open, given with their readings and what each
    would mean on the tenant's facts, never picked, never put to the tenant; one with no readings is a limit
    of the tool; 6 letters only when asked, only through `draft_letter`, missing details asked once, posture
-   lines copied word for word, then one line; 7 record messages and sent letters with `add_communication`;
+   lines copied word for word, then an answer to anything else asked with it and one line (TODO 96); 7 record messages and sent letters with `add_communication`;
    8 cases only through `get_cases`, called when the tenant asks what courts said or a case topic is on
    the point being applied; then for every case it gives, its facts beside the tenant's, its rule quoted with
    name and page (and the statute version it read when not today's), what the rule would mean on the

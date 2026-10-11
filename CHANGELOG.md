@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-10-11
 
+- Rule 6 after a draft: the reply answers anything else the tenant asked with the letter (TODO 96). Was: "After
+  draft_letter, reply only: "The letter appears above; tell me if you want changes."", there since rules version F
+  (2026-10-01) to keep the model from retelling the letter the program prints. It also kept the model from answering a
+  question asked in the same message as a change: in the student simulation of 2026-10-06, "is the written notice date
+  line ok?" (story A), and twice in story F whether the letter counts as the notice ending the lease and what 4 days'
+  notice instead of 7 means, the two questions that mattered most before moving out. Now: a "Not:" with that one line
+  after such a question, and "Instead: after draft_letter, answer anything else the tenant asked in that message, as
+  any answer, then end with "The letter appears above; tell me if you want changes." Never retell the letter."
+  Rule 6 is 219 words (174). `dev/scenarios/eval_student_notice_email` now ends with story F's letter: the request
+  (the student's lines joined, so nothing is left to ask) and a change asked with "does this letter count as my
+  notice", whose reply must say "notice", must not say the steps are done or that it counts, and must call
+  `draft_letter`; two letters expected; the screen must not show "I request that you" or "sent by by". For the author
+  (AUTHOR.md 106): rule 6's wording. Smoke: rule 6 has the new line and not "reply only". 704 lines, all OK.
+
 - The letter: the model's words are never put inside a sentence of the program's (TODO 95; option D, the author's
   choice). The underlying issue: `tools.build_letter` filled the letter as a form from the record instead of writing
   the tenant's letter. It wrapped the model's words in its own sentences, and it printed what the record held rather

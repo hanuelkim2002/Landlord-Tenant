@@ -1,5 +1,5 @@
 {
-  "about": "repair_not_made and wants_to_leave_early, story F of the student simulation of 2026-10-06 (docs/evals/2026-10-06-students/, the student's own description and chat lines): an AC broken since 2026-09-10, mold, asthma; an e-mail to the leasing office on 2026-09-26 saying \"If this isn't fixed I'm going to have to move out.\" On the code before 2026-10-08 the student's yes to \"Does your written notice say that you intend to end the lease\" marked the 83.56(1) notice steps done and the reply said there was no new step. Since the sheet asks plain facts (TODO items 86 and 90 to 92) the e-mail's delivery and its words are the tenant's to check, and no reply may say the notice steps are done. Sheet rules answer both the old questions and the new ones, so the same file runs before and after.",
+  "about": "repair_not_made and wants_to_leave_early, story F of the student simulation of 2026-10-06 (docs/evals/2026-10-06-students/, the student's own description and chat lines): an AC broken since 2026-09-10, mold, asthma; an e-mail to the leasing office on 2026-09-26 saying \"If this isn't fixed I'm going to have to move out.\" On the code before 2026-10-08 the student's yes to \"Does your written notice say that you intend to end the lease\" marked the 83.56(1) notice steps done and the reply said there was no new step. Since the sheet asks plain facts (TODO items 86 and 90 to 92) the e-mail's delivery and its words are the tenant's to check, and no reply may say the notice steps are done. Sheet rules answer both the old questions and the new ones, so the same file runs before and after. Since 2026-10-11 (TODO 95, 96) it ends with story F's letter: the request (the student's lines 35 and 36 joined, so nothing is left to ask) and a change asked with a question (line 37 without its complaint about the old template), which the reply after the draft must answer.",
   "start": [
     "new",
     "t-test",
@@ -127,7 +127,9 @@
   "chat": [
     "ok so sorry for rambling but im kind of freaking out. my asthma is really bad right now and i cant live here anymore. can i just move out and stop paying without getting charged the early termination fee? i heard its like $1,578 and i honestly cant afford that, and my mom cosigned so i dont want her to get stuck paying it either. do i have any right to leave since the landlord hasnt fixed the AC or the mold for almost 4 weeks??",
     "sorry i read all that and im really lost. so can i leave or not?? it keeps saying not settled / not known yet. and when it says the fee route is \"closed\" if i didnt sign a separate addendum, is that good or bad for me?? like does that mean i dont have to pay the $1,578 or that i cant leave at all. i dont remember signing anything separate, just the lease and my mom signed some guaranty thing, but im not 100% sure. and it said paying october rent might have messed it up?? i paid it on oct 1 because i didnt know i wasnt supposed to. i just need to know what i should do first, like tomorrow, i have clinicals in the morning and cant think straight",
-    "Did my e-mail to the leasing office on September 26 count as the notice to end my lease, or do I still need to send one?"
+    "Did my e-mail to the leasing office on September 26 count as the notice to end my lease, or do I still need to send one?",
+    "ok can you write the letter? i want the one about me leaving, and i want it to say its because of the AC and the mold and my asthma, not just that i feel like leaving. what i want them to do is let me out of the lease with no fee, not charge me or my mom for the rest of the rent, and give my deposit back. give them 3 days to reply. i can walk it over to the leasing office by hand and also email it. after i move im at my moms house, 5120 Beach Blvd, Jacksonville FL 32207. i pick preserve, i dont want to sound like im threatening them. and put my name Morgan Davis, unit 3110 bedroom A, magnolia row",
+    "thank you for the letter!! can you add that i went to UF Student Health on Sept 30 and the doctor wrote a note saying the mold and heat are making my asthma worse and to live somewhere else? also does this letter count as my notice that im ending the lease because of the AC and mold, or do i have to send something else too?"
   ],
   "expect": {
     "issues": [
@@ -169,7 +171,33 @@
         "must": [
           "(?i)\\b(check|addendum|83\\.505|not settled|turns on|depends on)\\b"
         ]
+      },
+      {
+        "say": "ok can you write the letter",
+        "called": [
+          "draft_letter"
+        ]
+      },
+      {
+        "say": "can you add that i went to UF Student Health",
+        "called": [
+          "draft_letter"
+        ],
+        "must_not": [
+          "(?i)\\bsteps? (are|is|were) (already )?(done|complete|completed)\\b",
+          "(?i)\\bno (new|further|other|more) steps?\\b",
+          "(?i)\\bnotice and the 7 days (are|were) done\\b",
+          "(?i)\\byes,? (it|this letter|that) (counts?|does|will)\\b"
+        ],
+        "must": [
+          "(?i)\\bnotice\\b"
+        ]
       }
+    ],
+    "letters": 2,
+    "screen_must_not": [
+      "I request that you",
+      "(?i)sent by by"
     ]
   }
 }
