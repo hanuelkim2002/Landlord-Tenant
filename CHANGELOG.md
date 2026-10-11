@@ -5,6 +5,21 @@ session can see why the code is the way it is.
 
 ## 2026-10-11
 
+- Eval: the letter (TODO 95, 96) on nemotron, with `WIKI_UNVERIFIED=1` (`dev/eval_runs/2026-10-11-letters-*`, not
+  committed). After: the four letter scenarios (`eval_deposit_ghosted`, `eval_claim_carpet`, `eval_noise_neighbors`,
+  `eval_repair_mold_apt`) and `eval_student_notice_email` with story F's letter turns, 3 runs each, no gateway trouble;
+  11 of 15 met their expectations. Before: the four scenarios' runs of 2026-10-08 (the same letter code), and story F's
+  new turns run 3 times on a checkout of 524504b. Of 19 letters a side: a broken sentence 8 before ("I request that you
+  please", "sent by by hand") and 0 after; date lines by field id ("Tenancy terminated", "Claim notice dated") 19 and 0;
+  signed with the lease's clause ("JORDAN A. ELLIS , an individual") 11 and 0; the tenant's own account 19 of 19 after;
+  no "CHECK BEFORE YOU SEND" line in any letter after (every date and amount in them traced to the sheet, the tenant's
+  messages, or the lease), and no refusal. Story F's "does this letter count as my notice" was answered in 3 of 3 runs
+  both before and after: nemotron did not keep rule 6's "reply only" (the stand-in of 2026-10-06 did), so TODO 96
+  matters for a model that keeps the rule. Misses after: `eval_deposit_ghosted` 0 of 3, the model drafting a preserve
+  letter on "which one is the nicest?" before the tenant picked (2 of 3, 1 of 3 before; SLIPS 108) and calling preserve
+  the nicest (SLIPS 38); story F 1 of 3, the doctor's note not added ("I cannot add that doctor's-visit detail as a new
+  fact", SLIPS 39). Seen in passing: a quote refusal printed to the tenant in the letter box (2026-10-08, TODO 107).
+
 - Rule 6 after a draft: the reply answers anything else the tenant asked with the letter (TODO 96). Was: "After
   draft_letter, reply only: "The letter appears above; tell me if you want changes."", there since rules version F
   (2026-10-01) to keep the model from retelling the letter the program prints. It also kept the model from answering a

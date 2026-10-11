@@ -37,6 +37,9 @@ AUTHOR.md). The letters (95, 96) are in the CHANGELOG, 2026-10-11.
 
 ## Next
 
+107. A refused `draft_letter` ("Rejected: obligation_quote is not found ...", eval of 2026-10-08, noise story) is printed
+    to the tenant in the letter box, labeled as the program's letter (`agent.turn_blocks` shows every result as is).
+    Done: the box shows only a drafted letter (or the same-letter line), and a refusal goes to the model alone.
 94. One set of facts per issue: two repair problems (hot water and an AC) share one start date, one notice, and one
     set of options, so a letter's line is wrong for one of them (student story C). A matter per problem, or an issue
     that can repeat with its facts kept per problem: propose before building.

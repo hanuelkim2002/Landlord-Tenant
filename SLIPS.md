@@ -21,7 +21,8 @@ the playbooks), quotes without marks 26, facts not confirmed 21.5, dates worked 
 
 103. The lease's notice clause read as settling an e-mail notice's delivery, which the program leaves to check (an
     83.505 addendum): "Your lease permits notices to be sent by e-mail ... so delivery by e-mail is allowed".
-    Counts: 2026-10-08 student e-mail story 2 of 3. Also once in the roommate story, the lease's own exception applied
+    Counts: 2026-10-08 student e-mail story 2 of 3; 2026-10-11 story F's letter question 1 of 3 before and 1 of 3
+    after ("which matches the lease's allowed notice methods"). Also once in the roommate story, the lease's own exception applied
     as settled ("Because the damage is traceable to the roommate, the lease excludes the landlord's repair duty").
     Status: watching; the legal point is AUTHOR.md 84's.
 89. A lease searched and then misread: "only mentions late charges in ... Lease Section 3.4" (3.3 sets $75), "The lease
@@ -45,16 +46,22 @@ the playbooks), quotes without marks 26, facts not confirmed 21.5, dates worked 
 
 39. A letter request asks again for what the tenant said (the amount, the days, the delivery, today's date). Counts:
     2026-10-01 blind 9 then 6.5; 15 of 21 letters drafted in one confirmation run; 2026-10-02 the carpet letter 0 of 3;
-    2026-10-08 part 2 eval 1 letter not drafted. Status: code-side option noted: fill the ask from confirmed facts.
+    2026-10-08 part 2 eval 1 letter not drafted; 2026-10-11 story F's change not drafted 1 of 3 before and 1 of 3 after
+    ("I cannot add that doctor's-visit detail as a new fact"). Status: code-side option noted: fill the ask from
+    confirmed facts.
 38. Asked which posture is "the nicest", the model calls preserve "the gentlest option" (rule 6's "Not:"). Counts:
-    2026-10-01 2 of 3; 2026-10-03 1 to 3 of 3 in each eval; 2026-10-08 part 2 eval 1. Status: watching; TODO 100 may
-    give the postures plain names.
+    2026-10-01 2 of 3; 2026-10-03 1 to 3 of 3 in each eval; 2026-10-08 part 2 eval 1; 2026-10-11 2 of 3 ("most
+    polite", "the nicest"). Status: watching; TODO 100 may give the postures plain names.
+108. A letter drafted with a posture the tenant has not picked: asked "which one is the nicest?", the model drafts a
+    preserve letter, then answers (rule 6's first "Not:"). Counts: 2026-10-08 deposit_ghosted 1 of 3; 2026-10-11 2 of 3,
+    after rule 6 began letting a reply follow a draft (TODO 96), which may make it easier. Status: watching; a code-side
+    option: `draft_letter` refuses a posture the tenant's messages have not named.
 
 ## The prompt's own words
 
 88. Prompt part names and ids written in replies: "(WHAT THE STATUTE DOES NOT SETTLE)" as a source, field ids, and the
     options' own words in quote marks. Counts: 2026-10-04 part names 8 to 15 turns, field ids 9 to 17, blind ID 15.5 to
-    24.5; 2026-10-08 one "caused_by: a roommate". Status: watching.
+    24.5; 2026-10-08 one "caused_by: a roommate"; 2026-10-11 one "through draft_letter again". Status: watching.
 68. A tool's receipt copied into a reply ("The program printed the tenant's deadlines: 0 dated, for no issue. ...").
     Counts: 2026-10-03 once. Status: watching.
 69. The sheet's own questions asked in the chat, in quote marks (rule 4's "Not:"). Counts: 2026-10-03 3 of 3, then 0
