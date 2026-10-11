@@ -136,6 +136,10 @@ LABELS = {
     "maintenance_and_repairs": "maintenance and repairs",
 }
 SECTION_NUMBER = re.compile(r"^\s*(?:(article|section|paragraph)\s+)?(\d+(?:\.\d+)*)\.?(?=\s|$)", re.I)
+# a lease cite as lease_cite gives it: "Lease Section 4.3", "Lease Article 7", "Lease, page 1", with any space between
+# the words: the model wrote "Lease Section 7.2", a narrow no-break space, and the program printed nothing under
+# the reply (eval of 2026-10-04, TODO item 85). Here since 2026-10-11, for the letter's check too (was in replies.py).
+LEASE_CITE = re.compile(r"\bLease\s+(?:Section|Article|Paragraph)\s+(\d+(?:\.\d+)*)|\bLease,?\s+page\s+(\d+)", re.I)
 
 
 def lease_cite(clause):

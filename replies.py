@@ -11,7 +11,7 @@ from citations import (caution, check_case_cites, check_cites, check_quoted, cit
                        quoted_passages, subsections, unbracketed, unquoted)
 from config import shorten
 from corpus import statute
-from lease import LABELS, SECTION_NUMBER, lease_cite, lease_clauses
+from lease import LABELS, LEASE_CITE, SECTION_NUMBER, lease_cite, lease_clauses
 from prompt import system_prompt
 from record import active_playbooks, append_event, read_events
 
@@ -111,10 +111,7 @@ def check_case_quotes(text, messages):
 # profile, so the tenant has the exact text to point to and the reply does not recite it. Was, from item 54 to 66:
 # every rule quoted in the reply, and a caution for a section cited without a quote (item 66's RETOLD).
 
-# a lease cite as YOUR LEASE gives it (lease.lease_cite): "Lease Section 4.3", "Lease Article 7", "Lease, page 1", with any
-# space between the words: the model wrote "Lease Section\u202f7.2", a narrow no-break space, and the program printed
-# nothing under the reply (eval of 2026-10-04, TODO item 85)
-LEASE_CITE = re.compile(r"\bLease\s+(?:Section|Article|Paragraph)\s+(\d+(?:\.\d+)*)|\bLease,?\s+page\s+(\d+)", re.I)
+# a lease cite as YOUR LEASE gives it: lease.LEASE_CITE
 CITED_MAX = 1500                                         # characters of one passage printed; the rest is named
 CITED_HEAD = "The words the reply above cites, printed by the program from the stored statute and your lease:"
 

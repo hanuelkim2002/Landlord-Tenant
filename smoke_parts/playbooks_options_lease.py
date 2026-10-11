@@ -278,7 +278,7 @@ try:
     with contextlib.redirect_stdout(shown_sheet):
         run_sheet(scripted(["99", "Hot  Water"]))
     refused_answer = propose_facts.invoke({"facts_json": json.dumps({"caused_by": {"value": "my cat", "how": "stated", "said": "x"}})})
-    letter = build_letter("Repair the air conditioning", 7, "certified mail", [])
+    letter = build_letter("", "Please repair the air conditioning.", 7, "certified mail", "Jordan Ellis", [])
     options_now = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
     check("items 90 to 92: the sheet lists a choice's answers by number, asks again for one not listed, and saves the words",
           "Which of these is the problem with? Pick the closest one. (number or words)" in shown_sheet.getvalue()
@@ -286,8 +286,8 @@ try:
           and record.matter["facts"]["problem_is_with"] == "hot water")
     check("items 90 to 92: propose_facts refuses an answer the choice does not list",
           "caused_by: value must be a number from the list, or its words" in refused_answer)
-    check("items 90 to 92: the letter's date line says when the tenant wrote, not that it was a notice",
-          f"Message date: {pretty(story_f['message_date'])}" in letter and "notice date" not in letter.lower())
+    check("items 90 to 92: a letter has no date line from the record, so none says the tenant's message was a notice",
+          "Message date" not in letter and "notice date" not in letter.lower())
     check("items 90 to 92: the prompt gives each step's check with the tenant's words, the 7 days as passed if they count, and leaves out a way for another case",
           "    step: the notice names the problem and says the tenant intends to end the lease because of it (83.56(1)): the tenant can check: whether the words of your message" in options_now
           and "If this isn't fixed I'm going to have to move out." in options_now
@@ -302,6 +302,53 @@ try:
 finally:
     remove_scratch("t-smoke-choice")
 check("the choice scratch matter is removed", not (MATTERS / "t-smoke-choice").exists())
+
+# the letter (TODO 95): the program's lines around the tenant's account and request, each printed as written, never
+# inside a sentence of the program's; a date or an amount the record does not hold is named under the letter; a cite in
+# the tenant's part, or a signer the lease does not name, is refused
+make_scratch("t-smoke-letter", issues=["repair_not_made"], proposed={},
+             facts={"problem_started": "2026-09-10", "message_date": "2026-09-26"})
+try:
+    load_matter("t-smoke-letter", "m-001")
+    record.start_session("existing")
+    record.append_transcript({"role": "tenant", "text": "the tech came sept 19 and its like 87 in here"})
+    signer = "Jordan Ellis"                               # the test lease names "JORDAN A. ELLIS , an individual"
+    letter = build_letter("The air conditioning stopped working on September 10, 2026.",
+                          "I, Morgan Davis, am ending my lease", 3, "by hand to the leasing office", signer, [])
+    labels = {f"{e.id.replace('_', ' ').capitalize()}:" for pb in playbooks.values() for e in pb.spec.elements}
+    check("item 95: the account and the request are printed as written, the delivery line once, no date line from the "
+          "record, the signer's name alone, and dates as a letter writes them",
+          "\n\nThe air conditioning stopped working on September 10, 2026.\n\nI, Morgan Davis, am ending my lease.\nPlease respond by " in letter
+          and "I request that you" not in letter and "\nDelivery: by hand to the leasing office\n" in letter
+          and "by by" not in letter and not any(label in letter for label in labels) and letter.endswith("\n\nJordan Ellis")
+          and pretty("2026-10-06") == "October 6, 2026")
+    drafts_before = sum(ev["kind"] == "draft" for ev in read_events())
+    args = {"issue": "repair_not_made", "posture": "preserve", "request": "Please repair the air conditioning.",
+            "respond_within_days": 7, "delivery_method": "certified mail", "signed_by": signer}
+    known = draft_letter.invoke({**args, "account": "It stopped on September 10. A technician came on Sept. 19. "
+                                                    "My deposit was $1,850.00."})
+    unknown = draft_letter.invoke({**args, "account": "It stopped on September 10. Seven days after my message was "
+                                                      "October 3, and I paid $1,278."})
+    check("item 95: dates and amounts from the sheet, the tenant's messages, and the lease pass; ones the record does "
+          "not hold are named under the letter, not in it",
+          "CHECK BEFORE YOU SEND" not in known
+          and "\n\n[CHECK BEFORE YOU SEND, not part of the letter: the tool did not find October 3 and $1,278 in your "
+              "answers, your messages, or your lease. Make sure each is right.]\n\n[NOTE TO TENANT" in unknown
+          and "CHECK BEFORE YOU SEND" not in (record.matter_dir() / read_events()[-1]["file"]).read_text())
+    refused = [draft_letter.invoke({**args, "account": a}) for a in ("Under 83.51(1) you must fix it.",
+                                                                     "Lease Section 7.2 says so.")]
+    signers = [draft_letter.invoke({**args, "account": "", "signed_by": s})
+               for s in ('Jordan A. Ellis ("Tenant")', "Morgan Davis", "")]
+    check("item 95: a cite in the tenant's part, a signer the lease does not name, one with a label, and none are "
+          "refused, and nothing is drafted",
+          all(r.startswith("Rejected: the account or the request cites") for r in refused)
+          and all(r.startswith("Rejected: signed_by must be a tenant the lease names") for r in signers)
+          and sum(ev["kind"] == "draft" for ev in read_events()) == drafts_before + 2)
+    record.end_session()
+finally:
+    record.session = None
+    remove_scratch("t-smoke-letter")
+check("the letter scratch matter is removed", not (MATTERS / "t-smoke-letter").exists())
 make_scratch("t-smoke-options", issues=["repair_not_made"], facts=ac, proposed={})
 try:
     load_matter("t-smoke-options", "m-001")
@@ -485,8 +532,9 @@ try:
         listed = deadline_listing()
         clocks = [c.id for i in record.matter["issues"] if i in playbooks for c in playbooks[i].spec.clocks]
         dated = [d["clock"] for d in json.loads(listed)["deadlines"] if "deadline" in d] if not listed.startswith("Not yet") else []
-        letter = draft_letter.invoke({"issue": issue, "posture": "preserve", "ask": "Confirm receipt of this letter",
-                                      "respond_within_days": 10, "delivery_method": "certified mail"})
+        letter = draft_letter.invoke({"issue": issue, "posture": "preserve", "account": "",
+                                      "request": "Please confirm receipt of this letter.", "respond_within_days": 10,
+                                      "delivery_method": "certified mail", "signed_by": "Jordan Ellis"})
         options_now = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
         check(f"{issue}: the sheet asks every fact, every clock gets a date, a letter carries its note, its options are in words",
               not pending_rows() and sorted(set(dated)) == sorted(set(clocks))

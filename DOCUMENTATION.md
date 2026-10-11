@@ -26,7 +26,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   for one passage copied as printed, headings inside it included, since Gemma first joined two subsections and
   dropped the heading between them, and the quote failed `check_quotes`), the profile as the model reads it
   (TODO item 77: `LABELS`, each field in plain words; `SECTION_NUMBER` and `lease_cite(clause)`, the cite to use,
-  "Lease Section 3.1", "Lease Article 7", or "Lease, page 1" for a clause with no number; `lease_lines(profile)`,
+  "Lease Section 3.1", "Lease Article 7", or "Lease, page 1" for a clause with no number; `LEASE_CITE`, such a cite
+  in a text, used by `replies` and `tools.draft_letter`; `lease_lines(profile)`,
   a line per clause, label, cite, and words, or that the reading found no such clause, or that it was not read;
   no field name, since given the profile as JSON the model cited clauses by field name), `extract_profile`
   (one call to `extract_llm`), `quote_found` and `check_quotes` (each quote must appear on its cited page,
@@ -205,7 +206,8 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `timeline full` a corrected fact reads "corrected from <how> <suggested value>". Not a tool; only the chat loop and `smoke.py` call it. Imports `record`,
   `deterministic`, `sheet` (for `shown`). Imported by `agent`, `smoke`.
 - `tools.py`: the nine `@tool` functions and the `tools` list (see Tools the model can call), plus the
-  plain helpers `pretty`, `quote_is_real`, `build_letter`, `open_facts_by_issue`, `deadline_listing`, and
+  plain helpers `pretty`, `quote_is_real`, `sentence`, `build_letter`, `dates_written`, `same_day`, `amount`,
+  `not_in_record`, `check_line` (the letter, Data flow, step 7), `open_facts_by_issue`, `deadline_listing`, and
   `deadline_receipt`. Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `lease`, `sheet`, `wiki`.
   Imported by `prompt`, `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
 - `prompt.py`: what the model reads (split out of `agent.py` and `tools.py` on 2026-10-06, unchanged). `RULES` (the fixed part of the system prompt; if the environment sets `RULES_FILE`, that
@@ -472,11 +474,22 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    added (confirmed dates and deadlines first, then events in log order). `issue` filters deadlines and
    issue-tagged events; untagged events always show. `full` adds `fact_confirmed`, `fetch`, `cite_flagged`, `quote_flagged`, `cases_left_out`, `reply_empty`,
    `deadlines_computed`, the issue events, `session_started`, and `session_ended` events.
-7. Letter assembly (`draft_letter`, then `build_letter`). Checks the issue and posture, checks each quote
-   with `quote_is_real` (substring of a present lease clause quote or any stored statute section), then
-   builds the letter from a template: today's date, landlord and premises quotes from the profile, every
-   confirmed date fact of the active playbooks, the ask, a reply-by date (today plus `respond_within_days`),
-   the quotes, the delivery method, and the tenant names quote. Writes the draft file and a `draft` event.
+7. Letter assembly (`draft_letter`, then `build_letter`; TODO item 95, 2026-10-11). Checks the issue and posture;
+   refuses a ch. 83 cite (`citations.cites_in`, dollar amounts set aside) or a lease cite (`lease.LEASE_CITE`) in the
+   tenant's part (the account, the request, the delivery method), and a `signed_by` with a label (parentheses or quote
+   marks) or a signer whose words are not all among the lease's `tenant_names` quote (several signers split at commas
+   and "and"; any signer when the lease names none); checks each quote with `quote_is_real` (substring of a present
+   lease clause quote or any stored statute section). Then builds the letter: today's date, the landlord and premises
+   quotes from the profile, the account and the request as the model wrote them (`sentence` adds a closing period
+   if none), a reply-by date (today plus `respond_within_days`), the quotes, "Delivery: " and the delivery method,
+   and the signer. The model's words are never put inside a sentence of the program's, and no confirmed fact is
+   printed by id. Dates are written "October 6, 2026" (`pretty`). `not_in_record` finds each date (`dates_written`:
+   "September 19", "Sept. 19, 2026", "Oct 2nd", "9/19", "9/19/2026", "2026-09-19") and dollar amount in the tenant's
+   part that is not today, the reply-by date, in the tenant's own words (the description, updates, this session's
+   messages from `record.tenant_words`, recorded messages, confirmed facts) or in the lease's quotes, or, for an
+   amount, a confirmed amount or a number in the tenant's words; a date given without a year matches any year
+   (`same_day`). `check_line` names them in a "[CHECK BEFORE YOU SEND, not part of the letter: ...]" line under the
+   letter, never in the draft file. Writes the draft file and a `draft` event.
 
 ## Files on disk
 
@@ -651,11 +664,14 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   this chat, and their words are in your earlier get_cases result. Nothing new was printed.]"), and
   a topic not offered prints "This tool has no case topic named ..." with the matter's case topics, so the
   tenant sees the topics there are.
-- `draft_letter(issue, posture, ask, respond_within_days, delivery_method, obligation_quote,
-  obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a playbook;
-  `posture` is preserve (no quotes), assert (obligation quote), or escalate (both quotes). Rejects any quote
-  `quote_is_real` does not find. Returns the letter plus a "NOTE TO TENANT" line from the playbook's
-  `guidance.postures.notice_sufficiency`. Writes the draft file and a `draft` event. If this session already
+- `draft_letter(issue, posture, account, request, respond_within_days, delivery_method, signed_by,
+  obligation_quote, obligation_cite, consequence_quote, consequence_cite)`: `issue` must be in the matter and have a
+  playbook; `posture` is preserve (no quotes), assert (obligation quote), or escalate (both quotes). `account` (what
+  happened, may be "") and `request` are whole sentences in the tenant's voice, printed as written; `signed_by` is the
+  tenant's name as the lease gives it. Rejects a cite in the account, request, or delivery method, a signer the lease
+  does not name or one with a label, and any quote `quote_is_real` does not find (Data flow, step 7).
+  Returns the letter, a "CHECK BEFORE YOU SEND" line when a date or amount in the tenant's part is not in the record,
+  and a "NOTE TO TENANT" line from the playbook's `guidance.postures.notice_sufficiency`. Writes the draft file and a `draft` event. If this session already
   drafted the same file and the new text is identical, it writes nothing and returns "[The same letter was
   already drafted in this session (<file>) and appears above. Nothing new was drafted.]". The chat loop
   prints this tool's output directly.

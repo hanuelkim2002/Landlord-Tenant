@@ -14,12 +14,12 @@ from pathlib import Path
 from langchain.tools import tool
 
 import record
-from citations import is_in
+from citations import cites_in, is_in
 import config
 from config import shorten, squash
 from corpus import playbooks, statute
 from deterministic import matter_deadlines
-from lease import find_in_lease
+from lease import LEASE_CITE, find_in_lease
 from record import active_playbooks, append_event, element_status, matter_dir, read_events, save
 from sheet import parse_answer, shown
 import wiki
@@ -242,14 +242,20 @@ def get_cases(topic: str) -> tuple[str, str]:
             + printed), printed
 
 
-# ---- Draft Letter: a template filled from the record. No model call, so there is nothing to validate:
-# every date is today or a confirmed fact, and every quote was checked against the lease profile or the statute.
+# ---- Draft Letter: a template filled from the record (TODO 95, 2026-10-11). The program writes what a landlord could
+# hold the tenant to: today's date, the lease's names and addresses, the reply-by date, the quotes (each checked
+# against the lease profile or the statute), the delivery line, and the signer (a tenant the lease names). The model
+# writes only the tenant's account and request, whole sentences printed as written and never put inside a sentence of
+# the program's: "I request that you {ask}" printed "I request that you i, Morgan Davis, ... am", and "This letter is
+# sent by {delivery_method}" printed "sent by by hand" (student simulation of 2026-10-06). Was also: every confirmed
+# date of every active issue under its id ("Tenancy terminated", "Claim notice dated" beside "Claim notice date").
+# Dates and dollar amounts now sit in the tenant's sentences, and one the record does not hold is named under the letter.
 
 def pretty(d):
     """date or '2026-07-31' -> 'July 31, 2026'"""
     if isinstance(d, str):
         d = date.fromisoformat(d)
-    return d.strftime("%B %d, %Y")
+    return f"{d:%B} {d.day}, {d.year}"
 
 
 def quote_is_real(text):
@@ -258,46 +264,136 @@ def quote_is_real(text):
     return any(squash(text) in squash(s) for s in sources)
 
 
-def build_letter(ask, respond_within_days, delivery_method, quotes):
-    """Assemble the letter line by line. Every date is today or a confirmed fact; every quote was checked."""
-    profile, facts = record.profile, record.matter["facts"]
+def sentence(text):
+    """The model's words as written, ending with a period unless they already end a sentence."""
+    text = text.strip()
+    return text if not text or text.endswith((".", "!", "?", '"', "'", "”")) else text + "."
+
+
+def build_letter(account, request, respond_within_days, delivery_method, signed_by, quotes):
+    """Assemble the letter line by line: the program's lines around the tenant's account and request."""
+    profile = record.profile
     today = date.today()
     lines = [pretty(today), "",
              profile.landlord_name_and_address.quote, "",
              "Re: " + profile.premises_address.quote, ""]
-    dates_shown = set()
-    for pb in active_playbooks():                          # the confirmed dates, labeled by the playbooks' own ids
-        for e in pb.spec.elements:
-            if e.type == "date" and e.id in facts and e.id not in dates_shown:
-                dates_shown.add(e.id)
-                lines.append(f"{e.id.replace('_', ' ').capitalize()}: {pretty(facts[e.id])}")
-    ask = ask.strip().rstrip(".")                          # the sentence below adds its own period
-    lines += ["", f"I request that you {ask[0].lower() + ask[1:]}.",
-              f"Please respond by {pretty(today + timedelta(days=respond_within_days))}.", ""]
+    if account.strip():
+        lines += [sentence(account), ""]
+    lines += [sentence(request), f"Please respond by {pretty(today + timedelta(days=respond_within_days))}.", ""]
     for q in quotes:
         lines += [f'{q["cite"]} states: "{q["text"]}"', ""]
-    lines += [f"This letter is sent by {delivery_method}.", "", profile.tenant_names.quote]
+    lines += [f"Delivery: {delivery_method.strip()}", "", signed_by.strip()]
     return "\n".join(lines)
 
 
+# Dates and dollar amounts as people write them: "September 19", "Sept. 19, 2026", "Oct 2nd", "9/19", "9/19/2026",
+# "2026-09-19", "$1,850.00".
+MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october",
+          "november", "december"]
+MONTH_DAY = re.compile(r"\b(" + "|".join(MONTHS) + r"|jan|feb|mar|apr|jun|jul|aug|sept?|oct|nov|dec)\.?\s+(\d{1,2})"
+                       r"(?:st|nd|rd|th)?\b(?:,?\s+(20\d\d)\b)?", re.I)
+SLASH_DAY = re.compile(r"\b(\d{1,2})/(\d{1,2})(?:/(20\d\d))?\b")
+ISO_DAY = re.compile(r"\b(20\d\d)-(\d\d)-(\d\d)\b")
+AMOUNT = re.compile(r"\$\s?(\d+(?:,\d{3})*(?:\.\d+)?)")
+NUMBER = re.compile(r"\d+(?:,\d{3})*(?:\.\d+)?")
+
+
+def dates_written(text):
+    """Each date in the text, as written and as (month, day, year or None): [("Sept. 19", (9, 19, None))]."""
+    found = []
+    for m in MONTH_DAY.finditer(text):
+        month = next(i + 1 for i, name in enumerate(MONTHS) if name.startswith(m.group(1).lower()[:3]))
+        found.append((m.group(0), (month, int(m.group(2)), int(m.group(3)) if m.group(3) else None)))
+    for m in SLASH_DAY.finditer(text):
+        found.append((m.group(0), (int(m.group(1)), int(m.group(2)), int(m.group(3)) if m.group(3) else None)))
+    for m in ISO_DAY.finditer(text):
+        found.append((m.group(0), (int(m.group(2)), int(m.group(3)), int(m.group(1)))))
+    return [(words, day) for words, day in found if 1 <= day[0] <= 12 and 1 <= day[1] <= 31]
+
+
+def same_day(a, b):
+    """Two (month, day, year) dates are the same day; a year left out matches any year."""
+    return a[:2] == b[:2] and (a[2] is None or b[2] is None or a[2] == b[2])
+
+
+def amount(words):
+    """'1,850.00' -> 1850.0"""
+    return float(words.replace(",", ""))
+
+
+def not_in_record(text, respond_by):
+    """The dates and dollar amounts in the tenant's part of a letter that the record does not hold, as written. A
+    date counts when it is today, the reply-by date, or in the tenant's own words (the description, updates, this
+    session's messages, recorded messages, confirmed facts, a confirmed date among them) or the lease's quotes; an
+    amount when it is a confirmed amount, a number in the tenant's own words, or an amount in the lease's quotes."""
+    facts = record.matter["facts"]
+    events = read_events()
+    tenant = " ".join([record.matter.get("description", ""), *record.tenant_words(),
+                       *[ev["text"] for ev in events if ev["kind"] == "tenant_update"],
+                       *[f'{ev["sent_on"]} {ev["text"]}' for ev in events if ev["kind"] == "communication"],
+                       *[v for v in facts.values() if isinstance(v, str)]])
+    lease = " ".join(c.quote for _, c in record.profile.clauses() if c.present and c.quote)
+    days = [(d.month, d.day, d.year) for d in (date.today(), respond_by)]
+    days += [day for _, day in dates_written(tenant + " " + lease)]
+    sums = [float(v) for v in facts.values() if isinstance(v, (int, float)) and not isinstance(v, bool)]
+    sums += [amount(n) for n in NUMBER.findall(tenant)] + [amount(n) for n in AMOUNT.findall(lease)]
+    missing = [words for words, day in dates_written(text) if not any(same_day(day, d) for d in days)]
+    missing += [m.group(0) for m in AMOUNT.finditer(text) if amount(m.group(1)) not in sums]
+    return list(dict.fromkeys(missing))
+
+
+def check_line(missing):
+    """The line under a letter naming what the record does not hold, or "" when it holds everything."""
+    if not missing:
+        return ""
+    named = missing[0] if len(missing) == 1 else ", ".join(missing[:-1]) + " and " + missing[-1]
+    return (f"[CHECK BEFORE YOU SEND, not part of the letter: the tool did not find {named} in your answers, your "
+            f"messages, or your lease. Make sure {'it is' if len(missing) == 1 else 'each is'} right.]")
+
+
 @tool
-def draft_letter(issue: str, posture: str, ask: str, respond_within_days: int, delivery_method: str,
-                 obligation_quote: str = "", obligation_cite: str = "",
+def draft_letter(issue: str, posture: str, account: str, request: str, respond_within_days: int,
+                 delivery_method: str, signed_by: str, obligation_quote: str = "", obligation_cite: str = "",
                  consequence_quote: str = "", consequence_cite: str = "") -> str:
-    """Draft a letter from the tenant to the landlord. The tenant sends it; you never do.
+    """Draft a letter from the tenant to the landlord. The tenant sends it; you never do. The program prints today's
+    date, the landlord and the unit as the lease gives them, the reply-by date, the quoted sentences, the delivery
+    line, and the signer. You write only the account and the request, in the tenant's voice, and they are printed as
+    you write them.
     issue: which of the matter's issues this letter is about, e.g. "deposit_not_returned".
     posture: "preserve" (no quotes), "assert" (adds obligation_quote), "escalate" (adds consequence_quote too).
-    ask: the concrete thing the tenant wants, e.g. "return the $1,850.00 deposit to 12 Elm St, Gainesville FL 32601".
-    respond_within_days: how many days the tenant gives for a reply.
-    delivery_method: how the TENANT will send this letter, e.g. "certified mail, return receipt requested".
-    obligation_quote: the exact lease or statute sentence the ask rests on, copied word for word.
+    account: what happened, in whole sentences in the tenant's first person, from what the tenant has told you: the
+      problem and when it started, what the tenant did and when, what the landlord did. Every date and amount as the
+      tenant gave it or as confirmed, never one you worked out. No cite and no legal conclusion. "" when the request
+      says it all.
+    request: what the tenant asks for or states, in whole sentences in the tenant's voice, e.g. "Please return my
+      $1,850.00 deposit to 12 Elm St, Gainesville FL 32601." or "I will move out on October 11, 2026."
+    respond_within_days: how many days the tenant gives for a reply; the program prints the date.
+    delivery_method: how the TENANT will send this letter, printed after "Delivery: ", e.g. "certified mail, return
+      receipt requested" or "by hand to the leasing office".
+    signed_by: the tenant's name as the lease gives it, without a label such as ("Resident"); several tenants signing
+      together, their names separated by commas.
+    obligation_quote: the exact lease or statute sentence the request rests on, copied word for word.
     obligation_cite: a reader-facing cite such as "Lease Section 4.3" or "Fla. Stat. 83.49(3)(a)". Never a profile field name.
     consequence_quote / consequence_cite: escalate only; the exact sentence stating what happens if the landlord does not act.
-    Quotes not found in the lease profile or the stored statute are rejected."""
+    Rejected: a quote not found in the lease profile or the stored statute; a cite in the account or the request (the
+    lease's and the statute's words go in only as obligation_quote or consequence_quote); a signer the lease does not
+    name. A date or a dollar amount in the account or the request that is not in the tenant's answers, messages, or
+    lease is printed with a line asking the tenant to check it."""
     if issue not in playbooks or issue not in record.matter["issues"]:
         return f"issue must be one of this matter's issues: {record.matter['issues']}"
     if posture not in ("preserve", "assert", "escalate"):
         return "posture must be preserve, assert, or escalate"
+    tenant_part = f"{account}\n{request}\n{delivery_method}"
+    cited = cites_in(AMOUNT.sub("", tenant_part)) + [m.group(0) for m in LEASE_CITE.finditer(tenant_part)]
+    if cited:
+        return (f"Rejected: the account or the request cites {', '.join(cited)}. Write them without cites; the lease's "
+                "and the statute's words go in only as obligation_quote or consequence_quote, with their cites.")
+    names = record.profile.tenant_names.quote or ""        # each signer's words must be among the lease's names
+    named = set(re.findall(r"[a-z]+", names.lower()))
+    signers = [s for s in re.split(r",|\band\b", signed_by, flags=re.I) if s.strip()]
+    labeled = re.search(r'[()"“”]', signed_by)
+    if not signers or labeled or (names and any(not set(re.findall(r"[a-z]+", s.lower())) <= named for s in signers)):
+        return f'Rejected: signed_by must be a tenant the lease names ("{names}"), without a label.'
     quotes = []
     if posture in ("assert", "escalate"):
         if not quote_is_real(obligation_quote):
@@ -308,7 +404,8 @@ def draft_letter(issue: str, posture: str, ask: str, respond_within_days: int, d
             return "Rejected: consequence_quote is not found in the lease profile or the stored statute."
         quotes.append({"cite": consequence_cite, "text": consequence_quote})
 
-    letter = build_letter(ask, respond_within_days, delivery_method, quotes)
+    letter = build_letter(account, request, respond_within_days, delivery_method, signed_by, quotes)
+    check = check_line(not_in_record(tenant_part, date.today() + timedelta(days=respond_within_days)))
     filename = f"draft_{date.today()}_{issue}_{posture}.txt"
     # The same letter again in the same session (seen in m-026) is already on the tenant's screen: nothing is
     # written or logged. Same means this session drafted this file and the text has not changed.
@@ -320,7 +417,7 @@ def draft_letter(issue: str, posture: str, ask: str, respond_within_days: int, d
     (matter_dir() / filename).write_text(letter)
     append_event("draft", issue=issue, posture=posture, cites=[q["cite"] for q in quotes], file=filename)
     note = playbooks[issue].guidance["postures"]["notice_sufficiency"]
-    return letter + "\n\n[NOTE TO TENANT, not part of the letter: " + note + "]"
+    return letter + (f"\n\n{check}" if check else "") + "\n\n[NOTE TO TENANT, not part of the letter: " + note + "]"
 
 
 # ---- Add Artifact

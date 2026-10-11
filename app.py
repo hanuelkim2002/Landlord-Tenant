@@ -100,8 +100,9 @@ def plain(text):
 # What each kind of the program's block is called on the page (agent.py, BLOCK KINDS).
 PRINTED_BY = {
     "deadlines": "Printed by the program: deadlines computed from your confirmed facts. Not written by the model.",
-    "letter": "Printed by the program from its letter tool, which builds a letter from a template and your confirmed "
-              "facts. The tool never sends anything.",
+    "letter": "Printed by the program from its letter tool. The date, the addresses, the reply-by date, the quotes, and "
+              "the signature are the program's; the account and the request are the model's wording of what you said. "
+              "Read every line before you send it. The tool never sends anything.",
     "cases": "Printed by the program from the case wiki, in the courts' own words.",
     "timeline": "Printed by the program from your record.",
     "stop": "Printed by the program.",

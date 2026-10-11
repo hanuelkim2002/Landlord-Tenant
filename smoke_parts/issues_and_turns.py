@@ -208,8 +208,8 @@ try:
           and sum(line.get("what") == "deadlines" for line in session_lines) == 1)
 
     # the same letter twice in one session (m-026): drafted once; a changed letter is drafted again
-    letter_args = {"issue": "deposit_not_returned", "posture": "preserve", "ask": "Return the deposit",
-                   "respond_within_days": 10, "delivery_method": "certified mail"}
+    letter_args = {"issue": "deposit_not_returned", "posture": "preserve", "account": "", "request": "Please return the deposit.",
+                   "respond_within_days": 10, "delivery_method": "certified mail", "signed_by": "Jordan Ellis"}
     draft_letter.invoke(letter_args)
     again = draft_letter.invoke(letter_args)
     changed = draft_letter.invoke({**letter_args, "respond_within_days": 14})

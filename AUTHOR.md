@@ -24,6 +24,14 @@ shared with TODO.md and SLIPS.md and never reused.
 
 ## Sign-offs
 
+106. The letter (TODO 95, CHANGELOG 2026-10-11, option D). The program's lines: "Delivery: " and the method, the signer
+    (a tenant the lease names, no label), "Please respond by", the "[CHECK BEFORE YOU SEND, not part of the letter: ...]"
+    line under a letter with a date or amount the record does not hold, and the web page's label on a letter; the
+    `draft_letter` description the model reads (`python schemas.py`). Also README's non-negotiable "Letters are a code
+    template, not model text": the model now writes the account and the request, as it wrote the ask before, with every
+    date, amount, and cite in them checked. A wording to adopt or change: "Letters are a code template: the program
+    writes the date, the addresses, the reply-by date, the quotes, the delivery line, and the signer; the model writes
+    only the tenant's account and request, and every date, amount, and cite in them is checked."
 84. The options' gates in all ten playbooks against `statutes/`, then sign off as for item 2. The CHANGELOG entries of
     2026-10-04 (items 72, 81, 84) and 2026-10-08 (the sheet asks plain facts, parts 1 and 2) say what each gate holds.
     Points to look at in particular:

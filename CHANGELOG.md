@@ -3,6 +3,45 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-11
+
+- The letter: the model's words are never put inside a sentence of the program's (TODO 95; option D, the author's
+  choice). The underlying issue: `tools.build_letter` filled the letter as a form from the record instead of writing
+  the tenant's letter. It wrapped the model's words in its own sentences, and it printed what the record held rather
+  than what the letter was for. Instances: `"I request that you {ask}."` printed "I request that you i, Morgan Davis,
+  ... am ending my lease" (student simulation of 2026-10-06, story F) and "I request that you please withdraw"
+  (nemotron, 2026-10-08), and a letter that states rather than asks (ending the lease, an 83.49(5) notice before
+  moving out) had no way to be written; `"This letter is sent by {delivery_method}."` printed "sent by by hand"
+  (stories C, E, F), "sent by in person", and "sent by hand-delivered" (3 of 22 nemotron letters on 2026-10-08); every
+  confirmed date of every active issue printed under its id, so the tenant's own letter stated legal labels
+  ("Tenancy terminated" in 9 deposit letters, "Written notice date" for a portal request, A, D2, E), two near-same
+  labels ("Claim notice dated" beside "Claim notice date", 5 carpet letters), another issue's dates (F's leaving
+  letter printed the repair's), one date for two problems (C), and lines the tenant could not change (D2); the
+  signature was the lease's names quote, `Jordan Reyes ("Resident")` in all six student letters, and on a lease naming
+  several tenants it would have signed for every one; the tenant's own account (the technician's visit, the
+  temperature, the doctor's note, the carpet's reason) had no place but the ask, where no date or amount was checked;
+  and dates read "October 06". Now: `draft_letter` takes `account` (what happened, in the tenant's first person, may be
+  "") and `request` (what the tenant asks for or states), whole sentences printed as written, and `signed_by`; it
+  refuses a ch. 83 or lease cite in the tenant's part (the law goes in only as the posture's checked quotes) and a
+  signer the lease does not name or one with a label. `build_letter` prints the date ("October 6, 2026"), the
+  landlord and premises from the lease, the account, the request, "Please respond by" with the code's date, the
+  quotes, "Delivery: " with the method, and the signer; no fact by id. `not_in_record` finds each date and dollar
+  amount in the tenant's part that is not today, the reply-by date, in the tenant's own words (description, updates,
+  this session's messages, recorded messages, confirmed facts), or in the lease, and `check_line` names them under
+  the letter, "[CHECK BEFORE YOU SEND, not part of the letter: ...]", never in the draft file. A flag, not a refusal:
+  a refusal would turn away "September 19" when the tenant typed "the 19th", and a letter not drafted is already the
+  most common letter miss (SLIPS 39). Today's `ask` had no such check, so this is stricter than before, not looser.
+  `lease.LEASE_CITE` moved from `replies.py` for the check. The web page's label on a letter says which lines are the
+  program's and which the model's. Not changed: the note under a letter and the posture names (TODO 100), one letter
+  per issue (TODO 94), rule 6 (TODO 96, the next change). The student simulation's replay harness
+  (`docs/evals/2026-10-06-students/method/harness.py`) replays the old `draft_letter` arguments and no longer rebuilds
+  the letter turns; it is a dated record. For the author (AUTHOR.md 106): the letter's wording, and README's "Letters
+  are a code template, not model text". Smoke: the account and request printed as written, the delivery line once, no
+  date line, the signer alone, "October 6, 2026"; dates and amounts from the sheet, the tenant's messages, and the
+  lease pass, others are named under the letter and not in the file; a cite, an unnamed signer, a labeled one, and
+  none are refused and nothing is drafted; the ten playbooks' letters and the same-letter check on the new arguments;
+  part 1's date-line check now says no date line. 703 lines, all OK.
+
 ## 2026-10-09
 
 - The TODO list split in three (the author's request: too many items, so the important ones were overlooked). Was:

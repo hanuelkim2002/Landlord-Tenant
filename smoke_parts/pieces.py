@@ -206,13 +206,16 @@ print()
 # the letter template
 record.matter["issues"] = ["deposit_not_returned"]
 record.matter["facts"] = dict(test_facts)
-print(build_letter("Return the $1,850.00 deposit to 12 Elm St, Gainesville FL 32601", 10, "certified mail, return receipt requested",
+print(build_letter("I moved out on July 30, 2026, and gave my forwarding address the same day.",
+                   "Please return my $1,850.00 deposit to 12 Elm St, Gainesville FL 32601", 10,
+                   "certified mail, return receipt requested", "Jordan A. Ellis",
                    [{"cite": "Fla. Stat. 83.49(3)(a)", "text": pb.spec.clocks[0].quote}]))
 print()
 
-check("a letter's request ends with one period, whatever the ask ends with",
-      "32601.\n" in build_letter("Return the deposit to 12 Elm St, Gainesville FL 32601.", 10, "certified mail", [])
-      and ".." not in build_letter("Return the deposit to 12 Elm St, Gainesville FL 32601.", 10, "certified mail", []))
+ended = [build_letter("", f"Please return the deposit to 12 Elm St, Gainesville FL 32601{end}", 10, "certified mail",
+                      "Jordan A. Ellis", []) for end in ("", ".")]
+check("a letter's request ends with one period, whatever the request ends with",
+      all("32601.\n" in letter and ".." not in letter for letter in ended))
 print()
 
 # cites in a reply (citations.py): subsections are found in every stored section, and each kind of bad cite is
