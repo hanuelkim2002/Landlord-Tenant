@@ -1,8 +1,8 @@
 """Prompt: what the model reads. The rules (the fixed part, with rules 6 and 8 put in only when they can apply), and
-the system prompt built from the record on every model call: the lease, the playbooks' notes and open questions, the
-statute, the case topics, the tenant's facts, the options, what the tool does not know, and which deadlines have
-passed, each part under a name a tenant can read (PARTS). No model call here; agent.build_agent hands system_prompt to
-the model. Split out of agent.py and tools.py on 2026-10-06, as it was.
+the system prompt built from the record on every model call: the lease, the menu of skills, the loaded skills'
+instructions, the statute sections they list, the case topics, the tenant's facts, the options, what the tool does not
+know, and which deadlines have passed, each part under a name a tenant can read (PARTS). No model call here;
+agent.build_agent hands system_prompt to the model. Split out of agent.py and tools.py on 2026-10-06.
 """
 import json
 import os
@@ -10,25 +10,26 @@ import re
 from datetime import date
 from pathlib import Path
 
-import yaml
-
 import record
 from corpus import statute
 from deterministic import NOT_APPLY, check_options, matter_deadlines
 from lease import LABELS, lease_lines
 from record import active_playbooks, element_status, read_events
+from skills import skills
 from tools import offered_topics, open_facts_by_issue
 
 
-# ---- Rules: the fixed part of the system prompt. The lease profile, the playbooks' notes and open questions,
-# the statute sections, the case topics, the element status, and the deadline status are appended to it on every
-# model call (system_prompt, below), each under a name a tenant can read (PARTS, below; TODO item 61).
+# ---- Rules: the fixed part of the system prompt. The lease profile, the skill menu, the loaded skills, the statute
+# sections, the case topics, the element status, and the deadline status are appended to it on every model call
+# (system_prompt, below), each under a name a tenant can read (PARTS, below; TODO item 61).
 # Version G (2026-10-02, TODO item 46): rules 1, 3, 5, and 9 apply the law to the tenant's facts. Version F, which
 # set the law beside the facts and never said what it meant, is in git history (commit a3b0b13).
 
 RULES = """You help a Florida residential tenant with a landlord-tenant dispute (Fla. Stat. ch. 83, part II). You apply the lease text in YOUR LEASE, the statute text in THE STATUTE, and the cases get_cases gives you to the tenant's record in YOUR FACTS and WHICH DEADLINES HAVE PASSED, and say what they mean for the tenant. The parts of this prompt are named as you name them to the tenant: YOUR LEASE is the tenant's lease, YOUR FACTS the tenant's facts. You are not a lawyer: the program prints a line under your answer saying it is the tool's reading, not a lawyer's advice, so do not write one yourself. You never send anything and never work out a date.
 
 Write short plain sentences. Cite, do not recite: give each rule in one plain sentence with its source in parentheses, (Fla. Stat. 83.56(1)) or the cite YOUR LEASE gives the clause, (Lease Section 4.3) or (Lease, page 1); the program prints the cited words under your reply, so never paste a section, a lease clause, or a case's passage into it. Quote only the few words a point turns on, in quote marks, next to the cite. Never list back what the tenant has confirmed or said: name only the facts the answer turns on, each in a few words. Where a fact came from, when it matters, in plain lower-case words: "you confirmed", "your lease says", "the program's deadlines", "the statute does not settle this". No labels like "Quote:" or "Fact:", no ids like forwarding_address_given or deposit_not_returned (say "the deposit", "the notice"), no part name in capitals as this prompt writes it, and no rule number ("rule 8").
+
+Load the skills that fit the tenant's situation with load_skill before you answer about it; more than one may fit. Follow a loaded skill's instructions. If none fits, say this tool has no skill for that situation, and answer only from what search_statute and get_statute_section find.
 
 Each "Not:" is a kind of past mistake: never write anything like it; write the "Instead:" form.
 
@@ -77,8 +78,8 @@ Instead: get_statute_section first (search_statute finds a phrase), then cite.
 Not: a rule from 83.64(1) cited as "Fla. Stat. 83.64(4)".
 Instead: cite the subsection the words sit in: the nearest "(1)" and "(a)" markers before the sentence in THE STATUTE.
 If nothing you have or can fetch answers: write exactly "The lease and statute text I have do not answer that." and nothing after "that".
-Not: that fallback line to "My notice says I can only pay by money order at the office. Can he do that?" while WHAT THE STATUTE DOES NOT SETTLE has an open question on the notice's form (no stored sentence says "money order").
-Instead: the fallback line only when no stored sentence, no open question in WHAT THE STATUTE DOES NOT SETTLE, and no topic in COURT CASES THIS TOOL HAS is on the point. When an open question or a topic is on it, even in other words than the tenant's, give its readings (rule 5) or its cases (rule 8), applied to the facts.
+Not: that fallback line to "My notice says I can only pay by money order at the office. Can he do that?" while a loaded skill's "What the statute does not settle" has an open question on the notice's form (no stored sentence says "money order").
+Instead: the fallback line only when no stored sentence, no open question in a loaded skill's "What the statute does not settle", and no topic in COURT CASES THIS TOOL HAS is on the point. When an open question or a topic is on it, even in other words than the tenant's, give its readings (rule 5) or its cases (rule 8), applied to the facts.
 
 3. Dates come only from YOUR FACTS, a lease quote, the tenant's words, or a tool result.
 Not: "Lease term ended: 2026-09-30" (in no source)
@@ -99,7 +100,7 @@ Instead: call propose_facts with the tenant's exact words as "said" (shortened o
 Not: "Can you confirm the date you moved out?" or "Please tell me: your monthly rent, the new rent, and the date you got the notice."
 Instead: read facts in YOUR FACTS; for anything the tenant states, call propose_facts; the sheet asks the tenant after your reply. Never ask in the chat to confirm or supply a fact listed in YOUR FACTS.
 
-5. The open questions in WHAT THE STATUTE DOES NOT SETTLE stay open, with their readings.
+5. The open questions in a loaded skill's "What the statute does not settle" stay open, with their readings.
 Not: "The termination date is the day you moved out." (an open question settled) or "Which date do you consider the termination of the rental agreement?" (asking the tenant to settle it)
 Not: "The statute does not settle this." and nothing more.
 Instead: "The statute does not settle this:" then the point in plain words, then each of the open question's readings and what it would mean on the tenant's facts. Never pick one. An open question with no readings is a limit of the tool: say what the tool does not compute.
@@ -125,7 +126,7 @@ Not: drafting, then asking the posture, then drafting again; or asking for days 
 Not: "What exactly do you want the landlord to do?" after the tenant wrote "asking for my $900 back".
 Instead: before draft_letter, ask once for whatever is missing: which issue (if more than one), what they want the landlord to do, days to reply, how they will send it (quote the notices clause), and the posture.
 Not: "Preserve is the gentle option." or the posture lines retold without quote marks.
-Not: THE TOOL'S NOTES ON YOUR ISSUES, deposit_not_returned, postures: "preserve: States move-out date, ..." (labels from this prompt)
+Not: LOADED SKILLS, deposit_not_returned, Letters: "preserve: States move-out date, ..." (labels from this prompt)
 Instead: each posture line word for word after its name only, as preserve: "[its line]", then ask which; for assert or escalate, name the sentence the letter will quote.
 Not: only "The letter appears above; tell me if you want changes." after "can you add the doctor's note? also does this letter count as my notice?"
 Instead: after draft_letter, answer anything else the tenant asked in that message, as any answer, then end with "The letter appears above; tell me if you want changes." Never retell the letter. Changes go through draft_letter again; never write or rewrite a letter yourself."""
@@ -164,7 +165,7 @@ if os.environ.get("RULES_FILE"):
 
 
 # ---- The System Prompt: built from whatever the record holds at the moment the model is called, on every call,
-# so facts confirmed on the sheet and issues added mid-chat reach the model at once.
+# so facts confirmed on the sheet and skills loaded mid-chat reach the model at once.
 
 # The prompt's parts, in order, each under a name a tenant can read. The model names its sources, and with
 # names like "ELEMENT STATUS" and "PLAYBOOKS" it wrote "(ELEMENT STATUS shows ...)" in 17 replies per 100, though
@@ -172,10 +173,10 @@ if os.environ.get("RULES_FILE"):
 PARTS = {
     "lease": ("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease: each in plain "
               "words, with the cite to use and its words; search_lease searches the whole lease's text)"),
-    "notes": "THE TOOL'S NOTES ON YOUR ISSUES (by issue: questions, lease checks, evidence, postures, mistakes to avoid)",
-    "open": ("WHAT THE STATUTE DOES NOT SETTLE (by issue: each open question, its sections, and its readings; the "
-             "stored text settles none of them, so give every reading and pick none)"),
-    "statute": "THE STATUTE (the sections for your issues, Fla. Stat. ch. 83, part II)",
+    "skills": ("SKILLS (every skill this tool has, with what it covers; load each one that fits the tenant's situation "
+               "with load_skill)"),
+    "loaded": "LOADED SKILLS (the instructions of each skill loaded for this matter, under its name: follow them)",
+    "statute": "THE STATUTE (the sections the loaded skills list, Fla. Stat. ch. 83, part II)",
     "cases": "COURT CASES THIS TOOL HAS (topics for get_cases; number of cases on each)",
     "facts": "YOUR FACTS (by issue: known, changed, proposed, missing, or n/a, and where each came from)",
     "options": ("YOUR OPTIONS (checked by the program from the confirmed facts, the program's deadlines, and the lease "
@@ -197,26 +198,21 @@ PARTS = {
 
 
 def system_prompt(messages=()):
-    """The rules (rules_for the chat so far, `messages`), then each part under its name in PARTS: the lease
-    profile, each active issue's guidance, its open questions, the statute sections, the case topics, the element
-    status, the options (options_status), what the tool does not know (unknowns_status), and the
-    deadline status (deadline_status: passed or upcoming, no dates), as the record stands now."""
-    sections = sorted({s for pb in active_playbooks() for s in pb.sections})   # an issue with no playbook adds none
+    """The rules (rules_for the chat so far, `messages`), then each part under its name in PARTS: the lease profile,
+    the menu of every skill (the loaded ones marked), each loaded skill's instructions under its name, the statute
+    sections the loaded skills list, the case topics, the element status, the options (options_status), what the tool
+    does not know (unknowns_status), and the deadline status (deadline_status: passed or upcoming, no dates), as the
+    record stands now."""
+    loaded = record.active_skills()
+    menu = "\n".join(f"- {name}: {skill.description}" + (" (loaded)" if name in record.matter["skills"] else "")
+                     for name, skill in skills.items())
+    instructions = "\n\n".join(f"# {skill.name}\n{skill.body}" for skill in loaded) or "none loaded yet"
+    sections = sorted({s for skill in loaded for s in skill.sections})
     hot = "\n\n".join(f"=== {s} ===\n{statute[s]}" for s in sections)
-    # Only the model-facing part of each playbook: the guidance half, and the open questions rule 5 refers to,
-    # each in its own part. The rest of spec (elements, clocks, exclusions) is for code and never enters the
-    # context. The open questions go in without their ids: no tool takes one, and the model copied them into
-    # replies (TODO item 53).
-    dump = lambda data: yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=110)
-    notes = "\n\n".join(dump({"issue": pb.issue, **pb.guidance}) for pb in active_playbooks())
-    open_text = "\n\n".join(
-        dump({"issue": pb.issue,
-              "open_questions": [{k: v for k, v in q.items() if k != "id"} for q in pb.spec.open_questions]})
-        for pb in active_playbooks() if pb.spec.open_questions) or "none listed for these issues"
     return (rules_for(messages)
             + f"\n\n{PARTS['lease']}:\n" + lease_lines(record.profile)
-            + f"\n\n{PARTS['notes']}:\n" + notes
-            + f"\n\n{PARTS['open']}:\n" + open_text
+            + f"\n\n{PARTS['skills']}:\n" + menu
+            + f"\n\n{PARTS['loaded']}:\n" + instructions
             + f"\n\n{PARTS['statute']}:\n" + hot
             + f"\n\n{PARTS['cases']}:\n" + case_topics_text()
             + f"\n\n{PARTS['facts']}:\n" + json.dumps(element_status(), indent=2)
@@ -226,7 +222,7 @@ def system_prompt(messages=()):
 
 
 def case_topics_text():
-    """One line per case topic offered for the active issues, or a line saying there are none."""
+    """One line per case topic offered for the loaded skills, or a line saying there are none."""
     topics = offered_topics()
     return "\n".join(f"- {t} ({n})" for t, n in topics.items()) or "none for these issues"
 

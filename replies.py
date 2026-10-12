@@ -13,17 +13,17 @@ from config import shorten
 from corpus import statute
 from lease import LABELS, LEASE_CITE, SECTION_NUMBER, lease_cite, lease_clauses
 from prompt import system_prompt
-from record import active_playbooks, append_event, read_events
+from record import append_event, read_events
 
 
 # ---- What the model had: the sections it could cite, and everything it was given, for the cite and quote checks.
 
 def sections_shown(messages):
-    """The sections the model could cite from: THE STATUTE in its prompt (the active playbooks' sections) plus every
+    """The sections the model could cite from: THE STATUTE in its prompt (the loaded skills' sections) plus every
     section it fetched with get_statute_section in this chat's thread."""
     fetched = {c["args"].get("section") for m in messages if m.type == "ai"
                for c in m.tool_calls if c["name"] == "get_statute_section"}
-    return {s for pb in active_playbooks() for s in pb.sections} | fetched
+    return {s for skill in record.active_skills() for s in skill.sections} | fetched
 
 
 def given_text(messages):

@@ -22,6 +22,7 @@ from deterministic import matter_deadlines
 from lease import LEASE_CITE, find_in_lease
 from record import active_playbooks, append_event, element_status, matter_dir, read_events, save
 from sheet import parse_answer, shown
+from skills import skills
 import wiki
 
 
@@ -45,6 +46,25 @@ def search_statute(phrase: str) -> str:
             hits.append(f"{sec}: ...{text[max(0, i-80):i+120]}...")
     append_event("fetch", search=phrase)
     return "\n".join(hits) or "No matches."
+
+
+# ---- Load Skill: the model picks the skills that fit the tenant's situation. A loaded skill's instructions and statute
+# sections are in the system prompt from the next model call (prompt.system_prompt), for the rest of the matter.
+
+@tool
+def load_skill(name: str) -> str:
+    """Load one of this tool's skills. A skill is a set of instructions for one kind of situation (a deposit not
+    returned, a repair not made, a notice received), with the statute sections it rests on. SKILLS in your instructions
+    lists every skill with what it covers. Before you answer about the tenant's situation, load each skill that fits
+    it; more than one may fit, and do not load one that does not. Once loaded, the skill's instructions appear in
+    LOADED SKILLS and its sections in THE STATUTE, in your instructions for the rest of the matter, so load it once.
+    name: the skill's name exactly as SKILLS gives it."""
+    if name not in skills:
+        return f"No skill named {name!r}. The skills there are: {', '.join(skills)}."
+    if name in record.matter["skills"]:
+        return f"The skill {name} is already loaded. Its instructions are in LOADED SKILLS."
+    record.add_skill(name)
+    return f"Loaded {name}. Its instructions are now in LOADED SKILLS and its statute sections in THE STATUTE."
 
 
 # ---- Lease Search (TODO item 82): YOUR LEASE holds the clauses the tool reads, not the whole lease, and from them the
@@ -197,8 +217,8 @@ def get_deadlines() -> tuple[str, str]:
 # it quotes the cases from it and never retells one in its own words.
 
 def offered_topics():
-    """The case topics for the active issues' statute sections (wiki.case_topics)."""
-    return wiki.case_topics(sorted({s for pb in active_playbooks() for s in pb.sections}))
+    """The case topics for the loaded skills' statute sections (wiki.case_topics)."""
+    return wiki.case_topics(sorted({s for skill in record.active_skills() for s in skill.sections}))
 
 
 def topic_named(topic, topics):
@@ -359,7 +379,7 @@ def draft_letter(issue: str, posture: str, account: str, request: str, respond_w
     date, the landlord and the unit as the lease gives them, the reply-by date, the quoted sentences, the delivery
     line, and the signer. You write only the account and the request, in the tenant's voice, and they are printed as
     you write them.
-    issue: which of the matter's issues this letter is about, e.g. "deposit_not_returned".
+    issue: which of the matter's loaded skills this letter is about, e.g. "deposit_not_returned".
     posture: "preserve" (no quotes), "assert" (adds obligation_quote), "escalate" (adds consequence_quote too).
     account: what happened, in whole sentences in the tenant's first person, from what the tenant has told you: the
       problem and when it started, what the tenant did and when, what the landlord did. Every date and amount as the
@@ -379,8 +399,8 @@ def draft_letter(issue: str, posture: str, account: str, request: str, respond_w
     lease's and the statute's words go in only as obligation_quote or consequence_quote); a signer the lease does not
     name. A date or a dollar amount in the account or the request that is not in the tenant's answers, messages, or
     lease is printed with a line asking the tenant to check it."""
-    if issue not in playbooks or issue not in record.matter["issues"]:
-        return f"issue must be one of this matter's issues: {record.matter['issues']}"
+    if issue not in playbooks or issue not in record.matter["skills"]:
+        return f"issue must be one of this matter's loaded skills: {record.matter['skills']}"
     if posture not in ("preserve", "assert", "escalate"):
         return "posture must be preserve, assert, or escalate"
     tenant_part = f"{account}\n{request}\n{delivery_method}"
@@ -453,5 +473,5 @@ def add_communication(sent_on: str, sender: str, recipient: str, channel: str, t
 
 # ---- Tools List: what the agent may call. A new tool goes here after it is defined above.
 
-tools = [get_statute_section, search_statute, search_lease, propose_facts, get_deadlines, get_cases, draft_letter, add_artifact,
-         add_communication]
+tools = [get_statute_section, search_statute, load_skill, search_lease, propose_facts, get_deadlines, get_cases, draft_letter,
+         add_artifact, add_communication]

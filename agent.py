@@ -1,10 +1,9 @@
 """Agent: reading the lease, intake and resume, the agent, and the chat. What the model reads is in prompt.py, and
 what the program checks and prints under each reply in replies.py.
 
-The chat is in pieces any front end can call: turn (one model turn) and command (a chat command) return
-blocks, the parts the tenant sees, each {"kind", "text"}. "reply" is the model's words; every other kind is the
-program's (see BLOCK KINDS below). The terminal loop, chat, prints them with print_blocks; the web page,
-app.py, draws the same blocks.
+The chat is in pieces any front end can call: turn (one model turn) returns blocks, the parts the tenant sees, each
+{"kind", "text"}. "reply" is the model's words; every other kind is the program's (see BLOCK KINDS below). The
+terminal loop, chat, prints them with print_blocks; the web page, app.py, draws the same blocks.
 """
 import re
 
@@ -16,20 +15,18 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 import record
 from config import agent_llm
-from corpus import issue_menu, playbooks
-from deterministic import classify, fill_facts
 from lease import check_quotes, extract_profile, ingest_pdf
 from prompt import system_prompt
-from record import (active_playbooks, add_issues, add_related_issues, append_event, candidate_playbooks, matter_dir,
-                    prune_proposals, reject_issue, save)
+from record import append_event, matter_dir, save
 from replies import CASES_LEFT_OUT, CUT_OFF, cases_left_out, check_reply, cited_words, reading_line
-from sheet import pending_rows, run_sheet, stop_text
-from timeline import render_deadlines, render_timeline
+from sheet import pending_rows, run_sheet
+from timeline import render_deadlines
 from tools import deadline_listing, tools
 
 
-# ---- The lease and intake: read the lease into its profile, then classify the description and propose facts.
-# The sheet and the agent come after, in run.py or app.py.
+# ---- The lease and intake: read the lease into its profile, then save the description. No model reads the description
+# here: it is sent to the model as the tenant's first chat message (turn), which loads the skills that fit and proposes
+# facts. The agent comes after, in run.py or app.py.
 
 def read_lease(pdf_path):
     """Store the PDF, read it with Gemma into the lease profile, check every quote, save the profile."""
@@ -40,47 +37,18 @@ def read_lease(pdf_path):
 
 
 def intake(description):
-    """Classify, fill facts for every matching playbook, save. For a new matter only. The agent is built
-    afterwards (build_agent), once the intake sheet has run, so the prompt shows the confirmed facts."""
-    matter = record.matter
-    matter["description"] = description
-    matter["issues"] = []
-    matter["facts"] = {}
-    matter["proposed"] = {}
-    add_issues(classify(description, issue_menu())["issues"], "classify", "the tenant's description")
-    for pb in candidate_playbooks():                       # suggested issues too; first to propose a fact wins
-        for fact_id, p in fill_facts(description, pb).items():
-            matter["proposed"].setdefault(fact_id, p)
-    prune_proposals()                                      # e.g. a deposit amount the lease already gives
-    save(matter)
-    print("proposed:", list(matter["proposed"]))
+    """Save the tenant's description of a new matter in matter.json. For a new matter only. No model call: the
+    caller builds the agent (build_agent) and sends the description as the tenant's first message (turn)."""
+    record.matter["description"] = description
+    save(record.matter)
 
 
 # ---- Resume: an existing matter, and the tenant says what is new since last time.
 
 def resume(update_text):
-    """Record the update, add any new issues, propose facts from the update, return the issues it added. The
-    agent is built afterwards.
-    Classifies only the update (the old issues are already known) and never removes an issue. Proposes
-    for every active playbook, old and new: a value equal to a confirmed fact is dropped, a value that
-    differs from one shows up as "changed" in the element status, and a new one as "proposed"."""
-    matter = record.matter
-    append_event("tenant_update", text=update_text)        # the update, verbatim; description stays the first story
-
-    new_issues = add_issues(classify(update_text, issue_menu())["issues"], "classify", "the tenant's update")
-    new_issues += add_related_issues()                     # facts already confirmed may bring in more
-
-    fresh = {}
-    for pb in candidate_playbooks():                       # suggested issues too; first to propose a fact wins
-        for fact_id, p in fill_facts(update_text, pb).items():
-            if fact_id in matter["facts"] and matter["facts"][fact_id] == p["value"]:
-                continue                                   # the tenant already confirmed this value
-            fresh.setdefault(fact_id, p)
-    matter["proposed"].update(fresh)                       # a newer suggestion replaces an older pending one
-    prune_proposals()
-    save(matter)
-    print("new issues:", new_issues, "| proposed from update:", list(fresh))
-    return new_issues
+    """Log what the tenant says is new, verbatim, as a tenant_update event; the description stays the first story.
+    No model call: the caller sends the update as the tenant's first message of the visit (turn)."""
+    append_event("tenant_update", text=update_text)
 
 
 # ---- The Agent: its system prompt (prompt.system_prompt) is rebuilt from the record on every model call.
@@ -93,20 +61,19 @@ def prompt_from_record(request):
 
 def build_agent():
     """An agent whose system prompt is rebuilt from the record on every model call. No model call here."""
-    print("issues:", record.matter["issues"], "| playbooks:", [pb.issue for pb in active_playbooks()])
+    print("skills loaded:", record.matter["skills"])
     return create_agent(agent_llm, tools=tools, middleware=[prompt_from_record], checkpointer=InMemorySaver())
 
 
-# ---- Chat: a turn of the model, or a chat command the program answers itself. Both return blocks, the parts
-# the tenant sees, in order. Tool output is hidden except draft_letter, whose result is shown as is, and
-# get_deadlines and get_cases, whose listings the program shows. After a turn in which the model proposed facts,
-# the intake sheet asks the tenant to confirm them. Everything said, every tool call, every command, and every
-# sheet answer goes to the session's transcript.
+# ---- Chat: a turn of the model returns blocks, the parts the tenant sees, in order. Tool output is hidden except
+# draft_letter, whose result is shown as is, and get_deadlines and get_cases, whose listings the program shows. After a
+# turn in which the model proposed facts, the intake sheet asks the tenant to confirm them. Everything said, every tool
+# call, and every sheet answer goes to the session's transcript.
 #
 # BLOCK KINDS. From the model: "reply". From the program: "letter" (draft_letter's result), "cases" (get_cases'
 # listing), "deadlines" (get_deadlines' listing, through render_deadlines), "sources" (the statute and lease words a
-# reply cites, cited_words), "caution" (a failed cite or quote check, or no reply), "footer" (READING_LINE under a reply), "timeline", "notice" (a command's answer), "stop"
-# (nothing the tool covers is left).
+# reply cites, cited_words), "caution" (a failed cite or quote check, or no reply), "footer" (READING_LINE under a
+# reply), "notice" (a message from the page itself, such as what was skipped on the sheet).
 
 def block(kind, text):
     """One part of what the tenant sees: its kind (BLOCK KINDS above) and its text."""
@@ -259,63 +226,14 @@ def sheet_note(confirmed):
     return "[Program note: the tenant confirmed on the sheet: " + ", ".join(f"{i} = {v}" for i, v in confirmed) + "]\n"
 
 
-def command(text):
-    """A chat command, answered by the program without the model: issues (the active and suggested issues),
-    drop <issue> (takes an active issue out, logged), timeline [full] [<issue>]. Returns its blocks, or None
-    when the text is not a command. After a drop, no covered issue may be left (active_playbooks): the chat
-    ends there."""
-    lowered = text.strip().lower()
-    if lowered == "issues":                             # the matter's issues, from the record
-        record.append_transcript({"role": "command", "text": text})
-        lines = [f"  {i}: {playbooks[i].description if i in playbooks else 'not covered by this tool'}"
-                 for i in record.matter["issues"]]
-        lines += [f"  {p['issue']}: suggested, not yet confirmed" for p in record.matter["proposed_issues"]]
-        return [block("notice", "\n".join(lines))]
-    if lowered.startswith("drop "):                     # the tenant takes an issue out of the matter
-        record.append_transcript({"role": "command", "text": text})
-        issue = text.split(maxsplit=1)[1].strip()
-        if issue not in record.matter["issues"] or issue not in playbooks:
-            return [block("notice", f"No active issue named {issue}. Type issues to see them.")]
-        reject_issue(issue, "issue_dropped")
-        save(record.matter)
-        blocks = [block("notice", f"Dropped {issue} from this matter. It is logged, and it can be suggested again later.")]
-        if not active_playbooks():
-            blocks.append(block("notice", "No issue this tool covers is left in this matter, so the chat ends here."))
-        return blocks
-    if lowered.startswith("timeline"):
-        record.append_transcript({"role": "command", "text": text})
-        words = text.split()[1:]
-        full = "full" in words
-        issue = next((w for w in words if w != "full"), None)
-        if issue and issue not in record.matter["issues"]:
-            return [block("notice", f"No issue named {issue} in this matter. Active issues: {record.matter['issues']}")]
-        return [block("timeline", render_timeline(issue, full))]
-    return None
-
-
-def stop_block():
-    """What the tenant reads when nothing the tool covers is left (sheet.stop_text), as a block, written to the
-    transcript as printed."""
-    shown = stop_text()
-    record.append_transcript({"role": "printed", "text": shown})
-    return block("stop", shown)
-
-
-def chat(agent):
-    """The terminal chat: read a line, answer a command or run a turn, print the blocks, and run the intake
-    sheet after a turn in which the model proposed facts. An empty line or bye ends it."""
+def chat(agent, first=""):
+    """The terminal chat: run a turn on each line the tenant types, print the blocks, and run the intake sheet after a
+    turn in which the model proposed facts. first is the tenant's first message, sent before any line is read: the
+    description of a new matter, or what is new on an existing one. An empty line or bye ends it."""
     config = thread_config()
     note = ""           # what the tenant confirmed on a sheet since the model last ran; goes with the next message
-    while True:
-        q = input(">> ")
-        if q in ("", "bye"):
-            break
-        blocks = command(q)
-        if blocks is not None:
-            print_blocks(blocks)
-            if not active_playbooks():                  # a drop took out the last covered issue
-                break
-            continue
+    q = first or input(">> ")
+    while q not in ("", "bye"):
         blocks, proposed = turn(agent, config, q, note)
         print_blocks(blocks)
         note = ""
@@ -325,3 +243,4 @@ def chat(agent):
             confirmed = run_sheet()
             print()
             note = sheet_note(confirmed)
+        q = input(">> ")

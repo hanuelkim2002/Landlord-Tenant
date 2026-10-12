@@ -28,9 +28,10 @@ from smoke_parts.common import FORFEIT
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
 pb = playbooks["deposit_not_returned"]
 
-# listing and loading: every saved matter, then what load_matter put in record
+# listing and loading: every saved matter (the test matter was saved before skills: its issues come out as skills),
+# then what load_matter put in record
 print(list_matters())
-print(record.matter["tenant"], record.matter["id"], record.matter["issues"], type(record.profile).__name__)
+print(record.matter["tenant"], record.matter["id"], record.matter["skills"], type(record.profile).__name__)
 print()
 
 # playbook checks: quotes (spec and prose) against the statute text, shape, and shared facts
@@ -62,7 +63,7 @@ update = {
 for row in check_elements(pb, record.profile, test_facts, update):
     if row["id"] in update:
         print(row)
-record.matter["issues"] = ["deposit_not_returned"]
+record.matter["skills"] = ["deposit_not_returned"]
 record.matter["facts"] = dict(test_facts)
 record.matter["proposed"] = update
 print(deadline_listing())
@@ -204,7 +205,7 @@ check("lease amounts are read from the printed figure", lease_value("money", rec
 print()
 
 # the letter template
-record.matter["issues"] = ["deposit_not_returned"]
+record.matter["skills"] = ["deposit_not_returned"]
 record.matter["facts"] = dict(test_facts)
 print(build_letter("I moved out on July 30, 2026, and gave my forwarding address the same day.",
                    "Please return my $1,850.00 deposit to 12 Elm St, Gainesville FL 32601", 10,

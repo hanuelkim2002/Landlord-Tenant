@@ -1,4 +1,4 @@
-"""Deterministic Layer: element status and date arithmetic (no model), plus the two one-shot intake calls."""
+"""Deterministic Layer: element status and date arithmetic (no model), plus ask_json and fill_facts."""
 import json
 import re
 from datetime import date, datetime, timedelta
@@ -363,24 +363,8 @@ def check_options(playbook, facts, today, profile=None):
     return results
 
 
-# ---- Classify and Fill Facts: two one-shot model calls made once at intake. Nothing here is confirmed.
-
-# The issue labels classify can pick. Each gets a playbook (except "other", which means none fits); a playbook
-# names the statute sections it rests on in its own `sections`, checked against statutes/ when it loads.
-ISSUE_LABELS = [
-    "deposit_not_returned",
-    "deposit_claim_received",
-    "repair_not_made",
-    "notice_received_nonpayment",
-    "notice_received_violation",
-    "landlord_entered_unannounced",
-    "rent_increased",
-    "wants_to_leave_early",
-    "lease_ending",
-    "neighbor_disturbance",
-    "other",
-]
-
+# ---- Ask JSON and Fill Facts: a one-shot model call whose answer is parsed as JSON, and the call that pulls facts out of a
+# description (nothing the model answers here is confirmed; TODO item 112 removes fill_facts).
 
 NOT_JSON = "\n\nYour last answer was not valid JSON. Return ONLY the JSON object, nothing else."
 
@@ -397,34 +381,6 @@ def ask_json(llm, prompt, tries=3):
         except json.JSONDecodeError:
             if attempt == tries - 1:
                 raise
-
-
-def classify(description, menu):
-    """Which issue labels fit the tenant's description? Multi-label. menu: every label with the situation it
-    covers (corpus.issue_menu()). A label counts only if the tenant says that situation has happened. "other"
-    goes with the covered labels when a separate problem fits none of them, so run.py can tell the tenant
-    part of it may not be covered (NOT_COVERED); alone, it means nothing fits."""
-    labels = "\n".join(f"- {label}: {situation}" for label, situation in menu.items())
-    prompt = f"""A Florida residential tenant describes a problem. Each label below covers one situation.
-Pick every label whose situation the tenant says has happened. Read who did what: a notice the tenant sent is
-not a notice the tenant received. Add "other" when a separate problem the tenant describes fits none of the
-situations (for example, a landlord's remark about the tenant's religion next to a broken heater), and use it
-alone when nothing fits. A detail of a situation a label covers is part of it, not a separate problem: why it
-happened, how it affects the tenant, what the tenant paid or was charged (a partial payment, a receipt, a
-late fee), or what a notice says.
-Do not guess facts the tenant did not state.
-Return ONLY JSON: {{"issues": [...], "reason": "one sentence per label, quoting what the tenant said"}}
-
-LABELS:
-{labels}
-
-TENANT SAID:
-{description}"""
-    result = ask_json(agent_llm, prompt)
-    result["issues"] = [i for i in result["issues"] if i in menu]   # drop anything invented
-    if not result["issues"]:
-        result["issues"] = ["other"]                                  # nothing fits: say so in the record
-    return result
 
 
 def fill_facts(description, playbook):

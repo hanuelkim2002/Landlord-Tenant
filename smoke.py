@@ -11,7 +11,7 @@ from checks import summary
 # throwaway copy of the test matter, removed at its end even after a failure.
 import smoke_parts.pieces                    # each piece on its own: playbooks, deadlines, cases, wiki, cites, quotes
 import smoke_parts.writing_to_a_matter       # sessions, propose_facts, the sheet, cites, cases, events, the timeline
-import smoke_parts.issues_and_turns          # issues suggested and dropped; turns with a stand-in model
+import smoke_parts.skills_and_turns          # the model loads skills, old matters, intake and resume; turns with a stand-in model
 import smoke_parts.playbooks_options_lease   # every playbook, options and what the tool knows, the lease search
 import smoke_parts.web_page                  # app.py, headless
 import smoke_parts.skill_files               # the skill format and its checks, on fixtures in a temporary folder

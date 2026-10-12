@@ -26,7 +26,7 @@ UF_BASE_URL = "https://api.ai.it.ufl.edu"
 uf_api_key = os.environ.get("UF_API_KEY")
 
 # AGENT_MODEL can be set in the environment to try another gateway model for one run, e.g.
-# AGENT_MODEL=gpt-oss-120b python dev/live_run.py ... ; it drives the chat, classify, and fill_facts.
+# AGENT_MODEL=gpt-oss-120b python dev/live_run.py ... ; it drives the chat (and fill_facts, until TODO item 112).
 AGENT_MODEL   = os.environ.get("AGENT_MODEL", "nemotron-3-super-120b-a12b")   # LOCAL, text only
 EXTRACT_MODEL = "gemma-4-31b-it"               # LOCAL, text + image
 

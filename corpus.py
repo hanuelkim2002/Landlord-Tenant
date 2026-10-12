@@ -9,7 +9,6 @@ import yaml
 from pydantic import BaseModel
 
 from config import PLAYBOOKS, STATUTES, squash
-from deterministic import ISSUE_LABELS
 from lease import LeaseProfile
 
 
@@ -64,8 +63,8 @@ class Condition(BaseModel):
 
 
 class RelatedIssue(BaseModel):
-    """Another issue this one leads to: record.add_related_issues adds it once the condition's fact is
-    confirmed with that value."""
+    """Another issue this one leads to, once the condition's fact is confirmed with that value. Data only: nothing
+    reads it since the model loads skills itself (TODO item 111); the playbooks go with item 113."""
     issue: str
     when: Condition
 
@@ -390,12 +389,12 @@ for path in sorted(PLAYBOOKS.glob("*.yaml")):
     pb = load_playbook(path)
     playbooks[pb.issue] = pb
 
-# A related issue must be a label the classifier knows, and its condition a fact some playbook asks for.
+# A related issue must be a playbook's issue, and its condition a fact some playbook asks for.
 _all_facts = {e.id for pb in playbooks.values() for e in pb.spec.elements}
 for pb in playbooks.values():
     for rel in pb.spec.related_issues:
-        if rel.issue not in ISSUE_LABELS:
-            raise ValueError(f"{pb.issue}: related issue {rel.issue} is not an issue label")
+        if rel.issue not in playbooks:
+            raise ValueError(f"{pb.issue}: related issue {rel.issue} is not a playbook's issue")
         if rel.when.fact not in _all_facts:
             raise ValueError(f"{pb.issue}: related issue condition {rel.when.fact} is not a fact any playbook asks for")
 
@@ -405,10 +404,3 @@ for pb in playbooks.values():
 # beside the lease's repairs clause), or says the tool has not read it.
 fact_lease = {w.fact: w.lease for pb in playbooks.values() for o in pb.spec.options for w in option_ways(o)
               if w.fact and w.lease}
-
-
-def issue_menu():
-    """Every label classify can pick, with the situation it covers: a playbook's description, and "other" for
-    none of them. What the classifier reads instead of bare label names."""
-    return {label: playbooks[label].description if label in playbooks else "None of the situations above."
-            for label in ISSUE_LABELS}

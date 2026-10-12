@@ -2,9 +2,10 @@
 
     streamlit run app.py          # then open http://localhost:8501
 
-The same steps as run.py, on one page. Left (the sidebar): a new matter, the saved matters, and the open
-matter's issues. Middle: the front door (a new matter: tenant, lease PDF, description; a saved one: what is
-new), then the intake sheet as a form, one question at a time, then the chat. Right: the timeline and the last
+The same steps as run.py, on one page. Left (the sidebar): a new matter, the saved matters, and what the open
+matter is about. Middle: the front door (a new matter: tenant, lease PDF, description; a saved one: what is
+new), then the chat, which starts with the description or the update as the tenant's first message; after a turn in
+which the model proposed facts, the intake sheet as a form, one question at a time. Right: the timeline and the last
 letter drafted, drawn from the record on every run, never by the model. In the chat, a speech bubble is the
 model's words (checked by the program before they are shown); a box is printed by the program itself.
 
@@ -26,13 +27,12 @@ from pathlib import Path
 import streamlit as st
 
 import record
-from agent import (block, build_agent, command, intake, read_lease, resume, sheet_note, stop_block, thread_config,
-                   turn)
+from agent import block, build_agent, intake, read_lease, resume, sheet_note, thread_config, turn
 from config import uf_api_key
-from corpus import playbooks
-from record import (active_playbooks, candidate_playbooks, end_session, list_matters, load_matter, matter_dir,
-                    new_matter, new_tenant_id, read_events, start_session)
-from sheet import NOT_COVERED, pending_rows, row_notes, save_answer, shown, suggestion, value_of
+from record import (end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id, read_events,
+                    start_session)
+from sheet import pending_rows, row_notes, save_answer, shown, suggestion, value_of
+from skills import skills
 from timeline import render_timeline
 
 st.set_page_config(page_title="Landlord-Tenant Organizer", layout="wide")
@@ -46,10 +46,10 @@ state = st.session_state
 
 def reset():
     """Forget the open matter: back to the front door, with an empty chat and no agent."""
-    state.stage = "door"            # door, new, update, sheet, chat, ended
+    state.stage = "door"            # door, new, update, sheet, chat
     state.ids = None                # (tenant id, matter id) of the open matter
     state.session = None            # the open session's id (record.session)
-    state.agent = None              # built once the first sheet is done, as in run.py
+    state.agent = None              # built when the chat opens, as in run.py
     state.config = None             # the chat thread's config
     state.history = []              # everything shown in the middle column, oldest first, as blocks
     state.pending = None            # the tenant's message, waiting for the model's turn
@@ -105,7 +105,6 @@ PRINTED_BY = {
               "Read every line before you send it. The tool never sends anything.",
     "cases": "Printed by the program from the case wiki, in the courts' own words.",
     "timeline": "Printed by the program from your record.",
-    "stop": "Printed by the program.",
     "sources": "Printed by the program: the statute's and your lease's own words that the reply above cites.",
 }
 
@@ -129,10 +128,10 @@ def show(b):
         with st.expander("The statute and lease words cited above"):
             st.caption(PRINTED_BY[kind])
             st.markdown(plain(text.split("\n\n", 1)[1]))
-    else:                                                  # deadlines, letter, cases, timeline, stop
+    else:                                                  # deadlines, letter, cases
         with st.container(border=True):
             st.caption(PRINTED_BY[kind])
-            if kind in ("cases", "stop"):
+            if kind == "cases":
                 st.markdown(plain(text))
             else:                                          # columns and line breaks matter here
                 st.code(text, language=None, wrap_lines=kind == "letter")
@@ -140,8 +139,21 @@ def show(b):
 
 # ---- The front door: a new matter, or a saved one.
 
+def open_chat(first=""):
+    """Go to the chat: build the agent once (no model call) and, if the tenant has a first message, show it and send it
+    as the first turn, so the model answers it first. first: the description of a new matter, or what is new."""
+    if state.agent is None:
+        state.agent = build_agent()
+        state.config = thread_config()
+    if first:
+        state.history.append(block("tenant", first))
+        state.pending = first
+    state.stage = "chat"
+
+
 def start_new(tenant, lease, description):
-    """New matter, as run.start_new: the tenant, the lease read into its profile, the description through intake."""
+    """New matter, as run.start_new: the tenant, the lease read into its profile, the description saved by intake; the
+    chat opens with the description as the tenant's first message."""
     new_matter(tenant if tenant != "New tenant" else new_tenant_id())
     state.ids = (record.matter["tenant"], record.matter["id"])
     state.session = start_session("new")              # from here on, every event carries this session's id
@@ -150,12 +162,8 @@ def start_new(tenant, lease, description):
             path = Path(folder) / "lease.pdf"
             path.write_bytes(lease.getvalue())
             read_lease(path)
-    with st.spinner("Reading your description."):
-        intake(description)
-    state.history.append(block("tenant", description))
-    if "other" in record.matter["issues"] and candidate_playbooks():
-        state.history.append(block("notice", NOT_COVERED))
-    state.stage = "sheet"
+    intake(description)
+    open_chat(description)
 
 
 def open_saved(m):
@@ -188,8 +196,7 @@ def new_matter_form():
             start_new(tenant, lease, description.strip())
         except Exception as error:                     # the gateway or the PDF failed: nothing to open yet
             close_session()
-            st.error(f"The lease or the description could not be read ({type(error).__name__}: {error}). "
-                     "Please try again.")
+            st.error(f"The lease could not be read ({type(error).__name__}: {error}). Please try again.")
             return
         st.rerun()
 
@@ -201,22 +208,16 @@ def update_form():
                               "nothing is new.", height=150)
         go = st.form_submit_button("Continue")
     if go:
+        if state.agent is None:
+            need_key()                                 # before the update is logged
         if update.strip():
-            need_key()
-            with st.spinner("Reading what is new."):
-                try:
-                    added = resume(update.strip())    # logs the update, suggests issues and facts
-                except Exception as error:            # the gateway failed: the session stays open
-                    st.error(f"What is new could not be read ({type(error).__name__}). Please try again.")
-                    return
-            state.history.append(block("tenant", update.strip()))
-            if "other" in added and candidate_playbooks():
-                state.history.append(block("notice", NOT_COVERED))
-        state.stage = "sheet"
+            resume(update.strip())                     # logs the update; the model reads it as the first message
+        open_chat(update.strip())
         st.rerun()
 
 
-# ---- The intake sheet as a form: one row at a time, asked and saved by code (sheet.py), no model.
+# ---- The intake sheet as a form: one row at a time, asked and saved by code (sheet.py), no model. It follows a turn
+# in which the model proposed facts.
 
 def answer_widget(r):
     """The input for one row, filled in with the suggestion if there is one. Returns the answer as text, the
@@ -266,52 +267,31 @@ def sheet_form():
         if expected:
             st.error(f"Please enter {expected}.")
             return
-        pair, lines = save_answer(r, answer.strip(), value)
-        state.saved.append(pair)
-        state.history.append(block("sheet", "\n".join([f"{r['question']} {shown(value)}"] + lines)))
+        state.saved.append(save_answer(r, answer.strip(), value))
+        state.history.append(block("sheet", f"{r['question']} {shown(value)}"))
         st.rerun()
 
 
 def finish_sheet():
-    """No row left to ask. Mid-chat, the chat goes on and what was confirmed goes to the model with the next
-    message. After the first sheet, as in run.py: the chat starts, or the tool stops if nothing it covers is left."""
+    """No row left to ask: back to the chat, and what was confirmed goes to the model with the next message."""
     if state.skipped:
         state.history.append(block("notice", f"Skipped for now: {', '.join(sorted(state.skipped))}. "
                                              "Deadlines wait until these are answered."))
-    if state.agent is not None:
-        state.note = sheet_note(state.saved)
-        state.stage = "chat"
-    elif not active_playbooks():
-        state.history.append(stop_block())
-        end_session()
-        state.session = None
-        state.stage = "ended"
-    else:
-        need_key()
-        state.agent = build_agent()                     # built after the sheet, so the prompt holds the confirmed facts
-        state.config = thread_config()
-        state.stage = "chat"
+    state.note = sheet_note(state.saved)
+    state.stage = "chat"
     state.skipped, state.saved = set(), []
 
 
-# ---- The chat: a message goes to agent.command or agent.turn; their blocks join the history.
+# ---- The chat: a message goes to agent.turn; its blocks join the history.
 
 def take_message(text):
-    """The tenant sent a message. A command is answered at once; anything else waits for the model's turn, run
-    on the next pass so the message shows before the model starts."""
+    """The tenant sent a message. It waits for the model's turn, run on the next pass so the message shows before
+    the model starts. bye ends the session."""
     if text.strip().lower() == "bye":
         close_session()
         return
     state.history.append(block("tenant", text))
-    blocks = command(text)
-    if blocks is None:
-        state.pending = text
-        return
-    state.history += blocks
-    if not active_playbooks():                          # a drop took out the last covered issue
-        end_session()
-        state.session = None
-        state.stage = "ended"
+    state.pending = text
 
 
 def run_pending_turn():
@@ -344,10 +324,11 @@ def record_panel():
     with timeline_tab:
         st.caption(PRINTED_BY["timeline"] + " Never written by the model.")
         pick, toggle = st.columns(2)
-        covered = [i for i in record.matter["issues"] if i in playbooks]
-        issue = pick.selectbox("Issue", ["all issues"] + covered)
-        full = toggle.toggle("Full timeline", help="Adds the tool's own steps: facts confirmed, statute lookups, sessions.")
-        text = render_timeline(None if issue == "all issues" else issue, full)
+        loaded = [skill.name for skill in record.active_skills()]
+        about = pick.selectbox("Part of the matter", ["all"] + loaded,
+                               format_func=lambda name: "all" if name == "all" else skills[name].description)
+        full = toggle.toggle("Full timeline", help="Adds the tool's own steps: skills loaded, facts confirmed, statute lookups, sessions.")
+        text = render_timeline(None if about == "all" else about, full)
         st.code(text, language=None)
         if st.button("Show wide"):
             wide_timeline(text)
@@ -385,16 +366,11 @@ with st.sidebar:
     if state.ids:
         st.divider()
         st.subheader(f"{state.ids[0]} / {state.ids[1]}")
-        for i in record.matter["issues"]:
-            st.markdown(f"**{plain(i)}**: {plain(playbooks[i].description if i in playbooks else 'not covered by this tool')}")
-        for p in record.matter["proposed_issues"]:
-            st.markdown(f"**{plain(p['issue'])}**: suggested, not yet confirmed")
-        covered = [i for i in record.matter["issues"] if i in playbooks]
-        if state.stage == "chat" and covered:
-            drop = st.selectbox("Take an issue out of this matter", covered, index=None, placeholder="Choose an issue")
-            if st.button("Drop", disabled=drop is None or bool(state.pending)):
-                take_message(f"drop {drop}")
-                st.rerun()
+        loaded = record.active_skills()
+        if loaded:                                      # what the model has loaded, in the skills' own words (no ids)
+            st.markdown("**What this matter is about**")
+            for skill in loaded:
+                st.markdown(f"- {plain(skill.description)}")
         if st.button("End session", width="stretch"):
             close_session()
             st.rerun()
@@ -415,8 +391,6 @@ with middle:
             show(b)
         if state.stage == "sheet":
             sheet_form()
-        elif state.stage == "ended":
-            st.info("This session has ended. Open the matter again from the list on the left to continue.")
         elif state.pending:
             run_pending_turn()
             st.rerun()
@@ -425,7 +399,7 @@ with right:
         record_panel()
 
 if state.stage == "chat":
-    message = st.chat_input("Write here, or type issues, timeline, or drop <issue>", disabled=bool(state.pending))
+    message = st.chat_input("Write here", disabled=bool(state.pending))
     if message:
         take_message(message)
         st.rerun()

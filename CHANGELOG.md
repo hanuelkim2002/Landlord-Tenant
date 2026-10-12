@@ -5,6 +5,47 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- The model loads skills itself (TODO item 111, done). `load_skill(name)` (a new tool) loads one of `skills.skills` into the
+  matter: a name that is not a skill is refused with the names there are, one already loaded says so, else
+  `record.add_skill` (the only code that writes `matter["skills"]`) saves it and logs a `skill_loaded` event. The prompt
+  has two new parts after YOUR LEASE: SKILLS (every skill's name and description, `(loaded)` on a loaded one) and LOADED
+  SKILLS (each loaded skill's body under `# <name>`, or "none loaded yet"); THE STATUTE is now the sections the loaded skills
+  list; the case topics (`tools.offered_topics`) and the cites a reply may use (`replies.sections_shown`) come from the same
+  sections. The rules gain one paragraph before rule 1 (load the skills that fit with `load_skill`, follow them, and with
+  none that fits say so and answer only from `search_statute` and `get_statute_section`), and the three places that named
+  WHAT THE STATUTE DOES NOT SETTLE or THE TOOL'S NOTES ON YOUR ISSUES now name a loaded skill's "What the statute does not
+  settle" and its Letters section. New flow: `agent.intake` only saves the description and `agent.resume` only logs the
+  update (neither calls a model); both front ends (`run.py`, `app.py`) build the agent right after and send the
+  description, or the update when it is not empty, to the model as the tenant's first chat message through `agent.turn`
+  (`agent.chat(agent, first)` for the terminal, `open_chat` for the page); the sheet follows a turn that proposed facts, as
+  after any turn. The web page's sidebar shows "What this matter is about": each loaded skill's description, no ids; its
+  timeline panel filters by loaded skill, shown by description. `matter["skills"]` replaces `issues`, `proposed_issues`, and
+  `rejected_issues`; `record.load_matter` (and `list_matters`) read an old matter's issues that are skill names as its skills
+  (`record.with_skills`) and the next save drops the three keys. Transition: `record.active_playbooks()` returns the
+  playbook of each loaded skill, so the fact status, the sheet's fact rows, `propose_facts`, the deadlines, the options
+  (YOUR FACTS, YOUR OPTIONS, WHAT THE TOOL DOES NOT KNOW, WHICH DEADLINES HAVE PASSED), and `draft_letter` keep working on the
+  loaded skills' playbooks until items 112 and 113. Replaced and removed: the issue classifier (`deterministic.classify`,
+  `ISSUE_LABELS`, `corpus.issue_menu`, the `other` label) and the intake's `fill_facts` calls (`fill_facts` itself stays for
+  item 112; `corpus` now checks a related issue against the playbooks, not `ISSUE_LABELS`); issue suggestion and confirmation
+  (`record.add_issues`, `confirm_issue`, `reject_issue`, the sheet's issue rows, and `save_answer`'s issue branch, which now
+  returns only the pair); the related-issue rules (`record.add_related_issues` and its calls; the playbooks' `related_issues`
+  data stays, read by nothing); the stop page (`sheet.stop_text`, `STOP_LINE`, `NOT_COVERED`, `CLAUSE_CHARS`,
+  `agent.stop_block`, and the stop paths in `run.py` and `app.py`) and the lease word map only it used
+  (`lease.clauses_about`, `stem`, `stems`, `matches`, `LEASE_WORDS`, `STOP`); the chat commands (`agent.command`: issues, drop,
+  timeline, timeline full, timeline <issue>; the page's Drop and its "ended" stage); the prompt parts THE TOOL'S NOTES ON YOUR
+  ISSUES and WHAT THE STATUTE DOES NOT SETTLE (each skill's body carries both); `record.candidate_playbooks` (there are no
+  suggested issues, so `prune_proposals` uses `active_playbooks`). `render_timeline`'s filter is `skill`, and `timeline full`
+  shows `skill_loaded` (issue events of old matters still render). Smoke: `smoke_parts/issues_and_turns.py` is now
+  `skills_and_turns.py`; its checks of suggested, rejected, and dropped issues, the stop texts, and the commands are gone, and
+  named checks are added for `load_skill` refusing a name, saying already loaded, and loading one (matter.json, the event, the
+  next prompt's SKILLS, LOADED SKILLS, and THE STATUTE), an old matter's issues read as skills, intake and resume making no model
+  call (a tripwire in place of the model clients), the description going to a stand-in model as the first turn, and the web page's
+  sidebar showing a loaded skill's description and an update typed at the door becoming the first message; 1,035 checks, all OK
+  (1,034 before). `smoke_online.py` drops its classify and `fill_facts` checks and runs the model's first turn on a new
+  description, on a situation no skill covers, and on a resume (not run). Not changed: `dev/live_run.py`, `dev/eval.py`, and the
+  scenarios still follow the flow before this item (issue rows on the sheet, `expect.issues` from `matter.json`'s `issues`) until
+  item 115.
+
 - The ten skills, written from the playbooks (TODO item 110, done). `skills/<name>.md` for each of the ten playbooks:
   the header copies its description, sections, clocks (every field; no clock had `delivery`), and counting unchanged,
   with `provenance` from the playbook plus `version: 1` and `converted_from` naming the playbook and its version; the

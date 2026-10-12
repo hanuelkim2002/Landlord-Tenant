@@ -38,9 +38,9 @@ is a law student, not admitted.
   the `tools` list at the bottom of that file. `python schemas.py` shows what the model sees.
 - `matter.json` is current state only. `events.jsonl` is the only history, append-only.
 - `record.confirm_fact` is the only door into `matter["facts"]`, and only the intake sheet calls it. The model
-  can only propose (`propose_facts`). Issues work the same way: `record.add_issues` only suggests (the
-  classifier, a related rule), `record.confirm_issue` (a yes on the sheet) makes one active, and
-  `record.reject_issue` logs a no or a drop. Nothing is deleted from the history. `compute_deadlines` is the only date arithmetic.
+  can only propose (`propose_facts`). Skills work the same way: `record.add_skill`, called only by the `load_skill`
+  tool, is the only door into `matter["skills"]`, and logs a `skill_loaded` event. Nothing is deleted from the history.
+  `compute_deadlines` is the only date arithmetic.
 - The sheet asks only what the tenant saw, did, or holds (what happened, when, how something was sent, who did it, a
   paper's own words), never whether something meets a term of the statute or the lease. The playbook applies the term:
   answers that meet it on the statute's words (the author's reading, a choice's answers), a check with both texts side
@@ -68,8 +68,8 @@ is a law student, not admitted.
 - After any edit to a skill in `skills/`, run the skill checks (`skills.check_all_skills`, also run by `smoke.py`)
   and every line must be OK. They check quotes in the prose too, not only in the header's clocks.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
-- `run.py` and `app.py` are interactive and call the UF gateway. `smoke_online.py` calls the model for classify,
-  fill_facts, and resume. Everything else, including `smoke.py`, runs without the key.
+- `run.py` and `app.py` are interactive and call the UF gateway. `smoke_online.py` calls the model for the first turn
+  on a description, on a situation no skill covers, and on an update (resume). Everything else, including `smoke.py`, runs without the key.
 - Smoke runs write only to scratch matters under `matters/t-smoke*`, which they remove; never to `t-test`.
 
 ## How to work with the author
@@ -91,11 +91,11 @@ is a law student, not admitted.
     source venv/bin/activate
     python dev/build_cases.py "<Westlaw print>"   # once: cases/ from the author's Westlaw Find and Print file
     python wiki.py check     # the case wiki's checks; also index, and verify "<page>" "<name>" for the author
-    python run.py            # new matter (lease, intake) or existing (what is new, resume), then the sheet, then chat
+    python run.py            # new matter (lease, intake) or existing (what is new, resume), then chat; the sheet follows a turn that proposed facts
     streamlit run app.py     # the same as a web page on this computer: http://localhost:8501
     python smoke.py          # offline checks, no key needed
-    python smoke_online.py   # classify, fill_facts, resume; calls the model
+    python smoke_online.py   # the first turn on a description, none covered, resume; calls the model
     python schemas.py        # what the model sees per tool
     python dev/live_run.py dev/scenarios/nonpayment_3day.json   # a scripted live session; calls the model
 
-Chat commands: `timeline`, `timeline full`, `timeline <issue>`, `issues`, `drop <issue>`, `bye`.
+Chat command: `bye` (the only one left in the terminal, which TODO item 115 removes).

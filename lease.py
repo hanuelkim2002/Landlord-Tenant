@@ -1,7 +1,6 @@
 """Lease Intake: read the PDF, extract the profile with Gemma, check every quote against the page."""
 import hashlib
 import json
-import math
 import re
 from pathlib import Path
 from typing import Optional
@@ -266,82 +265,3 @@ def find_in_lease(phrase, pages, limit=5):
             if page not in [pg for pg, _ in outside]:
                 outside.append((page, " ".join(text[max(0, h - 200):h + 300].split())))
     return clauses, outside
-
-
-# Everyday words a tenant uses, and the words a lease uses for the same thing. Small and explicit: extend it when
-# a story's clause is missed. Keys and values are matched as stems (stem, below).
-LEASE_WORDS = {
-    "roommate": ["joint", "several", "occupant"],
-    "cotenant": ["joint", "several", "occupant"],
-    "split": ["joint", "several"],
-    "car": ["vehicle", "park"],
-    "truck": ["vehicle", "park"],
-    "tow": ["vehicle", "park"],
-    "noise": ["disturb", "nuisance", "neighbor"],
-    "loud": ["disturb", "nuisance", "neighbor"],
-    "party": ["disturb", "nuisance", "neighbor"],
-    "dog": ["pet", "animal"],
-    "cat": ["pet", "animal"],
-    "smoke": ["smoking"],
-    "sublet": ["sublease", "assign"],
-    "guest": ["guest", "occupant"],
-    "key": ["lock", "key"],
-}
-STOP = set("""the and for that this with have has had was were are but not you your yours they them their there
-him his her she our out all any can could would should will just about from into than then when what which who
-whom why how also very more most some such only over back even still because been being does did doing done
-said says say tell told make made get got going know want wants need needs like time day days week weeks month
-months year years thing things way lot lots really one two three four first last since until while after before
-without within anyone anything someone something everyone everything nothing whole half both each every other
-another same own able again away here keep keeps kept stop stopped
-pay paid paying payment landlord tenant lease rent premises agreement shall""".split())
-
-
-def stem(word):
-    """A rough stem, enough to match "parking" with "park" and "parties" with "party"."""
-    w = re.sub(r"[^a-z]", "", word.lower())
-    for suffix, keep in (("ies", "y"), ("ing", ""), ("ed", ""), ("s", "")):
-        if w.endswith(suffix) and len(w) - len(suffix) >= 3 and not w.endswith("ss"):
-            return w[: len(w) - len(suffix)] + keep
-    return w
-
-
-def stems(text):
-    return {stem(w) for w in re.findall(r"[A-Za-z’']+", text)}
-
-
-def matches(term, words):
-    """True if a stem is among a clause's stems: exactly for a stem under four letters; otherwise as the start
-    of a longer one ("disturb" in "disturbance"), or the other way round when the clause's word is six letters
-    or more, so "room" never matches "roommate"."""
-    if len(term) < 4:
-        return term in words
-    return any(w.startswith(term) or (len(w) >= 6 and term.startswith(w)) for w in words)
-
-
-def clauses_about(text, pages, limit=3):
-    """The lease clauses on the subject of the tenant's text, best first, at most `limit`: a clause whose title
-    uses one of the tenant's words or a LEASE_WORDS word ("Vehicles" for "towed"), or whose text uses a
-    LEASE_WORDS words ("disturbs neighbors" for "parties"). The tenant's own words count only in titles, where a
-    lease names its subjects; in the body they would match too much ("half", "cover"). A clause found by its
-    text alone needs two LEASE_WORDS words. A word counts for more the fewer clauses use it, and a title match
-    counts double."""
-    clauses = lease_clauses(pages)
-    if not clauses:
-        return []
-    titles = [stems(c["title"]) for c in clauses]
-    bodies = [stems(c["title"] + " " + c["text"]) for c in clauses]
-    said = {t for t in stems(text) - stems(" ".join(STOP)) if len(t) >= 3}
-    mapped = {stem(x) for t in said for x in LEASE_WORDS.get(t, [])}
-
-    def weight(term):
-        used = sum(matches(term, b) for b in bodies)
-        return math.log(len(clauses) / used) if used else 0
-
-    scored = []
-    for c, title, body in zip(clauses, titles, bodies):
-        in_title = [t for t in said | mapped if matches(t, title)]
-        in_body = [t for t in mapped if matches(t, body) and t not in in_title]
-        if in_title or len(in_body) >= 2:
-            scored.append((sum(2 * weight(t) for t in in_title) + sum(weight(t) for t in in_body), c))
-    return [c for _, c in sorted(scored, key=lambda x: -x[0])[:limit]]

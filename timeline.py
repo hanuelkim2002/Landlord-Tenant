@@ -1,6 +1,5 @@
-"""Timeline: the record as the tenant sees it. Not a tool. The chat loop prints this directly when the
-tenant asks for a timeline, and prints get_deadlines' result with render_deadlines, so the record never
-passes through the model."""
+"""Timeline: the record as the tenant sees it. Not a tool. The web page draws this from the record, and the chat
+prints get_deadlines' result with render_deadlines, so the record never passes through the model."""
 import json
 import re
 from datetime import date
@@ -63,17 +62,18 @@ def render_deadlines(result):
     return "\n".join(lines)
 
 
-def render_timeline(issue=None, full=False):
+def render_timeline(skill=None, full=False):
     """One dated table for the matter: DATE, EVENT, SOURCE, FILE. Oldest first. Built from the record,
-    never from the model. issue=<name> keeps only that issue's deadlines and tagged events, plus everything
-    untagged. full=True adds the tool's own bookkeeping (facts confirmed, statute lookups, computations)."""
+    never from the model. skill=<name> keeps only that skill's deadlines and tagged events, plus everything
+    untagged. full=True adds the tool's own bookkeeping (skills loaded, facts confirmed, statute lookups,
+    computations, and, in matters from before skills, the issues suggested, confirmed, and dropped)."""
     events = read_events()
     facts = record.matter["facts"]
     rows = []                                              # (date, event, source, file)
     dates_shown = set()
 
     for pb in active_playbooks():
-        if issue and pb.issue != issue:
+        if skill and pb.issue != skill:
             continue
         for e in pb.spec.elements:                         # real-world dates the tenant confirmed
             if e.type == "date" and e.id in facts and e.id not in dates_shown:
@@ -81,12 +81,12 @@ def render_timeline(issue=None, full=False):
                 rows.append((facts[e.id], label(e.id), confirmation_of(e.id, events), ""))
 
     for d in matter_deadlines(active_playbooks(), facts, date.today()):   # a shared deadline once, both issues
-        if "deadline" in d and (not issue or issue in d["issues"]):
+        if "deadline" in d and (not skill or skill in d["issues"]):
             rows.append((str(d["deadline"]), f"[{', '.join(d['issues'])}] {d['actor']} deadline: {label(d['clock'])}",
                          f"computed, {d['cite']}, {d['status']}" + (", if it counts" if "condition" in d else ""), ""))
 
     for ev in events:
-        if issue and ev.get("issue") not in (None, issue):
+        if skill and ev.get("issue", ev.get("skill")) not in (None, skill):
             continue
         day = ev.get("sent_on", ev["when"][:10])           # a message sorts by its own date, not the day it was recorded
         if ev["kind"] == "communication":
@@ -108,7 +108,9 @@ def render_timeline(issue=None, full=False):
         elif full and ev["kind"] == "fetch":
             what = f"read statute {ev['section']}" if "section" in ev else f"searched statute for '{ev['search']}'"
             rows.append((day, what, "tool", ""))
-        elif full and ev["kind"] == "issue_added":
+        elif full and ev["kind"] == "skill_loaded":
+            rows.append((day, f"skill loaded: {label(ev['skill'])}", "tool, load_skill", ""))
+        elif full and ev["kind"] == "issue_added":                     # the issue events: matters from before skills
             rows.append((day, f"issue added: {label(ev['issue'])}", f"{ev['source']}, {ev['because']}", ""))
         elif full and ev["kind"] == "issue_proposed":
             rows.append((day, f"issue suggested: {label(ev['issue'])}", f"{ev['source']}, {ev['because']}", ""))

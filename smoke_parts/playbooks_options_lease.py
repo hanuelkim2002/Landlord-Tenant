@@ -1,6 +1,6 @@
 """Smoke, part: Every playbook through the real code path, and the checks of items 72 to 84: the rules that apply only sometimes,
 the lease profile's repairs clause, lease cites, options and what the tool knows of each condition, what the tool
-does not know, the stop text, and the lease search.
+does not know, the lease's numbered clauses, and the lease search.
 Run by smoke.py, in order; each check prints a line, OK or FAIL."""
 import contextlib
 import io
@@ -16,14 +16,14 @@ from config import MATTERS
 from corpus import load_playbook, playbooks
 from deterministic import check_options
 from record import load_matter, read_events
-from lease import lease_clauses, lease_text
-from sheet import STOP_LINE, pending_rows, row_notes, run_sheet, stop_text
+from lease import lease_clauses
+from sheet import pending_rows, row_notes, run_sheet
 from prompt import RULES as RULES_TEXT
 from prompt import LETTER_RULE, PARTS, options_status, system_prompt, unknowns_status
 from replies import check_reply, cited_clause, cited_words
 from tools import build_letter, deadline_listing, draft_letter, pretty, propose_facts
 from tools import tools as model_tools
-from smoke_parts.common import scripted
+from smoke_parts.common import prompt_part, scripted
 
 # ---- Every playbook through the real code path, on a scratch matter: the sheet asks every question (a "yes"
 # to every yes/no, so every applies_if question comes up), every clock gets a date, and a letter carries the
@@ -273,7 +273,7 @@ check("item 102: an old free-text answer to a question that is now a choice is a
       next(r for r in check_elements(claim_pb, old_profile, old_answer, {}) if r["id"] == "claim_delivery")["status"] == "missing"
       and by_id(claim_pb, {**claim_facts, **old_answer})["whole_deposit_back"]["gates"][1]["ways"][1]["state"] == "tell")
 
-make_scratch("t-smoke-choice", issues=["repair_not_made"], proposed={},
+make_scratch("t-smoke-choice", skills=["repair_not_made"], proposed={},
              facts={k: v for k, v in {**story_f, "problem_description": "the AC blows warm air", "problem_started": "2026-09-10",
                                       "landlord_response": "nothing", "eviction_action_filed": False}.items() if k != "problem_is_with"})
 try:
@@ -310,7 +310,7 @@ check("the choice scratch matter is removed", not (MATTERS / "t-smoke-choice").e
 # the letter (TODO 95): the program's lines around the tenant's account and request, each printed as written, never
 # inside a sentence of the program's; a date or an amount the record does not hold is named under the letter; a cite in
 # the tenant's part, or a signer the lease does not name, is refused
-make_scratch("t-smoke-letter", issues=["repair_not_made"], proposed={},
+make_scratch("t-smoke-letter", skills=["repair_not_made"], proposed={},
              facts={"problem_started": "2026-09-10", "message_date": "2026-09-26"})
 try:
     load_matter("t-smoke-letter", "m-001")
@@ -353,7 +353,7 @@ finally:
     record.session = None
     remove_scratch("t-smoke-letter")
 check("the letter scratch matter is removed", not (MATTERS / "t-smoke-letter").exists())
-make_scratch("t-smoke-options", issues=["repair_not_made"], facts=ac, proposed={})
+make_scratch("t-smoke-options", skills=["repair_not_made"], facts=ac, proposed={})
 try:
     load_matter("t-smoke-options", "m-001")
     options_part = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
@@ -408,7 +408,7 @@ check("item 84: an entry with no notice: damages not known yet, the purpose not 
 check("item 84: a fact whose own question does not apply decides its way as not met (a stay asked of a tenant not planning one)",
       by_id(playbooks["lease_ending"], {"planning_to_stay": False})["stay_with_permission"]["gates"][0]["ways"][0]["why"]
       == "it does not apply on the confirmed facts")
-make_scratch("t-smoke-closed", issues=["notice_received_violation"], proposed={},
+make_scratch("t-smoke-closed", skills=["notice_received_violation"], proposed={},
              facts={"violation_notice_delivered": str(today - timedelta(days=8)), "notice_offers_cure": True,
                     "notice_terminates_now": False, "prior_written_warning": False, "violation_corrected": False,
                     "landlord_accepted_rent_after_notice": True, "eviction_action_filed": False})
@@ -424,7 +424,7 @@ finally:
 # what the tool does not know (TODO item 83, prompt.unknowns_status): each point an option turns on that the tool has
 # not decided, once, with its state and what it would change, in a prompt part after YOUR OPTIONS; rule 1 asks for it
 # before any step, with "Not:" lines from three stories
-make_scratch("t-smoke-unknown", issues=["repair_not_made", "notice_received_nonpayment"],
+make_scratch("t-smoke-unknown", skills=["repair_not_made", "notice_received_nonpayment"],
              facts={**ac, "nonpayment_notice_delivered": str(today - timedelta(days=1)), "premises_county": "Orange",
                     "rent_unpaid": True, "eviction_action_filed": False}, proposed={})
 try:
@@ -446,7 +446,7 @@ try:
           and "search_lease searches the whole text" in unknown_part
           and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", unknown_part.replace("search_lease", "")))
     record.matter["facts"] = roof
-    record.matter["issues"] = ["repair_not_made"]
+    record.matter["skills"] = ["repair_not_made"]
     check("item 83: with every condition decided, the part holds only the lease lines",
           [line.split(":")[0] for line in unknowns_status().splitlines()]
           == ["- the parts of the lease on maintenance and repairs", "- anything else in the lease"])
@@ -457,34 +457,19 @@ check("item 83: rule 1 asks for each point the tool does not know, as the part g
       and "never such a point stated as a fact" in RULES_TEXT
       and all(story in RULES_TEXT for story in ("(a repair)", "(a deposit)", "(a 3-day notice)", "(a code the tool does not hold)")))
 
-# a story no playbook covers (sheet.stop_text, lease.clauses_about): the stop lists what the tool covers and shows
-# the lease's own clauses on the subject, word for word; nothing from the lease when no clause is on it
-make_scratch("t-smoke-stop")
+# the test lease's numbered clauses (lease.lease_clauses): the lease search, the words a reply cites, and the lease
+# cites all read the lease split at its headings
+make_scratch("t-smoke-clauses")
 try:
-    (MATTERS / "t-smoke-stop" / "m-001" / "events.jsonl").write_text("")
-    load_matter("t-smoke-stop", "m-001")
+    load_matter("t-smoke-clauses", "m-001")
     lease_pages = json.loads((record.matter_dir() / "pages.json").read_text())
     numbers = [c["number"] for c in lease_clauses(lease_pages)]
     check("the test lease splits into its numbered clauses, in order, a cross-reference not taken for one",
           len(numbers) == 78 and numbers[:3] == ["1.1", "1.2", "1.3"] and numbers[-1] == "22.2"
           and numbers.index("3.2") + 1 == numbers.index("3.3"))
-    page_words = " ".join(lease_text(lease_pages)[0].split())
-    def stop_for(story):
-        record.matter["description"] = story
-        return stop_text()
-    roommate = stop_for("My roommate moved out in August and stopped paying his half of the rent. We're both on the lease.")
-    printed_clauses = re.findall(r'page \d+: "(.*)"', roommate)
-    check("a roommate story: the stop lists every covered situation and shows lease 21.3, word for word",
-          roommate.startswith(STOP_LINE) and all(pb.description in roommate for pb in playbooks.values())
-          and "Lease Section 21.3, Joint and Several Liability" in roommate
-          and all(words.removesuffix(" ...") in page_words for words in printed_clauses))
-    check("a towing story: the stop shows lease 5.4, Vehicles",
-          "Lease Section 5.4, Vehicles" in stop_for("My apartment complex had my car towed from my parking spot."))
-    check("a story the lease says nothing about: no lease part is shown",
-          "Parts of your lease" not in stop_for("My landlord said he regrets renting to people like me because of my religion."))
 finally:
-    remove_scratch("t-smoke-stop")
-check("the stop scratch matter is removed", not (MATTERS / "t-smoke-stop").exists())
+    remove_scratch("t-smoke-clauses")
+check("the clauses scratch matter is removed", not (MATTERS / "t-smoke-clauses").exists())
 
 # the lease search (TODO item 82): the model searches the whole lease text before it says the lease lacks something;
 # the test lease's holdover clause (2.4) and late charge (3.3), which the profile does not hold, are found through the
@@ -528,13 +513,13 @@ make_scratch("t-smoke-playbooks")
 try:
     load_matter("t-smoke-playbooks", "m-001")
     for issue in sorted(playbooks):
-        record.matter.update(issues=[], proposed_issues=[], rejected_issues=[], facts={}, proposed={})
-        record.add_issues([issue], "classify", "a smoke check")
+        record.matter.update(skills=[], facts={}, proposed={})
+        record.add_skill(issue)
         shown_sheet = io.StringIO()
         with contextlib.redirect_stdout(shown_sheet):
             run_sheet(answer_by_type(shown_sheet))
         listed = deadline_listing()
-        clocks = [c.id for i in record.matter["issues"] if i in playbooks for c in playbooks[i].spec.clocks]
+        clocks = [c.id for i in record.matter["skills"] if i in playbooks for c in playbooks[i].spec.clocks]
         dated = [d["clock"] for d in json.loads(listed)["deadlines"] if "deadline" in d] if not listed.startswith("Not yet") else []
         letter = draft_letter.invoke({"issue": issue, "posture": "preserve", "account": "",
                                       "request": "Please confirm receipt of this letter.", "respond_within_days": 10,
@@ -543,7 +528,7 @@ try:
         check(f"{issue}: the sheet asks every fact, every clock gets a date, a letter carries its note, its options are in words",
               not pending_rows() and sorted(set(dated)) == sorted(set(clocks))
               and playbooks[issue].guidance["postures"]["notice_sufficiency"] in letter
-              and f"issue: {issue}" in system_prompt()
+              and f"# {issue}\n" in prompt_part("loaded")
               and all(f"- {o.label} (Fla. Stat. {o.cite}): " in options_now for o in playbooks[issue].spec.options)
               and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", options_now.replace("search_lease", "")))
 finally:

@@ -33,7 +33,7 @@ from smoke_parts.common import FORFEIT, prompt_part, screen, scripted, stated
 # transcript, and the timeline. Every line must be OK.
 
 make_scratch("t-smoke",
-             issues=["deposit_not_returned", "deposit_claim_received"],
+             skills=["deposit_not_returned", "deposit_claim_received"],
              facts={"claim_notice_received": False},
              proposed={"tenancy_terminated": stated("2026-07-31", "My lease ended July 31, 2026"),
                        "claim_notice_received": stated(True, "I got a letter from the landlord"),
@@ -125,30 +125,35 @@ try:
           "tenancy terminated, Fla. Stat. 83.49(3)(a): passed" in status_text
           and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", status_text)
           and not re.search(r"\b20\d\d-\d\d-\d\d\b", status_text) and len(read_events()) == events_now)
-    open_part = prompt_part("open")
-    check("item 53: the open questions reach the model without their ids, and the rules forbid writing the prompt's part names",
-          "readings:" in open_part and "termination_date_meaning" not in open_part
+    loaded_part = prompt_part("loaded")
+    check("item 53: a loaded skill reaches the model under its name with its open questions and no clock id, and the "
+          "rules forbid writing the prompt's part names",
+          loaded_part.startswith("# deposit_not_returned\n## When to load this skill") and "\n# deposit_claim_received\n" in loaded_part
+          and "## What the statute does not settle" in loaded_part and "termination_date_meaning" not in loaded_part
           and "no part name in capitals as this prompt writes it" in system_prompt())
-    old_names = re.compile(r"LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS")
+    old_names = re.compile(r"LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS|"
+                           r"THE TOOL'S NOTES ON YOUR ISSUES|WHAT THE STATUTE DOES NOT SETTLE \(")
     prompt_now = system_prompt([HumanMessage(content="Can you write a letter to my landlord?")])     # rule 6 in too
     heads = [prompt_now.index("\n\n" + name + ":\n") for name in PARTS.values()]
     check("item 61: the prompt's parts go under names a tenant can read, in order, with no old part name left in "
           "the prompt, the rules, or a tool's description",
           heads == sorted(heads) and not old_names.search(prompt_now + CASE_RULE + NO_CASES_RULE + LETTER_RULE)
           and not any(old_names.search(t.description) for t in model_tools)
-          and "postures:" in prompt_part("notes") and "open_questions" not in prompt_part("notes"))
+          and "## Letters" in prompt_part("loaded") and "open_questions" not in prompt_part("loaded"))
     check("item 52: the fallback line is ruled out where an open question or a case topic is on the point",
-          "the fallback line only when no stored sentence, no open question in WHAT THE STATUTE DOES NOT SETTLE, and no "
-          "topic in COURT CASES THIS TOOL HAS" in system_prompt())
-    check("item 56: the open questions' part says the stored text settles none, and rule 1's So gives each reading",
-          "settles none of them, so give every reading and pick none):\n" in system_prompt()
-          and "what follows on each of its readings, never one of them as the answer" in system_prompt())
+          "the fallback line only when no stored sentence, no open question in a loaded skill's \"What the statute does not "
+          "settle\", and no topic in COURT CASES THIS TOOL HAS" in system_prompt())
+    check("item 56: rule 1's So gives each reading of an open question, never one as the answer, and rule 5 sends the "
+          "model to a loaded skill's open questions",
+          "what follows on each of its readings, never one of them as the answer" in system_prompt()
+          and "5. The open questions in a loaded skill's \"What the statute does not settle\" stay open, with their readings."
+          in system_prompt())
     check("item 73: rule 1 asks for every rule the answer turns on with its cite, and the format line to cite, not recite",
           "Instead: each rule the answer turns on, each condition and each consequence you rely on, with the cite" in system_prompt()
           and "Cite, do not recite:" in system_prompt())
-    check("item 46: the rules apply the law, and open questions reach the model with their readings",
+    check("item 46: the rules apply the law, and a loaded skill's open questions reach the model with their readings",
           "1. Apply the law to the tenant's facts." in system_prompt() and "stay open, with their readings" in system_prompt()
-          and "readings:" in prompt_part("open"))
+          and "give every reading" in prompt_part("loaded"))
     check("a deadline two issues share is listed once, with both issues", len(shared) == 1
           and shared[0]["issues"] == ["deposit_not_returned", "deposit_claim_received"])
     printed = render_deadlines(deadline_listing())
