@@ -21,8 +21,6 @@ author's rule of 2026-10-06, in CLAUDE.md).
 
 Playbooks become skills (the author's plan of 2026-10-12; design in `docs/structure/2026-10-12-skills.md`). In order,
 each one commit; items 98 to 100 below wait until it is done, since the sheet and the prompt change under them.
-114. The new rules and prompt (the agreed rules, finished); the tool answers first and replies right after a
-    confirmation. Done: the prompt holds the new parts only.
 115. The web page only, one session module for it and the eval driver, the short lease profile, the eval driver and
     scenarios for a conversation. Done: `run.py` is gone and a scenario runs through the new driver.
 116. Measure: the eval stories before (e32ab77) and after, scored blind, with a chart.
@@ -35,7 +33,7 @@ AUTHOR.md). The letters (95, 96) are in the CHANGELOG, 2026-10-11.
     topics per issue joins item 29. Done: the answer is the first thing a tenant reads.
 99. The sheet's small snags: an issue row with no suggestion where Enter fails, "Skipped for now" showing a field id,
     "Taken out of your matter; logged.", no warning before a no that ends the visit, no word on what a mid-chat change
-    did, the deadlines block printed above unrelated answers, and `timeline` and `issues` named nowhere on screen.
+    did, and `timeline` and `issues` named nowhere on screen.
 100. Words students did not know: the postures (preserve, assert, escalate), the letter's note "ask in the chat to have
     this applied", "the landlord's duty is met", "possession", "registry of the court", "material", "waived", and
     "matter" and "playbook". Plain names for the postures with when each fits, or a word list the program prints.

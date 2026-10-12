@@ -5,6 +5,51 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- The new rules (version H), the reply right after a confirmation, and the deadline block only when a deadline has a date
+  (TODO item 114, done). Rules: `prompt.RULES`, `LETTER_RULE`, `CASE_RULE`, and `NO_CASES_RULE` are the text the author's review
+  of 2026-10-11 and 12 settled (`docs/structure/2026-10-12-rules.txt`), put in word for word. They replace version G (2026-10-02,
+  TODO item 46), which was 2,534 words always, with a "Not:" and an "Instead:" for each past mistake and "write exactly" fallback
+  lines (rule 6 219 words, rule 8 271 words, or one line). Version H is 1,335 words always (1,339 counting the two markers), rule
+  6 182 words, rule 8 197 words with a case topic and 29 without: 1,364 words with neither a letter nor a case topic, 1,546 with
+  a letter, 1,532 with a case topic, 1,714 with both. What the text says now: the opening names what the tenant wants and talks as
+  in a conversation; a skills paragraph sends the model to `load_skill` before answering and to a loaded skill's instructions;
+  a format paragraph (plain words, cite do not recite, never show the tool's insides); rule 1 is "help the tenant do what they
+  want" (answer first, whether an option is open before its steps, read the lease with `search_lease` before sending the tenant
+  to check it); rule 4 has the model propose facts with the tenant's exact words and ask in the chat only for what the answer
+  turns on; rule 9 is "move things forward without choosing" (was "offer nothing the tenant did not ask for"). `rules_for`, the
+  two markers, and the `RULES_FILE` override are unchanged; the markers stand on their own lines, and with no letter in play
+  rules 5, 7, 8, 9 follow one another with one blank line between. The comments about version G's "Not:" and "Instead:" pairs
+  are gone from `prompt.py`.
+  The reply right after a confirmation: before, the confirmation's note (`agent.sheet_note`) waited and went to the model at the
+  front of the tenant's next message, so the tenant who confirmed facts got no answer until they typed again. Now
+  `agent.after_confirmation(agent, config, confirmed)` sends the note to the model at once as a turn of its own (a `program`
+  line in the transcript, not a `tenant` line) and returns that turn's blocks and whether it proposed facts again, or `None`
+  with the model not called when nothing was confirmed (every row skipped). `agent.chat` (the terminal) and `app.py` (the web
+  page: `state.confirmed`, `state.replied`, `run_automatic_reply`) both call it, and the next tenant message then goes without a
+  note. At most one such reply per tenant message: if it proposes facts again, the confirmation runs again, but that one's note
+  goes with the tenant's next message as before (`state.note` on the page). The shared part of a turn moved out of `agent.turn`
+  into `ask_model` (send, take the new messages, `turn_blocks`, `retry_empty`) and `proposed_in`, which `turn` and
+  `after_confirmation` both use; `turn`'s behavior is unchanged.
+  The deadline block: `agent.deadlines_unasked` printed the deadlines above a reply to a question about when whenever the model
+  had not called `get_deadlines`, so with none dated it printed "No deadlines yet: ..." above unrelated answers (TODO item 99,
+  the student simulation). Now it prints only when the listing has at least one dated deadline; with none it prints nothing and
+  the model answers in words. TODO item 99's phrase on it is removed.
+  Smoke: 587 OK lines, all OK (569 before). Rewritten against the new text, 11 checks: items 46, 52, 53, 56, 73, 76, 77, 82, 96,
+  112, and 113, which tested version G's lines (its "Not:" lines, the "write exactly" fallback, rule numbers and wording). New named
+  checks, 18 more lines than before (the old "letter rule is left out" check became the rule 6 check below): the rules' opening and
+  skills paragraph; no "Not:", "Instead:", or "write exactly" in any rule; rule 6 left out while no letter is in play, with rules
+  5, 7, 8, 9 then in order, one blank line between and no marker or gap line left; rule 6 in its place once a letter is in play;
+  `CASE_RULE` with a case topic and `NO_CASES_RULE` without; every part name the rules write in capitals is one of `PARTS`;
+  every tool they name exists (and `sent_on`, `sender`, `recipient`, `channel` are `add_communication`'s arguments); `RULES` under
+  1,500 words; the deadline block not printed with no dated deadline; no automatic turn when nothing was confirmed; the note at
+  once as its own turn with the reply shown and no tenant line for it; the next message without a note; the terminal chat with
+  every row skipped, and with a reply that proposes facts again (one automatic reply only); on the page, the reply after the
+  form, the next message without a note, and the same bound, with the note carried to the next message.
+  Decisions: the note is sent as `sheet_note` writes it, with no instruction to reply (the model answers a
+  program note with the conversation; `retry_empty` covers an empty reply); `after_confirmation` returns `(blocks, proposed)`
+  like `turn`, so a front end can tell whether to confirm again, not blocks alone; a gateway error in the automatic reply on the
+  page becomes the usual caution and the note goes with the next message.
+
 - The playbooks go, with the options layer and every line only they used (TODO item 113, done). Removed: the ten
   `playbooks/*.yaml` files and the folder (2,935 lines of YAML before, 0 after; they stay in git history, last at commit
   680a48a); `corpus.py`'s playbook code (`Element`, `Condition`, `RelatedIssue`, `Way`, `Gate`, `Step`, `Option`, `Spec`,

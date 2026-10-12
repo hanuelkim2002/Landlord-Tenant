@@ -5,8 +5,8 @@
 New matter: pick a tenant (or make a new one), give the lease PDF's path, describe the problem. The lease is
 read once with Gemma, and the description is saved (intake). Existing matter: pick it from the list and say what is
 new, if anything; an update is logged (resume). Either way the chat starts at once, and the description or the update
-is the tenant's first message: the model loads the skills that fit and proposes facts, and the confirmation asks the
-tenant to confirm them after that turn.
+is the tenant's first message: the model loads the skills that fit and proposes facts, the confirmation asks the
+tenant to confirm them after that turn, and the model replies to what was confirmed at once.
 """
 from pathlib import Path
 

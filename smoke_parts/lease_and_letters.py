@@ -1,4 +1,5 @@
-"""Smoke, part: the lease and the letters. The rules that apply only sometimes (rule 6 on letters), the system prompt without
+"""Smoke, part: the lease and the letters. The rules (version H, TODO item 114: their text, rule 6 on letters and rule 8 on cases
+in only when they apply, every part and tool they name, their length), the system prompt without
 the options layer's two parts (TODO item 113), the lease profile's repairs clause and the lease cites, the deadline a message
 starts and what it counts only if, the letter (the program's lines around the tenant's account and request), the lease's
 numbered clauses and the lease search, and every skill's clock facts through the real code path (proposed, confirmed,
@@ -17,25 +18,86 @@ from deterministic import compute_deadlines, matter_deadlines
 from record import load_matter, read_events
 from lease import lease_clauses
 from sheet import pending_rows, run_sheet
+import prompt
 from prompt import RULES as RULES_TEXT
-from prompt import CASE_RULE, LETTER_RULE, NO_CASES_RULE, PARTS, system_prompt
+from prompt import CASE_RULE, LETTER_RULE, NO_CASES_RULE, PARTS, rules_for, system_prompt
 from replies import check_reply, cited_clause, cited_words
 from skills import clock_facts, skills
 from timeline import render_deadlines
-from tools import build_letter, deadline_listing, draft_letter, pretty, propose_facts
+from tools import add_communication, build_letter, deadline_listing, draft_letter, pretty, propose_facts
 from tools import tools as model_tools
 from smoke_parts.common import prompt_part, scripted
 
-# the letter rule on a matter with no letter drafted (the test matter's history has one, so it is emptied)
+# ---- The rules (version H, 2026-10-12, TODO item 114; the text is in docs/structure/2026-10-12-rules.txt), on a matter with no
+# letter drafted (the test matter's history has one, so it is emptied). rules_for fills the two markers: rule 6 (letters) only
+# once a letter is in play, rule 8 as the full cases rule only when a case topic is offered.
+numbers = lambda text: re.findall(r"^(\d)\. ", text, re.M)             # the rule numbers a text starts a line with
 make_scratch("t-smoke-rules")
 try:
     (MATTERS / "t-smoke-rules" / "m-001" / "events.jsonl").write_text("")
     load_matter("t-smoke-rules", "m-001")
-    check("the letter rule is left out while no letter is in play",
-          LETTER_RULE not in system_prompt([HumanMessage(content="What are my deadlines?")])
-          and LETTER_RULE in system_prompt([HumanMessage(content="Can you help me write something to send them?")]))
+    plain_chat = [HumanMessage(content="What are my deadlines?")]
+    letter_chat = [HumanMessage(content="Can you help me write something to send them?")]
+    no_letter, with_letter = rules_for(plain_chat), rules_for(letter_chat)
+    check("version H: the rules open with what the tenant wants, then the skills paragraph and the format paragraph, then the "
+          "nine rules; the model is sent to load_skill before answering, and told what to say when no skill fits",
+          RULES_TEXT.startswith("You help a Florida college tenant with a dispute with their landlord (Fla. Stat. ch. 83, part II). "
+                                "Find out what they want")
+          and "Skills: SKILLS lists the situations this tool has instructions for. When the tenant describes a situation, load "
+              "each skill that fits it with load_skill before you answer about it; more than one may fit." in RULES_TEXT
+          and "If no skill fits, say this tool has no skill for that situation, and answer only from what search_statute and "
+              "get_statute_section find." in RULES_TEXT
+          and RULES_TEXT.index("\n\nSkills: SKILLS") < RULES_TEXT.index("\n\nWrite short, plain sentences in everyday words")
+          < RULES_TEXT.index("\n1. Help the tenant do what they want.")
+          and system_prompt(plain_chat).startswith(RULES_TEXT[:200]))
+    check("version H: no \"Not:\" and \"Instead:\" pairs and no \"write exactly\" fallback line are left in any rule",
+          not any(old in text for old in ("Not:", "Instead:", "write exactly") for text in
+                  (RULES_TEXT, LETTER_RULE, CASE_RULE, NO_CASES_RULE)))
+    check("rule 6 is left out while no letter is in play, and rules 5, 7, 8, 9 then follow one another, one blank line between "
+          "them, no marker and no gap line left",
+          LETTER_RULE not in no_letter and numbers(no_letter) == list("12345789") and "[RULE" not in no_letter
+          and "\n\n\n" not in no_letter and re.search(r"\n\n5\. [^\n]*\n\n7\. Keep the record", no_letter)
+          and LETTER_RULE not in system_prompt(plain_chat))
+    check("once a letter is in play (the tenant asks for one), rule 6 stands between rules 5 and 7, one blank line on each side",
+          LETTER_RULE in with_letter and numbers(with_letter) == list("123456789") and "[RULE" not in with_letter
+          and "\n\n\n" not in with_letter
+          and re.search(r"\n\n5\. [^\n]*\n\n" + re.escape(LETTER_RULE) + r"\n\n7\. Keep the record", with_letter)
+          and LETTER_RULE in system_prompt(letter_chat))
+    facts_part = prompt_part("facts")
+    real_topics = prompt.offered_topics
+    try:
+        prompt.offered_topics = lambda: {}
+        no_topic = rules_for(plain_chat)
+        prompt.offered_topics = lambda: {"Landlord's notice of claim on the deposit": 1}
+        topic = rules_for(plain_chat)
+    finally:
+        prompt.offered_topics = real_topics
+    check("rule 8 is CASE_RULE when a case topic is offered and NO_CASES_RULE when none is, between rules 7 and 9, never both",
+          CASE_RULE in topic and NO_CASES_RULE not in topic and NO_CASES_RULE in no_topic and CASE_RULE not in no_topic
+          and numbers(topic) == list("12345789") and numbers(no_topic) == list("12345789")
+          and topic.index("\n7. Keep the record") < topic.index(CASE_RULE) < topic.index("\n9. Move things forward")
+          and no_topic.index("\n7. Keep the record") < no_topic.index(NO_CASES_RULE) < no_topic.index("\n9. Move things forward"))
 finally:
     remove_scratch("t-smoke-rules")
+
+# every part and tool the rules name exists: the prompt's part names (capitals) are PARTS' names, each is named, and the rules
+# spell no other part in capitals; every snake_case name is a tool the model has (the id and file-name examples aside), and
+# each tool is named; rule 4 sends the model to what YOUR FACTS says the deadlines still need
+blocks = RULES_TEXT + LETTER_RULE + CASE_RULE + NO_CASES_RULE
+part_names = [text.split(" (")[0] for text in PARTS.values()]
+leftover = blocks.replace("[RULE 6]", "").replace("[RULE 8]", "").replace("YYYY-MM-DD", "")
+for name in sorted(part_names, key=len, reverse=True):                        # "LOADED SKILLS" before "SKILLS"
+    leftover = leftover.replace(name, "")
+check("every part the rules name is a part of the prompt, each part is named by the rules, and no other name is written in capitals",
+      part_names == ["YOUR LEASE", "SKILLS", "LOADED SKILLS", "THE STATUTE", "COURT CASES THIS TOOL HAS", "YOUR FACTS",
+                     "WHICH DEADLINES HAVE PASSED"]
+      and all(name in blocks for name in part_names) and not re.findall(r"\b[A-Z]{3,}\b", leftover)
+      and "What the deadlines still need" in facts_part and "under what the deadlines still need" in RULES_TEXT)
+named = set(re.findall(r"\b[a-z]+(?:_[a-z]+)+\b", blocks)) - {"deposit_not_returned", "issue_posture"}
+check("every tool the rules name is a tool the model has, and the rules name each of its tools; rule 7's sent_on, sender, "
+      "recipient, and channel are add_communication's arguments",
+      named - {"sent_on"} == {t.name for t in model_tools} and {"sent_on", "sender", "recipient", "channel"} <= set(add_communication.args))
+check("the RULES are under 1,500 words", len(RULES_TEXT.split()) < 1500)
 
 # the options layer's two prompt parts are gone (TODO item 113); a loaded skill's "What the tenant can do" says what they said.
 # With every skill loaded and a letter in play, neither name is in the prompt, the rules, or a tool's description.
@@ -46,15 +108,17 @@ try:
     every_prompt = system_prompt([HumanMessage(content="Can you write a letter to my landlord?")]) + CASE_RULE + NO_CASES_RULE
     gone = ("YOUR OPTIONS", "WHAT THE TOOL DOES NOT KNOW")
     check("item 113: the system prompt has no YOUR OPTIONS and no WHAT THE TOOL DOES NOT KNOW part, nor does a rule or a tool's "
-          "description name one, and rule 1 sends the model to a loaded skill's \"What the tenant can do\"",
+          "description name one, and rule 1 sends the model to what a loaded skill says the tenant can do",
           not any(name in text for name in gone for text in [every_prompt, *(t.description for t in model_tools)])
           and not any(part.startswith(gone) for part in PARTS.values()) and not any(key in PARTS for key in ("options", "unknown"))
-          and 'the loaded skill\'s "What the tenant can do"' in RULES_TEXT)
+          and "say what to find out, what the tenant can do and what each option needs" in RULES_TEXT)
 finally:
     remove_scratch("t-smoke-nooptions")
-check("item 96: after a draft, rule 6 has the reply answer anything else asked with it, then the one line, never the letter retold",
-      'after draft_letter, answer anything else the tenant asked in that message, as any answer, then end with "The '
-      'letter appears above; tell me if you want changes." Never retell the letter.' in LETTER_RULE
+check("item 96: after a draft, rule 6 has the reply answer anything else asked with it, tell what the skill's Letters says to tell, "
+      "then the one line, never the letter retold",
+      'After draft_letter, answer anything else they asked in that message, tell them what the loaded skill\'s Letters says to tell '
+      'them when a letter is shown, and end with: "The letter appears above; tell me if you want changes." Never retell or '
+      'rewrite the letter yourself; changes go through draft_letter again.' in LETTER_RULE
       and "reply only" not in LETTER_RULE)
 
 
@@ -67,9 +131,10 @@ check("item 76: an older profile loads with the repairs clause not read, and cla
       old_profile.maintenance_and_repairs is None
       and "maintenance_and_repairs" not in dict(old_profile.clauses()) and len(old_profile.clauses()) == 15
       and "air conditioning" in LeaseProfile.model_json_schema()["properties"]["maintenance_and_repairs"]["description"])
-check("item 76: the lease part says it is not the whole lease, and rule 2 forbids saying the lease does not mention something",
+check("item 76: the lease part says it is not the whole lease, and rule 2 forbids saying the lease does or does not say something "
+      "before searching it",
       PARTS["lease"].startswith("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease")
-      and 'Not: "The lease does not mention air conditioning."' in RULES_TEXT)
+      and "Before you say the lease does or does not say something, search it with search_lease" in RULES_TEXT)
 
 # lease cites (TODO item 77): YOUR LEASE gives each clause in words with the cite to use, no field name; the program
 # prints the words for a section cite, a page cite (the clauses on that page with no number), and a cite inside an
@@ -83,7 +148,8 @@ check("item 77: YOUR LEASE names each clause in words with its cite, and no fiel
       and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", lines_now)
       and lease_cite(article) == "Lease Article 7" and cited_clause(article, "7.2", "")
       and not cited_clause(article, "17.2", "")
-      and 'Not: "(Lease notice_before_vacating)" or "(term_end)"' in RULES_TEXT)
+      and "as the lease clause's cite is given to you, (Lease Section 4.3) or (Lease, page 1)" in RULES_TEXT
+      and "no ids like deposit_not_returned" in RULES_TEXT)
 
 # the deadline a message starts and what it counts only if (TODO items 90 to 92, the student simulation of 2026-10-06): a repair
 # message sent by e-mail that says "I'm going to have to move out" starts the 7 days of 83.56(1), printed with what the date
@@ -209,8 +275,8 @@ try:
     nbsp = cited_words("The landlord must repair the air conditioning (Lease Section\u202f7.2), and see Fla. Stat.\u00a083.60\u00a0(1)(b).")
     check("item 85: a cite written with a no-break space still gets its words printed (lease and statute)",
           "Lease Section 7.2, page 4 (Systems and Appliances)" in nbsp and "Fla. Stat. 83.60(1)(b):" in nbsp)
-    check("item 82: rule 2 asks for a search before saying the lease lacks something, and the model has the tool",
-          "call search_lease first" in RULES_TEXT and "search_lease" in [tl.name for tl in model_tools]
+    check("item 82: rule 2 asks for a search, with a second wording, before saying the lease lacks something, and the model has the tool",
+          "try a second wording when the first finds nothing" in RULES_TEXT and "search_lease" in [tl.name for tl in model_tools]
           and "search_lease searches the whole lease's text" in PARTS["lease"])
 finally:
     remove_scratch("t-smoke-lease")

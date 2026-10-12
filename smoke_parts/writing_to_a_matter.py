@@ -192,10 +192,11 @@ try:
           and not re.search(r"\b20\d\d-\d\d-\d\d\b", status_text) and len(read_events()) == events_now)
     loaded_part = prompt_part("loaded")
     check("item 53: a loaded skill reaches the model under its name with its open questions and no clock id, and the "
-          "rules forbid writing the prompt's part names",
+          "rules forbid showing the tool's insides: ids, the prompt's part names, rule numbers",
           loaded_part.startswith("# deposit_not_returned\n## When to load this skill") and "\n# deposit_claim_received\n" in loaded_part
           and "## What the statute does not settle" in loaded_part and "termination_date_meaning" not in loaded_part
-          and "no part name in capitals as this prompt writes it" in system_prompt())
+          and "Never show the tool's insides: no ids like deposit_not_returned, no names of this prompt's parts, no rule numbers."
+          in system_prompt())
     old_names = re.compile(r"LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS|"
                            r"THE TOOL'S NOTES ON YOUR ISSUES|WHAT THE STATUTE DOES NOT SETTLE \(")
     prompt_now = system_prompt([HumanMessage(content="Can you write a letter to my landlord?")])     # rule 6 in too
@@ -205,24 +206,33 @@ try:
           heads == sorted(heads) and not old_names.search(prompt_now + CASE_RULE + NO_CASES_RULE + LETTER_RULE)
           and not any(old_names.search(t.description) for t in model_tools)
           and "## Letters" in prompt_part("loaded") and "open_questions" not in prompt_part("loaded"))
-    check("item 52: the fallback line is ruled out where an open question or a case topic is on the point",
-          "the fallback line only when no stored sentence, no open question in a loaded skill's \"What the statute does not "
-          "settle\", and no topic in COURT CASES THIS TOOL HAS" in system_prompt())
-    check("item 56: rule 1's So gives each reading of an open question, never one as the answer, and rule 5 sends the "
-          "model to a loaded skill's open questions",
-          "what follows on each of its readings, never one of them as the answer" in system_prompt()
-          and "5. The open questions in a loaded skill's \"What the statute does not settle\" stay open, with their readings."
-          in system_prompt())
-    check("item 73: rule 1 asks for every rule the answer turns on with its cite, and the format line to cite, not recite",
-          "Instead: each rule the answer turns on, each condition and each consequence you rely on, with the cite" in system_prompt()
+    check("item 52: before saying nothing answers, the model checks a loaded skill's open questions and the case topics, even in "
+          "other words than the tenant's, and gives the one on the point",
+          "If nothing you have or can fetch answers the question, say so plainly and do not guess. First check whether an open "
+          "question in a loaded skill or a case topic is on the point, even in other words than the tenant's; if one is, give it "
+          "(rules 5 and 8)." in system_prompt())
+    check("item 56: rule 5 keeps an open question a loaded skill lists open: each reading in a sentence with what it would mean "
+          "for the tenant, never one picked or put to them, and a step that works under every reading said",
+          "5. An open question a loaded skill lists, in the way of what the tenant asked, stays open: say in plain words that the "
+          "law does not settle it, give each reading in a sentence with what it would mean for them, and never pick one or ask "
+          "them to settle it. When one step works under every reading, say so." in system_prompt())
+    check("item 73: rule 1 asks for a cite whose words say each rule the answer relies on, and the format paragraph to cite, "
+          "not recite",
+          "Every rule you rely on needs a cite whose words say it; a rule you cannot cite stays out." in system_prompt()
           and "Cite, do not recite:" in system_prompt())
-    check("item 46: the rules apply the law, and a loaded skill's open questions reach the model with their readings",
-          "1. Apply the law to the tenant's facts." in system_prompt() and "stay open, with their readings" in system_prompt()
+    check("item 46: the rules apply the law to the tenant's facts and their lease, and a loaded skill's open questions reach the "
+          "model with their readings",
+          "1. Help the tenant do what they want." in system_prompt()
+          and "applying the loaded skill's conditions for that option to their facts and their lease" in system_prompt()
           and "give every reading" in prompt_part("loaded"))
-    check("item 112: rule 4 has the model propose what the tenant tells it, the tenant confirm after the reply, and ask in the "
-          "chat only for what the answer turns on; no rule says a sheet asks every missing fact",
-          "4. You propose facts; the tenant confirms them after your reply." in system_prompt()
+    check("item 112: rule 4 has the model propose what the tenant tells it with their exact words, the tenant confirm each fact "
+          "after the reply, and ask in the chat only for what the answer turns on, never for what YOUR FACTS or the lease holds; "
+          "no rule says a sheet asks every missing fact",
+          "4. When the tenant tells you a fact your answer, their record, or a letter turns on, call propose_facts with their "
+          "exact words as \"said\"" in system_prompt()
+          and "the tenant confirms each fact after your reply" in system_prompt()
           and "Ask in the chat only for what your answer turns on" in system_prompt()
+          and "never for something YOUR FACTS or the lease already holds" in system_prompt()
           and "the sheet asks" not in system_prompt() and "the sheet confirms" not in system_prompt())
     check("a deadline two skills share is listed once, with both skills", len(shared) == 1
           and shared[0]["skills"] == ["deposit_not_returned", "deposit_claim_received"])

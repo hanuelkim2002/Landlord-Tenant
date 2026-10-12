@@ -5,9 +5,10 @@
 The same steps as run.py, on one page. Left (the sidebar): a new matter, the saved matters, and what the open
 matter is about. Middle: the front door (a new matter: tenant, lease PDF, description; a saved one: what is
 new), then the chat, which starts with the description or the update as the tenant's first message; after a turn in
-which the model proposed facts, the confirmation as a form, one fact at a time. Right: the timeline and the last
-letter drafted, drawn from the record on every run, never by the model. In the chat, a speech bubble is the
-model's words (checked by the program before they are shown); a box is printed by the program itself.
+which the model proposed facts, the confirmation as a form, one fact at a time, and then the model's reply to what was
+confirmed, at once. Right: the timeline and the last letter drafted, drawn from the record on every run, never by the
+model. In the chat, a speech bubble is the model's words (checked by the program before they are shown); a box is
+printed by the program itself.
 
 How Streamlit works, in short: it runs this whole file again, top to bottom, on every click or message. So
 nothing in a plain variable survives from one run to the next. What must last is kept in st.session_state, the
@@ -27,7 +28,7 @@ from pathlib import Path
 import streamlit as st
 
 import record
-from agent import block, build_agent, intake, read_lease, resume, sheet_note, thread_config, turn
+from agent import after_confirmation, block, build_agent, intake, read_lease, resume, sheet_note, thread_config, turn
 from config import uf_api_key
 from record import (end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id, read_events,
                     start_session)
@@ -53,7 +54,9 @@ def reset():
     state.config = None             # the chat thread's config
     state.history = []              # everything shown in the middle column, oldest first, as blocks
     state.pending = None            # the tenant's message, waiting for the model's turn
-    state.note = ""                 # what the tenant confirmed on a sheet, for the model's next turn
+    state.confirmed = None          # what the tenant just confirmed on a sheet, waiting for the model's reply to it
+    state.replied = False           # the model has already replied to a confirmation of this tenant message
+    state.note = ""                 # what the tenant confirmed after that reply, for the model's next turn
     state.skipped = set()           # confirmation rows skipped in this sheet
     state.saved = []                # what this sheet saved, as save_answer's pairs
 
@@ -148,6 +151,7 @@ def open_chat(first=""):
     if first:
         state.history.append(block("tenant", first))
         state.pending = first
+        state.replied = False
     state.stage = "chat"
 
 
@@ -270,10 +274,14 @@ def sheet_form():
 
 
 def finish_sheet():
-    """No row left to ask: back to the chat, and what was confirmed goes to the model with the next message."""
+    """No row left to ask: back to the chat. What was confirmed goes to the model at once (run_automatic_reply), once per
+    tenant message; the confirmation of that reply goes with the tenant's next message."""
     if state.skipped:
         state.history.append(block("notice", skipped_note(state.skipped)))
-    state.note = sheet_note(state.saved)
+    if state.saved and not state.replied:
+        state.confirmed = state.saved
+    else:
+        state.note = sheet_note(state.saved)
     state.stage = "chat"
     state.skipped, state.saved = set(), []
 
@@ -288,6 +296,7 @@ def take_message(text):
         return
     state.history.append(block("tenant", text))
     state.pending = text
+    state.replied = False
 
 
 def run_pending_turn():
@@ -303,6 +312,26 @@ def run_pending_turn():
     state.note = ""
     state.history += blocks
     if proposed and pending_rows():                     # the tenant confirms the model's proposals
+        state.stage = "sheet"
+
+
+def run_automatic_reply():
+    """The model replies to what the tenant just confirmed, at once (agent.after_confirmation), once per tenant message: if
+    the reply proposes facts again, the form comes again, and what is confirmed then goes with the next message."""
+    confirmed, state.confirmed = state.confirmed, None
+    state.replied = True
+    with st.spinner("The model is working. The program checks its reply before you see it."):
+        try:
+            reply = after_confirmation(state.agent, state.config, confirmed)
+        except Exception as error:                      # the gateway failed: the model has not heard it, so it goes next time
+            traceback.print_exc()
+            state.note = sheet_note(confirmed)
+            state.history.append(block("caution", f"[Check: the model could not be reached ({type(error).__name__}). "
+                                                  "Please ask again.]"))
+            return
+    blocks, proposed = reply
+    state.history += blocks
+    if proposed and pending_rows():
         state.stage = "sheet"
 
 
@@ -390,12 +419,15 @@ with middle:
         elif state.pending:
             run_pending_turn()
             st.rerun()
+        elif state.confirmed:
+            run_automatic_reply()
+            st.rerun()
 with right:
     if state.ids and record.profile is not None:
         record_panel()
 
 if state.stage == "chat":
-    message = st.chat_input("Write here", disabled=bool(state.pending))
+    message = st.chat_input("Write here", disabled=bool(state.pending or state.confirmed))
     if message:
         take_message(message)
         st.rerun()

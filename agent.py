@@ -5,6 +5,7 @@ The chat is in pieces any front end can call: turn (one model turn) returns bloc
 {"kind", "text"}. "reply" is the model's words; every other kind is the program's (see BLOCK KINDS below). The
 terminal loop, chat, prints them with print_blocks; the web page, app.py, draws the same blocks.
 """
+import json
 import re
 
 from langchain.agents import create_agent
@@ -67,8 +68,9 @@ def build_agent():
 
 # ---- Chat: a turn of the model returns blocks, the parts the tenant sees, in order. Tool output is hidden except
 # draft_letter, whose result is shown as is, and get_deadlines and get_cases, whose listings the program shows. After a
-# turn in which the model proposed facts, the confirmation (sheet.py) asks the tenant to confirm them. Everything said, every tool
-# call, and every sheet answer goes to the session's transcript.
+# turn in which the model proposed facts, the confirmation (sheet.py) asks the tenant to confirm them, and the model
+# replies to what was confirmed at once (after_confirmation). Everything said, every tool call, and every sheet answer
+# goes to the session's transcript.
 #
 # BLOCK KINDS. From the model: "reply". From the program: "letter" (draft_letter's result), "cases" (get_cases'
 # listing), "deadlines" (get_deadlines' listing, through render_deadlines), "sources" (the statute and lease words a
@@ -180,12 +182,17 @@ WHEN_QUESTION = re.compile(r"\b(when (do|does|did|is|are|was|will|would|can|coul
 
 
 def deadlines_unasked(text, new):
-    """The deadlines as a block, printed by the program, when the tenant's message asks about when and the turn's
-    new messages hold no get_deadlines call; None otherwise. Written to the transcript as a printed line marked
+    """The deadlines as a block, printed by the program, when the tenant's message asks about when, the turn's
+    new messages hold no get_deadlines call, and at least one deadline has a date; None otherwise. With no dated
+    deadline nothing is printed and the model answers in words: the block ("No deadlines yet: ...") above an answer
+    to an unrelated question read as noise (TODO item 99). Written to the transcript as a printed line marked
     "deadlines". deadline_listing logs its deadlines_computed events, as for the tool."""
     if not WHEN_QUESTION.search(text) or any(m.type == "tool" and m.name == "get_deadlines" for m in new):
         return None
-    shown = render_deadlines(deadline_listing())
+    listing = deadline_listing()
+    if not any("deadline" in d for d in json.loads(listing)["deadlines"]):      # none has a date
+        return None
+    shown = render_deadlines(listing)
     record.append_transcript({"role": "printed", "what": "deadlines", "text": shown})
     return block("deadlines", shown)
 
@@ -196,51 +203,87 @@ def thread_config():
     return {"configurable": {"thread_id": record.session or str(uuid7())}}
 
 
-def turn(agent, config, text, note=""):
-    """One turn of the model on the tenant's message, with any note from the sheet in front of it. The message
-    goes to the transcript before the model runs (propose_facts checks the tenant's words against it). A turn
-    that shows the tenant nothing is asked once more (retry_empty). A question about when that the model
-    answered without get_deadlines gets the deadlines printed by the program, first (deadlines_unasked). Returns
-    the turn's blocks, and whether the model proposed facts, so the sheet comes next."""
-    record.append_transcript({"role": "tenant", "text": text})
-    if note:
-        record.append_transcript({"role": "program", "text": note})
+def ask_model(agent, config, content):
+    """Send content to the model as the next message of the chat thread, with the pieces every turn shares: the
+    turn's new messages are the thread after what the checkpointer held before it, minus the message sent; the
+    blocks come from turn_blocks; a turn that shows the tenant nothing is asked once more (retry_empty). Returns the
+    new messages and the blocks."""
     seen = len(agent.get_state(config).values.get("messages", []))     # the thread before this turn
-    result = agent.invoke({"messages": [HumanMessage(content=note + text)]}, config=config)
-    new = result["messages"][seen + 1:]                  # everything new this turn, minus the tenant's message
+    result = agent.invoke({"messages": [HumanMessage(content=content)]}, config=config)
+    new = result["messages"][seen + 1:]                  # everything new this turn, minus the message sent
     blocks = turn_blocks(new, result["messages"])
     if not blocks:                                       # nothing for the tenant: ask the model once more
         result, more, blocks = retry_empty(agent, config, result)
         new = new + more
+    return new, blocks
+
+
+def proposed_in(new):
+    """Whether the model called propose_facts in these new messages, so the confirmation comes next."""
+    return any(m.type == "tool" and m.name == "propose_facts" for m in new)
+
+
+def turn(agent, config, text, note=""):
+    """One turn of the model on the tenant's message, with any note from the sheet in front of it. The message
+    goes to the transcript before the model runs (propose_facts checks the tenant's words against it). A question
+    about when that the model answered without get_deadlines gets the deadlines printed by the program, first
+    (deadlines_unasked). Returns the turn's blocks, and whether the model proposed facts, so the sheet comes next."""
+    record.append_transcript({"role": "tenant", "text": text})
+    if note:
+        record.append_transcript({"role": "program", "text": note})
+    new, blocks = ask_model(agent, config, note + text)
     unasked = deadlines_unasked(text, new)               # asked when, and the model did not get the deadlines
     if unasked:
         blocks.insert(0, unasked)
-    return blocks, any(m.type == "tool" and m.name == "propose_facts" for m in new)
+    return blocks, proposed_in(new)
 
 
 def sheet_note(confirmed):
-    """What the tenant confirmed on a sheet between two turns, sent to the model at the front of the tenant's
-    next message, since the sheet runs between the model's turns. "" when nothing was confirmed."""
+    """What the tenant confirmed on a sheet between two turns, as a note for the model: sent as a turn of its own
+    (after_confirmation), or, for the confirmation of the reply to that, at the front of the tenant's next message.
+    "" when nothing was confirmed."""
     if not confirmed:
         return ""
     return "[Program note: the tenant confirmed on the sheet: " + ", ".join(f"{i} = {v}" for i, v in confirmed) + "]\n"
 
 
+def after_confirmation(agent, config, confirmed):
+    """The model's reply right after the tenant confirmed facts on the sheet (TODO item 114). The note (sheet_note) goes
+    to the model at once as a turn of its own, written to the transcript as a program line, not a tenant line, so the
+    tenant is answered on what they just confirmed or corrected instead of at their next message. Returns the turn's
+    blocks and whether the model proposed facts again, as turn does; None, with the model not called, when nothing was
+    confirmed. A front end calls it once per tenant message: when the reply proposes facts again, the confirmation
+    runs again, but the reply to that one waits for the tenant's next message, which carries sheet_note."""
+    note = sheet_note(confirmed)
+    if not note:
+        return None
+    record.append_transcript({"role": "program", "text": note})
+    new, blocks = ask_model(agent, config, note)
+    return blocks, proposed_in(new)
+
+
 def chat(agent, first=""):
-    """The terminal chat: run a turn on each line the tenant types, print the blocks, and run the intake sheet after a
-    turn in which the model proposed facts. first is the tenant's first message, sent before any line is read: the
-    description of a new matter, or what is new on an existing one. An empty line or bye ends it."""
+    """The terminal chat: run a turn on each line the tenant types, print the blocks, run the confirmation after a
+    turn in which the model proposed facts, and print the model's reply to what was confirmed (after_confirmation).
+    first is the tenant's first message, sent before any line is read: the description of a new matter, or what is new on
+    an existing one. An empty line or bye ends it."""
     config = thread_config()
-    note = ""           # what the tenant confirmed on a sheet since the model last ran; goes with the next message
+    note = ""           # what the tenant confirmed after the automatic reply; goes with the next message
     q = first or input(">> ")
     while q not in ("", "bye"):
         blocks, proposed = turn(agent, config, q, note)
         print_blocks(blocks)
         note = ""
-        # The model suggested facts: the tenant confirms them on the sheet now, with code, not with the model.
-        # The model learns the result with the tenant's next message, since the sheet runs between its turns.
+        # The model suggested facts: the tenant confirms them now, with code, not with the model. Then the model replies
+        # to what was confirmed, at once; one such reply per tenant message.
         if proposed and pending_rows():
             confirmed = run_sheet()
             print()
-            note = sheet_note(confirmed)
+            reply = after_confirmation(agent, config, confirmed)
+            if reply:
+                blocks, proposed = reply
+                print_blocks(blocks)
+                if proposed and pending_rows():       # it proposed facts again: confirm them, but no second automatic reply
+                    note = sheet_note(run_sheet())
+                    print()
         q = input(">> ")

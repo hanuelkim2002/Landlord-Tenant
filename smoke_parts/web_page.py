@@ -23,7 +23,8 @@ from smoke_parts.common import FORFEIT, StandIn
 # ---- The web page (app.py), run headless by Streamlit's AppTest on a scratch matter, with a stand-in model:
 # open a saved matter whose sidebar says what it is about, nothing new, a reply with a statute quote, a dollar amount,
 # and a bad cite, the model loading a skill (the sidebar follows) and proposing facts confirmed on the page's form (a yes/no
-# changed, a date, a text left for later), the note that follows, a model error, and End session. AppTest runs the page in this same program, so the page and
+# changed, a date, a text left for later), the model's reply to what was confirmed at once (TODO item 114) and the next
+# message without a note, a model error, and End session. AppTest runs the page in this same program, so the page and
 # these checks share record.
 logging.getLogger("streamlit").setLevel(logging.ERROR)     # AppTest's warnings about running outside a server
 make_scratch("t-smoke-app", skills=["deposit_not_returned"], proposed={},
@@ -52,6 +53,8 @@ try:
             "landlord_response": {"value": "said he would send a check", "how": "stated",
                                   "said": "The landlord said he would send a check"}})}}]),
         AIMessage(content='You said: "I left before the lease was up"'),
+        AIMessage(content="Thank you. With your move-out and the letter's date confirmed, the next thing to find out is "
+                          "what the landlord has paid."),            # the reply right after the form
         AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "a2"}]),
         AIMessage(content="")]))                            # asked only for the deadlines: nothing after the listing
     page.session_state["agent"] = create_agent(stand_in, tools=model_tools, checkpointer=InMemorySaver())
@@ -78,16 +81,26 @@ try:
           and page.date_input[0].value == date(2026, 9, 25))
     next(b for b in page.button if b.label == "Save").click().run()
     next(b for b in page.button if b.label == "Skip for now").click().run()
+    lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{page.session_state['session']}.jsonl").read_text().splitlines()]
+    note = "[Program note: the tenant confirmed on the sheet: early_or_periodic = True, claim_notice_date = 2026-09-25]\n"
+    thread = page.session_state["agent"].get_state(page.session_state["config"]).values["messages"]
     check("the page's form confirms the facts, leaves the skipped one pending, and says it will be asked again",
           page.session_state["stage"] == "chat" and record.matter["facts"]["early_or_periodic"] is True
           and record.matter["facts"]["claim_notice_date"] == "2026-09-25"
           and [r["id"] for r in pending_rows()] == ["landlord_response"]
           and any("Skipped for now: landlord response." in i.value.replace("\\", "") for i in page.info))
+    check("item 114: what the form confirmed goes to the model at once as a turn of its own and its reply is on the page, with a "
+          "program line in the transcript and no tenant line for the note",
+          [m.content for m in thread if m.type == "human"][-1] == note
+          and page.session_state["history"][-1]["kind"] == "reply"
+          and page.session_state["history"][-1]["text"].startswith("Thank you. With your move-out")
+          and [line["text"] for line in lines if line["role"] == "program"] == [note]
+          and note not in [line["text"] for line in lines if line["role"] == "tenant"]
+          and page.session_state["confirmed"] is None and page.session_state["note"] == "")
     page.chat_input[0].set_value("What are my deadlines?").run()
-    lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{page.session_state['session']}.jsonl").read_text().splitlines()]
-    check("what the sheet confirmed goes to the model with the next message, and the deadlines show in a program box",
-          [line["text"] for line in lines if line["role"] == "program"][-1]
-          == "[Program note: the tenant confirmed on the sheet: early_or_periodic = True, claim_notice_date = 2026-09-25]\n"
+    thread = page.session_state["agent"].get_state(page.session_state["config"]).values["messages"]
+    check("item 114: the next message goes to the model without a note, and the deadlines show in a program box",
+          [m.content for m in thread if m.type == "human"][-1] == "What are my deadlines?"
           and page.session_state["history"][-1]["kind"] == "deadlines")
     with contextlib.redirect_stderr(io.StringIO()):                 # the page prints the error's traceback
         page.chat_input[0].set_value("And now?").run()              # the stand-in has nothing left to say
@@ -102,7 +115,9 @@ finally:
 check("the page's scratch matter is removed", not (MATTERS / "t-smoke-app").exists())
 
 # a county and plain text on the page's form (item 112): a date picker, a county in a line, a text left to correct. The update
-# typed at the door is the tenant's first message; the stand-in model proposes facts from it, so the form comes.
+# typed at the door is the tenant's first message; the stand-in model proposes facts from it, so the form comes. Its reply right
+# after the form proposes one more fact (TODO item 114): the form comes again, and since that reply was the one automatic reply
+# of this tenant message, what the second form confirmed goes with the tenant's next message.
 make_scratch("t-smoke-app-text", skills=["notice_received_nonpayment"], proposed={}, facts={})
 try:
     page = AppTest.from_file(str(Path(__file__).resolve().parent.parent / "app.py"), default_timeout=60)
@@ -116,7 +131,10 @@ try:
             "nonpayment_notice_delivered": {"value": "2026-11-24", "how": "stated", "said": "taped to my door on November 24, 2026"},
             "premises_county": {"value": "Alachua", "how": "stated", "said": "I live in Alachua County"},
             "landlord_instruction": {"value": "pay in cash", "how": "stated", "said": "The landlord told me to pay in cash"}})}}]),
-        AIMessage(content="I have noted that.")]))
+        AIMessage(content="I have noted that."),
+        AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": "c2", "args": {"facts_json": json.dumps({
+            "notice_posting": {"value": "taped to my door", "how": "stated", "said": "taped to my door"}})}}]),
+        AIMessage(content="Thank you. I have added how the notice was delivered."), AIMessage(content="Third reply.")]))
     page.session_state["agent"] = create_agent(stand_in, tools=model_tools, checkpointer=InMemorySaver())
     page.session_state["config"] = {"configurable": {"thread_id": page.session_state["session"]}}
     page.text_area[0].set_value(update)
@@ -133,14 +151,30 @@ try:
     next(b for b in page.button if b.label == "Save").click().run()
     page.text_area[0].set_value("pay in cash only")                  # a correction to the suggested words
     next(b for b in page.button if b.label == "Save").click().run()
-    lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{page.session_state['session']}.jsonl").read_text().splitlines()]
-    check("the page saves a date, a county, and a corrected text as the tenant confirmed them, and goes back to the chat",
+    humans = lambda: [m.content for m in page.session_state["agent"].get_state(page.session_state["config"]).values["messages"]
+                      if m.type == "human"]
+    check("the page saves a date, a county, and a corrected text as the tenant confirmed them, and the model's reply right after "
+          "the form is shown, with the form again for the fact it proposed",
           record.matter["facts"] == {"nonpayment_notice_delivered": "2026-11-24", "premises_county": "Alachua",
                                      "landlord_instruction": "pay in cash only"}
-          and page.session_state["stage"] == "chat" and not record.matter["proposed"]
+          and page.session_state["stage"] == "sheet" and list(record.matter["proposed"]) == ["notice_posting"]
+          and page.session_state["history"][-1] == {"kind": "reply", "text": "Thank you. I have added how the notice was delivered."}
+          and humans() == [update, "[Program note: the tenant confirmed on the sheet: nonpayment_notice_delivered = 2026-11-24, "
+                                   "premises_county = Alachua, landlord_instruction = pay in cash only]\n"])
+    next(b for b in page.button if b.label == "Save").click().run()                 # the suggestion, taped to my door
+    lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{page.session_state['session']}.jsonl").read_text().splitlines()]
+    note_two = "[Program note: the tenant confirmed on the sheet: notice_posting = taped to my door]\n"
+    check("item 114: the reply to a confirmation is the only automatic reply to a tenant message: the second form's answer goes "
+          "back to the chat with no turn of the model, and is kept for the tenant's next message",
+          page.session_state["stage"] == "chat" and not record.matter["proposed"] and len(humans()) == 2
+          and page.session_state["note"] == note_two and page.session_state["confirmed"] is None
           and [(l["id"], l["typed"], l["value"]) for l in lines if l["role"] == "sheet"] == [
               ("nonpayment_notice_delivered", "", "2026-11-24"), ("premises_county", "", "Alachua"),
-              ("landlord_instruction", "pay in cash only", "pay in cash only")])
+              ("landlord_instruction", "pay in cash only", "pay in cash only"), ("notice_posting", "", "taped to my door")])
+    page.chat_input[0].set_value("And now?").run()
+    check("item 114: the next message carries that confirmation's note, once",
+          humans()[-1] == note_two + "And now?" and page.session_state["note"] == ""
+          and page.session_state["history"][-1] == {"kind": "reply", "text": "Third reply."})
 finally:
     remove_scratch("t-smoke-app-text")
 check("the page's text scratch matter is removed", not (MATTERS / "t-smoke-app-text").exists())
