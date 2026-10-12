@@ -125,7 +125,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   cite to a section or subsection that is not stored, so the skill check fails that one itself); and no clock id or
   clock fact id in the body as a whole word (`ids_in_prose`)). `check_all_skills()` (all of them, then a last line with the
   number of failures; returns it; called by `smoke.py`, not at import) and `skills` (dict, name to `Skill`, from
-  `skills/*.md` in name order; empty while the folder is absent or has no files, which is so until TODO item 110). No model
+  `skills/*.md` in name order; the ten skills since TODO item 110, empty when the folder is absent). No model
   calls. Imports `config`, `corpus`, `citations`. Imported by `smoke_parts/skill_files.py`.
 - `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
   `cases/` and `topics/` under the wiki folder, by name: `name`, `path`, `meta` from the YAML front matter,
@@ -595,8 +595,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
 
 Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `dev/leases/`
 (the eval's test leases, one per story, built from `lease.pdf` by `dev/build_test_leases.py`; gitignored), `statutes/83.*.txt` and `.html` (the
-read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `skills/*.md` (the skills, TODO item 109: the format and its
-checks exist; TODO item 110 writes the ten skills, so none is there yet), `.env` (the key), `docs/trials/` (dated records of trials, e.g. `2026-10-01-rules/`: the versions of the rules tried, the method, and the results; not kept current), `docs/structure/` (dated snapshots of the structure: a diagram of a
+read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `skills/*.md` (the ten skills, one per playbook, written from
+the playbooks' own verified content on 2026-10-12, TODO item 110, each with its clocks and counting copied unchanged
+and `provenance.converted_from` naming the playbook version; nothing in the chat reads them yet, and none is signed off), `.env` (the key), `docs/trials/` (dated records of trials, e.g. `2026-10-01-rules/`: the versions of the rules tried, the method, and the results; not kept current), `docs/structure/` (dated snapshots of the structure: a diagram of a
 session, a diagram of the storage, and the Skills history; not kept current), and `calendars/` (read-only, like `statutes/`):
 `court_holidays_circuit8.json` (Eighth Judicial Circuit: Alachua, Baker, Bradford, Gilchrist, Levy, and
 Union counties; for each of 2026 and 2027 the holidays in the Chief Judge's memorandum, each with its date,

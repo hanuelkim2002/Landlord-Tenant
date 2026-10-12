@@ -5,6 +5,23 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- The ten skills, written from the playbooks (TODO item 110, done). `skills/<name>.md` for each of the ten playbooks:
+  the header copies its description, sections, clocks (every field; no clock had `delivery`), and counting unchanged,
+  with `provenance` from the playbook plus `version: 1` and `converted_from` naming the playbook and its version; the
+  body turns its guidance, options (each gate's condition and the statute words its ways quote, the steps in order),
+  open questions with their readings, lease checks, overrides, exclusions, letter postures, and failure modes into
+  instructions to the model, under the seven headings. 1,467 lines in all, 107 (neighbor_disturbance) to 178
+  (repair_not_made), against 2,935 lines of YAML. Choices made in writing them: the typed machinery (element types and
+  sources, `compare_to`, the ways' `equals` and `otherwise`, `also_open`) became prose such as "set it beside the lease's
+  end date"; `notice_sufficiency`, which the program printed under every letter, is now what the model tells the tenant
+  when a letter is shown, under Letters; deposit_not_returned quotes 83.42(1) for the exclusion its playbook left as
+  "Not yet read" (AUTHOR item 2 asked for this), and asks the model to fetch 83.42 before relying on it; a section a
+  skill names but does not load (83.491, 83.56(4) in lease_ending, 83.55, 83.63) is fetched with
+  `get_statute_section` first; a few cross-references between skills (lease_ending to wants_to_leave_early,
+  rent_increased to lease_ending) carry no legal content. All ten pass `skills.check_all_skills` (every quote word for
+  word in its cited subsection; no clock fact id in the prose). Nothing in the chat reads them yet (item 111). AUTHOR
+  item 84 now asks for the sign-off on the skills.
+
 - Skills, step 1 (TODO 109): the skill format and its checks, with nothing reading skills yet. Added `skills.py`
   (beside `corpus.py`), `SKILLS` in `config.py`, and `smoke_parts/skill_files.py`. A skill is one markdown file in
   `skills/`: a YAML header (name, one-line description, statute sections, clocks as `corpus.Clock`, counting, provenance)

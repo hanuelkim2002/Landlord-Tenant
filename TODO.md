@@ -21,7 +21,6 @@ author's rule of 2026-10-06, in CLAUDE.md).
 
 Playbooks become skills (the author's plan of 2026-10-12; design in `docs/structure/2026-10-12-skills.md`). In order,
 each one commit; items 98 to 100 below wait until it is done, since the sheet and the prompt change under them.
-110. The ten skills, written from the playbooks' own verified content. Done: all ten pass the skill checks.
 111. The model loads skills (`load_skill`, the skill menu, `matter["skills"]`); the classifier, the issue rows, related
     issues, the stop page, and the chat commands go. Done: a stand-in model loads a skill and the record logs it.
 112. Facts: proposals only, a short confirmation, clock facts typed; `fill_facts`, fact lists, and fact status go.
