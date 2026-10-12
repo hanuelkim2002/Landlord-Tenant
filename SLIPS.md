@@ -69,17 +69,11 @@ the playbooks), quotes without marks 26, facts not confirmed 21.5, dates worked 
 
 ## Answers and offers
 
-40. "The lease and statute text I have do not answer that." to a legal question the playbook does not list as open
-    (whether a renewal must be signed by October 15). Counts: 2026-10-03 2 of 3, then 3 of 3. Status: watching; the
-    line is meant for a question nothing stored speaks to.
-62. Offers the tenant did not ask for (rule 9), more after a deadline listing. Counts: 2026-10-03 3 then 6 turns in 48
-    runs. Status: watching (`OFFER_WORDS`, rubric OFFER).
+40. "The lease and statute text I have do not answer that." to a legal question no open question covers (whether a
+    renewal must be signed by October 15). Counts: 2026-10-03 2 of 3, then 3 of 3. Status: watching; since the rules of
+    version H (2026-10-12) there is no fixed line, only "say so plainly and do not guess".
+62. Offers the tenant did not ask for, more after a deadline listing. Counts: 2026-10-03 3 then 6 turns in 48 runs.
+    Status: watching; since 2026-10-12 rule 9 asks for the next step once, and the rubric's OFFER counts only an offer
+    that is not the next step, or one made again.
 41. Empty replies. Counts: 2026-10-01 2 and 3 turns in 48 runs; 2026-10-08 part 2 eval 2 turns that were scored.
     Status: watching; `reply_empty` logs the gateway's finish_reason.
-
-## Intake
-
-42. `classify` adds "other" next to a covered issue for a detail of it (a partial payment with no receipt read as a
-    separate problem). Counts: 2026-10-02 3 of 3 rent-notice runs; after the wording fix 2 of 3; the mixed story's real
-    second problem now 3 of 3. Status: code-side options noted: keep it, have the classifier quote the separate problem
-    and check it is not a fact a playbook asks for, or drop "other" beside covered issues.

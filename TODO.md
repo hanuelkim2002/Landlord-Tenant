@@ -24,17 +24,14 @@ each one commit; items 98 to 100 below wait until it is done, since the sheet an
 116. Measure: the eval stories before (e32ab77) and after, scored blind, with a chart.
 
 The student simulation's remaining cause (`docs/evals/2026-10-06-students/`): what the tenant reads is built for
-checking, not for a reader with no legal training (98, 99, 100; the shape of an answer, 97, is the author's call in
-AUTHOR.md). The letters (95, 96) are in the CHANGELOG, 2026-10-11.
+checking, not for a reader with no legal training (98, 100). The letters (95, 96) are in the CHANGELOG, 2026-10-11;
+item 99 and the shape of an answer (AUTHOR 97) went with the skills (CHANGELOG, 2026-10-12).
 98. Case listings come first and whole: 51% to 72% of first replies, mostly unrelated injury cases, and every student
     skipped them. The reply first and the cases after it (folded on the web page), or cases only when asked; fewer
     topics per issue joins item 29. Done: the answer is the first thing a tenant reads.
-99. The sheet's small snags: an issue row with no suggestion where Enter fails, "Skipped for now" showing a field id,
-    "Taken out of your matter; logged.", no warning before a no that ends the visit, no word on what a mid-chat change
-    did, and `timeline` and `issues` named nowhere on screen.
-100. Words students did not know: the postures (preserve, assert, escalate), the letter's note "ask in the chat to have
-    this applied", "the landlord's duty is met", "possession", "registry of the court", "material", "waived", and
-    "matter" and "playbook". Plain names for the postures with when each fits, or a word list the program prints.
+100. Words students did not know: the postures (preserve, assert, escalate) and "matter" on the web page. Plain names
+    for the postures with when each fits. (Legal terms in replies, "possession", "material", "waived", are rule H's
+    format line since 2026-10-12: say what a term means; the eval of item 116 counts how it holds.)
 105. A false cite caution: "83.49(3)(a) (1981)", a statute version year after a cite, read as a subsection by
     `citations.CITE` (6 cautions in 2 `deposit_cases` runs, 2026-10-08). Done: a version year passes; a wrong
     subsection is still caught.

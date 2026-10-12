@@ -5,6 +5,16 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- TODO, AUTHOR, and SLIPS swept for the skills. TODO 99 (the sheet's snags: an issue row with no suggestion, a field id in
+  "Skipped for now", "Taken out of your matter", no warning before a no that ends the visit, the commands named nowhere)
+  went with the issue rows, the drop command, the stop page, and the labels of TODO 111 and 112; TODO 100 keeps the
+  postures' names and "matter" (legal terms in replies are the format line of the rules of version H). AUTHOR 97 (the
+  shape of an answer) was settled by the author in the rules review (rule 1: answer first, whether the tenant can before
+  any step, what is left to do; rule 5: when one step works under every reading, say so); AUTHOR 2 is folded into 84,
+  whose points no longer name the playbooks' ids; AUTHOR 117 asks the author to read rule 5, the skills paragraph, and
+  rules 6 to 9, written to finish the paused review. SLIPS 42 (the classifier's "other") went with the classifier
+  (TODO 111); 40 and 62 note the rules of version H.
+
 - The eval driver and the scenarios for a conversation (TODO item 115, part 2 of 2, done; also the `GATEWAY_SIGNS` part of TODO
   item 104). Replaced: `dev/live_run.py` (90 lines) typed into `run.py` through a pipe and answered the intake sheet's questions by
   matching the question on screen; it did not run after part 1. It is now 137 lines that play a scenario in their own program
