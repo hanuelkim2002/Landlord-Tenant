@@ -9,7 +9,7 @@ not what is planned (that is TODO.md) or what changed (that is CHANGELOG.md).
 Listed from the bottom of the import chain up. Every module imports `config`. Everything imports without
 `UF_API_KEY`; only a model call needs it (see Running and testing).
 
-- `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `CASES`, `WIKI`, `PLAYBOOKS`), `WIKI_UNVERIFIED` (true
+- `config.py`: paths (`ROOT`, `MATTERS`, `STATUTES`, `CASES`, `WIKI`, `PLAYBOOKS`, `SKILLS`), `WIKI_UNVERIFIED` (true
   when the environment sets `WIKI_UNVERIFIED=1`: development runs only, see `wiki.eligible`), the two model clients (`agent_llm` on
   `AGENT_MODEL`, up to 8000 output tokens since applied answers run longer, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0; `AGENT_MODEL`
   is nemotron-3-super-120b-a12b unless the environment sets `AGENT_MODEL`, for trying another gateway
@@ -102,6 +102,31 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   66 until item 73, when a rule in plain words with its cite became the wanted form). `REPORTER` (a reporter cite such as `448 So. 2d 1208` or `103 Fla. 892`) and `check_case_cites(text,
   given)` (each reporter cite in a reply, outside quote marks, must appear in what the model was given, i.e.
   a `get_cases` receipt; returns `(cite, problem)`). Imports `corpus`. Imported by `agent`, `smoke`, `wiki`, `dev/eval.py`.
+- `skills.py`: the skill format and its checks (TODO item 109, 2026-10-12; the design is in
+  `docs/structure/2026-10-12-skills.md`, a dated note). A skill is one markdown file in `skills/`: a YAML header between
+  two lines of three dashes, then the instructions. Nothing reads a skill yet except the checks; the playbooks are still
+  what the chat uses. `Skill` (`name`, `description`, `sections`, `clocks` as `corpus.Clock`, `counting`, `provenance`,
+  `body`: the markdown after the header; a key the shape does not define is refused, so a misspelled `clocks` cannot drop a
+  deadline). `load_skill_file(path)` (raises `ValueError` naming the file when: there is no header or it is not closed or
+  is not a mapping; a header key is missing or not defined, also inside a clock, or a clock is not a `Clock`; the name is
+  not the file's name without `.md`; the description is empty, over 200 characters (`MAX_DESCRIPTION`), or has a line break;
+  a section is not in `statutes/`; a clock's cite names a section not among the skill's `sections`; there are clocks and
+  no `counting.convention`), `cite_parts(cite)` ("83.60(1)(b)" to the section and the subsection), `clock_facts(skill)`
+  (fact id to type, from the role in the clocks: `trigger` and `shown_with` are "date", `applies_if` is "bool", and a
+  clock counted in `court_business_days` adds `premises_county`, "county"; there is no separate list of facts).
+  `REQUIRED` (the body's "## " headings, in order: When to load this skill, What to find out, What the tenant can do,
+  Deadlines, What the statute does not settle, Letters, Mistakes to avoid; "## Deadlines" only in a skill that has clocks;
+  no other "## " heading; "### " subheadings are free). `check_skill(skill)` (prints one line per check through
+  `corpus.report`, each naming the skill, and returns the failures: the headings (`heading_problem`: missing, not allowed,
+  repeated, or out of order); each clock's quote and consequence word for word in the section its cite names and in the
+  subsection the cite names (`cite_problem`, by `citations.is_in`, `subsections`, and `where_in`); every quotation of 20
+  characters or more in the body word for word in a stored section, and in the cited section and subsection when a cite is
+  next to it (`citations.check_quoted` on the body with nothing given, so only the statute counts; `check_quoted` skips a
+  cite to a section or subsection that is not stored, so the skill check fails that one itself); and no clock id or
+  clock fact id in the body as a whole word (`ids_in_prose`)). `check_all_skills()` (all of them, then a last line with the
+  number of failures; returns it; called by `smoke.py`, not at import) and `skills` (dict, name to `Skill`, from
+  `skills/*.md` in name order; empty while the folder is absent or has no files, which is so until TODO item 110). No model
+  calls. Imports `config`, `corpus`, `citations`. Imported by `smoke_parts/skill_files.py`.
 - `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
   `cases/` and `topics/` under the wiki folder, by name: `name`, `path`, `meta` from the YAML front matter,
   `body`; parsed once and reused, in `_read`, while no file there changes its time or size or is added or removed,
@@ -393,11 +418,12 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `remove_scratch(tenant_id)` removes it; it refuses any tenant id not starting with `t-smoke`.
 - `smoke.py`: entry point. Runs the offline checks, which are in `smoke_parts/` (split out of smoke.py on 2026-10-06),
   by importing each part in order, then prints `summary()` (see Running and testing).
-- `smoke_parts/`: the smoke checks in five parts, each run when imported: `pieces` (each piece on its own, on the
+- `smoke_parts/`: the smoke checks in six parts, each run when imported: `pieces` (each piece on its own, on the
   test matter in memory), `writing_to_a_matter` (on `matters/t-smoke/m-001`), `issues_and_turns` (on
   `matters/t-smoke-related/m-001`: issues suggested and dropped, and turns with a stand-in model),
   `playbooks_options_lease` (every playbook, and the checks of items 72 to 84 on their own scratch matters), and
-  `web_page`; and `common.py`, what more than one part uses: `FORFEIT` (a phrase of 83.49(3)(a)), `scripted`,
+  `web_page`, and `skill_files` (the skill format, on fixture skills written to a temporary folder, never to `skills/`; TODO
+  item 109); and `common.py`, what more than one part uses: `FORFEIT` (a phrase of 83.49(3)(a)), `scripted`,
   `stated`, `screen`, `prompt_part`, and `StandIn` (a stand-in model that takes any tools). Each part imports what it
   uses; named checks and scratch matters come from `checks.py`.
 - `smoke_online.py`: entry point. `classify` and `fill_facts` on a sample description, then `resume`
@@ -569,7 +595,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
 
 Outside `matters/`: `lease.pdf` (a sample lease for test runs, gitignored; `run.py` asks for a path), `dev/leases/`
 (the eval's test leases, one per story, built from `lease.pdf` by `dev/build_test_leases.py`; gitignored), `statutes/83.*.txt` and `.html` (the
-read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `.env` (the key), `docs/trials/` (dated records of trials, e.g. `2026-10-01-rules/`: the versions of the rules tried, the method, and the results; not kept current), `docs/structure/` (dated snapshots of the structure: a diagram of a
+read-only corpus; only `.txt` is loaded), `playbooks/*.yaml`, `skills/*.md` (the skills, TODO item 109: the format and its
+checks exist; TODO item 110 writes the ten skills, so none is there yet), `.env` (the key), `docs/trials/` (dated records of trials, e.g. `2026-10-01-rules/`: the versions of the rules tried, the method, and the results; not kept current), `docs/structure/` (dated snapshots of the structure: a diagram of a
 session, a diagram of the storage, and the Skills history; not kept current), and `calendars/` (read-only, like `statutes/`):
 `court_holidays_circuit8.json` (Eighth Judicial Circuit: Alachua, Baker, Bradford, Gilchrist, Levy, and
 Union counties; for each of 2026 and 2027 the holidays in the Chief Judge's memorandum, each with its date,
@@ -971,6 +998,7 @@ Offline checks (no model call, no key needed):
 
     python smoke.py                                                              # the offline smoke tests
     python -c "from corpus import check_all_playbooks; check_all_playbooks()"   # playbook checks: every line OK
+    python -c "import skills; skills.check_all_skills()"                         # skill checks: every line OK
     python schemas.py                                                            # what the model sees per tool
     python dev/build_cases.py "<Westlaw print>"                                  # once: builds cases/
     python dev/build_test_leases.py                                              # once: the eval's test leases
@@ -1042,7 +1070,17 @@ Offline checks (no model call, no key needed):
   saved matter opened from the list, nothing new, a reply in a speech bubble with the program's caution and
   line outside it and its `$` and `*` shown as written, a command, a proposed fact asked on the page's
   sheet with its related issue next, the note with the next message, deadlines in a program box, a model
-  error shown as a caution, End session; then, on `matters/t-smoke-app-choice/m-001`, a choice picked from a list. Every line
+  error shown as a caution, End session; then, on `matters/t-smoke-app-choice/m-001`, a choice picked from a list. Then the
+  skill format (TODO item 109; `smoke_parts/skill_files.py`, no matter): one valid fixture skill, written to a temporary
+  folder with statute quotes copied from `repair_not_made.yaml` and `notice_received_nonpayment.yaml`, loads and has no
+  failures; its clock facts are typed by role (and `premises_county` for a court-days clock); and each of these is caught,
+  as its own check: a name that is not the file's, a two-line, empty, or overlong description, a section not in `statutes/`,
+  a clock cite outside the sections, clocks with no counting convention, a clock that is not a `Clock` or has a misspelled
+  key, a file with no header; a clock quote or consequence changed by one word or cited to the wrong subsection; a missing,
+  misordered, repeated, or extra "## " heading, "## Deadlines" missing while there are clocks or present while there are
+  none; a body quotation in no stored section (cited or not), cited to the wrong subsection, or to a subsection the section
+  lacks; a clock id or a clock fact id (also `premises_county`) written in the body; and `skills.skills` a dict that
+  `check_all_skills` finds no failure in. Every line
   must be OK; the last line says "all checks OK" or lists the failures. The test matter itself is not
   changed by a smoke run.
 

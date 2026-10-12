@@ -5,6 +5,24 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- Skills, step 1 (TODO 109): the skill format and its checks, with nothing reading skills yet. Added `skills.py`
+  (beside `corpus.py`), `SKILLS` in `config.py`, and `smoke_parts/skill_files.py`. A skill is one markdown file in
+  `skills/`: a YAML header (name, one-line description, statute sections, clocks as `corpus.Clock`, counting, provenance)
+  and a body with the seven fixed "## " headings (Deadlines only when there are clocks). `load_skill_file` refuses a file
+  whose name is not its file name, whose description is empty, over 200 characters, or has a line break, whose section is not
+  in `statutes/`, whose clock cite is outside the sections, or that has clocks and no counting convention; it also
+  refuses a key the shape does not define (a misspelled `clocks` or `applies_if` would otherwise drop a deadline
+  silently, as `Playbook` and `Clock` do). `clock_facts` types the facts the clocks count from by role (no separate fact
+  list). `check_skill` (run for every skill by `check_all_skills`, and by `smoke.py`) checks the headings, each clock's
+  quote and consequence word for word in its cite's section and subsection, every quotation of 20 characters or more in
+  the body (`citations.check_quoted` with nothing given; a cite to a section or subsection that is not stored fails too,
+  where `check_quoted` skips it), and that no clock id or clock fact id with an underscore is a whole word in the body (a one-word id such as
+  "vacated" is also a plain word). It replaces nothing
+  yet: the playbooks and their checks, the chat, the prompt, the tools, the record, and the sheet are unchanged, and
+  `skills/` does not exist until item 110 writes the ten skills. Smoke: 32 named checks on one valid fixture skill and a
+  broken copy for each way a skill can be wrong, all written to a temporary folder (the fixture's statute quotes are
+  copied from `repair_not_made.yaml` and `notice_received_nonpayment.yaml`); 736 lines (704 before), all OK.
+
 - Plan: playbooks become skills (the author's decision; design in `docs/structure/2026-10-12-skills.md`, TODO items 109
   to 116). After trying the web page with a real lease, the author found the tool too rigid (slow intake, questions the
   lease answers, waiting instead of helping, "check your lease", replies that read as separate answers). A code map put

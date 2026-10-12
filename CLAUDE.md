@@ -65,6 +65,8 @@ is a law student, not admitted.
   deadline into a playbook, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
 - After any edit to a playbook YAML, run the playbook checks (`check_all_playbooks`, also run by `smoke.py`)
   and every line must be OK. They check quotes in the prose too, not only in `spec`.
+- After any edit to a skill in `skills/`, run the skill checks (`skills.check_all_skills`, also run by `smoke.py`)
+  and every line must be OK. They check quotes in the prose too, not only in the header's clocks.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
 - `run.py` and `app.py` are interactive and call the UF gateway. `smoke_online.py` calls the model for classify,
   fill_facts, and resume. Everything else, including `smoke.py`, runs without the key.

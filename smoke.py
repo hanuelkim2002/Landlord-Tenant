@@ -14,5 +14,6 @@ import smoke_parts.writing_to_a_matter       # sessions, propose_facts, the shee
 import smoke_parts.issues_and_turns          # issues suggested and dropped; turns with a stand-in model
 import smoke_parts.playbooks_options_lease   # every playbook, options and what the tool knows, the lease search
 import smoke_parts.web_page                  # app.py, headless
+import smoke_parts.skill_files               # the skill format and its checks, on fixtures in a temporary folder
 
 summary()

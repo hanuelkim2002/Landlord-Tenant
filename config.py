@@ -20,6 +20,7 @@ WIKI = ROOT / "wiki"                            # the case wiki: case and topic 
 # marked as such, so the wiring can be tried before verification. Never set for a tenant.
 WIKI_UNVERIFIED = os.environ.get("WIKI_UNVERIFIED") == "1"
 PLAYBOOKS = ROOT / "playbooks"
+SKILLS = ROOT / "skills"                        # the model's instructions, one markdown file per situation (skills.py)
 
 UF_BASE_URL = "https://api.ai.it.ufl.edu"
 uf_api_key = os.environ.get("UF_API_KEY")
