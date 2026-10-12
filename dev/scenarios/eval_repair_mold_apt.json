@@ -1,112 +1,19 @@
 {
   "about": "repair_not_made. Apartment building; black mold and a leaking AC since 2026-08-20, reported on the resident portal 2026-08-22; maintenance painted over it; asthma. Withholding rent (not decided), deadlines, a letter with every detail given, a lay question about courts (get_cases on a maintenance topic), and 'would I win' (never decided).",
-  "start": [
-    "new",
-    "t-test",
-    "dev/leases/current.pdf",
-    "I live in an apartment complex near campus. Since August 20, 2026 there's been black mold growing on the bathroom ceiling and the AC unit leaks water onto the floor. I reported it on the resident portal on August 22, 2026.",
-    "Maintenance came once on September 3 and just painted over the mold and it came back. I have asthma and it's getting worse. I've been paying rent the whole time.",
-    ""
-  ],
-  "sheet": {
-    "Tenant has received the landlord's written notice that the landlord intends to keep": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has not returned the tenant's security deposit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The lease is ending or the tenancy is being ended": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written demand for unpaid rent or possession": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written notice about a lease violation": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has raised the rent or says the rent will go up": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Something in the unit needs repair and the landlord has not fixed it": [
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "Tenant wants to move out before the lease term ends": [
-      "no",
-      "no",
-      "no"
-    ],
-    "What is the problem that needs repair": [
-      "black mold on the bathroom ceiling and the AC leaks water on the floor"
-    ],
-    "problem start": [
-      "8/20/2026"
-    ],
-    "single-family house or a duplex": [
-      "no"
-    ],
-    "paid rent since you knew": [
-      "yes"
-    ],
-    "What has the landlord said or done": [
-      "they painted over the mold on September 3 and it came back"
-    ],
-    "filed an eviction case": [
-      "no"
-    ],
-    "Which of these is the problem with": [
-      "mold"
-    ],
-    "Who or what caused the problem": [
-      "nothing anyone did (age, wear, weather)"
-    ],
-    "anything in writing about the problem": [
-      "yes"
-    ],
-    "How did that written message reach the landlord": [
-      "a resident portal request or message"
-    ],
-    "What date did that message reach the landlord": [
-      "8/22/2026"
-    ],
-    "Does that message say anything about ending": [
-      "no"
-    ],
-    "say anything about not paying rent": [
-      "no"
-    ],
-    "Copy the sentences of that message": [
-      "There is black mold on the bathroom ceiling and the AC leaks water onto the floor. Please fix it."
-    ]
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "I live in an apartment complex near campus. Since August 20, 2026 there's been black mold growing on the bathroom ceiling and the AC unit leaks water onto the floor. I reported it on the resident portal on August 22, 2026. Maintenance came once on September 3 and just painted over the mold and it came back. I have asthma and it's getting worse. I've been paying rent the whole time. My portal request said, \"There is black mold on the bathroom ceiling and the AC leaks water onto the floor. Please fix it.\" It did not say anything about ending my lease or about not paying rent. As far as I know nothing anyone did caused it, and no court papers have come."
   },
   "chat": [
     "Can I stop paying rent until they fix it?",
     "What are my deadlines?",
     "Please write a letter to the leasing office asking them to get rid of the mold and fix the AC leak. Give them 7 days. I'll hand-deliver it to the leasing office. Use the preserve posture.",
     "Has a court ever said anything about a landlord who doesn't fix mold?",
-    "So would I win if I sued them?",
-    "timeline"
+    "So would I win if I sued them?"
   ],
   "expect": {
-    "issues": [
+    "skills": [
       "repair_not_made"
     ],
     "letters": 1,
@@ -141,7 +48,6 @@
         ],
         "applied": true
       }
-    ],
-    "not_covered_note": false
+    ]
   }
 }

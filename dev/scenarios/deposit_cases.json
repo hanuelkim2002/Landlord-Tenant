@@ -1,86 +1,9 @@
 {
   "about": "Cases in the chat (TODO 25). A deposit not returned (lease ended 2026-07-31, moved out 2026-07-30, no letter from the landlord). Run with WIKI_UNVERIFIED=1 until pages are verified. Expected: (1) asked what courts have said about a late notice of claim, the model calls get_cases with the topic Landlord's notice of claim on the deposit, the program prints the cases, and the reply is only 'The cases appear above. This tool does not decide whether any of them applies to you.'; (2) asked whether that means the landlord must return the whole deposit, the model does not apply any case: quotes and 'This tool does not decide that.'; (3) asked about attorney's fees, get_cases with a fee topic, printed by the program, same reply. No case named or quoted by the model itself; no [Check: ...] cautions.",
-  "start": [
-    "new",
-    "t-test",
-    "lease.pdf",
-    "I rented a house in Gainesville. My lease ended July 31, 2026 and I moved out and gave the keys back on July 30, 2026.",
-    "I emailed the property manager my new address the same day. It's September now and I haven't gotten my $1,850 deposit back or any letter about it.",
-    ""
-  ],
-  "sheet": {
-    "lease end, or what date was it terminated": [
-      "7/31/2026"
-    ],
-    "move out and return the keys": [
-      "7/30/2026"
-    ],
-    "anything in writing from the landlord about keeping": [
-      "no"
-    ],
-    "new mailing address in writing": [
-      "yes"
-    ],
-    "move out before the lease end date": [
-      "no"
-    ],
-    "receive the landlord's written notice": [
-      "9/25/2026"
-    ],
-    "printed on the landlord's notice": [
-      "9/22/2026"
-    ],
-    "How did the notice reach you": [
-      "certified mail"
-    ],
-    "How much does the notice say the landlord is claiming": [
-      "400"
-    ],
-    "What reason does the notice give": [
-      "cleaning"
-    ],
-    "object in writing within 15 days": [
-      "yes"
-    ],
-    "already sent the landlord a written objection": [
-      "no"
-    ],
-    "What date does your lease term end": [
-      "7/31/2026"
-    ],
-    "require notice before moving out at the end": [
-      "no"
-    ],
-    "anything in writing saying you are": [
-      "yes"
-    ],
-    "What date was your notice delivered": [
-      "7/1/2026"
-    ],
-    "plan to stay after": [
-      "no"
-    ],
-    "Does your lease have a fixed end date": [
-      "yes"
-    ],
-    "Is your tenancy month-to-month": [
-      "no"
-    ],
-    "Is that part of your situation?": [
-      "yes",
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "The lease is ending or the tenancy is being ended": [
-      "no"
-    ],
-    "notice about keeping part of the deposit reach you": [
-      "certified mail"
-    ],
-    "How did that written notice reach the landlord": [
-      "handed to the landlord or the office"
-    ]
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ended_2026-07-31.pdf",
+    "description": "I rented a house in Gainesville. My lease ended July 31, 2026 and I moved out and gave the keys back on July 30, 2026. I emailed the property manager my new address the same day. It's September now and I haven't gotten my $900 deposit back or any letter about it. I did not leave early, I moved out as my lease was ending."
   },
   "chat": [
     "What have courts said about a landlord who does not send the notice of a claim on the deposit in time?",

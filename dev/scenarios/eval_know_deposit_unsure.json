@@ -1,87 +1,16 @@
 {
-  "about": "deposit_not_returned. The state: a fact the tenant has not given. Moved out 2026-07-31 when the lease ended, gave a new address, $900 deposit not back; the tenant does not know whether a notice of a claim came (skips that question on the sheet). Asked whether the landlord can keep the deposit, the answer must say it turns on whether a written notice of a claim came, which the sheet asks, and what follows either way; never that the landlord forfeited it as a fact. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
-  "start": [
-    "new",
-    "t-test",
-    "dev/leases/ended_2026-07-31.pdf",
-    "I moved out of my apartment on July 31, 2026, the day my lease ended, and I emailed the landlord my new address. It has been more than two months and my $900 deposit has not come back. I moved twice since, so I don't know if they mailed me anything.",
-    ""
-  ],
-  "sheet": {
-    "Tenant has received the landlord's written notice that the landlord intends to keep all or part of the security deposit (a claim on the deposit)": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has not returned the tenant's security deposit and has not sent a written claim against it": [
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "The landlord, or someone sent by the landlord, entered the tenant's unit without notice or at an unreasonable time": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The lease is ending or the tenancy is being ended; notice to leave or renew, and staying on after the end": [
-      "no",
-      "no",
-      "no"
-    ],
-    "A neighbor or another tenant keeps disturbing the tenant (noise, parties, or similar), and the tenant wants the landlord to deal with it": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written demand for unpaid rent or possession (the 3-day notice)": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written notice about a lease violation other than unpaid rent (the 7-day notice)": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has raised the rent or says the rent will go up": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Something in the unit needs repair and the landlord has not fixed it": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant wants to move out before the lease term ends": [
-      "no",
-      "no",
-      "no"
-    ],
-    "lease end, or what date was it terminated": [
-      "7/31/2026"
-    ],
-    "move out and return the keys": [
-      "7/31/2026"
-    ],
-    "anything in writing from the landlord about keeping": [
-      "?",
-      "?",
-      "?"
-    ],
-    "new mailing address in writing": [
-      "yes"
-    ],
-    "move out before the lease end date": [
-      "no"
-    ]
+  "about": "deposit_not_returned. The state: a fact the tenant has not given. Moved out 2026-07-31 when the lease ended, gave a new address, $900 deposit not back; the tenant does not know whether a notice of a claim came (the description says so). Asked whether the landlord can keep the deposit, the answer must say it turns on whether a written notice of a claim came, which the model asks about, and what follows either way; never that the landlord forfeited it as a fact. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ended_2026-07-31.pdf",
+    "description": "I moved out of my apartment on July 31, 2026, the day my lease ended, and I emailed the landlord my new address. It has been more than two months and my $900 deposit has not come back. I moved twice since, so I don't know if they mailed me anything."
   },
   "chat": [
     "Can my landlord keep my deposit?",
     "What are my deadlines?"
   ],
   "expect": {
-    "issues": [
+    "skills": [
       "deposit_not_returned"
     ],
     "turns": [
@@ -98,7 +27,6 @@
           "get_deadlines"
         ]
       }
-    ],
-    "not_covered_note": false
+    ]
   }
 }

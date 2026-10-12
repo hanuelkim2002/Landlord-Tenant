@@ -16,5 +16,6 @@ import smoke_parts.visits                    # visit.py: a new matter, a returni
 import smoke_parts.lease_and_letters         # the rules, the short lease profile and search, deadlines from a message, letters, every skill's clock facts
 import smoke_parts.web_page                  # app.py, headless
 import smoke_parts.skill_files               # the skill format and its checks, on fixtures in a temporary folder
+import smoke_parts.scenarios                # dev/scenarios/ in the conversation format, dev/live_run.py's screen and answer rules, dev/eval.py scoring a run
 
 summary()

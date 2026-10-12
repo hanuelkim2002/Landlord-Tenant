@@ -7,18 +7,17 @@ slips per reply in the rules trial, docs/trials/2026-10-01-rules).
 
 Options for run: --project <folder> runs another copy of the project (a git worktree at an older commit, to
 compare against); --parallel N runs N sessions at once (default 8). It calls the model: each run is
-dev/live_run.py, under its own scratch tenant, matters/t-eval-<out dir name>-<scenario>-<k>. The tenant is
-seeded with an m-000 copy of matters/t-test/test-001 so the id exists; the run's own matter is the one its
-screen names ("New matter <tenant> m-002"). Set
+dev/live_run.py <scenario> --tenant <scratch tenant>, matters/t-eval-<out dir name>-<scenario>-<k>. The tenant is
+seeded with an m-000 copy of matters/t-test/test-001, so the run's own matter is m-002: the one its screen
+names on its first line ("MATTER: <tenant>/<matter id>"). Set
 WIKI_UNVERIFIED=1 in the environment to offer the wiki's unverified case pages, as the cases scenarios need.
 
-A scenario's "expect" block (every key optional):
-  "issues"           the skills active at the end, exactly (read from matter.json's "issues"; item 115 rewrites this)
-  "stops"            true: the tool stops before the chat (nothing it covers applies)
-  "not_covered_note" true: the "may not be covered by this tool" note prints
-  "deadlines"        issues whose deadlines get_deadlines computes (a deadlines_computed event naming a clock)
+A scenario's "expect" block (every key optional; EXPECT_KEYS and TURN_KEYS below are the keys scored):
+  "skills"           the skills loaded at the end, exactly (read from matter.json's "skills")
+  "deadlines"        skills whose deadlines get_deadlines computes (a deadlines_computed event naming a clock)
   "letters"          how many letters draft_letter makes
-  "turns"            checks on single chat turns, each found by a piece of the tenant's line ("say"):
+  "turns"            checks on single chat turns, each found by a piece of the tenant's line ("say"); the first turn
+                     is the description (or the update), so a piece of it finds that turn:
                      "called" / "not_called" (tool names), "must" / "must_not" (regexes on the turn's replies;
                      must_not looks only outside quote marks),
                      "topics" (the get_cases topics allowed in that turn; any other topic fails),
@@ -27,8 +26,8 @@ A scenario's "expect" block (every key optional):
                      court question answered from cases given earlier also counts as calling get_cases),
                      "open_first" (true: outside quote marks, whether the option is open, OPEN_WORDS, comes
                      before the first step toward it, STEP_WORDS; TODO item 72)
-  "screen_must"      regexes the whole screen must match (a lease clause shown at the stop, e.g.)
-  "screen_must_not"  regexes the whole screen must not match (a wrong suggestion on the sheet, e.g.)
+  "screen_must"      regexes the whole screen must match (a line of the program's, e.g.)
+  "screen_must_not"  regexes the whole screen must not match (a wrong suggestion on a CONFIRM line, e.g.)
 Every reply is also measured, whatever the scenario: empty turns (reply_empty events), program cautions
 (quote_flagged and cite_flagged events), field names (a snake_case id outside quote marks), deadline echo (a
 computed deadline the program printed in the same turn, in the reply: since the model never sees one, it
@@ -52,7 +51,7 @@ are matched against what the tenant read, the replies and any line the program p
 "footers" counts those lines, so the model's own lines and the program's can be told apart.
 
 Output in <out dir> (dev/eval_runs/<name> is ignored by git): matters/ (each run's matter.json, events, and
-transcript, copied out; the scratch tenant is then removed from the project's matters/), runs/ (each run's screen, a crashed first attempt's too, and its scenario with the tenant filled in), runs.json,
+transcript, copied out; the scratch tenant is then removed from the project's matters/), runs/ (each run's screen, a crashed first attempt's too, and its scenario with the lease path made absolute), runs.json,
 transcripts/ (each run as text: who produced each part), scores.json (per run), summary.json (per scenario).
 """
 import json
@@ -99,7 +98,7 @@ LEASE_ABSENT = re.compile(r"\b(?:your|the) lease (?:does not|doesn't|did not|has
 # names before item 61, the names since (prompt.PARTS, in capitals; "your lease" in plain words is the wanted form),
 # and a rule's number ("rule 8"; not a court rule's "Rule 1.070")
 PROMPT_NAME = re.compile(r"\b(LEASE PROFILE|PLAYBOOKS|STATUTE SECTIONS|CASE TOPICS|ELEMENT STATUS|DEADLINE STATUS|"
-                         r"YOUR LEASE|THE TOOL['’]S NOTES|WHAT THE STATUTE DOES NOT SETTLE|THE STATUTE|"
+                         r"YOUR LEASE|LOADED SKILLS|SKILLS|THE TOOL['’]S NOTES|WHAT THE STATUTE DOES NOT SETTLE|THE STATUTE|"
                          r"COURT CASES THIS TOOL HAS|YOUR FACTS|THE PROGRAM['’]S DEADLINES|WHICH DEADLINES HAVE PASSED|"
                          r"YOUR OPTIONS|WHAT THE TOOL DOES NOT KNOW|"
                          r"[Rr]ule [1-9](?![.\d]))\b")
@@ -107,10 +106,17 @@ ISO_DATE = re.compile(r"\b20\d\d-\d\d-\d\d\b")
 SPOKEN_DATE = re.compile(r"\b(January|February|March|April|May|June|July|August|September|October|November|December)"
                          r" (\d{1,2}),? (20\d\d)\b")
 SLASH_DATE = re.compile(r"\b(\d{1,2})/(\d{1,2})/(20\d\d)\b")
-# Signs that the gateway, not the model, failed a run: run.py never came back (the driver's timeout), an empty
-# answer where JSON was expected, or two turns in a row the model left empty even after the retry. The eval of
-# 2026-10-01 hit an eight-minute stretch of these; such runs are counted apart, not as the model's slips.
-GATEWAY_SIGNS = ("run.py did not come back to a prompt", "Expecting value: line 1 column 1 (char 0)")
+# Signs that the gateway, not the model, failed a run: the visit's caution when a turn could not reach the model
+# (visit.failed, printed on the screen), the network errors the traceback names (8 of 31 runs on 2026-10-08 crashed on
+# these, TODO item 104), an empty answer where JSON was expected, or two turns in a row the model left empty even after
+# the retry. The eval of 2026-10-01 hit an eight-minute stretch of these; such runs are counted apart, not as the model's
+# slips.
+GATEWAY_SIGNS = ("the model could not be reached", "Connection error", "nodename nor servname provided",
+                 "Client Closed Request", "Expecting value: line 1 column 1 (char 0)")
+# The keys of a scenario's "expect" block and of one of its turns that check_expect scores (dev/scenarios/ is checked
+# against these by smoke_parts/scenarios.py).
+EXPECT_KEYS = ("skills", "deadlines", "letters", "turns", "screen_must", "screen_must_not")
+TURN_KEYS = ("say", "called", "not_called", "must", "must_not", "topics", "applied", "open_first", "cases_used")
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
           "November", "December"]
 
@@ -118,7 +124,9 @@ MONTHS = ["January", "February", "March", "April", "May", "June", "July", "Augus
 # ---- Running: one live session per (scenario, repeat), several at once.
 
 def seed_tenant(project, tenant):
-    """Make the tenant id exist (run.py only reuses a tenant it can list), with an m-000 copy of the seed."""
+    """Give the tenant an m-000 copy of the seed. The terminal driver needed it (run.py only reused a tenant it could list);
+    live_run.py does not (Visit.new makes a new tenant's matter itself), and it is kept so the runs are as before: the
+    run's matter is m-002."""
     folder = project / "matters" / tenant / "m-000"
     if not folder.exists():
         shutil.copytree(SEED, folder, ignore=shutil.ignore_patterns("sessions"))
@@ -132,22 +140,22 @@ def run_one(project, out, name, rep):
     tenant = f"t-eval-{out.name}-{name}-{rep}".replace("_", "-")
     seed_tenant(project, tenant)
     data = json.loads((SCENARIOS / f"{name}.json").read_text())
-    data["start"] = [tenant if line == "t-test" else line for line in data["start"]]
-    data["start"] = [str(HERE / line) if line.endswith(".pdf") else line for line in data["start"]]   # its lease
+    if "lease" in data["start"]:                          # the lease from this copy of the project, whichever one runs
+        data["start"]["lease"] = str(HERE / data["start"]["lease"])
     scenario = out / "runs" / f"{name}_r{rep}.json"
     scenario.write_text(json.dumps(data, indent=2))
     screen = out / "runs" / f"{name}_r{rep}.out"
     for attempt in (1, 2):
         with open(screen, "w") as f:
-            code = subprocess.run([sys.executable, str(project / "dev" / "live_run.py"), str(scenario)],
+            code = subprocess.run([sys.executable, str(project / "dev" / "live_run.py"), str(scenario), "--tenant", tenant],
                                   cwd=project, stdout=f, stderr=subprocess.STDOUT).returncode
         if code == 0 and "Traceback" not in screen.read_text():
             break
         if attempt == 1:                                  # kept, so the cause of a crash can be read later
             screen.rename(screen.with_name(screen.stem + "_attempt1.out"))
     print(f"  {name} r{rep}: exit {code}, attempt {attempt}", flush=True)
-    opened = re.search(r"New matter (\S+) (m-\d+)", screen.read_text())
-    matter = project / "matters" / tenant / (opened.group(2) if opened else "none")
+    opened = re.search(r"^MATTER: \S+/(\S+)$", screen.read_text(), re.M)      # the screen's first line
+    matter = project / "matters" / tenant / (opened.group(1) if opened else "none")
     return {"scenario": name, "rep": rep, "tenant": tenant, "matter": str(matter), "screen": str(screen), "exit": code}
 
 
@@ -156,8 +164,8 @@ KEPT = ("matter.json", "events.jsonl", "sessions")        # what scoring reads; 
 
 def file_away(project, out, runs):
     """Copy what scoring reads from each run's matter into <out dir>/matters/, then remove the scratch tenant
-    from the project's matters/ (only a t-eval- tenant, like smoke.py's t-smoke- ones), so run.py's list of
-    tenants is as it was before the eval. Points each run at its copy."""
+    from the project's matters/ (only a t-eval- tenant, like smoke.py's t-smoke- ones), so the list of tenants
+    is as it was before the eval. Points each run at its copy."""
     for r in runs:
         src = Path(r["matter"])
         dest = out / "matters" / r["tenant"] / src.name
@@ -173,8 +181,8 @@ def file_away(project, out, runs):
 
 
 def run(out, repeats, names, project, parallel):
-    leases = {line for name in names for line in json.loads((SCENARIOS / f"{name}.json").read_text())["start"]
-              if line.endswith(".pdf")}
+    leases = {start["lease"] for name in names for start in [json.loads((SCENARIOS / f"{name}.json").read_text())["start"]]
+              if "lease" in start}
     missing = sorted(line for line in leases if not (HERE / line).exists())
     if missing:                                           # dev/leases/ is built from lease.pdf, and git ignores it
         sys.exit(f"missing {missing}: run python dev/build_test_leases.py first")
@@ -195,8 +203,8 @@ def read_jsonl(path):
 
 def turns_of(entries):
     """Split a session transcript into chat turns: each starts at a tenant line and holds everything after it
-    (model replies and tool calls, tool results, cautions, sheet answers, program notes) up to the next tenant
-    line or command."""
+    (model replies and tool calls, tool results, cautions, confirmation answers, program notes) up to the next
+    tenant line or command. The first tenant line is the description (or the update)."""
     turns, current = [], None
     for e in entries:
         if e["role"] == "tenant":
@@ -240,8 +248,8 @@ def lease_dates(entry):
     of its own (dev/build_test_leases.py); before, every run read lease.pdf."""
     import PyPDF2                                      # the project's PDF reader (lease.ingest_pdf)
     copy = Path(entry["screen"]).with_suffix(".json")
-    start = json.loads(copy.read_text())["start"] if copy.exists() else []
-    pdf = next((Path(line) for line in start if line.endswith(".pdf")), None)
+    lease = json.loads(copy.read_text())["start"].get("lease") if copy.exists() else None
+    pdf = Path(lease) if lease else None
     if pdf is None or not pdf.exists():
         return frozenset()
     return frozenset(dates_in(" ".join(page.extract_text() or "" for page in PyPDF2.PdfReader(pdf).pages)))
@@ -324,20 +332,13 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
 
 def check_expect(expect, matter, events, turns, screen):
     """Each expectation of the scenario: [(what, passed, detail)]."""
-    from skills import skills                          # the scored copy's skills are this copy's (same names)
     results = []
-    if "issues" in expect:
-        active = sorted(i for i in matter.get("issues", []) if i in skills)
-        results.append(("issues", active == sorted(expect["issues"]), active))
-    if "stops" in expect:
-        stopped = "None of the situations this tool covers applies" in screen
-        results.append(("stops", stopped == expect["stops"], stopped))
-    if "not_covered_note" in expect:
-        noted = "may not be covered by this tool" in screen
-        results.append(("not_covered_note", noted == expect["not_covered_note"], noted))
-    for issue in expect.get("deadlines", []):
-        got = any(ev["kind"] == "deadlines_computed" and ev.get("issue") == issue and ev.get("clocks") for ev in events)
-        results.append((f"deadlines {issue}", got, got))
+    if "skills" in expect:
+        loaded = sorted(matter.get("skills", []))
+        results.append(("skills", loaded == sorted(expect["skills"]), loaded))
+    for skill in expect.get("deadlines", []):
+        got = any(ev["kind"] == "deadlines_computed" and ev.get("skill") == skill and ev.get("clocks") for ev in events)
+        results.append((f"deadlines {skill}", got, got))
     if "letters" in expect:
         n = sum(ev["kind"] == "draft" for ev in events)
         results.append(("letters", n == expect["letters"], n))
@@ -392,7 +393,7 @@ def transcript_text(entries):
         elif role == "command":
             lines.append(f"\nTENANT COMMAND (the program answers, not the model): {e['text']}")
         elif role == "sheet":
-            lines.append(f"[SHEET, tenant answered] {e.get('question')} -> {e.get('value')}")
+            lines.append(f"[CONFIRMED by the tenant] {e.get('label') or e.get('question')} -> {e.get('value')}")
         elif role == "program":
             lines.append(f"[PROGRAM NOTE to the model] {e['text'].strip()}")
         elif role == "check":
@@ -430,7 +431,7 @@ def score_run(entry, scenario, out):
     entries = [e for f in sorted((matter_dir / "sessions").glob("*.jsonl")) for e in read_jsonl(f)] \
         if (matter_dir / "sessions").exists() else []
     turns = turns_of(entries)
-    # every date the record holds: confirmed facts, the tenant's words (description, updates, chat), sheet
+    # every date the record holds: confirmed facts, the tenant's words (description, updates, chat), confirmation
     # answers, printed deadlines, and the session's own days (a reply may say today's date)
     known = set()
     for value in matter.get("facts", {}).values():
@@ -481,7 +482,7 @@ def score_run(entry, scenario, out):
 
 
 def score(out):
-    sys.path.insert(0, str(HERE))                         # skills, for the skill names
+    sys.path.insert(0, str(HERE))                         # citations, for the retold-cite measure
     runs = json.loads((out / "runs.json").read_text())
     scores = [score_run(r, json.loads((SCENARIOS / f"{r['scenario']}.json").read_text()), out) for r in runs]
     (out / "scores.json").write_text(json.dumps(scores, indent=2))

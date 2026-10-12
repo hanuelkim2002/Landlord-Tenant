@@ -1,146 +1,17 @@
 {
   "about": "rent_increased and repair_not_made. A month-to-month duplex at $950; a text on 2026-09-27 raises it to $1,150 from 2026-11-01, two weeks after the tenant e-mailed about a leaking roof (2026-09-12). Legality and 'is this payback' (retaliation), each not decided.",
-  "start": [
-    "new",
-    "t-test",
-    "dev/leases/month_to_month_950.pdf",
-    "I rent one side of a duplex in Gainesville, month to month, for $950. On September 27, 2026 my landlord texted me that rent is going up to $1,150 starting November 1, 2026.",
-    "Two weeks before that, on September 12, 2026, I emailed him asking him to fix the roof because it leaks into my bedroom when it rains, and he still hasn't fixed it. I feel like he's punishing me for complaining.",
-    ""
-  ],
-  "sheet": {
-    "Tenant has received the landlord's written notice that the landlord intends to keep": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has not returned the tenant's security deposit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The lease is ending or the tenancy is being ended": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written demand for unpaid rent or possession": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written notice about a lease violation": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has raised the rent or says the rent will go up": [
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "Something in the unit needs repair and the landlord has not fixed it": [
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "Tenant wants to move out before the lease term ends": [
-      "no",
-      "no",
-      "no"
-    ],
-    "How much is your monthly rent": [
-      "950"
-    ],
-    "What is the new rent": [
-      "1150"
-    ],
-    "receive notice of the increase": [
-      "9/27/2026"
-    ],
-    "increase in writing": [
-      "yes"
-    ],
-    "new rent applies": [
-      "11/1/2026"
-    ],
-    "Does your lease have a fixed end date": [
-      "no"
-    ],
-    "Is your tenancy month-to-month": [
-      "yes"
-    ],
-    "complained to anyone about the unit": [
-      "yes"
-    ],
-    "make that complaint or take that step": [
-      "9/12/2026"
-    ],
-    "other tenants got the same increase": [
-      "don't know"
-    ],
-    "What is the problem that needs repair": [
-      "the roof leaks into my bedroom when it rains"
-    ],
-    "problem start": [
-      "9/5/2026"
-    ],
-    "single-family house or a duplex": [
-      "yes"
-    ],
-    "paid rent since you knew": [
-      "yes"
-    ],
-    "What has the landlord said or done": [
-      "nothing, he never answered"
-    ],
-    "filed an eviction case": [
-      "no"
-    ],
-    "last day of the current monthly rent period": [
-      "10/31/2026"
-    ],
-    "Which of these is the problem with": [
-      "the roof"
-    ],
-    "Who or what caused the problem": [
-      "nothing anyone did (age, wear, weather)"
-    ],
-    "anything in writing about the problem": [
-      "yes"
-    ],
-    "How did that written message reach the landlord": [
-      "e-mail"
-    ],
-    "What date did that message reach the landlord": [
-      "9/12/2026"
-    ],
-    "Does that message say anything about ending": [
-      "no"
-    ],
-    "say anything about not paying rent": [
-      "no"
-    ],
-    "Copy the sentences of that message": [
-      "Please fix the roof. It leaks into my bedroom when it rains."
-    ],
-    "What was it? If more than one": [
-      "a written notice to the landlord about a repair"
-    ]
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/month_to_month_950.pdf",
+    "description": "I rent one side of a duplex in Gainesville, month to month, for $950. On September 27, 2026 my landlord texted me that rent is going up to $1,150 starting November 1, 2026. Two weeks before that, on September 12, 2026, I emailed him asking him to fix the roof because it leaks into my bedroom when it rains, and he still hasn't fixed it. I feel like he's punishing me for complaining. The roof has been leaking since September 5, 2026. My email said, \"Please fix the roof. It leaks into my bedroom when it rains.\" It did not say anything about ending my lease or about not paying rent, and he never answered it. I have kept paying rent. As far as I know nothing anyone did caused the leak, and no court papers have come. I don't know whether other tenants got the same increase."
   },
   "chat": [
     "Is he allowed to raise it that much?",
     "Is this payback for me asking about the roof?",
-    "What are my deadlines?",
-    "timeline"
+    "What are my deadlines?"
   ],
   "expect": {
-    "issues": [
+    "skills": [
       "rent_increased",
       "repair_not_made"
     ],
@@ -159,7 +30,6 @@
           "get_deadlines"
         ]
       }
-    ],
-    "not_covered_note": false
+    ]
   }
 }

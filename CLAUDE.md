@@ -95,5 +95,4 @@ is a law student, not admitted.
     python smoke.py          # offline checks, no key needed
     python smoke_online.py   # the first turn on a description, none covered, resume; calls the model
     python schemas.py        # what the model sees per tool
-    python dev/live_run.py dev/scenarios/nonpayment_3day.json   # a scripted live session; calls the model (still starts the removed
-                             # run.py: does not run until TODO item 115, part 2, rewrites it to call visit.py)
+    python dev/live_run.py dev/scenarios/nonpayment_3day.json   # a scripted visit through visit.py (description, confirmation answers, chat); calls the model

@@ -1,5 +1,8 @@
 """Helpers shared by the smoke parts: a phrase of 83.49(3)(a) the quote checks use, and small helpers for the
 checks that write to a matter. (Named checks and scratch matters are in checks.py.)"""
+import json
+
+from langchain.messages import AIMessage
 from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
 
 import record
@@ -53,3 +56,18 @@ class StandIn(GenericFakeChatModel):
     """A stand-in for the model: it plays the messages it is given, in order, and takes any tools it is bound to."""
     def bind_tools(self, tools, **kwargs):
         return self
+
+
+def proposes(call_id, facts):
+    """A stand-in model message that calls propose_facts."""
+    return AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": call_id, "args": {"facts_json": json.dumps(facts)}}])
+
+
+def loads(call_id, name):
+    """A stand-in model message that calls load_skill."""
+    return AIMessage(content="", tool_calls=[{"name": "load_skill", "id": call_id, "args": {"name": name}}])
+
+
+def said(value, words, how="stated"):
+    """One fact as propose_facts takes it, with the tenant's words it came from."""
+    return {"value": value, "how": how, "said": words}

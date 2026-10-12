@@ -1,101 +1,9 @@
 {
-  "about": "repair_not_made, after the author's run on the web page (2026-10-04, TODO items 72 and 73): an AC not repaired, a written notice by e-mail that did not say the tenant would end the lease, rent paid since. Asked how to end the lease, the answer must say first that ending it is not settled (83.56(1) reaches a failure of a duty in 83.51(1) or of a material lease provision, and 83.51(1) names no AC), before any step; and it must cite, not recite. Asked whether the AC is part of the lease, the answer cites the lease's repairs clause (the test lease's Article 7, read into the profile since TODO item 76), and never says the lease does not mention it.",
-  "start": [
-    "new",
-    "t-test",
-    "dev/leases/current.pdf",
-    "The AC in my apartment stopped working on September 1, 2026. I emailed the leasing office on September 3, 2026 asking them to fix it. They said they would send someone but nobody ever came, and it is still broken. It is really hot in here. I have kept paying rent.",
-    "I want to end my lease and move out because of this.",
-    ""
-  ],
-  "sheet": {
-    "Tenant has received the landlord's written notice that the landlord intends to keep": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has not returned the tenant's security deposit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The lease is ending or the tenancy is being ended": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written demand for unpaid rent or possession": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written notice about a lease violation": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has raised the rent or says the rent will go up": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Something in the unit needs repair and the landlord has not fixed it": [
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "Tenant wants to move out before the lease term ends": [
-      "no",
-      "no",
-      "no"
-    ],
-    "What is the problem that needs repair": [
-      "the AC stopped working and does not cool"
-    ],
-    "problem start": [
-      "9/1/2026"
-    ],
-    "single-family house or a duplex": [
-      "no"
-    ],
-    "paid rent since you knew": [
-      "yes"
-    ],
-    "What has the landlord said or done": [
-      "they said they would send someone but nobody came"
-    ],
-    "filed an eviction case": [
-      "no"
-    ],
-    "Which of these is the problem with": [
-      "the air conditioning"
-    ],
-    "Who or what caused the problem": [
-      "nothing anyone did (age, wear, weather)"
-    ],
-    "anything in writing about the problem": [
-      "yes"
-    ],
-    "How did that written message reach the landlord": [
-      "e-mail"
-    ],
-    "What date did that message reach the landlord": [
-      "9/3/2026"
-    ],
-    "Does that message say anything about ending": [
-      "no"
-    ],
-    "say anything about not paying rent": [
-      "no"
-    ],
-    "Copy the sentences of that message": [
-      "The AC stopped working on September 1. Please fix it."
-    ]
+  "about": "repair_not_made, after the author's run on the web page (2026-10-04, TODO items 72 and 73): an AC not repaired, a written notice by e-mail that did not say the tenant would end the lease, rent paid since. Asked how to end the lease, the answer must say first that ending it is not settled (83.56(1) reaches a failure of a duty in 83.51(1) or of a material lease provision, and 83.51(1) names no AC), before any step; and it must cite, not recite. Asked whether the AC is part of the lease, the answer cites the lease's repairs clause (the test lease's Article 7, found with search_lease), and never says the lease does not mention it.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "The AC in my apartment stopped working on September 1, 2026. I emailed the leasing office on September 3, 2026 asking them to fix it. They said they would send someone but nobody ever came, and it is still broken. It is really hot in here. I have kept paying rent. I want to end my lease and move out because of this. My email said, \"The AC stopped working on September 1. Please fix it.\" It did not say anything about ending my lease or about not paying rent. As far as I know nothing anyone did caused it, and no court papers have come."
   },
   "chat": [
     "How do I end my lease because of this?",
@@ -104,7 +12,7 @@
     "What are my deadlines?"
   ],
   "expect": {
-    "issues": [
+    "skills": [
       "repair_not_made"
     ],
     "turns": [
@@ -139,7 +47,6 @@
           "get_deadlines"
         ]
       }
-    ],
-    "not_covered_note": false
+    ]
   }
 }

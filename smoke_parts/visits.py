@@ -19,7 +19,7 @@ from lease import LeaseProfile
 from record import list_matters, matter_dir, read_events
 from sheet import pending_rows
 from visit import Result, Visit
-from smoke_parts.common import StandIn
+from smoke_parts.common import StandIn, loads, proposes, said
 
 LEASE_PDF = next(TEST_MATTER.glob("lease_*.pdf"))                      # the test lease, as the tenant would upload it
 PROFILE_TEXT = (TEST_MATTER / "lease_profile.json").read_text()
@@ -30,20 +30,6 @@ def extraction(pages):
     """Stands in for the extraction model: the test lease's profile, read from disk."""
     extractions.append(len(pages))
     return LeaseProfile.model_validate_json(PROFILE_TEXT)
-
-
-def proposes(call_id, facts):
-    """A stand-in model message that calls propose_facts."""
-    return AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": call_id, "args": {"facts_json": json.dumps(facts)}}])
-
-
-def loads(call_id, name):
-    """A stand-in model message that calls load_skill."""
-    return AIMessage(content="", tool_calls=[{"name": "load_skill", "id": call_id, "args": {"name": name}}])
-
-
-def said(value, words, how="stated"):
-    return {"value": value, "how": how, "said": words}
 
 
 def thread(visit):
@@ -323,8 +309,8 @@ check("the visits' scratch matters are removed", not any(m["tenant"].startswith(
       and not list(MATTERS.glob("t-smoke-visit*")))
 
 # ---- The terminal is gone (TODO item 115): run.py does not exist, nothing imports it, and no module still has the terminal's
-# chat loop, its block printer, or its confirmation. (dev/live_run.py still starts run.py as a subprocess until the eval driver
-# is rewritten; it is not imported by anything here.)
+# chat loop, its block printer, or its confirmation. (dev/live_run.py, the eval driver, runs a visit through visit.py instead;
+# its checks are in scenarios.py.)
 terminal = {"agent.py": ("def chat(", "def print_blocks("), "sheet.py": ("def run_sheet(",)}
 python_files = [p for p in ROOT.rglob("*.py") if "venv" not in p.parts and "eval_runs" not in p.parts and "docs" not in p.parts
                 and "__pycache__" not in p.parts]

@@ -407,7 +407,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `remove_scratch(tenant_id)` removes it; it refuses any tenant id not starting with `t-smoke`.
 - `smoke.py`: entry point. Runs the offline checks, which are in `smoke_parts/` (split out of smoke.py on 2026-10-06),
   by importing each part in order, then prints `summary()` (see Running and testing).
-- `smoke_parts/`: the smoke checks in seven parts, each run when imported: `pieces` (each piece on its own, on the
+- `smoke_parts/`: the smoke checks in eight parts, each run when imported: `pieces` (each piece on its own, on the
   test matter in memory, and that no Python file reads a playbook), `writing_to_a_matter` (on `matters/t-smoke/m-001` and `matters/t-smoke-county/m-001`), `skills_and_turns` (TODO item 111; named
   `issues_and_turns` until then: the model loading skills on `matters/t-smoke-skills/m-001`, an old matter's issues
   coming out as skills on `matters/t-smoke-old/m-001`, intake and resume making no model call and the description being
@@ -415,22 +415,40 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `visits` (TODO item 115: `visit.py` with a stand-in model and a stand-in extraction, on `matters/t-smoke-visit*`, and that
   `run.py` is gone), `lease_and_letters` (the rules, the prompt without the options parts, the short lease profile and
   cites, the deadline a repair message starts, the letter, the lease's clauses and search, and every skill's clock facts
-  through the real code path, each on its own scratch matter), `web_page`, and `skill_files` (the skill format and the typing of clock facts, on fixture skills written to a temporary folder, never to `skills/`; TODO
-  items 109 and 112); and `common.py`, what more than one part uses: `FORFEIT` (a phrase of 83.49(3)(a)),
+  through the real code path, each on its own scratch matter), `web_page`, `skill_files` (the skill format and the typing of clock facts, on fixture skills written to a temporary folder, never to `skills/`; TODO
+  items 109 and 112), and `scenarios` (TODO item 115, part 2: every file in `dev/scenarios/` in the conversation format, the eval
+  driver `dev/live_run.py` playing a stand-in visit on `matters/t-smoke-driver*`, and `dev/eval.py` scoring that run); and `common.py`, what more than one part uses: `FORFEIT` (a phrase of 83.49(3)(a)),
   `visit_here` (a `Visit` on the matter and session open in the record, with no agent and `replied` set, for the checks of the
   confirmation that must not call the model), `confirm_rows` (answers the confirmation a row at a time, as the page does,
-  through `Visit.confirm`), `stated`, `screen`, `prompt_part`, and `StandIn` (a stand-in model that takes any tools). Each part
+  through `Visit.confirm`), `stated`, `screen`, `prompt_part`, `StandIn` (a stand-in model that takes any tools), and the stand-in model's messages `proposes`
+  (a `propose_facts` call), `loads` (a `load_skill` call), and `said` (one fact as `propose_facts` takes it). Each part
   imports what it uses; named checks and scratch matters come from `checks.py`.
 - `smoke_online.py`: entry point. A visit's first turn through `visit.py`, on throwaway matters (intake and resume call
   no model, so the model's work is the turn on the description or the update): a new matter (`Visit.new` on the test lease,
   which also calls the extraction model), a situation no skill covers and an update (`Visit.existing`), each with named checks
   (the ones marked "(model)" depend on the answer).
-- `dev/live_run.py`: entry point for live tests. Starts `run.py` as a subprocess and drives a whole session from a
-  scenario file in `dev/scenarios/` (see Running and testing). `run.py` was removed in TODO item 115 (part 1, 2026-10-12), so
-  this driver does not run until part 2 rewrites it to call `visit.py`; the scenarios and `dev/eval.py` wait for the same.
-  Imports nothing from the project.
+- `dev/live_run.py`: entry point for live tests (TODO item 115, part 2; until then it started `run.py` as a subprocess and typed
+  into it through a pipe). `play(scenario, tenant=None)` plays a scenario from `dev/scenarios/` in its own program, through
+  `visit.py`, the way the web page runs a visit: `Visit.new` (the lease read, then the description as the tenant's first message)
+  or `Visit.existing` (the update, if any), the confirmation answered a row at a time while a row is open, each chat message the
+  same way, then `Visit.end`. It prints the screen as it goes, flushed, so a run that is cut off shows how far it got: a first
+  line `MATTER: <tenant>/<matter id>` (`dev/eval.py` reads the matter id from it), the lease reading's check lines under `PROGRAM
+  (lease check):` (its page listing, hash, and the agent's "skills loaded" left out, `READING_NOISE`), then `TENANT: ...` for each
+  message the tenant typed, `MODEL: ...` for a reply block, `PROGRAM (<kind>): ...` for any other block (sources, caution, footer,
+  deadlines, letter, cases, and the visit's own sheet and notice), and for each row asked `CONFIRM <label>: suggested <value>;
+  answered <the answer, or accepted>`, with `; refused, expected <what>` after an answer that did not fit, the same row then asked
+  again with the next answer. `pick_answer(row, rules)` takes the next answer of the longest rule key that has answers left and is
+  found, as whole words, in the row's label or id (`claim notice date` is not found in `claim notice dated`), else "" (accept the
+  suggestion). `confirm_all(visit, result, rules)` answers the first open row until none is open: a row whose empty answer is
+  refused (a suggestion that does not fit its type) is skipped with "?" the next time, so the loop ends; past `MAX_ANSWERS` (100)
+  answers it raises. `show(blocks)` prints blocks. After the last message the visit ends and any confirm answers never used are
+  listed. `main` stops without the key (`require_key`), plays the scenario, and on an exception prints `THE RUN STOPPED (<error
+  type>): <message>` before the traceback. `--tenant <id>` replaces the scenario's tenant. A model error inside a turn is the
+  visit's caution on the screen ("the model could not be reached"). Imports `config`, `sheet`, `visit`.
 - `dev/eval.py`: entry point for measuring. Runs `dev/live_run.py` on scenarios several times each and
-  scores the runs from their matters by code (see Running and testing). Imports `skills` only to score.
+  scores the runs from their matters by code (see Running and testing). `EXPECT_KEYS` and `TURN_KEYS` are the keys of an `expect`
+  block and of one of its turns that it scores (`smoke_parts/scenarios.py` holds the scenario files to them). Imports nothing
+  from the project when loaded; `citations` when it scores a turn.
 - `schemas.py`: entry point. Prints each tool's name, first docstring line, and argument schema.
 
 ## Data flow
@@ -1046,7 +1064,22 @@ Offline checks (no model call, no key needed):
   misordered, repeated, or extra "## " heading, "## Deadlines" missing while there are clocks or present while there are
   none; a body quotation in no stored section (cited or not), cited to the wrong subsection, or to a subsection the section
   lacks; a clock id or a clock fact id (also `premises_county`) written in the body; and `skills.skills` a dict that
-  `check_all_skills` finds no failure in, with no fact id typed two ways across the ten. Every line
+  `check_all_skills` finds no failure in, with no fact id typed two ways across the ten. Last, the scenarios and the eval driver
+  (TODO item 115, part 2; `smoke_parts/scenarios.py`): every file in `dev/scenarios/` has `about`, `start`, and `chat`, optionally
+  `confirm` and `expect`, and no `sheet`; every `start` is a new matter (`tenant`, `lease`, `description`) whose lease file exists or
+  a saved one (`tenant`, `matter`, `update`); every chat is messages, none of the chat commands that are gone; every `confirm` is a
+  mapping of a key to a list of answers; every `expect` uses only `dev/eval.py`'s `EXPECT_KEYS` and `TURN_KEYS`, names skills that
+  exist, has patterns that compile, and none of `stops`, `not_covered_note`, `issues`; every turn it checks is found by a piece of
+  exactly one message (the description or update, or one chat line); the two no-skill stories expect no skill and a reply saying the
+  tool has no skill for it; the driver's answer rules (whole words, the longest key with answers left, in order, "" when none is
+  left) and the end of a confirmation whose row cannot be accepted; the visit's caution for a model that could not be reached, and
+  the network errors, among `dev/eval.py`'s `GATEWAY_SIGNS`; then `live_run.play` with a stand-in model and extraction on
+  `matters/t-smoke-driver` (the MATTER line of the `--tenant` given, none added for the scenario's tenant; the order of the
+  TENANT, MODEL, PROGRAM, and CONFIRM lines; each CONFIRM line, a refused answer asked again, a skip; the session ended, the unused
+  answer said, no stand-in message left over, no gateway call), `dev/eval.py`'s `score_run` on that run (skills from `matter.json`,
+  deadlines from the events that name the skill, a turn found by a piece of the description, patterns on the CONFIRM lines, a
+  missed expectation failing, not crashed, not gateway trouble), and a saved matter played with an update and without one
+  (`matters/t-smoke-driver-old`). Every line
   must be OK; the last line says "all checks OK" or lists the failures. The test matter itself is not
   changed by a smoke run.
 
@@ -1061,46 +1094,60 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   (`Visit.existing` on `matters/t-smoke-online/m-001`: the update logged verbatim, the description and the skills loaded kept, nothing
   confirmed, no suggestion equal to a confirmed value). A date a loaded skill's clock counts from is checked as proposed
   under that skill's fact id (TODO item 112). Checks marked "(model)" depend on the model's answer.
-- `python dev/live_run.py dev/scenarios/<name>.json`: a live session without typing. (Not working since TODO item 115, part 1:
-  it starts `run.py`, which was removed with the terminal; part 2 rewrites the driver to call `visit.py`. Written for the flow
-  before TODO item 111: the sheet rules for issues and fact questions that came before the chat, and `expect.issues`, which `dev/eval.py` reads from
-  `matter.json`'s `issues`, no longer match, and since TODO item 112 the sheet is the confirmation of proposals, whose rows are a
-  label and a hint, not a question, so the sheet rules match nothing and skip each row; TODO item 115 rewrites the driver and the scenarios for a conversation.) The scenario gives the
-  lines typed before the sheet (`start`), rules for the sheet (`sheet`: a piece of a question's text to a
-  list of answers used in order, so a bad answer then a good one tests the re-ask; a question no rule
-  matches gets "?"), and the chat lines (`chat`, then "bye"). Questions are found on screen by their type
-  hint (a choice's is "number or words"; answer it with its words), since each prints on the same line as the previous prompt. A sheet that appears mid-chat is answered
-  by the same rules. Prints the whole screen and the answers typed. Calls the model and writes a real matter:
-  use the test tenant `t-test`; every "new" scenario adds a matter. When several rules match a question,
-  the longest one with answers left is used. Scenarios, each with its expected results in `about`:
-  `nonpayment_3day.json` (the 83.56(3) court-day count, 2026-09-24), `repair_notice.json` (the 83.60(1)(b)
-  date 2026-09-17 and a preserve letter with its note), `claim_letter.json` (a claim letter reported
-  mid-chat: a sheet in the chat, deposit_claim_received added, objection 2026-10-10 and remit 2026-10-22),
-  `not_covered.json` (a roommate dispute: only `other`, the tool stops before the sheet),
-  `entry_unannounced.json` (landlord_entered_unannounced; no clocks, a preserve letter; asks "Was it
-  legal?"), `rent_increase.json` (rent_increased; no clocks; asks whether it is allowed and whether it is
-  retaliation), `leave_early.json` (wants_to_leave_early; the 83.49(5) date 2026-11-08; asks what happens if
-  they just leave), `month_to_month_end.json` (lease_ending; both 83.57(3) dates 2026-10-31; asks whether 30
-  days notice is required), `deposit_cases.json` (deposit_not_returned, no letter; asks what courts have said
-  about a late notice of claim, whether that means the whole deposit comes back, and about lawyers' fees;
-  run with `WIKI_UNVERIFIED=1` until pages are verified). The four before it each ask a question the tool must not answer, and answer every
-  suggested issue but the intended one with no, keyed on the intended issue's full description (the driver
-  takes the longest matching rule, so a shorter key loses to "Is that part of your situation?"). The driver also
-  handles run.py exiting by itself.
+- `python dev/live_run.py dev/scenarios/<name>.json [--tenant <id>]`: a visit without typing, played in this program through
+  `visit.py` (TODO item 115, part 2; before, it typed into `run.py` through a pipe and answered the intake sheet's questions, both
+  gone). Calls the model and writes a real matter: use the test tenant `t-test`; every new-matter scenario adds a matter. It prints
+  the screen and exits (the lines are in Modules, `dev/live_run.py`). A scenario is a JSON file:
+
+      {"about": "...",
+       "start": {"tenant": "t-test", "lease": "dev/leases/current.pdf", "description": "..."},    a new matter
+            or {"tenant": "t-test", "matter": "m-001", "update": "..."},                           a saved one
+       "confirm": {"<piece of a fact's label or id>": ["answer", ...]},                            optional
+       "chat": ["...", "..."],
+       "expect": {...}}                                                                            optional, scored by dev/eval.py
+
+  `start` is the tenant's first message, as on the page: the description of a new matter (its lease read first, the path from the
+  project folder) or the update of a saved one (with no `update` the chat waits for its first line). `chat` is the messages after
+  it, one at a time; the visit ends after the last (there is no `bye`, and no chat commands since TODO item 111). `confirm` answers
+  the confirmation that follows a turn in which the model proposed facts, one row at a time: a key is a piece of the fact's label
+  (its id with spaces) or id, found as whole words; its answers are used in order, so a bad answer then a good one tests a
+  correction (an answer that does not fit is refused and the row asked again; `?` skips the row); when several keys match, the
+  longest one with answers left is used; a row no key matches, or whose answers ran out, is accepted as suggested. The old `sheet`
+  rules are gone with the questions they answered (an issue row, "This looks like ... Is that part of your situation?", and a
+  question for each fact a playbook lacked): the facts they supplied that the story did not tell are in the story, one plain
+  sentence each in the tenant's voice (what they saw, did, or hold, never a legal conclusion), in the description, so the model
+  learns them in the conversation and proposes them, and the confirmation shows them. The old `timeline` chat lines are gone too.
+  Scenarios without an `expect` block, for a person to run and read, each with its expected results in `about`:
+  `nonpayment_3day.json` (the 83.56(3) court-day count, 2026-09-24; a delivery date typed without a year, refused, then typed
+  right), `repair_notice.json` (the 83.60(1)(b) date 2026-09-17 and a preserve letter), `claim_letter.json` (a claim letter reported
+  mid-chat: deposit_claim_received loaded next to deposit_not_returned, the printed date and the date received typed on the
+  confirmation, objection date 2026-10-10 and remit date 2026-10-22), `not_covered.json` (a
+  roommate dispute: no skill loaded, and the model says so), `entry_unannounced.json` (landlord_entered_unannounced; no clocks, a
+  preserve letter; asks "Was it legal?"), `rent_increase.json` (rent_increased; no clocks; asks whether it is allowed and whether it
+  is retaliation), `leave_early.json` (wants_to_leave_early; the 83.49(5) date 2026-11-08; asks what happens if they just leave),
+  `month_to_month_end.json` (lease_ending; both 83.57(3) dates 2026-10-31; asks whether 30 days notice is required), and
+  `deposit_cases.json` (deposit_not_returned, no letter; asks what courts have said about a late notice of claim, whether that means
+  the whole deposit comes back, and about lawyers' fees; run with `WIKI_UNVERIFIED=1` until pages are verified). Before part 2
+  all nine read `lease.pdf`; they read leases of `dev/leases/` now (`current.pdf`; `ended_2026-07-31.pdf` for the two deposit
+  stories, whose deposit is $900 in the lease and so in the story; `month_to_month_950.pdf`).
 - `python dev/eval.py run <out dir> <repeats> [scenario ...]` (out dir: `dev/eval_runs/<name>`, ignored by git):
   runs scenarios several times each, several
   sessions at once (`--parallel N`, default 8), and scores every run by code (`python dev/eval.py score <out
   dir>` scores again). With no scenario named, every scenario with an `expect` block. Each run is
-  `dev/live_run.py` under its own scratch tenant `matters/t-eval-<out dir name>-<scenario>-<k>`, seeded with an
-  `m-000` copy of the test matter so the id exists; the run's matter is the one its screen names. When the
+  `dev/live_run.py <scenario> --tenant <scratch tenant>` (one subprocess per run, retried once when it exits with an
+  error or its screen holds a traceback) under its own scratch tenant `matters/t-eval-<out dir name>-<scenario>-<k>`, seeded with an
+  `m-000` copy of the test matter (no longer needed, since `Visit.new` makes a new tenant's matter itself; kept so the runs are as
+  before), so the run's matter is `m-002`: the one its screen names on its first line (`MATTER: <tenant>/<matter id>`). When the
   runs end, `file_away` copies each run's `matter.json`, events, and transcript into `<out dir>/matters/` and
   removes the `t-eval-` scratch tenants from `matters/`, so the list of tenants is as it was.
   `--project <folder>` runs another copy of the project, e.g. a git worktree at an older commit, to compare
-  (the scenarios and the seed still come from this copy). The `expect` block: `issues` (the skills
-  active at the end, read from `matter.json`'s `issues`, which a new matter no longer has: item 115 rewrites it), `stops` (the tool stops before the chat), `not_covered_note`, `deadlines` (issues with a
-  `deadlines_computed` event naming a clock), `letters` (`draft` events), `screen_must` and `screen_must_not`
-  (regexes on the whole screen), `turns` (per chat line, found by a
-  piece of it: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
+  (the scenarios and the seed still come from this copy, so the run's `live_run.py` must be of the conversation format too: an
+  older commit's cannot read these scenarios). The `expect` block (`EXPECT_KEYS`): `skills` (the skills loaded at the end, exactly,
+  read from `matter.json`'s `skills`; was `issues` until TODO item 115, part 2), `deadlines` (skills with a
+  `deadlines_computed` event naming a clock; the event carries `skill` since TODO item 112), `letters` (`draft` events),
+  `screen_must` and `screen_must_not` (regexes on the whole screen, so on the CONFIRM and PROGRAM lines too), `turns` (per message of
+  the tenant, found by a piece of it, the description or the update included, since it is the first message and the first turn:
+  `TURN_KEYS`; a piece found in two messages finds the first, so `smoke_parts/scenarios.py` holds each to one: tools `called` and `not_called`, regexes the turn's replies `must` have and `must_not` have
   outside quote marks, the `topics` allowed for `get_cases`, `applied`: a reply applies the law, a quote or a
   statute or lease cite (`CITE_SEEN`, since TODO item 73) with `APPLIED_WORDS` (40) words or more of the
   model's own addressed to the tenant, `open_first`: outside quote marks, whether the option is open
@@ -1117,7 +1164,7 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   (`recited`: more than `RECITED_CHARS`, 300, characters in quote marks, or `RECITED_FACTS`, 3, lines of "You
   confirmed" or "You said"; TODO item 73), quotes only (a quote
   and fewer than 40 words of its own), dates made (a date with a year outside quote marks that no fact, tenant
-  line, sheet answer, or the run's lease holds, `lease_dates(entry)` from the PDF named in the run's own copy of
+  line, confirmation answer, or the run's lease holds, `lease_dates(entry)` from the PDF named in the run's own copy of
   its scenario), cases not given (a "Name v. Name" no `get_cases` result in
   the session holds), retold cites (`citations.cites_without_quote`: a cite outside quote marks with none of
   its words quoted in the same reply; TODO item 54), deadlines the program printed itself (`deadlines_by_program`,
@@ -1125,14 +1172,16 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   calls `get_deadlines` still counts only the model's call; TODO item 65), and two word screens (`CHOOSE_WORDS`: you should, your best option, I recommend;
   `OFFER_WORDS`) that only mark a reply for a person to read, and prompt names (`PROMPT_NAME`: a prompt
   part's name as the prompt writes it, before TODO item 61 or since, YOUR OPTIONS and WHAT THE TOOL DOES NOT KNOW
-  included, in capitals, or a rule's number such as "rule 8"; TODO items 53, 61, and 83). Since 2026-10-02 (TODO item 49) a legal question's
+  included, SKILLS and LOADED SKILLS since TODO item 111, in capitals, or a rule's number such as "rule 8"; TODO items 53, 61, and 83). Since 2026-10-02 (TODO item 49) a legal question's
   turn expects `applied` instead of "does not decide", and the `LAW_WORDS` screen and the `must_not` patterns
   against "entitled", "allowed", "forfeit", and case names are gone. The blind scorers' rubric is
   `dev/eval_rubric.md` (applied answers: OPTION_BEFORE_OPEN and RECITED since TODO items 72 and 73, GAP_AS_FACT and
   UNKNOWN_UNTIED since item 85, QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,
   OPEN_CLOSED, CASE_MISREAD, ONE_SIDED, CHOICE_MADE, OVERCLAIM, LAW_UNSOURCED, DATE_MADE, ID, and the quoting
   and letter categories). A run with signs that the gateway failed
-  (the driver's timeout, an empty answer where JSON was expected, or two unrecovered empty turns in a row) is
+  (`GATEWAY_SIGNS`: the visit's caution "the model could not be reached", which the driver prints on the screen, the network
+  errors "Connection error", "nodename nor servname provided", and "Client Closed Request", an empty answer where JSON was
+  expected, or two unrecovered empty turns in a row; TODO item 104, 2026-10-12) is
   marked `gateway_trouble` and counted apart. Writes `runs/` (screens),
   `runs.json`, `transcripts/` (each run as text marking who produced each part), `scores.json`, and
   `summary.json`, and prints a table per scenario. A scenario's lease is the PDF its `start` names, resolved in
@@ -1142,21 +1191,23 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   one realistic lay-tenant story per skill (`deposit_ghosted`, `claim_carpet`, `entry_shower`,
   `lease_end_renewal`, `nonpayment_taped`, `violation_dog`, `rent_hike_duplex`, `repair_mold_apt`,
   `leave_early_family`, and `noise_neighbors` since neighbor_disturbance was added; it was `nc_noise`), two
-  stories no skill covers (`nc_roommate`, `nc_towing`, each expecting its lease clause at the stop), one
+  stories no skill covers (`nc_roommate`, `nc_towing`, each expecting no skill, a reply on the question that says the tool has no
+  skill for it, and a `search_lease` call: the stop page that printed the lease's own clause is gone, so the model's search takes its
+  place), one
   covered problem next to an uncovered one (`nc_mixed_heater`), and three with facts like a case in the wiki
   and plain questions about judges (`cases_late_claim`, `cases_3day_cash`, `cases_retaliation`), and the
   author's AC story of 2026-10-04 (`repair_ac_terminate`: asked how to end the lease, the answer must say it is
   not settled; TODO items 72 and 73), and six stories of what the tool knows (TODO item 85), one per state, each
   where the deciding point is in that state: `know_deposit_unsure` (a fact the tenant has not given: whether a notice
-  of a claim came, skipped on the sheet), `know_lease_holdover` (lease clauses the profile does not hold but the
+  of a claim came, said in the description), `know_lease_holdover` (lease clauses the profile does not hold but the
   lease has: the holdover, 2.4, and the late charge, 3.3; `search_lease` must be called and each cited),
   `know_violation_waterbed` (a lease with no such clause: the search finds nothing on waterbeds),
   `know_repair_mold_code` (a local code: mold, not the structure or the plumbing, so the duty turns on a code or the
   lease's clause, each the tenant's to check), `know_violation_guest` (an open question: whether a guest staying over is
   a violation the tenant should be given a chance to cure), and `know_nonpayment_orange` (outside the tool: a 3-day
   notice in Orange County, which has no court calendar), and three stories of the student simulation of 2026-10-06
-  with the students' own lines, each with sheet rules for the questions before and after the sheet asked plain facts
-  (2026-10-08, TODO items 86 and 90 to 92), so the same file runs on either code: `student_notice_email` (an e-mail
+  with the students' own lines, each with the facts the old sheet rules gave (2026-10-08, TODO items 86 and 90 to 92) told in the
+  description: `student_notice_email` (an e-mail
   saying "I'm going to have to move out": no reply may say the notice steps are done or that it counts), `student_hot_water`
   (no reply may call withholding open), `student_roommate` (no reply may call the repair options closed); run with
   `WIKI_UNVERIFIED=1` until pages are verified. Each scenario's `about` says what it tests.
@@ -1166,5 +1217,5 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   first message: the model answers it, loading skills and proposing facts, and the confirmation (`Visit.confirm`, no model for the
   answers) asks the tenant to confirm what it proposed, after which the model replies to what was confirmed. `bye` in the chat or
   End session ends the visit. There are no chat commands since TODO item 111 (the page draws the timeline). Every visit appends to
-  the matter's `events.jsonl`. Stop the page with Ctrl-C in its terminal. The eval driver will call `visit.py` the same way
-  (TODO item 115, part 2); the terminal front end (`python run.py`) was removed in part 1.
+  the matter's `events.jsonl`. Stop the page with Ctrl-C in its terminal. The eval driver, `dev/live_run.py`, calls `visit.py` the
+  same way (TODO item 115, part 2); the terminal front end (`python run.py`) was removed in part 1.

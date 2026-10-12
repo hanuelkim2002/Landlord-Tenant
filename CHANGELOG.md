@@ -5,6 +5,92 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- The eval driver and the scenarios for a conversation (TODO item 115, part 2 of 2, done; also the `GATEWAY_SIGNS` part of TODO
+  item 104). Replaced: `dev/live_run.py` (90 lines) typed into `run.py` through a pipe and answered the intake sheet's questions by
+  matching the question on screen; it did not run after part 1. It is now 137 lines that play a scenario in their own program
+  through `visit.py`, as the web page runs a visit: `Visit.new` (or `Visit.existing`), the description (or the update) as the
+  tenant's first message, the confirmation answered a row at a time through `Visit.confirm`, each chat message the same way, then
+  `Visit.end`. Same command, `python dev/live_run.py <scenario.json>`, and a new option `--tenant <id>` that replaces the scenario's
+  tenant (`dev/eval.py` gives each run a scratch tenant). The screen it prints (flushed as it goes): a first line `MATTER:
+  <tenant>/<matter id>`, the lease check's lines under `PROGRAM (lease check):`, then `TENANT:`, `MODEL:` for a reply, `PROGRAM
+  (<kind>):` for any other block (sources, caution, footer, deadlines, letter, cases, sheet, notice), and `CONFIRM <label>: suggested
+  <value>; answered <the answer, or accepted>` for each row (`; refused, expected ...` when an answer did not fit; the row is then
+  asked again with the next answer). The scenario format, in all 35 files of `dev/scenarios/`: `start` is an object, `{"tenant",
+  "lease", "description"}` for a new matter or `{"tenant", "matter", "update"}` for a saved one (it was a list of lines typed into the
+  terminal, with a trailing empty line); `confirm` replaces `sheet`: a piece of a fact's label or id (found as whole words, so `claim
+  notice date` does not match `claim notice dated`) to a list of answers used in order, the longest key with answers left winning, a
+  row no key matches accepted as suggested; `chat` is the messages after the first; `expect` is read by `dev/eval.py`. `dev/eval.py`
+  now runs `live_run.py <scenario> --tenant <scratch tenant>` (the seeding and `file_away` are kept; the run's matter is `m-002`, read
+  from the `MATTER:` line instead of "New matter ... m-002"); scores `skills` from `matter.json`'s `skills` (was `issues`, which a
+  new matter no longer has) and `deadlines` from the `deadlines_computed` events' `skill` (was `issue`); no longer scores `stops` or
+  `not_covered_note`; writes a sheet line of the transcript with its `label`; and has `EXPECT_KEYS` and `TURN_KEYS`, the keys it
+  scores. `PROMPT_NAME` also catches SKILLS and LOADED SKILLS (the old names stay: harmless). `GATEWAY_SIGNS` (TODO item 104) gains
+  "Connection error", "nodename nor servname provided", and "Client Closed Request" (8 of 31 runs on 2026-10-08 crashed on the
+  network and were scored as the tool's runs) and the visit's own caution, "the model could not be reached" (`visit.failed`, printed
+  on the screen); "run.py did not come back to a prompt" went with `run.py`. The rest of item 104 (a run stopped by a time limit leaves
+  no `runs.json`; item 33) stays on the list. A turn of an expectation is found by a piece of the tenant's message, the description
+  or the update included, which is the first message and so the first turn: nothing in the scorer had to change for that, but two
+  keys that now also matched the description were made unique, `eval_cases_3day_cash`'s "cash only?" (it matched two chat lines too)
+  to "Can he make me pay in cash only" and `eval_nonpayment_taped`'s "late fee" (the story says "$75 late fee") to "Can they put
+  the late fee".
+  How each kind of old sheet answer was carried into the stories (29 of the 35 descriptions got a sentence or two; 6 needed none):
+  (1) The issue rows ("This looks like ... Is that part of your situation?", and the rules keyed on an issue's description with
+  yes or no) were dropped: the model loads the skills itself. `expect.issues` became `expect.skills`, the names the same.
+  (2) A fact the story already told (the dates, amounts, how a notice reached the tenant, the county) was dropped from the rules and
+  nothing was added. (3) A fact the story did not tell became one plain sentence in the tenant's voice in the description (what they
+  saw, did, or hold; never a legal conclusion, no fact id), the story's own words untouched: what the tenant did or did not do ("I
+  have not paid any part of it since, and I am not holding back rent over repairs", "I did not agree to him coming in, and he did not
+  say it was an emergency", "I still have the waterbed"), what a paper says with the words of the old "copy the sentences" answer as
+  a quote ("My email said, "The AC stopped working on September 1. Please fix it." It did not say anything about ending my lease or
+  about not paying rent"), an absence ("no court papers have come", "I never got a warning before this", "The landlord has not taken
+  any rent from me since the notice"), a date or an amount ("since September 1, 2026", "The notice says the last day to pay or leave
+  is October 6, 2026", "The paper says the amount is $2,100", "the lease itself sets a $1,578 fee for leaving early"), and a cause
+  ("As far as I know nothing anyone did caused it", from "nothing anyone did (age, wear, weather)"). The three student stories keep
+  the students' lowercase voice. (4) Facts the lease holds (the rent, the term's end date, the notice the lease requires, what it
+  says about it) were not added: the model reads them with `search_lease`. (5) A rule that tested a correction stayed a `confirm`
+  rule: `claim_letter` and `eval_claim_carpet` type the printed date and the date received on `claim notice dated` and `claim notice
+  date` (the old sheet answered the same two dates), and `eval_claim_carpet`'s `screen_must_not` now looks for `CONFIRM claim notice
+  date: suggested 2026-09-18` on the screen where it looked for the sheet's "suggested: 2026-09-18" line; `nonpayment_3day` types
+  "Sept 18" (no year, refused) then "9/18/2026" on `nonpayment notice delivered`. Dropped: its other bad answer ("maybe" for part
+  payment, a yes/no question that is now a free-text fact) and the answers of "?" (a skip for a fact the tenant does not know:
+  `eval_know_deposit_unsure`'s story says it in the description, `eval_know_lease_holdover` has no row to skip). (6) `claim_letter`'s
+  mid-chat sheet: the chat line that reports the letter now also says it tells the tenant to object in writing within 15 days and
+  that they have not. (7) One fact was left out on purpose: `repair_notice`'s "no rent paid since", because its `about` says the
+  story avoids saying rent went unpaid. (8) The 16 `timeline` chat lines went (the page draws the timeline; the chat commands went
+  with TODO item 111); `eval_student_hot_water`'s second chat line lost its last sentence, "I only said no because I didn't write a
+  letter", which answered a sheet question that is gone.
+  Leases and `about`: the nine older scenarios, which read `lease.pdf` (not in a worktree, and the one `dev/build_test_leases.py`
+  builds the others from), read `dev/leases/current.pdf`, `month_to_month_950.pdf` for `month_to_month_end`, and `ended_2026-07-31.pdf`
+  for `claim_letter` and `deposit_cases`, whose deposit of "$1,850" became "$900" to be the lease's. Their `about` and the eval
+  stories' lost the sentences that described the old flow (the sheet, the stop page, the classifier, "playbook") and keep what each
+  story tests. The stories no skill covers, `eval_nc_roommate` and `eval_nc_towing`, expect `skills: []` and a reply to the question
+  that says the tool has no skill for it (`no skill|(?:not|n't) have a skill|(?:not|n't) cover`), and, in place of "the lease's clause
+  at the stop" (the stop page is gone), a `search_lease` call: the tool still holds the lease, so a reply on a roommate or a tow should
+  read it. `eval_nc_mixed_heater`'s `not_covered_note` became the same "no skill" pattern on the reply about the religion remark; its
+  second turn's `must` ("do not answer that|tool's reading") was left as it was, though "do not answer that" was version G's wording.
+  Smoke: 630 OK lines, all OK (612 before): 18 added, in the new `smoke_parts/scenarios.py` (247 lines, imported last by `smoke.py`),
+  none removed. Named checks: every file of `dev/scenarios/` has about, start, and chat, optionally confirm and expect, and no
+  sheet; every start is a new matter (tenant, lease, description) with a lease file that exists, or a saved one; every chat is
+  messages with none of the chat commands that are gone; every confirm is a mapping of keys to lists of answers; every expect uses
+  only `EXPECT_KEYS` and `TURN_KEYS`, names real skills, and each eval_ scenario has one; every pattern compiles and nothing is left
+  of `stops`, `not_covered_note`, or `issues`; every turn an expect checks is found by a piece of exactly one message; the two
+  no-skill stories expect no skill and a "no skill" reply, the others the skills they need; the driver's answer rules (whole
+  words, the longest key with answers left, in order); the end of a confirmation whose row cannot be accepted as suggested; the
+  visit's caution and the network errors among `GATEWAY_SIGNS`; and, for `live_run.play` on a stand-in model and extraction with no
+  gateway, on `matters/t-smoke-driver`: the MATTER line of the `--tenant` given (none added to `t-test`), the order of the lines,
+  each CONFIRM line (accepted, refused and asked again, skipped), the session ended and the unused answer said with no stand-in
+  message left over, `dev/eval.py`'s `score_run` on that run (and a missed expectation failing), and a saved matter played with an
+  update and without one (`matters/t-smoke-driver-old`). The three message helpers `proposes`, `loads`, and `said` moved from
+  `smoke_parts/visits.py` to `smoke_parts/common.py`, which both parts use.
+  One live run to prove the pipeline: `WIKI_UNVERIFIED=1 python dev/eval.py run dev/eval_runs/2026-10-12-pipeline 1
+  eval_repair_ac_terminate eval_nc_roommate --parallel 2`. Both runs finished on the first attempt, no crash, no gateway trouble, the
+  `t-eval-` tenants filed away and gone from `matters/`. `eval_nc_roommate` met every expectation (no skill loaded, `search_lease`
+  called, the reply says the tool has no skill for it). `eval_repair_ac_terminate` met the skill, the "not settled|turns on|depends
+  on" patterns, `applied`, the lease Section 7 cite, and `get_deadlines`, and missed `open_first` on "How do I end my lease" and "Can I
+  just stop paying rent" (the status comes after the first step in the reply). Nothing was tuned on it. Not changed: `smoke_online.py`
+  (it was not run), `dev/build_test_leases.py`, `dev/eval_rubric.md`. Comparing with an older commit (TODO item 116) now needs that
+  commit's own scenario files and driver, since `--project` takes the scenarios from this copy.
+
 - The web page only, one session module for it and the eval driver, and the short lease profile (TODO item 115, part 1 of 2).
   Part 2 rewrites the eval driver and the scenarios. Added: `visit.py` (173 lines), the flow that `app.py` and `agent.chat` each
   held, once: `Visit.new(tenant_id, pdf_path, description)` and `Visit.existing(tenant_id, matter_id, update="")` (classmethods

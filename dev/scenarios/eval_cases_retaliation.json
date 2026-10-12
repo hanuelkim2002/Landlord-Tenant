@@ -1,110 +1,9 @@
 {
-  "about": "notice_received_violation and repair_not_made, with facts like Salmonte v. Eilertson: the tenant reported broken smoke detectors and mold to the city on 2026-09-10; a 7-day notice for a cat followed on 2026-09-24. Retaliation sits in 83.64, a section of repair_not_made (not of the violation playbook), so its case topic is offered only because the repair issue is active.",
-  "start": [
-    "new",
-    "t-test",
-    "dev/leases/current_no_pets.pdf",
-    "On September 10, 2026 I called the city code enforcement about the broken smoke detectors and the mold in my apartment, because my landlord never fixed them.",
-    "On September 24, 2026 my landlord handed me a 7-day notice saying I'm violating the lease by having a cat and I have 7 days to remove it or the lease ends. I've had the cat for a year and he never cared before.",
-    ""
-  ],
-  "sheet": {
-    "Tenant has received the landlord's written notice that the landlord intends to keep": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has not returned the tenant's security deposit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The lease is ending or the tenancy is being ended": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written demand for unpaid rent or possession": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written notice about a lease violation": [
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "The landlord has raised the rent or says the rent will go up": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Something in the unit needs repair and the landlord has not fixed it": [
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "Tenant wants to move out before the lease term ends": [
-      "no",
-      "no",
-      "no"
-    ],
-    "lease violation delivered to you": [
-      "9/24/2026"
-    ],
-    "How did the notice reach you": [
-      "handed to me"
-    ],
-    "What does the notice say you did": [
-      "having an unauthorized cat in the unit"
-    ],
-    "give you 7 days to fix the problem": [
-      "yes"
-    ],
-    "say your lease is terminated": [
-      "no"
-    ],
-    "had the landlord ever given you a written warning or notice": [
-      "no"
-    ],
-    "fixed the problem the notice describes": [
-      "no"
-    ],
-    "accepted rent from you since the notice": [
-      "no"
-    ],
-    "filed an eviction case": [
-      "no"
-    ],
-    "What is the problem that needs repair": [
-      "broken smoke detectors and mold"
-    ],
-    "problem start": [
-      "9/1/2026"
-    ],
-    "single-family house or a duplex": [
-      "no"
-    ],
-    "paid rent since you knew": [
-      "yes"
-    ],
-    "What has the landlord said or done": [
-      "nothing"
-    ],
-    "Which of these is the problem with": [
-      "something else"
-    ],
-    "Who or what caused the problem": [
-      "nothing anyone did (age, wear, weather)"
-    ],
-    "anything in writing about the problem": [
-      "no"
-    ]
+  "about": "notice_received_violation and repair_not_made, with facts like Salmonte v. Eilertson: the tenant reported broken smoke detectors and mold to the city on 2026-09-10; a 7-day notice for a cat followed on 2026-09-24. Retaliation sits in 83.64, a section of repair_not_made (not of the violation skill), so its case topic is offered only because the repair skill is loaded.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current_no_pets.pdf",
+    "description": "On September 10, 2026 I called the city code enforcement about the broken smoke detectors and the mold in my apartment, because my landlord never fixed them. On September 24, 2026 my landlord handed me a 7-day notice saying I'm violating the lease by having a cat and I have 7 days to remove it or the lease ends. I've had the cat for a year and he never cared before. The smoke detectors and the mold have been like that since September 1, 2026, and the landlord has done nothing about them. I have kept paying rent. I have not sent him anything in writing about them, nothing anyone did caused them that I know of, and no court papers have come. I never got a written warning before the 7-day notice, I still have the cat, and the landlord has not taken any rent from me since."
   },
   "chat": [
     "Is he doing this because I reported him to the city?",
@@ -112,7 +11,7 @@
     "What are my deadlines?"
   ],
   "expect": {
-    "issues": [
+    "skills": [
       "notice_received_violation",
       "repair_not_made"
     ],
@@ -137,7 +36,6 @@
           "get_deadlines"
         ]
       }
-    ],
-    "not_covered_note": false
+    ]
   }
 }

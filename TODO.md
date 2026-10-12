@@ -21,10 +21,6 @@ author's rule of 2026-10-06, in CLAUDE.md).
 
 Playbooks become skills (the author's plan of 2026-10-12; design in `docs/structure/2026-10-12-skills.md`). In order,
 each one commit; items 98 to 100 below wait until it is done, since the sheet and the prompt change under them.
-115. The web page only, one session module for it and the eval driver, the short lease profile, the eval driver and
-    scenarios for a conversation (part 1 done 2026-10-12: visit.py, the web page only, the short lease profile). Part 2: the eval
-    driver (`dev/live_run.py`, `dev/eval.py`) calls `visit.py`, not the removed `run.py`, and the scenarios fit a conversation.
-    Done: a scenario runs through the new driver.
 116. Measure: the eval stories before (e32ab77) and after, scored blind, with a chart.
 
 The student simulation's remaining cause (`docs/evals/2026-10-06-students/`): what the tenant reads is built for
@@ -51,9 +47,9 @@ AUTHOR.md). The letters (95, 96) are in the CHANGELOG, 2026-10-11.
 94. One set of facts per issue: two repair problems (hot water and an AC) share one start date, one notice, and one
     set of options, so a letter's line is wrong for one of them (student story C). A matter per problem, or an issue
     that can repeat with its facts kept per problem: propose before building.
-104. `dev/eval.py` scores a run that crashed on the network as the tool's run (`GATEWAY_SIGNS` lacks "Connection
-    error", "nodename nor servname provided", "Client Closed Request"; 8 of 31 runs on 2026-10-08), and a run stopped by
-    a time limit leaves no `runs.json`. Item 33 (first attempts that crash, 2026-10-01) joins this.
+104. `dev/eval.py`: a run stopped by a time limit leaves no `runs.json`, so the runs that finished are lost until scored by
+    hand. Item 33 (first attempts that crash, 2026-10-01) joins this. Done: a stopped eval can be scored. (The network signs
+    in `GATEWAY_SIGNS` are done: CHANGELOG, 2026-10-12.)
 87, 67. Eval checks that count a right answer as a slip: the dog story's "you (are|will be) safe" matches "Whether you
     are safe turns on ..." (2 of 3 runs on 2026-10-04 and on 2026-10-08), `LEASE_ABSENT` counts a reply repeating what
     the tenant confirmed, and "cases not given" counts part of a given case's name ("Inc. v. Varnado"); match against

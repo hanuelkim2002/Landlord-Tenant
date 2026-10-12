@@ -1,100 +1,18 @@
 {
-  "about": "repair_not_made, story C of the student simulation of 2026-10-06: no hot water since 2026-09-28 (the water heater), a portal request that day, rent paid. On the code before 2026-10-08 the student's yes to \"Is the problem ... the plumbing?\" met 83.51(1)(b) and withholding rent showed OPEN, though hot water is in 83.51(2)(a)5. and 83.51(2)(c) bars a subsection (2) defense to possession (TODO item 91). Since the sheet asks what the problem is with, hot water is not settled, so no reply may call withholding open. Sheet rules answer both the old questions and the new ones.",
-  "start": [
-    "new",
-    "t-test",
-    "docs/evals/2026-10-06-students/results/C_hot_water/program/magnolia_lease.pdf",
-    "Hello, I have a question about my apartment. There has been no hot water in my whole unit since Monday, September 28.",
-    "I put in a request on the resident portal that day and maintenance came on the 29th. They said the water heater is broken and needs to be replaced, but nothing has happened since.",
-    "Also the AC keeps cutting out in the afternoons since around September 14. I paid October rent already. How long can they leave me like this and can I get any money back?",
-    ""
-  ],
-  "sheet": {
-    "Something in the unit needs repair": [
-      "yes"
-    ],
-    "Is that part of your situation?": [
-      "no",
-      "no",
-      "no"
-    ],
-    "What is the problem that needs repair": [
-      "No hot water in the whole unit since September 28; maintenance said the water heater needs replacing."
-    ],
-    "problem start": [
-      "9/28/2026"
-    ],
-    "single-family house or a duplex": [
-      "no"
-    ],
-    "paid rent since you knew": [
-      "yes"
-    ],
-    "filed an eviction case": [
-      "no"
-    ],
-    "What has the landlord said or done": [
-      "Maintenance came on September 29 and said the water heater needs to be replaced; nothing since."
-    ],
-    "roof, windows, doors, floors": [
-      "yes"
-    ],
-    "must repair this kind of problem": [
-      "yes"
-    ],
-    "caused by you": [
-      "no"
-    ],
-    "delivered a written notice to the landlord": [
-      "no",
-      "yes"
-    ],
-    "written notice delivered to the landlord": [
-      "9/28/2026"
-    ],
-    "How did you deliver the written notice": [
-      "a request on the resident portal"
-    ],
-    "intend to end the lease": [
-      "no"
-    ],
-    "intend not to pay rent": [
-      "no"
-    ],
-    "Which of these is the problem with": [
-      "hot water"
-    ],
-    "Who or what caused the problem": [
-      "nothing anyone did (age, wear, weather)"
-    ],
-    "anything in writing about the problem": [
-      "yes"
-    ],
-    "How did that written message reach the landlord": [
-      "a resident portal request or message"
-    ],
-    "What date did that message reach the landlord": [
-      "9/28/2026"
-    ],
-    "Does that message say anything about ending": [
-      "no"
-    ],
-    "say anything about not paying rent": [
-      "no"
-    ],
-    "Copy the sentences of that message": [
-      "There is no hot water in my unit. Please fix the water heater."
-    ]
+  "about": "repair_not_made, story C of the student simulation of 2026-10-06: no hot water since 2026-09-28 (the water heater), a portal request that day, rent paid. On the code before 2026-10-08 the student's yes to \"Is the problem ... the plumbing?\" met 83.51(1)(b) and withholding rent showed OPEN, though hot water is in 83.51(2)(a)5. and 83.51(2)(c) bars a subsection (2) defense to possession (TODO item 91). Since the model asks what the problem is with, hot water is not settled, so no reply may call withholding open. The facts the old sheet rules gave are in the description, and the second chat line no longer says \"I only said no\" (the sheet question it answered is gone).",
+  "start": {
+    "tenant": "t-test",
+    "lease": "docs/evals/2026-10-06-students/results/C_hot_water/program/magnolia_lease.pdf",
+    "description": "Hello, I have a question about my apartment. There has been no hot water in my whole unit since Monday, September 28. I put in a request on the resident portal that day and maintenance came on the 29th. They said the water heater is broken and needs to be replaced, but nothing has happened since. Also the AC keeps cutting out in the afternoons since around September 14. I paid October rent already. How long can they leave me like this and can I get any money back? My portal request said, \"There is no hot water in my unit. Please fix the water heater.\" It did not say anything about ending my lease or about not paying rent. As far as I know nothing anyone did caused it, and nobody has taken me to court."
   },
   "chat": [
     "Hello, thank you. My main question is how long are they allowed to leave us without hot water? I have been showering at the campus rec center. Can I get any money back, or pay less rent?",
-    "Sorry that was a lot to read. I did put in a request on the resident portal on September 28, and one for the AC on September 15. Doesn't that count as written notice? I only said no because I didn't write a letter."
+    "Sorry that was a lot to read. I did put in a request on the resident portal on September 28, and one for the AC on September 15. Doesn't that count as written notice?"
   ],
   "expect": {
-    "issues": [
+    "skills": [
       "repair_not_made"
     ],
-    "not_covered_note": false,
     "turns": [
       {
         "say": "how long are they allowed to leave us without hot water",

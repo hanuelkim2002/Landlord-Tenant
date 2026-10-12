@@ -1,99 +1,18 @@
 {
-  "about": "repair_not_made, story E of the student simulation of 2026-10-06: an in-unit washer a roommate broke, still leaking after a repair; portal requests. On the code before 2026-10-08 the sheet asked \"Was the problem caused by you, a member of your household, or someone you let in?\", the student said yes for the roommate, and both repair options showed closed (TODO item 92). Since the sheet asks who caused it, a roommate is not settled under 83.51(4), so no reply may call the repair options closed. Sheet rules answer both the old questions and the new ones.",
-  "start": [
-    "new",
-    "t-test",
-    "docs/evals/2026-10-06-students/results/E_washer_roommate/program/magnolia_lease.pdf",
-    "so my apartment charged all 4 of us roommates $85 for a washer repair and it says \"resident damage\". it was my roommate devin who broke it, he literally admitted it in the group chat (washed his comforter and shoes)",
-    "i didnt pay the $85 (paid my rent tho). office says they can charge late fees or take it out of my deposit at move out. also the washer still leaks a little bc they didnt really fix it, put in another request oct 3",
-    "can they actually do that? i dont think i should have to pay for something devin did",
-    ""
-  ],
-  "sheet": {
-    "Something in the unit needs repair": [
-      "yes"
-    ],
-    "Is that part of your situation?": [
-      "no",
-      "no",
-      "no"
-    ],
-    "What is the problem that needs repair": [
-      "The in-unit washer leaks; a roommate broke it and the repair did not stop the leak."
-    ],
-    "problem start": [
-      "9/15/2026"
-    ],
-    "single-family house or a duplex": [
-      "no"
-    ],
-    "paid rent since you knew": [
-      "yes"
-    ],
-    "filed an eviction case": [
-      "no"
-    ],
-    "What has the landlord said or done": [
-      "a tech came sept 17, wrote it up as resident misuse (overloading) and fixed something. washer works again but still leaks a little. then oct 1 they charged all 4 of us $85 'resident damage'. office says they cant tell who caused it so its split per the lease, and late fees or deposit"
-    ],
-    "roof, windows, doors, floors": [
-      "no"
-    ],
-    "must repair this kind of problem": [
-      "yes"
-    ],
-    "caused by you": [
-      "yes"
-    ],
-    "delivered a written notice to the landlord": [
-      "yes"
-    ],
-    "written notice delivered to the landlord": [
-      "9/15/2026"
-    ],
-    "How did you deliver the written notice": [
-      "through the online resident portal maintenance request"
-    ],
-    "intend to end the lease": [
-      "no"
-    ],
-    "intend not to pay rent": [
-      "no"
-    ],
-    "Which of these is the problem with": [
-      "an appliance (a washer, a refrigerator, a stove)"
-    ],
-    "Who or what caused the problem": [
-      "a roommate"
-    ],
-    "anything in writing about the problem": [
-      "yes"
-    ],
-    "How did that written message reach the landlord": [
-      "a resident portal request or message"
-    ],
-    "What date did that message reach the landlord": [
-      "9/15/2026"
-    ],
-    "Does that message say anything about ending": [
-      "no"
-    ],
-    "say anything about not paying rent": [
-      "no"
-    ],
-    "Copy the sentences of that message": [
-      "The washer is leaking. Please fix it."
-    ]
+  "about": "repair_not_made, story E of the student simulation of 2026-10-06: an in-unit washer a roommate broke, still leaking after a repair; portal requests. On the code before 2026-10-08 the sheet asked \"Was the problem caused by you, a member of your household, or someone you let in?\", the student said yes for the roommate, and both repair options showed closed (TODO item 92). Since the model asks who caused it, a roommate is not settled under 83.51(4), so no reply may call the repair options closed. The facts the old sheet rules gave are in the description.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "docs/evals/2026-10-06-students/results/E_washer_roommate/program/magnolia_lease.pdf",
+    "description": "so my apartment charged all 4 of us roommates $85 for a washer repair and it says \"resident damage\". it was my roommate devin who broke it, he literally admitted it in the group chat (washed his comforter and shoes) i didnt pay the $85 (paid my rent tho). office says they can charge late fees or take it out of my deposit at move out. also the washer still leaks a little bc they didnt really fix it, put in another request oct 3 can they actually do that? i dont think i should have to pay for something devin did the washer started leaking sept 15 and that day i put in a request on the portal that said \"The washer is leaking. Please fix it.\" it didnt say anything about ending the lease or not paying rent. a tech came sept 17, wrote it up as resident misuse (overloading) and fixed something, and the office says they cant tell who caused it so the charge is split per the lease. nobody has taken me to court."
   },
   "chat": [
     "ok so what i really want to know is do i actually have to pay this $85 if it was devin, and can they hit me w/ late fees or take it from my deposit at move out",
     "wait so bc devin did it i cant make them fix the washer? it STILL leaks after the tech came, thats not devins fault, they just didnt fix it right. i put in another request oct 3 and nothing"
   ],
   "expect": {
-    "issues": [
+    "skills": [
       "repair_not_made"
     ],
-    "not_covered_note": false,
     "turns": [
       {
         "say": "do i actually have to pay this $85",

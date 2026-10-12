@@ -1,118 +1,22 @@
 {
   "about": "neighbor_disturbance (playbook added 2026-10-02; this story was eval_nc_noise, which stopped as not covered). Upstairs neighbors' parties nightly; three complaints to the office, which says it can do nothing. Whether the landlord can do nothing and whether the tenant can leave over it are open questions (not decided); no clocks; an assert letter quoting 83.52(7); a lay question about courts (no topic is on noise, so 'This tool has no cases on that.' or a printed topic, never a case named by the model).",
-  "start": [
-    "new",
-    "t-test",
-    "dev/leases/current.pdf",
-    "My upstairs neighbors throw parties until 3 or 4 am almost every night and I can't sleep before my exams.",
-    "I've complained to the front office three times and they say there's nothing they can do. Can I do anything?",
-    ""
-  ],
-  "sheet": {
-    "Tenant has received the landlord's written notice that the landlord intends to keep": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has not returned the tenant's security deposit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord, or someone sent by the landlord, entered the tenant's unit": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The lease is ending or the tenancy is being ended": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written demand for unpaid rent or possession": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant received a landlord's written notice about a lease violation": [
-      "no",
-      "no",
-      "no"
-    ],
-    "The landlord has raised the rent or says the rent will go up": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Something in the unit needs repair and the landlord has not fixed it": [
-      "no",
-      "no",
-      "no"
-    ],
-    "Tenant wants to move out before the lease term ends": [
-      "no",
-      "no",
-      "no"
-    ],
-    "A neighbor or another tenant keeps disturbing the tenant": [
-      "yes",
-      "yes",
-      "yes"
-    ],
-    "What is the disturbance": [
-      "loud parties with music until 3 or 4 am"
-    ],
-    "Who is causing it": [
-      "the people in the apartment above me"
-    ],
-    "rent from the same landlord": [
-      "yes"
-    ],
-    "What date did it start": [
-      "8/25/2026"
-    ],
-    "How often does it happen": [
-      "almost every night, from about 11 pm to 3 or 4 am"
-    ],
-    "complained to the landlord or the leasing office": [
-      "yes"
-    ],
-    "Was any of your complaints in writing": [
-      "yes"
-    ],
-    "first complain to the landlord": [
-      "9/8/2026"
-    ],
-    "What has the landlord said or done": [
-      "they said there's nothing they can do"
-    ],
-    "reported it to anyone else": [
-      "no"
-    ],
-    "How did your written complaint reach the landlord": [
-      "e-mail"
-    ],
-    "Does that complaint say anything about ending": [
-      "no"
-    ],
-    "Copy the sentences of that complaint": [
-      "The people upstairs have parties until 3 or 4 am almost every night. Please make them stop."
-    ]
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "My upstairs neighbors throw parties until 3 or 4 am almost every night and I can't sleep before my exams. I've complained to the front office three times and they say there's nothing they can do. Can I do anything? They rent from the same complex. It started around August 25, 2026 and goes on from about 11 pm to 3 or 4 am. My first complaint was on September 8, 2026, and one of my complaints was an email that said, \"The people upstairs have parties until 3 or 4 am almost every night. Please make them stop.\" It does not say anything about my moving out. I have not reported it to anyone else."
   },
   "chat": [
     "Is it true they can't do anything about it?",
     "Can I break my lease because of this?",
     "What are my deadlines?",
     "Please write a letter to the leasing office asking them to make the people upstairs stop the late-night noise. Give them 7 days. I'll send it by certified mail to the leasing office. Use the assert posture.",
-    "Has a court ever said anything about neighbors who are too loud?",
-    "timeline"
+    "Has a court ever said anything about neighbors who are too loud?"
   ],
   "expect": {
-    "issues": [
+    "skills": [
       "neighbor_disturbance"
     ],
     "letters": 1,
-    "not_covered_note": false,
     "turns": [
       {
         "say": "they can't do anything",
