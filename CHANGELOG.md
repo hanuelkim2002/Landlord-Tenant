@@ -5,6 +5,90 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- The web page only, one session module for it and the eval driver, and the short lease profile (TODO item 115, part 1 of 2).
+  Part 2 rewrites the eval driver and the scenarios. Added: `visit.py` (173 lines), the flow that `app.py` and `agent.chat` each
+  held, once: `Visit.new(tenant_id, pdf_path, description)` and `Visit.existing(tenant_id, matter_id, update="")` (classmethods
+  returning `(visit, result)`), `visit.say(text)`, `visit.confirm(answers)`, `visit.rows()`, `visit.use()`, `visit.end()`, and a
+  `Result` (`blocks`, `rows`, `refused`). `Visit.new` opens the matter and the session, reads the lease, saves the description,
+  builds the agent, and runs the first turn on the description; `Visit.existing` loads a matter that has a lease profile, opens a
+  session, logs a non-empty update, and runs the first turn on it (an empty result with none). `confirm` takes `{fact id: answer}`
+  ("" accepts the suggestion, "?" skips, anything else is parsed by the row's type through `sheet.value_of`), refuses an answer
+  that does not fit (it comes back in `refused`, its row staying open), and when every row is answered or skipped tells the tenant
+  what was skipped and has the model reply at once to what was confirmed (`agent.after_confirmation`), at most once per tenant
+  message, with the second confirmation's note carried to the next message: the TODO item 114 behavior, moved from the page's
+  `state.confirmed`, `state.replied`, and `state.note` into the visit. Each method first puts its own matter and session back into
+  `record` (the page's `open_record`, now `Visit.use`), so a visit works after another matter was opened in between. A model
+  error comes back as the one caution the page showed, with the traceback on stderr, and the note a failed turn did not send is
+  kept. Removed: `run.py` (101 lines: `start`, `start_new`, `start_existing`, `ask_path`, `ask_text`), `agent.chat` and
+  `agent.print_blocks`, `sheet.run_sheet` and `sheet.HINT`, `smoke_parts/common.scripted`, and from `app.py` the keys
+  `state.agent`, `config`, `session`, `confirmed`, `replied`, `note`, `skipped`, and `saved` and the functions `run_automatic_reply`,
+  `finish_sheet`, and the building of the agent in `open_chat`; the page keeps `stage`, `ids`, `visit`, `history`, and `pending`.
+  The page looks and works as before (the door, the new-matter form, the update form, the confirmation one row at a time, the
+  chat, the sidebar with what the matter is about, the record panel with the timeline and the last letter, End session), with two
+  differences that follow from the visit: the first turn runs inside `Visit.new` and `Visit.existing`, so the tenant's first message
+  shows together with the model's reply instead of before it, and the session of a saved matter opens when the tenant clicks
+  Continue, not Open (an abandoned update form no longer leaves a session with a start and no end). The last row's Save also
+  brings the model's reply, so the spinner shows under the form then. `smoke_online.py` runs its three first turns through
+  `Visit.new` and `Visit.existing`; it was not run (it calls the model).
+  The short lease profile: `lease.LeaseProfile` keeps four clauses, `landlord_name_and_address`, `tenant_names`, and
+  `premises_address`, which `tools.build_letter` and `tools.draft_letter` read by name (the letter's addressee, the "Re:" line, and
+  the signer check), and `notices_to_landlord`, which no code reads by name but which is the clause a letter is delivered by (the
+  letter rule asks how the tenant will send it, and YOUR LEASE gives the model that clause already worded for it). Dropped: the
+  term, rent, deposit, deductions, fees, move-out, forwarding address, joint liability, signatures, notice before vacating, and
+  `maintenance_and_repairs`; the model reads them with `search_lease`. A profile saved with more fields (the test matter's fifteen,
+  the sixteen of matters read from 2026-10-04) still loads: pydantic's default for a field the model does not define is to ignore
+  it (`extra="ignore"`, checked with the sixteen-field profile), and the file is not rewritten unless the lease is read again.
+  `extract_profile` asks for only the four (its schema is the model's), and `check_quotes`, `lease_lines`, and `LABELS` follow; the
+  "not read" branches for a clause that was `None` went, since no field is optional now. `prompt.PARTS["lease"]` already said the
+  clauses are not the whole lease and that `search_lease` searches all of it; it now names the four and says to use `search_lease`
+  for anything else, such as the rent, the term, the deposit, or repairs. Replaced, a consequence the plan did not name:
+  `tools.quote_is_real` (a letter's obligation and consequence quotes) and `tools.not_in_record` (the dates and amounts in a letter
+  that the record must hold) read the quotes of every profile clause, so with four clauses a lease quote from any other clause would
+  have been refused and a lease amount or date (the rent, the term) would have been flagged "CHECK BEFORE YOU SEND". They read
+  `tools.lease_words` now: the profile's quotes and the lease's whole stored text. Nothing else in `tools.py` changed except the
+  wording "lease profile" to "lease" in `draft_letter`'s docstring and its two refusals. Not changed, and affected: `replies.reading_line`
+  adds the reading line to a reply that quotes lease words only when they sit in a profile clause or the reply gives a lease cite
+  (the model is asked to cite), so a reply quoting a clause it found with `search_lease` and citing none gets no line.
+  Not changed: `dev/live_run.py`, `dev/eval.py`, and `dev/scenarios/` still drive the removed `run.py` and do not run until part 2
+  rewrites them; nothing in `smoke.py` imports them. `setup.sh` no longer points to `python run.py`.
+  Line counts before and after, by module: `agent.py` 289 to 256, `app.py` 433 to 375, `run.py` 101 to 0 (deleted), `sheet.py` 152
+  to 119, `lease.py` 267 to 237, `tools.py` 491 to 497, `prompt.py` 193 to 195, `record.py` 192 to 192, `visit.py` 0 to 173 (new);
+  the Python app modules (`git ls-files '*.py'` without docs/, dev/, smoke*, and checks.py) 3,608 lines in 18 files before, 3,534
+  after in 18 (run.py out, visit.py in, 74 fewer). The smoke code (`smoke.py`, `smoke_online.py`, `smoke_parts/`, `checks.py`) 2,155
+  lines before, 2,515 after: `smoke.py` 19 to 20, `smoke_online.py` 89 to 94, `smoke_parts/common.py` 37 to 55,
+  `lease_and_letters.py` 322 to 336, `skills_and_turns.py` 414 to 355, `web_page.py` 180 to 228, `writing_to_a_matter.py` 450 to 448,
+  `visits.py` 0 to 335 (new).
+  Smoke: 612 OK lines, all OK (587 before): 10 removed, 35 added. Removed: the two terminal-chat checks of item 114 (every row
+  skipped, the bound of one automatic reply), `print_blocks`' output, the page opening a saved matter with a session and going
+  straight to the chat, the item 76 pair (the older profile with the repairs clause not read, the lease part's wording), and
+  item 77's check of YOUR LEASE's lines. Rewritten with the visit or the four clauses: the item 77 check (four lines, none for the
+  rent, no "not read"), the sheet checks (a typed answer, an empty answer, now through `Visit.confirm` a row at a time, with
+  `visit_here` and `confirm_rows` in `common.py`), the letter-words checks that used clause 4.3 (now 22.1, the notices clause), the
+  page checks (the stand-in model is put in `agent.agent_llm` and the visit builds its agent; a key for `need_key` in
+  `config.uf_api_key`; the visit's note and `replied` read from `page.session_state["visit"]`). New, in `smoke_parts/visits.py`, 21
+  checks, 19 of the visit and 2 that its scratch matters are removed (no gateway: a stand-in model and a stand-in extraction): `Visit.new` makes the matter, reads the 12-page lease once,
+  saves the four-clause profile, the text, and the description, and runs the first turn; the first turn loads a skill, proposes four
+  facts, and returns the reply and the four rows with the tenant's words; confirm accepting a suggestion and correcting another
+  with no model call while rows are open; a bad answer refused with "yes or no", nothing saved, the row open; the skipped notice and
+  the model's reply at once when every row is answered or skipped (the note a turn of its own, a `program` line and no `tenant`
+  line, the skipped fact pending); the next message without a note; the record put back by `say`, `rows`, `confirm`, and `end` after
+  another matter and session were opened, with nothing written to the other matter and `end` logging once; `Visit.existing` with an
+  update (a sixteen-field profile loads as four, the update logged after the session opens) and the reply bound (the automatic reply
+  proposes facts again, the second confirmation sends nothing, its note goes before the next message); every row skipped with no
+  model call; no update (a session, no update, no model, an empty result); a matter with no lease profile refused with no session; a
+  model error as one caution with the note kept; a lease that cannot be read ending the session it opened; and `run.py` gone with
+  nothing importing it and the terminal's functions gone. In `lease_and_letters.py`, four checks of the short profile (the four
+  fields, a fifteen- or sixteen-field profile loads as the four, the extraction schema asks for four, the lease part names them and
+  sends the model to `search_lease`) and one for clause 4.3 printed from the lease's text. In `web_page.py`, the new-matter form
+  through `Visit.new` with an uploaded PDF (refused without the lease and the description, then started, then End session) and the
+  scratch matter removed. Decisions, where the plan was open: `Visit.new` and `Visit.existing` are classmethods returning
+  `(visit, result)`, since a result alone would lose the visit; a row not named in `confirm`'s `answers` stays open, and the
+  confirmation finishes only when none is open, so the page can call it once per row and the eval driver once for all; a matter with
+  no lease profile is refused by `Visit.existing` (at Continue on the page, with the message on the form) and not by the page at
+  Open, so the check lives once; `Visit.new` accepts "" for a new tenant; the `sheet` and `notice` blocks (an answer saved, what was
+  skipped) come from the visit, so a screen the driver prints shows them; and the grep for fields read by name found only the four
+  above, so none was kept for another reason.
+
 - The new rules (version H), the reply right after a confirmation, and the deadline block only when a deadline has a date
   (TODO item 114, done). Rules: `prompt.RULES`, `LETTER_RULE`, `CASE_RULE`, and `NO_CASES_RULE` are the text the author's review
   of 2026-10-11 and 12 settled (`docs/structure/2026-10-12-rules.txt`), put in word for word. They replace version G (2026-10-02,

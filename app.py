@@ -1,40 +1,41 @@
-"""App: the tool as a web page on this computer, drawing the same blocks the terminal prints (TODO item 31).
+"""App: the tool as a web page on this computer (TODO item 31), the only front end since TODO item 115.
 
     streamlit run app.py          # then open http://localhost:8501
 
-The same steps as run.py, on one page. Left (the sidebar): a new matter, the saved matters, and what the open
-matter is about. Middle: the front door (a new matter: tenant, lease PDF, description; a saved one: what is
-new), then the chat, which starts with the description or the update as the tenant's first message; after a turn in
-which the model proposed facts, the confirmation as a form, one fact at a time, and then the model's reply to what was
-confirmed, at once. Right: the timeline and the last letter drafted, drawn from the record on every run, never by the
-model. In the chat, a speech bubble is the model's words (checked by the program before they are shown); a box is
-printed by the program itself.
+One page. Left (the sidebar): a new matter, the saved matters, and what the open matter is about. Middle: the front door
+(a new matter: tenant, lease PDF, description; a saved one: what is new), then the chat, which starts with the description
+or the update as the tenant's first message; after a turn in which the model proposed facts, the confirmation as a form,
+one fact at a time, and then the model's reply to what was confirmed, at once. Right: the timeline and the last letter
+drafted, drawn from the record on every run, never by the model. In the chat, a speech bubble is the model's words
+(checked by the program before they are shown); a box is printed by the program itself.
+
+The visit itself (the lease, the turns, the confirmation, the session) is run by visit.py, which the eval driver
+calls too; this file draws what comes back and keeps the page's own state.
 
 How Streamlit works, in short: it runs this whole file again, top to bottom, on every click or message. So
 nothing in a plain variable survives from one run to the next. What must last is kept in st.session_state, the
-page's memory for one browser tab: the open matter's ids, the session id, the stage, the agent and its thread,
-the chat so far as blocks, and the sheet's skips. record.matter and record.profile stay in the record module
-as always; open_record() puts this tab's matter back there at the top of every run.
+page's memory for one browser tab: the open matter's ids, the stage, the visit (its session, agent, and thread), and the
+chat so far as blocks. record.matter and record.profile stay in the record module as always; open_record() puts this
+tab's matter back there at the top of every run.
 
 The settings in .streamlit/config.toml keep the page on this computer (localhost) and turn off Streamlit's
 usage statistics. One tab at a time: two tabs on two matters would take turns replacing record.matter.
 """
 import re
 import tempfile
-import traceback
 from datetime import date
 from pathlib import Path
 
 import streamlit as st
 
 import record
-from agent import after_confirmation, block, build_agent, intake, read_lease, resume, sheet_note, thread_config, turn
+from agent import block
 from config import uf_api_key
-from record import (end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id, read_events,
-                    start_session)
-from sheet import pending_rows, row_notes, save_answer, shown, skipped_note, suggestion, value_of
+from record import list_matters, load_matter, matter_dir, read_events
+from sheet import row_notes, shown, suggestion
 from skills import skills
 from timeline import render_timeline
+from visit import Visit
 
 st.set_page_config(page_title="Landlord-Tenant Organizer", layout="wide")
 # The program's listings (deadlines, timeline, letters) are columns of fixed-width text: a smaller font fits
@@ -46,19 +47,12 @@ state = st.session_state
 # ---- The page's memory. Each key is set once, the first time this tab runs the file.
 
 def reset():
-    """Forget the open matter: back to the front door, with an empty chat and no agent."""
+    """Forget the open matter: back to the front door, with an empty chat and no visit."""
     state.stage = "door"            # door, new, update, sheet, chat
     state.ids = None                # (tenant id, matter id) of the open matter
-    state.session = None            # the open session's id (record.session)
-    state.agent = None              # built when the chat opens, as in run.py
-    state.config = None             # the chat thread's config
+    state.visit = None              # the visit (visit.py): its session, agent, and thread; made when the visit begins
     state.history = []              # everything shown in the middle column, oldest first, as blocks
     state.pending = None            # the tenant's message, waiting for the model's turn
-    state.confirmed = None          # what the tenant just confirmed on a sheet, waiting for the model's reply to it
-    state.replied = False           # the model has already replied to a confirmation of this tenant message
-    state.note = ""                 # what the tenant confirmed after that reply, for the model's next turn
-    state.skipped = set()           # confirmation rows skipped in this sheet
-    state.saved = []                # what this sheet saved, as save_answer's pairs
 
 
 if "stage" not in state:
@@ -68,16 +62,18 @@ if "stage" not in state:
 def open_record():
     """Put this tab's matter and session back into the record module. Another tab may have opened another matter
     in between, since the record module is shared by every tab of this one program."""
-    if state.ids and (record.matter["tenant"], record.matter["id"]) != state.ids:
-        load_matter(*state.ids)
-    record.session = state.session
+    if state.visit:
+        state.visit.use()
+    elif state.ids:                                    # a saved matter chosen, its visit not begun yet
+        if (record.matter["tenant"], record.matter["id"]) != state.ids:
+            load_matter(*state.ids)
+        record.session = None
 
 
 def close_session():
-    """End the open session in the record, as run.py does on a normal exit, and forget the matter."""
-    if state.session:
-        record.session = state.session
-        end_session()
+    """End the open visit's session (End session, or the tenant writing bye) and forget the matter."""
+    if state.visit:
+        state.visit.end()
     reset()
 
 
@@ -142,43 +138,32 @@ def show(b):
 
 # ---- The front door: a new matter, or a saved one.
 
-def open_chat(first=""):
-    """Go to the chat: build the agent once (no model call) and, if the tenant has a first message, show it and send it
-    as the first turn, so the model answers it first. first: the description of a new matter, or what is new."""
-    if state.agent is None:
-        state.agent = build_agent()
-        state.config = thread_config()
+def open_chat(visit, result, first=""):
+    """Go to the chat with the visit begun: show the tenant's first message, if any, then what came back from the
+    model's turn on it. first: the description of a new matter, or what is new."""
+    state.visit = visit
+    state.ids = (visit.tenant_id, visit.matter_id)
     if first:
         state.history.append(block("tenant", first))
-        state.pending = first
-        state.replied = False
-    state.stage = "chat"
+    state.history += result.blocks
+    state.stage = "sheet" if result.rows else "chat"
 
 
 def start_new(tenant, lease, description):
-    """New matter, as run.start_new: the tenant, the lease read into its profile, the description saved by intake; the
-    chat opens with the description as the tenant's first message."""
-    new_matter(tenant if tenant != "New tenant" else new_tenant_id())
-    state.ids = (record.matter["tenant"], record.matter["id"])
-    state.session = start_session("new")              # from here on, every event carries this session's id
-    with st.spinner("Reading the lease. This takes a minute or two."):
-        with tempfile.TemporaryDirectory() as folder:  # the upload, as a file for read_lease; the matter keeps its own copy
+    """New matter (Visit.new): the tenant, the lease read into its profile, the description saved, and the model's first
+    turn on it. The chat opens with the description as the tenant's first message."""
+    with st.spinner("Reading the lease and your description. This takes a minute or two."):
+        with tempfile.TemporaryDirectory() as folder:  # the upload, as a file for the visit; the matter keeps its own copy
             path = Path(folder) / "lease.pdf"
             path.write_bytes(lease.getvalue())
-            read_lease(path)
-    intake(description)
-    open_chat(description)
+            visit, result = Visit.new("" if tenant == "New tenant" else tenant, path, description)
+    open_chat(visit, result, description)
 
 
 def open_saved(m):
-    """A saved matter, as run.start_existing: load it and open a session; what is new is asked next."""
+    """A saved matter: what is new is asked next, and the visit begins when the tenant continues."""
     close_session()
-    load_matter(m["tenant"], m["id"])
-    if record.profile is None:
-        st.sidebar.error("This matter has no lease profile yet. Start a new matter with the lease instead.")
-        return
     state.ids = (m["tenant"], m["id"])
-    state.session = start_session("existing")
     state.stage = "update"
     st.rerun()
 
@@ -212,21 +197,23 @@ def update_form():
                               "nothing is new.", height=150)
         go = st.form_submit_button("Continue")
     if go:
-        if state.agent is None:
-            need_key()                                 # before the update is logged
-        if update.strip():
-            resume(update.strip())                     # logs the update; the model reads it as the first message
-        open_chat(update.strip())
+        need_key()                                     # before the update is logged
+        try:
+            with st.spinner("The model is working. The program checks its reply before you see it."):
+                visit, result = Visit.existing(*state.ids, update.strip())     # logs the update; the model reads it first
+        except ValueError as error:                    # the matter has no lease profile
+            st.error(str(error))
+            return
+        open_chat(visit, result, update.strip())
         st.rerun()
 
 
-# ---- The confirmation as a form: one fact at a time, asked and saved by code (sheet.py), no model. It follows a turn in
-# which the model proposed facts: the tenant confirms what they said, or corrects it.
+# ---- The confirmation as a form: one fact at a time, asked and saved by code (sheet.py, run by the visit), no model for
+# the answers. It follows a turn in which the model proposed facts: the tenant confirms what they said, or corrects it.
 
 def answer_widget(r):
-    """The input for one row, filled in with the suggestion if there is one. Returns the answer as text, the
-    way the terminal would read it: "" for nothing chosen. By the row's type: a date picker, yes/no, a county in a line,
-    any other fact in words."""
+    """The input for one row, filled in with the suggestion if there is one. Returns the answer as text: "" for
+    nothing chosen. By the row's type: a date picker, yes/no, a county in a line, any other fact in words."""
     offered = suggestion(r)
     if r["type"] == "bool":
         choice = st.radio("Your answer", ["yes", "no"], horizontal=True,
@@ -242,9 +229,9 @@ def answer_widget(r):
 
 
 def sheet_form():
-    rows = [r for r in pending_rows() if r["id"] not in state.skipped]
+    rows = state.visit.rows()
     if not rows:
-        finish_sheet()
+        state.stage = "chat"
         st.rerun()
     r = rows[0]
     with st.container(border=True):
@@ -258,35 +245,21 @@ def sheet_form():
             save, skip = st.columns(2)
             saved = save.form_submit_button("Save", type="primary")
             skipped = skip.form_submit_button("Skip for now")
-    if skipped:
-        state.skipped.add(r["id"])
-        st.rerun()
-    if saved:
-        if suggestion(r) is not None and answer == shown(suggestion(r)):
-            answer = ""                                  # the suggestion accepted, logged as in the terminal
-        value, expected = value_of(r, answer.strip())
-        if expected:
-            st.error(f"Please enter {expected}.")
+    if saved or skipped:
+        if saved and suggestion(r) is not None and answer == shown(suggestion(r)):
+            answer = ""                                  # the suggestion accepted, logged as typed ""
+        # the last row also brings the model's reply to what was confirmed (Visit.confirm), so this can take a while
+        with st.spinner("The model is working. The program checks its reply before you see it."):
+            result = state.visit.confirm({r["id"]: "?" if skipped else answer.strip()})
+        if result.refused:
+            st.error(f"Please enter {result.refused[r['id']]}.")
             return
-        state.saved.append(save_answer(r, answer.strip(), value))
-        state.history.append(block("sheet", f"{r['label']}: {shown(value)}"))
+        state.history += result.blocks
+        state.stage = "sheet" if result.rows else "chat"
         st.rerun()
 
 
-def finish_sheet():
-    """No row left to ask: back to the chat. What was confirmed goes to the model at once (run_automatic_reply), once per
-    tenant message; the confirmation of that reply goes with the tenant's next message."""
-    if state.skipped:
-        state.history.append(block("notice", skipped_note(state.skipped)))
-    if state.saved and not state.replied:
-        state.confirmed = state.saved
-    else:
-        state.note = sheet_note(state.saved)
-    state.stage = "chat"
-    state.skipped, state.saved = set(), []
-
-
-# ---- The chat: a message goes to agent.turn; its blocks join the history.
+# ---- The chat: a message goes to the visit (Visit.say); its blocks join the history.
 
 def take_message(text):
     """The tenant sent a message. It waits for the model's turn, run on the next pass so the message shows before
@@ -296,42 +269,14 @@ def take_message(text):
         return
     state.history.append(block("tenant", text))
     state.pending = text
-    state.replied = False
 
 
 def run_pending_turn():
     text, state.pending = state.pending, None
     with st.spinner("The model is working. The program checks its reply before you see it."):
-        try:
-            blocks, proposed = turn(state.agent, state.config, text, state.note)
-        except Exception as error:                      # the gateway failed: say so, keep the page
-            traceback.print_exc()                       # the whole error, for the terminal running streamlit
-            state.history.append(block("caution", f"[Check: the model could not be reached ({type(error).__name__}). "
-                                                  "Please ask again.]"))
-            return
-    state.note = ""
-    state.history += blocks
-    if proposed and pending_rows():                     # the tenant confirms the model's proposals
-        state.stage = "sheet"
-
-
-def run_automatic_reply():
-    """The model replies to what the tenant just confirmed, at once (agent.after_confirmation), once per tenant message: if
-    the reply proposes facts again, the form comes again, and what is confirmed then goes with the next message."""
-    confirmed, state.confirmed = state.confirmed, None
-    state.replied = True
-    with st.spinner("The model is working. The program checks its reply before you see it."):
-        try:
-            reply = after_confirmation(state.agent, state.config, confirmed)
-        except Exception as error:                      # the gateway failed: the model has not heard it, so it goes next time
-            traceback.print_exc()
-            state.note = sheet_note(confirmed)
-            state.history.append(block("caution", f"[Check: the model could not be reached ({type(error).__name__}). "
-                                                  "Please ask again.]"))
-            return
-    blocks, proposed = reply
-    state.history += blocks
-    if proposed and pending_rows():
+        result = state.visit.say(text)                  # a gateway error comes back as a caution
+    state.history += result.blocks
+    if result.rows:                                     # the tenant confirms the model's proposals
         state.stage = "sheet"
 
 
@@ -419,15 +364,12 @@ with middle:
         elif state.pending:
             run_pending_turn()
             st.rerun()
-        elif state.confirmed:
-            run_automatic_reply()
-            st.rerun()
 with right:
     if state.ids and record.profile is not None:
         record_panel()
 
 if state.stage == "chat":
-    message = st.chat_input("Write here", disabled=bool(state.pending or state.confirmed))
+    message = st.chat_input("Write here", disabled=bool(state.pending))
     if message:
         take_message(message)
         st.rerun()

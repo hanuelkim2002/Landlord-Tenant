@@ -12,7 +12,8 @@ from checks import summary
 import smoke_parts.pieces                    # each piece on its own: no playbook left, deadlines, cases, wiki, cites, quotes
 import smoke_parts.writing_to_a_matter       # sessions, propose_facts, the sheet, cites, cases, events, the timeline
 import smoke_parts.skills_and_turns          # the model loads skills, old matters, intake and resume; turns with a stand-in model
-import smoke_parts.lease_and_letters         # the rules, the lease profile and search, deadlines from a message, letters, every skill's clock facts
+import smoke_parts.visits                    # visit.py: a new matter, a returning tenant, the confirmation, the record put back; the terminal is gone
+import smoke_parts.lease_and_letters         # the rules, the short lease profile and search, deadlines from a message, letters, every skill's clock facts
 import smoke_parts.web_page                  # app.py, headless
 import smoke_parts.skill_files               # the skill format and its checks, on fixtures in a temporary folder
 

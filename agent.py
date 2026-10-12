@@ -1,9 +1,9 @@
-"""Agent: reading the lease, intake and resume, the agent, and the chat. What the model reads is in prompt.py, and
-what the program checks and prints under each reply in replies.py.
+"""Agent: reading the lease, intake and resume, the agent, and the chat's turns. What the model reads is in prompt.py,
+and what the program checks and prints under each reply in replies.py.
 
-The chat is in pieces any front end can call: turn (one model turn) returns blocks, the parts the tenant sees, each
-{"kind", "text"}. "reply" is the model's words; every other kind is the program's (see BLOCK KINDS below). The
-terminal loop, chat, prints them with print_blocks; the web page, app.py, draws the same blocks.
+The chat is in pieces: turn (one model turn) returns blocks, the parts the tenant sees, each {"kind", "text"}. "reply" is
+the model's words; every other kind is the program's (see BLOCK KINDS below). visit.py runs a visit with them (a new
+matter or a returning tenant, a message, the confirmation); the web page, app.py, draws the blocks.
 """
 import json
 import re
@@ -20,14 +20,13 @@ from lease import check_quotes, extract_profile, ingest_pdf
 from prompt import system_prompt
 from record import append_event, matter_dir, save
 from replies import CASES_LEFT_OUT, CUT_OFF, cases_left_out, check_reply, cited_words, reading_line
-from sheet import pending_rows, run_sheet
 from timeline import render_deadlines
 from tools import deadline_listing, tools
 
 
 # ---- The lease and intake: read the lease into its profile, then save the description. No model reads the description
 # here: it is sent to the model as the tenant's first chat message (turn), which loads the skills that fit and proposes
-# facts. The agent comes after, in run.py or app.py.
+# facts. The agent comes after, in visit.py.
 
 def read_lease(pdf_path):
     """Store the PDF, read it with Gemma into the lease profile, check every quote, save the profile."""
@@ -68,24 +67,19 @@ def build_agent():
 
 # ---- Chat: a turn of the model returns blocks, the parts the tenant sees, in order. Tool output is hidden except
 # draft_letter, whose result is shown as is, and get_deadlines and get_cases, whose listings the program shows. After a
-# turn in which the model proposed facts, the confirmation (sheet.py) asks the tenant to confirm them, and the model
-# replies to what was confirmed at once (after_confirmation). Everything said, every tool call, and every sheet answer
-# goes to the session's transcript.
+# turn in which the model proposed facts, the confirmation (sheet.py, run by visit.py) asks the tenant to confirm them, and
+# the model replies to what was confirmed at once (after_confirmation). Everything said, every tool call, and every sheet
+# answer goes to the session's transcript.
 #
 # BLOCK KINDS. From the model: "reply". From the program: "letter" (draft_letter's result), "cases" (get_cases'
 # listing), "deadlines" (get_deadlines' listing, through render_deadlines), "sources" (the statute and lease words a
 # reply cites, cited_words), "caution" (a failed cite or quote check, or no reply), "footer" (READING_LINE under a
-# reply), "notice" (a message from the page itself, such as what was skipped on the sheet).
+# reply). visit.py adds "sheet" (an answer just saved on the confirmation) and "notice" (what was skipped on it), and the
+# page adds "tenant" (the tenant's own message).
 
 def block(kind, text):
     """One part of what the tenant sees: its kind (BLOCK KINDS above) and its text."""
     return {"kind": kind, "text": text}
-
-
-def print_blocks(blocks):
-    """The terminal's way of showing blocks: each block's text, then an empty line."""
-    for b in blocks:
-        print(b["text"] + "\n")
 
 
 def transcript_entry(m):
@@ -252,7 +246,7 @@ def after_confirmation(agent, config, confirmed):
     to the model at once as a turn of its own, written to the transcript as a program line, not a tenant line, so the
     tenant is answered on what they just confirmed or corrected instead of at their next message. Returns the turn's
     blocks and whether the model proposed facts again, as turn does; None, with the model not called, when nothing was
-    confirmed. A front end calls it once per tenant message: when the reply proposes facts again, the confirmation
+    confirmed. visit.Visit.confirm calls it once per tenant message: when the reply proposes facts again, the confirmation
     runs again, but the reply to that one waits for the tenant's next message, which carries sheet_note."""
     note = sheet_note(confirmed)
     if not note:
@@ -260,30 +254,3 @@ def after_confirmation(agent, config, confirmed):
     record.append_transcript({"role": "program", "text": note})
     new, blocks = ask_model(agent, config, note)
     return blocks, proposed_in(new)
-
-
-def chat(agent, first=""):
-    """The terminal chat: run a turn on each line the tenant types, print the blocks, run the confirmation after a
-    turn in which the model proposed facts, and print the model's reply to what was confirmed (after_confirmation).
-    first is the tenant's first message, sent before any line is read: the description of a new matter, or what is new on
-    an existing one. An empty line or bye ends it."""
-    config = thread_config()
-    note = ""           # what the tenant confirmed after the automatic reply; goes with the next message
-    q = first or input(">> ")
-    while q not in ("", "bye"):
-        blocks, proposed = turn(agent, config, q, note)
-        print_blocks(blocks)
-        note = ""
-        # The model suggested facts: the tenant confirms them now, with code, not with the model. Then the model replies
-        # to what was confirmed, at once; one such reply per tenant message.
-        if proposed and pending_rows():
-            confirmed = run_sheet()
-            print()
-            reply = after_confirmation(agent, config, confirmed)
-            if reply:
-                blocks, proposed = reply
-                print_blocks(blocks)
-                if proposed and pending_rows():       # it proposed facts again: confirm them, but no second automatic reply
-                    note = sheet_note(run_sheet())
-                    print()
-        q = input(">> ")

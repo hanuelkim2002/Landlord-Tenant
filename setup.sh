@@ -12,4 +12,4 @@ echo
 echo "Done. Next:"
 echo "  1. put your key in .env (UF_API_KEY=...)"
 echo "  2. source venv/bin/activate"
-echo "  3. python run.py   (or: streamlit run app.py, the same as a web page)"
+echo "  3. streamlit run app.py   (the web page, on http://localhost:8501)"

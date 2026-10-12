@@ -1,16 +1,16 @@
 """Confirmation: after a turn in which the model proposed facts, the tenant confirms them. Asked and saved by code. No
 model is involved. It asks only to confirm what the tenant said, never for a fact the record lacks.
 
-In pieces, so the terminal and the web page (app.py) ask the same rows the same way:
+In pieces, which the web page (app.py) and visit.py use to ask and save the rows:
   pending_rows()  what the tenant confirms now: the proposed facts, and a fact whose proposal differs from the confirmed one
   row_notes(r)    the lines shown under a row's label
   value_of(r, a)  the tenant's answer checked against the row's type (an empty answer takes the suggestion)
   save_answer()   saves one answer with record.confirm_fact and transcribes it
-  run_sheet()     the terminal's confirmation: asks the rows one at a time with the pieces above
+  skipped_note()  what the tenant is told after skipping rows
 
 Every answer is checked against the row's type before it is saved. A suggestion (from the model's propose_facts) is shown
-with the tenant's own words and accepted with Enter. "?" skips a fact for now; its proposal stays, and it is asked again at
-the next confirmation.
+with the tenant's own words and accepted with an empty answer. "?" skips a fact for now (visit.Visit.confirm); its proposal
+stays, and it is asked again at the next confirmation.
 """
 from datetime import datetime
 
@@ -75,9 +75,6 @@ def shown(value):
 
 # ---- Asking: one row at a time. The list is rebuilt after each answer.
 
-HINT = {"date": "YYYY-MM-DD", "bool": "yes/no", "county": "county name", "text": "words"}
-
-
 def suggestion(r):
     """A row's suggested value, offered only if it fits the type; a malformed one counts as no suggestion."""
     if r["suggested"] is None:
@@ -120,33 +117,3 @@ def skipped_note(fact_ids):
     names = ", ".join(sorted(i.replace("_", " ") for i in fact_ids))
     return (f"Skipped for now: {names}. They stay unconfirmed, and nothing is counted from an unconfirmed fact. You will "
             "be asked again at the next confirmation.")
-
-
-def run_sheet(ask=input):
-    """The terminal's confirmation: ask every pending fact until none is left or the tenant has skipped the rest. Returns
-    what was saved as save_answer's pairs, so the chat loop can tell the model what the tenant decided. ask is the
-    function that reads one answer; input by default, a list's iterator in tests."""
-    print("\nPlease confirm what you told me. Enter accepts a suggested answer, or type the right one. ? skips for now.\n")
-    skipped, saved = set(), []
-    while True:
-        rows = [r for r in pending_rows() if r["id"] not in skipped]
-        if not rows:
-            break
-        r = rows[0]
-        print(f"  {r['label']} ({HINT[r['type']]})")
-        for line in row_notes(r):
-            print("    " + line)
-
-        answer = ask("    > ").strip()
-        if answer == "?":
-            skipped.add(r["id"])
-            continue
-        value, expected = value_of(r, answer)
-        if expected:
-            print(f"    Please type {expected}, or ? to skip.")
-            continue
-        saved.append(save_answer(r, answer, value))
-
-    if skipped:
-        print("\n" + skipped_note(skipped))
-    return saved

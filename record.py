@@ -18,7 +18,7 @@ from skills import clock_facts as skill_clock_facts, skills
 
 # The test matter. "t-test" is the test tenant's id; a real tenant gets a random one from new_tenant_id().
 matter = {"id": "test-001", "tenant": "t-test", "skills": [], "facts": {}, "proposed": {}}
-profile = None          # the LeaseProfile for this matter. Set by run.py after intake or load.
+profile = None          # the LeaseProfile for this matter. Set by agent.read_lease for a new matter, or by load_matter.
 session = None          # the open session's id, or None. Set by start_session, cleared by end_session.
 
 

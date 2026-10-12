@@ -1,12 +1,10 @@
 """Smoke, part: the lease and the letters. The rules (version H, TODO item 114: their text, rule 6 on letters and rule 8 on cases
 in only when they apply, every part and tool they name, their length), the system prompt without
-the options layer's two parts (TODO item 113), the lease profile's repairs clause and the lease cites, the deadline a message
+the options layer's two parts (TODO item 113), the short lease profile and the lease cites (TODO item 115), the deadline a message
 starts and what it counts only if, the letter (the program's lines around the tenant's account and request), the lease's
 numbered clauses and the lease search, and every skill's clock facts through the real code path (proposed, confirmed,
 dated, and a letter drafted).
 Run by smoke.py, in order; each check prints a line, OK or FAIL."""
-import contextlib
-import io
 import json
 import re
 from datetime import date, timedelta
@@ -17,7 +15,7 @@ from config import MATTERS
 from deterministic import compute_deadlines, matter_deadlines
 from record import load_matter, read_events
 from lease import lease_clauses
-from sheet import pending_rows, run_sheet
+from sheet import pending_rows
 import prompt
 from prompt import RULES as RULES_TEXT
 from prompt import CASE_RULE, LETTER_RULE, NO_CASES_RULE, PARTS, rules_for, system_prompt
@@ -26,7 +24,7 @@ from skills import clock_facts, skills
 from timeline import render_deadlines
 from tools import add_communication, build_letter, deadline_listing, draft_letter, pretty, propose_facts
 from tools import tools as model_tools
-from smoke_parts.common import prompt_part, scripted
+from smoke_parts.common import confirm_rows, prompt_part, visit_here
 
 # ---- The rules (version H, 2026-10-12, TODO item 114; the text is in docs/structure/2026-10-12-rules.txt), on a matter with no
 # letter drafted (the test matter's history has one, so it is emptied). rules_for fills the two markers: rule 6 (letters) only
@@ -122,18 +120,32 @@ check("item 96: after a draft, rule 6 has the reply answer anything else asked w
       and "reply only" not in LETTER_RULE)
 
 
-# the lease profile's repairs clause (TODO item 76): a profile read before the slot was added loads, with the slot
-# not read (None) and left out of clauses(); the extraction asks for it; the prompt says the lease part is not the
-# whole lease, and rule 2 forbids "the lease does not mention" from it
-from lease import LeaseProfile
-old_profile = LeaseProfile.model_validate_json((TEST_MATTER / "lease_profile.json").read_text())
-check("item 76: an older profile loads with the repairs clause not read, and clauses() leaves it out; new reads ask for it",
-      old_profile.maintenance_and_repairs is None
-      and "maintenance_and_repairs" not in dict(old_profile.clauses()) and len(old_profile.clauses()) == 15
-      and "air conditioning" in LeaseProfile.model_json_schema()["properties"]["maintenance_and_repairs"]["description"])
-check("item 76: the lease part says it is not the whole lease, and rule 2 forbids saying the lease does or does not say something "
-      "before searching it",
-      PARTS["lease"].startswith("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease")
+# the short lease profile (TODO item 115): the four clauses a letter uses. A profile saved with more fields (the test
+# matter's, with fifteen of the old sixteen, and one with all sixteen) loads, pydantic ignoring the fields the model does not
+# define, and holds only the four; the extraction asks for only the four; the prompt says the lease part is not the whole
+# lease and sends the model to search_lease for the rest, and rule 2 forbids "the lease does not mention" before a search
+from lease import LABELS, LeaseProfile
+old_text = (TEST_MATTER / "lease_profile.json").read_text()
+sixteen = json.loads(old_text)
+sixteen["maintenance_and_repairs"] = {"present": True, "quote": "Landlord shall repair the heating", "page": 4, "section": "7.2"}
+old_profile = LeaseProfile.model_validate_json(old_text)
+whole_old = LeaseProfile.model_validate_json(json.dumps(sixteen))
+FOUR = ["landlord_name_and_address", "tenant_names", "premises_address", "notices_to_landlord"]
+check("item 115: the profile keeps the four clauses a letter uses: the landlord, the tenants, the unit, and the notices clause",
+      list(LeaseProfile.model_fields) == FOUR and list(LABELS) == FOUR and [n for n, _ in old_profile.clauses()] == FOUR)
+check("item 115: a profile saved with fifteen or all sixteen of the old fields loads with only the four; the others are ignored",
+      len(json.loads(old_text)) == 15 and len(sixteen) == 16 and [n for n, _ in whole_old.clauses()] == FOUR
+      and set(whole_old.model_dump()) == set(FOUR) and not hasattr(whole_old, "maintenance_and_repairs")
+      and old_profile.tenant_names.quote == whole_old.tenant_names.quote == "JORDAN A. ELLIS , an individual")
+check("item 115: the extraction asks the model for only the four clauses",
+      list(LeaseProfile.model_json_schema()["properties"]) == FOUR
+      and "Where and HOW the tenant must send notices" in LeaseProfile.model_json_schema()["properties"]["notices_to_landlord"]["description"])
+check("item 115: the lease part says it is not the whole lease and names the four clauses, and sends the model to search_lease for "
+      "anything else; rule 2 forbids saying the lease does or does not say something before searching it",
+      PARTS["lease"].startswith("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease: the landlord, "
+                                "the tenants, the unit, and where and how notices go")
+      and "search_lease searches the whole lease's text, so use it for anything else in the lease, such as the rent, the term, "
+          "the deposit, or repairs" in PARTS["lease"]
       and "Before you say the lease does or does not say something, search it with search_lease" in RULES_TEXT)
 
 # lease cites (TODO item 77): YOUR LEASE gives each clause in words with the cite to use, no field name; the program
@@ -142,9 +154,10 @@ check("item 76: the lease part says it is not the whole lease, and rule 2 forbid
 from lease import Clause, lease_cite, lease_lines
 article = Clause(present=True, quote="7.1. Statutory Duties. ...", page=4, section="ARTICLE 7")
 lines_now = lease_lines(old_profile)
-check("item 77: YOUR LEASE names each clause in words with its cite, and no field name",
-      "- the rent (cite as Lease Section 3.1): " in lines_now and "- the tenants' names (cite as Lease, page 1): " in lines_now
-      and "- maintenance and repairs: not read from this lease" in lines_now
+check("item 77: YOUR LEASE names each clause in words with its cite, and no field name; it has only the four clauses",
+      "- the address of the unit (cite as Lease Section 1.1): " in lines_now and "- the tenants' names (cite as Lease, page 1): " in lines_now
+      and "- where and how the tenant sends notices to the landlord (cite as Lease Section 22.1): " in lines_now
+      and len(lines_now.splitlines()) == 4 and "the rent" not in lines_now and "not read from this lease" not in lines_now
       and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", lines_now)
       and lease_cite(article) == "Lease Article 7" and cited_clause(article, "7.2", "")
       and not cited_clause(article, "17.2", "")
@@ -260,18 +273,20 @@ try:
           "- Lease Section 2.4, Month -to-Month Holdover With Consent, page 1: \"If Landlord accepts Rent" in found["holdover"]
           and "- Lease Section 3.3, Late Charge, page 2:" in found["late charge"]
           and "- Lease Section 7.2, Systems and Appliances, page 4:" in found["air conditioning"]
-          and not any(name == "maintenance_and_repairs" for name, _ in record.profile.clauses()))
+          and not any(c.section and c.section.startswith(("2.4", "3.3", "7.2")) for _, c in record.profile.clauses()))
     check("item 82: a phrase found nowhere in the lease's text says so, and asks for another wording; each search is logged",
           found["hot tub"].startswith("No clause or page of the lease's text (12 pages) holds \"hot tub\"")
           and "try another wording" in found["hot tub"]
           and [ev.get("lease_search") for ev in read_events() if ev["kind"] == "fetch"] == list(found))
     printed = cited_words("Your lease turns month to month if the landlord takes rent after the term (Lease Section 2.4), "
-                          "and the deposit comes back as the lease says (Lease Section 4.3). See also Lease Article 7.")
+                          "and notices go where it says (Lease Section 22.1). See also Lease Article 7.")
     check("item 82: a reply citing a clause the profile does not hold gets its words printed from the lease's text; a held one only from the profile",
           "Lease Section 2.4, page 1 (Month -to-Month Holdover With Consent): If Landlord accepts Rent" in printed
           and "Lease Section 7.2, page 4 (Systems and Appliances): Landlord shall repair the heating" in printed
-          and "Lease Section 4.3, page 2 (notice before moving out early)" in printed
-          and "(Return of Deposit and Claims)" not in printed)
+          and "Lease Section 22.1, page 9 (where and how the tenant sends notices to the landlord)" in printed
+          and "(Addresses)" not in printed)
+    check("item 115: a clause the old profile held and the short one does not, 4.3, is printed from the lease's text with its title",
+          "Lease Section 4.3, page 2 (Return of Deposit and Claims)" in cited_words("The deposit comes back as the lease says (Lease Section 4.3)."))
     nbsp = cited_words("The landlord must repair the air conditioning (Lease Section\u202f7.2), and see Fla. Stat.\u00a083.60\u00a0(1)(b).")
     check("item 85: a cite written with a no-break space still gets its words printed (lease and statute)",
           "Lease Section 7.2, page 4 (Systems and Appliances)" in nbsp and "Fla. Stat. 83.60(1)(b):" in nbsp)
@@ -299,8 +314,7 @@ try:
             propose_facts.invoke({"facts_json": json.dumps({fact: {"value": ANSWERS[kind][0], "how": "stated", "said": ANSWERS[kind][1]}
                                                             for fact, kind in typed.items()})})
         proposed_all = {r["id"]: r["type"] for r in pending_rows()}
-        with contextlib.redirect_stdout(io.StringIO()):
-            run_sheet(scripted([""] * len(typed)))
+        confirm_rows(visit_here(), [""] * len(typed))
         listed = deadline_listing()
         clocks = [c.id for c in skills[name].clocks]
         dated = [d["clock"] for d in json.loads(listed)["deadlines"] if "deadline" in d]

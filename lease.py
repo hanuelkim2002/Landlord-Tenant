@@ -35,7 +35,10 @@ def ingest_pdf(pdf_path, matter_dir):
     return pages
 
 
-# ---- Lease Profile Shape: fifteen named clauses. Gemma must fill exactly this shape; Pydantic rejects anything else.
+# ---- Lease Profile Shape: the four clauses a letter uses. Gemma must fill exactly this shape; Pydantic rejects anything
+# else. The rest of the lease is read with search_lease (TODO item 82), not kept here. A profile saved with more fields
+# (the sixteen of before 2026-10-12) still loads: pydantic ignores a field the model does not define (its default,
+# extra="ignore"), so the old fields are simply not read.
 
 class Clause(BaseModel):
     """One lease provision: whether it exists, and if so the exact words,
@@ -47,32 +50,17 @@ class Clause(BaseModel):
 
 
 class LeaseProfile(BaseModel):
-    """The structured profile extracted from one lease. Sixteen named slots,
-    each a Clause. Filled by gemma, checked by check_quotes. A profile read before a slot was added holds None
-    there (maintenance_and_repairs, added 2026-10-04): not read, which is not the same as not in the lease."""
+    """The structured profile extracted from one lease: four named slots, each a Clause, the ones a letter uses (the
+    landlord, the tenants, and the unit are printed in it; the notices clause says how the tenant may deliver it).
+    Filled by gemma, checked by check_quotes."""
     landlord_name_and_address: Clause
     tenant_names: Clause
     premises_address: Clause
-    term_start: Clause          # date as printed, Python parses it later
-    term_end: Clause
-    rent: Clause                # amount as printed
-    security_deposit: Clause
-    deposit_deductions: Clause
-    nonrefundable_fees: Clause
-    move_out_requirements: Clause
-    forwarding_address_requirement: Clause
     notices_to_landlord: Clause = Field(description="Where and HOW the tenant must send notices to the landlord: the address AND any sentence listing required delivery methods (hand, certified mail, email, etc.). Quote both together.")
-    joint_and_several_liability: Clause
-    signatures: Clause
-    notice_before_vacating: Clause = Field(description="A term requiring the tenant to notify the landlord before moving out EARLY or abandoning, especially one tied to the deposit. Not the notice required before the lease's normal end date.")
-    # Added 2026-10-04 (TODO item 76): asked "Is the AC part of my lease?", the model said the lease does not mention
-    # air conditioning, from the other fifteen slots, none of which is about repairs.
-    maintenance_and_repairs: Optional[Clause] = Field(None, description="Who must maintain and repair the unit, its systems, and its appliances (air conditioning, heating, plumbing, appliances), and how the tenant asks for a repair. Copy one passage exactly as printed, from its first word to its last, with any numbered heading inside it; never join separate passages or leave out words between them.")
 
     def clauses(self):
-        """Each slot read from the lease, as (name, clause); a slot this profile was read without (None) is left
-        out."""
-        return [(name, clause) for name, clause in self if clause is not None]
+        """Each slot of the profile, as (name, clause)."""
+        return list(self)
 
 
 # ---- Extract and Check: Gemma reads the lease into the profile; check_quotes confirms every quote word for word.
@@ -120,19 +108,7 @@ LABELS = {
     "landlord_name_and_address": "the landlord's name and address",
     "tenant_names": "the tenants' names",
     "premises_address": "the address of the unit",
-    "term_start": "the start of the term",
-    "term_end": "the end of the term",
-    "rent": "the rent",
-    "security_deposit": "the security deposit",
-    "deposit_deductions": "what the landlord may keep from the deposit, and how it is returned",
-    "nonrefundable_fees": "fees that are not refunded",
-    "move_out_requirements": "what the tenant must do at move-out",
-    "forwarding_address_requirement": "giving a forwarding address",
     "notices_to_landlord": "where and how the tenant sends notices to the landlord",
-    "joint_and_several_liability": "each tenant's liability for the whole lease",
-    "signatures": "the signatures",
-    "notice_before_vacating": "notice before moving out early",
-    "maintenance_and_repairs": "maintenance and repairs",
 }
 SECTION_NUMBER = re.compile(r"^\s*(?:(article|section|paragraph)\s+)?(\d+(?:\.\d+)*)\.?(?=\s|$)", re.I)
 # a lease cite as lease_cite gives it: "Lease Section 4.3", "Lease Article 7", "Lease, page 1", with any space between
@@ -152,13 +128,10 @@ def lease_cite(clause):
 
 def lease_lines(profile):
     """The profile for the system prompt's YOUR LEASE: a line per clause, in LABELS' words, with its cite and its
-    words; a clause the reading found no provision for, or did not read, said so. No field name."""
+    words; a clause the reading found no provision for said so. No field name."""
     lines = []
-    for name in type(profile).model_fields:
-        clause = getattr(profile, name)
-        if clause is None:
-            lines.append(f"- {LABELS[name]}: not read from this lease")
-        elif not clause.present:
+    for name, clause in profile.clauses():
+        if not clause.present:
             lines.append(f"- {LABELS[name]}: the tool's reading found no such clause")
         else:
             lines.append(f"- {LABELS[name]} (cite as {lease_cite(clause)}): \"{' '.join(clause.quote.split())}\"")
@@ -168,10 +141,7 @@ def lease_lines(profile):
 def check_quotes(profile, pages):
     """Every quote must appear verbatim starting on the page it claims. May run onto the next page."""
     page_text = {p["page"]: squash(p["text"]) for p in pages}
-    for name, clause in profile:
-        if clause is None:
-            print(f"  ??   {name}: not read")
-            continue
+    for name, clause in profile.clauses():
         if not clause.present:
             print(f"  --   {name}: not present")
             continue
@@ -229,7 +199,7 @@ def lease_clauses(pages):
     return clauses
 
 
-# ---- Search the lease (TODO item 82): the profile holds sixteen clauses, not the whole lease, and from them the model
+# ---- Search the lease (TODO item 82): the profile holds a few clauses, not the whole lease, and from them the model
 # said "the lease does not contain a holdover clause" and "the lease does not mention any late fee" though the test
 # lease has both (2.4, 3.3). The model searches the whole text first; a phrase found nowhere in it is a known absence.
 

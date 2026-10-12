@@ -2,8 +2,6 @@
 listing and ids, sessions, propose_facts, the confirmation, deadlines, YOUR FACTS, a reply's cites, cases through
 get_cases, the rules that apply only sometimes, events and the transcript, and the timeline.
 Run by smoke.py, in order; each check prints a line, OK or FAIL."""
-import contextlib
-import io
 import json
 import re
 import shutil
@@ -19,7 +17,7 @@ import wiki
 from wiki import verify
 from record import (append_event, append_transcript, end_session, list_matters, load_matter, matter_dir,
                     new_matter_id, read_events, start_session)
-from sheet import pending_rows, row_notes, run_sheet
+from sheet import pending_rows, row_notes
 from timeline import render_deadlines, render_timeline
 from prompt import CASE_RULE, LETTER_RULE, NO_CASES_RULE, PARTS, system_prompt
 from replies import CITED_HEAD, check_reply, cited_words, given_text, printed_cases, sections_shown
@@ -27,7 +25,7 @@ from agent import turn_blocks
 from tools import (deadline_listing, get_cases, get_deadlines, get_statute_section, not_in_record, offered_topics,
                    propose_facts, topic_named)
 from tools import tools as model_tools
-from smoke_parts.common import FORFEIT, prompt_part, screen, scripted, stated
+from smoke_parts.common import FORFEIT, confirm_rows, prompt_part, screen, stated, visit_here
 
 # ---- Code that writes to a matter, on a throwaway copy of the test matter (matters/t-smoke/m-001, removed
 # at the end even if a check fails): sessions, propose_facts, the confirmation, deadlines, YOUR FACTS, events, the
@@ -143,26 +141,28 @@ try:
           and "- claim_notice_date (date): counted from by the tenant's 15-day deadline of Fla. Stat. 83.49(3)(b) "
               "[deposit claim received]" in facts_part)
 
-    # accept, correct, bad input asked again, a changed fact, a skip
+    # accept, correct, bad input asked again, a changed fact, a skip: through Visit.confirm, a row at a time as the page asks
+    # (the visit has no model here: replied=True, so the answers are saved and the note carried, with no automatic reply)
     prompt_before_sheet = system_prompt()
-    shown_sheet = io.StringIO()
-    with contextlib.redirect_stdout(shown_sheet):
-        saved = run_sheet(scripted(["", "", "", "", "", "cleaning and carpet", "maybe", "7/28/2026", "?", ""]))
+    visit = visit_here()
+    asked = " ".join(line for r in rows for line in row_notes(r))
+    answered, refused = confirm_rows(visit, ["", "", "", "", "", "cleaning and carpet", "maybe", "7/28/2026", "?", ""])
     facts = record.matter["facts"]
-    check("item 112: the confirmation saves every answered fact", len(saved) == 8)
-    check("sheet: Enter accepts a suggestion", facts["tenancy_terminated"] == "2026-07-31")
-    check("sheet: a typed answer replaces a suggestion, and a bad one is asked again",
-          facts["vacated"] == "2026-07-28" and "Please type a date like 2026-07-31 or 7/31/2026" in shown_sheet.getvalue()
+    check("item 112: the confirmation saves every answered fact", sum(b["kind"] == "sheet" for b in answered) == 8
+          and visit.note.count(" = ") == 8)
+    check("sheet: an empty answer accepts a suggestion", facts["tenancy_terminated"] == "2026-07-31")
+    check("sheet: a typed answer replaces a suggestion, and a bad one is refused with what is expected, to be asked again",
+          facts["vacated"] == "2026-07-28" and refused == ["a date like 2026-07-31 or 7/31/2026"]
           and facts["claim_reason"] == "cleaning and carpet")
     check("sheet: a changed fact takes the new value, shown beside the old with the tenant's words",
-          facts["claim_notice_received"] == "yes" and "was no, now yes?" in shown_sheet.getvalue()
-          and 'suggested: yes, from your words: "I got a letter from the landlord"' in shown_sheet.getvalue())
+          facts["claim_notice_received"] == "yes" and "was no, now yes?" in asked
+          and 'suggested: yes, from your words: "I got a letter from the landlord"' in asked)
     check("item 112: the confirmation asks no question of a skill and shows no lease clause",
-          "What date" not in shown_sheet.getvalue() and "your lease" not in shown_sheet.getvalue()
-          and "tenancy terminated (YYYY-MM-DD)" in shown_sheet.getvalue())
+          "What date" not in asked and "your lease" not in asked and rows[0]["label"] == "tenancy terminated")
     check("item 112: a skipped fact stays pending, and the tenant is told it is asked again",
           [r["id"] for r in pending_rows()] == ["landlord_response"] and "landlord_response" in record.matter["proposed"]
-          and "Skipped for now: landlord response." in shown_sheet.getvalue() and "asked again" in shown_sheet.getvalue())
+          and [b["kind"] for b in answered].count("notice") == 1
+          and "Skipped for now: landlord response." in screen(answered) and "asked again" in screen(answered))
     after_sheet = json.loads(deadline_listing())
     got = {d["clock"]: str(d.get("deadline")) for d in after_sheet["deadlines"]}
     check("item 112: a deadline computes from the confirmed clock dates, and waiting lists what is not confirmed",
@@ -172,8 +172,7 @@ try:
     append_transcript({"role": "tenant", "text": "I left before the lease was up."})
     propose_facts.invoke({"facts_json": json.dumps({"early_or_periodic": {
         "value": True, "how": "inferred", "said": "I left before the lease was up"}})})
-    with contextlib.redirect_stdout(io.StringIO()):
-        run_sheet(scripted(["", ""]))                          # the skipped fact is asked again, then the new one
+    confirm_rows(visit_here(), ["", ""])                       # the skipped fact is asked again, then the new one
     deadlines = {d["clock"]: str(d.get("deadline")) for d in json.loads(deadline_listing())["deadlines"]}
     check("sheet: a skipped fact is asked again at the next confirmation; a yes confirms a clock's applies_if fact",
           facts["landlord_response"] == "said he would send a check next week" and facts["early_or_periodic"] is True
@@ -282,16 +281,16 @@ try:
           and [(e["kind"], e.get("cite")) for e in flagged] == [("cite_flagged", "83.64"), ("quote_flagged", "83.49(3)(b)")])
     events_now = len(read_events())
     retold_text = (f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nUnder 83.49(3)(b), if you do not object within 15 days, they '
-                   f'may deduct (Lease Section 4.3).')
+                   f'may deduct. Send your notice where the lease says (Lease Section 22.1).')
     retold = check_reply(retold_text, [])
     cited = cited_words(retold_text)
-    lease_43 = next(c for _, c in record.profile.clauses() if c.present and c.section and c.section.startswith("4.3"))
+    lease_notices = next(c for _, c in record.profile.clauses() if c.present and c.section and c.section.startswith("22.1"))
     check("item 73: a section cited without a quote gets no caution and no event (item 66's caution is gone); the "
           "program prints the words of each cite, the narrowest once, and the lease clause with its page",
           retold == [] and len(read_events()) == events_now
           and cited.startswith(CITED_HEAD) and "\n\nFla. Stat. 83.49(3)(a): (a) Upon the vacating" in cited
           and "\n\nFla. Stat. 83.49(3)(b): (b) Unless the tenant objects" in cited and "Fla. Stat. 83.49:" not in cited
-          and f"Lease Section 4.3, page {lease_43.page} (what the landlord may keep from the deposit" in cited
+          and f"Lease Section 22.1, page {lease_notices.page} (where and how the tenant sends notices to the landlord" in cited
           and [b["kind"] for b in turn_blocks([AIMessage(content=retold_text)], [])] == ["reply", "sources", "footer"]
           and cited_words("You said nothing about the law.") == "")
     page_cited = cited_words("The landlord is the one named in your lease (Lease, page 1).")
@@ -430,12 +429,11 @@ try:
           "Proposed: nonpayment_notice_delivered, premises_county." in reply and "premises_county: value must be some words" in empty
           and record.clock_facts()["premises_county"] == "county"
           and [(r["id"], r["type"]) for r in rows] == [("nonpayment_notice_delivered", "date"), ("premises_county", "county")])
-    shown_sheet = io.StringIO()
-    with contextlib.redirect_stdout(shown_sheet):
-        run_sheet(scripted(["", ""]))
+    confirm_rows(visit_here(), ["", ""])
     listing = json.loads(deadline_listing())
     check("item 112: a court-days clock is dated once its date and county are confirmed; the date the notice states is waited for",
-          "premises county (county name)" in shown_sheet.getvalue() and record.matter["facts"]["premises_county"] == "Alachua"
+          [r["label"] for r in rows] == ["nonpayment notice delivered", "premises county"]
+          and record.matter["facts"]["premises_county"] == "Alachua"
           and [(d["clock"], str(d["deadline"])) for d in listing["deadlines"]] == [("three_day_demand_period", "2026-12-01")]
           and listing["waiting"] == {"notice_received_nonpayment": ["notice_stated_payment_date"]})
     # letters read every confirmed fact value (item 112): a plain-text fact's amount and date are in the record

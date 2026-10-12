@@ -22,7 +22,9 @@ author's rule of 2026-10-06, in CLAUDE.md).
 Playbooks become skills (the author's plan of 2026-10-12; design in `docs/structure/2026-10-12-skills.md`). In order,
 each one commit; items 98 to 100 below wait until it is done, since the sheet and the prompt change under them.
 115. The web page only, one session module for it and the eval driver, the short lease profile, the eval driver and
-    scenarios for a conversation. Done: `run.py` is gone and a scenario runs through the new driver.
+    scenarios for a conversation (part 1 done 2026-10-12: visit.py, the web page only, the short lease profile). Part 2: the eval
+    driver (`dev/live_run.py`, `dev/eval.py`) calls `visit.py`, not the removed `run.py`, and the scenarios fit a conversation.
+    Done: a scenario runs through the new driver.
 116. Measure: the eval stories before (e32ab77) and after, scored blind, with a chart.
 
 The student simulation's remaining cause (`docs/evals/2026-10-06-students/`): what the tenant reads is built for

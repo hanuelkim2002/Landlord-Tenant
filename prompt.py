@@ -95,8 +95,10 @@ if os.environ.get("RULES_FILE"):
 # names like "ELEMENT STATUS" and "PLAYBOOKS" it wrote "(ELEMENT STATUS shows ...)" in 17 replies per 100, though
 # the rules forbade it (TODO item 61). Under these names, a source named in plain words reads right to the tenant.
 PARTS = {
-    "lease": ("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease: each in plain "
-              "words, with the cite to use and its words; search_lease searches the whole lease's text)"),
+    "lease": ("YOUR LEASE (only the clauses the tool reads from the tenant's lease, not the whole lease: the landlord, "
+              "the tenants, the unit, and where and how notices go, each in plain words, with the cite to use and its "
+              "words; search_lease searches the whole lease's text, so use it for anything else in the lease, such as "
+              "the rent, the term, the deposit, or repairs)"),
     "skills": ("SKILLS (every skill this tool has, with what it covers; load each one that fits the tenant's situation "
                "with load_skill)"),
     "loaded": "LOADED SKILLS (the instructions of each skill loaded for this matter, under its name: follow them)",

@@ -38,8 +38,8 @@ is a law student, not admitted.
 - Adding a tool: one `@tool` function in `tools.py` with a docstring written to the model, then add it to
   the `tools` list at the bottom of that file. `python schemas.py` shows what the model sees.
 - `matter.json` is current state only. `events.jsonl` is the only history, append-only.
-- `record.confirm_fact` is the only door into `matter["facts"]`, and only the confirmation (`sheet.save_answer`, shown
-  after a turn in which the model proposed facts) calls it. The model can only propose (`propose_facts`). Skills work
+- `record.confirm_fact` is the only door into `matter["facts"]`, and only the confirmation (`sheet.save_answer`, called by
+  `visit.Visit.confirm` after a turn in which the model proposed facts) calls it. The model can only propose (`propose_facts`). Skills work
   the same way: `record.add_skill`, called only by the `load_skill` tool, is the only door into `matter["skills"]`, and
   logs a `skill_loaded` event. Nothing is deleted from the history. `compute_deadlines` is the only date arithmetic.
 - The model asks in the chat only for plain facts, what the tenant saw, did, or holds (what happened, when, how something
@@ -47,7 +47,9 @@ is a law student, not admitted.
   skill's "What to find out" says so (2026-10-08). The confirmation asks only to confirm what the tenant said, never for a
   fact the record lacks (2026-10-12).
 - Every quote (lease, statute, tenant's words) is checked by substring against its source before use.
-- Letters are a code template (`build_letter`). The timeline is printed by the chat loop, never by the model.
+- Letters are a code template (`build_letter`). The timeline is drawn by the web page, never by the model.
+- A visit (a new matter or a returning tenant, a message, the confirmation, ending the session) is run by `visit.py`; the web page
+  and the eval driver both call it, so they run a visit the same way.
 
 ## Guardrails
 
@@ -66,7 +68,7 @@ is a law student, not admitted.
 - After any edit to a skill in `skills/`, run the skill checks (`skills.check_all_skills`, also run by `smoke.py`)
   and every line must be OK. They check quotes in the prose too, not only in the header's clocks.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
-- `run.py` and `app.py` are interactive and call the UF gateway. `smoke_online.py` calls the model for the first turn
+- `app.py` is interactive and calls the UF gateway. `smoke_online.py` calls the model for the first turn
   on a description, on a situation no skill covers, and on an update (resume). Everything else, including `smoke.py`, runs without the key.
 - Smoke runs write only to scratch matters under `matters/t-smoke*`, which they remove; never to `t-test`.
 
@@ -89,11 +91,9 @@ is a law student, not admitted.
     source venv/bin/activate
     python dev/build_cases.py "<Westlaw print>"   # once: cases/ from the author's Westlaw Find and Print file
     python wiki.py check     # the case wiki's checks; also index, and verify "<page>" "<name>" for the author
-    python run.py            # new matter (lease, intake) or existing (what is new, resume), then chat; the sheet follows a turn that proposed facts
-    streamlit run app.py     # the same as a web page on this computer: http://localhost:8501
+    streamlit run app.py     # the web page on this computer: http://localhost:8501 (a new matter or a saved one, the chat, the confirmation)
     python smoke.py          # offline checks, no key needed
     python smoke_online.py   # the first turn on a description, none covered, resume; calls the model
     python schemas.py        # what the model sees per tool
-    python dev/live_run.py dev/scenarios/nonpayment_3day.json   # a scripted live session; calls the model
-
-Chat command: `bye` (the only one left in the terminal, which TODO item 115 removes).
+    python dev/live_run.py dev/scenarios/nonpayment_3day.json   # a scripted live session; calls the model (still starts the removed
+                             # run.py: does not run until TODO item 115, part 2, rewrites it to call visit.py)

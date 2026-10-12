@@ -4,11 +4,8 @@ and resume call no model and the description is the first turn; then, on a scrat
 stand-in model: an empty reply asked again, the reading line under a reply, a turn's blocks, a whole turn,
 get_deadlines not ending the turn, the deadlines printed when the tenant asks when (and not when none has a date), and the
 same letter twice; then the model's reply right after a confirmation (TODO item 114): the program note as a turn of its own,
-nothing confirmed and no turn, at most one such reply per tenant message in the terminal chat.
+nothing confirmed and no turn. (The visit that runs these turns and confirmations is checked in visits.py.)
 Run by smoke.py, in order; each check prints a line, OK or FAIL."""
-import builtins
-import contextlib
-import io
 import json
 from langchain.agents import create_agent
 from langchain.messages import AIMessage, HumanMessage
@@ -20,15 +17,15 @@ from checks import TEST_MATTER, check, make_scratch, remove_scratch
 from config import MATTERS
 from lease import LeaseProfile
 from record import end_session, list_matters, load_matter, matter_dir, new_matter, read_events, start_session
-from sheet import pending_rows, run_sheet
+from sheet import pending_rows, save_answer, value_of
 from skills import skills
 from timeline import render_deadlines, render_timeline
 from prompt import system_prompt
 from replies import READING_LINE
-from agent import after_confirmation, deadlines_unasked, intake, print_blocks, resume, retry_empty, sheet_note, thread_config, turn, turn_blocks
+from agent import after_confirmation, deadlines_unasked, intake, resume, retry_empty, sheet_note, thread_config, turn, turn_blocks
 from tools import deadline_listing, draft_letter, get_cases, get_deadlines, load_skill
 from tools import tools as model_tools
-from smoke_parts.common import FORFEIT, StandIn, prompt_part, scripted, screen, stated
+from smoke_parts.common import FORFEIT, StandIn, prompt_part, screen, stated
 
 # ---- The model loads skills (TODO item 111), on a scratch copy with none loaded: load_skill refuses a name that is not a
 # skill and lists the ones there are, says so for one already loaded, and loads one: matter.json has it, a skill_loaded
@@ -214,13 +211,10 @@ try:
           screen(turn_blocks([AIMessage(content=f'Lease Section 4.3, page 2: "{lease_words}"')], [])).count(READING_LINE) == 1)
 
     # blocks (TODO item 31): what the tenant sees from a turn or a command, the model's words apart from the
-    # program's, for the terminal and the web page alike
+    # program's, for the web page and the eval driver alike
     bad_cite = AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nSee also 83.64.')
     check("a reply's blocks: the model's words, the words it cites, then the program's cautions, then its line",
           [b["kind"] for b in turn_blocks([bad_cite], [bad_cite])] == ["reply", "sources", "caution", "footer"])
-    with contextlib.redirect_stdout(io.StringIO()) as printed:
-        print_blocks([{"kind": "reply", "text": "One."}, {"kind": "footer", "text": "Two."}])
-    check("the terminal prints each block's text with an empty line after it", printed.getvalue() == "One.\n\nTwo.\n\n")
     check("what the tenant confirmed on a sheet goes to the model with the next message",
           sheet_note([("vacated", "2026-07-28"), ("claim_amount", 400)])
           == "[Program note: the tenant confirmed on the sheet: vacated = 2026-07-28, claim_amount = 400]\n"
@@ -336,8 +330,8 @@ try:
     nothing = after_confirmation(agent_confirm, config_confirm, [])           # every row skipped: nothing confirmed
     check("item 114: nothing confirmed, no automatic turn: after_confirmation returns None and the model is not called",
           nothing is None and len(messages_of()) == thread_before and sheet_note([]) == "")
-    with contextlib.redirect_stdout(io.StringIO()):
-        confirmed = run_sheet(scripted([""]))
+    row = pending_rows()[0]                                                    # the tenant accepts the suggestion
+    confirmed = [save_answer(row, "", value_of(row, "")[0])]
     reply = after_confirmation(agent_confirm, config_confirm, confirmed)
     blocks_auto, proposed_auto = reply
     note = sheet_note(confirmed)
@@ -358,57 +352,4 @@ try:
 finally:
     remove_scratch("t-smoke-confirm")
 check("the confirmation scratch matter is removed", not (MATTERS / "t-smoke-confirm").exists())
-
-
-def run_chat(first, messages, typed, answers):
-    """The terminal chat (agent.chat) on a scratch matter with the stand-in model, the lines the tenant types and the sheet's
-    answers scripted. Returns what was printed, the messages the model got as the tenant's (human messages), and the
-    session's transcript lines."""
-    make_scratch("t-smoke-chat", skills=["deposit_not_returned"], facts={}, proposed={})
-    try:
-        load_matter("t-smoke-chat", "m-001")
-        start_session("existing")
-        chat_agent = create_agent(StandIn(messages=iter(messages)), tools=model_tools, checkpointer=InMemorySaver())
-        typed, answers = iter(typed), iter(answers)
-        real_input, real_sheet = builtins.input, agent.run_sheet
-        builtins.input = lambda shown="": next(typed)
-        agent.run_sheet = lambda: real_sheet(lambda shown: next(answers))
-        try:
-            with contextlib.redirect_stdout(io.StringIO()) as printed:
-                agent.chat(chat_agent, first)
-        finally:
-            builtins.input, agent.run_sheet = real_input, real_sheet
-        thread = chat_agent.get_state(thread_config()).values["messages"]
-        lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{record.session}.jsonl").read_text().splitlines()]
-        end_session()
-        return printed.getvalue(), [m.content for m in thread if m.type == "human"], lines
-    finally:
-        remove_scratch("t-smoke-chat")
-
-
-def proposes(call_id, facts):
-    """A stand-in model message that calls propose_facts."""
-    return AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": call_id, "args": {"facts_json": json.dumps(facts)}}])
-
-
-# the terminal chat: every row skipped, so nothing confirmed and the model is not called again; then the whole round with an
-# automatic reply that proposes facts again, whose confirmation gets no second automatic reply but goes with the next message
-said_one, said_two = "I moved out on July 28, 2026", "he would send a check"
-first_message = f"{said_one} and {said_two}."
-moved = {"vacated": {"value": "2026-07-28", "how": "stated", "said": said_one}}
-response = {"landlord_response": {"value": said_two, "how": "stated", "said": said_two}}
-printed_skip, humans_skip, lines_skip = run_chat(first_message, [proposes("g1", moved), AIMessage(content="Noted.")], ["bye"], ["?"])
-check("item 114: in the terminal chat, a sheet with every row skipped is followed by no automatic turn",
-      humans_skip == [first_message] and "Noted." in printed_skip and not any(line["role"] == "program" for line in lines_skip))
-printed_twice, humans_twice, lines_twice = run_chat(
-    first_message, [proposes("g2", moved), AIMessage(content="Noted."), proposes("g3", response), AIMessage(content="Automatic."),
-                    AIMessage(content="Next.")], ["And?", "bye"], ["", ""])
-note_one, note_two = sheet_note([("vacated", "2026-07-28")]), sheet_note([("landlord_response", said_two)])
-check("item 114: in the terminal chat the automatic reply happens at most once per tenant message: its own confirmation gets "
-      "none, and goes to the model with the tenant's next message",
-      humans_twice == [first_message, note_one, note_two + "And?"]
-      and [line["text"] for line in lines_twice if line["role"] == "program"] == [note_one, note_two]
-      and [line["text"] for line in lines_twice if line["role"] == "tenant"] == [first_message, "And?"]
-      and [w for w in ("Noted.", "Automatic.", "Next.") if w in printed_twice] == ["Noted.", "Automatic.", "Next."]
-      and printed_twice.index("Noted.") < printed_twice.index("Automatic.") < printed_twice.index("Next."))
 print()

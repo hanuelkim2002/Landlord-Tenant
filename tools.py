@@ -19,7 +19,7 @@ import config
 from config import shorten, squash
 from corpus import statute
 from deterministic import matter_deadlines
-from lease import LEASE_CITE, find_in_lease
+from lease import LEASE_CITE, find_in_lease, lease_text
 from record import append_event, matter_dir, read_events, save
 from sheet import parse_answer, shown
 from skills import clock_facts as skill_clock_facts, skills, unconfirmed_clock_facts
@@ -101,7 +101,7 @@ def search_lease(phrase: str) -> str:
 
 # ---- Propose Facts: the model can suggest a fact, never confirm one. It reads what is confirmed, what is proposed, and
 # what the deadlines still need in YOUR FACTS. Confirming is the tenant's, on the confirmation the chat shows after the
-# turn (sheet.run_sheet).
+# turn (visit.Visit.confirm).
 
 FACT_ID = re.compile(r"[a-z][a-z0-9_]{1,39}")            # lowercase words joined by underscores, at most 40 characters
 MAX_TEXT = 300                                           # characters of a fact kept as plain text
@@ -279,7 +279,7 @@ def get_cases(topic: str) -> tuple[str, str]:
 
 # ---- Draft Letter: a template filled from the record (TODO 95, 2026-10-11). The program writes what a landlord could
 # hold the tenant to: today's date, the lease's names and addresses, the reply-by date, the quotes (each checked
-# against the lease profile or the statute), the delivery line, and the signer (a tenant the lease names). The model
+# against the lease or the statute), the delivery line, and the signer (a tenant the lease names). The model
 # writes only the tenant's account and request, whole sentences printed as written and never put inside a sentence of
 # the program's: "I request that you {ask}" printed "I request that you i, Morgan Davis, ... am", and "This letter is
 # sent by {delivery_method}" printed "sent by by hand" (student simulation of 2026-10-06). Was also: every confirmed
@@ -293,10 +293,16 @@ def pretty(d):
     return f"{d:%B} {d.day}, {d.year}"
 
 
+def lease_words():
+    """Everything the lease says: the profile's quotes, then the lease's whole text (the profile holds only four clauses,
+    and the model reads the rest with search_lease, so a quote or an amount from any clause counts)."""
+    return " ".join([c.quote for _, c in record.profile.clauses() if c.present and c.quote]
+                    + [lease_text(record.lease_pages())[0]])
+
+
 def quote_is_real(text):
-    """True if text appears verbatim in the lease profile or in a stored statute section."""
-    sources = [c.quote for _, c in record.profile.clauses() if c.present] + list(statute.values())
-    return any(squash(text) in squash(s) for s in sources)
+    """True if text appears verbatim in the lease (lease_words) or in a stored statute section."""
+    return any(squash(text) in squash(s) for s in [lease_words()] + list(statute.values()))
 
 
 def sentence(text):
@@ -359,15 +365,15 @@ def amount(words):
 def not_in_record(text, respond_by):
     """The dates and dollar amounts in the tenant's part of a letter that the record does not hold, as written. A
     date counts when it is today, the reply-by date, or in the tenant's own words (the description, updates, this
-    session's messages, recorded messages, confirmed facts, a confirmed date among them) or the lease's quotes; an
-    amount when it is a confirmed amount, a number in the tenant's own words, or an amount in the lease's quotes."""
+    session's messages, recorded messages, confirmed facts, a confirmed date among them) or the lease's words; an
+    amount when it is a confirmed amount, a number in the tenant's own words, or an amount in the lease's words."""
     facts = record.matter["facts"]
     events = read_events()
     tenant = " ".join([record.matter.get("description", ""), *record.tenant_words(),
                        *[ev["text"] for ev in events if ev["kind"] == "tenant_update"],
                        *[f'{ev["sent_on"]} {ev["text"]}' for ev in events if ev["kind"] == "communication"],
                        *[v for v in facts.values() if isinstance(v, str)]])
-    lease = " ".join(c.quote for _, c in record.profile.clauses() if c.present and c.quote)
+    lease = lease_words()
     days = [(d.month, d.day, d.year) for d in (date.today(), respond_by)]
     days += [day for _, day in dates_written(tenant + " " + lease)]
     sums = [float(v) for v in facts.values() if isinstance(v, (int, float)) and not isinstance(v, bool)]
@@ -410,7 +416,7 @@ def draft_letter(issue: str, posture: str, account: str, request: str, respond_w
     obligation_quote: the exact lease or statute sentence the request rests on, copied word for word.
     obligation_cite: a reader-facing cite such as "Lease Section 4.3" or "Fla. Stat. 83.49(3)(a)". Never a profile field name.
     consequence_quote / consequence_cite: escalate only; the exact sentence stating what happens if the landlord does not act.
-    Rejected: a quote not found in the lease profile or the stored statute; a cite in the account or the request (the
+    Rejected: a quote not found in the lease or the stored statute; a cite in the account or the request (the
     lease's and the statute's words go in only as obligation_quote or consequence_quote); a signer the lease does not
     name. A date or a dollar amount in the account or the request that is not in the tenant's answers, messages, or
     lease is printed with a line asking the tenant to check it."""
@@ -432,11 +438,11 @@ def draft_letter(issue: str, posture: str, account: str, request: str, respond_w
     quotes = []
     if posture in ("assert", "escalate"):
         if not quote_is_real(obligation_quote):
-            return "Rejected: obligation_quote is not found in the lease profile or the stored statute."
+            return "Rejected: obligation_quote is not found in the lease or the stored statute."
         quotes.append({"cite": obligation_cite, "text": obligation_quote})
     if posture == "escalate":
         if not quote_is_real(consequence_quote):
-            return "Rejected: consequence_quote is not found in the lease profile or the stored statute."
+            return "Rejected: consequence_quote is not found in the lease or the stored statute."
         quotes.append({"cite": consequence_cite, "text": consequence_quote})
 
     letter = build_letter(account, request, respond_within_days, delivery_method, signed_by, quotes)

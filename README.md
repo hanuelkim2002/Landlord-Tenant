@@ -86,7 +86,8 @@ a review).
   questions), the answer says so and gives the readings on each side; it never presents one as settled.
 - The model never computes a date. All date arithmetic is in one function, from confirmed facts only.
 - The model never sends anything. Letters are drafted; the tenant sends them and reports the sending.
-- The model never quotes from memory. Lease quotes come from the verified profile; statute quotes come from
+- The model never quotes from memory. Lease quotes come from the lease's stored text (the verified
+  profile, or the clause `search_lease` found); statute quotes come from
   the stored text in `statutes/`; case quotes come from the stored opinions in `cases/`; every quote is
   checked by substring against its source before use.
 - Cases are used whole and fairly: an answer that relies on a case shows every case on the question,
