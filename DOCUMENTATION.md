@@ -1178,7 +1178,10 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   `dev/eval_rubric.md` (applied answers: OPTION_BEFORE_OPEN and RECITED since TODO items 72 and 73, GAP_AS_FACT and
   UNKNOWN_UNTIED since item 85, QUOTES_ONLY, UNCONFIRMED_FACT, CONDITION_MISSED, CONDITION_WRONG,
   OPEN_CLOSED, CASE_MISREAD, ONE_SIDED, CHOICE_MADE, OVERCLAIM, LAW_UNSOURCED, DATE_MADE, ID, and the quoting
-  and letter categories). A run with signs that the gateway failed
+  and letter categories; revised 2026-10-12, TODO item 116, for the conversation: what the tenant said may be used,
+  asking for what an answer turns on and offering the next step once are no longer slips, ASK_AGAIN replaces
+  CONFIRM_IN_CHAT, REPEATED and LEASE_PUNTED are new, and each transcript gets two ratings, helpful and conversational,
+  1 to 5). The blind method of that eval is in `docs/evals/2026-10-12-skills/method/`. A run with signs that the gateway failed
   (`GATEWAY_SIGNS`: the visit's caution "the model could not be reached", which the driver prints on the screen, the network
   errors "Connection error", "nodename nor servname provided", and "Client Closed Request", an empty answer where JSON was
   expected, or two unrecovered empty turns in a row; TODO item 104, 2026-10-12) is

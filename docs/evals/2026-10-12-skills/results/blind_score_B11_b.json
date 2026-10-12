@@ -1,0 +1,280 @@
+{
+  "scorer": "B11_b",
+  "runs": [
+    {
+      "code": "R050",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 1,
+        "why": "Long and overwhelming; the same fact list and the same four or five questions come back in replies 1, 2 and 3 (several of them about facts the tenant already gave); reply 4 is a good short answer, but replies 1-3 apply only the 83.51(1)(b) structural list and never the codes in 83.51(1)(a)."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "What we know so far (from your message): - You saw black mold on your bedroom wall starting September 8, 2026. - You emailed the property manager on September 10, 2026 ... (eight confirmed facts listed back)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "Four questions at once, including: Do you know who or what caused the mold? (tenant already said nothing anyone did) and Have you paid rent since you learned about the mold, and do you consider that payment to waive your right to end the lease over this problem? (tenant already said still paying rent)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "The statute’s duty to maintain structural components and plumbing (83.51(1)(b)) covers roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and plumbing. ... If it is surface mold from indoor humidity with no water intrusion, the duty is less clear. (83.51(1)(b)) applies only where there are no applicable codes; the codes in 83.51(1)(a) are left out)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Do you view that payment as accepting the condition as is, or do you intend to continue paying while seeking a repair? (asks the tenant to settle whether paying rent with knowledge waives; the two readings are not given)"},
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "Please check your lease and any addenda: Is there any clause that says you are responsible for mold, mildew, or moisture control, or that limits the landlord’s duty to repair mold? (the tool had read 8.5 Mold and Moisture and Article 7; borderline only because of the addenda)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "The law-generally-allows block, the Both options require list, the fact list and questions 1-4 (What is the mold growing on ... Has anything in writing changed ... Do you know who or what caused the mold? ... Have you paid rent since you learned about the mold) repeat reply 1 almost word for word"},
+        {"reply": 2, "category": "RECITED", "evidence": "What we know from your message and the lease: - You saw black mold on your bedroom wall starting September 8, 2026. ... plus the lease clauses 7.1, 7.2, 8.2, 8.5 summarized again"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "Five questions at once, again including Do you know who or what caused the mold? and You said you are still paying rent. Do you view that payment as accepting the condition as is ..."},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "The statute’s duty to maintain structural components and plumbing (83.51(1)(b)) covers roofs, windows ... If it is surface mold from indoor humidity with no water intrusion, the duty is less clear. (83.51(1)(a) codes not mentioned)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "Do you view that payment as accepting the condition as is, or do you intend to continue paying while seeking a repair? (tenant asked to settle the waiver question)"},
+        {"reply": 2, "category": "LEASE_PUNTED", "evidence": "Please check your lease and any addenda: Is there any clause that says you are responsible for mold, mildew, or moisture control ..."},
+        {"reply": 2, "category": "DATE_MADE", "evidence": "The lease’s 48‑hour mold‑reporting rule (Lease Section 8.5) appears satisfied by your email on September 10 for mold noticed on September 8. (the model compared the dates itself)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: does not clearly apply to a single‑family house you rent while attending college (the tenant never said in this chat that they attend college)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "The five conditions, the fact list (What we know from your message and the lease) and questions 1-4 are copied from reply 2"},
+        {"reply": 3, "category": "RECITED", "evidence": "What we know from your message and the lease - You saw black mold on your bedroom wall starting September 8, 2026. ... (the same twelve-item list again)"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "Do you know who or what caused the mold? ... Have you paid rent since you learned about the mold ... Have you sent a written notice that states you intend to end the lease because of the mold? (the reply itself says the Sept 10 email did not)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "The landlord’s duty under 83.51(1)(b) covers roofs, windows, doors, floors, steps, porches, exterior walls, foundations, other structural components, and the plumbing. (83.51(1)(a) codes left out)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Do you view that payment as accepting the condition as is, or do you intend to continue paying while seeking a repair?"},
+        {"reply": 3, "category": "LEASE_PUNTED", "evidence": "Please check your lease and any addenda: Is there any clause that says you are responsible for mold, mildew, or moisture control, or that limits the landlord’s duty to repair mold?"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "The notice must be delivered by hand, regular mail, certified mail, or e‑mail only if you and the landlord have signed an addendum agreeing to e‑mail notices. (no cite; 83.56(1) says nothing on delivery, and certified mail is not in 83.56(4))"},
+        {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "a new written notice ... that says something like: “Black mold is growing on my bedroom wall. This is a material noncompliance with the landlord’s duty to maintain the premises. Unless the mold is remediated within seven days, I intend to terminate the rental agreement.”"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "(The statute requires the landlord to comply with applicable building, housing, and health codes, but the tool does not decide ...) -- no section cited; also they can inspect the unit is uncited"}
+      ]
+    },
+    {
+      "code": "R053",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "Short, honest about what is not known, and reply 2 builds on reply 1 with the code office; but it sends the tenant to read Article 7 itself and leaves the waiver question with no readings."
+      },
+      "slips": [
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "You can check that duty in your lease’s maintenance and repairs clause (Lease Article 7)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "whether paying rent after you knew of the mold waived your right to terminate is not settled by the statute; that depends on whether the mold is a continuing noncompliance. (no word on what follows under either reading)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: The city or county code enforcement office can tell you whether such a code requires the landlord to fix mold and can inspect the unit. (the power to inspect is uncited)"}
+      ]
+    },
+    {
+      "code": "R072",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Reply 3 gives a clear bottom line (the Sept 10 email did not state an intention to end the lease, so not yet); but replies 1-3 recycle the same long blocks and questions, never mention the codes until reply 4, and write notice sentences in the model's own words."
+      },
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "The landlord’s response that it’s “your job to keep the house dry” does not appear in the lease as a shift of the landlord’s statutory duty. / Your lease does not show such a written change for mold (lease 8.5 puts humidity and ventilation on the tenant, and only a few searches were run)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "The statute’s list of structural parts and plumbing does not expressly include mold. (83.51(1)(b) applied without the (1)(a) codes it depends on)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Whether paying rent while the mold remains unfixed waives your right to end the lease over this specific mold issue is an open question the statute does not settle. (readings and what each means not given)"},
+        {"reply": 1, "category": "CHOICE_MADE", "evidence": "To preserve your rights, you should send the landlord a written notice that: ... States that you intend to terminate the lease ... or ... withhold rent"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Is delivered in a way the lease and statute allow: hand‑delivered, certified mail (return receipt requested), or nationally recognized overnight courier ... Email is only allowed for routine, non‑statutory communications unless ... § 83.505. (one reading for how the rent notice is delivered)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "To compute the 7‑day deadlines, I need you to confirm: The date your email was delivered to the landlord (you said September 10, 2026) ... plus three further questions under What I need from you to advise further"},
+        {"reply": 1, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: To preserve your rights, you should send ... a written notice that ... States that you intend to terminate the lease ... (describes an escalate-style notice as preserve, in the model's own words)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: you can choose one or both intentions in the same notice (no cite; 83.56(1) and 83.60(1)(b) do not say it)"},
+        {"reply": 2, "category": "RECITED", "evidence": "What you’ve told me (confirmed) - Black mold has been growing on your bedroom wall since September 8, 2026. ... and a lease summary list"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Conditions 1-4, the Steps for either option and the three questions repeat the content of reply 1"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "Do you have any reason to believe you, a family member, or a guest caused the mold? (tenant said nothing anyone did) plus the same three questions and the confirm-three-facts request"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "The statute’s list (roof, windows, doors, floors, steps, porches, exterior walls, foundations, other structural parts, plumbing) does not expressly include mold. (no 83.51(1)(a) codes)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Even if the other three conditions are met, paying rent may affect your ability to end the lease. The statute is unclear on whether paying rent while a known problem continues waives the right to terminate."},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "Deliver the notice in a way the lease and statute allow: hand‑delivered, certified mail ... Email is only allowed for routine, non‑statutory communications unless ... § 83.505. (rent-withholding notice delivery presented as settled)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "Your lease does not show such a written change for mold, but you should check whether you signed any addendum"},
+        {"reply": 2, "category": "POSTURE_OWN_WORDS", "evidence": "States either: “I intend to terminate the rental agreement because the landlord has not fixed the mold,” or “I intend to withhold rent because the landlord has not fixed the mold.”"},
+        {"reply": 2, "category": "ID", "evidence": "borderline: Your two main options under the repair‑not‑made skill (a skill name in the reply)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "The landlord’s duty to repair comes from Florida Statute § 83.51(1), which requires the landlord to maintain: the roof, windows, doors ... and the plumbing ... Mold is not expressly listed in that statute. (the (1)(a) codes left out)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "Whether paying rent while the mold remains unfixed waives your right to end the lease over this specific mold issue is an open question the statute does not settle."},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "Your lease does not show such a written change for mold"},
+        {"reply": 3, "category": "REPEATED", "evidence": "Items 3 (duty changed in writing), 4 (who caused it), 5 (paying rent), the notice steps and the question list repeat reply 2"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "Do you have any reason to believe you, a family member, or a guest caused the mold? plus three more questions in one list"},
+        {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "States clearly: “I intend to terminate the rental agreement because the landlord has not fixed the mold.”"},
+        {"reply": 4, "category": "UNKNOWN_UNTIED", "evidence": "borderline: The city or county code enforcement office can tell you whether the mold violates a housing code. ... This tool does not decide that question. (codes never connected to the 83.51(1)(a) duty or to what a violation would mean for ending the lease)"}
+      ]
+    },
+    {
+      "code": "R083",
+      "scenario": "eval_know_repair_mold_code",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "Reply 1 covers the right points compactly (the Sept 10 email is not a notice to end the lease, codes are outside the tool, who to ask) and reply 2 answers the who-question; but reply 1 is a string of one-line paragraphs, sends the tenant to Article 7, and picks one reading of material."
+      },
+      "slips": [
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "the lease does not say the landlord repairs mold, so you can check Lease Article 7 to see if it covers this kind of problem."},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "The landlord’s duty was not changed in writing; you can check whether any lease term or other writing changes who repairs mold (Lease Article 7)."},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Whether paying rent after learning of the mold waives your right to end the lease over it is not settled by the statute; the tool does not decide if a continuing noncompliance overrides the waiver."},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The statute does not settle what counts as a “material” failure to comply, so whether the mold is material depends on its seriousness, duration, and effect on living in the unit. (only the degree reading; the listed-duty reading is left out)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "deliver a written notice to the landlord (by hand, certified mail, or email if you have an 83.505 addendum) ... (Fla. Stat. 83.56(1)). (83.56(1) says nothing on ways of delivery; certified mail is not in the statute; cites are also dumped in one line at the end)"}
+      ]
+    },
+    {
+      "code": "R016",
+      "scenario": "eval_know_violation_waterbed",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "The tenant learns the period passed, the landlord has not taken rent, and what the options are; but reply 4 says Yes and treats the cure-versus-no-cure question as settled, and replies 2 and 4 repeat large blocks and the same letter offer."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "What you have told me: - The notice was handed to you on September 29, 2026. - The notice offers you 7 days to cure ... (seven facts listed back, after a What the notice says section that says the same)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "borderline: I need you to confirm the facts I proposed (the delivery date, that the notice offers a cure, that it does not terminate the lease immediately, that you still have the waterbed ...)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "If an eviction case is filed, you could defend it by showing that the notice was improper (e.g., the violation was of a type that should have allowed a cure, or that you had no prior warning). (no cite; no prior warning is not a defense in the stored text)"},
+        {"reply": 2, "category": "RECITED", "evidence": "What the notice said - Hand‑delivered on September 29, 2026. ... What you have confirmed - Notice delivered: September 29, 2026. ... (two fact lists)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "The What the statute says, What your lease says and fact-list sections are reply 1 again almost word for word"},
+        {"reply": 2, "category": "ID", "evidence": "(WHICH DEADLINES HAVE PASSED: “seven days to correct [notice received violation]: the tenant's, 7 days after violation notice delivered, Fla. Stat. 83.56(2)(b): passed”)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "Because the notice gave you a chance to cure and you did not cure within the 7 days, the landlord may now terminate the rental agreement for that noncompliance. (83.56(2) needs a material failure to comply with 83.52 or the lease; the reply itself says the lease is silent on waterbeds)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "The landlord would then need to follow the eviction process to regain possession (filing a complaint, serving you, etc.). / You can treat the lease as terminated ... following the deposit‑return rules. (no cite; sections not given to the model)"},
+        {"reply": 2, "category": "OFFER", "evidence": "Once you tell me your goal, I can help you draft the appropriate letter, keep a record of your communications, and outline the next steps (the letter offer from reply 1 made again)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Whether a waterbed falls under that general prohibition is not settled by the lease itself. (no word on what follows either way or who can settle it)"},
+        {"reply": 4, "category": "OPEN_CLOSED", "evidence": "A waterbed is not one of those examples, so the landlord correctly gave you a cure period."},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: The statute reserves the “no‑cure” option for serious acts like intentional property damage or a continued unreasonable disturbance (Fla. Stat. 83.56(2)(a)). (the statute says include, but are not limited to)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "The landlord cannot simply lock you out or shut off utilities; they must follow the court process. (no cite)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "the What you can do block (stay, move out, respond with a letter under Lease Section 22.1) repeats reply 2's block"},
+        {"reply": 4, "category": "OFFER", "evidence": "I can help you draft the appropriate letter, keep a record of your communications, and outline the follow‑up steps (third time the letter offer is made)"}
+      ]
+    },
+    {
+      "code": "R068",
+      "scenario": "eval_know_violation_waterbed",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "Reply 1 is a bare non-answer and reply 2 turns on whether a waterbed violates the lease without going to 83.52, the lease's use clause or the cure-or-not question, and gives no next step."
+      },
+      "slips": [
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "If it does not violate the lease, the notice is defective and the landlord may not terminate. (no cite for this rule)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: If it does violate the lease, then since the 7‑day cure period has passed and you have not removed the waterbed, the landlord may terminate the lease (Fla. Stat. 83.56(2)(b)). (the open question of which paragraph applies is not mentioned)"},
+        {"reply": 2, "category": "RECITED", "evidence": "Your facts: the notice says you have a waterbed, it offers a chance to cure, it was handed to you on 2026‑09‑29, you have not removed the waterbed, and the 7‑day cure period has passed."},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: This tool has no cases on waterbeds. (no get_cases search was run)"}
+      ]
+    },
+    {
+      "code": "R073",
+      "scenario": "eval_know_violation_waterbed",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "Reply 2 names the open question (curable or not) with both readings and applies the program's passed deadline; but it asserts a notice would be defective on one reading, sends the tenant to read the lease clause the tool already printed, and gives no next step."
+      },
+      "slips": [
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "the landlord’s notice should have terminated the lease immediately and given you 7 days to vacate. ... it would be defective for a non‑curable violation. (83.56(2)(a) says may terminate; defective is not a reading in the stored text)"},
+        {"reply": 2, "category": "LEASE_PUNTED", "evidence": "You can check the lease’s provisions on appliances and reasonable use to see if they address waterbeds, but the tool found no such term. (the tool had read and printed Section 8.1)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "In that case, the landlord may now end the lease. (83.56(2) first needs a material failure to comply with 83.52, the lease or reasonable rules; the reply notes the lease does not mention waterbeds but never ties that to the conclusion)"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: Your facts show the notice was delivered on 2026-09-29, handed to you, it offered a cure, you have not corrected the violation, and the program’s deadlines show the 7‑day period has passed."}
+      ]
+    },
+    {
+      "code": "R093",
+      "scenario": "eval_know_violation_waterbed",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 4,
+        "conversational": 3,
+        "why": "Reply 4 gives the which-paragraph open question with both readings, the lease finding, and options, and the earlier replies fit the confirm-then-deadline flow; but reply 2 treats the notice as good without the open question, reply 4 repeats reply 2's options, and a few cites and statements are off."
+      },
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "You can still fix the problem the notice names. (said before the program could count the 7 days; the same reply says whether the period has ended depends on the date)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "the statute’s examples of curable violations include having unauthorized items or failing to keep the premises clean and sanitary (Fla. Stat. 83.56(2)(b)). (the statute names unauthorized pets, guests, or vehicles, not items)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "borderline: Do you want to confirm the delivery date of the notice so we can show the exact deadline? (the tenant already gave the date)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "Since you still have the waterbed and the period has ended, the landlord may now terminate the lease on this notice. (no word that the waterbed must be a material failure to comply with 83.52 or the lease, which the lease does not mention)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "the landlord may now terminate the lease on this notice (the cure-or-no-cure paragraph question is left out, so the 83.56(2)(b) reading is taken as settled)"},
+        {"reply": 2, "category": "LETTER_ORDER", "evidence": "borderline: let me know how you would like to deliver it (hand, certified mail, email, etc.) (asked before the lease's notices clause was read and quoted)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: whether a waterbed violates a material provision of the rental agreement or the tenant’s duty to maintain the dwelling unit (Fla. Stat. 83.52) is a point the lease does not settle, and the statute does not specify either. (no word on what follows either way)"},
+        {"reply": 3, "category": "OFFER", "evidence": "Would you like to proceed with any of the options we discussed (for example, removing the waterbed and sending a letter, or asking the landlord to withdraw the notice)? (not asked for; the letter offer was already made in reply 2)"},
+        {"reply": 4, "category": "QUOTE_WRONG", "evidence": "The lease does require you to keep the premises clean and sanitary and to comply with housing codes (Lease Section 8.2, 8.5) (8.2 is routine maintenance and 8.5 is mold and moisture; the clean-and-sanitary duty is in 8.1)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "borderline: I also searched for related terms (e.g., “water,” “furniture”) and found no provision that bans or regulates waterbeds. (no search for furniture appears in the transcript)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: the landlord should have sent a notice that ends the lease at once, and giving you a cure period may not be proper. (not one of the context file's readings)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "the What you can do now block (ask to withdraw the notice, send a letter stating you cured, move out) repeats reply 2's block word for word"},
+        {"reply": 4, "category": "OFFER", "evidence": "Would you like to draft a letter to the landlord ... let me know how you would like to deliver it (the same offer as in reply 2)"},
+        {"reply": 4, "category": "LETTER_ORDER", "evidence": "borderline: let me know how you would like to deliver it (hand, certified mail, email, etc.) (before reading the lease's notices clause)"}
+      ]
+    },
+    {
+      "code": "R009",
+      "scenario": "eval_know_lease_holdover",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 2,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Both lease answers are correct, cited and quoted exactly, and cover both branches (rent accepted or no written consent; late after the fifth); but they are thin: no word that the tenant's plan depends on the landlord accepting rent, and the two replies stand alone."
+      },
+      "slips": []
+    },
+    {
+      "code": "R027",
+      "scenario": "eval_know_lease_holdover",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 2,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Correct and cited, both lease branches given for the holdover and the late charge stated for after the fifth; the late-fee reply is awkward (paraphrase plus the same sentence quoted) and neither reply ties back to the tenant's plan."
+      },
+      "slips": []
+    },
+    {
+      "code": "R040",
+      "scenario": "eval_know_lease_holdover",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 2,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Good use of the 15-day landlord-notice condition and what the tenant told the model, and the lease answers in replies 3 and 4 are right; but reply 2 repeats reply 1, a November 1 date is counted, reply 2 says no month-to-month arises (lease 2.4, found in reply 3, says it does), and both early replies end by asking the tenant to pick."
+      },
+      "slips": [
+        {"reply": 1, "category": "DATE_MADE", "evidence": "give the landlord written notice at least 60 days before December 31, 2026 (i.e., by around November 1, 2026)."},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: here are your main options: 1. Move out at the lease end – give the landlord written notice ... (steps given without saying whether the notice time is still open)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: Stay beyond the lease end with the landlord’s permission – you would need the landlord’s agreement (preferably in writing) to continue occupying the unit (the tenant plans to keep paying rent; what counts as permission is the open question)"},
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: written notice at least sixty (60) days before the Expiration Date (bolded, word for word from Lease 2.3, no quote marks)"},
+        {"reply": 2, "category": "DATE_MADE", "evidence": "Give the landlord written notice at least 60 days before December 31, 2026 (i.e., by around November 1, 2026)."},
+        {"reply": 2, "category": "REPEATED", "evidence": "The 60-day lease requirement, the three paths, the liquidated damages and 83.575(2) explanation and the closing choice repeat reply 1"},
+        {"reply": 2, "category": "OFFER", "evidence": "Once you choose, I can tell you exactly what steps are required (e.g., drafting a notice, getting the landlord’s agreement) and help you keep a record (same offer as in reply 1)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "Since your lease has a specific duration, 83.57(3) does not automatically create a month‑to‑month tenancy; the permission would likely create a new tenancy whose terms you and the landlord agree on. (83.57(3) does not say it, and lease 2.4 says acceptance of rent makes it month to month)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: You would need the landlord’s agreement (preferably in writing) to continue occupying the unit after December 31, 2026."},
+        {"reply": 2, "category": "QUOTE_UNMARKED", "evidence": "borderline: within 15 days before the start of the 60‑day notice period (statute words bolded without quote marks)"},
+        {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "the lease says the tenancy shall become month‑to‑month on the same terms, terminable by either party on thirty (30) days’ written notice given before the end of any monthly period as provided in Section 83.57, Florida Statutes (Lease 2.4 word for word, no quote marks)"},
+        {"reply": 3, "category": "RECITED", "evidence": "borderline: the whole of Lease 2.4 and Lease 15.1 restated almost word for word as two paragraphs"},
+        {"reply": 4, "category": "RECITED", "evidence": "It states: “Rent not received by 11:59 p.m. on the fifth (5th) day of the month is late. Tenant shall pay a late charge of $75.00 plus $10.00 per day thereafter, not to exceed a total of $250.00 in any month.” (two sentences pasted; the program prints them)"}
+      ]
+    },
+    {
+      "code": "R079",
+      "scenario": "eval_know_lease_holdover",
+      "replies": 3,
+      "law_replies": 3,
+      "applied_well": 2,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Replies 2 and 3 are correct and cited, but reply 1 gives a wrong deadline (June 30, 2026), inverts the 83.575(2) condition and tells the tenant a holdover is not advised; reply 2 repeats reply 1's month-to-month paragraph and reply 3 stands alone."
+      },
+      "slips": [
+        {"reply": 1, "category": "DATE_MADE", "evidence": "give the landlord 60 days’ written notice now (by June 30, 2026) to vacate on December 31, 2026."},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "you could be liable for liquidated damages equal to one month’s rent, unless the landlord first gave you the required written notice specifying your obligations (Fla. Stat. 83.575(2)). (83.575(2) makes the landlord's notice a condition of the tenant's liability, not an exemption from it)"},
+        {"reply": 1, "category": "CHOICE_MADE", "evidence": "borderline: Stay without a new agreement (holdover) – not advised, as it could lead to double rent liability if the landlord does not consent."},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: Here are the main paths you can take: 1. Move out at the end of the lease – give the landlord 60 days’ written notice now (steps for each path given without saying whether it is still open)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Yes. Your lease says that if the landlord accepts rent from you after the expiration date without a written renewal, the tenancy becomes month‑to‑month ... (the same content as the second paragraph of reply 1)"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "scorer": "B10_b",
+  "runs": [
+    {
+      "code": "R003",
+      "scenario": "eval_rent_hike_duplex",
+      "replies": 6,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "The tenant learns the retaliation defense is not open yet, that the Sept 12 email starts no repair clock, and that a new notice would; but replies 1 and 2 are near copies, the answer on the increase gives readings without tying them to the Sept 27 / Nov 1 facts, and reply 5 asks the tenant to confirm facts already given."
+      },
+      "slips": [
+        {"reply": 1, "category": "DATE_MADE", "evidence": "For example, if you want to leave November 30, you'd need to give notice by October 31."},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "If the roof isn't fixed in those seven days, you can terminate the rental agreement (Fla. Stat. 83.56(1)). [no 'materially fails to comply']"},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: To end the lease because the landlord hasn't fixed the roof, you would need to: [steps come before the reply says the email does not start either option]"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "you'd need to show you acted in good faith, that other tenants didn't get the same increase (you don't know this), that the increase was primarily because of retaliation [conditions from 83.64(2)-(4) stated with no cite]"},
+        {"reply": 2, "category": "DATE_MADE", "evidence": "For example, to leave November 30, you'd need to give notice by October 31."},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "If the roof isn't fixed in those seven days, you can terminate the rental agreement (Fla. Stat. 83.56(1))."},
+        {"reply": 2, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: To end the lease because the landlord hasn't fixed the roof, you would need to:"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you'd need to show you acted in good faith (you say you did), that other tenants didn't get the same increase (you don't know)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: you'd need to show you acted in good faith (you say you did) [the tenant never said this]"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Reply 2 repeats reply 1 section for section, e.g. 'Your Sept 12 email asked for a roof repair but did not say you intended to end the lease or stop paying rent.'"},
+        {"reply": 2, "category": "OFFER", "evidence": "Would you like me to help you draft a notice for either purpose? [same offer as reply 1]"},
+        {"reply": 3, "category": "QUOTES_ONLY", "evidence": "borderline: During a fixed term, the rent is what the lease says, so an increase would need a lease clause allowing it or your agreement; part II adds nothing either way. [readings listed, no word on how the Sept 27 notice for Nov 1 fits any of them or what each means for the tenant]"},
+        {"reply": 3, "category": "OFFER", "evidence": "borderline: Would you like me to help you draft a notice to end the tenancy, or do you have other questions about your options? [ending the tenancy is not what the tenant asked about]"},
+        {"reply": 4, "category": "OPEN_CLOSED", "evidence": "You can raise retaliation only as a defense in an action the landlord brings against you for possession. (Fla. Stat. 83.64(2)). [picks the defense-only reading of what the tenant can do about an increase alone]"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You say you did, so this condition could be met. [good faith; also 'have not been accused of a lease violation' is not in the record]"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: whether any other conduct you engaged in (like the repair request) is protected activity is an open question the law does not settle [an open question not in the context file]"},
+        {"reply": 4, "category": "REPEATED", "evidence": "borderline: Since your email lacked that intention, it may not meet that specific example. [same analysis as replies 1 and 2]"},
+        {"reply": 5, "category": "ASK_AGAIN", "evidence": "Would you like to confirm those three facts now? [three facts the tenant already gave]"},
+        {"reply": 5, "category": "RECITED", "evidence": "You emailed the landlord on September 12, 2026 asking him to fix the roof because it leaks into your bedroom when it rains."},
+        {"reply": 6, "category": "REPEATED", "evidence": "borderline: If you want to pursue ending the lease or using the repair issue as a defense, you would need to send a new written notice that states your intention [same steps and lease delivery paragraph as replies 1 and 2]"},
+        {"reply": 6, "category": "OFFER", "evidence": "Would you like me to help you draft such a notice? [same offer a third time]"}
+      ]
+    },
+    {
+      "code": "R013",
+      "scenario": "eval_rent_hike_duplex",
+      "replies": 3,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "The tenant is told the increase 'appears permissible' on a date comparison the model made and that the roof email 'likely is not' protected, with no next step; the deadlines reply is an empty stub."
+      },
+      "slips": [
+        {"reply": 1, "category": "DATE_MADE", "evidence": "Your notice was dated September 27 and the increase takes effect November 1, which is more than 30 days, so the notice condition is met."},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "Either way, the notice you received satisfies the requirement. [a yes for a period the program could not count]"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: the increase takes effect November 1, which is more than 30 days [83.57(3) counts 30 days before the end of a monthly period, not before the effective date]"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "you can check if it stated an intention to terminate the lease or to withhold rent [the sheet already holds 'False' for both; also asks to confirm good faith, other tenants, good cause]"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "so it likely is not a protected complaint [treats the 83.64(1)(c) example as the only protected activity; the statute's list is 'not limited to']"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "A protected complaint must state the noncompliance and indicate your intention to end the lease or to withhold rent (Fla. Stat. 83.56(1)). [83.56(1) says only terminate]"},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "Thus, on the facts you have confirmed, the increase does not appear to be retaliation for your roof request [motive is not in the record]"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "you can raise retaliation as a defense only if the landlord brings an action for possession (Fla. Stat. 83.64(2))."}
+      ]
+    },
+    {
+      "code": "R018",
+      "scenario": "eval_rent_hike_duplex",
+      "replies": 3,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "Opens with a flat 'Yes' that settles the open question and leans on the model's own date comparison; the retaliation reply is careful but ends by repeating 'permissible'; the deadlines reply is just a stray tag."
+      },
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Since the notice period is met and Florida statute does not limit the amount of a rent increase, the increase is permitted."},
+        {"reply": 1, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE reading for rent increase)"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "which is more than 30 days before the end of the October monthly period"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "Since the notice period is met [a yes for a period the program could not count; the monthly period's end is not in the record]"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "Florida statute does not limit the amount of a rent increase [rule with no cite]"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "borderline: so whether it qualifies as a protected complaint is not known yet; you can check the wording against what 83.56(1) requires. [the sheet holds that the message says nothing about ending the lease or rent; also 'You have not confirmed whether any rent is unpaid' when the sheet says rent was paid]"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "For now, the rent increase itself is permissible under the month-to-month notice rule (see prior answer)."}
+      ]
+    },
+    {
+      "code": "R094",
+      "scenario": "eval_rent_hike_duplex",
+      "replies": 5,
+      "law_replies": 4,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Reply 3 gives the tenant a clear, well-tied answer on the increase (readings, what each means, a preserve letter), but replies 1, 2, 4 and 5 recite facts, repeat the six-condition list, mark the Sept 12 email as protected conduct, and offer the same letter every time."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You received notice of the increase to $1,150 on September 27, 2026, effective November 1, 2026 [and the roof-leak facts listed back]"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "this is protected conduct under 83.64(1)(c) when it concerns a issue under 83.56(1) [(c) needs a complaint pursuant to 83.56(1), a notice stating an intention to terminate; the email did not]"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: This defense requires all six conditions to be met (Fla. Stat. 83.64(2)) [the conditions come from (1), (3), (4); (2) does not say it]"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You appear to have acted in good faith (legitimate repair complaint, continued rent payment)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "for a standalone increase, other remedies would need to be explored [no readings, nothing on what follows]"},
+        {"reply": 2, "category": "RECITED", "evidence": "Confirmed facts: - Rent: $950/month, increasing to $1,150 effective November 1, 2026 [whole list of the tenant's facts]"},
+        {"reply": 2, "category": "REPEATED", "evidence": "This requires all six conditions (Fla. Stat. 83.64(2)) [the rent-increase section repeats reply 1]"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "You complained to the landlord about a repair (Sept 12 email) - protected conduct under 83.64(1)(c) [contradicts its own 'Critical point' that the email states no intention to terminate]"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You appear to have acted in good faith (legitimate complaint, continued rent payment)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "What 'material' means for the leak [list of unsettled points with no readings and nothing on what each changes]"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: This requires all six conditions (Fla. Stat. 83.64(2))"},
+        {"reply": 2, "category": "OFFER", "evidence": "Would you like me to help you draft a letter to the landlord about either the repair issue (stating intent to terminate or withhold rent) or the rent increase [same offer as reply 1]"},
+        {"reply": 2, "category": "ID", "evidence": "borderline: (skill open question on rent paid)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: The notice must be delivered by a method allowed under 83.56(4) [after listing notice delivery as unsettled; the rent notice's delivery is an open question]"},
+        {"reply": 3, "category": "RECITED", "evidence": "borderline: You received notice of the increase to $1,150 on September 27, 2026, effective November 1, 2026."},
+        {"reply": 3, "category": "OFFER", "evidence": "borderline: Would you like me to help you draft a letter to the landlord about the rent increase, or do you have questions about giving notice to end your tenancy? [third time]"},
+        {"reply": 4, "category": "OPEN_CLOSED", "evidence": "You cannot bring a standalone claim just because you believe the increase is retaliatory; you would raise it only if an eviction action is filed."},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "This is protected conduct under 83.64(1)(c) when it concerns an issue that could support termination under 83.56(1) ... Met based on your email."},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Appears met: you reported a genuine leak, continued paying rent [and 'Met: ... no apparent good cause' when no lease violation is in the record]"},
+        {"reply": 4, "category": "DATE_MADE", "evidence": "Timing alone (increase notice 15 days after your repair email) does not prove"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "The statute does not declare a rent increase retaliatory based solely on timing after a repair complaint [and three 'open questions' not in the context file]"},
+        {"reply": 4, "category": "OFFER", "evidence": "Would you like me to help you draft a letter to the landlord about the rent increase (asking for confirmation of the new rent and its basis) or about giving notice to end your tenancy"},
+        {"reply": 4, "category": "REPEATED", "evidence": "borderline: To raise the retaliation defense in an eviction action, all six conditions must be met [same list as replies 1 and 2]"},
+        {"reply": 5, "category": "ID", "evidence": "1. The date your written notice was delivered to the landlord (message_date) [also 'The loaded skill for repair_not_made' and 'waiting [repair not made]']"},
+        {"reply": 5, "category": "ASK_AGAIN", "evidence": "Until you confirm those three facts (by sending a new notice that includes one of those intentions, or by clarifying that your email did include such an intention)"},
+        {"reply": 5, "category": "OFFER", "evidence": "I can help you draft such a letter if you'd like."},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "borderline: The notice must be delivered by a method allowed under Fla. Stat. 83.56(4) [stated for the rent-withholding notice too]"},
+        {"reply": 5, "category": "REPEATED", "evidence": "borderline: Because those intentions are missing, neither of the 7-day periods ... is currently running from that email [same as reply 2]"}
+      ]
+    },
+    {
+      "code": "R001",
+      "scenario": "eval_student_roommate",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 3,
+        "why": "The tenant's real question, what changes if it was Devin, is never answered, the late-fee point is cited to the wrong lease section, and the repair answer gives no clear route; reply 2 does answer the 'wait so' question directly."
+      },
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "Late fees only apply to unpaid rent, not to damage charges, so they cannot add a late fee to this $85 unless you are late on rent (Lease Section 3.3 does not list a late-fee provision for damages)."},
+        {"reply": 1, "category": "QUOTE_WRONG", "evidence": "(Lease Section 3.3 does not list a late-fee provision for damages) [3.3 is the non-refundable fees clause; the late charge is 3.2]"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "as the lease allows deductions for the cost of repairing damage beyond normal wear and tear to shared areas (Lease Section 4.2) [4.2 says that for the bedroom and bathroom; shared areas are 'equal share ... under Section 3.4']"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "Late fees only apply to unpaid rent, not to damage charges, so they cannot add a late fee to this $85 unless your rent is late (Lease Section 3.3)."},
+        {"reply": 2, "category": "QUOTE_WRONG", "evidence": "unless your rent is late (Lease Section 3.3) [wrong section]"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Thus, you may have to pay your share of the $85 if the landlord cannot identify the responsible roommate, and the amount can be taken from your deposit [repeats reply 1's late-fee and deposit points the tenant did not ask about again]"},
+        {"reply": 2, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: To end the lease or withhold rent, you must first deliver a written notice that names the problem and states you intend to end the lease (or stop paying rent)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: The landlord may deduct the $85 repair charge from your security deposit as a cost for damage beyond normal wear and tear (Lease Section 4.2)."},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: provided the problem is a material failure of a duty under 83.51(1) or a material lease provision [condition named, not applied to a washer, nothing on who settles it or what follows]"}
+      ]
+    },
+    {
+      "code": "R005",
+      "scenario": "eval_student_roommate",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "The tenant gets a usable plan (send Devin's admission to the office, the late-fee clause covers rent only, a notice for the leak), but the answer that Devin's fault means 'you would not be liable' rests on a misread 7.1, the statutory remedy is stated with no cite or conditions, and replies 1 to 3 largely repeat each other."
+      },
+      "slips": [
+        {"reply": 1, "category": "QUOTE_WRONG", "evidence": "jointly and severally liable for damage to the Unit's shared appliances when Landlord cannot determine which resident caused the damage [source has 'shared areas (...) and its shared appliances']"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: The landlord may deduct from your security deposit for \"the cost of repairing damage beyond normal wear and tear\" (Lease Section 4.2). [that clause is about the bedroom and bathroom]"},
+        {"reply": 1, "category": "ID", "evidence": "This fits the \"repair not made\" situation."},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "If you want to pursue ending the lease or withholding rent because of the leak, you would need to give a written notice that states the problem and your intention"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "you would need to give a written notice that states the problem and your intention (to end the lease or not pay rent) [no statute cited]"},
+        {"reply": 1, "category": "RECITED", "evidence": "You put in a request on Sept. 15, a tech came Sept. 17 and wrote it up as resident misuse, and you put in another request Oct. 3 saying the washer still leaks a little."},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: the landlord can only add late charges to rent that is paid late"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: The landlord may deduct from your security deposit for \"the cost of repairing damage beyond normal wear and tear\" (Lease Section 4.2)."},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you would need to give a written notice that states the problem and your intention (to end the lease or not pay rent)"},
+        {"reply": 2, "category": "OPTION_BEFORE_OPEN", "evidence": "If you wish to pursue ending the lease or withholding rent because of the leak, you would need to give a written notice"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Since the $85 is not rent, late fees likely do not apply unless the lease says otherwise (I found no such provision). [late-fee and deposit paragraphs repeat reply 1]"},
+        {"reply": 2, "category": "OFFER", "evidence": "Let me know if you'd like help drafting such a notice or if you have other questions."},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "then the exception in Section 7.1 applies and you would not be liable for the $85 charge [7.1 is the landlord's repair duty exception; it does not say who pays]"},
+        {"reply": 3, "category": "OVERCLAIM", "evidence": "borderline: you would not be liable for the $85 charge"},
+        {"reply": 3, "category": "REPEATED", "evidence": "The $85 charge is not rent, so late fees likely do not apply unless the lease says otherwise (I found no such provision). [third time, with the same 3.2 and 4.2 quotes]"},
+        {"reply": 3, "category": "OFFER", "evidence": "If you'd like help drafting a written notice to the office about the charge or the ongoing washer leak, just let me know."},
+        {"reply": 3, "category": "RECITED", "evidence": "borderline: you've already told me about the Sept. 15 portal request, the Sept. 17 tech visit, and the Oct. 3 request"},
+        {"reply": 4, "category": "RECITED", "evidence": "You submitted a portal request on Sept. 15 (\"The washer is leaking. Please fix it.\") [and the tech visit and Oct. 3 request listed back]"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "None of those requests stated an intention to end the lease or to stop paying rent. [the Oct. 3 request's wording is not in the record]"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "borderline: The lease does not require a special notice just to ask for a repair [no search of the lease for it]"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "If they don't, you may then terminate the lease or, after 7 days, raise the unrepaired condition as a defense [no 'materially fails', no 83.51(1) coverage of a washer, no word on rent paid with knowledge]"},
+        {"reply": 4, "category": "OPTION_BEFORE_OPEN", "evidence": "To do either of those, you must deliver a written notice to the landlord that:"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "The landlord's duty to repair the washer does not depend on whether you pay that charge. [and the 7-day notice rule, no statute cited]"},
+        {"reply": 4, "category": "OFFER", "evidence": "Let me know which path you'd like to take, and if you'd like a draft notice for the repair problem."},
+        {"reply": 4, "category": "REPEATED", "evidence": "borderline: Once that notice is delivered, the landlord has 7 days to fix the problem. [same steps as replies 1 and 2]"}
+      ]
+    },
+    {
+      "code": "R017",
+      "scenario": "eval_student_roommate",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 1,
+        "conversational": 1,
+        "why": "The tenant is told the charge follows the equal-split rule, never answered about Devin, and told they 'cannot compel repair under the lease or statute' with no mention of the notice route; reply 2 repeats reply 1 whole before the new point."
+      },
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: You said the roommate broke the washer and the landlord could not tell who did it, so the $85 charge follows that rule. [ignores the tenant's own fact that it was Devin; the office, not the tenant, said it cannot tell]"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "and the statute does not add one, so late fees would only apply if the lease includes them for other charges [lease 'does not provide a late-fee provision' stated with no search]"},
+        {"reply": 2, "category": "REPEATED", "evidence": "The lease makes residents jointly and severally liable for damage to shared appliances when the landlord cannot determine who caused it, and divides the cost equally among them (Lease Section 3.4). [first three paragraphs repeat reply 1]"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "You said the roommate broke the washer, so the exception applies and the landlord is not obligated to repair it under the lease. [the sheet says the repair did not stop the leak]"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "Therefore, the landlord has no statutory duty to fix the washer when the damage is attributed to a roommate. [roommate-caused question presented as settled; 83.51(4) not cited]"},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "you may still ask the landlord to fix it as a courtesy, but you cannot compel repair under the lease or statute."},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "and the statute does not add one, so late fees would only apply if the lease includes them for other charges"}
+      ]
+    },
+    {
+      "code": "R023",
+      "scenario": "eval_student_roommate",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "The tenant gets a direct answer (likely owes the $85 under 7.4, late fees probably not, deposit only with the 83.49(3) notice) and a route for the leak, but the landlord-can-determine step and the reading of 7.1 are wrong, the notice rule has no cite, and replies 1 and 2 are copies."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You submitted a portal request on September 15 (\"The washer is leaking. Please fix it.\"), a technician came September 17, and you submitted another request on October 3 because it still leaks."},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "Since you say Devin (your roommate) admitted in the group chat that he washed his comforter and shoes, causing the leak, the landlord can determine who caused the damage. [the office says it cannot tell]"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "Your September 15 and October 3 requests did not state an intention to terminate the lease or withhold rent [the Oct. 3 wording is not in the record]"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "so they do not meet the statutory notice requirements for those remedies. [no statute cited]"},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "To pursue remedies like ending your lease or withholding rent (as a defense if the landlord sues for possession), you would need to deliver a written notice"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Even if you are responsible for paying for the repair (because your roommate caused it), the landlord still has a duty to perform the repair properly. [reply 2 repeats reply 1]"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "Since Devin (your roommate) admitted in the group chat that he washed his comforter and shoes, causing the leak, the landlord can determine who caused the damage."},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "Your September 15 and October 3 portal requests did not state an intention to terminate the lease or withhold rent"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "so they do not meet the statutory notice requirements for those remedies."},
+        {"reply": 2, "category": "OPTION_BEFORE_OPEN", "evidence": "To pursue remedies like ending your lease or withholding rent (as a defense if the landlord sues for possession), you would need to deliver a written notice"},
+        {"reply": 2, "category": "OFFER", "evidence": "Would you like me to help you draft a written notice to the landlord about the continuing leak [same offer as reply 1]"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "Since Devin (your roommate) admitted in the group chat that he washed his comforter and shoes, causing the leak, the landlord can determine who caused the damage."},
+        {"reply": 3, "category": "REPEATED", "evidence": "Late fees in your lease apply only to unpaid rent installments not received by the 5th of the month (Lease Section 3.2). [and the 7.1 / 7.4 / 3.4 reasoning, third time]"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "That exception excuses the landlord from paying for the repair when the damage is caused by a resident or guest, but it does not excuse the landlord from actually doing the repair work. [7.1's words except damage caused by a roommate from the duty to repair]"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "Until you give such a notice, the landlord's failure to fix the leak properly does not automatically let you end the lease or withhold rent. [and the 7-day steps, no statute cited]"},
+        {"reply": 4, "category": "OPTION_BEFORE_OPEN", "evidence": "To pursue remedies like ending your lease or withholding rent (as a defense if the landlord sues for possession), you would need to deliver a written notice to the landlord that:"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "Your September 15 and October 3 portal requests did not state an intention to terminate the lease or withhold rent"},
+        {"reply": 4, "category": "REPEATED", "evidence": "You could now send a new written notice that includes the required language. [same notice steps as replies 1 and 2]"},
+        {"reply": 4, "category": "OFFER", "evidence": "Would you like me to help you draft that notice now? [same offer a third time]"}
+      ]
+    }
+  ]
+}

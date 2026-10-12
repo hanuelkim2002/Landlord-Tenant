@@ -5,6 +5,20 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- Eval of the skills, before and after (TODO item 116, done; `docs/evals/2026-10-12-skills/`). The 26 stories with
+  expectations, 2 runs each, on e32ab77 (its own scenarios and driver) and on this copy, nemotron, no gateway trouble.
+  By code: 41 of 52 runs met every expectation before, 20 of 52 after (the expectations differ where the flow does);
+  dates the model wrote 3 to 19; cautions 21 to 73; recited 7 to 34; lease searches 34 to 64. Blind (26 Sonnet scorers,
+  two per batch, 69% agreement, the rubric revised for the conversation): slips per reply 2.02 to 3.70 (firm 1.31 to
+  2.64); legal answers applied well 13.8% to 12.6%; helpful 2.50 to 2.84; conversational 2.18 to 2.08. Better: the tenant
+  sent to check the lease (firm 7.1 to 2.1 per 100 replies), cases misread, quotes alone, ids. Worse: offers, repeated
+  content, law from memory, reciting, asking again, conditions, dates, an option's steps first, choosing. The automatic
+  reply after a confirmation (TODO 114) carries 46 of the 115 REPEATED slips in 53 of the 266 replies. Findings: TODO 118
+  to 120 (the automatic reply, the deadlines when asked when, the scripted chat lines), AUTHOR 121 (the next step: a
+  stronger model, a small code check back, or both), SLIPS 59, 62, 65 counts and new entries 122 and 123. The rubric
+  (`dev/eval_rubric.md`) revised for the conversation; the blind method in the eval's `method/`. Chart shown in the
+  session.
+
 - TODO, AUTHOR, and SLIPS swept for the skills. TODO 99 (the sheet's snags: an issue row with no suggestion, a field id in
   "Skipped for now", "Taken out of your matter", no warning before a no that ends the visit, the commands named nowhere)
   went with the issue rows, the drop command, the stop page, and the labels of TODO 111 and 112; TODO 100 keeps the

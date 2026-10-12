@@ -6,6 +6,12 @@ shared with TODO.md and SLIPS.md and never reused.
 
 ## Decisions that hold up work
 
+121. After the skills (eval of 2026-10-12, `docs/evals/2026-10-12-skills/`): on nemotron the tool reads the lease and is
+    rated a little more helpful (2.50 to 2.84), but slips per reply rose from 2.02 to 3.70: law from memory twice as
+    often, offers in most replies, conditions applied wrong or missed more, dates worked out, an option's steps before
+    whether it is open (0.9 to 4.5 per 100 replies). Decide the next step: try a stronger agent model on the same
+    stories (`AGENT_MODEL`), bring back a small code check for the slips that hurt a tenant most (an option's steps
+    before whether it is open, dates), or both; and whether to keep the automatic reply (TODO 118).
 117. The rules of version H (`docs/structure/2026-10-12-rules.txt`, in `prompt.py` since TODO 114). The review of
     2026-10-11 and 12 agreed the opening, the format paragraph, and rules 1 to 4, and paused at rule 5 (suggested, not
     agreed). Rule 5, the skills paragraph, and rules 6 to 9 were written in the same style to finish the plan: read them

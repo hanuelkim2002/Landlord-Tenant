@@ -1,0 +1,278 @@
+{
+  "scorer": "B12_a",
+  "runs": [
+    {
+      "code": "R010",
+      "scenario": "eval_know_violation_guest",
+      "replies": 3,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Helpful: the open question is given with both readings and three options, but the lease is wrongly said to set no limit on guest stays and the same menu is given three times. Conversational: replies 2 and 3 re-run reply 1 almost whole instead of building on it."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "What you told me: ... On September 30, 2026, your landlord handed you a notice saying your lease is terminated and you have 7 days to move out, because your boyfriend has been staying over too many nights"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "If you move out by October 7, 2026 (7 days from September 30, counting calendar days and not counting the delivery day), you avoid an eviction filing."},
+        {"reply": 1, "category": "OVERCLAIM", "evidence": "borderline: you avoid an eviction filing"},
+        {"reply": 2, "category": "RECITED", "evidence": "What you’ve confirmed: ... The notice does not give you a chance to fix the problem. You have not received any prior written warning about this issue."},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "(you confirmed you never got any warning); only the delivery date, offers-cure and terminates-now were confirmed, the warning, no-rent and no-case facts were only said"},
+        {"reply": 2, "category": "ID", "evidence": "(WHICH DEADLINES HAVE PASSED: seven days to vacate [notice received violation]: passed)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Having a boyfriend stay over could be seen as having an unauthorized guest, which the statute lists as something that should get a chance to cure. This is an open question the tool does not decide. (same open-question block, defense steps and options as reply 1)"},
+        {"reply": 2, "category": "OFFER", "evidence": "I can help you take the next step—such as drafting a letter to the landlord or preparing a record of what happened. (same offer as reply 1)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "The lease does not define “unauthorized occupant” or set a limit on how many nights a guest may stay. (only the phrase was searched; 'occupant' and nights never searched; the same lease holds a 14-day/30-day limit in Section 5.1, printed in R066)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: That means the landlord may now file an eviction case for possession based on this notice."},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "but does not define “unauthorized occupant” or set a limit on how many nights a guest may stay (Lease Sections 7.2, 8.1, 8.4, 13.3)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "If the violation is like the examples in 83.56(2)(a) (destruction, damage, intentional misuse of property, or a continued unreasonable disturbance), then the landlord may end the lease without giving you a chance to fix it. (third telling of the same readings and the same three options)"},
+        {"reply": 3, "category": "OFFER", "evidence": "Let me know which of those steps you’d like to take, and I can help you draft a letter or prepare a record."}
+      ]
+    },
+    {
+      "code": "R026",
+      "scenario": "eval_know_violation_guest",
+      "replies": 1,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 3,
+        "why": "Helpful: says the question is unsettled but never says what follows under each reading, reads no lease clause, and leaves no next step. Conversational: one reply that uses the tenant's sheet answers and question directly, but it is a single dense paragraph."
+      },
+      "slips": [
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Therefore, on these facts, whether the landlord can end the lease without giving you a chance to fix it is not settled. (no reading is tied to what it means for the tenant: notice stands vs. notice denies the chance to cure; nothing on what is left to do)"}
+      ]
+    },
+    {
+      "code": "R066",
+      "scenario": "eval_know_violation_guest",
+      "replies": 3,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Helpful: finds lease Section 5.1 and lays out options with the open question stated, but never ties the 14/30-day limit to how many nights he stayed and adds uncited law about default and rent. Conversational: the lease paragraph and the options are repeated nearly whole in each reply."
+      },
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "A defense (such as paying rent into the court registry) only arises once a case is filed. (no cite; 83.60(2) not cited in this reply)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: no other person may reside at the premises for more than fourteen (14) consecutive days or more than thirty (30) days in any calendar year without the landlord’s prior written consent (Lease Section 5.1) (how many nights he stayed is not named as unknown or tied to what follows)"},
+        {"reply": 1, "category": "OVERCLAIM", "evidence": "borderline: If you move out by the deadline, you comply with the notice and avoid an eviction case over this notice."},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you would have a limited time to respond (usually 5 days) to avoid a default judgment ... You would still owe rent through the date you actually vacate, and the landlord could still make a claim on your security deposit (no statute or lease cite for any of it; the open-question paragraph also cites no section)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Your lease limits authorized occupants to you, your spouse, and your minor child. (same lease paragraph, same three options, same open question as reply 1)"},
+        {"reply": 2, "category": "OFFER", "evidence": "I can help you draft such a letter if you want. (letter offered again)"},
+        {"reply": 2, "category": "CHOICE_MADE", "evidence": "borderline: **Move out as soon as possible.** This stops any further rent accrual under the lease"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: no other person may reside at the premises for more than fourteen (14) consecutive days or more than thirty (30) days in any calendar year (lease limit set out again with nothing on whether his stays exceed it)"},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: If you move out now, you avoid an eviction case over this notice."},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Your lease limits authorized occupants to you, your spouse, and your minor child, and states that no other person may reside at the premises for more than fourteen (14) consecutive days or more than thirty (30) days in any calendar year (Lease Section 5.1) (stated with no application to the facts)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "If the landlord files an eviction case, you could defend by arguing the notice was invalid because the alleged violation should have had a cure period and you had no prior warning. (third telling of the lease paragraph and defense from replies 1 and 2)"}
+      ]
+    },
+    {
+      "code": "R075",
+      "scenario": "eval_know_violation_guest",
+      "replies": 1,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "Helpful: a clear answer, but it settles the open question for the tenant and gives no next step or lease reading. Conversational: one standalone reply that never offers where to go from here."
+      },
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The violation fits the example of a curable noncompliance (having or permitting unauthorized guests) under 83.56(2)(b), and there was no prior warning, so the condition for immediate termination under 83.56(2)(a) is not met."},
+        {"reply": 1, "category": "OVERCLAIM", "evidence": "the notice you received that terminates the lease immediately is ineffective under the statute"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: but that period only runs from a valid termination notice."}
+      ]
+    },
+    {
+      "code": "R020",
+      "scenario": "eval_cases_retaliation",
+      "replies": 5,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "Helpful: calls a listed pet violation an open question, argues a cure defense against a notice that already gave a cure, says the tool has no retaliation cases when it has one, and says it does not cover repairs. Conversational: the option menus and the repair paragraph recur, and the last reply is a stub."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You’ve had the cat for a year, the landlord never objected before, and you’ve continued paying rent. You also mentioned ongoing smoke detector and mold issues since September 1, which you reported to city code enforcement on September 10."},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "a pet violation like yours is not explicitly listed (83.56(2)(b) lists unauthorized pets by name; also: The landlord has not accepted rent since the notice (you say they haven’t), which may affect waiver arguments under Fla. Stat. 83.56(5)(a) is offered as a defense though no rent was accepted)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Whether the 7 days run from delivery or receipt. ... The program counts from the delivery date you give. (no readings or what each means; the notice was handed over, so delivery and receipt fall on the same day)"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: (this tool does not cover repair obligations, but you may have rights under the lease or housing codes) (the tool has a repair situation)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "The landlord could now deliver a notice of termination or file an eviction case for possession, relying on the original 7‑day notice. (no cite)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "The violation (having a cat) is of a nature that should have given you a chance to cure (an open question in the statute). (this notice already gave the cure; pets are listed in 83.56(2)(b); the waiver bullet again lists no rent accepted as a defense)"},
+        {"reply": 2, "category": "RECITED", "evidence": "borderline: You are still paying rent, and the landlord has not accepted any rent since the notice was delivered."},
+        {"reply": 2, "category": "REPEATED", "evidence": "You received no written warning of a similar pet violation in the 12 months before this notice. (the same three defense bullets and the same 'Other issues' paragraph as reply 1)"},
+        {"reply": 2, "category": "OFFER", "evidence": "Get ready for a possible eviction case? (same offer as reply 1)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: This tool does not cover repair obligations"},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "A lease violation like keeping a cat without a required pet addendum could be asserted as good cause. (whether the tenant has a pet addendum is not known; lease 10.2 speaks of the pet 'currently' kept)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "You would need to show: (1) you engaged in protected activity (the Sept. 10 complaint), (2) the landlord took adverse action (the Sept. 24 notice), (3) there is a causal connection (the close timing may suggest this)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: (4) the landlord cannot prove the eviction is for good cause (83.64(3) puts the proof of good cause on the landlord)"},
+        {"reply": 3, "category": "CHOICE_MADE", "evidence": "borderline: Continue paying rent unless you receive proper notice to terminate or legal advice otherwise."},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: This tool does not cover repair obligations, but you may have rights under the lease, housing codes"},
+        {"reply": 3, "category": "OFFER", "evidence": "Draft a letter to the landlord about the cat notice or the repair issues? / Prepare for a possible eviction case? (offered before)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "Courts in Florida have interpreted this provision to allow tenants to raise retaliatory conduct as a defense in eviction actions (no case cited)"},
+        {"reply": 4, "category": "ID", "evidence": "The topics available are listed in COURT CASES THIS TOOL HAS"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "This tool’s case database does not include specific cases on retaliation for reporting code violations. (get_cases was never called; the tool has a Retaliatory eviction topic, Salmonte v. Eilertson)"}
+      ]
+    },
+    {
+      "code": "R051",
+      "scenario": "eval_cases_retaliation",
+      "replies": 3,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "Helpful: finds the one retaliation case but reads it as support for a rule it does not state and never says whether the tenant's city report counts. Conversational: terse and standalone, and the last reply is only a note that the deadlines were printed."
+      },
+      "slips": [
+        {"reply": 1, "category": "CASE_MISREAD", "evidence": "he may be able to show good cause (Salmonte v. Eilertson, 526 So. 2d 179, 180 (Fla. 1st DCA 1988): “the landlords had good cause to evict”) (case rule applied to the tenant with no word on how alike the facts are; the Salmonte tenant admitted several breaches)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "Whether you can defend against the notice as retaliatory turns on whether the landlord can prove good cause for the notice. (leaves out 83.64(1): the tenant's complaint to the city, good faith, 'primarily because'; never applies the tenant's September 10 complaint)"},
+        {"reply": 2, "category": "CASE_MISREAD", "evidence": "Thus, a court has said a landlord may not retaliate for a tenant’s report to the city (Salmonte says nothing of the kind; the tenant there admitted lease violations and lost the defense)"}
+      ]
+    },
+    {
+      "code": "R061",
+      "scenario": "eval_cases_retaliation",
+      "replies": 3,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 1,
+        "conversational": 1,
+        "why": "Helpful: asks the tenant to confirm a report they already described, then answers the court question with one bare quote and no word on what it means for them. Conversational: ignores what the tenant said, and the last reply is a placeholder."
+      },
+      "slips": [
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "turns on whether you reported him to the city about the broken smoke detectors and mold, which you can confirm on the sheet (the tenant said so in the question and the description)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "if you did, then under Fla. Stat. 83.64(1) the landlord may not retaliate by threatening an action for possession ... primarily because you complained to a governmental agency (leaves out the good-faith condition of 83.64(1))"},
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "The landlord may still show good cause for the notice under Fla. Stat. 83.64(3). (rule set out; nothing on the cat notice, lease Section 10.1, or what follows for the tenant)"},
+        {"reply": 2, "category": "QUOTES_ONLY", "evidence": "The court said the retaliatory eviction defense “does not apply when the landlord proves that the eviction is for good cause” (a bare quote; nothing on how the case compares to the tenant or what it means for them)"}
+      ]
+    },
+    {
+      "code": "R090",
+      "scenario": "eval_cases_retaliation",
+      "replies": 5,
+      "law_replies": 2,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Helpful: the retaliation answer applies the statute and lease to the tenant's facts and the later reply says which options are closed, but it wrongly says the tool has no retaliation cases. Conversational: reply 1 asks five things the tenant already said and reply 3 re-explains reply 2."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You said the landlord handed you a notice stating you are violating the lease by having a cat and that you have 7 days to remove it or the lease ends."},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "Date the notice was delivered to you – you said it was handed to you on September 24, 2026. Is that correct? (five questions in chat, most already answered in the description)"},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: You can still avoid termination by removing the cat within the 7‑day period. (said before it is known whether the period has run; the reply admits it does not know)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "unless you can show that the notice was improper or that the landlord has waived the right to terminate (for example, by accepting rent with knowledge of the violation) (no cite; 83.56(5)(a) not cited)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: You said the landlord has not accepted any rent since the notice was delivered, so the waiver argument does not apply at this point. (leaves out the year of rent taken while the cat was there and the landlord 'never cared')"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "the lease does not fix a reply period for this kind of letter (no search of the lease for it)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "Your lease prohibits pets without a written addendum (Lease Section 10.1), and the notice alleges you are violating that rule. (the retaliation paragraph repeats reply 2)"},
+        {"reply": 3, "category": "OFFER", "evidence": "If you would like to send a letter to the landlord now, I can help you draft one. (letter offered in reply 2)"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "To do that, I need a few details: 1. What you want the landlord to do ... 3. How you will deliver the letter (the lease requires notices ...) 4. Who will sign the letter (four asks; the lease already says how notices go)"},
+        {"reply": 3, "category": "ID", "evidence": "borderline: the options under the notice‑violation skill that require action within the 7 days"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "This tool does not have any court cases on the topic of retaliation for reporting a landlord to a government agency. (get_cases never called; a Retaliatory eviction topic exists)"},
+        {"reply": 4, "category": "ID", "evidence": "The COURT CASES THIS TOOL HAS list does not include a topic that covers retaliation"}
+      ]
+    },
+    {
+      "code": "R008",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Helpful: says plainly the tool cannot count for Orange County and lists the steps, but suggests an October 9 payment might still be on time and says paying late does not cure without the acceptance-waiver rule. Conversational: the same 'pay as soon as possible' and the same calendar explanation come back in every reply, with the letter offer each time."
+      },
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: The program will compute the 3‑day deadline from the delivery date, skipping weekends and Orange County court holidays, once those facts are confirmed. (the tool holds no Orange County calendar)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "How the days are counted (whether the delivery day counts, when the period ends) and which holidays count are not settled by the statute (Fla. Stat. 83.56(3)). (no readings, nothing on what each means for the tenant)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "However, the landlord must then give you a receipt showing the date, amount received, and agreed balance due (Fla. Stat. 83.56(5)(a)). (leaves out the registry and new 3-day notice alternatives; the 5-day registry rule is also given without 'any defense other than payment')"},
+        {"reply": 2, "category": "DATE_MADE", "evidence": "borderline: if the count skips a holiday that falls on October 4‑5"},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: If the legal deadline is later than October 6 ... paying on October 9 might still be within the period. (a later deadline does not reach October 9)"},
+        {"reply": 2, "category": "CHOICE_MADE", "evidence": "borderline: the only way to be sure you are paying within the 3‑day window is to pay **as soon as possible**"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "you would have 5 days after service to pay the rent into the court registry or file a motion to determine the amount; failing to do so waives defenses other than payment (Fla. Stat. 83.60(2)) (leaves out the trigger 'any defense other than payment' and the weekend/holiday exclusion)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Check the notice’s form – you can compare what it says to the statutory form ... (same steps list as reply 1: pay, if you cannot pay, 5 days after service, notice form)"},
+        {"reply": 2, "category": "OFFER", "evidence": "Let me know if you would like to draft a letter to the landlord (for example, to state that you intend to pay or to ask for a receipt if you make a partial payment)"},
+        {"reply": 3, "category": "CHOICE_MADE", "evidence": "borderline: To be certain you are paying within the 3‑day window, pay as soon as you can—ideally before the date stated in the notice (October 6) or immediately."},
+        {"reply": 3, "category": "REPEATED", "evidence": "How the days are counted and which holidays count are open questions in the statute (Fla. Stat. 83.56(3)), and the tool does not settle them. (verbatim sentence and calendar explanation from reply 2)"},
+        {"reply": 3, "category": "OFFER", "evidence": "I can help you record it or draft any needed letters."},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "Paying **after** those 3 days have elapsed does **not** cure the default; the landlord may proceed with termination (leaves out the 83.56(5)(a) rule that the landlord waives by accepting rent with actual knowledge, which is what the October 9 question turns on)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "Paying **after** those 3 days have elapsed does **not** cure the default (83.56(3) as printed does not say this)"},
+        {"reply": 4, "category": "QUOTE_UNMARKED", "evidence": "borderline: If the tenant fails to pay rent when due and the default continues for **3 days, excluding Saturday, Sunday, and legal holidays**, after delivery of the landlord’s written demand for payment, the landlord **may terminate the rental agreement** (Fla. Stat. 83.56(3))."},
+        {"reply": 4, "category": "CHOICE_MADE", "evidence": "the safest course is to pay **as soon as possible**—ideally before the date stated in the notice (October 6) or immediately"},
+        {"reply": 4, "category": "REPEATED", "evidence": "The program cannot compute that period because no court‑holiday calendar for Orange County is stored (and the same pay-as-soon-as-possible advice, third time)"},
+        {"reply": 4, "category": "OFFER", "evidence": "If you would like to send a letter to the landlord confirming your intent to pay (or to request a receipt if you make a partial payment), I can help draft one."}
+      ]
+    },
+    {
+      "code": "R046",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 3,
+        "why": "Helpful: tells the tenant the tool cannot count the days and that the notice says October 6, but nothing on who can settle the count, no step, and no word on the October 9 paycheck. Conversational: short replies that stay on the question and reuse the notice's dates, but cold and without any lead to a next step."
+      },
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "because it lacks the holiday calendar for Orange County (get_deadlines)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "The tool could not compute the legal last day to pay because it lacks the holiday calendar for Orange County (nothing on what follows or who can settle the count, for example the county's court holiday list)"},
+        {"reply": 2, "category": "ID", "evidence": "The tool cannot compute whether the 3‑day period has ended by October 9 because it lacks the holiday calendar for Orange County (get_deadlines)."},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "Since the tool cannot determine which of those readings applies, the answer is not settled. (consequences given, but no one named who can settle it and no next step)"}
+      ]
+    },
+    {
+      "code": "R064",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Helpful: covers paying early, the October 9 acceptance point, partial rent and what the lease says, but says October 6 or earlier is certainly within any reading and hints a weekend could push the deadline past October 9. Conversational: the lease paragraph, the counting sentence and the letter offer are repeated in each reply."
+      },
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: Once you confirm them, the program will compute the 3‑day deadline excluding Saturdays, Sundays, and legal holidays in Orange County. (the tool holds no Orange County calendar)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "How far a notice may differ and still be in substantially that form is not settled by the law. (no readings and nothing on what each means for the tenant)"},
+        {"reply": 1, "category": "RECITED", "evidence": "Your lease says notices to the landlord must be in writing and delivered by hand, certified mail, return receipt requested, or nationally recognized overnight courier to: Sunrise Property Holdings, LLC, Attn: Property Manager, 4120 NW 39th Avenue, Suite 210, Gainesville, Florida 32606; or by email with confirmation of receipt"},
+        {"reply": 1, "category": "QUOTE_UNMARKED", "evidence": "borderline: The notice requirements of subsections (1)–(3) of 83.56 may not be waived in the rental agreement. (Fla. Stat. 83.56(4))"},
+        {"reply": 2, "category": "RECITED", "evidence": "Based on the confirmed facts—the notice was delivered on October 1, 2026, states the last day to pay or leave is October 6, 2026, and the house is in Orange County (and the lease Section 22.1 passage pasted again)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Your lease requires notices to the landlord to be in writing and delivered by hand, certified mail, return receipt requested, or nationally recognized overnight courier to: Sunrise Property Holdings, LLC (same sections as reply 1: pay before the deadline, if it passes, notice form, lease Section 22.1)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "they must give you a receipt stating the date and amount received and the agreed‑upon date and balance of rent due before filing an action for possession. (Fla. Stat. 83.56(5)(a)) (leaves out the registry and new 3-day notice alternatives)"},
+        {"reply": 2, "category": "OFFER", "evidence": "I can help you draft a letter."},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "borderline: Please let me know what you would like to say and how you wish to send the letter (certified mail, email, etc.). (the lease already says how; plus a request for the notice's wording)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "Under the statute, the 3‑day period runs after delivery of the notice (October 1, 2026) and excludes Saturdays, Sundays, and legal holidays. (no section cited)"},
+        {"reply": 3, "category": "OFFER", "evidence": "Let me know if you’d like help drafting a letter to the landlord (for example, to confirm your intent to pay or to request an account of the balance)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "How those 3 days are counted (whether the delivery day counts, when the period ends) and which holidays count are not settled by the law. Because the program does not have a court‑holiday calendar for Orange County, it cannot calculate the exact deadline date for you. (word for word from reply 3; lease paragraph a third time)"},
+        {"reply": 4, "category": "RECITED", "evidence": "Your lease requires notices to the landlord to be in writing and delivered by hand, certified mail, return receipt requested, or nationally recognized overnight courier to: Sunrise Property Holdings, LLC, Attn: Property Manager, 4120 NW 39th Avenue"},
+        {"reply": 4, "category": "OVERCLAIM", "evidence": "you could pay **on or before** the date stated in the notice (October 6) or earlier, which would certainly be within any reasonable reading of the 3‑day period. (if the delivery day counts, October 6 may be late; also: if the period skips a weekend or a holiday that pushes the deadline later, though the weekend is already out of the count to October 6)"},
+        {"reply": 4, "category": "OFFER", "evidence": "I can help you draft a letter to the landlord confirming your intent to pay on October 9 (or to pay earlier)"},
+        {"reply": 4, "category": "ASK_AGAIN", "evidence": "borderline: Just let me know what you want to say and how you wish to send the letter. (the lease holds how)"}
+      ]
+    },
+    {
+      "code": "R092",
+      "scenario": "eval_know_nonpayment_orange",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "Helpful: says what the tool cannot count, who can settle it (the clerk) and what follows either way for an October 9 payment, but offers no steps beyond checking. Conversational: reply 2 builds on reply 1 and the tenant's October 1 and October 6 dates without repeating."
+      },
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "which is needed to count the three days (excluding Saturday, Sunday, and legal holidays) after the notice was delivered on October 1, 2026 (the rule is stated with no section cite)"}
+      ]
+    }
+  ]
+}

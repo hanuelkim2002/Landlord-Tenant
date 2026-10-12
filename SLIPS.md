@@ -12,10 +12,11 @@ How to log:
 - Rule numbers are the current rules (version G, 2026-10-02). Items 4 to 23, logged under earlier rule sets, were taken
   off on 2026-10-01 (CHANGELOG says where each went). Numbers are shared with TODO.md and AUTHOR.md and never reused.
 
-Latest blind scoring (2026-10-03, `docs/evals/2026-10-03-blind/`): 36 of 115 legal answers applied well (21 of 103 on
-2026-10-02); rules restated without their quote 46.5, conditions applied wrong 30.5 (AUTHOR.md 63 holds the ones for
-the playbooks), quotes without marks 26, facts not confirmed 21.5, dates worked out 13, cases misread 17.5 or one-sided
-13.5 (item 71).
+Latest blind scoring (2026-10-12, `docs/evals/2026-10-12-skills/`, the skills before and after, rubric revised that
+day): legal answers applied well 13.8% before, 12.6% after; slips per reply 2.02 to 3.70 (firm 1.31 to 2.64); helpful
+2.50 to 2.84, conversational 2.18 to 2.08. After, firm per 100 replies: offers 42.3, repeated content 38.2, law from
+memory 34.6, recited 24.8, asked again 24.6, conditions wrong 12.8 or missed 12.4. Earlier: 2026-10-03,
+`docs/evals/2026-10-03-blind/` (36 of 115 applied well).
 
 ## What the model states as known
 
@@ -35,10 +36,12 @@ the playbooks), quotes without marks 26, facts not confirmed 21.5, dates worked 
 ## Dates and deadlines
 
 59. Dates the model works out: "Thirty days after June 30, 2026 is July 30, 2026.", "about 52 days". Counts: 2026-10-02
-    blind 12.5, code 4; 2026-10-03 (items 51 to 53) 4 turns; 2026-10-03 (items 54 to 61) 3 turns. Status: watching;
-    rule 3's pairs; the eval's echo and dates-made measures catch it.
+    blind 12.5, code 4; 2026-10-03 (items 51 to 53) 4 turns; 2026-10-03 (items 54 to 61) 3 turns; 2026-10-12 code 3
+    before, 19 after the skills (blind firm 2 and 20). Status: code-side cause in TODO 119 (the program no longer
+    prints the deadlines when nothing is dated).
 65. Asked when, the model does not call `get_deadlines`. Counts: 2026-10-08 part 2 eval 4 of 46 runs (lease renewal 2,
-    leaving early 2). Status: fixed for the tenant by item 65 (the program prints the deadlines itself); counted only.
+    leaving early 2); 2026-10-12 after the skills 7 turns failed it in 52 runs. Status: since TODO 114 the program prints
+    them only when one has a date; TODO 119.
 12. A claim letter's printed date suggested as the date it was received. Counts: 2026-10-01 trial 1 of 3 claim runs;
     2026-10-01 eval 0 of 9. Status: watching; the sheet shows the suggestion and the tenant corrects it.
 
@@ -73,7 +76,14 @@ the playbooks), quotes without marks 26, facts not confirmed 21.5, dates worked 
     renewal must be signed by October 15). Counts: 2026-10-03 2 of 3, then 3 of 3. Status: watching; since the rules of
     version H (2026-10-12) there is no fixed line, only "say so plainly and do not guess".
 62. Offers the tenant did not ask for, more after a deadline listing. Counts: 2026-10-03 3 then 6 turns in 48 runs.
-    Status: watching; since 2026-10-12 rule 9 asks for the next step once, and the rubric's OFFER counts only an offer
-    that is not the next step, or one made again.
+    2026-10-12: blind OFFER (an offer not the next step, or made again) firm 1 before, 112.5 after the skills, in
+    266 replies; 41 of the 127 on the automatic reply after a confirmation. Status: watching; rule 9 of version H asks
+    for the next step once; TODO 118 for the automatic reply.
+122. A reply that repeats an earlier one (the same conditions, the same steps) instead of building on it: blind
+    REPEATED firm 14.5 before, 101.5 after the skills (2026-10-12), 46 of the 115 on the automatic reply after a
+    confirmation. Status: code-side cause in TODO 118; scripted chat lines written for the old flow add some (TODO 120).
+123. A rule or a reading from memory: a reading of an open question that is not in the skill ("Reading 2: A material
+    noncompliance can include a serious breach ... that affects habitability"), a three-day-notice warning no loaded
+    skill gives. Blind LAW_UNSOURCED firm 22.5 before, 92 after the skills (2026-10-12). Status: watching.
 41. Empty replies. Counts: 2026-10-01 2 and 3 turns in 48 runs; 2026-10-08 part 2 eval 2 turns that were scored.
     Status: watching; `reply_empty` logs the gateway's finish_reason.

@@ -1,0 +1,259 @@
+{
+  "scorer": "B6_a",
+  "runs": [
+    {
+      "code": "R007",
+      "scenario": "eval_cases_late_claim",
+      "replies": 6,
+      "law_replies": 4,
+      "applied_well": 2,
+      "ratings": {
+        "helpful": 4,
+        "conversational": 2,
+        "why": "The tenant leaves knowing the late notice cost the landlord the claim, that the landlord can still sue separately, and who pays fees; but the same answer comes three times, the same letter offer in four replies, and reply 1 only asks to confirm facts already given."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Please confirm that the following are correct: - You moved out and your lease ended on June 30, 2026 ... - You have not yet sent the landlord a written objection. (the tenant's facts listed back)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "I need to confirm a few facts before I can tell you what deadlines apply ... Please confirm that the following are correct (six facts the tenant already gave; no application of the law)"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "You are therefore entitled to the full $1,000 deposit back. (forfeiture stated without the statute's 'may file an action for damages after returning the security deposit')"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: was sent by certified mail on August 24, 2026 (the tenant said they received it by certified mail on August 24; the date it was sent is not in the record)"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "Just let me know how you'd like to send it (...), how many days you want to give the landlord to reply, and who should sign it. (three things at once)"},
+        {"reply": 2, "category": "DEADLINE_REPEAT", "evidence": "both dates are after the July 30, 2026 deadline"},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: was sent by certified mail on August 24, 2026 (received, not sent, per the tenant)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "Repeats reply 2: the 30-day rule, the same dates, 'forfeited the right to impose a claim on your deposit', and the same offer"},
+        {"reply": 3, "category": "OFFER", "evidence": "I can help you draft a letter demanding the return of your full deposit ... Would you like me to draft that letter for you? (second time)"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "how you'd like to send it (certified mail, hand-delivery, email with confirmation), how many days you want to give the landlord to reply, and who should sign it"},
+        {"reply": 3, "category": "DEADLINE_REPEAT", "evidence": "so the 30-day deadline was July 30, 2026"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "These cases are on point with your situation: your lease ended June 30, 2026 ... (asserts the cases reach the tenant; says nothing of how alike the cases' facts are, e.g. Durene read the 1981 statute, Malagon is a jury trial with a counterclaim)"},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "borderline: forfeits the right to keep any of the deposit and must return it (Durene's holding that the landlord may still bring an independent damages action, and Malagon's counterclaim award to the landlord, left out; reply 3 had said the landlord may sue separately)"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "borderline: dated August 20, 2026 and sent August 24, 2026 (received on the 24th per the tenant)"},
+        {"reply": 4, "category": "DEADLINE_REPEAT", "evidence": "both after the July 30, 2026 deadline"},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You are entitled to the full $1,000 back-not just the $700 they tried to keep. (whether the other $300 was already returned is not in the record; the tenant said the landlord is keeping $700)"},
+        {"reply": 5, "category": "REPEATED", "evidence": "Repeats the forfeiture paragraph and 'The landlord could still file a separate lawsuit for damages...' from reply 3 nearly word for word"},
+        {"reply": 5, "category": "OFFER", "evidence": "If you'd like, I can help you draft a letter demanding the return of your full deposit. (third time)"},
+        {"reply": 5, "category": "ASK_AGAIN", "evidence": "how you'd like to send it (...), how many days you want to give the landlord to reply, and who should sign it"},
+        {"reply": 6, "category": "OFFER", "evidence": "If you'd like, I can help you draft a letter demanding the return of your full deposit. (fourth time, not tied to the fee question asked)"},
+        {"reply": 6, "category": "ASK_AGAIN", "evidence": "how you'd like to send it (...), how many days you want to give the landlord to reply, and who should sign it"},
+        {"reply": 6, "category": "RECITED", "evidence": "borderline: Your lease says: 'In any civil action between the Parties ... Section 83.48, Florida Statutes.' The statute says the same: 'If either party institutes an action ...' (two full sentences pasted though the program prints the cited words)"}
+      ]
+    },
+    {
+      "code": "R042",
+      "scenario": "eval_cases_late_claim",
+      "replies": 6,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "The late-notice forfeiture is quoted, but the reply invents two 'open questions', says the landlord 'may now deduct the $700' after the 30 days passed, and tells the tenant the law gives no definitive answer; replies 2 and 3 repeat each other."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "**Your situation** - Lease ended: June 30, 2026 ... - Security deposit: $1,000 ... and again under 'What is left to do' (tenant's facts listed back twice)"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "dated August 20, 2026-51 days after you moved out on June 30"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "two things the statute does not settle: 1. Whether a notice sent by certified mail after the 30 days still counts as the 'required notice' ... (not an open question of the context file; 83.49(3)(a) says the right is forfeited) and 'If you object in time, the landlord may not deduct the claim unless they prove it in a separate action' (no stored text says this)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "2. Whether a notice you actually received in time (even if late) is enough (... notice may be given by other means permitted by law) - 83.505(6) is about the way a notice is served, not lateness; the notice here came by certified mail"},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "1. **Object to the claim in writing** ... You must object within 15 days after you received the notice (August 24, 2026). (steps given first, before saying whether the objection period is still open)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "borderline: Please confirm the three dates above so I can show you the deadlines (dates the tenant already gave)"},
+        {"reply": 2, "category": "DEADLINE_REPEAT", "evidence": "That period ended around July 30, 2026 ... around September 8, 2026 ... around September 19, 2026"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "Because you did not object in writing within 15 days ..., the landlord may now deduct the $700 claim from your deposit and send you the balance ($300). (83.49(3)(b) applied without the 30-day condition of (3)(a), which the program shows passed)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "two points the statute does not settle ... 'it does not explicitly say a late notice is invalid'; 'If the landlord accepts it, they must return your deposit' (readings and rule not in the context file or the stored text)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "Whether a notice you actually received in time (even if late) is enough ... (Fla. Stat. 83.505(6) misapplied to a late notice that came by certified mail)"},
+        {"reply": 2, "category": "RECITED", "evidence": "The statute says: 'If the landlord fails to give the required written notice within the 30-day period, he or she forfeits ... to the tenant.' plus the 83.49(3)(b) sentence in italics (statute pasted though the program prints it)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: Your lease tracks the statute closely ... It does not say what happens if they miss that deadline. (said of the whole lease from clause 4.3 and a 'deposit' search; no search for a consequence)"},
+        {"reply": 2, "category": "ID", "evidence": "borderline: Whether a late objection counts is not settled by the statute (see the open questions above under 'How the tenant may object') - a prompt heading shown to the tenant"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "If you want to send a letter, I will need to know: - What you want the landlord to do ... - How many days ... - How you will send the letter ... - Who will sign it (four things)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "Repeats reply 2: the statute's late-notice sentence, the same two 'points the statute does not settle', 'Your lease tracks the statute', the (3)(b) italic quote, and the same letter list"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "the landlord may now deduct the $700 claim and send you the $300 balance (after saying the 30-day period was missed and the right forfeited)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "Two points remain unclear, so the law does not give a definitive answer to whether the landlord can still keep the money (invented open question; 83.49(3)(a) states the forfeiture)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "Whether actual receipt of the notice (even if late) is enough. Another section says notice may be given by any other means permitted by law (83.505(6))"},
+        {"reply": 3, "category": "DATE_MADE", "evidence": "dated August 20, 2026-about 50 days after you moved out (counted by the model; reply 1 said 51)"},
+        {"reply": 3, "category": "DEADLINE_REPEAT", "evidence": "the objection period ended around September 8, 2026"},
+        {"reply": 3, "category": "RECITED", "evidence": "'he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff ... to the tenant.' and the (3)(b) sentence pasted in italics"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: It does not state the consequence of missing that deadline. (said of the whole lease with no search for a consequence clause)"},
+        {"reply": 3, "category": "OFFER", "evidence": "If you would like to send a letter to the landlord ... I can help you draft it. (second time)"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "You would need to decide: - What you want the landlord to do ... - How many days ... - How you will send the letter ... - Who will sign it"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "In Durene v. Alcime ... The landlord did not send the required notice within 30 days after she moved out ... The landlord had to return the deposit. (printed Durene read the 1981 statute, speaks of a 15-day period, says nothing of 30 days, the tenant's sex, or a holding that the landlord had to return the deposit; the landlord returned it after suit)"},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "borderline: Durene's holding that the landlord may still bring an independent damages action, and Malagon's counterclaim award to the landlord and denial of fees, left out"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: the statute leaves some questions open (as discussed earlier) - the invented open questions presented again"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "the statute leaves two points open ... (1) whether a notice sent after the 30 days still counts as the 'required notice' (not an open question of the context file)"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "(2) whether actual receipt of the notice (even if late) is enough to cure the lateness (a notice-method rule applied to timing)"},
+        {"reply": 5, "category": "REPEATED", "evidence": "Repeats the three case holdings from reply 4 and the two 'open points' from replies 2 and 3"},
+        {"reply": 5, "category": "OFFER", "evidence": "If you would like to send a letter to the landlord demanding the return of your full deposit ..., I can help you draft it. (third time)"},
+        {"reply": 6, "category": "LAW_UNSOURCED", "evidence": "the court decides what is reasonable based on the work done. There are Florida cases that discuss how fees are calculated and when they are awarded (no cite; not in 83.49(3)(c))"},
+        {"reply": 6, "category": "OFFER", "evidence": "borderline: If you would like to see what Florida courts have said about attorney's fees in deposit cases, I can retrieve those cases for you. (the lease's fee clause 14.4 was never read)"}
+      ]
+    },
+    {
+      "code": "R056",
+      "scenario": "eval_cases_late_claim",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Reply 1 gives a clean, correct answer on the facts, but the later replies repeat the same case quotes, list the confirmed facts back, and never say what the tenant can do next (no objection or demand step)."
+      },
+      "slips": [
+        {"reply": 2, "category": "QUOTE_WRONG", "evidence": "In Durene v. Alcime the court said the landlord 'forfeited his right to impose a claim upon the security deposit' (printed Durene says 'forfeited his access to that particular, readily available fund of money'; the quoted words are the statute's)"},
+        {"reply": 2, "category": "CASE_MISREAD", "evidence": "All three cases interpreted the same statute provision that applies today, Fla. Stat. 83.49(3)(a). (Malagon read 83.49(3)(c) (1989); Durene read the 1981 version, Casey the 1987 version)"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: Your facts match the late-notice pattern ... (Malagon's counterclaim award to the landlord and Durene's independent damages action not mentioned; Plakhov is mentioned)"},
+        {"reply": 3, "category": "RECITED", "evidence": "You confirmed you moved out June 30, 2026; you confirmed the notice is dated August 20, 2026 and received August 24, 2026; you confirmed the deposit is $1,000; you confirmed the claim is $700 for cleaning and painting."},
+        {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "Your lease says the same: thirty (30) days to give Tenant written notice ... of Landlord's intention to impose a claim on the Deposit (Lease Section 4.3). (lease words without quote marks)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "Repeats the Durene, Malagon, and Casey quotes from reply 2 and the forfeiture rule and 'The landlord could still sue for damages separately' from reply 1"},
+        {"reply": 3, "category": "QUOTE_WRONG", "evidence": "Durene v. Alcime held that the landlord 'forfeited his right to impose a claim upon the security deposit' (not word for word in Durene)"},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: you should receive the full $1,000 deposit back (whether the other $300 was already returned is not in the record)"},
+        {"reply": 4, "category": "RECITED", "evidence": "You confirmed you moved out June 30, 2026; you confirmed the landlord's notice is dated August 20, 2026 and received August 24, 2026; you confirmed the deposit is $1,000 and the claimed amount is $700 for cleaning and painting."},
+        {"reply": 4, "category": "ONE_SIDED", "evidence": "Malagon v. Solari similarly stated that failure to give the required notice makes the landlord liable for attorney's fees and costs (Malagon's own trial court denied fees because both sides prevailed and the landlord won a counterclaim award; left out)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "borderline: Durene v. Alcime noted that a landlord who fails to give the required notice may become liable for attorney's fees and costs under section 83.49(3)(c) (Durene ... at 1210) (the printed Durene text says nothing of fees; only Malagon says so)"}
+      ]
+    },
+    {
+      "code": "R099",
+      "scenario": "eval_cases_late_claim",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "The reply keeps saying it is 'not known yet' whether the notice was late although the notice date and the passed 30-day deadline are in the record, so the tenant never gets a straight answer on the money; the fee answer is right but skips the lease clause."
+      },
+      "slips": [
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: Whether you can get the deposit back ... is not known yet; it turns on whether the notice was sent after the 30 days ended ... if the Aug 20 date is after that deadline, the condition is met; if it is on or before, it is not met. (rule and both branches set out, facts not applied to it though the notice is dated Aug 20 and the program shows the deadline passed)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "the landlord may keep the claim subject to your objection deadline (...failure to object does not waive your right to sue for a refund) (no cite; the 83.49(3)(b) sentence is not cited)"},
+        {"reply": 2, "category": "CASE_MISREAD", "evidence": "Your facts match: you received a notice claiming $700 for cleaning and painting; if the notice was untimely, the court would award you the full $1,000 deposit. (Malagon's facts - jury verdict, counterclaim, $3,300 - not compared; also courts 'who miss the 30-day notice deadline' though Durene and Casey read earlier versions)"},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "the court would award you the full $1,000 deposit"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "borderline: Malagon quoted without the landlord's counterclaim award; Durene's independent damages action not mentioned (reply 1 had said 'unless he sues separately')"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "(subject to your objection, which the 15-day deadline has also passed, but failure to object does not waive your right to sue for a refund in a separate action) (no cite to 83.49(3)(b))"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "borderline: Whether the notice was sent after that deadline is not known yet-you can check the postmark or the e-mail's date (sends the tenant to re-check what the sheet holds: dated Aug 20, received Aug 24, by certified mail, not e-mail)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "Repeats the 30-day rule, both branches, and the Durene, Malagon, and Casey summary from replies 1 and 2"},
+        {"reply": 3, "category": "QUOTES_ONLY", "evidence": "borderline: Thus, you do not automatically get the $700 back; you could get the full deposit if the notice was untimely, or ... if the notice was timely (the record shows which)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "This rule applies regardless of the amount in dispute and is not altered by your lease. (no lease search was made; the lease has a fee clause, 14.4)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "applies regardless of the amount in dispute (83.49(3)(c) does not say so)"}
+      ]
+    },
+    {
+      "code": "R033",
+      "scenario": "eval_student_hot_water",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 1,
+        "why": "The tenant learns that the portal request lacked a stated intention and that notices must go by hand, certified mail, or e-mail, but gets no word on subsection (2), the waiver question has no readings, and the second reply is the first one again after the tenant said it was too much to read."
+      },
+      "slips": [
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "If you deliver a proper notice and the landlord does not fix the hot water within seven days, you may terminate the lease. (no 'materially fails to comply'; 83.51(1)(b) applies only where no code applies; 83.51(2)(a)5 lists hot water for this kind of unit and is not mentioned)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The landlord must keep the plumbing in reasonable working order (Fla. Stat. 83.51(1)) (hot water treated as a subsection (1) duty; the (1)-or-(2) question and the portal-as-delivery question not presented)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Whether paying rent while knowing of the problem waives your right to terminate is not settled by the statute (no readings, nothing on what follows for the tenant who paid October rent)"},
+        {"reply": 1, "category": "ID", "evidence": "(see WHAT THE STATUTE DOES NOT SETTLE for 83.56(5)(a))"},
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "a resident-portal request may not satisfy that rule, so you should check how you sent the notice. (the tenant already said portal; Lease 7.2 says a maintenance request is not a notice under 13.1)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Repeats reply 1: the plumbing duty, the notice requirement, the seven-day paragraph, the 83.56(1)(b) paragraph and the waiver sentence, to a tenant who said 'that was a lot to read'"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "If you deliver a proper notice and the landlord does not fix the hot water within seven days, you may terminate the lease. (no 'materially', no subsection (2) listing of hot water)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "a resident-portal request is not one of those methods, so it does not satisfy the lease's notice rule either (the statutory delivery question for 83.60(1)(b) left unsaid; hot water still treated as a subsection (1) duty)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "Whether paying rent while knowing of the problem waives your right to terminate is not settled by the statute"},
+        {"reply": 2, "category": "ID", "evidence": "(see WHAT THE STATUTE DOES NOT SETTLE for 83.56(5)(a))"}
+      ]
+    },
+    {
+      "code": "R055",
+      "scenario": "eval_student_hot_water",
+      "replies": 2,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Reply 2 answers the portal question and says what a proper notice needs, but the tenant is told to check the lease and the code office, is told the landlord is 'not yet in breach', and reply 1 never says the portal message already lacked the needed statement."
+      },
+      "slips": [
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "Whether the landlord must provide hot water turns on whether hot water is considered part of the plumbing ... under Fla. Stat. 83.51(1)(b) or a building- or housing-code requirement (83.51(2)(a)5 names hot water for a unit other than a single-family home or duplex and is not mentioned)"},
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "Your resident-portal request may or may not satisfy that; you can check it against that clause. (the tool read 13.1 and holds 7.2)"},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "If you have given a proper written notice ... the landlord has 7 days after delivery to fix it before you may terminate the lease (steps given without saying that the tenant's message states neither intention, which the record shows)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Paying rent after knowing of the problem may waive your right ... but the statute does not settle whether that waiver applies when the problem continues (no readings, nothing on what follows for October rent already paid)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "you may recover damages for the loss you suffered under Fla. Stat. 83.55, such as the cost of showering elsewhere, but you must prove those damages. (83.55 does not say 'must prove')"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "a resident-portal request is not listed there either. (Fla. Stat. 83.56(4)) ... so the 7-day period for termination or rent withholding has not started. (Fla. Stat. 83.56(1); 83.60(1)(b)) (83.60(1)(b) names no way; one reading picked)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "the landlord is not yet in breach for failing to fix the hot water (no stored text makes breach depend on notice; reply 2 itself cites 83.55 damages for a breach)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "If the breach does not make the unit untenantable, the statute allows the rent to be reduced ... (83.56(1)(b)) (leaves out that this applies only when the failure is due to causes beyond the landlord's control and the landlord makes every reasonable effort; the landlord has done nothing since Sept 29)"},
+        {"reply": 2, "category": "LEASE_PUNTED", "evidence": "You can check whether hot water is considered part of the plumbing ... by looking at your lease's maintenance clause (Lease 7.1 lists plumbing and the tool can read it)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "the statute does not settle that point (no readings of subsection (1) versus (2) and what each means for notice and rent)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Repeats from reply 1 the 7-day termination paragraph, the withhold-rent defense line, the 83.55 damages line and the 'statute does not settle' point"}
+      ]
+    },
+    {
+      "code": "R057",
+      "scenario": "eval_student_hot_water",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 4,
+        "conversational": 2,
+        "why": "The tenant gets clear, usable steps (a notice that states the intention and how to deliver it), the lease quote in reply 4, and the three unsettled points named; but replies 1 to 4 repeat the same notice steps and offer, and money back is mostly deflected."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You reported the hot-water loss via the resident portal on September 28, and maintenance came the next day ... You also said the AC has been cutting out since around September 14."},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "e-mail only if you and the landlord have an e-mail notice addendum (no cite; 83.505 not cited and not printed under the reply)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "Whether your payment constitutes a waiver is an open question. (the two readings of 'continuing noncompliance' and what each means for the tenant not given)"},
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: Whether you are entitled to money back ... would require a separate claim for damages, which this tool does not cover. (rent reduction under 83.56(1)(b) and 83.60(1)(b) answers 'pay less rent' and is not applied)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: e-mail only if you and the landlord have an e-mail notice addendum (the open question of how the 83.60(1)(b) notice is delivered not presented; the hand and certified-mail ways work under every reading)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "borderline: Confirm the facts I've proposed (the date of your portal request, that it did not mention ending the lease ...) (facts the tenant already gave)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Repeats reply 1 almost word for word: the lease line, the notice rule, 'What you can do now', the three unsettled points, 'What the tool cannot decide'"},
+        {"reply": 2, "category": "RECITED", "evidence": "The facts you confirmed (message date 2024-09-28, no mention of ending the lease, no mention of not paying rent) are now recorded."},
+        {"reply": 2, "category": "DATE_MADE", "evidence": "borderline: message date 2024-09-28 (the tenant said Monday, September 28, which is 2026; the year 2024 came from the model's proposed fact and was confirmed on the sheet)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "e-mail only if you and the landlord have an e-mail notice addendum (no cite)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "Whether your payment constitutes a waiver is an open question. (no readings, nothing on what follows either way)"},
+        {"reply": 2, "category": "QUOTES_ONLY", "evidence": "borderline: Whether you are entitled to money back ... which this tool does not cover."},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: e-mail only if you and the landlord have an e-mail notice addendum (delivery question stated as settled)"},
+        {"reply": 2, "category": "OFFER", "evidence": "If you want, I can help you draft such a notice ... Would you like to proceed with drafting a notice (second offer)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Whether the loss of hot water ... is a 'material' noncompliance ... they depend on how serious the condition is, how long it lasts (only one reading; the reading that a failure of a listed duty is material whatever its size is left out)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Whether your October rent payment constitutes such a waiver is an open question the tool does not decide. (no readings or consequences)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "The 'Next step' list (describe the problems; state your intent to end the lease or withhold rent; give seven days) repeats replies 1 and 2"},
+        {"reply": 3, "category": "OFFER", "evidence": "Would you like me to help you draft such a notice (third time)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "e-mail only if you and the landlord have an e-mail notice addendum (no cite)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: If a court finds ... the statute allows the rent ... to be reduced ... (83.56(1)(b)) (the beyond-the-landlord's-control and every-reasonable-effort condition is left out of this bullet, though it is named later under 'cannot decide')"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "Your portal messages described the problems but did not say you intended to end the lease or to withhold rent. (the tenant gave the words of the September 28 message only; what the AC request said is not in the record)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "e-mail only if you and the landlord have an e-mail notice addendum (no cite; lease 13.1 allows e-mail to office@ without saying so)"},
+        {"reply": 4, "category": "OPEN_CLOSED", "evidence": "borderline: they do not meet the statutory notice requirement (portal as a delivered notice under 83.60(1)(b), which names no way, not presented as open)"},
+        {"reply": 4, "category": "OFFER", "evidence": "Would you like me to help you draft such a notice (fourth time)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "'What you can do now' repeats the same notice steps and delivery ways given in replies 1, 2 and 3"}
+      ]
+    },
+    {
+      "code": "R060",
+      "scenario": "eval_student_hot_water",
+      "replies": 3,
+      "law_replies": 3,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 1,
+        "why": "Three long, headed essays that ask the same goal and notice questions each time and answer almost nothing on how long or what money; the tenant said 'that was a lot to read' and got another long one."
+      },
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "Keeping the plumbing in reasonable working condition (which covers hot water, as part of the plumbing system) ... Since the hot water problem continues ..., you may still have rights (hot water called plumbing, then 'open question'; the waiver question answered with one reading)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "there's an open question in the law about whether hot water is covered under subsection (1) ... or subsection (2) ... - this affects how strong your claim is. (no readings, no word on notice and the withholding defense)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "both options require you to first send a proper written notice that specifies the noncompliance ... States your intention (no cite for the notice rule; 83.56(1) and 83.60(1)(b) are not cited); 'if it's considered part of heat facilities'"},
+        {"reply": 1, "category": "RECITED", "evidence": "**Important facts from your situation:** - You noticed no hot water since Monday, September 28 ... - No court action has been filed against you"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "I need to know: 1. What do you want to achieve? 2. Have you sent any written notice ...? 3. If you have sent such a notice: How did you send it ..., what date ..., and what exactly did it say? (more than two things, asked twice in the reply)"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You paid October rent after knowing about the hot water problem (the tenant said only that October rent was paid, not when)"},
+        {"reply": 1, "category": "QUOTE_WRONG", "evidence": "borderline: if you 'pay rent with actual knowledge of a noncompliance by the landlord,' (the statute reads 'pays rent')"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "Florida law doesn't set a specific number of days that a landlord can leave you without hot water-or any other essential service ... (no cite; the stored sections set 7 days after written notice); the 7-day and notice rules in sections 1 and 2 carry no cite"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "Since the hot water problem continues ..., you may still have rights regarding the ongoing failure to repair. (waiver question: one reading)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "You may be able to end the lease ... You may be able to withhold rent (no 'materially fails to comply with 83.51(1)'; the subsection (1)-or-(2) question raised in reply 1 is dropped, though hot water is listed in (2))"},
+        {"reply": 2, "category": "RECITED", "evidence": "**5. What you've told me so far** - Hot water outage started: Monday, September 28 ... - No court action filed against you"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Repeats reply 1: the facts list, the notice rule, the waiver paragraph, and the same questions about goal and other notices"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "What is your main goal right now? ... Have you sent any written notice ...? If yes, please describe how you sent it ..., the date ..., and exactly what it said. (asked a second time)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You said you paid October rent after knowing about the hot water problem (the tenant did not say when)"},
+        {"reply": 2, "category": "QUOTE_WRONG", "evidence": "borderline: if you 'pay rent with actual knowledge of a noncompliance by the landlord,'"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "Florida law requires specific delivery methods: For the remedies of ending your lease (83.56(1)) or withholding rent as a defense (83.60(1)(b)), the notice must be delivered by: Mailing it ... Emailing it only if ... (83.60(1)(b) names no way; one reading presented as the rule)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "A resident-portal message is not one of these methods unless your lease or a signed addendum specifically says it counts-and your lease says the opposite. (no stored text lets a lease make a portal message count; Lease 7.2 does not say the opposite)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "'As explained, Florida law doesn't set a flat number of days', the 7-day clock, the goal and notice questions and the 'Once I know ... I can' list repeat replies 1 and 2"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "What is your main goal right now? ... Have you sent any written notice ...? If yes, please describe how you sent it ..., the date ..., and exactly what it said. (third time, more than two things)"}
+      ]
+    }
+  ]
+}

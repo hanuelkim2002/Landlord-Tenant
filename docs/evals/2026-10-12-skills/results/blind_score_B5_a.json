@@ -1,0 +1,213 @@
+{
+  "scorer": "B5_a",
+  "runs": [
+    {
+      "code": "R025",
+      "scenario": "eval_noise_neighbors",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: the tenant ends with a ready letter and learns that ending the lease turns on a lease promise, but is told flatly the landlord need not act and gets an empty deadlines list with no explanation; conversational: replies are terse standalone answers (reply 3 says nothing, reply 5 is one line) and do not build on each other."
+      },
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The landlord is not required to act under the lease or the statute; they may choose to act but are not obligated. (whether the landlord must act is an open question; one reading picked)"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "the tool found nothing on quiet enjoyment or enforcing rules against other tenants in your lease's text. Since the lease does not promise to address such disturbances (only 'quiet enjoyment' was searched)"},
+        {"reply": 2, "category": "RECITED", "evidence": "Your facts: loud parties with music until 3 or 4 am almost every night from the upstairs neighbor who rents from the same landlord; you complained in writing; the landlord said there's nothing they can do."},
+        {"reply": 2, "category": "LEASE_PUNTED", "evidence": "You can check your lease for any quiet-enjoyment or rule-enforcement clause (the tool had searched the lease and printed 5.2 and 22.1)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: The lease does not promise to enforce rules against other tenants or to guarantee quiet enjoyment (Lease Section 5.2, 8.1, 14.2; ...) - a negative claim from searches on 'rules' and 'neighbor' only; 8.1 and 14.2 not printed"}
+      ]
+    },
+    {
+      "code": "R047",
+      "scenario": "eval_noise_neighbors",
+      "replies": 7,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: tenant gets the statute rules, the lease point, a letter and a cases answer, but the can-I-break-the-lease answer misstates the conditions and the cases reading overreaches; conversational: replies 1 to 4 restate the same lease/statute/unsettled blocks and end with the same 'would you like me to draft' question, so they read as repeats, not a conversation."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "What we know from your facts: - The upstairs neighbors throw parties until 3 or 4 am almost every night... (You told me) ... You have not reported it to anyone else. (You told me)"},
+        {"reply": 1, "category": "POSTURE_OWN_WORDS", "evidence": "This notice preserves your rights and creates a record. (and: 'a \"preserve\" letter')"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: They rent from the same complex (same landlord). (You told me) - tenant said 'same complex'; and 'Notes your prior complaints (including the email on September 8, 2026)' - tenant gave September 8 as the first complaint, not as the email's date"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Where we stand: lease does not promise enforcement; statute gives a remedy it may use; not settled whether inaction is a breach; 'What you can do next' - same three-point notice and same points as reply 1"},
+        {"reply": 2, "category": "OFFER", "evidence": "Would you like me to draft that notice for you? (same offer as the end of reply 1)"},
+        {"reply": 2, "category": "POSTURE_OWN_WORDS", "evidence": "This notice creates a paper trail and preserves your rights."},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Notes your prior complaints (including the email of September 8, 2026)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "The landlord is not legally obligated to stop the noise ... Because the law does not compel the landlord to act, you cannot force the landlord to intervene (whether the landlord must act is open; the lease-clause reading is not given)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "What your lease says / What the statute allows / What you can do next - the same lease sentence and the same notice steps as replies 1 and 2"},
+        {"reply": 3, "category": "OFFER", "evidence": "Would you like me to draft that notice for you? (third time)"},
+        {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "it simply preserves your rights and shows you have given the landlord a chance to act"},
+        {"reply": 4, "category": "ID", "evidence": "(Open question: \"Ending the tenant's own lease\" in the neighbor_disturbance skill.)"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "The three conditions you must meet ... 2. Same landlord - The noisy tenants must rent from the same landlord as you ... 3. Unreasonable disturbance - listed under 'What the statute requires for a tenant to end the lease' (83.56(1) has neither condition)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "borderline: the three open questions and the 'What your lease says' paragraph repeat reply 1 and reply 3 almost word for word"},
+        {"reply": 4, "category": "LEASE_PUNTED", "evidence": "borderline: Choose a delivery method allowed by the lease and the statute (hand-delivered, certified mail... or email if you and the landlord have agreed to electronic notices) - the notices clause (22.1) was never searched; it allows email only for routine communications"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Notes your prior complaints (including the email of September 8, 2026)"},
+        {"reply": 5, "category": "ID", "evidence": "The neighbor_disturbance skill does not set any deadlines for a landlord to act"},
+        {"reply": 7, "category": "CASE_MISREAD", "evidence": "this case suggests that your written complaints (made before any landlord notice) could satisfy the precondition to raising that defense (Lakeway turned on a 83.60(1) complaint stating intent not to pay rent; the tenant's email does not); and the Durene point garbled: 'landlord's duty to give a section 83.49(5) notice was not excused' (case says 83.49(3)(a))"},
+        {"reply": 7, "category": "UNCONFIRMED_FACT", "evidence": "you are still in possession and have not withheld rent (the tenant never said anything about rent)"},
+        {"reply": 7, "category": "OFFER", "evidence": "borderline: If you would like to proceed with a letter that includes an intention to terminate ... I can help you draft one (offered in reply 4 already)"}
+      ]
+    },
+    {
+      "code": "R062",
+      "scenario": "eval_noise_neighbors",
+      "replies": 5,
+      "law_replies": 3,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: first answer opens 'whether the landlord can do something ... is not settled' although 83.56(2)(a) gives the landlord a remedy, second answer sends the tenant to check the lease and an email the record already describes, and the court question gets one line over two printed cases; conversational: terse separate answers, reply 3 is a meta note ('No additional text added')."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You confirmed that the upstairs tenants rent from the same landlord, that they hold loud parties with music until 3 or 4 am almost every night, and that you complained in writing on September 8, 2026, to which the landlord replied there is nothing they can do."},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: you complained in writing on September 8, 2026 (September 8 is the first complaint; the written complaint's date is not given)"},
+        {"reply": 2, "category": "RECITED", "evidence": "You confirmed the upstairs tenants rent from the same landlord, that they hold loud parties ... starting August 25, 2026, and that you emailed a written complaint on September 8, 2026"},
+        {"reply": 2, "category": "REPEATED", "evidence": "borderline: same fact list, same lease point and same 'unreasonable is not settled' point as reply 1"},
+        {"reply": 2, "category": "LEASE_PUNTED", "evidence": "you can check the lease for such language (the tool found none in the clauses it reads) ... turns on (1) checking the lease for quiet enjoyment or rule-enforcement language"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "Whether you have delivered a notice that states your intent to terminate the lease is not known yet; you can check your email for those words. (the record holds that the complaint says nothing about ending the lease)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: you emailed a written complaint on September 8, 2026"},
+        {"reply": 5, "category": "QUOTES_ONLY", "evidence": "borderline: This tool has no cases on that. - two constructive-eviction cases were printed above the reply and the reply says nothing about them or how they bear on loud neighbors"}
+      ]
+    },
+    {
+      "code": "R071",
+      "scenario": "eval_noise_neighbors",
+      "replies": 7,
+      "law_replies": 4,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: reads the lease and the e-notice statute correctly, says the email does not state an intent to end the lease and what a termination notice needs, and gives a letter with the no-deadline note; but never says plainly the landlord may act first and misstates what 83.56(1) requires; conversational: reply 2 is a verbatim copy of reply 1 and reply 4 repeats most of it, with the same 'Next step' question each time."
+      },
+      "slips": [
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "2. The disturbing tenants rent from the same landlord - ... this condition is met. 3. The disturbance is unreasonable - listed under 'What that turns on' for ending the tenant's own lease (83.56(1) names neither)"},
+        {"reply": 1, "category": "QUOTE_WRONG", "evidence": "borderline: counts as a \"material failure to comply\" with the lease (statute says 'materially fails to comply')"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You said they rent from the same complex, so this condition is met (complex is not landlord, before confirmation); Your email of September 8 (the email's date is not given)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "the whole reply repeats reply 1 word for word ('What you can try to do', 'What that turns on', 'What the statute does not settle', 'Next step')"},
+        {"reply": 2, "category": "OFFER", "evidence": "Would you like to draft a written notice to your landlord that specifies the problem and says you intend to end the lease ... (same offer as reply 1)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "2. The disturbing tenants rent from the same landlord ... 3. The disturbance is unreasonable (as conditions of ending the lease)"},
+        {"reply": 2, "category": "QUOTE_WRONG", "evidence": "borderline: a \"material failure to comply\" with the lease"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Your email of September 8 (the email's date is not given)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Whether the landlord must act is an open question the law does not settle. - no reading and nothing on what follows either way (a lease clause the landlord fails by not acting)"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "The statute lets a tenant end the lease only if three conditions are met ... 2. The person causing the disturbance rents from the same landlord. 3. The disturbance is unreasonable."},
+        {"reply": 4, "category": "REPEATED", "evidence": "the conditions, the lease searches, the notice delivery paragraph, 'What the statute does not settle', 'What you can do now' and 'Next step' repeat reply 1 almost whole"},
+        {"reply": 4, "category": "OFFER", "evidence": "Would you like to draft a written notice ... (same offer, third time)"},
+        {"reply": 4, "category": "QUOTE_WRONG", "evidence": "borderline: counts as a \"material failure to comply\" with the lease"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "borderline: Your lease does not contain a promise of quiet enjoyment, noise restrictions, or a duty to enforce rules against other tenants (searches ... found none) - 'noise restrictions' stated from a search of the word 'noise' only; Lease 5.2 (printed in other transcripts of this lease) bars disturbing neighbors"},
+        {"reply": 5, "category": "ID", "evidence": "The neighbor_disturbance skill (the only skill loaded for your matter) has no deadline that the tool calculates."}
+      ]
+    },
+    {
+      "code": "R035",
+      "scenario": "eval_violation_dog",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: the tenant is told twice that whether the dog is still there 'is not known yet; you can check', though the sheet says the problem is not fixed and the tenant said the dog is here, so 'am I safe' never gets an answer; conversational: reply 2 re-runs reply 1's two branches, reply 3 is a meta note, and the letter answer asks for three decisions."
+      },
+      "slips": [
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "Whether the dog issue stopped before that rent acceptance and has not happened again is not known yet; you can check that. (the sheet says the problem is not fixed and the tenant said the dog is still here)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: the landlord may end the lease because the 7-day cure period has passed (the program's deadlines ...) - the rule is not cited to 83.56(2)(b)"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "turns on when the dog was removed relative to the landlord's acceptance of rent ... You can check that: whether the dog was gone before the landlord accepted rent (the dog has not been removed; the friend would pick her up this weekend)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "so the landlord must rely on the cure period or on waiver under 83.56(5)(a) (waiver is what stops the landlord, not what the landlord relies on)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "borderline: the same two branches (removed before rent: waived; still present: may terminate) and the same facts as reply 1"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: because the 7-day cure period has expired and the lease prohibits pets ... the landlord may terminate the lease (no cite to 83.56(2)(b))"},
+        {"reply": 4, "category": "ASK_AGAIN", "evidence": "you would need to decide: what you want the landlord to do, how many days ..., and how you will send it ... Once you provide those details (three things at once)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "borderline: Writing a letter to the landlord is not required by the lease or the statute. (no search of the lease on letters)"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: Such a letter does not change any legal deadlines or rights unless it serves ... as evidence of waiver under Fla. Stat. 83.56(5)(a) (waiver comes from the landlord accepting rent, not from a tenant's letter)"}
+      ]
+    },
+    {
+      "code": "R043",
+      "scenario": "eval_violation_dog",
+      "replies": 6,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: the tenant learns the 7 days have passed, that rent acceptance may not help because the dog is still there, that removing the dog now does not clearly end the risk, and what a defense costs; but some law is misapplied; conversational: replies 1 to 4 repeat the same facts, the same waiver paragraph and the same menu of choices instead of building."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You told me that on September 26, 2026, your landlord handed you a notice saying ... you paid October rent today and they took it, the dog is still here, and no court papers have come."},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "Option 1: Fix the problem within the 7 days ... If you get rid of the dog within those 7 days, the landlord may not end the lease on this notice. (steps given before saying whether the 7 days are still open)"},
+        {"reply": 2, "category": "RECITED", "evidence": "the same first paragraph, word for word: You told me that on September 26, 2026, your landlord handed you a notice ..."},
+        {"reply": 2, "category": "REPEATED", "evidence": "the opening paragraph and the 'What would you like to do?' menu repeat reply 1"},
+        {"reply": 2, "category": "OFFER", "evidence": "What would you like to do? Do you want to: remove the dog ... prepare for a possible eviction case ... (same menu as reply 1)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "if the same noncompliance recurs within 12 months after notice ... Since the dog is still present (a continuing noncompliance), the landlord may not need to give you a new notice (a violation that never stopped is not one that 'recurs'; the tool does not count the 12 months)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "the landlord must still file an eviction lawsuit and obtain a court order to make you move out (no cite); borderline: the lease holds you responsible for guests and their pets (see Lease Sections 8.1(e), 8.4, and 13.3) - not printed under the reply"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "Because the dog remains (a continuing noncompliance), the landlord may not need to give you a new notice before filing. (applies the 'recurs within 12 months' sentence to a continuing violation)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "the waiver paragraph, the prior-warning paragraph, the 12-month paragraph and the 'What you can do now' list repeat reply 2"},
+        {"reply": 3, "category": "OFFER", "evidence": "Would you like to remove the dog and ask the landlord to confirm the matter is resolved? Or would you prefer to prepare for a possible eviction case? (same menu again)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "borderline: Open question in the law ... Two readings are possible: 1. Curing after the notice period defeats the landlord's right ... 2. The landlord may still rely on the past breach (not an open question of the context file; readings uncited)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "the rent-acceptance paragraph and the 'What you can do' list (remove the dog, prepare for a case, ask the landlord in writing) repeat replies 2 and 3"},
+        {"reply": 4, "category": "OFFER", "evidence": "borderline: Or would you prefer to focus on preparing for a possible eviction case? (the same two-choice menu a third time)"},
+        {"reply": 5, "category": "DEADLINE_REPEAT", "evidence": "The only deadline from this notice is the seven-day period to correct the violation (get rid of the dog), and that period has passed."},
+        {"reply": 6, "category": "CHOICE_MADE", "evidence": "Yes, writing a letter can help create a record, explain your side, and possibly resolve the matter."},
+        {"reply": 6, "category": "ASK_AGAIN", "evidence": "To help you draft a letter, I need to know: what do you want the landlord to do ... how many days ... how will you deliver ... Who should sign it? (four things at once)"}
+      ]
+    },
+    {
+      "code": "R058",
+      "scenario": "eval_violation_dog",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: the tenant is sent to 'check whether you removed the dog' though the sheet says it is not fixed, and is told 'you would be safe' if a past removal happened; the letter answer asks three things twice; conversational: reply 2 repeats reply 1's branches, reply 3 is 'No response needed', reply 4 opens 'Whether you can write a letter explaining is open'."
+      },
+      "slips": [
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "you can check whether you removed the dog or prevented it from being present before the rent was accepted, and whether it has returned. (the sheet says the problem is not fixed)"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "You can check when the landlord accepted rent relative to when you removed the dog, and whether the dog has returned since. (the dog has not been removed)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "the waiver branches, the lease 10.1 sentence and the cure-period sentence repeat reply 1"},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "If the dog was gone before that rent payment and has not come back, you would be safe; otherwise, you would not be safe."},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "The statute does not settle whether having a dog is a violation that must be given a chance to cure (83.56(2)(b) lists 'having or permitting unauthorized pets' as an example that gets the chance to cure)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "you may send a written communication to the landlord at any time (Lease Section 22.1) - the printed 22.1 says nothing about sending at any time"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "You have not sent a letter yet."},
+        {"reply": 4, "category": "ASK_AGAIN", "evidence": "you need to decide what you want the landlord to do, how many days to give for a reply, and how you will send it ... If yes, I need to know: what ..., how many days ..., and how (three things, asked twice)"}
+      ]
+    },
+    {
+      "code": "R065",
+      "scenario": "eval_violation_dog",
+      "replies": 6,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 1,
+        "why": "helpful: the tenant learns the 7 days have passed and that the lease bars any animal, but 'am I safe' is never answered and the same facts (rent date, whether the landlord knew) are asked for in four replies; conversational: reply 3 repeats reply 2, and replies 4 and 6 ignore what the tenant already said ('paid October rent today', the notice was about the dog)."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You received a notice on September 26, 2026, handed to you ... You say it's a friend's dog ... no prior warning, you paid October rent ... no court papers have been filed."},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "I need to confirm a few details: 1. Date the notice was delivered ... Is that correct? 2. ... What is today's date? 3. Has the dog been removed? You said the dog is still here. Is that still true? (three things, all given)"},
+        {"reply": 2, "category": "RECITED", "evidence": "You told me the notice was handed to you on September 26, 2026 ... I have proposed three facts for you to confirm: - The notice was delivered ... - The notice says you have 7 days ... - The notice does not say the lease is terminated"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "depends on two things: 1. When you paid that rent (after the notice was delivered?) 2. Whether the landlord knew about the dog when they accepted the rent. (the tenant paid 'today', after the notice about the dog)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "the lease paragraph, the waiver paragraph, 'What I need from you' and 'Short answer' repeat reply 2"},
+        {"reply": 3, "category": "RECITED", "evidence": "What's settled from what you've confirmed - The notice was delivered to you on September 26, 2026, and was handed to you. - The notice says you have 7 days to fix the problem ..."},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "I need you to confirm two more facts: The exact date you paid October rent ... Whether the landlord knew about the dog when they accepted that rent payment."},
+        {"reply": 3, "category": "QUOTE_WRONG", "evidence": "\"seven days to correct [notice received violation]: the tenant's, 7 days after violation notice delivered, Fla. Stat. 83.56(2)(b): passed\" (not words of the printed deadline)"},
+        {"reply": 3, "category": "ID", "evidence": "borderline: [notice received violation] (the issue id spelled out inside the quote)"},
+        {"reply": 3, "category": "DEADLINE_REPEAT", "evidence": "The 7-day period to remove the dog (counted from the date the notice was delivered) has passed."},
+        {"reply": 4, "category": "ASK_AGAIN", "evidence": "You said you paid October rent \"today\" and the landlord accepted it. What is the exact date you paid that rent? ... I'll also need to know whether the landlord knew about the dog"},
+        {"reply": 4, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Once I have that, I'll also need to know whether the landlord knew about the dog when they accepted that rent payment. - no word on what follows either way, and 'am I safe' gets no answer"},
+        {"reply": 5, "category": "DEADLINE_REPEAT", "evidence": "Seven days to correct the violation (remove the dog): counted from the date the notice was delivered (September 26, 2026). That period has passed."},
+        {"reply": 6, "category": "ASK_AGAIN", "evidence": "two facts I still need from you: the exact date you paid October rent, and whether the landlord knew about the dog ... then what you want the landlord to do, how many days, how you'll deliver, who will sign it, the posture (six to seven things)"},
+        {"reply": 6, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: Assert: adds the statutory sentence about curing within 7 days ... Escalate: adds the statutory sentence about waiver by accepting rent with knowledge (not the posture lines)"}
+      ]
+    }
+  ]
+}

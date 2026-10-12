@@ -19,9 +19,16 @@ author's rule of 2026-10-06, in CLAUDE.md).
 
 ## Now
 
-Playbooks become skills (the author's plan of 2026-10-12; design in `docs/structure/2026-10-12-skills.md`). In order,
-each one commit; items 98 to 100 below wait until it is done, since the sheet and the prompt change under them.
-116. Measure: the eval stories before (e32ab77) and after, scored blind, with a chart.
+Playbooks became skills (2026-10-12, TODO 109 to 116 in the CHANGELOG; the eval in `docs/evals/2026-10-12-skills/`).
+What the eval found that code can fix:
+118. The automatic reply after a confirmation repeats the whole answer: 53 of 266 replies, 46 of 115 REPEATED and 41 of
+    127 OFFER slips (`docs/evals/2026-10-12-skills/`). The note could ask only what the confirmation changes, or the
+    reply could be skipped when nothing confirmed changes the answer. Done: repeats on automatic replies fall.
+119. Asked when, with nothing dated yet, the program prints nothing (TODO 114) and the model writes dates (dates made by code:
+    3 before, 19 after, 2026-10-12). Print what the deadlines wait for whenever "when" is asked without get_deadlines.
+    Done: dates made back near the old level.
+120. The eval's scripted chat lines were written for the old flow and re-ask in turn 2 what the first reply now answers,
+    inflating REPEATED. Review each story's chat lines for a conversation. Done: no story asks what turn 1 answered.
 
 The student simulation's remaining cause (`docs/evals/2026-10-06-students/`): what the tenant reads is built for
 checking, not for a reader with no legal training (98, 100). The letters (95, 96) are in the CHANGELOG, 2026-10-11;

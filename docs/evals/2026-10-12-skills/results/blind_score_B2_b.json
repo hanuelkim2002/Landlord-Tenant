@@ -1,0 +1,116 @@
+{
+  "scorer": "B2_b",
+  "runs": [
+    {
+      "code": "R021",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 6,
+      "law_replies": 3,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: the tenant learns the 3-day period passed, that a registry deposit or motion is needed within 5 days to keep a notice defense, and that Moskowitz cuts against a cash-only defect, but gets no counted deadline, no mention of the rent that keeps accruing, and a 'registry regardless of lease' claim with no search behind it. conversational: replies 2, 3, 4 and 5 re-state the same registry steps and the same open-question sentence and end with the same 'keep a record' offer, so they read as separate stand-alone answers."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You told me the landlord handed you a 3‑day notice on September 25, 2026, demanding $1,300 for September rent, payable in cash only by September 30, 2026 or leave. (lists the intake back; also pastes the whole 83.56(3) form and the whole lease 3.2 clause)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "borderline: three requests at once: 'Confirm the three facts I proposed', 'Check the notice you received to see whether it included the landlord’s name, address, and phone number', 'Decide whether you want to pay the rent into the court registry or file a motion'"},
+        {"reply": 2, "category": "REPEATED", "evidence": "You did not say whether the notice included the landlord’s name, address, and phone number, or the address of the leased premises including the county. (the cash-only paragraph, the defective-notice paragraph, the 5-day registry rule and the lease 3.2 summary all repeat reply 1)"},
+        {"reply": 2, "category": "OFFER", "evidence": "Tell me which option you want to pursue, and I can help you keep a record of the steps you take."},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: Try to settle by paying the rent owed (though it won’t stop this eviction). (83.60(2) itself speaks of a defense of payment and 83.56(5) of acceptance of rent; the record does not support a flat 'won’t stop')"},
+        {"reply": 3, "category": "OFFER", "evidence": "just let me know and I can help you add it to your file. (same record-keeping offer as replies 1 and 2)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "borderline: Whether adding a “cash only” term makes the notice not in substantially the required form is an open question—the law does not settle how far a notice may differ and still be in substantially that form. (third time; lease and statute points repeat reply 2 without referring back)"},
+        {"reply": 4, "category": "QUOTES_ONLY", "evidence": "borderline: So, at least one court has said that a cash‑only demand in a three‑day notice does not, by itself, make the notice defective. (three block quotes, then only a generic 'depends on the specific facts'; nothing on how Moskowitz’s 'in cash' notice compares with the tenant’s notice or what it means for their defense)"},
+        {"reply": 4, "category": "OFFER", "evidence": "just let me know and I can help you add it to your file. (record-keeping offer made again)"},
+        {"reply": 5, "category": "GAP_AS_FACT", "evidence": "Your lease does not change this requirement; the statute’s registry rule applies regardless of lease terms. (no lease search on court, registry or eviction terms was run)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "the statute’s registry rule applies regardless of lease terms. (Fla. Stat. 83.60(2)) (the printed 83.60(2) words do not say this)"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "Pay into the court registry the rent the landlord claims is owed (leaves out 83.60(2)’s 'the rent that accrues during the pendency of the proceeding, when due' and 'or as determined by the court', on the exact question asked)"},
+        {"reply": 5, "category": "OFFER", "evidence": "If you want to keep a record of your decision or of any steps you take (such as paying into the registry or filing a motion), just let me know and I can help you add it to your file."},
+        {"reply": 5, "category": "REPEATED", "evidence": "borderline: If you do not pay into the registry or file the motion within the 5‑day period, you lose the right to defend on grounds other than payment (the rule and the consequence are stated twice here and again from replies 1 and 2)"}
+      ]
+    },
+    {
+      "code": "R024",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: very short answers; reply 1 says the landlord cannot require cash, reply 2 says a court held a cash demand is fine, with no word reconciling them or applying either to the tenant’s notice; the registry answer is mostly right but the deadlines reply says the program shows periods ended or open when the program printed nothing computed. conversational: each reply is a stand-alone block with no link to the previous one; only the last reply picks up the registry point."
+      },
+      "slips": [
+        {"reply": 2, "category": "QUOTES_ONLY", "evidence": "A court has held that a three-day notice demanding cash payment is not defective because demanding payment in cash is a redundancy and does not depart from the statutory form (the one-line holding and a quote, nothing about the tenant’s own cash-only notice, the open 'substantially the form' question, or what follows for their defense)"},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: You stated you didn’t pay because you didn’t have the cash. If that is correct, you have not paid the rent into the court registry. (infers the registry fact from a statement about the notice’s cash demand; the registry fact is not known)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "you must pay the rent the court claims into the registry of the court, or file a motion to determine the amount, within 5 days after service of process (says 'the court claims' for 'as alleged in the complaint', and leaves out the rent that accrues during the proceeding, when due)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: The program’s deadlines show the 5‑day deadline has not yet passed (the option to raise a defense other than payment is OPEN). (no deadlines are printed before this reply; the next get_deadlines printed 'Not yet' and the tool does not count the 5 days)"},
+        {"reply": 3, "category": "ID", "evidence": "borderline: (the option to raise a defense other than payment is OPEN) (a prompt status label in capitals)"},
+        {"reply": 3, "category": "CASE_MISREAD", "evidence": "borderline: Your cause of action against the landlord is not lost (K.D. Lewis involved tenants who withheld rent over repairs and counterclaimed; the reply applies its caveat to this tenant, who is not holding back rent over repairs, with no word on how alike the facts are)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "The program’s deadlines show the 3‑day period to pay the rent the notice demands has ended, so the landlord may terminate the rental agreement on that notice. (the program printed 'Not yet. No issue has all its facts confirmed.' twice; the same reply says the 5-day period 'has not yet ended' )"},
+        {"reply": 4, "category": "ID", "evidence": "(This is the pending fact in YOUR FACTS.)"}
+      ]
+    },
+    {
+      "code": "R030",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 6,
+      "law_replies": 3,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: thorough on the registry duty (five cases, a plain statement of what to do and that the tool does not count the 5 days) and applies Moskowitz to the tenant, but invents what 'some courts say', misdescribes Moskowitz, promises a deadline computation it cannot do, and the deadlines reply is a bare line that never mentions the 5-day deadline. conversational: the open-question paragraph and the registry steps come back almost word for word in replies 1 to 4, though reply 5 does tie the cash-only defense to the registry duty."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You said the landlord handed you a notice stating you owe $1,300 for September rent and must pay in cash only by September 30 or leave. ... You already told me: (then lists delivery date, stated date and county back)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "Some courts say a notice may not add terms about how, where, or in what form rent must be paid; others allow differences that do not mislead the tenant about how much, by when, and to whom. (readings from the context file stated as what courts say; no case was retrieved, and Moskowitz later holds the opposite)"},
+        {"reply": 1, "category": "OFFER", "evidence": "Please confirm those three facts so I can compute the deadlines and tell you exactly how many days you have left to pay into the registry or file a motion. (the tool does not compute the 5 days, as reply 2 admits; also offers to check a photo of the notice)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "borderline: Does it include the county, the landlord’s name, address, and phone number? Does it state the amount for rent and use of the premises? (five or more questions about the notice at once)"},
+        {"reply": 2, "category": "ID", "evidence": "WHICH DEADLINES HAVE PASSED: three day demand period [notice received nonpayment]: passed ... (add_communication or add_artifact)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "You can still raise a defense other than payment in the eviction case that was filed yesterday. (the tenant said they were served yesterday, not when the case was filed)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: You can still raise a defense other than payment (states the 5-day window is open, then says 'The tool does not compute that 5‑day deadline')"},
+        {"reply": 2, "category": "RECITED", "evidence": "You told me you have not paid any part of the rent since the notice and you are not holding back rent over repairs."},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "Some courts say a notice may not add terms about how, where, or in what form rent must be paid; others allow differences that do not mislead the tenant about how much, by when, and to whom."},
+        {"reply": 2, "category": "REPEATED", "evidence": "Whether the notice is defective because it adds a cash‑only requirement is not settled by the law. Some courts say ... (the open-question paragraph and the registry-or-motion steps repeat reply 1)"},
+        {"reply": 2, "category": "OFFER", "evidence": "You can also keep a record of the notice and the court papers by providing them to me (add_communication or add_artifact) so they are stored in your file."},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "Some courts say a notice may not add terms about how, where, or in what form rent must be paid; others allow differences that do not mislead the tenant about how much, by when, and to whom."},
+        {"reply": 3, "category": "REPEATED", "evidence": "Because this is an open question, I cannot say for sure whether the cash‑only demand makes the notice defective (the lease paragraph, the statute-form point and the open-question paragraph repeat replies 1 and 2 almost word for word)"},
+        {"reply": 4, "category": "QUOTE_WRONG", "evidence": "whether a three‑day notice that demands payment “in cash only” is defective (Moskowitz’s words are 'in cash', not 'in cash only')"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "The tenant argued the cash requirement departed from the statutory form (in Moskowitz the county court dismissed sua sponte; also treats 'in cash' as the same as the tenant’s 'cash only' with no word on how alike the notices are)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "The court read Fla. Stat. 83.56(3) (1989), which is the same provision that applies today. | Some courts have suggested a notice may not add terms about how, where, or in what form rent must be paid"},
+        {"reply": 4, "category": "OVERCLAIM", "evidence": "borderline: If a court followed Moskowitz, it would likely find that a cash‑only demand in your notice (a 1991 Third DCA case on the 1989 statute, 'in cash' not 'cash only')"},
+        {"reply": 4, "category": "REPEATED", "evidence": "Your lease limits payment to ACH transfer, electronic portal, cashier’s check, or money order, and says the landlord may refuse cash. (lease note, open-question paragraph and registry steps all repeat replies 1 to 3)"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "you must either pay the rent the landlord claims you owe into the court registry or file a motion to determine the rent amount, within 5 days after service (leaves out the rent that accrues during the proceeding, when due, on the exact question asked)"},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "Pay the $1,300 the landlord claims you owe into the court registry (the amount alleged in the complaint is not known; $1,300 is the notice’s figure)"},
+        {"reply": 5, "category": "OFFER", "evidence": "Let me know if you need help drafting a letter to the court or the landlord"},
+        {"reply": 5, "category": "ID", "evidence": "(add_communication or add_artifact)"},
+        {"reply": 5, "category": "REPEATED", "evidence": "borderline: If you fail to meet that deadline, you waive all defenses other than payment, and the landlord can seek an immediate default judgment for removal. (said in the opening, in 'Florida courts have repeatedly held', and again here, and in replies 1 to 4)"}
+      ]
+    },
+    {
+      "code": "R097",
+      "scenario": "eval_cases_3day_cash",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: the tenant is told the landlord cannot require cash (lease), then that a cash demand is not defective (statute and case) with no reconciling, is never told whether the 5-day window is still open or to act now, and the deadlines reply says the program shows the 3 days passed when the program printed nothing. conversational: replies are stand-alone and clipped; reply 4 largely repeats reply 3, and the cash-only answers in replies 1 and 2 do not refer to each other."
+      },
+      "slips": [
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "A notice that adds “in cash” does not depart from that form because a demand for payment implies payment in money ... If you received a notice demanding cash only, the notice’s demand for payment in cash is not defective under the statute (open question of how far a notice may differ and still be in substantially that form presented as settled by one case)"},
+        {"reply": 2, "category": "CASE_MISREAD", "evidence": "A notice that adds “in cash” does not depart from that form (Moskowitz’s 1991 Third DCA holding on the 1989 statute stated as a rule reaching the tenant’s 'cash only' notice, with no word on how alike the facts are)"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "borderline: Whether the notice actually demands cash only is yours to check against the notice you received. (the tenant already said the notice demands cash only)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "If you have done neither, then you have waived those defenses and the landlord is entitled to an immediate default judgment for removal (leaves out 'within 5 days' after service, which may still be running, and the rent that accrues during the proceeding)"},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "you said you have not paid that rent into the registry because you lacked cash (the tenant said they did not pay the notice’s rent for lack of cash; nothing about the registry, which the same reply calls unknown)"},
+        {"reply": 3, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: you must pay the rent the landlord claims into the court registry or file a motion to determine the amount within five days after you were served with the court papers (steps given with no word on whether the window is still open or that the tool does not count it)"},
+        {"reply": 3, "category": "CASE_MISREAD", "evidence": "borderline: If you have paid the rent into the registry or filed a motion to determine the amount within that time, then you preserve your right to raise defenses other than payment (cited to Stanley, K.D. Lewis and First Hanover, which hold the converse: failure to pay loses possession or the defense; no word on how alike their facts are)"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "the program’s deadlines show the 3 days have passed (the program printed 'Not yet. No issue has all its facts confirmed.' four times)"},
+        {"reply": 4, "category": "ID", "evidence": "(your facts show registry_paid is not known yet)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "If you have done so, you preserve your right to raise defenses other than payment (the waived-or-preserved pair of conditions and the same four cites repeat reply 3)"}
+      ]
+    }
+  ]
+}

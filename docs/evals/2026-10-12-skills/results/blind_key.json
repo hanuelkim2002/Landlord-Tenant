@@ -1,0 +1,602 @@
+[
+  {
+    "code": "R001",
+    "side": "before",
+    "scenario": "eval_student_roommate",
+    "rep": 1
+  },
+  {
+    "code": "R002",
+    "side": "after",
+    "scenario": "eval_leave_early_family",
+    "rep": 1
+  },
+  {
+    "code": "R003",
+    "side": "after",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 2
+  },
+  {
+    "code": "R004",
+    "side": "after",
+    "scenario": "eval_claim_carpet",
+    "rep": 1
+  },
+  {
+    "code": "R005",
+    "side": "after",
+    "scenario": "eval_student_roommate",
+    "rep": 2
+  },
+  {
+    "code": "R006",
+    "side": "after",
+    "scenario": "eval_nc_towing",
+    "rep": 1
+  },
+  {
+    "code": "R007",
+    "side": "after",
+    "scenario": "eval_cases_late_claim",
+    "rep": 1
+  },
+  {
+    "code": "R008",
+    "side": "after",
+    "scenario": "eval_know_nonpayment_orange",
+    "rep": 1
+  },
+  {
+    "code": "R009",
+    "side": "before",
+    "scenario": "eval_know_lease_holdover",
+    "rep": 1
+  },
+  {
+    "code": "R010",
+    "side": "after",
+    "scenario": "eval_know_violation_guest",
+    "rep": 2
+  },
+  {
+    "code": "R011",
+    "side": "after",
+    "scenario": "eval_leave_early_family",
+    "rep": 2
+  },
+  {
+    "code": "R012",
+    "side": "after",
+    "scenario": "eval_entry_shower",
+    "rep": 1
+  },
+  {
+    "code": "R013",
+    "side": "before",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 1
+  },
+  {
+    "code": "R014",
+    "side": "after",
+    "scenario": "eval_nc_towing",
+    "rep": 2
+  },
+  {
+    "code": "R015",
+    "side": "after",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 1
+  },
+  {
+    "code": "R016",
+    "side": "after",
+    "scenario": "eval_know_violation_waterbed",
+    "rep": 1
+  },
+  {
+    "code": "R017",
+    "side": "before",
+    "scenario": "eval_student_roommate",
+    "rep": 2
+  },
+  {
+    "code": "R018",
+    "side": "before",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 2
+  },
+  {
+    "code": "R019",
+    "side": "before",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 2
+  },
+  {
+    "code": "R020",
+    "side": "after",
+    "scenario": "eval_cases_retaliation",
+    "rep": 2
+  },
+  {
+    "code": "R021",
+    "side": "after",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 1
+  },
+  {
+    "code": "R022",
+    "side": "before",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 1
+  },
+  {
+    "code": "R023",
+    "side": "after",
+    "scenario": "eval_student_roommate",
+    "rep": 1
+  },
+  {
+    "code": "R024",
+    "side": "before",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 2
+  },
+  {
+    "code": "R025",
+    "side": "before",
+    "scenario": "eval_noise_neighbors",
+    "rep": 1
+  },
+  {
+    "code": "R026",
+    "side": "before",
+    "scenario": "eval_know_violation_guest",
+    "rep": 2
+  },
+  {
+    "code": "R027",
+    "side": "before",
+    "scenario": "eval_know_lease_holdover",
+    "rep": 2
+  },
+  {
+    "code": "R028",
+    "side": "before",
+    "scenario": "eval_leave_early_family",
+    "rep": 1
+  },
+  {
+    "code": "R029",
+    "side": "before",
+    "scenario": "eval_repair_ac_terminate",
+    "rep": 2
+  },
+  {
+    "code": "R030",
+    "side": "after",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 2
+  },
+  {
+    "code": "R031",
+    "side": "after",
+    "scenario": "eval_entry_shower",
+    "rep": 2
+  },
+  {
+    "code": "R032",
+    "side": "before",
+    "scenario": "eval_know_deposit_unsure",
+    "rep": 2
+  },
+  {
+    "code": "R033",
+    "side": "before",
+    "scenario": "eval_student_hot_water",
+    "rep": 2
+  },
+  {
+    "code": "R034",
+    "side": "before",
+    "scenario": "eval_claim_carpet",
+    "rep": 2
+  },
+  {
+    "code": "R035",
+    "side": "before",
+    "scenario": "eval_violation_dog",
+    "rep": 1
+  },
+  {
+    "code": "R036",
+    "side": "after",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 2
+  },
+  {
+    "code": "R037",
+    "side": "before",
+    "scenario": "eval_claim_carpet",
+    "rep": 1
+  },
+  {
+    "code": "R038",
+    "side": "after",
+    "scenario": "eval_repair_ac_terminate",
+    "rep": 1
+  },
+  {
+    "code": "R039",
+    "side": "after",
+    "scenario": "eval_know_deposit_unsure",
+    "rep": 1
+  },
+  {
+    "code": "R040",
+    "side": "after",
+    "scenario": "eval_know_lease_holdover",
+    "rep": 2
+  },
+  {
+    "code": "R041",
+    "side": "after",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 2
+  },
+  {
+    "code": "R042",
+    "side": "after",
+    "scenario": "eval_cases_late_claim",
+    "rep": 2
+  },
+  {
+    "code": "R043",
+    "side": "after",
+    "scenario": "eval_violation_dog",
+    "rep": 2
+  },
+  {
+    "code": "R044",
+    "side": "after",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 2
+  },
+  {
+    "code": "R045",
+    "side": "after",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 1
+  },
+  {
+    "code": "R046",
+    "side": "before",
+    "scenario": "eval_know_nonpayment_orange",
+    "rep": 2
+  },
+  {
+    "code": "R047",
+    "side": "after",
+    "scenario": "eval_noise_neighbors",
+    "rep": 1
+  },
+  {
+    "code": "R048",
+    "side": "before",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 1
+  },
+  {
+    "code": "R049",
+    "side": "before",
+    "scenario": "eval_student_notice_email",
+    "rep": 2
+  },
+  {
+    "code": "R050",
+    "side": "after",
+    "scenario": "eval_know_repair_mold_code",
+    "rep": 2
+  },
+  {
+    "code": "R051",
+    "side": "before",
+    "scenario": "eval_cases_retaliation",
+    "rep": 2
+  },
+  {
+    "code": "R052",
+    "side": "after",
+    "scenario": "eval_nc_roommate",
+    "rep": 1
+  },
+  {
+    "code": "R053",
+    "side": "before",
+    "scenario": "eval_know_repair_mold_code",
+    "rep": 2
+  },
+  {
+    "code": "R054",
+    "side": "before",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 2
+  },
+  {
+    "code": "R055",
+    "side": "before",
+    "scenario": "eval_student_hot_water",
+    "rep": 1
+  },
+  {
+    "code": "R056",
+    "side": "before",
+    "scenario": "eval_cases_late_claim",
+    "rep": 2
+  },
+  {
+    "code": "R057",
+    "side": "after",
+    "scenario": "eval_student_hot_water",
+    "rep": 1
+  },
+  {
+    "code": "R058",
+    "side": "before",
+    "scenario": "eval_violation_dog",
+    "rep": 2
+  },
+  {
+    "code": "R059",
+    "side": "after",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 1
+  },
+  {
+    "code": "R060",
+    "side": "after",
+    "scenario": "eval_student_hot_water",
+    "rep": 2
+  },
+  {
+    "code": "R061",
+    "side": "before",
+    "scenario": "eval_cases_retaliation",
+    "rep": 1
+  },
+  {
+    "code": "R062",
+    "side": "before",
+    "scenario": "eval_noise_neighbors",
+    "rep": 2
+  },
+  {
+    "code": "R063",
+    "side": "before",
+    "scenario": "eval_repair_ac_terminate",
+    "rep": 1
+  },
+  {
+    "code": "R064",
+    "side": "after",
+    "scenario": "eval_know_nonpayment_orange",
+    "rep": 2
+  },
+  {
+    "code": "R065",
+    "side": "after",
+    "scenario": "eval_violation_dog",
+    "rep": 1
+  },
+  {
+    "code": "R066",
+    "side": "after",
+    "scenario": "eval_know_violation_guest",
+    "rep": 1
+  },
+  {
+    "code": "R067",
+    "side": "after",
+    "scenario": "eval_nc_roommate",
+    "rep": 2
+  },
+  {
+    "code": "R068",
+    "side": "before",
+    "scenario": "eval_know_violation_waterbed",
+    "rep": 1
+  },
+  {
+    "code": "R069",
+    "side": "before",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 1
+  },
+  {
+    "code": "R070",
+    "side": "before",
+    "scenario": "eval_leave_early_family",
+    "rep": 2
+  },
+  {
+    "code": "R071",
+    "side": "after",
+    "scenario": "eval_noise_neighbors",
+    "rep": 2
+  },
+  {
+    "code": "R072",
+    "side": "after",
+    "scenario": "eval_know_repair_mold_code",
+    "rep": 1
+  },
+  {
+    "code": "R073",
+    "side": "before",
+    "scenario": "eval_know_violation_waterbed",
+    "rep": 2
+  },
+  {
+    "code": "R074",
+    "side": "before",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 2
+  },
+  {
+    "code": "R075",
+    "side": "before",
+    "scenario": "eval_know_violation_guest",
+    "rep": 1
+  },
+  {
+    "code": "R076",
+    "side": "before",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 1
+  },
+  {
+    "code": "R077",
+    "side": "after",
+    "scenario": "eval_know_deposit_unsure",
+    "rep": 2
+  },
+  {
+    "code": "R078",
+    "side": "before",
+    "scenario": "eval_nc_mixed_heater",
+    "rep": 1
+  },
+  {
+    "code": "R079",
+    "side": "after",
+    "scenario": "eval_know_lease_holdover",
+    "rep": 1
+  },
+  {
+    "code": "R080",
+    "side": "before",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 2
+  },
+  {
+    "code": "R081",
+    "side": "after",
+    "scenario": "eval_repair_mold_apt",
+    "rep": 1
+  },
+  {
+    "code": "R082",
+    "side": "after",
+    "scenario": "eval_claim_carpet",
+    "rep": 2
+  },
+  {
+    "code": "R083",
+    "side": "before",
+    "scenario": "eval_know_repair_mold_code",
+    "rep": 1
+  },
+  {
+    "code": "R084",
+    "side": "after",
+    "scenario": "eval_lease_end_renewal",
+    "rep": 2
+  },
+  {
+    "code": "R085",
+    "side": "after",
+    "scenario": "eval_nonpayment_taped",
+    "rep": 2
+  },
+  {
+    "code": "R086",
+    "side": "after",
+    "scenario": "eval_repair_ac_terminate",
+    "rep": 2
+  },
+  {
+    "code": "R087",
+    "side": "before",
+    "scenario": "eval_entry_shower",
+    "rep": 2
+  },
+  {
+    "code": "R088",
+    "side": "before",
+    "scenario": "eval_student_notice_email",
+    "rep": 1
+  },
+  {
+    "code": "R089",
+    "side": "after",
+    "scenario": "eval_student_notice_email",
+    "rep": 2
+  },
+  {
+    "code": "R090",
+    "side": "after",
+    "scenario": "eval_cases_retaliation",
+    "rep": 1
+  },
+  {
+    "code": "R091",
+    "side": "before",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 2
+  },
+  {
+    "code": "R092",
+    "side": "before",
+    "scenario": "eval_know_nonpayment_orange",
+    "rep": 1
+  },
+  {
+    "code": "R093",
+    "side": "after",
+    "scenario": "eval_know_violation_waterbed",
+    "rep": 2
+  },
+  {
+    "code": "R094",
+    "side": "after",
+    "scenario": "eval_rent_hike_duplex",
+    "rep": 1
+  },
+  {
+    "code": "R095",
+    "side": "after",
+    "scenario": "eval_student_notice_email",
+    "rep": 1
+  },
+  {
+    "code": "R096",
+    "side": "before",
+    "scenario": "eval_entry_shower",
+    "rep": 1
+  },
+  {
+    "code": "R097",
+    "side": "before",
+    "scenario": "eval_cases_3day_cash",
+    "rep": 1
+  },
+  {
+    "code": "R098",
+    "side": "before",
+    "scenario": "eval_know_deposit_unsure",
+    "rep": 1
+  },
+  {
+    "code": "R099",
+    "side": "before",
+    "scenario": "eval_cases_late_claim",
+    "rep": 1
+  },
+  {
+    "code": "R100",
+    "side": "after",
+    "scenario": "eval_deposit_ghosted",
+    "rep": 1
+  }
+]

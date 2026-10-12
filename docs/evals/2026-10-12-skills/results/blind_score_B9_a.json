@@ -1,0 +1,218 @@
+{
+  "scorer": "B9_a",
+  "runs": [
+    {
+      "code": "R029",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: replies 1 and 3 say clearly the tenant cannot end the lease or stop rent yet, what notice is missing, and how the waiver question cuts either way, but the deadlines reply is an empty stub; conversational: each reply restarts with the same 'Your facts' list and the last reply is just '</think>'."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: the AC stopped working on September 1, you emailed the landlord on September 3 asking for a fix, the landlord said they would send someone but nobody came, you have paid rent since you knew of the problem"},
+        {"reply": 3, "category": "RECITED", "evidence": "Your facts: the AC stopped working on September 1, you emailed the landlord on September 3 asking for a fix, the landlord said they would send someone but nobody came ... and no eviction case has been filed."},
+        {"reply": 3, "category": "REPEATED", "evidence": "the whole 'Your facts' list and the 'deliver a written notice ... then wait seven days' steps repeat reply 1 almost word for word"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'whether paying rent with knowledge of the problem affects this defense is not addressed by the statute' and the closing 'So:' says nothing on what follows if it does or does not"}
+      ]
+    },
+    {
+      "code": "R038",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 6,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "helpful: the tenant learns the 7-day notice route, the waiver readings and that rent withholding needs its own notice, but the rent answer wrongly treats the lease repair duty as the 83.51(1) duty and never says the codes are not in the tool; conversational: later replies point back ('see my earlier message') but re-run the same steps, offers and fact-confirm request each time."
+      },
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "Is delivered in a way the lease allows (hand delivery, regular mail, certified mail, or email only if ... addendum): Lease 22.1 lists hand, certified mail RR, courier; regular mail is not in it and no cite is given"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "If the landlord still hasn't fixed the AC by the end of the seventh day, you may then terminate the lease and move out. (83.56(1) says 'materially fails'; materiality never mentioned)"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: 'whether your college housing is excluded from the statute under 83.42(1)' - the tenant never said this is college housing"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "Is delivered in a way your lease allows for statutory notices: hand delivery, regular mail, certified mail, return receipt requested ... (regular mail not in Lease 22.1, no cite)"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: 'If the landlord still hasn't fixed the AC by the end of the seventh day, you may then terminate the lease and move out.' with no word on materiality"},
+        {"reply": 2, "category": "REPEATED", "evidence": "the notice contents, delivery list and 'wait seven days' steps repeat reply 1"},
+        {"reply": 2, "category": "OFFER", "evidence": "If you'd like, I can draft a notice that states your intention to end the lease (same offer as reply 1)"},
+        {"reply": 3, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: opens with 'To end your lease because the air-conditioning isn't fixed, you must follow the statutory notice-and-wait process:' and the steps, with no word first on whether ending is open now"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "hand delivery, regular mail, certified mail (return receipt requested) ... (Lease Section 22.1) - the cited lease words do not include regular mail"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "borderline: 'If the landlord still hasn't fixed the AC by the end of the seventh day, you may then terminate the lease and move out (Fla. Stat. 83.56(1))' omits 'materially'"},
+        {"reply": 3, "category": "REPEATED", "evidence": "steps 1 and 2 and the 'Next step' paragraph repeat reply 2 nearly verbatim"},
+        {"reply": 3, "category": "OFFER", "evidence": "If you'd like, I can draft a notice that states your intention to end the lease (third time)"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "Please confirm the facts I've proposed (the AC problem started September 1, you emailed September 3 ...) if you haven't already - they were already confirmed"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "Landlord's duty under 83.51(1) applies to the AC. Your lease requires the landlord to repair the heating, air-conditioning ... (Lease 7.2) - a lease duty called the 83.51(1) duty the rent defense needs"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "'the landlord's duty appears to apply' settles the which-code question, and 'Is delivered in a way your lease allows for statutory notices' states the rent-notice delivery as settled; neither open question is given with its readings"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "The statute says that if you pay rent knowing the landlord is not complying, you may waive your right to terminate the lease or sue ..., but it does not automatically waive the rent-withholding defense (no cite to 83.56(5)(a); regular mail also credited to Lease 22.1)"},
+        {"reply": 5, "category": "REPEATED", "evidence": "the delivery paragraph, the waiver readings and the lease 7.2 point repeat replies 1-3"},
+        {"reply": 5, "category": "ASK_AGAIN", "evidence": "Please also confirm whether your apartment is a single-family home or duplex (or neither) ... If you have already confirmed the facts I proposed earlier ... just let me know"},
+        {"reply": 6, "category": "LAW_UNSOURCED", "evidence": "delivered in a way your lease allows for statutory notices (hand delivery, regular mail, certified mail ...) - regular mail not in the lease clause"},
+        {"reply": 6, "category": "REPEATED", "evidence": "the delivery paragraph, 'What you need to do first' and the waiver note repeat earlier replies"},
+        {"reply": 6, "category": "OFFER", "evidence": "If you'd like, I can draft a notice that states your intention to end the lease (or your intention not to pay rent) (offered again)"},
+        {"reply": 6, "category": "ASK_AGAIN", "evidence": "Please confirm the facts I proposed earlier (the AC problem started September 1 ...) if you haven't already; also lists 'whether that notice says you intend to end the lease' as unconfirmed though the tenant already said the email did not"}
+      ]
+    },
+    {
+      "code": "R063",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: reply 3 handles the code question well and both replies say a new notice is needed, but reply 1 sends the tenant to check a lease clause the tool can read and the deadlines reply is a placeholder; conversational: reply 3 repeats reply 1's facts and notice paragraph and the final reply is '(No additional text needed ...)'."
+      },
+      "slips": [
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "It turns on whether the landlord had a duty to fix the AC under the lease or the statute, which you can check in the lease's maintenance clause (Lease Article 7). If the lease says ... (it then quotes Article 7 as saying the landlord repairs the AC)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'you may terminate the lease, subject to the unsettled question of whether paying rent waived that right' - no readings or what follows either way"},
+        {"reply": 1, "category": "RECITED", "evidence": "Your facts: the lease says the landlord repairs the AC (Lease Article 7); you confirmed the AC stopped working on September 1, you emailed the landlord on September 3 ..."},
+        {"reply": 3, "category": "RECITED", "evidence": "Your facts: you confirmed the AC stopped working on September 1, you emailed the landlord on September 3 ... and you have paid rent since you knew about the problem."},
+        {"reply": 3, "category": "REPEATED", "evidence": "the 'Your facts' sentence, the not-caused and not-changed-in-writing points and the delivery/7-day paragraph repeat reply 1"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: 'Delivery of that notice must be by hand, certified mail, ... or by email only if you and the landlord have signed an 83.505 addendum (Lease Section 22.1)' for the rent notice, where 83.60(1)(b) names no way and the readings are not given"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "borderline: 'subject to the unsettled questions of materiality and whether paying rent while knowing of the problem waives that right' with no readings or consequences"}
+      ]
+    },
+    {
+      "code": "R086",
+      "scenario": "eval_repair_ac_terminate",
+      "replies": 6,
+      "law_replies": 4,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: clear that a new notice with the intention is needed, gives the waiver readings and the registry rule, but the rent answer wrongly says the lease reaches the 83.60 defense and misstates the tenant's cause fact; conversational: reply 3 is a near copy of reply 1 and reply 5 re-runs the same conditions and offers."
+      },
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 'This is a material provision of the lease, so the landlord has a duty to repair the AC' - what is material is left open by the statute"},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: 'You do not know the cause, so this point turns on what caused the AC to fail.' - the tenant said as far as they know nothing anyone did caused it"},
+        {"reply": 2, "category": "REPEATED", "evidence": "the new-notice contents, delivery methods and email-addendum point repeat reply 1"},
+        {"reply": 2, "category": "OFFER", "evidence": "Would you like me to draft that notice for you? (same offer as reply 1)"},
+        {"reply": 3, "category": "OPTION_BEFORE_OPEN", "evidence": "borderline: opens 'To end your lease because the air-conditioning is not working, you must first give the landlord a proper written notice ... you may then terminate the lease' before the conditions that decide whether it is open"},
+        {"reply": 3, "category": "REPEATED", "evidence": "the four numbered conditions and the three 'What you still need to do' steps repeat reply 1"},
+        {"reply": 3, "category": "OFFER", "evidence": "Would you like me to draft that notice for you? (third time)"},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: 'You said you do not know what caused the AC to fail.' - the tenant did not say that"},
+        {"reply": 3, "category": "OVERCLAIM", "evidence": "borderline: 'After the landlord receives it and seven days pass without repair, you will be able to end the lease and move out.'"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "the defense relies on the lease's material provision as well (see 83.56(1) reaches 'material provisions of the rental agreement') - 83.60(1)(b) reaches only 83.51(1); also 83.56(5)(a), a waiver of terminating or suing, applied to the rent defense"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "'The problem must be a failure to comply with a duty in that subsection (structural/plumbing items, or possibly running water/hot water)' leaves out 83.51(1)(a) codes and never says the codes are not in the tool"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "'The notice must be delivered in a way the law allows for statutory notices' (rent-notice delivery stated as settled) and materiality 'turns on how serious the condition is, how long it has lasted' (one reading only)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "borderline: 'What the law allows (the 'repair-and-deduct' defense)' mislabels the 83.60(1)(b) defense; 'doing so risks a 3-day notice for nonpayment' has no cite"},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "borderline: 'You said you do not know what caused the AC to fail.' (repeated misstatement)"},
+        {"reply": 5, "category": "OVERCLAIM", "evidence": "borderline: 'Once you send that notice and seven days pass without repair, you will be able to raise the AC problem as a defense if the landlord sues for possession'"},
+        {"reply": 5, "category": "REPEATED", "evidence": "conditions 2 and 3, the delivery condition and the 'What you still need to do' steps repeat replies 1 and 3"}
+      ]
+    },
+    {
+      "code": "R045",
+      "scenario": "eval_lease_end_renewal",
+      "replies": 5,
+      "law_replies": 5,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 3,
+        "why": "helpful: the tenant is told repeatedly, with computed dates, that the landlord already failed its 83.575(2) notice and they owe no liquidated damages, though the notice window had not yet closed and the email's content was not given; conversational: replies refer back ('as we discussed earlier') and answer each chat line, but restate the same conclusion and offer each time."
+      },
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "because the landlord did not send the written notice the statute requires first; That email does not specify your 60-day notice obligation, the termination date, or list any fees - the tenant said only what the email told them to do"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "The landlord must send a notice ... within 15 days before that start date (so between about October 17 and October 31, 2026) ... it was sent well before the 15-day window - picks the reading that early is out of time"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "Because the landlord failed to send that prerequisite notice - by the reply's own window (Oct 17-31) it had not yet passed"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "so around November 1, 2026; so between about October 17 and October 31, 2026"},
+        {"reply": 1, "category": "OVERCLAIM", "evidence": "you are not liable for liquidated damages if you fail to give the 60-day notice or if you give it late"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "You can leave at the end of your lease without owing the liquidated damages ... because the landlord did not send the written notice the statute requires first."},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "This avoids the liquidated-damages charge. / You can leave at the end of your lease without owing the liquidated damages"},
+        {"reply": 2, "category": "REPEATED", "evidence": "the headline conclusion and the delivery/keep-a-copy steps repeat reply 1"},
+        {"reply": 2, "category": "OFFER", "evidence": "If you want to give notice to not renew, I can help you draft a letter ... (offer already made in reply 1)"},
+        {"reply": 3, "category": "DATE_MADE", "evidence": "you must give the 60-day written notice (by around November 1, 2026)"},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "because the landlord did not send the prerequisite notice required by Fla. Stat. 83.575(2) (they emailed you ... not about your 60-day notice obligation or fees)"},
+        {"reply": 3, "category": "OVERCLAIM", "evidence": "you would not owe the liquidated-damages charge even if you gave the notice late or not at all"},
+        {"reply": 3, "category": "OFFER", "evidence": "Would you like to draft that notice now, or do you have any other questions about your options?"},
+        {"reply": 3, "category": "RECITED", "evidence": "borderline: pastes two sentences of Lease 2.3 in quotes, which the program prints under the reply"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "because the landlord did not send the prerequisite notice required by Fla. Stat. 83.575(2), you may not owe that charge even if the notice is late"},
+        {"reply": 4, "category": "OFFER", "evidence": "Would you like help drafting a notice to deliver by that deadline, or do you have any other questions about your options?"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "If you stay and the landlord accepts rent ... the lease allows the landlord to charge you an additional month's rent under Fla. Stat. 83.575(3) (extra month's rent for a tenant who remains with permission) - rent taken treated as permission, no mention that this is unsettled"},
+        {"reply": 5, "category": "GAP_AS_FACT", "evidence": "Your lease does not change that rule; it simply states that holding over without permission can lead to eviction and double rent. (no lease clause printed or found says this)"},
+        {"reply": 5, "category": "DATE_MADE", "evidence": "give the landlord the 60-day written notice ... (by around November 1, 2026)"},
+        {"reply": 5, "category": "CHOICE_MADE", "evidence": "borderline: 'the safest course is to give the landlord the 60-day written notice your lease requires'"},
+        {"reply": 5, "category": "OFFER", "evidence": "Would you like to draft a notice to end the lease now, or do you have any other questions about the holdover rules?"},
+        {"reply": 5, "category": "RECITED", "evidence": "borderline: pastes the full Lease 2.4 sentence and the Fla. Stat. 83.58 passage in quotes, both printed by the program"}
+      ]
+    },
+    {
+      "code": "R054",
+      "scenario": "eval_lease_end_renewal",
+      "replies": 3,
+      "law_replies": 3,
+      "applied_well": 2,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: the holdover answer is clear on both paths and what it turns on, but the renewal answer says the text does not answer and the last-day answer defers on a fact the tenant can supply; conversational: three standalone answers that never refer to each other or to the tenant's stated uncertainty about studying abroad."
+      },
+      "slips": [
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: 'Therefore, the lease and statute text I have do not answer whether you must sign the renewal by October 15.' although Lease 2.3 (no automatic renewal, 60-day notice) and 83.575 bear on it and nothing is said on what happens if the tenant does not sign"},
+        {"reply": 2, "category": "ID", "evidence": "turns on whether you plan to stay after the lease ends (planning_to_stay)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: 'If you plan to stay, you would need the landlord's agreement; the notice deadline does not apply.' (no cite)"}
+      ]
+    },
+    {
+      "code": "R069",
+      "scenario": "eval_lease_end_renewal",
+      "replies": 3,
+      "law_replies": 3,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 4,
+        "conversational": 3,
+        "why": "helpful: says no lease or statute deadline to sign, that the landlord's notice may fall short of 83.575(2), what to do if leaving or staying, and both holdover paths, without computing a date; conversational: replies share the same thread (60-day notice, landlord's notice) but each is a standalone answer."
+      },
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 'You can check the September 25 notice's date and what it lists ... to see whether it satisfies the statute's within 15 days before the start requirement' - the tenant is asked to apply a phrase the law leaves open, with no readings given"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "borderline: 'when it was sent relative to the lease's notice period, which the tool does not yet know' and 'check the September 25 notice's date' - the sheet already holds 2026-09-25"},
+        {"reply": 2, "category": "ID", "evidence": "the fact 'planning_to_stay' is still missing"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "borderline: 'You can confirm that on the sheet, and then the deadline will be available.' - the program does not compute a date from a lease-set period"}
+      ]
+    },
+    {
+      "code": "R084",
+      "scenario": "eval_lease_end_renewal",
+      "replies": 5,
+      "law_replies": 5,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: reply 3 and reply 5 answer the tenant's questions directly and list the open questions, but the options replies compute dates and lean on an early-notice reading, and reply 4 contradicts them by saying the tool does not compute dates; conversational: reply 2 is a near copy of reply 1 and the offers and date talk are repeated across replies."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your lease facts (confirmed after your reply): Lease ends: December 31, 2026 / Required notice ... / Landlord's email ... / You have not given written notice"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "which is around November 1, 2026; (i.e., between October 17 and November 1, 2026); The landlord emailed you on September 25, 2026, which is before October 17."},
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: 'it did not explicitly state: The lease expiration date ... Your obligation to give 60 days written notice ... The liquidated damages amount' - the tenant gave only what the email told them to do"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: 'The landlord's notice came too early (September 25 vs. required window of October 17-November 1)' and 'the landlord's defective notice' treat one reading as the rule, though the open question is listed at the end"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: 'Deliver written notice to the landlord by hand, certified mail, or (if you have an email addendum) email.' with no cite and no search of the lease's notices clause"},
+        {"reply": 1, "category": "CHOICE_MADE", "evidence": "borderline: 'consider giving your 60-day notice soon to secure your right to leave without penalty'"},
+        {"reply": 1, "category": "POSTURE_OWN_WORDS", "evidence": "a letter preserving your rights regarding the landlord's notice (if you want to argue their notice was defective)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "the facts list, the notice analysis, the four options and the 'does not settle' list repeat reply 1 nearly word for word"},
+        {"reply": 2, "category": "RECITED", "evidence": "Confirmed facts: Lease ends: December 31, 2026 / Required notice if not renewing ... / Landlord's email ..."},
+        {"reply": 2, "category": "DATE_MADE", "evidence": "This means your notice should reach the landlord by around November 1, 2026; between October 17 and November 1, 2026"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: 'it did not explicitly state: The lease expiration date ... Your obligation to give 60 days written notice'"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: 'The landlord's notice came too early (September 25 vs. required window of October 17-November 1)'"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: 'Deliver written notice to the landlord by hand, certified mail, or (if you have an email addendum) email.' (no cite)"},
+        {"reply": 2, "category": "CHOICE_MADE", "evidence": "borderline: 'consider giving your 60-day notice soon to secure your right to leave without penalty'"},
+        {"reply": 2, "category": "POSTURE_OWN_WORDS", "evidence": "A letter preserving your rights regarding the landlord's notice (if you want to argue their notice was defective)"},
+        {"reply": 2, "category": "OFFER", "evidence": "Would you like help drafting any of the following? (same three-letter offer as reply 1)"},
+        {"reply": 3, "category": "RECITED", "evidence": "borderline: Your lease states: 'This Lease shall not automatically renew. Either Party wishing to terminate ... before the Expiration Date.' - two sentences pasted, printed by the program"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "However, the landlord may show the unit to prospective tenants, provided they follow proper notice requirements for entry (no cite; the lease search for 'showing' found nothing)"},
+        {"reply": 3, "category": "DATE_MADE", "evidence": "give the 60-day written notice by the deadline (around November 1, 2026)"},
+        {"reply": 3, "category": "OFFER", "evidence": "Would you like to discuss any of these options further, or would you like help drafting a notice or response?"},
+        {"reply": 4, "category": "OPEN_CLOSED", "evidence": "borderline: 'if the landlord's notice under Florida Statute 83.575(2) was defective (for example, sent too early or missing required information)' treats early as a defect though the statute leaves that open"},
+        {"reply": 4, "category": "OFFER", "evidence": "Would you like help drafting a notice to move out once you have determined the date, or would you like to discuss any other options?"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "borderline: 'If the landlord accepts your rent for January ... that is strong evidence the landlord has given you permission to stay, and the month-to-month rule (Lease Section 2.4 and 83.575(3)) would apply' - what counts as permission was listed as open in reply 1"}
+      ]
+    }
+  ]
+}
