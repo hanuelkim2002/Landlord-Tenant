@@ -40,6 +40,8 @@ try:
     check("(model) the first turn answers the tenant", any(b["kind"] == "reply" for b in blocks))
     check("(model) the model loads the skill that fits", "deposit_not_returned" in record.matter["skills"])
     check("(model) the model proposes facts from the description", proposed and record.matter["proposed"])
+    check("(model) a date the description gives for a loaded skill's clock is proposed under that skill's fact id",
+          record.matter["proposed"].get("tenancy_terminated", {}).get("value") == "2026-07-31")
     check("the model confirms nothing", record.matter["facts"] == {})
     check("every skill loaded is logged", [e["skill"] for e in read_events() if e["kind"] == "skill_loaded"]
           == record.matter["skills"])
@@ -79,7 +81,8 @@ try:
     check("no suggestion repeats a confirmed value",
           not any(i in facts and p["value"] == facts[i] for i, p in record.matter["proposed"].items()))
     check("(model) the model loads deposit_claim_received", "deposit_claim_received" in record.matter["skills"])
-    check("(model) the changed fact is proposed", record.matter["proposed"].get("claim_notice_received", {}).get("value") is True)
+    check("(model) the date the claim notice arrived is proposed under the skill's fact id",
+          record.matter["proposed"].get("claim_notice_date", {}).get("value") == "2026-09-25")
 finally:
     remove_scratch("t-smoke-online")
 check("the scratch matter is removed", not (MATTERS / "t-smoke-online").exists())

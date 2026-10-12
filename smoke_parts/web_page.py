@@ -4,6 +4,7 @@ import contextlib
 import io
 import json
 import logging
+from datetime import date
 from pathlib import Path
 from langchain.agents import create_agent
 from langchain.messages import AIMessage
@@ -21,8 +22,8 @@ from smoke_parts.common import FORFEIT, StandIn
 
 # ---- The web page (app.py), run headless by Streamlit's AppTest on a scratch matter, with a stand-in model:
 # open a saved matter whose sidebar says what it is about, nothing new, a reply with a statute quote, a dollar amount,
-# and a bad cite, the model loading a skill (the sidebar follows) and proposing a fact asked on the page's sheet, the
-# note that follows, a model error, and End session. AppTest runs the page in this same program, so the page and
+# and a bad cite, the model loading a skill (the sidebar follows) and proposing facts confirmed on the page's form (a yes/no
+# changed, a date, a text left for later), the note that follows, a model error, and End session. AppTest runs the page in this same program, so the page and
 # these checks share record.
 logging.getLogger("streamlit").setLevel(logging.ERROR)     # AppTest's warnings about running outside a server
 make_scratch("t-smoke-app", skills=["deposit_not_returned"], proposed={},
@@ -40,19 +41,23 @@ try:
           any(m.value.strip("*") == "What this matter is about" for m in page.sidebar.markdown)
           and any(skills["deposit_not_returned"].description in m.value.replace("\\", "") for m in page.sidebar.markdown)
           and not any("deposit_not_returned" in m.value for m in page.sidebar.markdown))
-    said = "I got a letter from the landlord"
+    said = ("I left before the lease was up. I got a letter from the landlord on September 25, 2026. "
+            "The landlord said he would send a check.")
     stand_in = StandIn(messages=iter([
         AIMessage(content=f'Fla. Stat. 83.49(3)(a): "{FORFEIT}"\nSee also 83.64. You paid $900 *or more*.'),
         AIMessage(content="", tool_calls=[{"name": "load_skill", "id": "a0", "args": {"name": "deposit_claim_received"}}]),
-        AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": "a1", "args": {"facts_json": json.dumps(
-            {"claim_notice_received": {"value": True, "how": "stated", "said": said}})}}]),
-        AIMessage(content=f'You said: "{said}"'),
+        AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": "a1", "args": {"facts_json": json.dumps({
+            "early_or_periodic": {"value": True, "how": "inferred", "said": "I left before the lease was up"},
+            "claim_notice_date": {"value": "2026-09-25", "how": "stated", "said": "a letter from the landlord on September 25, 2026"},
+            "landlord_response": {"value": "said he would send a check", "how": "stated",
+                                  "said": "The landlord said he would send a check"}})}}]),
+        AIMessage(content='You said: "I left before the lease was up"'),
         AIMessage(content="", tool_calls=[{"name": "get_deadlines", "args": {}, "id": "a2"}]),
         AIMessage(content="")]))                            # asked only for the deadlines: nothing after the listing
     page.session_state["agent"] = create_agent(stand_in, tools=model_tools, checkpointer=InMemorySaver())
     page.session_state["config"] = {"configurable": {"thread_id": page.session_state["session"]}}
     next(b for b in page.button if b.label == "Continue").click().run()
-    check("with nothing new and no fact open, the page goes straight to the chat", page.session_state["stage"] == "chat")
+    check("with nothing new and no fact proposed, the page goes straight to the chat", page.session_state["stage"] == "chat")
     page.chat_input[0].set_value("Was that legal?").run()
     bubbles = [(m.name, [x.value for x in m.markdown]) for m in page.chat_message]
     check("the page shows the model's reply in a speech bubble, the program's caution and line outside it",
@@ -62,22 +67,27 @@ try:
     check("the page shows a reply as written: a $ starts no math, a * no italics",
           "\\$900 \\*or more\\*" in bubbles[-1][1][0])
     page.chat_input[0].set_value(said).run()
-    check("after the model loads a skill and proposes a fact, the page shows the sheet with the suggestion filled in, and "
-          "the sidebar adds the skill's description",
+    check("after the model loads a skill and proposes facts, the page shows the form with the suggestion filled in (a changed "
+          "yes/no first, the old answer beside it), and the sidebar adds the skill's description",
           page.session_state["stage"] == "sheet" and page.radio[0].value == "yes"
+          and any("was no, now yes?" in c.value for c in page.caption)
           and record.matter["skills"] == ["deposit_not_returned", "deposit_claim_received"]
           and any(skills["deposit_claim_received"].description in m.value.replace("\\", "") for m in page.sidebar.markdown))
     next(b for b in page.button if b.label == "Save").click().run()
-    while page.session_state["stage"] == "sheet":
-        next(b for b in page.button if b.label == "Skip for now").click().run()
-    check("the page's sheet confirms the fact, asks the loaded skill's facts next, and leaves skipped facts open",
-          record.matter["facts"]["claim_notice_received"] is True
-          and any(r["id"] == "claim_notice_date" for r in pending_rows()))
+    check("the page asks a date with a date picker holding the suggestion", page.session_state["stage"] == "sheet"
+          and page.date_input[0].value == date(2026, 9, 25))
+    next(b for b in page.button if b.label == "Save").click().run()
+    next(b for b in page.button if b.label == "Skip for now").click().run()
+    check("the page's form confirms the facts, leaves the skipped one pending, and says it will be asked again",
+          page.session_state["stage"] == "chat" and record.matter["facts"]["early_or_periodic"] is True
+          and record.matter["facts"]["claim_notice_date"] == "2026-09-25"
+          and [r["id"] for r in pending_rows()] == ["landlord_response"]
+          and any("Skipped for now: landlord response." in i.value.replace("\\", "") for i in page.info))
     page.chat_input[0].set_value("What are my deadlines?").run()
     lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{page.session_state['session']}.jsonl").read_text().splitlines()]
     check("what the sheet confirmed goes to the model with the next message, and the deadlines show in a program box",
           [line["text"] for line in lines if line["role"] == "program"][-1]
-          == "[Program note: the tenant confirmed on the sheet: claim_notice_received = True]\n"
+          == "[Program note: the tenant confirmed on the sheet: early_or_periodic = True, claim_notice_date = 2026-09-25]\n"
           and page.session_state["history"][-1]["kind"] == "deadlines")
     with contextlib.redirect_stderr(io.StringIO()):                 # the page prints the error's traceback
         page.chat_input[0].set_value("And now?").run()              # the stand-in has nothing left to say
@@ -91,23 +101,21 @@ finally:
     remove_scratch("t-smoke-app")
 check("the page's scratch matter is removed", not (MATTERS / "t-smoke-app").exists())
 
-# a choice on the page's sheet (TODO items 90 to 92): its answers in a list to pick from, saved as the words picked. The
-# update typed at the door is the tenant's first message; the stand-in model proposes a fact from it, so the sheet comes.
-make_scratch("t-smoke-app-choice", skills=["repair_not_made"], proposed={},
-             facts={"problem_description": "no hot water", "problem_started": "2026-09-28", "single_family_or_duplex": False,
-                    "caused_by": "nothing anyone did (age, wear, weather)", "wrote_to_landlord": False,
-                    "rent_paid_since_known": True, "landlord_response": "nothing", "eviction_action_filed": False})
+# a county and plain text on the page's form (item 112): a date picker, a county in a line, a text left to correct. The update
+# typed at the door is the tenant's first message; the stand-in model proposes facts from it, so the form comes.
+make_scratch("t-smoke-app-text", skills=["notice_received_nonpayment"], proposed={}, facts={})
 try:
     page = AppTest.from_file(str(Path(__file__).resolve().parent.parent / "app.py"), default_timeout=60)
     page.run()
     listed = page.sidebar.selectbox[0]
-    listed.select_index(listed.options.index("t-smoke-app-choice / m-001")).run()
+    listed.select_index(listed.options.index("t-smoke-app-text / m-001")).run()
     next(b for b in page.sidebar.button if b.label == "Open").click().run()
-    update = "My hot water stopped working again."
+    update = "The notice was taped to my door on November 24, 2026. I live in Alachua County. The landlord told me to pay in cash."
     stand_in = StandIn(messages=iter([
-        AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": "c1", "args": {"facts_json": json.dumps(
-            {"problem_description": {"value": "the hot water stopped again", "how": "stated",
-                                     "said": "My hot water stopped working again"}})}}]),
+        AIMessage(content="", tool_calls=[{"name": "propose_facts", "id": "c1", "args": {"facts_json": json.dumps({
+            "nonpayment_notice_delivered": {"value": "2026-11-24", "how": "stated", "said": "taped to my door on November 24, 2026"},
+            "premises_county": {"value": "Alachua", "how": "stated", "said": "I live in Alachua County"},
+            "landlord_instruction": {"value": "pay in cash", "how": "stated", "said": "The landlord told me to pay in cash"}})}}]),
         AIMessage(content="I have noted that.")]))
     page.session_state["agent"] = create_agent(stand_in, tools=model_tools, checkpointer=InMemorySaver())
     page.session_state["config"] = {"configurable": {"thread_id": page.session_state["session"]}}
@@ -115,21 +123,24 @@ try:
     next(b for b in page.button if b.label == "Continue").click().run()
     logged = [e for e in read_events() if e["kind"] == "tenant_update"]
     check("an update typed at the door is logged as typed and is the tenant's first message: the model answers it and the "
-          "page shows the sheet that follows",
+          "page shows the form that follows",
           len(logged) == 1 and logged[0]["text"] == update and page.session_state["history"][0] == {"kind": "tenant", "text": update}
           and any(b["kind"] == "reply" and b["text"] == "I have noted that." for b in page.session_state["history"])
-          and page.session_state["stage"] == "sheet")
-    for _ in range(5):                                  # skip the row for the proposed change; the choice comes next
-        if any(sb.label == "Your answer" for sb in page.selectbox):
-            break
-        next(b for b in page.button if b.label == "Skip for now").click().run()
-    picker = next(s for s in page.selectbox if s.label == "Your answer")
-    shown_answers = list(picker.options)
-    picker.set_value("hot water")
+          and page.session_state["stage"] == "sheet" and page.date_input[0].value == date(2026, 11, 24))
     next(b for b in page.button if b.label == "Save").click().run()
-    check("the page asks a choice from a list of its answers and saves the one picked",
-          "hot water" in shown_answers and "the air conditioning" in shown_answers
-          and record.matter["facts"]["problem_is_with"] == "hot water" and page.session_state["stage"] == "chat")
+    county = page.text_input[0]
+    check("the page asks a county in a line holding the suggestion", county.label == "County" and county.value == "Alachua")
+    next(b for b in page.button if b.label == "Save").click().run()
+    page.text_area[0].set_value("pay in cash only")                  # a correction to the suggested words
+    next(b for b in page.button if b.label == "Save").click().run()
+    lines = [json.loads(line) for line in (matter_dir() / "sessions" / f"{page.session_state['session']}.jsonl").read_text().splitlines()]
+    check("the page saves a date, a county, and a corrected text as the tenant confirmed them, and goes back to the chat",
+          record.matter["facts"] == {"nonpayment_notice_delivered": "2026-11-24", "premises_county": "Alachua",
+                                     "landlord_instruction": "pay in cash only"}
+          and page.session_state["stage"] == "chat" and not record.matter["proposed"]
+          and [(l["id"], l["typed"], l["value"]) for l in lines if l["role"] == "sheet"] == [
+              ("nonpayment_notice_delivered", "", "2026-11-24"), ("premises_county", "", "Alachua"),
+              ("landlord_instruction", "pay in cash only", "pay in cash only")])
 finally:
-    remove_scratch("t-smoke-app-choice")
-check("the page's choice scratch matter is removed", not (MATTERS / "t-smoke-app-choice").exists())
+    remove_scratch("t-smoke-app-text")
+check("the page's text scratch matter is removed", not (MATTERS / "t-smoke-app-text").exists())

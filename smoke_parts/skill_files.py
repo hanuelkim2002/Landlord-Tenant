@@ -1,4 +1,4 @@
-"""Smoke, part: the skill format and its checks (TODO item 109). One valid fixture skill and a broken copy for each way a
+"""Smoke, part: the skill format and its checks (TODO items 109 and 112). One valid fixture skill and a broken copy for each way a
 skill file or its body can be wrong, all written to a temporary folder (never into skills/): the header refused when the
 file is loaded, and the body and clock quotes caught by check_skill. Nothing here reads a model or a matter.
 Run by smoke.py, in order; each check prints a line, OK or FAIL."""
@@ -11,7 +11,8 @@ import yaml
 
 import skills
 from checks import check
-from skills import REQUIRED, check_all_skills, check_skill, clock_facts, load_skill_file
+from skills import (REQUIRED, check_all_skills, check_skill, clock_facts, load_skill_file, type_conflicts,
+                    unconfirmed_clock_facts)
 
 # Statute words copied from playbooks/repair_not_made.yaml (the clocks for 83.56(1) and 83.60(1)(b)) and
 # playbooks/notice_received_nonpayment.yaml (83.56(3)), which smoke.py's playbook checks hold word for word in statutes/.
@@ -158,6 +159,44 @@ with tempfile.TemporaryDirectory() as tmp:
                                        "premises_county": "county"}
           and checked(tmp, court_text, "fixture_court")[0] == 0)
 
+    # the facts the clocks have not got yet (item 112): a clock whose applies_if is confirmed no needs nothing more
+    check("skills: the clock facts not confirmed yet, in the clocks' order; a clock whose applies_if is confirmed no needs "
+          "none, a confirmed yes still needs its date",
+          list(unconfirmed_clock_facts(skill, {})) == ["message_date", "message_mentions_ending", "message_mentions_rent"]
+          and unconfirmed_clock_facts(skill, {"message_date": "2026-09-01"}) == {
+              "message_mentions_ending": "bool", "message_mentions_rent": "bool"}
+          and unconfirmed_clock_facts(skill, {"message_mentions_ending": False, "message_mentions_rent": False}) == {}
+          and unconfirmed_clock_facts(skill, {"message_mentions_ending": True, "message_mentions_rent": False}) == {
+              "message_date": "date"})
+
+    # a fact id typed two ways is caught (item 112): a trigger in one clock and an applies_if in another, in one skill
+    # or in two, since propose_facts would parse the same fact two ways
+    both_ways = load_skill_file(write(tmp, skill_text(clocks=with_clock(1, applies_if="message_date"))))
+    elsewhere = dict(name="fixture_other", sections=["83.51", "83.56"],
+                     clocks=[{**HEADER["clocks"][0], "id": "other_clock", "trigger": "other_date", "applies_if": "message_date"}])
+    other_skill = load_skill_file(write(tmp, skill_text(**elsewhere), "fixture_other"))
+    in_one = type_conflicts([both_ways])
+    in_two = type_conflicts([skill, other_skill])
+    check("skills: two valid fixtures, the court-days one included, type each fact id one way",
+          type_conflicts([skill, court_skill]) == [])
+    check("skills: a fact id typed date by a trigger and yes/no by an applies_if in one skill is caught",
+          len(in_one) == 1 and in_one[0].startswith("message_date is date in fixture_repair seven_days_after_termination_notice "
+                                                    "trigger and bool in fixture_repair seven_days_after_withholding_notice applies_if"))
+    check("skills: a fact id one skill counts from as a date and another as a yes/no is caught, naming both",
+          len(in_two) == 1 and "message_date is date in fixture_repair" in in_two[0]
+          and "bool in fixture_other other_clock applies_if" in in_two[0])
+    real_skills = skills.skills
+    skills.skills = {"fixture_repair": skill, "fixture_other": other_skill}
+    printed_all = io.StringIO()
+    try:
+        with redirect_stdout(printed_all):
+            conflicted = check_all_skills()
+    finally:
+        skills.skills = real_skills
+    check("skills: check_all_skills fails, with a line naming the fact id, when two skills type one fact two ways",
+          conflicted > 0 and any(line.startswith("FAIL skills: every fact the clocks count from is typed one way")
+                                 and "message_date" in line for line in printed_all.getvalue().splitlines()))
+
     # a header that is wrong is refused when the file is loaded
     check("skills: a name that is not the file's name is refused",
           refused(tmp, skill_text(name="other_name"), "is not the file's name"))
@@ -241,4 +280,5 @@ with tempfile.TemporaryDirectory() as tmp:
 # the skills folder: a dict, name to Skill, empty until TODO item 110 writes the ten skills; checking it finds no failure
 check("skills: skills.skills is a dict, and check_all_skills finds no failure in what it holds",
       isinstance(skills.skills, dict) and check_all_skills() == 0)
+check("item 112: no fact id is typed two ways across the ten skills", type_conflicts(skills.skills.values()) == [])
 print()

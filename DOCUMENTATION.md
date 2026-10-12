@@ -13,7 +13,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   when the environment sets `WIKI_UNVERIFIED=1`: development runs only, see `wiki.eligible`), the two model clients (`agent_llm` on
   `AGENT_MODEL`, up to 8000 output tokens since applied answers run longer, `extract_llm` on `EXTRACT_MODEL`, both on the UF gateway at temperature 0; `AGENT_MODEL`
   is nemotron-3-super-120b-a12b unless the environment sets `AGENT_MODEL`, for trying another gateway
-  model in one run; it drives the chat and `fill_facts`), and `squash`
+  model in one run; it drives the chat), and `squash`
   (collapse whitespace, lowercase; used for every quote comparison). Reads `.env` with python-dotenv. The
   two clients are `None` when `UF_API_KEY` is missing; `require_key()` raises with a clear message then,
   and `run.py` and `smoke_online.py` call it first. `shorten(text, limit, rest="")` (a passage cut at its last word
@@ -41,7 +41,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   holding a phrase, and the pages holding it outside any clause with a passage around it; compared by `plain`,
   letters and digits only, lowercase, since the PDF text breaks words, "air -conditioning"; a phrase of three
   letters or digits or fewer must stand as a whole word). Imports `config`. Imported by `record`,
-  `agent`, and `sheet`.
+  `agent`, `corpus`, `deterministic`, `prompt`, `replies`, and `tools`.
 - `calendars.py`: the court holiday calendars, loaded once at import from `calendars/*.json` into
   `court_calendars`. `load_calendar` (raises if a holiday is filed under the wrong year or its printed
   weekday is not the date's weekday), `court_calendar(county)` (the calendar of the circuit that includes
@@ -59,10 +59,10 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   parts the tool reads; prints a line per check via `report`, returns the failures), `check_all_playbooks`
   (all of them, checking ids against every playbook's, plus a fact id shared by playbooks having the same type
   and question; returns the failures), and `playbooks` (dict, issue to `Playbook`, from
-  `playbooks/*.yaml`), and `fact_lease` (fact id to the lease clause that a way decided by the fact names: the sheet
-  shows that clause beside the question; no playbook names one since `lease_promises_repair` left the sheet,
-  2026-10-08). No model
-  calls. Imports `config`, `lease` (for `LeaseProfile`, to check `compare_to` and a way's `lease`). Imported by `record`, `tools`, `agent`, `sheet`, `smoke`.
+  `playbooks/*.yaml`). Since TODO item 112 only the options layer reads the playbooks' elements, ways, and questions
+  (and `draft_letter` its note to the tenant): the facts, the deadlines, and the timeline read the skills, and
+  `fact_lease`, which the sheet used to show a lease clause beside a question, is gone. No model
+  calls. Imports `config`, `lease` (for `LeaseProfile`, to check `compare_to` and a way's `lease`). Imported by `record`, `tools`, `smoke`.
 - `citations.py`: checks the ch. 83 cites and the quotes in a reply the model wrote. `SUBSECTION_START` (a marker such as
   `(3)` or `(b)` starts a subsection when a space and a capital letter or an opening quote follow it, or a
   lettered marker first, as in `(5)(a) If`; not after "subsection", "paragraph", "subparagraph"),
@@ -101,16 +101,21 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `skills.py`: the skill format and its checks (TODO item 109, 2026-10-12; the design is in
   `docs/structure/2026-10-12-skills.md`, a dated note). A skill is one markdown file in `skills/`: a YAML header between
   two lines of three dashes, then the instructions. Since TODO item 111 the chat reads them: the `load_skill` tool, `record.active_skills`,
-  and the system prompt (`prompt.system_prompt`) use `skills`; the facts, deadlines, options, and letters still run on
-  the playbooks of the loaded skills (`record.active_playbooks`) until items 112 and 113. `Skill` (`name`, `description`, `sections`, `clocks` as `corpus.Clock`, `counting`, `provenance`,
+  and the system prompt (`prompt.system_prompt`) use `skills`; since item 112 so do the facts (`clock_facts`), the
+  deadlines (`deterministic.compute_deadlines`), and the timeline. The options layer and `draft_letter`'s note to the
+  tenant still run on the playbooks of the loaded skills until item 113. `Skill` (`name`, `description`, `sections`, `clocks` as `corpus.Clock`, `counting`, `provenance`,
   `body`: the markdown after the header; a key the shape does not define is refused, so a misspelled `clocks` cannot drop a
   deadline). `load_skill_file(path)` (raises `ValueError` naming the file when: there is no header or it is not closed or
   is not a mapping; a header key is missing or not defined, also inside a clock, or a clock is not a `Clock`; the name is
   not the file's name without `.md`; the description is empty, over 200 characters (`MAX_DESCRIPTION`), or has a line break;
   a section is not in `statutes/`; a clock's cite names a section not among the skill's `sections`; there are clocks and
-  no `counting.convention`), `cite_parts(cite)` ("83.60(1)(b)" to the section and the subsection), `clock_facts(skill)`
-  (fact id to type, from the role in the clocks: `trigger` and `shown_with` are "date", `applies_if` is "bool", and a
-  clock counted in `court_business_days` adds `premises_county`, "county"; there is no separate list of facts).
+  no `counting.convention`), `cite_parts(cite)` ("83.60(1)(b)" to the section and the subsection), `clock_roles(skill)`
+  (what the clocks count from, as `(fact id, type, clock, role)` in the clocks' order: the role is `trigger` or
+  `shown_with`, "date", `applies_if`, "bool", or, for a clock counted in `court_business_days`, "county" for
+  `premises_county`; there is no separate list of facts), `clock_facts(skill)` (the same as `{fact id: type}`),
+  `unconfirmed_clock_facts(skill, facts)` (the clock facts not in the confirmed `facts` yet, as `{id: type}`, leaving out the facts
+  only a `ruled_out` clock needs, one whose `applies_if` is confirmed no), and `type_conflicts(all_skills)` (the fact ids two clocks type
+  differently, one sentence each, in one skill or in two).
   `REQUIRED` (the body's "## " headings, in order: When to load this skill, What to find out, What the tenant can do,
   Deadlines, What the statute does not settle, Letters, Mistakes to avoid; "## Deadlines" only in a skill that has clocks;
   no other "## " heading; "### " subheadings are free). `check_skill(skill)` (prints one line per check through
@@ -120,10 +125,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   characters or more in the body word for word in a stored section, and in the cited section and subsection when a cite is
   next to it (`citations.check_quoted` on the body with nothing given, so only the statute counts; `check_quoted` skips a
   cite to a section or subsection that is not stored, so the skill check fails that one itself); and no clock id or
-  clock fact id in the body as a whole word (`ids_in_prose`)). `check_all_skills()` (all of them, then a last line with the
-  number of failures; returns it; called by `smoke.py`, not at import) and `skills` (dict, name to `Skill`, from
+  clock fact id in the body as a whole word (`ids_in_prose`)). `check_all_skills()` (all of them, then one check that no fact
+  id is typed two ways across them (`type_conflicts`), then a last line with the number of failures; returns it; called by
+  `smoke.py`, not at import) and `skills` (dict, name to `Skill`, from
   `skills/*.md` in name order; the ten skills since TODO item 110, empty when the folder is absent). No model
-  calls. Imports `config`, `corpus`, `citations`. Imported by `record`, `tools`, `prompt`, `app`, `smoke_parts`.
+  calls. Imports `config`, `corpus`, `citations`. Imported by `record`, `deterministic`, `timeline`, `tools`, `prompt`, `app`, `smoke_parts`.
 - `wiki.py`: the case wiki's code (see Files on disk, `wiki/`). `read_pages(root)` (every page in
   `cases/` and `topics/` under the wiki folder, by name: `name`, `path`, `meta` from the YAML front matter,
   `body`; parsed once and reused, in `_read`, while no file there changes its time or size or is added or removed,
@@ -157,16 +163,17 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   `render_cases` text prints, in order, each with where its own part starts, found by its heading line, name
   then citation; a case named only under another's "Other cases on it" is not one; TODO item 57). Imports
   `citations`, `config`, `corpus`. Imported by `tools`, `agent`, `smoke`.
-- `deterministic.py`: `check_elements` (element status), `court_days` (court business days from a
-  county's court holiday calendar), `lease_value` and `lease_differs` (a lease quote
-  read as a date or an amount, and compared with the tenant's value), `compute_deadlines` (the only date arithmetic), `matter_deadlines` (every playbook's
-  deadlines, with one that two playbooks share listed once, tagged with both issues), `check_options(playbook,
-  facts, today, profile=None)` (TODO items 72 and 81; facts through `listed`, which leaves out an answer a choice fact
-  does not list, kept from before its question was a choice, as `check_elements` does, so the sheet asks it again: each option of the playbook with its status from the
+- `deterministic.py`: `court_days` (court business days from a
+  county's court holiday calendar), `compute_deadlines(skill, facts, today)` (the only date arithmetic; reads `skill.clocks` and
+  `skill.counting["convention"]`), `matter_deadlines(loaded, facts, today)` (every loaded skill's
+  deadlines, with one that two skills share listed once, tagged with both skills' names in `skills`), `check_options(playbook,
+  facts, today, profile=None)` (TODO items 72 and 81; its clocks are its skill's, `skills[playbook.issue]`, since the playbook and
+  the skill have the same name and the same clocks; facts through `listed`, which leaves out an answer a choice fact
+  does not list, kept from before its question was a choice: each option of the playbook with its status from the
   confirmed facts, the clocks, and the lease profile). Each way of a gate gets a state from `way_state`: a fact
   confirmed with the way's value (`matches`: one of them, for a choice fact's list of answers) is "met", with another
   value its `otherwise` ("not met", or "not settled" through an open question, or "not met yet"); a fact not confirmed
-  is "tell" (the sheet asks it), or "check" when the way names a lease clause the profile did not read; a way whose
+  is "tell" (the model asks the tenant in the chat: "ask the tenant: ..."), or "check" when the way names a lease clause the profile did not read; a way whose
   `applies_if` does not hold (`holds`: a yes/no fact true, or a choice fact with one of the answers listed), or whose
   fact's own question is never asked (`asked_never`), is "not met", why `NOT_APPLY`; a clock is met when its status is
   the way's `equals`, "tell" while its start date is not confirmed, "outside" when it cannot be counted (no court
@@ -180,23 +187,22 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   (a gate not met yet), or open. Each step (`step_status`) "done" (its fact confirmed with its value, its clock's date
   passed, through `compute_deadlines`, or a way of its met), "waiting" (the date upcoming), "the tenant can check" or
   "not settled" (through its ways, `STEP_STATUS`, with why), or "to do"; a clock's step whose date has passed while a
-  step above it is not done is "passed", with "counts only if the steps above are done" (TODO items 86 and 90 to 92)),
-  `ask_json` (a one-shot call on a model client; an answer that is not valid JSON is asked for again with `NOT_JSON` added,
-  three answers at most, then the error is raised; parsed with `strict=False`, so a line break inside a quoted string is
-  kept) and `fill_facts` (a choice fact's answers go with its question, and a suggestion it does not list is dropped;
-  through `ask_json` on `agent_llm`). Nothing calls `fill_facts` since TODO item 111, when the intake stopped reading the
-  description with a model (TODO item 112 removes it); the issue classifier, `classify`, and `ISSUE_LABELS` went with
-  that item. Imports `calendars`, `config`, `lease` (for `LABELS` and `lease_cite`). Imported by `record`, `timeline`,
-  `tools`, `agent`, `smoke`.
+  step above it is not done is "passed", with "counts only if the steps above are done" (TODO items 86 and 90 to 92)).
+  The options layer goes with the playbooks (TODO item 113). `check_elements` (element status), `lease_value` and `lease_differs`
+  (a lease quote read as a date or an amount and compared with the tenant's value), `ask_json`, and `fill_facts` (the
+  model's reading of a description into facts) went with TODO item 112: the facts are proposed in the chat and no list of
+  them is checked. Imports `calendars`, `lease` (for `LABELS` and `lease_cite`), `skills`. Imported by `timeline`, `tools`,
+  `prompt`, `smoke`.
 - `record.py`: the shared state. `matter` and `profile` live here and every other module reaches them as
-  `record.matter` and `record.profile`. `confirm_fact` (the only code that writes a confirmed fact),
-  `prune_proposals` (drops suggestions that can never be asked; see Data flow 3), `add_skill(name)` (the only code
+  `record.matter` and `record.profile`. `confirm_fact` (the only code that writes a confirmed fact; a proposal stays in
+  `matter["proposed"]` until it runs for its id), `add_skill(name)` (the only code
   that writes `matter["skills"]`, the names of the loaded skills; called only by the `load_skill` tool, which has
   checked that the name is a skill and not loaded yet: appends the name, saves `matter.json`, and logs a
   `skill_loaded` event with `skill`), `active_skills()` (the `skills.Skill` objects for `matter["skills"]`, in the order
-  loaded), `active_playbooks()` (TRANSITION, until TODO items 112 and 113 remove the playbooks: the playbook of each
-  loaded skill, for the names that have one, so the fact status, the sheet's fact rows, `propose_facts`, the deadlines,
-  the options, and `draft_letter` keep working on the loaded skills), `matter_dir` (the only function that knows the
+  loaded), `clock_facts()` (TODO item 112: the facts the loaded skills' clocks count from, as `{fact id: type}`, merged
+  across the skills from `skills.clock_facts`; `propose_facts` and the confirmation read it), `active_playbooks()`
+  (TRANSITION, until TODO item 113 removes the playbooks: the playbook of each loaded skill, for the names that have one;
+  only `prompt.options_status` and `unknowns_status` call it), `matter_dir` (the only function that knows the
   folder layout), `lease_pages()` (the matter's `pages.json`, or [] with none; read by `search_lease` and
   `replies.cited_words`), `new_tenant_id` (random `t-` plus six hex characters), `new_matter_id(tenant_id)` (`m-001`,
   `m-002`, ... counting the tenant's `m-*` folders), `list_matters` (every saved matter as `{"tenant", "id", "skills"}`,
@@ -205,7 +211,7 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   and loses the three keys; the file itself is rewritten at the next `save`), `load_matter(tenant_id, matter_id)`
   (replaces `matter` from `matter.json`, through `with_skills`, and `profile` from `lease_profile.json`, or `None` if
   there is none; raises `FileNotFoundError` for a matter that does not exist), `save` (writes `matter.json`),
-  `append_event` and `read_events` (`events.jsonl`), `element_status`. The starting `matter` is the test matter,
+  `append_event` and `read_events` (`events.jsonl`). The starting `matter` is the test matter,
   tenant `"t-test"`, id `"test-001"`, used by the smoke scripts through `load_matter`. `new_matter(tenant_id)`
   replaces `matter` with an empty one (`skills: []`) under the next matter id and clears `profile`; `run.py` and
   `app.py` call it.
@@ -214,21 +220,26 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   open, `append_event` adds its id to every event. `append_transcript(entry)` writes one line to the open
   session's transcript (does nothing with no session open). `tenant_words()` returns the tenant's lines from the open session's
   transcript.
-  Imports `config`, `corpus`, `deterministic`, `lease`, `skills`. Imported by `timeline`, `tools`, `agent`, `run`,
+  Imports `config`, `corpus`, `lease`, `skills`. Imported by `sheet`, `timeline`, `tools`, `agent`, `run`,
   `smoke`, `smoke_online`.
 - `timeline.py`: `render_deadlines(result)` (a `get_deadlines` result as the tenant reads it: per deadline
-  its date, actor, clock, issues, status, rule and start, cite, and counting line; a clock with no date
+  its date, actor, clock, skills, status, rule and start, cite, and counting line; a clock with no date
   shows why; a clock's `shown_with` fact, when confirmed, on a line "beside it, from your record: ..."; a clock's
-  `condition` on a line "counts only if ..." (TODO items 90 to 92); with no deadline at all, one line saying so; then each waiting issue with its open facts; also the "Not yet." refusal), and
-  `render_timeline(skill, full)`, the DATE / EVENT / SOURCE / FILE table (`skill` keeps one loaded skill's deadlines and tagged events), plus helpers
+  `condition` on a line "counts only if ..." (TODO items 90 to 92); with no deadline at all, one line saying so, "No
+  deadlines yet" while a skill waits for facts; then each waiting skill with its facts), and
+  `render_timeline(skill, full)`, the DATE / EVENT / SOURCE / FILE table (`skill` keeps one loaded skill's deadlines and tagged events), whose confirmed-date rows are every
+  confirmed fact whose value is a date written YYYY-MM-DD (`is_iso_date`), a plain-text fact among them, each by its id in words (TODO item 112; with a
+  skill filter, a date only another loaded skill's clocks count from is left out), plus helpers
   `label`, `corrected` (the tenant confirmed a different value from the suggestion, compared as shown),
   and `confirmation_of`. A confirmed date's SOURCE reads "tenant (corrected, ...)" when corrected, and in
   `timeline full` a corrected fact reads "corrected from <how> <suggested value>". Not a tool; only the web page and `smoke.py` call it. Imports `record`,
-  `deterministic`, `sheet` (for `shown`). Imported by `agent`, `smoke`.
+  `deterministic`, `sheet` (for `shown`), `skills`. Imported by `agent`, `smoke`.
 - `tools.py`: the ten `@tool` functions and the `tools` list (see Tools the model can call), plus the
   plain helpers `pretty`, `quote_is_real`, `sentence`, `build_letter`, `dates_written`, `same_day`, `amount`,
-  `not_in_record`, `check_line` (the letter, Data flow, step 7), `open_facts_by_issue`, `deadline_listing`, and
-  `deadline_receipt`. Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `lease`, `sheet`, `skills`, `wiki`.
+  `not_in_record`, `check_line` (the letter, Data flow, step 7), `computed_deadlines` and `deadlines_waiting` (the
+  deadlines the confirmed facts give, and the clock facts each loaded skill still needs; the listing and the prompt both
+  read them), `deadline_listing`, and `deadline_receipt`; and, for `propose_facts`, `FACT_ID` (the shape of a fact name),
+  `MAX_TEXT`, and `CLOCK_FACT_IDS` (the clock fact ids of every skill, loaded or not). Imports `record`, `citations`, `config`, `corpus`, `deterministic`, `lease`, `sheet`, `skills`, `wiki`.
   Imported by `prompt`, `agent`, `schemas`, `smoke` (for `build_letter`, `get_deadlines`).
 - `prompt.py`: what the model reads (split out of `agent.py` and `tools.py` on 2026-10-06, unchanged). `RULES` (the fixed part of the system prompt; if the environment sets `RULES_FILE`, that
   file's text replaces it for the run, for trying versions of the rules), `rules_for(messages)` (`RULES`
@@ -240,10 +251,11 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   rules, the chat's messages so far; the menu of skills, every skill's name and description with `(loaded)` on a loaded
   one, and the loaded skills' instructions, each under `# <name>`, come from `skills.skills` and
   `record.active_skills()`), `case_topics_text`
-  (one line per case topic, or none), and three parts the program works out: `deadline_status` (WHICH DEADLINES
+  (one line per case topic, or none), and four parts the program works out: `facts_status` with `role_words` (YOUR
+  FACTS: the confirmed facts, the proposals waiting, and what the deadlines still need), `deadline_status` (WHICH DEADLINES
   HAVE PASSED), `options_status` with `state_words` (YOUR OPTIONS), and `unknowns_status` with `UNDECIDED` and
   `KNOWN_AS` (WHAT THE TOOL DOES NOT KNOW); see The system prompt. Imports `record`, `corpus`, `deterministic`,
-  `lease`, `skills`, `tools`. Imported by `replies`, `agent`, `smoke`.
+  `lease`, `sheet` (for `shown`), `skills`, `tools`. Imported by `replies`, `agent`, `smoke`.
 - `replies.py`: what the program checks and prints under each reply (split out of `agent.py` on 2026-10-06,
   unchanged). `check_reply(text, messages)` (which builds `given_text` once for its checks) runs
   `citations.check_cites` against `sections_shown(messages)` (the loaded skills' `sections` plus every
@@ -359,13 +371,13 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   its own copy under its hash; the description; then `intake` and `open_chat`),
   `update_form` (what is new, through `resume`, which logs it, and `open_chat`), `open_chat(first)` (builds the agent
   once, which makes no model call, shows `first` as the tenant's message, and leaves it as `pending`, so the model's
-  first turn answers it), `sheet_form` (one row at a time from `pending_rows`: the
-  question, `row_notes`, an input by type, a date picker, yes/no, an amount, words, a list of a choice's answers to
-  pick from, filled in with the
-  suggestion; Save goes through `value_of` and `save_answer`, an accepted suggestion logged as typed ""; Skip
-  for now), `finish_sheet` (back to the chat with the note), then the chat:
+  first turn answers it), `sheet_form` (the confirmation, one row at a time from `pending_rows`: the
+  label, `row_notes`, an input by the row's type (`answer_widget`): a date picker, yes/no, a county in a line, words in a
+  text area, filled in with the suggestion; Save goes through `value_of` and `save_answer`, an accepted suggestion logged
+  as typed ""; Skip for now leaves the proposal pending), `finish_sheet` (back to the chat with the note, and
+  `sheet.skipped_note` when something was skipped), then the chat:
   `take_message` (`bye` ends the session; anything else waits as
-  `pending`, so the message shows before the model starts) and `run_pending_turn` (`agent.turn`; a sheet
+  `pending`, so the message shows before the model starts) and `run_pending_turn` (`agent.turn`; the confirmation
   follows when the model proposed facts and rows are pending; an error from the gateway becomes a caution and
   the page goes on, with the traceback printed in the terminal running Streamlit). The terminal's chat commands
   (`issues`, `drop`, `timeline`) are gone since TODO item 111. `show(b)` draws a block:
@@ -379,28 +391,25 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
   last letter drafted (from the last `draft` event's file, with a download button). `need_key()` stops a run
   that would call a model without the key. Imports `record`, `agent`, `config`, `sheet`, `skills`,
   `timeline`.
-- `sheet.py`: the intake sheet, asked and saved by code with no model. It follows a turn in which the model proposed
-  facts (the stop page, the issue rows, `NOT_COVERED`, and the lease word map went with TODO item 111).
-  `pending_rows()` (every changed, proposed, or missing fact of the loaded skills' playbooks, once per fact
-  id, with its question, type, a choice fact's answers (`choices`), and any suggestion), `parse_answer(kind, text,
-  choices=None)` (checks
-  an answer against the element's type: dates as `2026-07-31` or `7/31/2026`, yes/no, amounts with or without `$` and
-  commas, non-empty text, and for a choice its number in the list or its words, spacing and capitals aside, saved as
-  the words; TODO items 90 to 92), `shown`.
-  The sheet's pieces, so the terminal and the web page ask a row the same way: `suggestion(r)` (a row's
-  suggested value if it fits the type, else `None`), `row_notes(r)` (the lines under a row's question: the
-  confirmed value next to the update's, the suggestion with the tenant's words, "your lease says" for a row
-  carrying `lease_says`, the lease clause a fact's question is about through `clause_note` for a row carrying
-  `lease_clause` (`corpus.fact_lease`; its words as the tool read them with the cite, or that the tool found no such
-  clause or did not read it, so the tenant checks the lease itself; TODO item 81)),
-  `value_of(r, answer)` (an empty answer takes the
-  suggestion, otherwise `parse_answer`; returns `(value, None)` or `(None, what is expected)`), and
-  `save_answer(r, answer, value)` (`record.confirm_fact`; saves `matter.json`, writes a `sheet` transcript
-  line; returns the pair `(fact id, value)` for the model's note). `run_sheet(ask=input)` is the
-  terminal's sheet: asks one row at a time with those pieces (a choice's answers numbered under its question, hint
-  "number or words"), rebuilding the list after each answer so an
-  `applies_if` fact appears once it applies; Enter accepts a suggestion, `?` skips; returns the saved pairs.
-  Imports `record`, `corpus`, `lease`. Imported by `app`, `agent`, `timeline`, `tools` (for `parse_answer` and `shown`).
+- `sheet.py`: the confirmation, asked and saved by code with no model (TODO item 112; it was the intake sheet, which asked every
+  fact the loaded playbooks lacked). It follows a turn in which the model proposed facts and asks only to confirm what the
+  tenant said, never for a fact the record lacks. `pending_rows()` (every fact in `matter["proposed"]`, in the order proposed;
+  each row: `id`, `label` (the id with spaces), `type` (the type of a clock fact of a loaded skill, from `record.clock_facts`,
+  "date", "bool", or "county", else "text"), `status` ("proposed", or "changed" when the id is already confirmed with a value
+  that reads differently), `suggested`, `basis` (the tenant's words), and `confirmed` (the confirmed value of a changed row)),
+  `parse_answer(kind, text)` (checks an answer against the row's type: dates as `2026-07-31` or `7/31/2026`, yes/no, and for
+  any other type, "text" or "county", non-empty words), `shown` (yes/no for a boolean, else as is).
+  The pieces, so the terminal and the web page ask a row the same way: `suggestion(r)` (a row's suggested value if it fits the
+  type, else `None`), `row_notes(r)` (the lines under a row's label: "was X, now Y?" for a changed row, then the suggestion
+  with the tenant's words it came from, or just the words when the suggestion does not fit the type), `value_of(r, answer)`
+  (an empty answer takes the suggestion, otherwise `parse_answer`; returns `(value, None)` or `(None, what is expected)`),
+  `save_answer(r, answer, value)` (`record.confirm_fact`; saves `matter.json`, writes a `sheet` transcript line with the
+  row's `label`; returns the pair `(fact id, value)` for the model's note), and `skipped_note(fact_ids)` (what the tenant is told
+  after skipping: the facts stay unconfirmed, nothing is counted from one, and they are asked again at the next confirmation).
+  `run_sheet(ask=input)` is the terminal's confirmation: asks one row at a time with those pieces (the label and a hint by
+  type), rebuilding the list after each answer; Enter accepts a suggestion, a typed value corrects it, `?` skips (the proposal
+  stays pending); returns the saved pairs. Imports `record`. Imported by `app`, `agent`, `prompt`, `timeline`, `tools` (for
+  `parse_answer` and `shown`).
 - `checks.py`: helpers for the smoke scripts. `check(name, condition)` prints `OK` or `FAIL` and keeps the
   failures, `summary()` prints the last line, `make_scratch(tenant_id, **changes)` copies the test matter
   (without its transcripts) to `matters/<tenant_id>/m-001` and changes `matter.json` keys, and
@@ -408,13 +417,14 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
 - `smoke.py`: entry point. Runs the offline checks, which are in `smoke_parts/` (split out of smoke.py on 2026-10-06),
   by importing each part in order, then prints `summary()` (see Running and testing).
 - `smoke_parts/`: the smoke checks in six parts, each run when imported: `pieces` (each piece on its own, on the
-  test matter in memory), `writing_to_a_matter` (on `matters/t-smoke/m-001`), `skills_and_turns` (TODO item 111; named
+  test matter in memory), `writing_to_a_matter` (on `matters/t-smoke/m-001` and `matters/t-smoke-county/m-001`), `skills_and_turns` (TODO item 111; named
   `issues_and_turns` until then: the model loading skills on `matters/t-smoke-skills/m-001`, an old matter's issues
   coming out as skills on `matters/t-smoke-old/m-001`, intake and resume making no model call and the description being
   the first turn on `matters/t-smoke-intake/m-001`, and turns with a stand-in model on `matters/t-smoke-related/m-001`),
-  `playbooks_options_lease` (every playbook, and the checks of items 72 to 84 on their own scratch matters), and
-  `web_page`, and `skill_files` (the skill format, on fixture skills written to a temporary folder, never to `skills/`; TODO
-  item 109); and `common.py`, what more than one part uses: `FORFEIT` (a phrase of 83.49(3)(a)), `scripted`,
+  `playbooks_options_lease` (every skill's clock facts through the real code path, and the checks of items 72 to 84 on
+  their own scratch matters), and
+  `web_page`, and `skill_files` (the skill format and the typing of clock facts, on fixture skills written to a temporary folder, never to `skills/`; TODO
+  items 109 and 112); and `common.py`, what more than one part uses: `FORFEIT` (a phrase of 83.49(3)(a)), `scripted`,
   `stated`, `screen`, `prompt_part`, and `StandIn` (a stand-in model that takes any tools). Each part imports what it
   uses; named checks and scratch matters come from `checks.py`.
 - `smoke_online.py`: entry point. The model's first turn on throwaway copies of the test matter (intake and resume call
@@ -437,51 +447,52 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    (`load_skill`; `record.add_skill` saves the name and logs `skill_loaded`), reads the lease and the statute, proposes
    facts from the tenant's own words (`propose_facts`; the description is in the transcript by then, so its `said` words
    can be checked), and answers; the loaded skills' instructions and sections are in its next prompt. If it proposed facts,
-   the sheet follows (step 3). Nothing is confirmed by code before the tenant answers the sheet.
+   the confirmation follows (step 3). Nothing is confirmed by code before the tenant answers it.
 2b. An update to an existing matter (`resume`). The text is logged verbatim as a `tenant_update` event;
    `description` is not touched. The text is sent to the model as the visit's first chat message, as in step 2, with
    no model call before it. Nothing is removed: the skills loaded stay loaded. A proposal next to a confirmed fact with a
-   different value shows as `changed` (step 4). Facts two playbooks share by element id need nothing: there
-   is one `facts` pool for the matter, so a new skill's shared elements are already known.
+   different value shows as `changed` (step 4). Facts two skills share need nothing: there
+   is one `facts` pool for the matter, so a new skill's clock facts that are already confirmed are known.
 3. Proposed to confirmed (`record.confirm_fact`, the only code that writes `matter["facts"]`). It moves
    the value into `facts`, removes it from `proposed`, and appends a `fact_confirmed` event carrying the
    proposal's `how`, `basis`, and `proposed_value` (or `how: "asked"` when nothing was proposed) and
-   `confirmed_in`. One caller: the intake sheet (`sheet.run_sheet`, the tenant answers code directly,
-   `confirmed_in: "sheet"`). Then `prune_proposals` drops every suggestion that can never be asked: all
-   elements with its id take the value from the lease (a present clause listed before `user` in
-   `source`), or depend on a fact confirmed as not true with no change to it pending, or no loaded skill's playbook
-   asks for it. A suggestion whose condition is still open, or has a pending change, is kept. `propose_facts`
-   prunes too. Pruning is not logged. The model cannot confirm a fact; it can only add to `proposed` with
-   `propose_facts`, and the sheet follows its turn. Events from before 2026-09-27 may say
-   `confirmed_in: "chat"` or have no `confirmed_in`: those were recorded by the old `record_facts` tool.
-4. Element status (`check_elements`). For each element in order: `n/a` if it has an `applies_if` and that
-   fact is not confirmed truthy (unconfirmed counts as not truthy); `known` if a source gives a value (a confirmed fact, or a present lease clause's
-   quote, in the order listed in `source`); `changed` instead of `known` if the value is a confirmed fact
-   and `proposed` holds a different value for the same id (the row carries both, `value` and `new_value`,
-   plus the proposal's `how` and `basis`; a value read from the lease is never `changed`); `proposed` if it
-   is in `proposed`; otherwise `missing`. Changed, proposed, and missing rows carry the `guidance.questions`
-   text in `ask`. A changed row is resolved on the sheet, with either value. A row whose element names a
-   lease field in `compare_to` also carries `lease_says`, the lease's exact words, when the lease's value
-   (read by `lease_value`: dates as printed, dollar figures) differs from the tenant's value (the confirmed
-   one, the suggestion, or for a changed row the new value). Nothing is compared when the quote cannot be
-   read. The tool shows both and does not decide which is right.
-5. Confirmed to deadlines (`get_deadlines`, then `matter_deadlines`, then `compute_deadlines` per playbook of a loaded skill; an "issue" in a deadline's tags is a skill's name). Only issues with no proposed, changed, or
-   missing row are computed; the others are returned as waiting. For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
-   if the trigger date is not confirmed; otherwise trigger date plus or minus `days` calendar days, status
-   `passed` if before today else `upcoming`, with the cite and the playbook's `counting.convention`. A clock
+   `confirmed_in`. One caller: the confirmation (`sheet.save_answer` from `sheet.run_sheet` or the web page's form, the
+   tenant answers code directly, `confirmed_in: "sheet"`). The model cannot confirm a fact; it can only add to `proposed`
+   with `propose_facts` (TODO item 112), which parses a clock fact of a loaded skill by its type
+   (`record.clock_facts`: "date", "bool", "county") and keeps any other fact, under a name of lowercase words joined by
+   underscores, as plain text; a proposal stays in `proposed` until the tenant confirms or corrects it (nothing prunes
+   it; before item 112 `prune_proposals` dropped a suggestion no playbook asked), and a skipped one is asked again at the
+   next confirmation. Events from before 2026-09-27 may say `confirmed_in: "chat"` or have no `confirmed_in`: those
+   were recorded by the old `record_facts` tool.
+4. The confirmation's rows (`sheet.pending_rows`). One row for each fact in `proposed`, in the order proposed, with its
+   label (the id with spaces), type (a clock fact's, else "text"), the suggested value, and the tenant's words it came from;
+   a proposal for an id already confirmed with a value that reads differently is a `changed` row, shown "was X, now Y?"
+   and resolved with either value. No row is made for a fact the record lacks, and no question comes from a skill or a
+   playbook. Enter (or an empty answer on the page) accepts the suggestion, a typed value corrects it, parsed by the type;
+   skipping leaves the proposal pending. Before item 112 the sheet asked, from the loaded playbooks' elements, every
+   changed, proposed, or missing fact (`check_elements`), with the lease's words beside a value that differed.
+5. Confirmed to deadlines (`get_deadlines`, then `tools.computed_deadlines`, `matter_deadlines`, and `compute_deadlines` per loaded
+   skill; a "skill" in a deadline's tags is a skill's name; TODO item 112). Only confirmed facts count: a proposal
+   is never read. Every clock of every loaded skill that can be computed is listed; there is no "ready" rule, so a skill
+   missing one fact still gets its other deadlines. `waiting` (`tools.deadlines_waiting`) is `{skill name: [clock facts
+   not confirmed yet]}` for the skills with some (`skills.unconfirmed_clock_facts`: the facts a clock needs, leaving out
+   those only a clock needs whose `applies_if` is confirmed no). For each clock: skipped if `applies_if` is not a truthy confirmed fact; "need date for ..."
+   if the trigger date is not confirmed (such a row is left out of the listing, since waiting says what it needs); otherwise trigger date plus or minus `days` calendar days, status
+   `passed` if before today else `upcoming`, with the cite and the skill's `counting.convention`. A clock
    with `count: court_business_days` goes through `court_days` instead: one day at a time from the trigger
    date (not counted), skipping Saturdays, Sundays, and every holiday in the calendar of the circuit that
    includes the confirmed `premises_county`. Its row carries its own counting line naming the circuit and
    the memoranda used. With no calendar for the county, or a day in a year with no memorandum loaded, the
    row says "not computed: ..." and has no date; nothing is guessed.
-   `matter_deadlines` then merges a row two playbooks share (same clock id, cite, date, and status) into
-   one, and every row carries `issues`, the list of issues it belongs to.
-6. Record to timeline (`render_timeline`). Rows come from confirmed date facts, freshly computed deadlines
-   (from `matter_deadlines`, so a shared deadline is one row tagged `[issue, issue]`, kept under either
+   `matter_deadlines` then merges a row two skills share (same clock id, cite, date, and status) into
+   one, and every row carries `skills`, the list of skill names it belongs to.
+6. Record to timeline (`render_timeline`). Rows come from confirmed date facts (every fact whose value is a date
+   written YYYY-MM-DD, a plain-text one too), freshly computed deadlines
+   (from `matter_deadlines`, so a shared deadline is one row tagged `[skill, skill]`, kept under either
    skill by the web page's skill filter),
    and events (see Files on disk). Sorted by date only; rows on the same day keep the order they were
    added (confirmed dates and deadlines first, then events in log order). `skill` filters deadlines and
-   events tagged with an issue or a skill; untagged events always show. `full` adds `skill_loaded`, `fact_confirmed`, `fetch`, `cite_flagged`, `quote_flagged`, `cases_left_out`, `reply_empty`,
+   events tagged with a skill (or, in older matters, an issue); untagged events always show. `full` adds `skill_loaded`, `fact_confirmed`, `fetch`, `cite_flagged`, `quote_flagged`, `cases_left_out`, `reply_empty`,
    `deadlines_computed`, the issue events of older matters, `session_started`, and `session_ended` events.
 7. Letter assembly (`draft_letter`, then `build_letter`; TODO item 95, 2026-10-11). Checks that the issue is a loaded skill with a playbook, and the posture;
    refuses a ch. 83 cite (`citations.cites_in`, dollar amounts set aside) or a lease cite (`lease.LEASE_CITE`) in the
@@ -495,8 +506,9 @@ Listed from the bottom of the import chain up. Every module imports `config`. Ev
    printed by id. Dates are written "October 6, 2026" (`pretty`). `not_in_record` finds each date (`dates_written`:
    "September 19", "Sept. 19, 2026", "Oct 2nd", "9/19", "9/19/2026", "2026-09-19") and dollar amount in the tenant's
    part that is not today, the reply-by date, in the tenant's own words (the description, updates, this session's
-   messages from `record.tenant_words`, recorded messages, confirmed facts) or in the lease's quotes, or, for an
-   amount, a confirmed amount or a number in the tenant's words; a date given without a year matches any year
+   messages from `record.tenant_words`, recorded messages, and the value of every confirmed fact, whatever its type: a
+   plain-text fact's date or amount counts, TODO item 112) or in the lease's quotes, or, for an
+   amount, a confirmed number or a number in the tenant's words (a plain-text fact's among them); a date given without a year matches any year
    (`same_day`). `check_line` names them in a "[CHECK BEFORE YOU SEND, not part of the letter: ...]" line under the
    letter, never in the draft file. Writes the draft file and a `draft` event.
 
@@ -512,8 +524,9 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   field the profile was read without (`maintenance_and_repairs` before 2026-10-04) is missing or `null`.
 - `matter.json`: current state only, overwritten by `save`. Keys: `id`, `tenant`, `description` (the intake text),
   `skills` (the names of the loaded skills, in the order loaded; written only by `record.add_skill`),
-  `facts` (confirmed, element id to value), `proposed` (unconfirmed,
-  element id to `{"value", "how", "basis"}`). A `matter.json` saved before skills has `issues`, `proposed_issues`, and
+  `facts` (confirmed, fact id to value; a clock fact of a skill holds a date string, a boolean, or a county, any other fact
+  plain text, and a matter from before TODO item 112 may hold a number or a boolean under a playbook's element id), `proposed` (unconfirmed,
+  fact id to `{"value", "how", "basis"}`; kept until the tenant confirms it). A `matter.json` saved before skills has `issues`, `proposed_issues`, and
   `rejected_issues` instead of `skills`; `load_matter` reads them as skills (`record.with_skills`) and the next save
   drops them.
 - `events.jsonl`: the history, one JSON object per line, append-only. Every event has `when` (local time,
@@ -537,8 +550,8 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   - `cases_shown`: `topic`, `cases` (the cites printed, oldest first), `unverified` (true, only in a
     development run with `WIKI_UNVERIFIED`). Written by `get_cases` when it prints; once per topic per
     session. `timeline full` only.
-  - `deadlines_computed`: `issue`, `clocks` (ids of clocks that produced a date). One per active playbook
-    per `get_deadlines` call.
+  - `deadlines_computed`: `skill` (`issue` in events before TODO item 112), `clocks` (ids of clocks that produced a date). One per
+    loaded skill that has a dated clock, per `get_deadlines` call.
   - `draft`: `issue`, `posture`, `cites`, `file`. Written by `draft_letter`.
   - `artifact`: `file` (original name), `sha256`, `note`. Written by `add_artifact`.
   - `communication`: `sent_on` (YYYY-MM-DD), `sender`, `recipient`, `channel`, `text`. Written by
@@ -564,7 +577,7 @@ A tenant id is opaque, never a name or an email. Currently only `matters/t-test/
   list of `{"name", "args"}`, when it called tools), `tool` (`name`, `text`: the result the model saw, and
   `shown`: what the program printed from it, for `get_cases` and `get_deadlines`),
   `command` (`text`: a chat command, `timeline`, `issues`, or `drop`, handled without the model; sessions before TODO
-  item 111 only), `sheet` (`id`, `question`,
+  item 111 only), `sheet` (`id`, `label` (`question` before TODO item 112),
   `typed`: what the tenant typed, empty if they accepted the suggestion, `value`: what was saved; before item 111 also
   `issues_suggested` when the answer brought in a related issue), or
   `printed` (`text`: what the program printed outside the chat, the stop text before item 111, or, with `"what": "deadlines"`,
@@ -647,24 +660,29 @@ All in `tools.py`, in the `tools` list. The docstring is what the model reads; `
   lease's text holds it, to try another wording, and that if none is found the tool found nothing on it in the
   lease's text (a known absence, unlike a clause the profile did not read). Its docstring asks for it before the
   model says the lease does or does not say something. Writes a `fetch` event.
-- `propose_facts(facts_json)`: JSON object keyed by element id, each `{"value", "how", "said"}`. Puts a
-  suggestion in `proposed` only if the id is a user-sourced element of the playbook of a loaded skill, the value fits
-  the element's type (`sheet.parse_answer`, a choice's answer among its choices, and it is stored as parsed), `how` is
-  stated or inferred, and
+- `propose_facts(facts_json)` (TODO item 112): JSON object keyed by fact id, each `{"value", "how", "said"}`. Its docstring tells the
+  model to propose the facts the tenant tells it that the answer, the record, or a letter turns on; to use, for a fact the
+  deadlines count from, the id YOUR FACTS gives under what the deadlines still need, in its type; to give any other fact a
+  short name of lowercase words joined by underscores; and that the tenant confirms each after the reply. Puts a proposal in `proposed`
+  only if: the id is a clock fact of a loaded skill (`record.clock_facts`) and the value fits its type (`sheet.parse_answer`:
+  a date as `2026-07-31` or `7/31/2026`, yes/no as true/false or yes/no, a county as non-empty words; stored as parsed), or
+  the id is any other fact name (`FACT_ID`, `^[a-z][a-z0-9_]{1,39}$`) and the value is non-empty plain text of at most 300
+  characters (`MAX_TEXT`; a number or a boolean is kept as the words `shown` gives); the id of a clock fact of a skill that
+  is not loaded is refused ("load that skill first"), so a date is never kept as words; `how` is stated or inferred; and
   `said` appears in what the tenant typed this session (`record.tenant_words`, by `citations.is_in`: an
   ellipsis may join pieces, each of which must appear; spacing, quote-mark style, and end punctuation are
-  ignored).
-  A value equal to the confirmed one is refused. Saves `matter.json`; returns what was taken and why
-  anything was refused. Never confirms: the chat loop runs the sheet after the turn.
-- `get_deadlines()`: the listing comes from `tools.deadline_listing()`, which works issue by issue. An issue is
-  ready when none of its rows is proposed, changed, or missing. It returns JSON `{"deadlines": [...],
-  "waiting": {issue: [open fact ids]}}`: the clocks of the ready issues from `matter_deadlines`, each with
-  `issues` (a list; a deadline two issues share appears once), and, if any, the issues still waiting with
-  their open facts; or "Not yet. ...", with the open facts by issue, when no issue is ready. Writes a
-  `deadlines_computed` event per ready playbook. A tool with `response_format="content_and_artifact"`: the
+  ignored). A value that reads the same as the confirmed one is refused ("already confirmed with that value"). A proposal for
+  a confirmed fact with another value is kept and shown as a changed row. Saves `matter.json`; returns what was proposed and why
+  anything was refused. Never confirms: the chat loop runs the confirmation after the turn. It is no longer required that the id
+  be an element of a loaded skill's playbook.
+- `get_deadlines()`: the listing comes from `tools.deadline_listing()`, which lists every clock of every loaded skill that
+  the confirmed facts let the program compute (`tools.computed_deadlines`), with no "ready skill" rule. It returns JSON
+  `{"deadlines": [...], "waiting": {skill: [clock facts not confirmed yet]}}`: each deadline carries `skills` (a list; a
+  deadline two skills share appears once), and `waiting` appears only when some loaded skill still needs a fact. Writes a
+  `deadlines_computed` event per loaded skill that has a dated clock. A tool with `response_format="content_and_artifact"`: the
   program gets the listing as the artifact, and the chat loop prints the turn's last one through
   `timeline.render_deadlines`; the model gets `deadline_receipt(listing)`, how many dated deadlines for which
-  issues and which issues wait, with no date in it, so it cannot retype a deadline from earlier in the chat
+  skills and which skills wait, with no date in it, so it cannot retype a deadline from earlier in the chat
   and must call the tool to show them again (TODO item 44); the receipt also says the model's instructions say
   which have passed (in lower case: the model copied the receipt into replies, and with it a part's name), to add nothing when the tenant asked only for the deadlines, and otherwise to answer the
   rest without writing a date. Not turn-ending since TODO item 51 (it was `return_direct` from item 19, so the
@@ -705,7 +723,7 @@ always matches the record: facts confirmed on the sheet and skills loaded mid-ch
 next call. The conversation itself is kept by the checkpointer; only the system prompt is rebuilt. In
 this order:
 
-1. `RULES`, through `rules_for`: 2,492 words always (2,437 before TODO item 111, 2,055 before items 82 and 83), plus rule 6 on letters (219 words; 174 before TODO 96) once a letter is in
+1. `RULES`, through `rules_for`: 2,517 words always (2,492 before TODO item 112, 2,437 before item 111, 2,055 before items 82 and 83), plus rule 6 on letters (219 words; 174 before TODO 96) once a letter is in
    play, and rule 8 on cases in full (271 words) when there is a case topic, otherwise one line. Version G
    (2026-10-02, TODO item 46), for applying the law (README, Purpose). A role paragraph (apply the lease and
    the statute to the record in YOUR FACTS and WHICH DEADLINES HAVE PASSED and say what they mean for the tenant,
@@ -733,7 +751,7 @@ this order:
    every rule the answer turns on cited to a section whose words say it, each condition and consequence relied
    on, never a rule no cite gives (TODO items 54 and 73; the author's recited reply of 2026-10-04 as its "Not:");
    only the facts it turns on, in a few words, never listed back, never an id or a prompt section's name (a
-   fact said in the chat but not confirmed is "not known yet until the sheet confirms it"); for each condition, met, failed, or not known; what follows, and with an open question in the way what
+   fact said in the chat but not confirmed is "not known yet until they confirm it after your reply"); for each condition, met, failed, or not known; what follows, and with an open question in the way what
    follows on each of its readings, never one as the answer (TODO item 56), and when
    asked what they can do, each option the stored text gives and what it requires first (fetching a section
    such as 83.55 or 83.48 when it is not in THE STATUTE); the open question in the way. Never assume a
@@ -745,8 +763,10 @@ this order:
    the tenant's words, or a tool result; whether a deadline has passed only from WHICH DEADLINES HAVE PASSED ("passed" or
    "upcoming"), never a comparison of the model's own, nor a date worked out for an open question's reading; the dates only from `get_deadlines`, called every
    time, which the program prints above the reply; asked only for the deadlines the model adds nothing, asked
-   more it answers the rest applying WHICH DEADLINES HAVE PASSED (TODO item 51); 4 the model proposes facts with `propose_facts`, the
-   tenant confirms them on the sheet; 5 open questions stay open, given with their readings and what each
+   more it answers the rest applying WHICH DEADLINES HAVE PASSED (TODO item 51); 4 the model proposes what the tenant tells it with `propose_facts`, the
+   tenant confirms it after the reply, and the model asks in the chat only for what its answer turns on, never to confirm
+   or supply a fact YOUR FACTS shows (TODO item 112; was "the tenant confirms them on the sheet" and "the sheet asks the
+   tenant after your reply"; item 114 rewrites the rules); 5 open questions stay open, given with their readings and what each
    would mean on the tenant's facts, never picked, never put to the tenant; one with no readings is a limit
    of the tool; 6 letters only when asked, only through `draft_letter`, missing details asked once, posture
    lines copied word for word, then an answer to anything else asked with it and one line (TODO 96); 7 record messages and sent letters with `add_communication`;
@@ -790,7 +810,16 @@ rules forbade it.
    loaded (a section outside them is fetched with `get_statute_section`).
 6. `COURT CASES THIS TOOL HAS`: `prompt.case_topics_text()`, one line per topic with its number of cases,
    from `tools.offered_topics()`, or "none for these issues" (always, until the author verifies pages).
-7. `YOUR FACTS`: `element_status()` as JSON at the moment of the call.
+7. `YOUR FACTS` (TODO item 112; was `element_status()` as JSON, every playbook element known, changed, proposed, missing,
+   or n/a): `prompt.facts_status()`, in three lists. "Confirmed by the tenant": each confirmed fact as "- <id>: <value>" (yes/no for a
+   boolean; ids are fine in the prompt, the rules forbid them in a reply), or "none yet". "Proposed, waiting for the tenant to
+   confirm after your reply": each proposal, likewise, or "none". "What the deadlines still need": each clock fact of a
+   loaded skill not confirmed yet (`skills.unconfirmed_clock_facts`), "- <id> (<type>): <what it does for each clock> [<skill
+   name in words>]", the type being date, bool, or county, and what it does being "counted from by the <actor>'s <days>-day
+   deadline of Fla. Stat. <cite>", "decides whether the <cite> deadline counts" for an `applies_if`, "the county, for counting
+   court business days", or "printed beside the <cite> deadline's date; not needed to count it" for a `shown_with`
+   (`role_words`); or "nothing: every fact the loaded skills' deadlines count from is confirmed". The model proposes each
+   under the id shown.
 8. `YOUR OPTIONS`: `prompt.options_status()`: for each active issue's options (`deterministic.check_options`,
    from the confirmed facts, the clocks, and the lease profile), "- <label> (Fla. Stat. <cite>): <STATUS>", then a
    line per condition (gate) with its state in words (`state_words`: its status, what the tool knows of it when
@@ -815,10 +844,11 @@ rules forbade it.
    the whole text, and only a point no wording finds there is known to be absent. In words, no id.
 10. `WHICH DEADLINES HAVE PASSED`, whose name line says it has no dates and that any question about when calls
    `get_deadlines` (named THE PROGRAM'S DEADLINES for a few hours on 2026-10-03, which the model read as the
-   deadlines themselves and answered from): `prompt.deadline_status()`: for the issues with every fact confirmed, each deadline by its label ("claim
-   notice deadline", not the clock's id) with its issues, whose it is, what it counts from (the fact's label,
+   deadlines themselves and answered from): `prompt.deadline_status()`: for each deadline the confirmed facts give (`tools.computed_deadlines`), by its label ("claim
+   notice deadline", not the clock's id) with its skills, whose it is, what it counts from (the fact's label,
    not its date), its cite, and "passed" or "upcoming" (or why it has
-   no date), with "(counts only if ...)" for a clock with a `condition`; then each issue still waiting, with the facts it waits for. Logs nothing. So the model can apply a
+   no date), with "(counts only if ...)" for a clock with a `condition`; then each skill still waiting, with the facts it waits for
+   (`tools.deadlines_waiting`). Logs nothing. So the model can apply a
    condition such as "within the 30-day period" without seeing or comparing a date.
 
 The program note after a sheet still tells the model, in the conversation, that a sheet just ran.
@@ -870,11 +900,11 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
   - `elements`: `id`, `type` (date, money, bool, text, choice; a choice lists its answers in `choices`, in plain words:
     what the tenant saw or did, never a term of the statute, TODO items 86 and 90 to 92), `source` (list; `user` and/or
     `lease_profile.<field>`, tried in order), `applies_if` (id of a bool element), `compare_to` (optional,
-    `lease_profile.<field>`: the lease field to show next to the tenant's value when they differ; the
-    deposit playbooks set `tenancy_terminated` against `term_end`; rent_increased, wants_to_leave_early, and
-    lease_ending set `term_end_date` against it). Read by
-    `check_elements`, `fill_facts` (only elements with `user` in `source`; nothing calls it now), `build_letter` and
-    `render_timeline` (date elements).
+    `lease_profile.<field>`: the lease field to show next to the tenant's value when they differ; read by nothing since
+    TODO item 112, when `lease_differs` went; the deposit playbooks set `tenancy_terminated` against `term_end`;
+    rent_increased, wants_to_leave_early, and lease_ending set `term_end_date` against it). Read by the options layer
+    only (`deterministic.check_options`: `listed`, `asked_never`); since TODO item 112 not by `check_elements` and
+    `fill_facts` (gone), `build_letter`, or `render_timeline`, which read the confirmed facts.
   - `clocks`: `id`, `actor` (landlord, tenant), `trigger` (a date element id), `days`, `direction`
     (before, after), `cite`, `quote`, optional `consequence` (`delivery`, a list read by nothing, went on 2026-10-08), `condition` (what the date
     counts only if, in words, printed with it: a notice whose sufficiency the tool does not decide), `applies_if`, `shown_with` (a
@@ -898,20 +928,20 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     could be cured). For a choice fact, `equals` may list several answers, any of which meets the way. A way may have
     `applies_if`, a yes/no fact, or `{fact, equals}` naming answers of a choice fact: it counts only when that holds
     (an objection already sent, a message sent by e-mail), is not met when it does not, and is the tenant's to tell
-    before (item 84). A way whose fact's own `applies_if` is confirmed false is not met (a question the sheet never
-    asks). A check may name a text fact in `beside`, whose words from the record are given with it. A fact
+    before (item 84). A way whose fact's own `applies_if` is confirmed false is not met (a question never
+    asked). A check may name a text fact in `beside`, whose words from the record are given with it. A fact
     or clock way has `when_otherwise` and `otherwise`
     for a value against it: "closed" (the default), "unsettled" with an `open_question`, or "later" (not met yet). A
     way may name a lease clause, `lease`, a `LeaseProfile` field: for a fact way, a clause not read makes the fact
-    the tenant's to check rather than to tell, and the sheet shows the clause beside the fact's question
-    (`corpus.fact_lease`). A way's own `says`, `cite`, and `quote` are optional; a single-way gate leaves them to
+    the tenant's to check rather than to tell (until TODO item 112 the sheet also showed the clause beside the fact's
+    question, through `corpus.fact_lease`). A way's own `says`, `cite`, and `quote` are optional; a single-way gate leaves them to
     the gate. Steps: `says`, `cite`, `quote`, and one `fact` with `equals`, one `clock`, or `ways` (decided as a
     gate's condition is: done through a way met, the tenant can check, not settled, or to do). `load_playbook` checks
     each way's shape (`way_problem`, a step's ways too) and that every fact, clock, open question, lease clause, and
     choice answer named exists;
     `check_playbook` that every quote (a way's too) is in its section, every cite among the playbook's sections, and
     no id in the prose (a way's `says`, `when_otherwise`, `check`, `outside` included). Read by
-    `deterministic.check_options`; the gates are the author's to check (TODO item 84). The sheet asks only what the
+    `deterministic.check_options`; the gates are the author's to check (TODO item 84). The model asks only what the
     tenant saw, did, or holds; which answers meet a condition is the playbook's reading, and what no answer settles
     is a check or an open question (2026-10-08, TODO items 86, 90 to 92, and 102; every playbook). repair_not_made (0.6): end the lease (83.56(1)), gated on a duty to fix the problem, met through what the
     problem is with (`problem_is_with`, a choice): the roof, a window or a door, a floor, steps, or a porch, an outside
@@ -985,8 +1015,9 @@ condition's fact is not an element of any playbook. Keys the `Playbook` class do
     none). `check_playbook` checks the shape and, like all prose, the quotes. Not otherwise read by code. Not shown to the
     model since TODO item 111: each skill's body carries its open questions.
 - `guidance` (prose, no longer put into the prompt since TODO item 111; the skill's body carries it), with two pieces also read by code:
-  - `questions`: one question per element id. `check_elements` needs one for every element that can be
-    proposed or missing; the sheet asks them (`fill_facts` sent them to the model until TODO item 111).
+  - `questions`: one question per element id. Read by the options layer only, which says "ask the tenant: <question>"
+    for a point the tenant can tell the tool (`way_state`); `check_playbook` still checks that every element has one.
+    Neither the sheet (until TODO item 112) nor `fill_facts` (until item 111) asks them any more.
   - `postures.notice_sufficiency`: appended to every `draft_letter` result as the note to the tenant.
   - `lease_checks`, `evidence`, `postures` (core, preserve, assert, escalate), `failure_modes` (slips in
     applying this issue's law: a condition skipped, a fact assumed, a date counted by the model): model only.
@@ -1036,7 +1067,7 @@ Offline checks (no model call, no key needed):
 - `python smoke.py`: runs the parts in `smoke_parts/`, in order (a new check goes in the part on its subject).
   Needs the saved test matter `matters/t-test/test-001/` with its lease profile. Opens it
   with `load_matter` and prints `list_matters()`, then runs the playbook checks (one named check, "every
-  playbook check is OK", fails if any line of `check_all_playbooks` does), element status and deadlines on hand-typed facts with today fixed at 2026-09-08, the case corpus (every file in `cases/`
+  playbook check is OK", fails if any line of `check_all_playbooks` does), deadlines on hand-typed facts with today fixed at 2026-09-08, the case corpus (every file in `cases/`
   named for the cite on its first line, none of Westlaw's material, no headnote marker opening a line,
   attorneys and parallel cites present, and `court_text` on a hand-typed opinion), the case wiki (the real
   pages pass `lint`; on a throwaway copy, a changed word, a wrong pin page also across a page break, a
@@ -1048,17 +1079,24 @@ Offline checks (no model call, no key needed):
   untagged, are not; `get_cases` prints Durene in the courts' words with the closing line and logs it,
   gives the model only the names, prints nothing the second time in a session, and refuses a topic not
   offered; a case cite not shown is flagged), a hand-typed update
-  against those facts (one changed row, one unchanged, one lease value left alone, `get_deadlines`
-  refusing), the letter template, the cite checks (subsection markers in order in every stored section,
+  against those facts (a deadline computed from the confirmed date and not from a proposed one, `waiting` listing the
+  clock facts not confirmed, and a fact only a ruled-out clock needs not waited for; TODO item 112), the letter template, the cite checks (subsection markers in order in every stored section,
   each kind of bad cite flagged, and a real, shown but wrong cite passing), the quote checks (which cite goes
   with which quote, a good quote passing despite apostrophes or an ellipsis, items 5 and 6 of TODO.md as
   they would look in quote marks), and both
   timelines. The timelines read the real `events.jsonl` of `test-001`. Importing `tools` and `timeline`
   also checks that the modules import. Last, on a scratch copy `matters/t-smoke/m-001` (removed at the
-  end, even after a failure), about thirty named checks of the code that writes to a matter: listing and
-  ids, sessions and their tags, `propose_facts` taking one suggestion and refusing five for five reasons,
-  the sheet with scripted answers (accept, correct, bad input, a changed fact, an `applies_if` fact, a
-  skip), `get_deadlines` waiting and then answering, the prompt following the record, a flagged cite and
+  end, even after a failure), named checks of the code that writes to a matter: listing and
+  ids, sessions and their tags, `record.clock_facts`, nothing dated from a proposed fact, `propose_facts` (TODO item 112) taking a
+  clock fact typed (a date) and refusing a bad date and a bad yes/no, taking a free-form fact as plain text, refusing a bad
+  name, a clock fact of a skill not loaded, words the tenant never typed, a how that is not stated or inferred, a text over
+  300 characters, and a value equal to the confirmed one, and refusing JSON that is not an object; the confirmation's rows
+  (only the proposals, a changed fact with both values) and its scripted answers (accept, correct, a bad date asked again, a
+  changed fact, a skip that stays pending and is asked again at the next confirmation); YOUR FACTS (confirmed, proposed, what the deadlines still need,
+  and after the confirmation); `get_deadlines` computing from the confirmed clock dates with `waiting` naming what is not confirmed, then
+  without `waiting`; the timeline's dates (a plain-text date fact among them); the rule 4 text; a county as a clock fact on
+  `matters/t-smoke-county/m-001` (taken as words, an empty one refused, a court-days clock dated, a letter's dates and amounts
+  checked against every confirmed fact value); the prompt following the record, a flagged cite and
   quote printed and logged, a turn's blocks (the model's reply apart from the program's cautions and line), the
   tenant's description counting as given, events, the transcript, and the
   timeline. Then the skills (TODO item 111; `smoke_parts/skills_and_turns.py`): on `matters/t-smoke-skills/m-001`,
@@ -1068,30 +1106,34 @@ Offline checks (no model call, no key needed):
   `load_matter` and `list_matters` turning an old matter's issues into skills; on `matters/t-smoke-intake/m-001`,
   `intake` saving the description and `resume` logging the update with a tripwire in place of the model clients, and the
   description and the update going to a stand-in model as the first turn (it loads a skill and proposes a fact from the
-  tenant's own words); then turns with a stand-in model on `matters/t-smoke-related/m-001`, and every playbook through the real
-  code path on `matters/t-smoke-playbooks/m-001`: for each, the sheet is answered by type ("yes" to every
-  yes/no, so every `applies_if` question comes up), every clock must get a date, and a preserve letter must
-  carry the playbook's `notice_sufficiency` note. A new playbook is covered without a new check. Then the
-  sheet asking plain facts (TODO items 86 and 90 to 92): the eval's stories F, A, C, and E through the repair gates and
-  steps, a neighbor complaint, a choice answered by number and by words, an unlisted answer refused on load, by
-  `propose_facts`, and on the sheet, the letter's date line, and the prompt's step lines, on `matters/t-smoke-choice/m-001`. Last, the
+  tenant's own words); then turns with a stand-in model on `matters/t-smoke-related/m-001` (a skill with a fact open does not
+  block another's deadlines), and every skill's clock facts through the real
+  code path on `matters/t-smoke-playbooks/m-001`: for each of the ten, the model's `propose_facts` gives its clock facts (a date
+  for every date, yes for every `applies_if`, Alachua for a county), the confirmation accepts each, every clock must get a
+  date with nothing left waiting, and a preserve letter must carry the playbook's `notice_sufficiency` note. A new skill is
+  covered without a new check. Then the options layer's checks (TODO items 86 and 90 to 92): the eval's stories F, A, C, and E
+  through the repair gates and steps, a neighbor complaint, an unlisted answer refused on load, the letter's date line, and the
+  prompt's step lines, on `matters/t-smoke-steps/m-001`. Last, the
   web page, run headless by Streamlit's `AppTest` on `matters/t-smoke-app/m-001` with a stand-in model: a
   saved matter opened from the list, nothing new, a reply in a speech bubble with the program's caution and
   line outside it and its `$` and `*` shown as written, the sidebar naming the loaded skill by its description with
-  no id, the model loading a second skill and proposing a fact (the sidebar adds the skill, the page's sheet asks the
-  fact), the note with the next message, deadlines in a program box, a model
-  error shown as a caution, End session; then, on `matters/t-smoke-app-choice/m-001`, an update typed at the door as
-  the first message, and a choice picked from a list on the sheet that follows. Then the
+  no id, the model loading a second skill and proposing three facts (the sidebar adds the skill; the page's form asks a
+  changed yes/no with the old answer beside it, a date with a date picker, and leaves a text pending when skipped), the note with the next message, deadlines in a program box, a model
+  error shown as a caution, End session; then, on `matters/t-smoke-app-text/m-001`, an update typed at the door as
+  the first message, and a date, a county in a line, and a corrected text confirmed on the form that follows. Then the
   skill format (TODO item 109; `smoke_parts/skill_files.py`, no matter): one valid fixture skill, written to a temporary
   folder with statute quotes copied from `repair_not_made.yaml` and `notice_received_nonpayment.yaml`, loads and has no
-  failures; its clock facts are typed by role (and `premises_county` for a court-days clock); and each of these is caught,
+  failures; its clock facts are typed by role (and `premises_county` for a court-days clock), and the ones not confirmed yet
+  are listed in the clocks' order, leaving out a clock whose `applies_if` is confirmed no (TODO item 112); a fact id typed
+  two ways is caught, as a trigger and an `applies_if` in one skill and as two skills, and `check_all_skills` fails
+  with a line naming it; and each of these is caught,
   as its own check: a name that is not the file's, a two-line, empty, or overlong description, a section not in `statutes/`,
   a clock cite outside the sections, clocks with no counting convention, a clock that is not a `Clock` or has a misspelled
   key, a file with no header; a clock quote or consequence changed by one word or cited to the wrong subsection; a missing,
   misordered, repeated, or extra "## " heading, "## Deadlines" missing while there are clocks or present while there are
   none; a body quotation in no stored section (cited or not), cited to the wrong subsection, or to a subsection the section
   lacks; a clock id or a clock fact id (also `premises_county`) written in the body; and `skills.skills` a dict that
-  `check_all_skills` finds no failure in. Every line
+  `check_all_skills` finds no failure in, with no fact id typed two ways across the ten. Every line
   must be OK; the last line says "all checks OK" or lists the failures. The test matter itself is not
   changed by a smoke run.
 
@@ -1103,10 +1145,12 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
   facts proposed, nothing confirmed, each skill loaded logged), a situation no skill covers
   (`matters/t-smoke-online-none/m-001`: no skill loaded), and `resume` with an update
   (`matters/t-smoke-online/m-001`: the update logged verbatim, the description and the skills loaded kept, nothing
-  confirmed, no suggestion equal to a confirmed value). Checks marked "(model)" depend on the model's answer.
+  confirmed, no suggestion equal to a confirmed value). A date a loaded skill's clock counts from is checked as proposed
+  under that skill's fact id (TODO item 112). Checks marked "(model)" depend on the model's answer.
 - `python dev/live_run.py dev/scenarios/<name>.json`: a live session without typing. (Written for the flow before TODO item
   111: the sheet rules for issues and fact questions that came before the chat, and `expect.issues`, which `dev/eval.py` reads from
-  `matter.json`'s `issues`, no longer match; TODO item 115 rewrites the driver and the scenarios for a conversation.) The scenario gives the
+  `matter.json`'s `issues`, no longer match, and since TODO item 112 the sheet is the confirmation of proposals, whose rows are a
+  label and a hint, not a question, so the sheet rules match nothing and skip each row; TODO item 115 rewrites the driver and the scenarios for a conversation.) The scenario gives the
   lines typed before the sheet (`start`), rules for the sheet (`sheet`: a piece of a question's text to a
   list of answers used in order, so a bad answer then a good one tests the re-ask; a question no rule
   matches gets "?"), and the chat lines (`chat`, then "bye"). Questions are found on screen by their type
@@ -1206,6 +1250,6 @@ Calls the model (needs the key in `.env`; stops at `require_key()` without it):
 - `python run.py`: interactive. Asks new or existing. A new matter reads the lease (one extraction call) and saves the
   description (`intake`, no model). An existing matter asks what is new: an update is logged (`resume`, no model).
   Then the chat starts at once, and the description or the update is the first message: the model answers it,
-  loading skills and proposing facts, and the intake sheet (no model) asks the tenant to confirm what it proposed.
+  loading skills and proposing facts, and the confirmation (`sheet.run_sheet`, no model) asks the tenant to confirm what it proposed.
   An empty line or `bye` exits. There are no chat commands since TODO item 111 (`timeline`, `issues`, and `drop`
   are gone; the web page draws the timeline). Every run appends to the matter's `events.jsonl`.

@@ -6,8 +6,8 @@ holds only what code needs: the name and the one-line description the model pick
 the skill loads, the deadline clocks (corpus.Clock, with the facts they count from), the counting convention, and the
 author's sign-off. Everything else is prose.
 
-Loaded once when this module is imported. Nothing here calls a model. Nothing reads a skill yet except the checks
-(check_skill, check_all_skills, run by smoke.py).
+Loaded once when this module is imported. Nothing here calls a model. The chat reads the skills (load_skill, the system
+prompt, the deadlines, the facts the deadlines wait for); the checks (check_skill, check_all_skills) are run by smoke.py.
 """
 import re
 from pathlib import Path
@@ -111,20 +111,49 @@ def load_skill_file(path):
     return skill
 
 
-def clock_facts(skill):
-    """The facts the skill's clocks count from, as {fact id: type}, typed by the role each plays (so there is no
-    separate list of facts): a trigger and a shown_with are dates, an applies_if is yes/no ("bool"), and a clock
-    counted in court business days needs the county ("premises_county", type "county")."""
-    facts = {}
+def clock_roles(skill):
+    """What the skill's clocks count from, as (fact id, type, clock, role), in the clocks' order, typed by the role each
+    fact plays (so there is no separate list of facts): a trigger and a shown_with are dates, an applies_if is yes/no
+    ("bool"), and a clock counted in court business days needs the county ("premises_county", type "county")."""
+    roles = []
     for c in skill.clocks:
-        facts[c.trigger] = "date"
+        roles.append((c.trigger, "date", c, "trigger"))
         if c.shown_with:
-            facts[c.shown_with] = "date"
+            roles.append((c.shown_with, "date", c, "shown_with"))
         if c.applies_if:
-            facts[c.applies_if] = "bool"
+            roles.append((c.applies_if, "bool", c, "applies_if"))
         if c.count == "court_business_days":
-            facts["premises_county"] = "county"
-    return facts
+            roles.append(("premises_county", "county", c, "county"))
+    return roles
+
+
+def clock_facts(skill):
+    """The facts the skill's clocks count from, as {fact id: type} (clock_roles without the clock and the role). A fact
+    id two roles type differently keeps the last; type_conflicts finds it."""
+    return {fact: kind for fact, kind, _, _ in clock_roles(skill)}
+
+
+def ruled_out(clock, facts):
+    """True when the clock's applies_if fact is confirmed no in `facts`, so the clock does not count."""
+    return clock.applies_if in facts and not facts[clock.applies_if]
+
+
+def unconfirmed_clock_facts(skill, facts):
+    """The skill's clock facts not in `facts` (the confirmed ones) yet, as {fact id: type}, in the clocks' order. A clock
+    that is ruled_out does not count, so a fact only that clock needs is not waited for."""
+    return {fact: kind for fact, kind, clock, _ in clock_roles(skill) if fact not in facts and not ruled_out(clock, facts)}
+
+
+def type_conflicts(all_skills):
+    """The fact ids the clocks of these skills type two ways, one sentence each, or [] when every id has one type: a
+    trigger in one clock and an applies_if in another, in one skill or in two, would make propose_facts parse the same
+    fact two ways."""
+    typed = {}
+    for skill in all_skills:
+        for fact, kind, clock, role in clock_roles(skill):
+            typed.setdefault(fact, {}).setdefault(kind, []).append(f"{skill.name} {clock.id} {role}")
+    return [f"{fact} is {' and '.join(f'{kind} in {wheres[0]}' for kind, wheres in kinds.items())}"
+            for fact, kinds in typed.items() if len(kinds) > 1]
 
 
 # ---- Check a Skill
@@ -214,9 +243,13 @@ def check_skill(skill):
 
 
 def check_all_skills():
-    """Run check_skill on every loaded skill and print a last line with the number of failures. Called by smoke.py,
-    not at import. Returns the number of failures."""
+    """Run check_skill on every loaded skill, then check that no fact id is typed two ways across them (type_conflicts),
+    and print a last line with the number of failures. Called by smoke.py, not at import. Returns the number of
+    failures."""
     fails = sum(check_skill(skill) for skill in skills.values())
+    conflicts = type_conflicts(skills.values())
+    fails += report("skills: every fact the clocks count from is typed one way" + (f": {conflicts}" if conflicts else ""),
+                    not conflicts)
     print(f"{len(skills)} skills checked, {fails} failures")
     return fails
 

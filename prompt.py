@@ -1,10 +1,10 @@
 """Prompt: what the model reads. The rules (the fixed part, with rules 6 and 8 put in only when they can apply), and
 the system prompt built from the record on every model call: the lease, the menu of skills, the loaded skills'
-instructions, the statute sections they list, the case topics, the tenant's facts, the options, what the tool does not
-know, and which deadlines have passed, each part under a name a tenant can read (PARTS). No model call here;
+instructions, the statute sections they list, the case topics, the tenant's facts (confirmed, proposed, and what the
+deadlines still need), the options, what the tool does not know, and which deadlines have passed, each part under a name
+a tenant can read (PARTS). No model call here;
 agent.build_agent hands system_prompt to the model. Split out of agent.py and tools.py on 2026-10-06.
 """
-import json
 import os
 import re
 from datetime import date
@@ -12,15 +12,16 @@ from pathlib import Path
 
 import record
 from corpus import statute
-from deterministic import NOT_APPLY, check_options, matter_deadlines
+from deterministic import NOT_APPLY, check_options
 from lease import LABELS, lease_lines
-from record import active_playbooks, element_status, read_events
-from skills import skills
-from tools import offered_topics, open_facts_by_issue
+from record import active_playbooks, read_events
+from sheet import shown
+from skills import clock_roles, ruled_out, skills, unconfirmed_clock_facts
+from tools import computed_deadlines, deadlines_waiting, offered_topics
 
 
 # ---- Rules: the fixed part of the system prompt. The lease profile, the skill menu, the loaded skills, the statute
-# sections, the case topics, the element status, and the deadline status are appended to it on every model call
+# sections, the case topics, the facts, the options, and the deadline status are appended to it on every model call
 # (system_prompt, below), each under a name a tenant can read (PARTS, below; TODO item 61).
 # Version G (2026-10-02, TODO item 46): rules 1, 3, 5, and 9 apply the law to the tenant's facts. Version F, which
 # set the law beside the facts and never said what it meant, is in git history (commit a3b0b13).
@@ -37,9 +38,9 @@ Each "Not:" is a kind of past mistake: never write anything like it; write the "
 Not: three statute quotes, then "This tool does not decide that." (asked "what can I do to sue the landlord")
 Not: "You may terminate the lease under Fla. Stat. 83.56(1)." (a conclusion with no rule and no facts)
 Instead: answer a question about the law in this order, each part short:
-- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not known yet, not settled, outside the tool, or not open yet), and the condition it turns on. When the answer turns on a point in WHAT THE TOOL DOES NOT KNOW, name it as that part gives it: one the tenant can tell the tool (the sheet asks), one the tenant can check (say what and where), one not settled (with its readings), one outside the tool, or one not yet; and what the option would be if it holds and if it does not. Never a step of an option before this, and never such a point stated as a fact.
+- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not known yet, not settled, outside the tool, or not open yet), and the condition it turns on. When the answer turns on a point in WHAT THE TOOL DOES NOT KNOW, name it as that part gives it: one the tenant can tell the tool (ask them in the chat when your answer turns on it), one the tenant can check (say what and where), one not settled (with its readings), one outside the tool, or one not yet; and what the option would be if it holds and if it does not. Never a step of an option before this, and never such a point stated as a fact.
 - The rule: in one plain sentence, with its cite.
-- Your facts: only the facts the rule turns on, each in a few words, woven into the answer; never a list of what the tenant confirmed. Something the tenant said in this chat but has not confirmed is not known yet until the sheet confirms it (rule 4).
+- Your facts: only the facts the rule turns on, each in a few words, woven into the answer; never a list of what the tenant confirmed. Something the tenant said in this chat but has not confirmed is not known yet until they confirm it after your reply (rule 4).
 - Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
 - So: what follows on those facts, in plain words. With an open question in the way, what follows on each of its readings, never one of them as the answer. Asked what they can do: each option in YOUR OPTIONS with its status, then what it requires first; the steps of an option that is not open only as what it would take if its open condition went the tenant's way (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in THE STATUTE, such as 83.55 on damages or 83.48 on attorney fees.
 - Cases: when a case topic is on the point, as rule 8 says.
@@ -94,11 +95,11 @@ Instead: call get_deadlines every time; the program prints the deadlines above y
 Not: answering "How long do I have to tell them I disagree?" or "When do I have to tell them?" with the statute's words alone.
 Instead: for any question about when, how long, how many days, or a last day, call get_deadlines.
 
-4. You propose facts; the tenant confirms them on the sheet.
-Not: "Your confirmed dates: ..." or "Fact: claim_notice_date: 2026-09-22" before YOUR FACTS shows them as known.
+4. You propose facts; the tenant confirms them after your reply.
+Not: "Your confirmed dates: ..." or "Fact: claim_notice_date: 2026-09-22" before YOUR FACTS shows them as confirmed.
 Instead: call propose_facts with the tenant's exact words as "said" (shortened only by "..." between exact pieces); in the reply, say a point is not confirmed yet only where the answer turns on it.
 Not: "Can you confirm the date you moved out?" or "Please tell me: your monthly rent, the new rent, and the date you got the notice."
-Instead: read facts in YOUR FACTS; for anything the tenant states, call propose_facts; the sheet asks the tenant after your reply. Never ask in the chat to confirm or supply a fact listed in YOUR FACTS.
+Instead: read YOUR FACTS; propose what the tenant tells you, and the tenant confirms it after your reply. Ask in the chat only for what your answer turns on, one or two things at a time. Never ask in the chat to confirm or supply a fact listed in YOUR FACTS.
 
 5. The open questions in a loaded skill's "What the statute does not settle" stay open, with their readings.
 Not: "The termination date is the day you moved out." (an open question settled) or "Which date do you consider the termination of the rental agreement?" (asking the tenant to settle it)
@@ -165,7 +166,7 @@ if os.environ.get("RULES_FILE"):
 
 
 # ---- The System Prompt: built from whatever the record holds at the moment the model is called, on every call,
-# so facts confirmed on the sheet and skills loaded mid-chat reach the model at once.
+# so facts confirmed after a turn and skills loaded mid-chat reach the model at once.
 
 # The prompt's parts, in order, each under a name a tenant can read. The model names its sources, and with
 # names like "ELEMENT STATUS" and "PLAYBOOKS" it wrote "(ELEMENT STATUS shows ...)" in 17 replies per 100, though
@@ -178,7 +179,8 @@ PARTS = {
     "loaded": "LOADED SKILLS (the instructions of each skill loaded for this matter, under its name: follow them)",
     "statute": "THE STATUTE (the sections the loaded skills list, Fla. Stat. ch. 83, part II)",
     "cases": "COURT CASES THIS TOOL HAS (topics for get_cases; number of cases on each)",
-    "facts": "YOUR FACTS (by issue: known, changed, proposed, missing, or n/a, and where each came from)",
+    "facts": ("YOUR FACTS (the facts the tenant confirmed; the facts they told you that wait for their confirmation after "
+              "your reply; and what the deadlines still need, each with the id to propose it under)"),
     "options": ("YOUR OPTIONS (checked by the program from the confirmed facts, the program's deadlines, and the lease "
                 "clauses the tool has read: whether each option is open, closed, not known yet, not settled, outside the "
                 "tool, or not open yet; each condition that decides it, with what the tool knows of it and, while it is "
@@ -200,7 +202,7 @@ PARTS = {
 def system_prompt(messages=()):
     """The rules (rules_for the chat so far, `messages`), then each part under its name in PARTS: the lease profile,
     the menu of every skill (the loaded ones marked), each loaded skill's instructions under its name, the statute
-    sections the loaded skills list, the case topics, the element status, the options (options_status), what the tool
+    sections the loaded skills list, the case topics, the facts (facts_status), the options (options_status), what the tool
     does not know (unknowns_status), and the deadline status (deadline_status: passed or upcoming, no dates), as the
     record stands now."""
     loaded = record.active_skills()
@@ -215,7 +217,7 @@ def system_prompt(messages=()):
             + f"\n\n{PARTS['loaded']}:\n" + instructions
             + f"\n\n{PARTS['statute']}:\n" + hot
             + f"\n\n{PARTS['cases']}:\n" + case_topics_text()
-            + f"\n\n{PARTS['facts']}:\n" + json.dumps(element_status(), indent=2)
+            + f"\n\n{PARTS['facts']}:\n" + facts_status()
             + f"\n\n{PARTS['options']}:\n" + options_status()
             + f"\n\n{PARTS['unknown']}:\n" + unknowns_status()
             + f"\n\n{PARTS['deadlines']}:\n" + deadline_status())
@@ -230,26 +232,55 @@ def case_topics_text():
 # ---- The prompt's parts that the program works out: which deadlines have passed, the options, and what the tool does
 # not know. Each logs nothing, since the prompt is rebuilt on every model call.
 
+def role_words(clock, role):
+    """What a fact does for a clock, in words: counted from (trigger), shown beside the date (shown_with), decides whether
+    the deadline counts (applies_if), or the county for counting court business days."""
+    if role == "applies_if":
+        return f"decides whether the {clock.cite} deadline counts"
+    if role == "county":
+        return "the county, for counting court business days"
+    if role == "shown_with":
+        return f"printed beside the {clock.cite} deadline's date; not needed to count it"
+    return f"counted from by the {clock.actor}'s {clock.days}-day deadline of Fla. Stat. {clock.cite}"
+
+
+def facts_status():
+    """YOUR FACTS, for the system prompt (PARTS): the facts the tenant confirmed, each "- <id>: <value>"; the proposals
+    waiting for the tenant's confirmation, likewise; and what the deadlines still need: each clock fact of a loaded skill
+    that is not confirmed yet, "- <id> (<type>): <what it does for each clock> [<skill>]", so the model proposes it under
+    that id. Ids are fine here; the rules forbid them in a reply. Logs nothing: the prompt is rebuilt on every call."""
+    facts, proposed = record.matter["facts"], record.matter["proposed"]
+    needs = []
+    for skill in record.active_skills():
+        for fact_id, kind in unconfirmed_clock_facts(skill, facts).items():
+            roles = "; ".join(role_words(clock, role) for i, _, clock, role in clock_roles(skill)
+                              if i == fact_id and not ruled_out(clock, facts))
+            needs.append(f"- {fact_id} ({kind}): {roles} [{skill.name.replace('_', ' ')}]")
+    return ("Confirmed by the tenant:\n" + ("\n".join(f"- {i}: {shown(v)}" for i, v in facts.items()) or "none yet")
+            + "\n\nProposed, waiting for the tenant to confirm after your reply (what they told you, not confirmed):\n"
+            + ("\n".join(f"- {i}: {shown(p['value'])}" for i, p in proposed.items()) or "none")
+            + "\n\nWhat the deadlines still need (propose each under its id when the tenant tells you):\n"
+            + ("\n".join(needs) or "nothing: every fact the loaded skills' deadlines count from is confirmed"))
+
+
 def deadline_status():
-    """WHICH DEADLINES HAVE PASSED, for the system prompt (PARTS): each deadline of the ready issues, whose it is, what it counts
-    from, its cite, and whether it has passed, with no date in it, then the issues still waiting and what for.
+    """WHICH DEADLINES HAVE PASSED, for the system prompt (PARTS): each deadline the confirmed facts give, whose it is, what
+    it counts from, its cite, and whether it has passed, with no date in it, then the skills still waiting and what for.
     So the model can apply a condition such as "within the 30-day period" from the program's "passed" or
     "upcoming", never from dates of its own (TODO item 46). Logs nothing: the prompt is rebuilt on every call."""
-    waiting = open_facts_by_issue()
-    ready = [pb for pb in active_playbooks() if pb.issue not in waiting]
     words = lambda ident: ident.replace("_", " ")         # labels, not ids: the model copies an id it reads (item 53)
     lines = []
-    for d in matter_deadlines(ready, record.matter["facts"], date.today()):
-        issues = ", ".join(words(i) for i in d["issues"])
+    for d in computed_deadlines():
+        names = ", ".join(words(s) for s in d["skills"])
         if "deadline" not in d:
-            lines.append(f"- {words(d['clock'])} [{issues}]: no date ({words(d['status'])})")
+            lines.append(f"- {words(d['clock'])} [{names}]: no date ({words(d['status'])})")
             continue
         start = d["from"].split()[0]                       # the trigger; its date stays out
-        lines.append(f"- {words(d['clock'])} [{issues}]: the {d['actor']}'s, {d['rule']} {words(start)}, Fla. Stat. "
+        lines.append(f"- {words(d['clock'])} [{names}]: the {d['actor']}'s, {d['rule']} {words(start)}, Fla. Stat. "
                      f"{d['cite']}: {d['status']}" + (f" (counts only if {d['condition']})" if "condition" in d else ""))
-    lines += [f"- waiting [{words(issue)}]: no deadline until these are confirmed: {', '.join(words(i) for i in ids)}"
-              for issue, ids in waiting.items()]
-    return "\n".join(lines) or "none: no active issue has a deadline this tool computes"
+    lines += [f"- waiting [{words(name)}]: no deadline until these are confirmed: {', '.join(words(i) for i in ids)}"
+              for name, ids in deadlines_waiting().items()]
+    return "\n".join(lines) or "none: no loaded skill has a deadline this tool computes"
 
 
 def state_words(x):

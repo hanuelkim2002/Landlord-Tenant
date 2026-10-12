@@ -20,9 +20,9 @@ from config import shorten, squash
 from corpus import playbooks, statute
 from deterministic import matter_deadlines
 from lease import LEASE_CITE, find_in_lease
-from record import active_playbooks, append_event, element_status, matter_dir, read_events, save
+from record import append_event, matter_dir, read_events, save
 from sheet import parse_answer, shown
-from skills import skills
+from skills import clock_facts as skill_clock_facts, skills, unconfirmed_clock_facts
 import wiki
 
 
@@ -99,52 +99,68 @@ def search_lease(phrase: str) -> str:
     return "\n".join(lines)
 
 
-# ---- Propose Facts: the model can suggest a fact, never confirm one. It reads the status in its prompt.
-# Confirming is the tenant's, on the intake sheet the chat loop shows after the turn (sheet.run_sheet).
+# ---- Propose Facts: the model can suggest a fact, never confirm one. It reads what is confirmed, what is proposed, and
+# what the deadlines still need in YOUR FACTS. Confirming is the tenant's, on the confirmation the chat shows after the
+# turn (sheet.run_sheet).
+
+FACT_ID = re.compile(r"[a-z][a-z0-9_]{1,39}")            # lowercase words joined by underscores, at most 40 characters
+MAX_TEXT = 300                                           # characters of a fact kept as plain text
+CLOCK_FACT_IDS = {fact for skill in skills.values() for fact in skill_clock_facts(skill)}    # of any skill, loaded or not
+
 
 @tool
 def propose_facts(facts_json: str) -> str:
-    """Suggest facts the tenant stated or implied in this chat. You cannot confirm or record a fact: the tenant
-    confirms each suggestion on a sheet the program shows right after your reply. Do not ask them to confirm
-    it in the chat. Input: JSON object keyed by element id, each {"value": ..., "how": "stated" or "inferred",
-    "said": "the tenant's exact words the value rests on", shortened only with "..." between exact pieces}.
-    Dates as YYYY-MM-DD, yes/no as true/false, money as a number, a choice as one of its answers, copied exactly.
-    Returns which suggestions were taken and why any were refused."""
+    """Propose the facts the tenant tells you in this chat that your answer, the record, or a letter turns on. You cannot
+    confirm or record a fact: the tenant confirms each one after your reply, so do not ask them to confirm it in the
+    chat. For a fact the deadlines count from, use the id YOUR FACTS gives under what the deadlines still need, with
+    the value in its type: a date as YYYY-MM-DD, a yes or no as true or false, a county as its name. Any other fact gets
+    a short name in lowercase words joined by underscores (at most 40 characters, such as rent_amount or
+    landlord_response) and its value as plain words (at most 300 characters). Input: a JSON object keyed by that
+    name, each {"value": ..., "how": "stated" or "inferred", "said": "the tenant's exact words the value rests on",
+    shortened only with "..." between exact pieces}. Returns which proposals were taken and why any were refused."""
     try:
         proposals = json.loads(facts_json)
     except json.JSONDecodeError:
         return "facts_json is not valid JSON."
-    kinds = {e.id: e for pb in active_playbooks() for e in pb.spec.elements if "user" in e.source}
+    if not isinstance(proposals, dict):
+        return "facts_json must be a JSON object keyed by fact name."
+    typed = record.clock_facts()                           # the clock facts of the loaded skills, by type
     said_by_tenant = " ".join(record.tenant_words())
     taken, refused = [], []
     for fact_id, p in proposals.items():
-        if fact_id not in kinds:
-            refused.append(f"{fact_id}: not a fact this matter's issues ask for")
+        p = p if isinstance(p, dict) else {}
+        if fact_id not in typed and fact_id in CLOCK_FACT_IDS:       # kept as text it would not be a date or a yes/no
+            refused.append(f"{fact_id}: a skill counts deadlines from it; load that skill first")
+            continue
+        if fact_id not in typed and not FACT_ID.fullmatch(fact_id):
+            refused.append(f"{fact_id}: a fact name is lowercase words joined by underscores, at most 40 characters")
             continue
         if p.get("value") is None:
             refused.append(f"{fact_id}: no value given")
             continue
-        value, expected = parse_answer(kinds[fact_id].type, shown(p["value"]), kinds[fact_id].choices)
+        kind = typed.get(fact_id, "text")
+        value, expected = parse_answer(kind, shown(p["value"]))        # a county is words
         if expected:
             refused.append(f"{fact_id}: value must be {expected}")
+        elif kind == "text" and len(value) > MAX_TEXT:
+            refused.append(f"{fact_id}: value must be at most {MAX_TEXT} characters")
         elif p.get("how") not in ("stated", "inferred"):
             refused.append(f"{fact_id}: how must be stated or inferred")
         elif not p.get("said") or not is_in(p["said"], said_by_tenant):   # each piece around "..." exact
             refused.append(f"{fact_id}: said must be the tenant's exact words from this chat (\"...\" may join "
                            "exact pieces)")
-        elif fact_id in record.matter["facts"] and record.matter["facts"][fact_id] == value:
+        elif fact_id in record.matter["facts"] and shown(record.matter["facts"][fact_id]) == shown(value):   # as read
             refused.append(f"{fact_id}: already confirmed with that value")
         else:
             record.matter["proposed"][fact_id] = {"value": value, "how": p["how"], "basis": p["said"]}
             taken.append(fact_id)
-    record.prune_proposals()
     save(record.matter)
     lines = []
     if taken:
-        lines.append("Suggested: " + ", ".join(taken) + ". The tenant confirms them on the sheet shown after your reply.")
+        lines.append("Proposed: " + ", ".join(taken) + ". The tenant confirms them after your reply.")
     if refused:
         lines.append("Refused: " + "; ".join(refused))
-    return "\n".join(lines) or "Nothing to suggest."
+    return "\n".join(lines) or "Nothing to propose."
 
 
 # ---- Deadlines
@@ -155,47 +171,46 @@ def propose_facts(facts_json: str) -> str:
 # question after it ("If I get rid of the dog by Friday, am I safe?" got the listing and no answer, eval of
 # 2026-10-02). get_cases stopped ending the turn at item 47.
 
-def open_facts_by_issue():
-    """The facts each active issue still needs (proposed, changed, or missing), by issue. An issue with none is
-    ready: its deadlines can be computed."""
-    waiting = {}
-    for issue, rows in element_status().items():
-        open_ids = sorted({r["id"] for r in rows if r["status"] in ("proposed", "changed", "missing")})
-        if open_ids:
-            waiting[issue] = open_ids
-    return waiting
+def computed_deadlines():
+    """Every clock of the loaded skills that the confirmed facts let the program compute (a deadline two skills share
+    once, tagged with every skill: deterministic.matter_deadlines), as rows; a clock still missing its date is left out,
+    since deadlines_waiting says what it needs. A clock the program cannot count (no court calendar for the county)
+    stays, with its reason and no date. Proposed facts count for nothing: only matter["facts"]."""
+    rows = matter_deadlines(record.active_skills(), record.matter["facts"], date.today())
+    return [d for d in rows if not d["status"].startswith("need date")]
+
+
+def deadlines_waiting():
+    """The clock facts each loaded skill still needs, as {skill name: [fact ids]}, for the skills that need some
+    (skills.unconfirmed_clock_facts)."""
+    waiting = {skill.name: list(unconfirmed_clock_facts(skill, record.matter["facts"])) for skill in record.active_skills()}
+    return {name: ids for name, ids in waiting.items() if ids}
 
 
 def deadline_listing():
-    """Every deadline the confirmed facts give, as JSON: {"deadlines": [...], "waiting": {issue: [open facts]}},
-    issue by issue (an issue is ready when none of its facts is proposed, changed, or missing; a deadline two
-    issues share appears once), or "Not yet. ..." with the open facts when no issue is ready. Writes a
-    deadlines_computed event per ready issue. What the program prints, through render_deadlines."""
-    waiting = open_facts_by_issue()
-    ready = [pb for pb in active_playbooks() if pb.issue not in waiting]
-    if not ready:
-        return "Not yet. No issue has all its facts confirmed. Still open, by issue: " + json.dumps(waiting)
-    deadlines = matter_deadlines(ready, record.matter["facts"], date.today())   # shared ones once
-    for pb in ready:
-        append_event("deadlines_computed", issue=pb.issue,
-                     clocks=[d["clock"] for d in deadlines if pb.issue in d["issues"] and "deadline" in d])
+    """Every deadline the confirmed facts give, as JSON: {"deadlines": [...], "waiting": {skill: [clock facts not
+    confirmed yet]}}, with "waiting" only when some skill needs a fact. Writes a deadlines_computed event per loaded
+    skill that has a dated clock. What the program prints, through render_deadlines."""
+    deadlines = computed_deadlines()
+    for skill in record.active_skills():
+        clocks = [d["clock"] for d in deadlines if skill.name in d["skills"] and "deadline" in d]
+        if clocks:
+            append_event("deadlines_computed", skill=skill.name, clocks=clocks)
     result = {"deadlines": deadlines}
+    waiting = deadlines_waiting()
     if waiting:
-        result["waiting"] = waiting            # these issues' dates come once their facts are confirmed
+        result["waiting"] = waiting            # these skills' dates come once their facts are confirmed
     return json.dumps(result, indent=2, default=str)
 
 
 def deadline_receipt(listing):
     """What the model gets back from get_deadlines: what was printed, with no date in it (TODO item 44: given
     the dates, the model retyped them when asked again instead of calling the tool)."""
-    if listing.startswith("Not yet"):
-        return ("The program printed for the tenant that no issue has all its facts confirmed yet. Your instructions "
-                "show the open facts.")
     data = json.loads(listing)
     dated = [d for d in data["deadlines"] if "deadline" in d]
-    issues = sorted({i for d in data["deadlines"] for i in d["issues"]})
+    names = sorted({s for d in data["deadlines"] for s in d["skills"]})
     waiting = sorted(data.get("waiting", {}))
-    return (f"The program printed the tenant's deadlines: {len(dated)} dated, for {issues or 'no issue'}"
+    return (f"The program printed the tenant's deadlines: {len(dated)} dated, for {names or 'no skill'}"
             + (f"; still waiting for facts: {waiting}" if waiting else "")
             + ". You are not shown the dates; your instructions say which have passed. If the tenant asked only "
             "for the deadlines, add nothing; otherwise answer the rest of the question without writing a date. To "

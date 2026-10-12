@@ -14,9 +14,8 @@ from langchain_core.utils.uuid import uuid7
 
 from config import MATTERS
 from corpus import playbooks
-from deterministic import check_elements
 from lease import LeaseProfile
-from skills import skills
+from skills import clock_facts as skill_clock_facts, skills
 
 # The test matter. "t-test" is the test tenant's id; a real tenant gets a random one from new_tenant_id().
 matter = {"id": "test-001", "tenant": "t-test", "skills": [], "facts": {}, "proposed": {}}
@@ -95,12 +94,12 @@ def new_matter(tenant_id):
 
 def confirm_fact(fact_id, value, confirmed_in):
     """Move one fact into matter["facts"] and log it. confirmed_in: where the tenant confirmed it; "sheet"
-    (the intake sheet) is the only caller now. The event keeps what was proposed and on what words."""
+    (the confirmation after a turn, sheet.save_answer) is the only caller. The event keeps what was proposed and on
+    what words. A proposal stays in matter["proposed"] until this runs for its id."""
     was = matter["proposed"].pop(fact_id, {"value": None, "how": "asked", "basis": None})
     matter["facts"][fact_id] = value
     append_event("fact_confirmed", id=fact_id, value=value, how=was["how"], basis=was["basis"],
                  proposed_value=was["value"], confirmed_in=confirmed_in)
-    prune_proposals()                          # a "no" here can make another suggestion moot
 
 
 # ---- Skills. The model loads a skill with the load_skill tool, which calls add_skill: the only code that writes
@@ -113,29 +112,6 @@ def add_skill(name):
     matter["skills"].append(name)
     save(matter)
     append_event("skill_loaded", skill=name)
-
-
-def prune_proposals():
-    """Drop suggestions that can never be asked: every element with that id either takes its value from the
-    lease, depends on a fact the tenant confirmed as no (with no change to it pending), or no loaded skill's playbook
-    asks for it. A suggestion that depends on a fact still open is kept, since that fact may yet be yes. Nothing is
-    logged: suggestions are not history, and the tenant's words they came from stay in the description or the update."""
-    for fact_id in list(matter["proposed"]):
-        uses = [e for pb in active_playbooks() for e in pb.spec.elements if e.id == fact_id]
-        if all(_cannot_be_asked(e) for e in uses):
-            del matter["proposed"][fact_id]
-
-
-def _cannot_be_asked(e):
-    """True if this element will never show a suggestion: the lease comes first in its sources and has the
-    clause, or the fact it depends on (applies_if) is confirmed as not true with no change to it pending."""
-    for src in e.source:
-        if src == "user":
-            break
-        if profile is not None and getattr(profile, src.replace("lease_profile.", "")).present:
-            return True
-    return (e.applies_if in matter["facts"] and not matter["facts"][e.applies_if]
-            and e.applies_if not in matter["proposed"])     # a pending change could still make it true
 
 
 def save(matter):
@@ -210,13 +186,15 @@ def active_skills():
     return [skills[name] for name in matter["skills"] if name in skills]
 
 
+def clock_facts():
+    """The facts the loaded skills' clocks count from, as {fact id: type}, merged across the skills (skills.clock_facts of
+    each: "date", "bool", or "county"). propose_facts parses a proposal for one of these by its type; skills.type_conflicts
+    (run by smoke.py) keeps a fact id from being typed two ways."""
+    return {fact: kind for skill in active_skills() for fact, kind in skill_clock_facts(skill).items()}
+
+
 def active_playbooks():
-    """TRANSITION, until TODO items 112 and 113 remove the playbooks: the playbook of each loaded skill (a skill and its
-    playbook have the same name), so the fact status, the sheet's fact rows, propose_facts, the deadlines, the options,
-    and draft_letter still work on the loaded skills' playbooks."""
+    """TRANSITION, until TODO item 113 removes the playbooks: the playbook of each loaded skill (a skill and its
+    playbook have the same name). Only the options layer (prompt.options_status and unknowns_status) calls it; the facts,
+    the deadlines, and the timeline read the skills."""
     return [playbooks[name] for name in matter["skills"] if name in playbooks]
-
-
-def element_status():
-    """Element rows for the playbook of every loaded skill, keyed by its name."""
-    return {pb.issue: check_elements(pb, profile, matter["facts"], matter["proposed"]) for pb in active_playbooks()}

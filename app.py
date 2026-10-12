@@ -5,7 +5,7 @@
 The same steps as run.py, on one page. Left (the sidebar): a new matter, the saved matters, and what the open
 matter is about. Middle: the front door (a new matter: tenant, lease PDF, description; a saved one: what is
 new), then the chat, which starts with the description or the update as the tenant's first message; after a turn in
-which the model proposed facts, the intake sheet as a form, one question at a time. Right: the timeline and the last
+which the model proposed facts, the confirmation as a form, one fact at a time. Right: the timeline and the last
 letter drafted, drawn from the record on every run, never by the model. In the chat, a speech bubble is the
 model's words (checked by the program before they are shown); a box is printed by the program itself.
 
@@ -31,7 +31,7 @@ from agent import block, build_agent, intake, read_lease, resume, sheet_note, th
 from config import uf_api_key
 from record import (end_session, list_matters, load_matter, matter_dir, new_matter, new_tenant_id, read_events,
                     start_session)
-from sheet import pending_rows, row_notes, save_answer, shown, suggestion, value_of
+from sheet import pending_rows, row_notes, save_answer, shown, skipped_note, suggestion, value_of
 from skills import skills
 from timeline import render_timeline
 
@@ -54,7 +54,7 @@ def reset():
     state.history = []              # everything shown in the middle column, oldest first, as blocks
     state.pending = None            # the tenant's message, waiting for the model's turn
     state.note = ""                 # what the tenant confirmed on a sheet, for the model's next turn
-    state.skipped = set()           # sheet rows skipped in this sheet
+    state.skipped = set()           # confirmation rows skipped in this sheet
     state.saved = []                # what this sheet saved, as save_answer's pairs
 
 
@@ -216,12 +216,13 @@ def update_form():
         st.rerun()
 
 
-# ---- The intake sheet as a form: one row at a time, asked and saved by code (sheet.py), no model. It follows a turn
-# in which the model proposed facts.
+# ---- The confirmation as a form: one fact at a time, asked and saved by code (sheet.py), no model. It follows a turn in
+# which the model proposed facts: the tenant confirms what they said, or corrects it.
 
 def answer_widget(r):
     """The input for one row, filled in with the suggestion if there is one. Returns the answer as text, the
-    way the terminal would read it: "" for nothing chosen."""
+    way the terminal would read it: "" for nothing chosen. By the row's type: a date picker, yes/no, a county in a line,
+    any other fact in words."""
     offered = suggestion(r)
     if r["type"] == "bool":
         choice = st.radio("Your answer", ["yes", "no"], horizontal=True,
@@ -231,12 +232,8 @@ def answer_widget(r):
         picked = st.date_input("Date", value=date.fromisoformat(offered) if offered else None,
                                min_value=date(2000, 1, 1), max_value=date(2040, 12, 31), format="MM/DD/YYYY")
         return picked.isoformat() if picked else ""
-    if r["type"] == "money":
-        return st.text_input("Amount", value="" if offered is None else shown(offered), placeholder="1850 or $1,850.00")
-    if r["type"] == "choice":                            # its answers in plain words; the closest one is picked
-        picked = st.selectbox("Your answer", r["choices"], placeholder="Pick the closest one",
-                              index=None if offered is None else r["choices"].index(offered))
-        return picked or ""
+    if r["type"] == "county":
+        return st.text_input("County", value=offered or "")
     return st.text_area("Your answer", value=offered or "", height=90)
 
 
@@ -247,9 +244,9 @@ def sheet_form():
         st.rerun()
     r = rows[0]
     with st.container(border=True):
-        st.caption("Facts for your matter. The program asks and saves these; the model is not involved. "
-                   "A suggestion is filled in; change it if it is wrong.")
-        st.markdown(f"**{plain(r['question'])}**")
+        st.caption("Please confirm what you told me. The program saves these; the model is not involved. "
+                   "The suggestion is filled in; change it if it is wrong.")
+        st.markdown(f"**{plain(r['label'])}**")
         for line in row_notes(r):
             st.caption(plain(line))
         with st.form(f"row {r['id']}"):
@@ -268,15 +265,14 @@ def sheet_form():
             st.error(f"Please enter {expected}.")
             return
         state.saved.append(save_answer(r, answer.strip(), value))
-        state.history.append(block("sheet", f"{r['question']} {shown(value)}"))
+        state.history.append(block("sheet", f"{r['label']}: {shown(value)}"))
         st.rerun()
 
 
 def finish_sheet():
     """No row left to ask: back to the chat, and what was confirmed goes to the model with the next message."""
     if state.skipped:
-        state.history.append(block("notice", f"Skipped for now: {', '.join(sorted(state.skipped))}. "
-                                             "Deadlines wait until these are answered."))
+        state.history.append(block("notice", skipped_note(state.skipped)))
     state.note = sheet_note(state.saved)
     state.stage = "chat"
     state.skipped, state.saved = set(), []
@@ -306,7 +302,7 @@ def run_pending_turn():
             return
     state.note = ""
     state.history += blocks
-    if proposed and pending_rows():                     # the tenant confirms the model's suggestions on the sheet
+    if proposed and pending_rows():                     # the tenant confirms the model's proposals
         state.stage = "sheet"
 
 

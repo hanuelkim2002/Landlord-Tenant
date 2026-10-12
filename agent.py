@@ -67,7 +67,7 @@ def build_agent():
 
 # ---- Chat: a turn of the model returns blocks, the parts the tenant sees, in order. Tool output is hidden except
 # draft_letter, whose result is shown as is, and get_deadlines and get_cases, whose listings the program shows. After a
-# turn in which the model proposed facts, the intake sheet asks the tenant to confirm them. Everything said, every tool
+# turn in which the model proposed facts, the confirmation (sheet.py) asks the tenant to confirm them. Everything said, every tool
 # call, and every sheet answer goes to the session's transcript.
 #
 # BLOCK KINDS. From the model: "reply". From the program: "letter" (draft_letter's result), "cases" (get_cases'

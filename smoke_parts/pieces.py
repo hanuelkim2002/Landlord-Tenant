@@ -1,7 +1,6 @@
-"""Smoke, part: Each piece checked on its own, on the test matter in memory (nothing written): the playbook checks, element
-status and deadlines with a fixed today, court business days, the case corpus and the case wiki, a lease value next
-to a tenant's, the letter template, cites and quotes in a reply, a reply that is not JSON at intake, and both
-timelines.
+"""Smoke, part: Each piece checked on its own, on the test matter in memory (nothing written): the playbook checks,
+deadlines with a fixed today, court business days, the case corpus and the case wiki, the letter template, cites and
+quotes in a reply, and both timelines.
 Run by smoke.py, in order; each check prints a line, OK or FAIL."""
 import json
 import re
@@ -10,19 +9,19 @@ import tempfile
 from datetime import date
 from pathlib import Path
 import PyPDF2
-from langchain.messages import AIMessage
 import record
 from calendars import court_calendars
 from checks import check
 from citations import SUBSECTION_START, check_cites, check_quoted, cites_without_quote, quoted_passages, subsections
 from config import CASES, WIKI
 from corpus import check_all_playbooks, load_playbook, playbooks, statute
-from deterministic import NOT_JSON, ask_json, check_elements, compute_deadlines, lease_value
+from deterministic import compute_deadlines
 from dev.build_cases import court_text
 from wiki import lint, read_pages, verified, verify
 from record import list_matters, load_matter
+from skills import skills
 from timeline import render_deadlines, render_timeline
-from tools import build_letter, deadline_listing
+from tools import build_letter, computed_deadlines, deadlines_waiting
 from smoke_parts.common import FORFEIT
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
@@ -38,7 +37,7 @@ print()
 check("every playbook check is OK", check_all_playbooks() == 0)
 print()
 
-# elements and deadlines with hand-typed facts and a fixed "today"
+# deadlines with hand-typed facts and a fixed "today"
 test_facts = {
     "tenancy_terminated": "2026-07-31",
     "vacated": "2026-07-30",
@@ -46,32 +45,34 @@ test_facts = {
     "forwarding_address_given": True,
     "early_or_periodic": False,
 }
-for row in check_elements(pb, record.profile, test_facts, {}):
-    print(row)
-print()
-for d in compute_deadlines(pb, test_facts, today=date(2026, 9, 8)):
+for d in compute_deadlines(skills["deposit_not_returned"], test_facts, today=date(2026, 9, 8)):
     print(d)
 print()
 
-# a later update against confirmed facts: a different value is "changed", the same value stays "known",
-# and a value read from the lease is never "changed". get_deadlines waits while a change is open.
+# a later update against confirmed facts: a proposal is not a confirmed fact, so a deadline computes from the confirmed
+# date only. (computed_deadlines logs nothing; deadline_listing writes an event, so it is not called on the test matter.)
 update = {
+    "tenancy_terminated": {"value": "2026-08-31", "how": "stated", "basis": "my lease ended August 31"},
     "claim_notice_received": {"value": True, "how": "stated", "basis": "I got a letter keeping $400"},
-    "vacated": {"value": "2026-07-30", "how": "stated", "basis": "July 30, 2026"},
-    "deposit_amount": {"value": 1500, "how": "stated", "basis": "$1,500"},
 }
-for row in check_elements(pb, record.profile, test_facts, update):
-    if row["id"] in update:
-        print(row)
 record.matter["skills"] = ["deposit_not_returned"]
 record.matter["facts"] = dict(test_facts)
 record.matter["proposed"] = update
-print(deadline_listing())
+computed = {d["clock"]: str(d["deadline"]) for d in computed_deadlines()}
+print(computed, deadlines_waiting())
+check("a deadline computes from the confirmed clock date, not from a proposed one (item 112)",
+      computed == {"return_if_no_claim": "2026-08-15", "claim_notice_deadline": "2026-08-30"})
 record.matter["proposed"] = {}
+record.matter["facts"] = {"vacated": "2026-07-30"}
+check("waiting lists the clock facts of a loaded skill not confirmed yet, and nothing is dated without its date (item 112)",
+      deadlines_waiting() == {"deposit_not_returned": ["tenancy_terminated", "early_or_periodic"]} and computed_deadlines() == [])
+record.matter["facts"] = {"tenancy_terminated": "2026-07-31", "early_or_periodic": False}
+check("a fact only a clock ruled out needs is not waited for: with early_or_periodic confirmed no, vacated is not (item 112)",
+      deadlines_waiting() == {} and len(computed_deadlines()) == 2)
 print()
 
 # court business days (83.56(3)): the circuit's holiday calendar, the count, and refusing instead of guessing
-nonpayment = playbooks["notice_received_nonpayment"]
+nonpayment = skills["notice_received_nonpayment"]
 def three_day(delivered, county):
     row = next(d for d in compute_deadlines(nonpayment, {"nonpayment_notice_delivered": delivered, "premises_county": county},
                                             today=date(2026, 9, 27)) if d["clock"] == "three_day_demand_period")
@@ -85,14 +86,14 @@ check("court days cross into the next year's memorandum", three_day("2026-12-30"
 check("court days refuse a year with no memorandum loaded", three_day("2027-12-29", "Alachua")[1]["status"].startswith("not computed"))
 check("court days refuse a county with no calendar", three_day("2026-11-24", "Miami-Dade")[1]["status"].startswith("not computed"))
 check("a court-day date carries its counting line", "Eighth Judicial Circuit" in three_day("2026-11-24", "Alachua")[1]["counting"])
-refused = {**three_day("2026-11-24", "Miami-Dade")[1], "issues": ["notice_received_nonpayment"]}
+refused = {**three_day("2026-11-24", "Miami-Dade")[1], "skills": ["notice_received_nonpayment"]}
 check("a refused court-day count is printed with its reason and no date", render_deadlines(json.dumps(
       {"deadlines": [refused]})).splitlines()[1].startswith("  (no date)   three day demand period [notice_received_nonpayment]: not computed"))
 stated = {"nonpayment_notice_delivered": "2026-09-18", "premises_county": "Alachua", "notice_stated_payment_date": "2026-09-21"}
 row = next(d for d in compute_deadlines(nonpayment, stated, today=date(2026, 9, 27)) if d["clock"] == "three_day_demand_period")
 check("the notice's stated date is printed beside the 83.56(3) date once confirmed, not before (item 10)",
       "beside it, from your record: notice stated payment date 2026-09-21" in render_deadlines(json.dumps(
-      {"deadlines": [{**row, "issues": ["notice_received_nonpayment"]}]}, default=str))
+      {"deadlines": [{**row, "skills": ["notice_received_nonpayment"]}]}, default=str))
       and "shown_with" not in three_day("2026-09-18", "Alachua")[1])
 with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as bad:
     bad.write(Path("playbooks/notice_received_nonpayment.yaml").read_text().replace(
@@ -192,18 +193,6 @@ check("verify refuses a wiki page that has a problem", refused)
 shutil.rmtree(wiki_copy.parent)
 print()
 
-# a tenant fact next to the lease field its playbook names (compare_to): shown only when they differ
-def row_for(fact_id, facts, proposed={}):
-    return next(r for r in check_elements(pb, record.profile, facts, proposed) if r["id"] == fact_id)
-check("a tenant date that differs from the lease carries the lease's words",
-      row_for("tenancy_terminated", {"tenancy_terminated": "2026-07-31"}).get("lease_says") == record.profile.term_end.quote)
-check("a tenant date that matches the lease carries nothing",
-      "lease_says" not in row_for("tenancy_terminated", {"tenancy_terminated": lease_value("date", record.profile.term_end.quote)}))
-check("a suggestion is compared with the lease too", "lease_says" in row_for(
-      "tenancy_terminated", {}, {"tenancy_terminated": {"value": "2026-07-31", "how": "stated", "basis": "x"}}))
-check("lease amounts are read from the printed figure", lease_value("money", record.profile.security_deposit.quote) == 1850)
-print()
-
 # the letter template
 record.matter["skills"] = ["deposit_not_returned"]
 record.matter["facts"] = dict(test_facts)
@@ -252,30 +241,6 @@ check("a cite inside a quoted passage is the quote's own, not the reply's (live 
 check("a short quoted cite is still checked", check_cites('"cite": "83.64"', {"83.49"})[0][0] == "83.64")
 check("item 11's wrong claim passes this check (its cite is real and shown)",
       check_cites("you may terminate the lease under Fla. Stat. 83.56(1)", set(playbooks["repair_not_made"].sections)) == [])
-
-# a model answer that is not valid JSON at intake is asked for again (deterministic.ask_json; 3 of 51 intakes
-# crashed on one in the eval of 2026-10-01): a stand-in model answers badly once, then well
-class Answers:
-    def __init__(self, *texts):
-        self.texts, self.prompts = list(texts), []
-    def invoke(self, prompt):
-        self.prompts.append(prompt)
-        return AIMessage(content=self.texts.pop(0))
-flaky = Answers('{"issues": ["other"] "reason": "x"}', '```json\n{"issues": ["other"], "reason": "x"}\n```')
-check("ask_json asks again after an answer that is not JSON, saying so",
-      ask_json(flaky, "Classify.") == {"issues": ["other"], "reason": "x"} and len(flaky.prompts) == 2
-      and flaky.prompts[1].endswith(NOT_JSON))
-broken = Answers("no", "still no", "never")
-try:
-    ask_json(broken, "Classify.")
-    gave_up = False
-except json.JSONDecodeError:
-    gave_up = len(broken.prompts) == 3
-check("ask_json gives up after three answers that are not JSON", gave_up)
-two_lines = Answers('{"issues": ["other"], "reason": "he said he regrets\nrenting to people like you"}')
-check("ask_json keeps a line break inside a quoted string (the mixed story's crash, eval 2026-10-01)",
-      ask_json(two_lines, "Classify.")["reason"] == "he said he regrets\nrenting to people like you"
-      and len(two_lines.prompts) == 1)
 
 # quotes in a reply (citations.check_quoted): which cite goes with which quote, then what each is checked against
 OBJECTS = "Unless the tenant objects to the imposition of the landlord’s claim"          # in 83.49(3)(b)

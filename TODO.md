@@ -21,8 +21,6 @@ author's rule of 2026-10-06, in CLAUDE.md).
 
 Playbooks become skills (the author's plan of 2026-10-12; design in `docs/structure/2026-10-12-skills.md`). In order,
 each one commit; items 98 to 100 below wait until it is done, since the sheet and the prompt change under them.
-112. Facts: proposals only, a short confirmation, clock facts typed; `fill_facts`, fact lists, and fact status go.
-    Done: a deadline still computes only from confirmed dates.
 113. The playbooks go, with the options layer and every line only they used. Done: no code reads `playbooks/`.
 114. The new rules and prompt (the agreed rules, finished); the tool answers first and replies right after a
     confirmation. Done: the prompt holds the new parts only.

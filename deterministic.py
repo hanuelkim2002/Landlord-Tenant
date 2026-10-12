@@ -1,104 +1,9 @@
-"""Deterministic Layer: element status and date arithmetic (no model), plus ask_json and fill_facts."""
-import json
-import re
-from datetime import date, datetime, timedelta
-
+"""Deterministic Layer: date arithmetic and the options layer (no model)."""
+from datetime import date, timedelta
 
 from calendars import court_calendar, holidays_in
-from config import agent_llm, squash
 from lease import LABELS, lease_cite
-
-
-# ---- Element Status
-
-def lease_value(kind, quote):
-    """Read a lease quote as the element's type, so it can be compared with the tenant's answer. Dates as
-    printed ("September 30, 2027", "9/30/2027", "2027-09-30") and dollar amounts ("$1,850.00"). None when
-    the quote cannot be read that way; then nothing is compared."""
-    if kind == "date":
-        for fmt in ("%B %d, %Y", "%b %d, %Y", "%m/%d/%Y", "%Y-%m-%d"):
-            try:
-                return datetime.strptime(quote.strip().rstrip("."), fmt).date().isoformat()
-            except ValueError:
-                pass
-    if kind == "money":
-        found = re.search(r"\$([\d,]+(?:\.\d\d)?)", quote)
-        if found:
-            amount = float(found.group(1).replace(",", ""))
-            return int(amount) if amount == int(amount) else amount
-    return None
-
-
-def lease_differs(e, profile, tenant_value):
-    """The lease's exact words when the element names a lease field (compare_to) and the lease's value,
-    read as the element's type, differs from the tenant's. Otherwise None. The tool shows both; it does
-    not decide which is right."""
-    if not e.compare_to or profile is None:
-        return None
-    clause = getattr(profile, e.compare_to.replace("lease_profile.", ""))
-    if not clause.present:
-        return None
-    lease = lease_value(e.type, clause.quote)
-    if lease is None or lease == tenant_value:
-        return None
-    return clause.quote
-
-
-def listed(playbook, facts):
-    """The confirmed facts with any answer a choice fact does not list left out: an answer kept from before its question
-    was a choice (claim_delivery was words until 2026-10-08), which the sheet then asks again and no condition reads."""
-    choices = {e.id: e.choices for e in playbook.spec.elements if e.type == "choice"}
-    return {k: v for k, v in facts.items() if k not in choices or v in choices[k]}
-
-
-def check_elements(playbook, profile, facts, proposed):
-    """For each element: known (confirmed), changed (confirmed, but a later update suggests a different value),
-    proposed (needs the tenant's confirmation), missing, or n/a. A row whose tenant value differs from the
-    lease field named in compare_to also carries lease_says, the lease's exact words.
-    facts = confirmed answers keyed by element id. proposed = unconfirmed answers with how and basis."""
-    rows = []
-    facts = listed(playbook, facts)                       # an answer its choice does not list is asked again
-    for e in playbook.spec.elements:
-        # Elements that only matter if another CONFIRMED fact is true. n/a until then.
-        if e.applies_if and not facts.get(e.applies_if):
-            rows.append({"id": e.id, "status": "n/a"})
-            continue
-
-        value, found_in = None, None
-        for src in e.source:
-            if src == "user" and e.id in facts:
-                value, found_in = facts[e.id], "user"
-            elif src.startswith("lease_profile."):
-                clause = getattr(profile, src.replace("lease_profile.", ""))
-                if clause.present:
-                    value, found_in = clause.quote, src
-            if value is not None:
-                break
-
-        # A confirmed fact with a different value waiting in proposed: show both, the tenant decides.
-        # Only for facts the tenant confirmed; a value read from the lease is not changed this way.
-        if found_in == "user" and e.id in proposed and proposed[e.id]["value"] != value:
-            p = proposed[e.id]
-            rows.append({"id": e.id, "status": "changed", "value": value, "new_value": p["value"],
-                         "how": p["how"], "basis": p["basis"],
-                         "ask": f"The tenant confirmed {value}; their update suggests {p['value']}. Ask which is "
-                                f"right: " + playbook.guidance["questions"][e.id]})
-        elif value is not None:
-            rows.append({"id": e.id, "status": "known", "value": value, "from": found_in})
-        elif e.id in proposed:
-            p = proposed[e.id]
-            rows.append({"id": e.id, "status": "proposed", "value": p["value"], "how": p["how"], "basis": p["basis"],
-                         "ask": "Confirm with the tenant: " + playbook.guidance["questions"][e.id]})
-        else:
-            rows.append({"id": e.id, "status": "missing", "ask": playbook.guidance["questions"][e.id]})
-            continue
-
-        row = rows[-1]                                     # the tenant's value this row shows, if any
-        tenant_value = row.get("new_value", row.get("value")) if row.get("from", "user") == "user" else None
-        says = lease_differs(e, profile, tenant_value) if tenant_value is not None else None
-        if says:
-            row["lease_says"] = says
-    return rows
+from skills import skills
 
 
 # ---- Deadlines: the only date arithmetic in the project.
@@ -127,11 +32,12 @@ def court_days(start, days, direction, county):
                  f"which holidays count are open questions; show this line with the date.")
 
 
-def compute_deadlines(playbook, facts, today):
-    """Date arithmetic only. Dates in facts are strings like '2026-07-31'."""
+def compute_deadlines(skill, facts, today):
+    """Date arithmetic only. Dates in facts are strings like '2026-07-31'. One row per clock of the skill that applies
+    (its applies_if fact confirmed true, or none): the deadline, or why there is none yet."""
     out = []
-    for c in playbook.spec.clocks:
-        # Same applies_if rule as elements: skip clocks that don't apply.
+    for c in skill.clocks:
+        # Skip clocks that don't apply: their applies_if fact is not a confirmed truthy one.
         if c.applies_if and not facts.get(c.applies_if):
             continue
         # Can't compute without the trigger date. Say which one is needed.
@@ -141,7 +47,7 @@ def compute_deadlines(playbook, facts, today):
 
         # Turn "2026-07-31" into a real date, then add or subtract the day count.
         start = date.fromisoformat(facts[c.trigger])
-        counting = playbook.counting["convention"]
+        counting = skill.counting["convention"]
         if c.count == "court_business_days":
             deadline, counting = court_days(start, c.days, c.direction, facts.get("premises_county"))
             if deadline is None:                           # no calendar for the county or the year: say so
@@ -172,19 +78,19 @@ def compute_deadlines(playbook, facts, today):
     return out
 
 
-def matter_deadlines(playbooks, facts, today):
-    """compute_deadlines for every playbook of the matter, with a deadline two playbooks share listed once and
-    tagged with every issue that has it. Shared means the same clock id, cite, and result (date and status);
-    two different rules that happen to share an id stay separate. Each row carries "issues", a list."""
+def matter_deadlines(loaded, facts, today):
+    """compute_deadlines for every skill in `loaded`, with a deadline two skills share listed once and tagged with every
+    skill that has it. Shared means the same clock id, cite, and result (date and status); two different rules that
+    happen to share an id stay separate. Each row carries "skills", a list of skill names."""
     merged = []
-    for pb in playbooks:
-        for d in compute_deadlines(pb, facts, today):
+    for skill in loaded:
+        for d in compute_deadlines(skill, facts, today):
             same = next((m for m in merged if m["clock"] == d["clock"] and m.get("cite") == d.get("cite")
                          and m.get("deadline") == d.get("deadline") and m["status"] == d["status"]), None)
             if same:
-                same["issues"].append(pb.issue)
+                same["skills"].append(skill.name)
             else:
-                merged.append({**d, "issues": [pb.issue]})
+                merged.append({**d, "skills": [skill.name]})
     return merged
 
 
@@ -195,7 +101,7 @@ def matter_deadlines(playbooks, facts, today):
 # What the tool knows (TODO item 81, the author's decision of 2026-10-04): each condition (gate) is met through one
 # of its ways (a confirmed fact, a clock, a lease clause, something the tenant can check, law outside the tool), and
 # the program says which of five things it is: known (met, not met, or not met yet), something the tenant can tell
-# the tool (a fact the sheet asks), something the tenant can check (a part of the lease the tool has not read, a
+# the tool (a fact the tenant can state), something the tenant can check (a part of the lease the tool has not read, a
 # local code, a document), not settled (an open question), or outside the tool. The model said "the lease does not
 # mention air conditioning" from a lease it had not read whole, and called ending the lease over an AC not settled
 # on the statute alone while the lease promised the repair.
@@ -233,7 +139,7 @@ def matches(value, equals):
 
 def asked_never(fact, playbook, facts):
     """True when a fact's own question does not apply on the confirmed facts (its applies_if fact is confirmed
-    false), so the sheet never asks it."""
+    false), so it is never asked."""
     element = next(e for e in playbook.spec.elements if e.id == fact)
     return bool(element.applies_if and element.applies_if in facts and not facts[element.applies_if])
 
@@ -250,7 +156,7 @@ def holds(applies_if, facts):
 
 def way_state(w, playbook, facts, clock_rows, profile):
     """One way's state (STATES) and why, in plain words: a fact or clock confirmed one way or the other is known (or
-    not settled, through its open question); a fact not confirmed is one the tenant can tell the tool on the sheet,
+    not settled, through its open question); a fact not confirmed is one the tenant can tell the tool,
     or can check when it rests on a lease clause the tool has not read; a clock waits for its start date (the tenant
     can tell it) or cannot be counted (outside the tool); a check is the tenant's to check, with the tenant's own
     words when it names a fact to set beside the statute (beside); outside is outside; an open question alone is not
@@ -265,7 +171,7 @@ def way_state(w, playbook, facts, clock_rows, profile):
         if held is False or asked_never(fact, playbook, facts):       # its question is never asked: an answer kept
             return "not met", NOT_APPLY                                # from before does not count
         if held is None:
-            return "tell", f"the sheet asks: {questions[fact]}"
+            return "tell", f"ask the tenant: {questions[fact]}"
     if not (w.fact or w.clock or w.check or w.outside):        # an open question alone decides it
         text = next(q["text"] for q in playbook.spec.open_questions if q.get("id") == w.open_question)
         return "not settled", "the statute does not settle it: " + " ".join(text.split()).split(". ")[0] + "."
@@ -277,18 +183,18 @@ def way_state(w, playbook, facts, clock_rows, profile):
         return "outside", " ".join(w.outside.split())
     if w.fact:
         if asked_never(w.fact, playbook, facts):
-            return "not met", NOT_APPLY                     # a question the sheet never asks
+            return "not met", NOT_APPLY                     # a question never asked
         if w.fact in facts:
             return ("met", "") if matches(facts[w.fact], w.equals) else (otherwise, " ".join(w.when_otherwise.split()))
         if w.lease and (profile is None or getattr(profile, w.lease, None) is None):     # a part of the lease not read
-            return "check", f"{note}, so the tenant can look there; the sheet asks: {questions[w.fact]}"
-        return "tell", f"the sheet asks: {questions[w.fact]}" + (f"; {note}" if note else "")
+            return "check", f"{note}, so the tenant can look there; ask the tenant: {questions[w.fact]}"
+        return "tell", f"ask the tenant: {questions[w.fact]}" + (f"; {note}" if note else "")
     row = clock_rows.get(w.clock)
     clock = next(c for c in playbook.spec.clocks if c.id == w.clock)
     if row is None and clock.applies_if in facts:              # the clock does not apply on the confirmed facts
         return "not met", "the period does not apply on the confirmed facts"
     if row is None or row["status"].startswith("need date"):   # its start date (or applies_if fact) not confirmed
-        return "tell", f"the sheet asks: {questions[clock.trigger if row is not None else clock.applies_if]}"
+        return "tell", f"ask the tenant: {questions[clock.trigger if row is not None else clock.applies_if]}"
     if row["status"].startswith("not computed"):
         return "outside", row["status"]
     return ("met", "") if row["status"] == (w.equals or "passed") else (otherwise, " ".join(w.when_otherwise.split()))
@@ -323,6 +229,14 @@ def step_status(s, playbook, facts, clock_rows, profile):
     return ("done" if s.fact in facts and matches(facts[s.fact], s.equals) else "to do"), ""
 
 
+def listed(playbook, facts):
+    """The confirmed facts with any answer a choice fact does not list left out: an answer kept from before its question
+    was a choice (claim_delivery was words until 2026-10-08), which no condition reads. (TRANSITION, with the options
+    layer: TODO item 113 removes it.)"""
+    choices = {e.id: e.choices for e in playbook.spec.elements if e.type == "choice"}
+    return {k: v for k, v in facts.items() if k not in choices or v in choices[k]}
+
+
 def check_options(playbook, facts, today, profile=None):
     """Each option of the playbook with its status, from the confirmed facts, the clocks, and the lease profile only
     (option_status: open, closed, not known yet, not settled, outside the tool, or not open yet). Each gate takes the best
@@ -333,7 +247,8 @@ def check_options(playbook, facts, today, profile=None):
     not done is "passed", not done: the period counts only if the steps above are done (a notice whose words the tenant
     checks). Returns [{"option", "label", "cite", "status", "gates", "steps", "also_open"}]."""
     facts = listed(playbook, facts)                       # an answer its choice does not list decides nothing
-    clock_rows = {row["clock"]: row for row in compute_deadlines(playbook, facts, today)}
+    # TRANSITION, until TODO item 113: a playbook's clocks are the clocks of the skill with its name
+    clock_rows = {row["clock"]: row for row in compute_deadlines(skills[playbook.issue], facts, today)}
     results = []
     for o in playbook.spec.options:
         gates = []
@@ -361,58 +276,3 @@ def check_options(playbook, facts, today, profile=None):
                         "status": option_status([gate["state"] for gate in gates]), "gates": gates,
                         "steps": steps, "also_open": list(o.also_open)})
     return results
-
-
-# ---- Ask JSON and Fill Facts: a one-shot model call whose answer is parsed as JSON, and the call that pulls facts out of a
-# description (nothing the model answers here is confirmed; TODO item 112 removes fill_facts).
-
-NOT_JSON = "\n\nYour last answer was not valid JSON. Return ONLY the JSON object, nothing else."
-
-
-def ask_json(llm, prompt, tries=3):
-    """Send a prompt, strip any markdown fences, return parsed JSON. An answer that is not valid JSON is asked
-    for again with NOT_JSON added, up to `tries` answers in all (in the eval of 2026-10-01, 3 of 51 intakes
-    crashed run.py on one); the last failure is raised."""
-    for attempt in range(tries):
-        raw = llm.invoke(prompt + (NOT_JSON if attempt else "")).content.strip()
-        raw = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-        try:
-            return json.loads(raw, strict=False)          # a line break inside a quoted string is kept, not refused
-        except json.JSONDecodeError:
-            if attempt == tries - 1:
-                raise
-
-
-def fill_facts(description, playbook):
-    """Pull answers out of the description. Each is tagged stated or inferred and must rest on the tenant's
-    own words. Nothing here is confirmed; the tenant confirms each one on the intake sheet (sheet.py)."""
-    slots = [{"id": e.id, "type": e.type, "question": playbook.guidance["questions"][e.id],
-              **({"choices": e.choices} if e.choices else {})}
-             for e in playbook.spec.elements if "user" in e.source]
-    prompt = f"""Read what the tenant said and answer each question if you can.
-Return ONLY a JSON object. For each id: {{"value": ..., "how": "stated" or "inferred", "said": "exact words copied from the tenant"}}.
-"stated" means the tenant answered the question directly. "inferred" means the answer follows from what the
-tenant said (for example, comparing two dates they gave). Either way, "said" must be the tenant's exact words
-that the answer rests on. If nothing the tenant said supports an answer, omit the id.
-Rules: date -> "YYYY-MM-DD" only if the tenant gave day, month, and year. bool -> true/false.
-money -> number without $ or commas. choice -> one of its choices, copied exactly. Never compute a date; only copy
-one the tenant gave.
-
-QUESTIONS:
-{json.dumps(slots, indent=2)}
-
-TENANT SAID:
-{description}"""
-    answers = ask_json(agent_llm, prompt)
-
-    choices = {s["id"]: s.get("choices") for s in slots}
-    proposed = {}
-    for slot_id, a in answers.items():
-        said = squash(a.get("said", ""))
-        how = a.get("how")
-        listed = slot_id in choices and (choices[slot_id] is None or a.get("value") in choices[slot_id])
-        if listed and how in ("stated", "inferred") and said and said in squash(description):
-            proposed[slot_id] = {"value": a["value"], "how": how, "basis": a["said"]}
-        else:
-            print(f"  dropped {slot_id}: no supporting quote or tag, or an answer its choices do not list")
-    return proposed

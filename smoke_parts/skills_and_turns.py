@@ -12,7 +12,6 @@ from langchain.messages import AIMessage, HumanMessage
 from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
 from langgraph.checkpoint.memory import InMemorySaver
 import agent
-import deterministic
 import record
 from checks import TEST_MATTER, check, make_scratch, remove_scratch
 from config import MATTERS
@@ -83,7 +82,6 @@ try:
     check("load_matter turns an old matter's issues into skills, in order, and drops the old keys",
           record.matter["skills"] == ["deposit_not_returned", "repair_not_made"]
           and not {"issues", "proposed_issues", "rejected_issues"} & set(record.matter)
-          and [p.issue for p in record.active_playbooks()] == ["deposit_not_returned", "repair_not_made"]
           and [s.name for s in record.active_skills()] == ["deposit_not_returned", "repair_not_made"])
     check("list_matters lists an old matter's skills", next(m for m in list_matters() if m["tenant"] == "t-smoke-old")["skills"]
           == ["deposit_not_returned", "repair_not_made"])
@@ -105,8 +103,8 @@ class Tripwire:
     def invoke(self, *args, **kwargs):
         Tripwire.called = True
         raise AssertionError("the model was called")
-real_llm = (agent.agent_llm, deterministic.agent_llm)
-agent.agent_llm = deterministic.agent_llm = Tripwire()
+real_llm = agent.agent_llm
+agent.agent_llm = Tripwire()
 try:
     new_matter("t-smoke-intake")
     record.profile = LeaseProfile.model_validate_json((TEST_MATTER / "lease_profile.json").read_text())
@@ -145,7 +143,7 @@ try:
           and agent_first.get_state(config_first).values["messages"][-2].content == update)
     end_session()
 finally:
-    agent.agent_llm, deterministic.agent_llm = real_llm
+    agent.agent_llm = real_llm
     remove_scratch("t-smoke-intake")
 check("the intake scratch matter is removed", not (MATTERS / "t-smoke-intake").exists())
 
@@ -159,18 +157,20 @@ try:
     load_skill.invoke({"name": "deposit_claim_received"})
     check("the model's next prompt has the new skill's instructions", "# deposit_claim_received\n" in prompt_part("loaded"))
     check("the prompt carries the sections the loaded skills name", "=== 83.49 ===" in system_prompt())
-    # deadlines per skill: deposit_not_returned complete, deposit_claim_received still open (its facts skipped)
+    # deadlines per skill (item 112): every clock that can be computed is listed, whatever else a skill still waits for.
+    # deposit_not_returned has all its clock facts; deposit_claim_received lacks the date its landlord_remit_balance counts from.
     record.confirm_fact("claim_notice_received", True, "sheet")        # the tenant's yes, as on the sheet
     record.matter["facts"].update(tenancy_terminated="2026-07-31", vacated="2026-07-30", claim_notice_date="2026-09-25",
                                   claim_delivery="certified mail", forwarding_address_given=True, early_or_periodic=False)
-    per_issue = json.loads(deadline_listing())
-    check("a skill with open facts does not block another skill's deadlines",
-          {d["clock"] for d in per_issue["deadlines"]} == {"return_if_no_claim", "claim_notice_deadline"}
-          and all(d["issues"] == ["deposit_not_returned"] for d in per_issue["deadlines"])
-          and "deposit_claim_received" in per_issue["waiting"] and "deposit_not_returned" not in per_issue["waiting"])
-    check("printed deadlines show one skill's dates and the other waiting",
-          "return if no claim" in render_deadlines(json.dumps(per_issue, default=str))
-          and "waiting [deposit_claim_received]: " in render_deadlines(json.dumps(per_issue, default=str)))
+    per_skill = json.loads(deadline_listing())
+    check("a skill with a fact still open does not block its other clocks or another skill's: every clock that can be computed is "
+          "listed, and waiting names the one fact left",
+          {d["clock"] for d in per_skill["deadlines"]} == {"return_if_no_claim", "claim_notice_deadline", "tenant_objection_deadline"}
+          and next(d for d in per_skill["deadlines"] if d["clock"] == "return_if_no_claim")["skills"] == ["deposit_not_returned"]
+          and per_skill["waiting"] == {"deposit_claim_received": ["claim_notice_dated"]})
+    check("printed deadlines show the dates and the skill that waits",
+          "return if no claim" in render_deadlines(json.dumps(per_skill, default=str))
+          and "waiting [deposit_claim_received]: claim notice dated" in render_deadlines(json.dumps(per_skill, default=str)))
 
     # an empty reply (m-018): the model is asked once more; a stand-in agent plays the model's second turn
     class Again:

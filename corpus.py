@@ -21,8 +21,9 @@ statute = {p.stem: p.read_text() for p in STATUTES.glob("83.*.txt")}
 
 class Element(BaseModel):
     """One fact the tool needs before it can say anything about this issue.
-    check_elements reads these to decide what is known and what to ask. compare_to names a lease field
-    (e.g. "lease_profile.term_end") to set next to the tenant's answer when the two differ.
+    The options layer (deterministic.check_options) reads these; since TODO item 112 nothing asks them as a list
+    (the model proposes facts, and skills type the ones the deadlines count from). compare_to names a lease field
+    (e.g. "lease_profile.term_end"); nothing compares it since item 112, and the playbooks go with item 113.
     A choice fact (TODO items 86 and 90 to 92) lists its answers in plain words in choices: what the tenant saw or
     did (how a message was sent, who caused a problem), never a term of the statute; the playbook's ways say what
     each answer means for a condition."""
@@ -72,7 +73,7 @@ class RelatedIssue(BaseModel):
 class Way(BaseModel):
     """One way a gate's condition can be met (TODO item 81), decided by exactly one of:
     - fact: met when the fact is confirmed with the value in equals. Not confirmed, the tenant can tell the tool
-      (the sheet asks), unless the way names a lease clause (lease) the tool has not read: then the tenant can
+      (ask them in the chat), unless the way names a lease clause (lease) the tool has not read: then the tenant can
       check that part of the lease.
     - clock: met when the clock's status from compute_deadlines is equals ("passed", the default, or "upcoming").
       With its start date not confirmed, the tenant can tell the tool; a clock the tool cannot count (no court
@@ -397,10 +398,3 @@ for pb in playbooks.values():
             raise ValueError(f"{pb.issue}: related issue {rel.issue} is not a playbook's issue")
         if rel.when.fact not in _all_facts:
             raise ValueError(f"{pb.issue}: related issue condition {rel.when.fact} is not a fact any playbook asks for")
-
-
-# The lease clause a fact's question is about, from a gate's way that the fact decides and that names one (TODO item
-# 81): the sheet shows the clause, as the tool read it, beside the question (whether the lease promises the repair,
-# beside the lease's repairs clause), or says the tool has not read it.
-fact_lease = {w.fact: w.lease for pb in playbooks.values() for o in pb.spec.options for w in option_ways(o)
-              if w.fact and w.lease}

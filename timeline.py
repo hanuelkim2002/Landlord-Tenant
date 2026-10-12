@@ -6,13 +6,25 @@ from datetime import date
 
 import record
 from deterministic import matter_deadlines
-from record import active_playbooks, read_events
+from record import read_events
 from sheet import shown
+from skills import clock_facts
 
 
 def label(ident):
-    """'tenancy_terminated' -> 'tenancy terminated'. Used for element and clock ids."""
+    """'tenancy_terminated' -> 'tenancy terminated'. Used for fact and clock ids."""
     return ident.replace("_", " ")
+
+
+def is_iso_date(value):
+    """True if the fact's value is a date written YYYY-MM-DD (a date fact, or a plain-text fact that reads as one)."""
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        return False
+    try:
+        date.fromisoformat(value)
+    except ValueError:
+        return False
+    return True
 
 
 def corrected(ev):
@@ -34,31 +46,31 @@ def render_deadlines(result):
     """get_deadlines' result as the tenant reads it. The chat loop prints this itself after a turn in which the
     model called get_deadlines, so no part of a deadline depends on the model reporting it: each row shows its
     date, whose deadline, the rule and what it counts from, the cite, the status, the counting line, and its
-    issues; a clock with no date shows why. With no deadline at all (an issue with no clocks, or none that
-    applies), it says so in one line instead of printing an empty heading. Then the issues still waiting,
+    skills; a clock with no date shows why. With no deadline at all, it says so in one line instead of printing an
+    empty heading: none yet while a skill waits for facts, else none that applies. Then the skills still waiting,
     with the facts they wait for."""
-    if result.startswith("Not yet."):                      # no issue ready: the waiting list is JSON at the end
-        waiting = json.loads(result.split(": ", 1)[1])
-        lines = ["No deadlines yet: no issue has all its facts confirmed."]
+    data = json.loads(result)
+    waiting = data.get("waiting", {})
+    if data["deadlines"]:
+        lines = ["Deadlines, computed by the tool from your confirmed facts:"]
+    elif waiting:
+        lines = ["No deadlines yet: the facts below are not confirmed."]
     else:
-        data = json.loads(result)
-        waiting = data.get("waiting", {})
-        lines = ["Deadlines, computed by the tool from your confirmed facts:" if data["deadlines"] else
-                 "No deadlines: none of the deadlines this tool computes applies to your confirmed facts."]
-        for d in data["deadlines"]:
-            issues = ", ".join(d["issues"])
-            if "deadline" not in d:
-                lines.append(f"  (no date)   {label(d['clock'])} [{issues}]: {d['status']}")
-                continue
-            lines.append(f"  {d['deadline']}  {d['actor']} deadline: {label(d['clock'])} [{issues}], {d['status']}")
-            lines.append(f"              {d['rule']} {label(d['from'])}, Fla. Stat. {d['cite']}")
-            lines.append(f"              counting: {d['counting']}")
-            if "shown_with" in d:                          # a confirmed date shown beside the computed one
-                lines.append(f"              beside it, from your record: {label(d['shown_with'])}")
-            if "condition" in d:                           # what it counts only if, which the tool does not decide
-                lines.append(f"              counts only if {d['condition']}")
-    for issue, fact_ids in waiting.items():
-        lines.append(f"  waiting [{issue}]: {', '.join(label(f) for f in fact_ids)}")
+        lines = ["No deadlines: none of the deadlines this tool computes applies to your confirmed facts."]
+    for d in data["deadlines"]:
+        names = ", ".join(d["skills"])
+        if "deadline" not in d:
+            lines.append(f"  (no date)   {label(d['clock'])} [{names}]: {d['status']}")
+            continue
+        lines.append(f"  {d['deadline']}  {d['actor']} deadline: {label(d['clock'])} [{names}], {d['status']}")
+        lines.append(f"              {d['rule']} {label(d['from'])}, Fla. Stat. {d['cite']}")
+        lines.append(f"              counting: {d['counting']}")
+        if "shown_with" in d:                          # a confirmed date shown beside the computed one
+            lines.append(f"              beside it, from your record: {label(d['shown_with'])}")
+        if "condition" in d:                           # what it counts only if, which the tool does not decide
+            lines.append(f"              counts only if {d['condition']}")
+    for name, fact_ids in waiting.items():
+        lines.append(f"  waiting [{name}]: {', '.join(label(f) for f in fact_ids)}")
     return "\n".join(lines)
 
 
@@ -70,19 +82,19 @@ def render_timeline(skill=None, full=False):
     events = read_events()
     facts = record.matter["facts"]
     rows = []                                              # (date, event, source, file)
-    dates_shown = set()
 
-    for pb in active_playbooks():
-        if skill and pb.issue != skill:
-            continue
-        for e in pb.spec.elements:                         # real-world dates the tenant confirmed
-            if e.type == "date" and e.id in facts and e.id not in dates_shown:
-                dates_shown.add(e.id)
-                rows.append((facts[e.id], label(e.id), confirmation_of(e.id, events), ""))
+    counted_from = {}                                      # fact id -> the loaded skills whose clocks count from it
+    for loaded in record.active_skills():
+        for fact_id in clock_facts(loaded):
+            counted_from.setdefault(fact_id, []).append(loaded.name)
+    for fact_id, value in facts.items():                   # real-world dates the tenant confirmed: every fact that reads as one
+        tagged = counted_from.get(fact_id)                 # None when no loaded skill counts from it: shown under every skill
+        if is_iso_date(value) and (not skill or not tagged or skill in tagged):
+            rows.append((value, label(fact_id), confirmation_of(fact_id, events), ""))
 
-    for d in matter_deadlines(active_playbooks(), facts, date.today()):   # a shared deadline once, both issues
-        if "deadline" in d and (not skill or skill in d["issues"]):
-            rows.append((str(d["deadline"]), f"[{', '.join(d['issues'])}] {d['actor']} deadline: {label(d['clock'])}",
+    for d in matter_deadlines(record.active_skills(), facts, date.today()):   # a shared deadline once, both skills
+        if "deadline" in d and (not skill or skill in d["skills"]):
+            rows.append((str(d["deadline"]), f"[{', '.join(d['skills'])}] {d['actor']} deadline: {label(d['clock'])}",
                          f"computed, {d['cite']}, {d['status']}" + (", if it counts" if "condition" in d else ""), ""))
 
     for ev in events:

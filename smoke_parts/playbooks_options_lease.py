@@ -1,4 +1,4 @@
-"""Smoke, part: Every playbook through the real code path, and the checks of items 72 to 84: the rules that apply only sometimes,
+"""Smoke, part: Every skill's clock facts through the real code path, and the checks of items 72 to 84: the rules that apply only sometimes,
 the lease profile's repairs clause, lease cites, options and what the tool knows of each condition, what the tool
 does not know, the lease's numbered clauses, and the lease search.
 Run by smoke.py, in order; each check prints a line, OK or FAIL."""
@@ -17,30 +17,14 @@ from corpus import load_playbook, playbooks
 from deterministic import check_options
 from record import load_matter, read_events
 from lease import lease_clauses
-from sheet import pending_rows, row_notes, run_sheet
+from sheet import pending_rows, run_sheet
 from prompt import RULES as RULES_TEXT
 from prompt import LETTER_RULE, PARTS, options_status, system_prompt, unknowns_status
 from replies import check_reply, cited_clause, cited_words
+from skills import clock_facts, skills
 from tools import build_letter, deadline_listing, draft_letter, pretty, propose_facts
 from tools import tools as model_tools
 from smoke_parts.common import prompt_part, scripted
-
-# ---- Every playbook through the real code path, on a scratch matter: the sheet asks every question (a "yes"
-# to every yes/no, so every applies_if question comes up), every clock gets a date, and a letter carries the
-# playbook's note to the tenant. A new playbook is covered without a new check.
-def answer_by_type(shown_so_far):
-    """An ask function that answers the question on screen by its type hint."""
-    def ask(prompt):
-        last = [line for line in shown_so_far.getvalue().splitlines() if line.startswith("  ") and
-                not line.startswith("    ")][-1]
-        if "What county" in last:
-            return "Alachua"                             # a county with a stored court holiday calendar
-        for hint, answer in (("(YYYY-MM-DD)", "2026-10-31"), ("(yes/no)", "yes"), ("(amount)", "1200"), ("(words)", "a test answer"),
-                             ("(number or words)", "1")):
-            if last.endswith(hint):
-                return answer
-        return "?"
-    return ask
 
 # the letter rule on a matter with no letter drafted (the test matter's history has one, so it is emptied)
 make_scratch("t-smoke-rules")
@@ -171,10 +155,11 @@ check("item 81: a way decided by two things is refused when the playbook loads",
 # The stories: F (an e-mail saying "I'm going to have to move out"), A (a portal request), C (hot water), E (a roommate).
 from deterministic import compute_deadlines, matter_deadlines
 from timeline import render_deadlines
+repair_skill = skills["repair_not_made"]
 story_f = {**ac, "message_date": str(today - timedelta(days=10)), "message_mentions_ending": True,
            "message_words": "If this isn't fixed I'm going to have to move out."}
 f_end, f_keep = by_id(repair, story_f)["end_the_lease"], by_id(repair, story_f)["withhold_rent"]
-f_listing = render_deadlines(json.dumps({"deadlines": matter_deadlines([repair], story_f, today)}, default=str))
+f_listing = render_deadlines(json.dumps({"deadlines": matter_deadlines([repair_skill], story_f, today)}, default=str))
 check("items 90 to 92: an e-mail that mentions moving out is no done notice: its delivery and its words are the tenant's to check, the 7 days passed, not done",
       [s["status"] for s in f_end["steps"]] == ["the tenant can check", "the tenant can check", "passed"]
       and "83.505" in f_end["steps"][0]["why"]
@@ -187,7 +172,7 @@ check("items 90 to 92: the deadline from that e-mail is printed with what it cou
 portal = {**ac, "message_sent_by": "a resident portal request or message"}
 check("items 90 to 92: a portal request that mentions neither ending the lease nor rent starts no 7-day period, and no notice step is done",
       [s["status"] for s in by_id(repair, portal)["end_the_lease"]["steps"]] == ["to do", "to do", "to do"]
-      and compute_deadlines(repair, portal, today) == [])
+      and compute_deadlines(repair_skill, portal, today) == [])
 hot = by_id(repair, {**roof, "problem_is_with": "hot water"})
 pipes = by_id(repair, {**roof, "problem_is_with": "pipes, drains, toilets, or faucets"})
 check("item 91: hot water is not settled under 83.51(1)(b), for both options, so withholding is never open on it; a leaking pipe is the plumbing",
@@ -220,15 +205,8 @@ with tempfile.TemporaryDirectory() as tmp:
     except ValueError as e:
         refused = "names an answer problem_is_with does not list (warm water)" in str(e)
 check("items 90 to 92: a way naming an answer its choice does not list is refused when the playbook loads", refused)
-from sheet import parse_answer
-answers = repair.spec.elements[1].choices
-check("items 90 to 92: a choice is answered by its number or its words, spacing and capitals aside; anything else is refused",
-      parse_answer("choice", "9", answers) == ("hot water", None) and parse_answer("choice", "  Hot   Water ", answers) == ("hot water", None)
-      and parse_answer("choice", "18", answers) == (None, "a number from the list, or its words")
-      and parse_answer("choice", "the water heater", answers)[0] is None)
-# part 2 of the sheet asking plain facts (TODO item 102): the other playbooks ask how a paper went, where a fee is
+# part 2 of the facts the options read (TODO item 102): the other playbooks ask how a paper went, where a fee is
 # written, what the tenant did, and read the answers in their gates and steps
-from deterministic import check_elements
 dep, claim_pb, ending_pb, rent_pb, leave_pb = (playbooks[i] for i in ("deposit_not_returned", "deposit_claim_received",
                                                                        "lease_ending", "rent_increased", "wants_to_leave_early"))
 came = lambda how: by_id(dep, {**ghosted, "claim_notice_received": True, "claim_delivery": how})["whole_deposit_back"]
@@ -269,27 +247,16 @@ check("item 102: one notice before moving out, asked once: the deposit and leavi
       {"leave_notice_given", "leave_notice_sent_by"} <= {e.id for e in dep.spec.elements} & {e.id for e in leave_pb.spec.elements}
       and "about a similar problem" not in playbooks["notice_received_violation"].guidance["questions"]["prior_written_warning"])
 old_answer = {"claim_delivery": "it came in the mail I think", "objected": False}
-check("item 102: an old free-text answer to a question that is now a choice is asked again, and decides nothing",
-      next(r for r in check_elements(claim_pb, old_profile, old_answer, {}) if r["id"] == "claim_delivery")["status"] == "missing"
-      and by_id(claim_pb, {**claim_facts, **old_answer})["whole_deposit_back"]["gates"][1]["ways"][1]["state"] == "tell")
+check("item 102: an old free-text answer to a question that is now a choice decides nothing",
+      by_id(claim_pb, {**claim_facts, **old_answer})["whole_deposit_back"]["gates"][1]["ways"][1]["state"] == "tell")
 
-make_scratch("t-smoke-choice", skills=["repair_not_made"], proposed={},
-             facts={k: v for k, v in {**story_f, "problem_description": "the AC blows warm air", "problem_started": "2026-09-10",
-                                      "landlord_response": "nothing", "eviction_action_filed": False}.items() if k != "problem_is_with"})
+make_scratch("t-smoke-steps", skills=["repair_not_made"], proposed={},
+             facts={**story_f, "problem_is_with": "hot water", "problem_description": "the AC blows warm air",
+                    "problem_started": "2026-09-10", "landlord_response": "nothing", "eviction_action_filed": False})
 try:
-    load_matter("t-smoke-choice", "m-001")
-    shown_sheet = io.StringIO()
-    with contextlib.redirect_stdout(shown_sheet):
-        run_sheet(scripted(["99", "Hot  Water"]))
-    refused_answer = propose_facts.invoke({"facts_json": json.dumps({"caused_by": {"value": "my cat", "how": "stated", "said": "x"}})})
+    load_matter("t-smoke-steps", "m-001")
     letter = build_letter("", "Please repair the air conditioning.", 7, "certified mail", "Jordan Ellis", [])
     options_now = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
-    check("items 90 to 92: the sheet lists a choice's answers by number, asks again for one not listed, and saves the words",
-          "Which of these is the problem with? Pick the closest one. (number or words)" in shown_sheet.getvalue()
-          and "    9. hot water" in shown_sheet.getvalue() and "Please type a number from the list, or its words" in shown_sheet.getvalue()
-          and record.matter["facts"]["problem_is_with"] == "hot water")
-    check("items 90 to 92: propose_facts refuses an answer the choice does not list",
-          "caused_by: value must be a number from the list, or its words" in refused_answer)
     check("items 90 to 92: a letter has no date line from the record, so none says the tenant's message was a notice",
           "Message date" not in letter and "notice date" not in letter.lower())
     check("items 90 to 92: the prompt gives each step's check with the tenant's words, the 7 days as passed if they count, and leaves out a way for another case",
@@ -304,8 +271,8 @@ try:
     check("item 64: a whole reply quoting the tenant's own sentence beside 83.56(1) gets no caution; words the tenant never wrote still do",
           len(reply_cautions) == 1 and "\"I will end my lease on...\" (83.56(1)) is not in 83.56" in reply_cautions[0])
 finally:
-    remove_scratch("t-smoke-choice")
-check("the choice scratch matter is removed", not (MATTERS / "t-smoke-choice").exists())
+    remove_scratch("t-smoke-steps")
+check("the steps scratch matter is removed", not (MATTERS / "t-smoke-steps").exists())
 
 # the letter (TODO 95): the program's lines around the tenant's account and request, each printed as written, never
 # inside a sentence of the program's; a date or an amount the record does not hold is named under the letter; a cite in
@@ -365,14 +332,6 @@ try:
           and "    step: the notice names the problem and says the tenant intends to end the lease because of it (83.56(1)): to do" in options_part
           and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", options_part)
           and "- Open or not: asked what they can do" in system_prompt())
-    lease_row = {"kind": "fact", "status": "missing", "suggested": None, "lease_says": None,
-                 "lease_clause": "maintenance_and_repairs"}             # a row whose question is about a lease clause
-    unread_note = row_notes(lease_row)
-    record.profile = read_profile
-    check("item 81: the sheet shows the lease clause a question is about, or says the tool has not read it",
-          unread_note == ["the tool has not read the part of your lease on maintenance and repairs: check your lease itself"]
-          and row_notes(lease_row)[0].startswith("your lease's clause on maintenance and repairs (Lease Article 7), as the tool read it: \"7.2.")
-          and "air -conditioning" in row_notes(lease_row)[0])
 finally:
     remove_scratch("t-smoke-options")
 
@@ -509,29 +468,45 @@ try:
 finally:
     remove_scratch("t-smoke-lease")
 
+# ---- Every skill's clock facts through the real code path (item 112), on a scratch matter: for each of the ten skills,
+# the model proposes its clock facts (a date for every date, yes for every applies_if, a county with a stored court holiday
+# calendar), the confirmation accepts each, every clock gets a date, nothing is left waiting, and a letter carries the
+# playbook's note to the tenant. A new skill is covered without a new check.
+ANSWERS = {"date": ("2026-10-31", "2026-10-31"), "bool": (True, "yes"), "county": ("Alachua", "Alachua")}    # value, tenant's words
 make_scratch("t-smoke-playbooks")
 try:
     load_matter("t-smoke-playbooks", "m-001")
-    for issue in sorted(playbooks):
+    record.start_session("existing")
+    record.append_transcript({"role": "tenant", "text": "It all happened on 2026-10-31 in Alachua, and the answer to each question is yes."})
+    for name in sorted(skills):
         record.matter.update(skills=[], facts={}, proposed={})
-        record.add_skill(issue)
-        shown_sheet = io.StringIO()
-        with contextlib.redirect_stdout(shown_sheet):
-            run_sheet(answer_by_type(shown_sheet))
+        record.add_skill(name)
+        typed = clock_facts(skills[name])
+        if typed:
+            propose_facts.invoke({"facts_json": json.dumps({fact: {"value": ANSWERS[kind][0], "how": "stated", "said": ANSWERS[kind][1]}
+                                                            for fact, kind in typed.items()})})
+        proposed_all = {r["id"]: r["type"] for r in pending_rows()}
+        with contextlib.redirect_stdout(io.StringIO()):
+            run_sheet(scripted([""] * len(typed)))
         listed = deadline_listing()
-        clocks = [c.id for i in record.matter["skills"] if i in playbooks for c in playbooks[i].spec.clocks]
-        dated = [d["clock"] for d in json.loads(listed)["deadlines"] if "deadline" in d] if not listed.startswith("Not yet") else []
-        letter = draft_letter.invoke({"issue": issue, "posture": "preserve", "account": "",
+        clocks = [c.id for c in skills[name].clocks]
+        dated = [d["clock"] for d in json.loads(listed)["deadlines"] if "deadline" in d]
+        letter = draft_letter.invoke({"issue": name, "posture": "preserve", "account": "",
                                       "request": "Please confirm receipt of this letter.", "respond_within_days": 10,
                                       "delivery_method": "certified mail", "signed_by": "Jordan Ellis"})
         options_now = system_prompt().split("\n\n" + PARTS["options"] + ":\n")[1].split("\n\n")[0]
-        check(f"{issue}: the sheet asks every fact, every clock gets a date, a letter carries its note, its options are in words",
-              not pending_rows() and sorted(set(dated)) == sorted(set(clocks))
-              and playbooks[issue].guidance["postures"]["notice_sufficiency"] in letter
-              and f"# {issue}\n" in prompt_part("loaded")
-              and all(f"- {o.label} (Fla. Stat. {o.cite}): " in options_now for o in playbooks[issue].spec.options)
+        check(f"{name}: its clock facts are proposed and confirmed, every clock gets a date, nothing waits, a letter carries its "
+              "note, its options are in words",
+              proposed_all == typed and not pending_rows() and not record.matter["proposed"]
+              and record.matter["facts"] == {fact: ANSWERS[kind][0] for fact, kind in typed.items()}
+              and sorted(set(dated)) == sorted(set(clocks)) and "waiting" not in json.loads(listed)
+              and playbooks[name].guidance["postures"]["notice_sufficiency"] in letter
+              and f"# {name}\n" in prompt_part("loaded")
+              and all(f"- {o.label} (Fla. Stat. {o.cite}): " in options_now for o in playbooks[name].spec.options)
               and not re.search(r"\b[a-z]+(?:_[a-z]+)+\b", options_now.replace("search_lease", "")))
+    record.end_session()
 finally:
+    record.session = None
     remove_scratch("t-smoke-playbooks")
 check("the playbook scratch matter is removed", not (MATTERS / "t-smoke-playbooks").exists())
 print()

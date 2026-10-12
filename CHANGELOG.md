@@ -5,6 +5,67 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- Facts: the model proposes, the tenant confirms, no fact lists (TODO item 112, done). `propose_facts` takes `{id: {value,
+  how, said}}`: an id that is a clock fact of a loaded skill (`record.clock_facts()`, the merged `{id: type}` from
+  `skills.clock_facts`) is parsed by its type (a date or a yes/no through `sheet.parse_answer`, a county as non-empty words);
+  any other id must be lowercase words joined by underscores, at most 40 characters (`FACT_ID`), and its value is kept as
+  plain text, non-empty and at most 300 characters (`MAX_TEXT`). `how` and `said` are checked as before, and a value that
+  reads the same as the confirmed one is refused (compared as the tenant reads it, so a yes/no and the words "no" match).
+  Decision: the id of a clock fact of a skill that is not loaded yet is refused ("load that skill first"), so a date is never
+  kept as words and later read as a date. The docstring is rewritten to the model (propose what the answer, the record, or a
+  letter turns on; use the id YOUR FACTS gives for a fact the deadlines count from; any other fact gets a short lowercase
+  name; the tenant confirms each after the reply), and the requirement that an id be an element of a loaded playbook is
+  gone. The confirmation (`sheet.pending_rows`) lists only the proposals, in the order proposed, and a proposal for an id already
+  confirmed with another value as a changed row ("was X, now Y?"); each row has its id, a label (the id with spaces), its
+  type (a clock fact's, else "text"), the suggestion, and the tenant's words. No missing-fact row and no question from a
+  playbook; Enter (an empty answer on the page) accepts the suggestion, a typed value corrects it, parsed by the type, and
+  skipping leaves the proposal pending, to be asked again at the next confirmation (`skipped_note`). The page's form chooses
+  its input by type: a date picker, yes/no, a county in a line, words in a text area. `record.confirm_fact` is still the only door
+  into `matter["facts"]`, called by `sheet.save_answer`; the transcript's `sheet` line has `label` where it had `question`.
+  Deadlines are read from the skills: `deterministic.compute_deadlines(skill, facts, today)` reads `skill.clocks` and
+  `skill.counting["convention"]` (the same arithmetic), `matter_deadlines(loaded, facts, today)` tags each row with the skill
+  names in `skills` (was `issues`), and `tools.deadline_listing()` lists every clock of every loaded skill that can be
+  computed (`tools.computed_deadlines`: a clock with no date yet is left out) plus `waiting`, `{skill name: [clock facts
+  not confirmed yet]}` (`tools.deadlines_waiting`, from the new `skills.unconfirmed_clock_facts`, which leaves out a fact only
+  a clock needs whose `applies_if` is confirmed no). There is no "ready issue" rule and no "Not yet." answer: a skill missing one fact
+  still gets its other deadlines, and a deadline is still computed only from confirmed facts, never from a proposal. The
+  `deadlines_computed` event carries `skill` (was `issue`), one per loaded skill with a dated clock. `render_deadlines`,
+  `deadline_receipt`, `prompt.deadline_status`, and the timeline follow; the timeline's confirmed date rows are every
+  confirmed fact whose value is a date written YYYY-MM-DD, a plain-text fact among them, by its id in words. YOUR FACTS
+  (`prompt.facts_status`) lists the confirmed facts and the proposals waiting, each "- <id>: <value>", and "What the
+  deadlines still need": each unconfirmed clock fact of each loaded skill with its type, what it does for each clock, and the
+  skill's name. Rule 4 now says to propose what the tenant tells the model, that the tenant confirms it after the reply, and to
+  ask in the chat only for what the answer turns on; the places that said the sheet asks or confirms (rule 1's "not
+  known yet until the sheet confirms it", its "(the sheet asks)") and the options layer's "the sheet asks: ..." now say the
+  tenant confirms after the reply, or "ask the tenant: ...". The letters needed no change: `not_in_record` already reads
+  every confirmed fact value, whatever its type, and is now checked on plain-text facts. New: `record.clock_facts`,
+  `skills.clock_roles`, `unconfirmed_clock_facts`, `type_conflicts` (a fact id typed two ways, by a trigger in one clock and
+  an `applies_if` in another, in one skill or two, fails `skills.check_all_skills`), `tools.computed_deadlines`,
+  `deadlines_waiting`, `FACT_ID`, `MAX_TEXT`, `CLOCK_FACT_IDS`, `prompt.facts_status`, `role_words`, `sheet.skipped_note`,
+  `timeline.is_iso_date`. Replaced and removed: `deterministic.check_elements`, `lease_value`, `lease_differs`, `fill_facts`,
+  `ask_json`, `NOT_JSON` (nothing called the last three after item 111), `record.element_status`, `prune_proposals` and
+  `_cannot_be_asked` (a proposal now stays until the tenant confirms or corrects it), `tools.open_facts_by_issue`,
+  `sheet.clause_note` and the lease lines of `row_notes` (`lease_says`, `lease_clause`), `corpus.fact_lease`, and the choice and
+  money branches of `sheet.parse_answer` and its `choices` argument (no row has either type now).
+  Kept for item 113, which deletes them with the playbooks: the playbooks, `corpus.Element`, the options layer
+  (`deterministic.check_options`, `listed`, `holds`, `asked_never`, `way_state`, ...; its clocks now come from the playbook's
+  skill, `skills[playbook.issue]`, which has the same clocks), `prompt.options_status` and `unknowns_status`, and
+  `record.active_playbooks`, which only those two call. Since the facts the options read are playbook element ids the
+  model is no longer told, the options layer shows most conditions as not known yet until item 113. Smoke: 1,041 checks, all OK
+  (1,035 before). Removed: the checks of element status rows, missing-fact rows, `compare_to`, `lease_value`, `fill_facts`'s JSON
+  retry, pruning, a choice on the sheet and the page, and the lease clause note on a row. Added, named: `propose_facts` taking a
+  clock fact typed and refusing a bad date and a bad yes/no, a bad name, a skill's fact before it is loaded, words the tenant never
+  typed, a text over 300 characters, and a value equal to the confirmed one; taking a free-form fact as plain text; the confirmation
+  showing only the proposals and a changed fact, accepting, correcting, and skipping (the skipped one stays pending and is
+  asked again); a deadline computed from the confirmed clock date and not from a proposed one, `waiting` listing the clock facts not
+  confirmed, and a fact only a ruled-out clock needs not waited for; YOUR FACTS before and after the confirmation; rule 4's text;
+  the timeline's dates; a county proposed, confirmed on the page and dated; a fact id typed two ways caught (in one skill, in two,
+  and by `check_all_skills`). The old check that drove the sheet through every playbook now drives each of the ten skills'
+  clock facts (a date for each date, yes for each `applies_if`, Alachua for the county) through `propose_facts` and the confirmation,
+  and requires every clock to get a date and nothing to be left waiting. `smoke_online.py` now expects a skill's clock fact
+  proposed under its id (not run). Not changed: `dev/live_run.py`, `dev/eval.py`, and the scenarios, whose sheet rules match
+  nothing now (item 115).
+
 - The model loads skills itself (TODO item 111, done). `load_skill(name)` (a new tool) loads one of `skills.skills` into the
   matter: a name that is not a skill is refused with the names there are, one already loaded says so, else
   `record.add_skill` (the only code that writes `matter["skills"]`) saves it and logs a `skill_loaded` event. The prompt

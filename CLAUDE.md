@@ -37,15 +37,14 @@ is a law student, not admitted.
 - Adding a tool: one `@tool` function in `tools.py` with a docstring written to the model, then add it to
   the `tools` list at the bottom of that file. `python schemas.py` shows what the model sees.
 - `matter.json` is current state only. `events.jsonl` is the only history, append-only.
-- `record.confirm_fact` is the only door into `matter["facts"]`, and only the intake sheet calls it. The model
-  can only propose (`propose_facts`). Skills work the same way: `record.add_skill`, called only by the `load_skill`
-  tool, is the only door into `matter["skills"]`, and logs a `skill_loaded` event. Nothing is deleted from the history.
-  `compute_deadlines` is the only date arithmetic.
-- The sheet asks only what the tenant saw, did, or holds (what happened, when, how something was sent, who did it, a
-  paper's own words), never whether something meets a term of the statute or the lease. The playbook applies the term:
-  answers that meet it on the statute's words (the author's reading, a choice's answers), a check with both texts side
-  by side, or an open question. A sheet answer never meets a gate, finishes a step, or starts a clock by a legal reading
-  (2026-10-08).
+- `record.confirm_fact` is the only door into `matter["facts"]`, and only the confirmation (`sheet.save_answer`, shown
+  after a turn in which the model proposed facts) calls it. The model can only propose (`propose_facts`). Skills work
+  the same way: `record.add_skill`, called only by the `load_skill` tool, is the only door into `matter["skills"]`, and
+  logs a `skill_loaded` event. Nothing is deleted from the history. `compute_deadlines` is the only date arithmetic.
+- The model asks in the chat only for plain facts, what the tenant saw, did, or holds (what happened, when, how something
+  was sent, who did it, a paper's own words), never whether something meets a term of the statute or the lease; each
+  skill's "What to find out" says so (2026-10-08). The confirmation asks only to confirm what the tenant said, never for a
+  fact the record lacks (2026-10-12).
 - Every quote (lease, statute, tenant's words) is checked by substring against its source before use.
 - Letters are a code template (`build_letter`). The timeline is printed by the chat loop, never by the model.
 
