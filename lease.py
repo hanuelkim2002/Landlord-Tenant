@@ -182,7 +182,7 @@ def check_quotes(profile, pages):
 
 
 # ---- Lease Clauses: the lease text split at its numbered headings ("5.4. Vehicles."), and the clauses that use
-# words from what the tenant wrote. For a story no playbook covers: the tenant sees the parts of their own lease
+# words from what the tenant wrote. For a story no skill covers: the tenant sees the parts of their own lease
 # on the subject, as printed. No model involved.
 
 HEADING = re.compile(r"(?<![\d.])(\d{1,2})\.(\d{1,2})\.\s+([A-Z][A-Za-z ,'’&/-]{2,50}?)\.")

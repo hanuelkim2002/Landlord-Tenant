@@ -19,7 +19,6 @@ WIKI = ROOT / "wiki"                            # the case wiki: case and topic 
 # Development runs only: WIKI_UNVERIFIED=1 lets the chat show case pages the author has not verified yet, each
 # marked as such, so the wiring can be tried before verification. Never set for a tenant.
 WIKI_UNVERIFIED = os.environ.get("WIKI_UNVERIFIED") == "1"
-PLAYBOOKS = ROOT / "playbooks"
 SKILLS = ROOT / "skills"                        # the model's instructions, one markdown file per situation (skills.py)
 
 UF_BASE_URL = "https://api.ai.it.ufl.edu"
@@ -31,7 +30,7 @@ AGENT_MODEL   = os.environ.get("AGENT_MODEL", "nemotron-3-super-120b-a12b")   # 
 EXTRACT_MODEL = "gemma-4-31b-it"               # LOCAL, text + image
 
 # The model clients exist only when the key is set. Without it they are None, so the offline checks
-# (smoke.py, the playbook quote check, schemas.py) still import and run. Anything that calls a model
+# (smoke.py, the skill checks, schemas.py) still import and run. Anything that calls a model
 # calls require_key() first.
 if uf_api_key:
     # 8000 since applied answers (rules version G, cases set beside the facts) run longer; at 4000 one stopped

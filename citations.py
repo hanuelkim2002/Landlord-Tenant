@@ -73,7 +73,7 @@ def check_cites(text, shown):
     return problems
 
 
-# ---- Quotes in a reply: each passage in quote marks, 20 characters or more (the length check_playbook uses
+# ---- Quotes in a reply: each passage in quote marks, 20 characters or more (the length check_skill uses
 # for quotations in prose), with the ch. 83 cite next to it if there is one. The model writes a cite either
 # after the quote on the same line ("..." (83.49(3)(a))) or in a heading just before it
 # (**Statute quote (Fla. Stat. 83.49(3)(b)):** "...").

@@ -14,8 +14,8 @@ from checks import check
 from skills import (REQUIRED, check_all_skills, check_skill, clock_facts, load_skill_file, type_conflicts,
                     unconfirmed_clock_facts)
 
-# Statute words copied from playbooks/repair_not_made.yaml (the clocks for 83.56(1) and 83.60(1)(b)) and
-# playbooks/notice_received_nonpayment.yaml (83.56(3)), which smoke.py's playbook checks hold word for word in statutes/.
+# Statute words copied from skills/repair_not_made.md (the clocks for 83.56(1) and 83.60(1)(b)) and
+# skills/notice_received_nonpayment.md (83.56(3)), which check_all_skills holds word for word in statutes/.
 TERMINATE = ("If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement "
              "within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the "
              "intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the "

@@ -1,27 +1,25 @@
 """Prompt: what the model reads. The rules (the fixed part, with rules 6 and 8 put in only when they can apply), and
 the system prompt built from the record on every model call: the lease, the menu of skills, the loaded skills'
 instructions, the statute sections they list, the case topics, the tenant's facts (confirmed, proposed, and what the
-deadlines still need), the options, what the tool does not know, and which deadlines have passed, each part under a name
-a tenant can read (PARTS). No model call here;
+deadlines still need), and which deadlines have passed, each part under a name a tenant can read (PARTS). No model
+call here;
 agent.build_agent hands system_prompt to the model. Split out of agent.py and tools.py on 2026-10-06.
 """
 import os
 import re
-from datetime import date
 from pathlib import Path
 
 import record
 from corpus import statute
-from deterministic import NOT_APPLY, check_options
-from lease import LABELS, lease_lines
-from record import active_playbooks, read_events
+from lease import lease_lines
+from record import read_events
 from sheet import shown
 from skills import clock_roles, ruled_out, skills, unconfirmed_clock_facts
 from tools import computed_deadlines, deadlines_waiting, offered_topics
 
 
 # ---- Rules: the fixed part of the system prompt. The lease profile, the skill menu, the loaded skills, the statute
-# sections, the case topics, the facts, the options, and the deadline status are appended to it on every model call
+# sections, the case topics, the facts, and the deadline status are appended to it on every model call
 # (system_prompt, below), each under a name a tenant can read (PARTS, below; TODO item 61).
 # Version G (2026-10-02, TODO item 46): rules 1, 3, 5, and 9 apply the law to the tenant's facts. Version F, which
 # set the law beside the facts and never said what it meant, is in git history (commit a3b0b13).
@@ -38,15 +36,15 @@ Each "Not:" is a kind of past mistake: never write anything like it; write the "
 Not: three statute quotes, then "This tool does not decide that." (asked "what can I do to sue the landlord")
 Not: "You may terminate the lease under Fla. Stat. 83.56(1)." (a conclusion with no rule and no facts)
 Instead: answer a question about the law in this order, each part short:
-- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as YOUR OPTIONS gives it (open, closed, not known yet, not settled, outside the tool, or not open yet), and the condition it turns on. When the answer turns on a point in WHAT THE TOOL DOES NOT KNOW, name it as that part gives it: one the tenant can tell the tool (ask them in the chat when your answer turns on it), one the tenant can check (say what and where), one not settled (with its readings), one outside the tool, or one not yet; and what the option would be if it holds and if it does not. Never a step of an option before this, and never such a point stated as a fact.
+- Open or not: asked what they can do, or how to do something, first whether that option is open on their facts, as the loaded skill's "What the tenant can do" gives it (open, closed, not known yet, not settled, outside the tool, or not open yet), and the condition it turns on. When the answer turns on a point the facts do not settle, name it as that section gives it: one the tenant can tell the tool (ask them in the chat when your answer turns on it), one the tenant can check (say what and where), one not settled (with its readings), one outside the tool, or one not yet; and what the option would be if it holds and if it does not. Never a step of an option before this, and never such a point stated as a fact.
 - The rule: in one plain sentence, with its cite.
 - Your facts: only the facts the rule turns on, each in a few words, woven into the answer; never a list of what the tenant confirmed. Something the tenant said in this chat but has not confirmed is not known yet until they confirm it after your reply (rule 4).
 - Applied: for each condition in the rule, whether those facts meet it, fail it, or are not known yet.
-- So: what follows on those facts, in plain words. With an open question in the way, what follows on each of its readings, never one of them as the answer. Asked what they can do: each option in YOUR OPTIONS with its status, then what it requires first; the steps of an option that is not open only as what it would take if its open condition went the tenant's way (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in THE STATUTE, such as 83.55 on damages or 83.48 on attorney fees.
+- So: what follows on those facts, in plain words. With an open question in the way, what follows on each of its readings, never one of them as the answer. Asked what they can do: each option in the loaded skill's "What the tenant can do" with its status, then what it requires first; the steps of an option that is not open only as what it would take if its open condition went the tenant's way (a written notice, a waiting period, rent paid into the court registry). search_statute and get_statute_section find a section that is not in THE STATUTE, such as 83.55 on damages or 83.48 on attorney fees.
 - Cases: when a case topic is on the point, as rule 8 says.
 - Not settled: an open question in the way, with its readings (rule 5).
-Not: "To terminate the lease, deliver a new written notice that states your intention, wait 7 days, then terminate." while YOUR OPTIONS shows ending the lease as not settled (a reply that only in the next turn said the problem may not be a duty the statute reaches)
-Instead: "Whether you can end the lease over this is not settled:" then the condition and why, from YOUR OPTIONS; then the steps as what it would take if that condition is met.
+Not: "To terminate the lease, deliver a new written notice that states your intention, wait 7 days, then terminate." while the loaded skill's "What the tenant can do" shows ending the lease as not settled (a reply that only in the next turn said the problem may not be a duty the statute reaches)
+Instead: "Whether you can end the lease over this is not settled:" then the condition and why, from the loaded skill; then the steps as what it would take if that condition is met.
 Not: "Your lease does not say the landlord repairs the AC, so you cannot end the lease." while the tool has not read that part of the lease (a repair)
 Not: "Because you moved out early without the 7-day notice, the landlord did not have to send a claim notice." while the lease's own term on notice before moving out is the tenant's to check (a deposit)
 Not: "Your notice adds a late fee, so it is defective and the case would be dismissed." while the notice's form is the tenant's to check and how far it may differ is not settled (a 3-day notice)
@@ -181,16 +179,6 @@ PARTS = {
     "cases": "COURT CASES THIS TOOL HAS (topics for get_cases; number of cases on each)",
     "facts": ("YOUR FACTS (the facts the tenant confirmed; the facts they told you that wait for their confirmation after "
               "your reply; and what the deadlines still need, each with the id to propose it under)"),
-    "options": ("YOUR OPTIONS (checked by the program from the confirmed facts, the program's deadlines, and the lease "
-                "clauses the tool has read: whether each option is open, closed, not known yet, not settled, outside the "
-                "tool, or not open yet; each condition that decides it, with what the tool knows of it and, while it is "
-                "not decided, what the option would be were it met; and how far its steps have got)"),
-    # TODO item 83: each point an option turns on that the tool has not decided, gathered from YOUR OPTIONS once, with
-    # what it would change; the model had stated such gaps as facts ("the lease does not mention any late fee").
-    "unknown": ("WHAT THE TOOL DOES NOT KNOW (worked out by the program: each point an option turns on that the tool has "
-                "not decided from the confirmed facts, a lease clause it read, or the statute; whether the tenant can "
-                "tell the tool, can check it, it is not settled, it is outside the tool, or it is not yet; and what "
-                "each would change)"),
     # Was THE PROGRAM'S DEADLINES (item 61, 2026-10-03), until the eval the same day: read as the deadlines
     # themselves, it was answered from ("You have until the upcoming deadline shown in THE PROGRAM'S DEADLINES")
     # and get_deadlines went uncalled on 5 of 39 questions about when.
@@ -202,9 +190,8 @@ PARTS = {
 def system_prompt(messages=()):
     """The rules (rules_for the chat so far, `messages`), then each part under its name in PARTS: the lease profile,
     the menu of every skill (the loaded ones marked), each loaded skill's instructions under its name, the statute
-    sections the loaded skills list, the case topics, the facts (facts_status), the options (options_status), what the tool
-    does not know (unknowns_status), and the deadline status (deadline_status: passed or upcoming, no dates), as the
-    record stands now."""
+    sections the loaded skills list, the case topics, the facts (facts_status), and the deadline status (deadline_status:
+    passed or upcoming, no dates), as the record stands now."""
     loaded = record.active_skills()
     menu = "\n".join(f"- {name}: {skill.description}" + (" (loaded)" if name in record.matter["skills"] else "")
                      for name, skill in skills.items())
@@ -218,8 +205,6 @@ def system_prompt(messages=()):
             + f"\n\n{PARTS['statute']}:\n" + hot
             + f"\n\n{PARTS['cases']}:\n" + case_topics_text()
             + f"\n\n{PARTS['facts']}:\n" + facts_status()
-            + f"\n\n{PARTS['options']}:\n" + options_status()
-            + f"\n\n{PARTS['unknown']}:\n" + unknowns_status()
             + f"\n\n{PARTS['deadlines']}:\n" + deadline_status())
 
 
@@ -229,8 +214,8 @@ def case_topics_text():
     return "\n".join(f"- {t} ({n})" for t, n in topics.items()) or "none for these issues"
 
 
-# ---- The prompt's parts that the program works out: which deadlines have passed, the options, and what the tool does
-# not know. Each logs nothing, since the prompt is rebuilt on every model call.
+# ---- The prompt's parts that the program works out: the facts and which deadlines have passed. Each logs nothing, since
+# the prompt is rebuilt on every model call.
 
 def role_words(clock, role):
     """What a fact does for a clock, in words: counted from (trigger), shown beside the date (shown_with), decides whether
@@ -281,91 +266,3 @@ def deadline_status():
     lines += [f"- waiting [{words(name)}]: no deadline until these are confirmed: {', '.join(words(i) for i in ids)}"
               for name, ids in deadlines_waiting().items()]
     return "\n".join(lines) or "none: no loaded skill has a deadline this tool computes"
-
-
-def state_words(x):
-    """A gate's or a way's state in words: its status, then what the tool knows of it when that says more (the tenant
-    can tell the tool, the tenant can check), then why."""
-    words = x["status"]
-    if x["knowledge"] not in ("known", x["status"]):
-        words += f", {x['knowledge']}"
-    return words + (f": {x['why']}" if "why" in x else "")
-
-
-def options_status():
-    """YOUR OPTIONS, for the system prompt (PARTS): for each active issue's options
-    (deterministic.check_options, from the confirmed facts and the lease profile), the option, its cite, and its
-    status; then each condition that decides it with its state in words (state_words): met, not met, not met yet,
-    or not known yet because the tenant can tell the tool or can check, not settled, or outside the tool, and why;
-    for a condition not met that has several ways to be met, each way with its own state; for one not yet decided,
-    what the option would be were it met, unless another condition closes it anyway (were it not, the option is
-    closed; TODO item 81); each step and whether it
-    is done, waiting, or to do; and the open questions that bear on it even so, by their first sentence. In words,
-    never an id (TODO item 53). Logs nothing: the prompt is rebuilt on every call."""
-    facts = record.matter["facts"]
-    lines = []
-    for pb in active_playbooks():
-        first_sentence = {q["id"]: " ".join(q["text"].split()).split(". ")[0] + "."
-                          for q in pb.spec.open_questions if isinstance(q, dict)}
-        for o in check_options(pb, facts, date.today(), record.profile):
-            lines.append(f"- {o['label']} (Fla. Stat. {o['cite']}): {o['status'].upper()}")
-            for g in o["gates"]:
-                ways = [w for w in g["ways"] if w.get("why") != NOT_APPLY] or g["ways"]    # a way for another case: out
-                several = len(ways) > 1 and g["state"] != "met"
-                lines.append(f"    condition: {g['says']} ({g['cite']}): "
-                             + (f"{g['status']}, met through any of these:" if several else state_words(g)))
-                if several:
-                    lines += [f"      - {w['says']} ({w['cite']}): {state_words(w)}" for w in ways]
-                if g["state"] not in ("met", "not met") and g["if_met"] != "closed":   # else another closes it
-                    lines.append(f"      if this condition is met, the option is {g['if_met']}; if it is not, the "
-                                 "option is closed")
-            for s in o["steps"]:
-                lines.append(f"    step: {s['says']} ({s['cite']}): {s['status']}" + (f": {s['why']}" if "why" in s else ""))
-            for q in o["also_open"]:
-                lines.append(f"    also, from what the statute does not settle: {first_sentence.get(q, '')}")
-    return "\n".join(lines) or "none: no active issue lists its options yet"
-
-
-# What the answer depends on that the tool does not know (TODO item 83, the author's decision of 2026-10-04): every
-# point an option turns on that is not settled from the confirmed facts, a lease clause the tool read, or the statute,
-# once, with what the tool knows of it and what it would change. In the eval of 2026-10-04 the model stated such gaps
-# as facts ("the lease does not mention any late fee") or left them out of the answer.
-UNDECIDED = ("tell", "check", "not settled", "outside", "not met yet")
-KNOWN_AS = {"tell": "the tenant can tell the tool", "check": "the tenant can check", "not settled": "not settled",
-            "outside": "outside the tool", "not met yet": "not yet"}
-
-
-def unknowns_status():
-    """WHAT THE TOOL DOES NOT KNOW, for the system prompt (PARTS): each point an option of an active issue turns
-    on that the tool has not decided (deterministic.check_options: a way of a gate not decided, UNDECIDED) and that
-    could change an option (one another condition closes is left out), once, in words: what it is, with its cite and issue; what the tool knows of it (the tenant can tell the tool, the tenant can
-    check, not settled, outside the tool, not yet) and why; then, for each option it decides, what the option would be
-    if it holds, and what is left if it does not (the condition's other undecided ways, or the option closed). Then
-    the lease: the parts the tool has not read, and that search_lease searches the rest. Logs nothing."""
-    points = {}
-    for pb in active_playbooks():
-        for o in check_options(pb, record.matter["facts"], date.today(), record.profile):
-            for g in o["gates"]:
-                if g["state"] not in UNDECIDED or g["if_met"] == "closed":   # decided, or another condition closes it
-                    continue
-                undecided = [w for w in g["ways"] if w["state"] in UNDECIDED]
-                for w in undecided:
-                    point = points.setdefault((w["says"], w["cite"], w.get("why", "")), {"issues": [], "effects": [], **w})
-                    if pb.issue.replace("_", " ") not in point["issues"]:
-                        point["issues"].append(pb.issue.replace("_", " "))
-                    others = [x["says"] for x in undecided if x is not w]
-                    point["effects"].append(f"{o['label']}: {g['if_met']} if it holds; if not, "
-                                            + (f"the condition turns on whether {' or whether '.join(others)}" if others
-                                               else "closed"))
-    lines = []
-    for (says, cite, why), point in points.items():
-        lines.append(f"- whether {says} ({cite}) [{', '.join(point['issues'])}]: {KNOWN_AS[point['state']]}"
-                     + (f": {why}" if why else ""))
-        lines += [f"    {effect}" for effect in point["effects"]]
-    if record.profile is not None:
-        unread = [LABELS[name] for name in type(record.profile).model_fields if getattr(record.profile, name) is None]
-        if unread:
-            lines.append(f"- the parts of the lease on {', '.join(unread)}: not read from this lease")
-    lines.append("- anything else in the lease: YOUR LEASE holds only the clauses the tool reads; search_lease searches the "
-                 "whole text, and only a point no wording finds there is known to be absent")
-    return "\n".join(lines)

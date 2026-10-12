@@ -11,15 +11,15 @@ shared with TODO.md and SLIPS.md and never reused.
     held, but an open point ends in two readings and "The tool picks neither", read as no answer. Should a short plain
     summary of the options and the next step for each, still not a choice among them, lead every answer? (TODO 98 waits
     on this in part.)
-93. Situations no playbook covers, from the same simulation: a disputed charge on the ledger (a roommate's damage), a
+93. Situations no skill covers, from the same simulation: a disputed charge on the ledger (a roommate's damage), a
     roommate who caused damage, closed amenities and an amenity fee, a service the rent includes (Wi-Fi), the
     guarantor's exposure, and rent back for the time without a repair (83.56(1)(b), 83.60(1)(b)'s reduction, 83.55).
     Also a no to the only suggested issue ends the visit with no warning, and two students asked where to find free
-    help. A new playbook changes README's list.
+    help. A new skill changes README's list.
 1. Which clocks `compute_deadlines` should support next: other circuits' court calendars (and each new year's
     memorandum; 2028's for any count reaching it), periods the lease sets (83.575(1)-(2), 83.595(4)), hours (83.53(2)),
     months (83.56(2)'s 12 months), and 83.60(2), which waits on the open questions below.
-26. Whether to build `search_cases(phrase)` for a situation no playbook covers: the model would choose what to search
+26. Whether to build `search_cases(phrase)` for a situation no skill covers: the model would choose what to search
     for. Since 2026-10-02 applying the law is the plan, so what remains is whether its search finds the right cases.
 
 ## Sign-offs
@@ -34,13 +34,13 @@ shared with TODO.md and SLIPS.md and never reused.
     writes the date, the addresses, the reply-by date, the quotes, the delivery line, and the signer; the model writes
     only the tenant's account and request, and every date, amount, and cite in them is checked." (README took close
     to this wording on 2026-10-12, with the architecture change; change it if you prefer another.)
-84. Since 2026-10-12 (TODO 110) each playbook's content is also a skill in `skills/`, and the skills replace the
-    playbooks once TODO 113 is done: sign off each skill (read every quote against `statutes/`, then set
-    `provenance.verified_by` and `verified_on`), which carries the options' conditions below in prose. Was: the options'
-    gates in all ten playbooks against `statutes/`, then sign off as for item 2. The CHANGELOG entries of
+84. The skills in `skills/` replaced the playbooks on 2026-10-12 (TODO 110 to 113): sign off each skill (read every quote
+    against `statutes/`, then set `provenance.verified_by` and `verified_on`), which carries the options' conditions below in
+    prose, in its "What the tenant can do". Was: the options' gates in all ten playbooks against `statutes/`, then sign off as
+    for item 2. The CHANGELOG entries of
     2026-10-04 (items 72, 81, 84) and 2026-10-08 (the sheet asks plain facts, parts 1 and 2) say what each gate holds.
     Points to look at in particular:
-    - repair_not_made: a problem 83.51(1)(b) does not name leaves ending the lease not known yet rather than not settled;
+    - skills/repair_not_made.md: a problem 83.51(1)(b) does not name leaves ending the lease not known yet rather than not settled;
       the duty not changed in writing (single-family home or duplex only); rent paid with knowledge as a gate on ending
       the lease only, and its open question; which `problem_is_with` answers meet 83.51(1)(b), with running water and hot
       water not settled; `caused_by` (the tenant, family, or a guest close both options, though 83.51(4) says
@@ -48,32 +48,33 @@ shared with TODO.md and SLIPS.md and never reused.
       83.56(4)'s ways (a portal request or a text not one, e-mail only under an 83.505 addendum, and whether a lease
       clause allowing e-mail notices is enough given 83.505(6)); the lease's repair promise as the tenant's check (item
       86, decided on the session's recommendation); rule 1's two changed "Instead:" examples.
-    - deposit_not_returned: a claim notice not by certified mail not settled; the notice before moving out read
-      against 83.49(5)'s certified mail or personal delivery. deposit_claim_received: an objection done only as a letter
+    - skills/deposit_not_returned.md: a claim notice not by certified mail not settled; the notice before moving out read
+      against 83.49(5)'s certified mail or personal delivery. skills/deposit_claim_received.md: an objection done only as a letter
       to the notice's address.
-    - lease_ending: the tenant's notice read against 83.56(4); the 83.575(2) gate met on nothing in writing from the
-      landlord about the end of the lease. rent_increased: `complaint_kind` against 83.64(1)(a) to (c); the retaliation
-      defense's gates, good cause included. wants_to_leave_early: a fee written only in the lease closes the fee route;
+    - skills/lease_ending.md: the tenant's notice read against 83.56(4); the 83.575(2) gate met on nothing in writing from the
+      landlord about the end of the lease. skills/rent_increased.md: `complaint_kind` against 83.64(1)(a) to (c); the retaliation
+      defense's gates, good cause included. skills/wants_to_leave_early.md: a fee written only in the lease closes the fee route;
       the fee's "no more than 2 months' rent", left to the tenant to check though both amounts are on the record.
-    - landlord_entered_unannounced: 83.55 in its sections, and the seven gates read from 83.53(2). neighbor_disturbance:
-      whether a neighbor's disturbance can end the lease only through a lease promise. notice_received_violation: the
+    - skills/landlord_entered_unannounced.md: 83.55 in its sections, and the seven gates read from 83.53(2). skills/neighbor_disturbance.md:
+      whether a neighbor's disturbance can end the lease only through a lease promise. skills/notice_received_violation.md: the
       broader earlier-warning question.
-    - Every playbook: the questions' and choices' wording, and 83.505 added to five playbooks' sections.
+    - Every skill: the wording of what it has the model ask and the choices it offers, and 83.505 in five skills' sections.
     - Left as they were, for you to say whether any should move: the questions where the tenant reports what a paper
       literally says (`notice_offers_cure`, `notice_terminates_now`, `violation_corrected`, `lease_requires_end_notice`,
       `tenant_consented`, `access_or_utilities_cut`), and whether the defective-notice defense gets a way for a 3-day
       notice not delivered as 83.56(4) allows.
-2. Hand check of the seven playbooks written 2026-09-27 (repair_not_made, notice_received_nonpayment,
+2. Hand check of the seven skills written from the playbooks of 2026-09-27 (repair_not_made, notice_received_nonpayment,
    notice_received_violation, landlord_entered_unannounced, rent_increased, wants_to_leave_early, lease_ending): read
-   each quote against `statutes/`, then set `provenance.verified_by` and `verified_on`. Also replace the deposit
-   playbooks' 83.42 exclusion ("Not yet read") with the 83.42(1) quote the newer playbooks carry.
-34. `notice_received_violation` does not list 83.64 (retaliatory conduct) in `sections`, though a violation notice after
-    a complaint is the setting of Salmonte v. Eilertson; adding it is a playbook change for you to check.
-63. Condition slips the blind scorers found (2026-10-02) that no failure mode names yet; which belong in the playbooks,
+   each quote against `statutes/`, then set `provenance.verified_by` and `verified_on` in `skills/<name>.md`. Also replace
+   the deposit skills' 83.42 note ("has not been checked") with the 83.42(1) quote the newer skills carry.
+34. `skills/notice_received_violation.md` does not list 83.64 (retaliatory conduct) in `sections`, though a violation notice
+    after a complaint is the setting of Salmonte v. Eilertson; adding it is a skill change for you to check.
+63. Condition slips the blind scorers found (2026-10-02) that no failure mode names yet; which belong in the skills (Mistakes to avoid),
     each quoted from `statutes/`: 83.49(5) left out where no 7-day vacate notice shows; 83.51(1)(b)'s duties applied
     without its opening condition on codes; a common-area duty (83.51(2)(a)) applied inside the unit; 83.56(5)(a)'s
-    waiver applied to the 83.60(1)(b) defense; a rent increase read as a decrease. Also whether wants_to_leave_early's
-    `fee_notice_period` needs readings (the model took the lease's 7-day vacate notice as the fee's notice period).
+    waiver applied to the 83.60(1)(b) defense; a rent increase read as a decrease. Also whether `skills/wants_to_leave_early.md`
+    needs readings of the fee's notice period under What the statute does not settle (the model took the lease's 7-day vacate
+    notice as the fee's notice period).
 24. The case wiki: read each page against its opinion and verify it (`python wiki.py verify`); untag a page that
     should not load for a tenant (a commercial lease, e.g. Multach v. Adams); check each case's status in Westlaw (the
     print flags 27, one red-striped, Charlemagne v. Francis); and the 65 questions the ingest left in `wiki/log.md`.
@@ -83,7 +84,7 @@ shared with TODO.md and SLIPS.md and never reused.
 
 ## Research
 
-3. The counting convention, a stated assumption in each playbook: check the time-computation rule in the corpus before
+3. The counting convention, a stated assumption in each skill's header: check the time-computation rule in the corpus before
    relying on it. Not to be settled from memory.
 27. No appellate case on the 83.42(1) exclusion for residence incidental to educational services turned up in the
     candidate list's sources; it decides whether ch. 83 applies to on-campus housing at all.

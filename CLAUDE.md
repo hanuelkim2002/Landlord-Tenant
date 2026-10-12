@@ -4,7 +4,8 @@ A Florida landlord-tenant dispute tool (Fla. Stat. ch. 83, pt. II) for a tenant 
 applies the stored statute and cases to the tenant's confirmed facts (decided 2026-10-02; in development, on
 test matters only, see README), says first whether an option is open before its steps, cites the law and
 prints the cited words by code instead of reciting them, knows what it knows and says how each unknown changes
-what the tenant can do (all 2026-10-04), never sends anything, and never computes a date in the model. The author
+what the tenant can do (all 2026-10-04; since 2026-10-12 the model does this by applying the loaded skill, where code
+decided it from the playbooks before), never sends anything, and never computes a date in the model. The author
 is a law student, not admitted.
 
 ## Read these first
@@ -20,7 +21,7 @@ is a law student, not admitted.
 ## Duties on every change
 
 1. Make the one change asked for. Nothing else.
-2. Run the offline checks (see DOCUMENTATION.md, Running and testing). Playbook checks and the
+2. Run the offline checks (see DOCUMENTATION.md, Running and testing). Skill checks and the
    named smoke checks must all be OK. A change to code that writes to a matter gets a check in `smoke_parts/` (run by `smoke.py`).
 3. Add a CHANGELOG.md entry saying what was added and what it replaced.
 4. Update DOCUMENTATION.md if a function, tool, file, event kind, or rule changed.
@@ -61,9 +62,7 @@ is a law student, not admitted.
   `python wiki.py index` and `python wiki.py check`; no problem may remain. Never fill in a page's
   `verified_by`; only the author signs off, with `python wiki.py verify`.
 - `statutes/` is a read-only corpus. Never edit it. Never write statutory text, a section number, or a
-  deadline into a playbook, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
-- After any edit to a playbook YAML, run the playbook checks (`check_all_playbooks`, also run by `smoke.py`)
-  and every line must be OK. They check quotes in the prose too, not only in `spec`.
+  deadline into a skill, a rule, or a reply from memory. Cite into `statutes/` or say it needs checking.
 - After any edit to a skill in `skills/`, run the skill checks (`skills.check_all_skills`, also run by `smoke.py`)
   and every line must be OK. They check quotes in the prose too, not only in the header's clocks.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
@@ -76,7 +75,7 @@ is a law student, not admitted.
 - Build collaboratively, one change at a time. Do not run ahead autonomously.
 - Fix the cause, not the instance (the author's rule, 2026-10-06). A TODO item usually comes from one example (an AC,
   a portal request, one story). Before changing anything, name the underlying issue the example shows, find its other
-  instances across the playbooks, the prompt, and the code, and propose a fix for the issue as a whole; a fix fitted
+  instances across the skills, the prompt, and the code, and propose a fix for the issue as a whole; a fix fitted
   to the example alone is not done. That fix is the one change. Its CHANGELOG entry names the underlying issue and the
   instances it covers.
 - Push back on architecture choices you think are wrong.

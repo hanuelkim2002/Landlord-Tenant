@@ -5,6 +5,53 @@ session can see why the code is the way it is.
 
 ## 2026-10-12
 
+- The playbooks go, with the options layer and every line only they used (TODO item 113, done). Removed: the ten
+  `playbooks/*.yaml` files and the folder (2,935 lines of YAML before, 0 after; they stay in git history, last at commit
+  680a48a); `corpus.py`'s playbook code (`Element`, `Condition`, `RelatedIssue`, `Way`, `Gate`, `Step`, `Option`, `Spec`,
+  `Playbook`, `load_playbook`, `answers_problem`, `way_problem`, `option_ways`, `prose_strings`, `playbook_ids`,
+  `check_playbook`, `check_all_playbooks`, the `playbooks` dict and the validation of its related issues; 400 lines before, 44
+  after, keeping `statute`, `Clock`, and `report`, with the module docstring rewritten); `deterministic.py`'s options layer
+  (`check_options`, `way_state`, `option_status`, `step_status`, `lease_note`, `matches`, `asked_never`, `holds`, `listed`,
+  `STATES`, `STATUS`, `KNOWLEDGE`, `STEP_STATUS`, `NOT_APPLY`, and the imports of `lease` and `skills` that only they used;
+  278 lines before, 92 after, keeping `court_days`, `compute_deadlines`, and `matter_deadlines`); `prompt.py`'s
+  `options_status`, `unknowns_status`, `state_words`, `UNDECIDED`, `KNOWN_AS`, and the YOUR OPTIONS and WHAT THE TOOL DOES NOT
+  KNOW parts (`PARTS["options"]`, `PARTS["unknown"]`, and their two lines in `system_prompt`; 371 lines before, 268 after);
+  `record.active_playbooks` (200 lines before, 192 after) and `config.PLAYBOOKS`; and `tools.draft_letter`'s "NOTE TO TENANT"
+  line, read from the playbook's `guidance.postures.notice_sufficiency` (each skill's Letters section now tells the model what
+  to say when a letter is shown; `draft_letter` still refuses an `issue` that is not a loaded skill, now read from
+  `skills.skills`; 492 lines before, 491 after). Python app modules (`git ls-files '*.py'` without docs/, dev/, `smoke*`, and
+  `checks.py`): 4,263 lines in 18 files before, 3,608 after (655 fewer). The smoke code (`smoke.py`, `smoke_online.py`,
+  `smoke_parts/`, `checks.py`): 2,180 lines before, 1,919 after. YAML: 2,935 lines before, 0 after.
+  What replaced it: nothing in code. Whether an option is open, what the tool does not know about it, and its steps are the
+  loaded skill's "What the tenant can do" (with "What to find out" and "What the statute does not settle"), which the model
+  applies; no code decides an option's status now. The skill checks (`skills.check_skill`) still hold every quote in a skill to
+  the stored statute. The rules got the minimal edit that drops the two part names: rule 1's "Open or not" and "So" lines and
+  its "Not:" and "Instead:" lines on ending the lease now point to the loaded skill's "What the tenant can do" (RULES 2,517
+  words before, 2,534 after); item 114 rewrites the rules. Other references: `dev/eval.py`'s `check_expect` takes the skill
+  names from `skills.skills` (its `issues` expectation still reads `matter.json`'s `issues`, which a new matter lacks; item 115
+  rewrites the driver and the scenarios), and `dev/live_run.py` needed no change. `smoke_parts/playbooks_options_lease.py` is
+  now `smoke_parts/lease_and_letters.py` (512 lines before, 256 after), with `smoke.py`'s import updated and the parts' order
+  kept.
+  Smoke: 569 OK lines, all OK (1,041 before; 438 of those were the lines of `check_all_playbooks`, and the rest 603 named
+  checks). Removed, 39 named checks: "every playbook check is OK", the refusals when a playbook loads (a `shown_with` that is not
+  a date, a way decided by two things, an answer a choice does not list), and every options check (items 72, 81, 83, 84, 86,
+  and 90 to 92, and 102: the gates, ways, and steps of the repair, deposit, claim, nonpayment, violation, entry, neighbor,
+  ending, rent, and leaving-early playbooks, the options and unknowns prompt parts, and rule 1's lines on them). Kept: the
+  letter's lines and refusals (item 95; its check no longer expects a note under the letter), the lease's clauses and search,
+  and each of the ten skills' clock facts through `propose_facts`, the confirmation, and `get_deadlines` (its letter check now
+  requires a letter drafted with nothing added under it). Rewritten on the skills' clock facts, with new names: the 7-day
+  deadline a repair message starts, printed with what it counts only if, and a message that mentions neither ending the lease
+  nor rent starting none (items 90 to 92), and the prompt's deadline part with the same words. Item 64's check (a reply
+  quoting the tenant's own words beside 83.56(1) gets no caution) now gives those words in a thread message, since the options
+  part had been the only place they reached the prompt. Added, 5 named checks: no Python file outside docs/ reads `playbooks/`
+  or `corpus.playbooks` and the folder is gone (the words are put together in `smoke_parts/pieces.py` so the file does not hold
+  them; `dev/*.py` is checked too), and the system prompt with every skill loaded and a letter in play has no YOUR OPTIONS and no
+  WHAT THE TOOL DOES NOT KNOW, in a part, a rule, or a tool's description, and rule 1 names the loaded skill's "What the tenant
+  can do"; and the three rewritten deadline checks above. Decisions: `Clock` stays in `corpus.py`
+  because `skills.py` imports it; the shown_with-is-a-date refusal has no replacement because a skill types `shown_with` by its
+  role as a date; TODO.md and AUTHOR.md items that named a playbook file or part and still apply now name the skill, and the
+  rest are left for the author to decide.
+
 - Facts: the model proposes, the tenant confirms, no fact lists (TODO item 112, done). `propose_facts` takes `{id: {value,
   how, said}}`: an id that is a clock fact of a loaded skill (`record.clock_facts()`, the merged `{id: type}` from
   `skills.clock_facts`) is parsed by its type (a date or a yes/no through `sheet.parse_answer`, a county as non-empty words);

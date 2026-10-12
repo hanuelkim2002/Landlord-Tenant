@@ -346,7 +346,7 @@ def cases_printed(text, root=None):
 
 
 def check_wiki(root=WIKI):
-    """Print every problem and warning, then a count. Like the playbook checks: no problem may remain."""
+    """Print every problem and warning, then a count. Like the skill checks: no problem may remain."""
     problems, warnings = lint(root)
     for line in problems:
         print("FAIL " + line)

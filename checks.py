@@ -10,7 +10,7 @@ failures = []
 
 
 def check(name, condition):
-    """Print one named check. Every line must be OK, like the playbook quote checks."""
+    """Print one named check. Every line must be OK, like the skill checks."""
     print(("OK   " if condition else "FAIL ") + name)
     if not condition:
         failures.append(name)

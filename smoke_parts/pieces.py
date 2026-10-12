@@ -1,6 +1,6 @@
-"""Smoke, part: Each piece checked on its own, on the test matter in memory (nothing written): the playbook checks,
-deadlines with a fixed today, court business days, the case corpus and the case wiki, the letter template, cites and
-quotes in a reply, and both timelines.
+"""Smoke, part: Each piece checked on its own, on the test matter in memory (nothing written): no Python file reads a
+playbook (TODO item 113), deadlines with a fixed today, court business days, the case corpus and the case wiki, the
+letter template, cites and quotes in a reply, and both timelines.
 Run by smoke.py, in order; each check prints a line, OK or FAIL."""
 import json
 import re
@@ -13,8 +13,8 @@ import record
 from calendars import court_calendars
 from checks import check
 from citations import SUBSECTION_START, check_cites, check_quoted, cites_without_quote, quoted_passages, subsections
-from config import CASES, WIKI
-from corpus import check_all_playbooks, load_playbook, playbooks, statute
+from config import CASES, ROOT, WIKI
+from corpus import statute
 from deterministic import compute_deadlines
 from dev.build_cases import court_text
 from wiki import lint, read_pages, verified, verify
@@ -25,7 +25,6 @@ from tools import build_letter, computed_deadlines, deadlines_waiting
 from smoke_parts.common import FORFEIT
 
 load_matter("t-test", "test-001")         # the test matter and its lease profile, from disk
-pb = playbooks["deposit_not_returned"]
 
 # listing and loading: every saved matter (the test matter was saved before skills: its issues come out as skills),
 # then what load_matter put in record
@@ -33,8 +32,13 @@ print(list_matters())
 print(record.matter["tenant"], record.matter["id"], record.matter["skills"], type(record.profile).__name__)
 print()
 
-# playbook checks: quotes (spec and prose) against the statute text, shape, and shared facts
-check("every playbook check is OK", check_all_playbooks() == 0)
+# the playbooks are gone (TODO item 113): the skills carry their content, and no Python file of the project reads a playbook
+# or the folder. The name is put together here so that this file does not hold it.
+NAME = "play" + "books"
+readers = [path.relative_to(ROOT).as_posix() for path in [*ROOT.glob("*.py"), *ROOT.glob("smoke_parts/*.py"), *ROOT.glob("dev/*.py")]
+           if re.search(f"{NAME}/|corpus\\.{NAME}|from corpus import[^\\n]*{NAME}", path.read_text())]
+check(f"item 113: no Python file outside docs/ reads {NAME}/ or corpus.{NAME}, and the folder is gone",
+      not readers and not (ROOT / NAME).exists())
 print()
 
 # deadlines with hand-typed facts and a fixed "today"
@@ -95,15 +99,6 @@ check("the notice's stated date is printed beside the 83.56(3) date once confirm
       "beside it, from your record: notice stated payment date 2026-09-21" in render_deadlines(json.dumps(
       {"deadlines": [{**row, "skills": ["notice_received_nonpayment"]}]}, default=str))
       and "shown_with" not in three_day("2026-09-18", "Alachua")[1])
-with tempfile.NamedTemporaryFile("w", suffix=".yaml", delete=False) as bad:
-    bad.write(Path("playbooks/notice_received_nonpayment.yaml").read_text().replace(
-        "shown_with: notice_stated_payment_date", "shown_with: amount_demanded"))
-try:
-    load_playbook(bad.name)
-    refused = False
-except ValueError as e:
-    refused = "is not a date element" in str(e)
-check("a shown_with that is not a date element is refused when the playbook loads", refused)
 check("no deadline at all is said in one line, not an empty heading (an issue with no clocks)",
       render_deadlines(json.dumps({"deadlines": []})) == "No deadlines: none of the deadlines this tool computes "
       "applies to your confirmed facts." and "waiting [rent_increased]" in render_deadlines(
@@ -199,7 +194,7 @@ record.matter["facts"] = dict(test_facts)
 print(build_letter("I moved out on July 30, 2026, and gave my forwarding address the same day.",
                    "Please return my $1,850.00 deposit to 12 Elm St, Gainesville FL 32601", 10,
                    "certified mail, return receipt requested", "Jordan A. Ellis",
-                   [{"cite": "Fla. Stat. 83.49(3)(a)", "text": pb.spec.clocks[0].quote}]))
+                   [{"cite": "Fla. Stat. 83.49(3)(a)", "text": skills["deposit_not_returned"].clocks[0].quote}]))
 print()
 
 ended = [build_letter("", f"Please return the deposit to 12 Elm St, Gainesville FL 32601{end}", 10, "certified mail",
@@ -240,7 +235,7 @@ check("a cite inside a quoted passage is the quote's own, not the reply's (live 
       'or her intention" (Fla. Stat. 83.49(3)(a))', {"83.49"}) == [])
 check("a short quoted cite is still checked", check_cites('"cite": "83.64"', {"83.49"})[0][0] == "83.64")
 check("item 11's wrong claim passes this check (its cite is real and shown)",
-      check_cites("you may terminate the lease under Fla. Stat. 83.56(1)", set(playbooks["repair_not_made"].sections)) == [])
+      check_cites("you may terminate the lease under Fla. Stat. 83.56(1)", set(skills["repair_not_made"].sections)) == [])
 
 # quotes in a reply (citations.check_quoted): which cite goes with which quote, then what each is checked against
 OBJECTS = "Unless the tenant objects to the imposition of the landlord’s claim"          # in 83.49(3)(b)

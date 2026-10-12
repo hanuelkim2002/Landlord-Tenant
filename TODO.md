@@ -4,7 +4,7 @@ Work Claude Code can do, in priority order. Do the top of **Now** unless the aut
 done, move it to CHANGELOG.md with the date.
 
 What goes where (the author's decision of 2026-10-09):
-- **TODO.md**: a change to code, playbooks, the harness, or docs that Claude Code can make, with a clear enough goal.
+- **TODO.md**: a change to code, skills, the harness, or docs that Claude Code can make, with a clear enough goal.
   At most about four lines: what to change, why it matters to a tenant, and what done looks like. No eval history in
   the item; link the record (`docs/evals/...`, the CHANGELOG) instead.
 - **AUTHOR.md**: what only the author can do: legal sign-offs, decisions, research, open questions.
@@ -21,7 +21,6 @@ author's rule of 2026-10-06, in CLAUDE.md).
 
 Playbooks become skills (the author's plan of 2026-10-12; design in `docs/structure/2026-10-12-skills.md`). In order,
 each one commit; items 98 to 100 below wait until it is done, since the sheet and the prompt change under them.
-113. The playbooks go, with the options layer and every line only they used. Done: no code reads `playbooks/`.
 114. The new rules and prompt (the agreed rules, finished); the tool answers first and replies right after a
     confirmation. Done: the prompt holds the new parts only.
 115. The web page only, one session module for it and the eval driver, the short lease profile, the eval driver and
@@ -67,8 +66,8 @@ AUTHOR.md). The letters (95, 96) are in the CHANGELOG, 2026-10-11.
 ## Later
 
 29, 35, 36. Which case topics a tenant sees: the model picks one of many offered topics (two runs of one question saw
-    different cases), the topics per playbook are many and mixed (27 for repair_not_made, procedural ones among them),
-    and a tenant who never asks sees none. Sections on the topic pages or a topic list per playbook first, then a line
+    different cases), the topics per skill are many and mixed (27 for repair_not_made, procedural ones among them),
+    and a tenant who never asks sees none. Sections on the topic pages or a topic list per skill first, then a line
     or a `cases` command listing the topics so the tenant picks.
 43. A `conduct_and_use` lease profile field (the test lease's 5.2 and 5.4), so a neighbor_disturbance chat or letter can
     quote the lease's own rule; every lease would be read again.

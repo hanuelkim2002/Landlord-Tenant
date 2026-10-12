@@ -13,7 +13,6 @@ from datetime import datetime
 from langchain_core.utils.uuid import uuid7
 
 from config import MATTERS
-from corpus import playbooks
 from lease import LeaseProfile
 from skills import clock_facts as skill_clock_facts, skills
 
@@ -191,10 +190,3 @@ def clock_facts():
     each: "date", "bool", or "county"). propose_facts parses a proposal for one of these by its type; skills.type_conflicts
     (run by smoke.py) keeps a fact id from being typed two ways."""
     return {fact: kind for skill in active_skills() for fact, kind in skill_clock_facts(skill).items()}
-
-
-def active_playbooks():
-    """TRANSITION, until TODO item 113 removes the playbooks: the playbook of each loaded skill (a skill and its
-    playbook have the same name). Only the options layer (prompt.options_status and unknowns_status) calls it; the facts,
-    the deadlines, and the timeline read the skills."""
-    return [playbooks[name] for name in matter["skills"] if name in playbooks]

@@ -17,7 +17,7 @@ import record
 from citations import cites_in, is_in
 import config
 from config import shorten, squash
-from corpus import playbooks, statute
+from corpus import statute
 from deterministic import matter_deadlines
 from lease import LEASE_CITE, find_in_lease
 from record import append_event, matter_dir, read_events, save
@@ -414,7 +414,7 @@ def draft_letter(issue: str, posture: str, account: str, request: str, respond_w
     lease's and the statute's words go in only as obligation_quote or consequence_quote); a signer the lease does not
     name. A date or a dollar amount in the account or the request that is not in the tenant's answers, messages, or
     lease is printed with a line asking the tenant to check it."""
-    if issue not in playbooks or issue not in record.matter["skills"]:
+    if issue not in skills or issue not in record.matter["skills"]:
         return f"issue must be one of this matter's loaded skills: {record.matter['skills']}"
     if posture not in ("preserve", "assert", "escalate"):
         return "posture must be preserve, assert, or escalate"
@@ -451,8 +451,7 @@ def draft_letter(issue: str, posture: str, account: str, request: str, respond_w
                 "new was drafted.]")
     (matter_dir() / filename).write_text(letter)
     append_event("draft", issue=issue, posture=posture, cites=[q["cite"] for q in quotes], file=filename)
-    note = playbooks[issue].guidance["postures"]["notice_sufficiency"]
-    return letter + (f"\n\n{check}" if check else "") + "\n\n[NOTE TO TENANT, not part of the letter: " + note + "]"
+    return letter + (f"\n\n{check}" if check else "")
 
 
 # ---- Add Artifact

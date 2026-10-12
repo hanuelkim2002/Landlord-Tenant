@@ -13,7 +13,7 @@ screen names ("New matter <tenant> m-002"). Set
 WIKI_UNVERIFIED=1 in the environment to offer the wiki's unverified case pages, as the cases scenarios need.
 
 A scenario's "expect" block (every key optional):
-  "issues"           the playbook issues active at the end, exactly
+  "issues"           the skills active at the end, exactly (read from matter.json's "issues"; item 115 rewrites this)
   "stops"            true: the tool stops before the chat (nothing it covers applies)
   "not_covered_note" true: the "may not be covered by this tool" note prints
   "deadlines"        issues whose deadlines get_deadlines computes (a deadlines_computed event naming a clock)
@@ -324,10 +324,10 @@ def measure_turn(turn, known_dates=frozenset(), fetched=""):
 
 def check_expect(expect, matter, events, turns, screen):
     """Each expectation of the scenario: [(what, passed, detail)]."""
-    from corpus import playbooks                       # the scored copy's playbooks are this copy's (same issues)
+    from skills import skills                          # the scored copy's skills are this copy's (same names)
     results = []
     if "issues" in expect:
-        active = sorted(i for i in matter.get("issues", []) if i in playbooks)
+        active = sorted(i for i in matter.get("issues", []) if i in skills)
         results.append(("issues", active == sorted(expect["issues"]), active))
     if "stops" in expect:
         stopped = "None of the situations this tool covers applies" in screen
@@ -481,7 +481,7 @@ def score_run(entry, scenario, out):
 
 
 def score(out):
-    sys.path.insert(0, str(HERE))                         # corpus, for the playbook issue names
+    sys.path.insert(0, str(HERE))                         # skills, for the skill names
     runs = json.loads((out / "runs.json").read_text())
     scores = [score_run(r, json.loads((SCENARIOS / f"{r['scenario']}.json").read_text()), out) for r in runs]
     (out / "scores.json").write_text(json.dumps(scores, indent=2))
