@@ -13,27 +13,28 @@ record over the life of the dispute, and drafts letters the tenant sends themsel
 
 The author is a law student, not admitted. Until 2026-10-02 the tool only set the lease, the statute, and
 the cases beside the tenant's facts and never said what they meant for the tenant. A list of quotes does not
-help a tenant who asks what they can do, so the tool now applies the law. An answer to a question about the
-law has this shape (2026-10-02; the first point and the citing added 2026-10-04):
+help a tenant who asks what they can do, so the tool now applies the law, in a conversation (the author's
+decision of 2026-10-12, after trying the web page: the tool had been too rigid, asking what the lease answers,
+waiting instead of helping, and sending the tenant to "check your lease"). The tool finds out what the tenant
+wants (to move out, get a repair, get the deposit back, answer a notice) and helps them get there:
 
-- first, whether what the tenant wants to do is open to them at all: each option's conditions, checked by the
-  program against the confirmed facts (open, closed, not settled, or not known yet, and what it turns on),
-  before any steps toward it;
-- the rule in one plain sentence, cited to its source (a section of the statute, a section of the lease, a
-  case and page); the program prints the cited words beneath the answer, so the tenant has the exact text to
-  point to without reading it inside the answer;
-- only the facts the rule turns on, each in a few words;
-- for each condition of the rule, whether those facts meet it, fail it, or are not known yet;
-- what follows on those facts: the steps for an option that is open, or that may be, and what each requires;
-- any point the stored text and the cases leave unsettled, with the readings on each side.
+- it answers what the tenant asked, first, in a reply that fits the question, and a follow-up builds on what was
+  already said instead of starting over;
+- asked whether or how they can do something, it makes clear whether they can before any step toward it, what
+  that turns on, and what is left to do;
+- each rule is one plain sentence cited to its source (a section of the statute, a section of the lease, a case
+  and page); the program prints the cited words beneath the answer, so the tenant has the exact text to point to
+  without reading it inside the answer;
+- it reads the lease itself for a point the lease decides, asks the tenant for a fact it does not have, and sends
+  the tenant to check only what it cannot read (military orders, a local code, a paper it does not hold);
+- a point the stored text and the cases leave unsettled is said briefly, with the readings on each side;
+- when the tenant is ready to act, it can help keep a record that each step was done.
 
-The tool knows what it knows (the author's decision of 2026-10-04). Each condition an answer turns on is, for
-the tool, one of five things, worked out by the program and given to the model: known (the confirmed facts, a
-lease clause the tool has read, the statute); something the tenant can tell it (a fact the sheet asks);
-something the tenant can check (a part of the lease the tool has not read, a local code, a document);
-not settled (an open question, with its readings); or outside the tool (law it does not hold). The answer says
-which, never states a gap as a fact ("the lease does not mention it" from a lease the tool has not read
-whole), and says how each unknown would change what the tenant can do.
+The tool knows what it knows (the author's decision of 2026-10-04). A point an answer turns on is known (a
+confirmed fact, a lease clause the tool has read, the statute), something the tenant can tell it, something the
+tenant can check, not settled (an open question, with its readings), or outside the tool (law it does not hold).
+The answer never states a gap as a fact ("the lease does not mention it" from a lease the tool has not searched),
+and says how an unknown would change what the tenant can do.
 
 The answer does not recite: no statute or lease passage pasted into it, and no list of what the tenant has
 already told the tool. The tool does not choose among the options for the tenant, and it says that its answer
@@ -47,38 +48,42 @@ a review).
 
 1. Intake the contract: read the lease PDF, extract a fixed profile of named clauses, verify every quote
    against the page it cites.
-2. Match the dispute with the contract: classify the tenant's description into issues, work out which facts
-   each issue needs, and confirm each one with the tenant before it is recorded.
-3. Apply the law to the dispute: preload the statute sections for each issue and the court decisions
-   that read them, compute every statutory deadline from confirmed facts in code, check in code which options
-   the tenant's confirmed facts leave open, and answer the tenant's questions by applying stored text, cited
-   and printed by the program, to the confirmed facts.
+2. Match the dispute with the contract: the model loads the skills whose descriptions fit the tenant's
+   situation, finds out the facts each needs (the lease first, then the tenant), and confirms with the tenant
+   each fact the record keeps.
+3. Apply the law to the dispute: load the statute sections of each loaded skill and the court decisions that
+   read them, compute every statutory deadline from confirmed facts in code, and answer the tenant's questions
+   by applying the skill's instructions and the stored text, cited and printed by the program, to the facts.
 4. Keep a coherent evidentiary record: one append-only event log per matter holding facts as confirmed,
    messages as pasted, files as provided, letters as drafted and as sent, and a timeline built from it.
 
 ## The three parts
 
-1. The chatbot: a LangChain agent with a small set of tools and a rules-based system prompt.
+1. The chatbot: a LangChain agent with a small set of tools and a short system prompt of rules, on one
+   front end, the web page.
 2. The data bank: one folder per tenant and per matter, so a returning tenant resumes where they left off.
-3. Skills: the guidance half of each playbook, the statute sections it rests on, and the topics of the
-   case wiki's verified pages for those sections, loaded into the prompt when its issue becomes active (a
-   topic's cases, with their facts and rules as quoted on their pages, reach the model when it asks for them,
-   so it can set them beside the tenant's facts) instead of pasted for every issue, so the context window
-   holds only what the matter's issues need.
+3. Skills: one per situation (2026-10-12; they replace the YAML playbooks). The model sees every skill's name
+   and one-line description and loads the ones that fit, as Claude Code loads skills; a loaded skill's
+   instructions, the statute sections it rests on, and the topics of the case wiki's verified pages for those
+   sections enter the prompt (a topic's cases, with their facts and rules as quoted on their pages, reach the
+   model when it asks for them, so it can set them beside the tenant's facts), so the context window holds only
+   what the matter needs.
 
 ## Non-negotiables
 
-- An application rests only on confirmed facts and stored text. A fact the record does not hold is named as
+- An application rests only on stored text and on the tenant's own facts: those confirmed, and, in the
+  conversation, what the tenant has said, named as what they said until they confirm it (2026-10-12). The
+  record, the deadlines, and letters rest on confirmed facts only. A fact the tenant has not given is named as
   missing, never assumed, and the step that needs it is left open. Every rule in an answer is cited to its
   source, and the program prints the cited words; every fact carries where it came from.
-- The tool knows what it knows. A condition it has not settled from confirmed facts, a lease clause it read, or
+- The tool knows what it knows. A point it has not settled from the tenant's facts, a lease clause it read, or
   the statute is named as one the tenant can tell it, can check, that is not settled, or that is outside the
   tool, never answered as if known; and the answer says how it would change the tenant's options.
-- An option comes before its steps. Whether an option is open is checked by code from the confirmed facts and
-  the playbook's conditions for it, quoted from the statute; the answer says whether it is open, closed, not
-  settled, or not known yet before it gives any step toward it.
-- An open point stays open. Where the statute's words and the cases do not settle a question (a playbook's
-  open questions), the answer says so and gives the readings on each side; it never presents one as settled.
+- An option comes before its steps. The answer says whether the tenant can do what they ask, applying the loaded
+  skill's conditions, quoted from the statute, to their facts and their lease, before it gives any step toward
+  it. (From 2026-10-04 to 2026-10-12 code decided whether each option was open, from the playbooks' conditions.)
+- An open point stays open. Where the statute's words and the cases do not settle a question (a skill's open
+  questions), the answer says so and gives the readings on each side; it never presents one as settled.
 - The model never computes a date. All date arithmetic is in one function, from confirmed facts only.
 - The model never sends anything. Letters are drafted; the tenant sends them and reports the sending.
 - The model never quotes from memory. Lease quotes come from the verified profile; statute quotes come from
@@ -92,24 +97,31 @@ a review).
 - A fact enters the record only after the tenant confirms it. Proposed facts carry how they were proposed
   (stated or inferred) and the tenant's own words as basis.
 - The record is append-only. Current state is a snapshot; history is never edited or deleted.
-- Letters are a code template, not model text. The timeline, the cases' text, and the cited statute and lease
+- Letters are a code template around the tenant's own account. The program prints the date, the names and
+  addresses as the lease gives them, the reply-by date, the quoted sentences (each checked), the delivery line,
+  and the signer; the model writes only the tenant's account and request, in the tenant's voice, with no cite
+  or legal conclusion in them (2026-10-11). The timeline, the cases' text, and the cited statute and lease
   words are printed by code; the model's answer applies them, cites each case by name and page, and never says
   a case or a section holds anything its printed words do not.
-- `statutes/` and `cases/` are read-only corpora. Playbook and case wiki quotes are verified against them
+- `statutes/` and `cases/` are read-only corpora. Skill and case wiki quotes are verified against them
   after every edit. `cases/` holds the court's text only: no publisher's headnotes, synopses, or citator
   flags.
 
 ## The unit of legal knowledge
 
-A playbook: one YAML file per issue. Its `spec` half is typed and read by code (the facts needed, the
-statutory clocks, exclusions, related issues, open questions). Its `guidance` half is prose for the model
-(questions to ask, letter postures, what the statute leaves unsettled). Playbooks in scope, in order:
-deposit_not_returned, deposit_claim_received, repair_not_made, notice_received_violation, rent_increased,
-lease_ending, notice_received_nonpayment, landlord_entered_unannounced, wants_to_leave_early,
-neighbor_disturbance. That is one per issue label the classifier can pick, except "other", which means none
-of them fits.
+A skill: one markdown file per situation in `skills/` (2026-10-12; until then a YAML playbook, whose typed
+half let code decide which facts to ask and which options were open). A skill is written to the model as
+instructions: when to load it, what to find out and where, what the tenant can do and what each option needs
+(the statute's words quoted), what the statute does not settle (the readings on each side), letters, and
+mistakes to avoid. Only a short header is typed, because code needs it: the skill's name and one-line
+description (how the model picks it), the statute sections it loads, the deadline clocks code counts (with the
+facts they count from), and the author's sign-off. Every quote in a skill is checked against `statutes/`.
+Skills, one per situation: deposit_not_returned, deposit_claim_received, repair_not_made,
+notice_received_violation, rent_increased, lease_ending, notice_received_nonpayment,
+landlord_entered_unannounced, wants_to_leave_early, neighbor_disturbance. A situation no skill fits gets an
+answer only from what the statute search finds, said as such.
 
-Beside the playbooks, a case wiki (`wiki/`), after Andrej Karpathy's LLM wiki: linked markdown pages that
+Beside the skills, a case wiki (`wiki/`), after Andrej Karpathy's LLM wiki: linked markdown pages that
 Claude Code writes from `cases/` in development sessions and the author reviews. One page per case (its
 issue, rule, and reasoning quoted from the opinion with pin pages, the statute version it read, and how it
 relates to other cases) and one page per topic, made as topics emerge from the cases, never fixed in
@@ -125,14 +137,14 @@ out.
 
 ## Beyond the current plan
 
-A chatbot front end in place of the terminal loop: `app.py`, a web page on this computer only (2026-10-02),
-draws what the terminal prints, with the model's words apart from the program's. Putting it in front of
-tenants waits until the data bank, skills, and case wiki work is done, and on logins, where `matters/` data
+A chatbot front end: `app.py`, a web page on this computer only (2026-10-02), with the model's words apart
+from the program's; since 2026-10-12 the only front end (the terminal loop was removed). Putting it in front
+of tenants waits until the data bank, skills, and case wiki work is done, and on logins, where `matters/` data
 lives, and the unlicensed-practice review.
 
 ## Stack
 
 Python, LangChain agent with `@tool` functions, Pydantic for every structured shape, PyPDF2 for the lease,
-YAML playbooks, a markdown case wiki, two models on the UF gateway (an agent model and an extraction model), Streamlit for
+markdown skills, a markdown case wiki, two models on the UF gateway (an agent model and an extraction model), Streamlit for
 the web page. Built first as a
 Colab notebook, moved to this folder as modules on 2026-09-25.

@@ -19,6 +19,22 @@ author's rule of 2026-10-06, in CLAUDE.md).
 
 ## Now
 
+Playbooks become skills (the author's plan of 2026-10-12; design in `docs/structure/2026-10-12-skills.md`). In order,
+each one commit; items 98 to 100 below wait until it is done, since the sheet and the prompt change under them.
+109. The skill format and its checks (`skills/`, `skills.py`), with no change to the chat. Done: a valid skill passes
+    and each kind of broken one fails, in `smoke.py`.
+110. The ten skills, written from the playbooks' own verified content. Done: all ten pass the skill checks.
+111. The model loads skills (`load_skill`, the skill menu, `matter["skills"]`); the classifier, the issue rows, related
+    issues, the stop page, and the chat commands go. Done: a stand-in model loads a skill and the record logs it.
+112. Facts: proposals only, a short confirmation, clock facts typed; `fill_facts`, fact lists, and fact status go.
+    Done: a deadline still computes only from confirmed dates.
+113. The playbooks go, with the options layer and every line only they used. Done: no code reads `playbooks/`.
+114. The new rules and prompt (the agreed rules, finished); the tool answers first and replies right after a
+    confirmation. Done: the prompt holds the new parts only.
+115. The web page only, one session module for it and the eval driver, the short lease profile, the eval driver and
+    scenarios for a conversation. Done: `run.py` is gone and a scenario runs through the new driver.
+116. Measure: the eval stories before (e32ab77) and after, scored blind, with a chart.
+
 The student simulation's remaining cause (`docs/evals/2026-10-06-students/`): what the tenant reads is built for
 checking, not for a reader with no legal training (98, 99, 100; the shape of an answer, 97, is the author's call in
 AUTHOR.md). The letters (95, 96) are in the CHANGELOG, 2026-10-11.

@@ -3,6 +3,20 @@
 Newest first. One entry per change, dated. Say what was replaced as well as what was added, so a future
 session can see why the code is the way it is.
 
+## 2026-10-12
+
+- Plan: playbooks become skills (the author's decision; design in `docs/structure/2026-10-12-skills.md`, TODO items 109
+  to 116). After trying the web page with a real lease, the author found the tool too rigid (slow intake, questions the
+  lease answers, waiting instead of helping, "check your lease", replies that read as separate answers). A code map put
+  320 of 4,477 lines in code that hands a job to the model, and most of the rest in code that steers, checks, or
+  replaces it. README updated for the new architecture: Purpose (a conversation that helps the tenant get what they
+  want; the agreed answer shape), goals 2 and 3, the three parts (skills the model loads by description; the web page
+  as the only front end), the non-negotiables (what the tenant said may be used in the conversation as what they said;
+  the record, deadlines, and letters stay confirmed-only; whether an option is open is now the skill applied by the
+  model, no longer code; letters as the code template around the tenant's account, since 2026-10-11), and the unit of
+  legal knowledge (a skill: prose with a short typed header of sections, clocks, and sign-off). The rules agreed in the
+  review of 2026-10-11 and 12 (opening, format, rules 1 to 4; rule 5 suggested) are kept in the design note.
+
 ## 2026-10-11
 
 - Eval: the letter (TODO 95, 96) on nemotron, with `WIKI_UNVERIFIED=1` (`dev/eval_runs/2026-10-11-letters-*`, not
