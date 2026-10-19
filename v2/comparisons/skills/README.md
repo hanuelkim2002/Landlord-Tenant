@@ -38,11 +38,13 @@ and v1's skill as it is, as the baseline.
 
 ## How it is scored
 
-- **By you, blind.** One answer per story per method (20 in all), shuffled, with the method names hidden. You mark
-  each right, partly, or wrong, and whether it answers first. Then I show which method wrote which.
-- **By the judge** (`gpt-oss-120b`, not the tested model), all 60 answers: the points and mistakes by meaning, with
-  the statute sections and the lease in front of it; and whether the first sentence answers the question. I check
-  its grades as in the lease test.
+- **By you, blind, side by side.** For each story, the four answers (one per method, from the first run) side by
+  side, labeled W, X, Y, Z, with the order shuffled for each story so a letter does not tell you the method.
+  You rank them 1 (best) to 4, ties allowed, with a note if you like. Only then do I show which method wrote which.
+  Your ranks are the main score: the average rank per method over the five stories, and how often each came first.
+- **By the judge** (`gpt-oss-120b`, not the tested model), shown only after your ranking, all 60 answers: the
+  points and mistakes by meaning, with the statute sections and the lease in front of it; and whether the first
+  sentence answers the question. I check its grades as in the lease test.
 - **By code:**
   - **Short**: the skill's length in words.
   - **Quotes check out (skill)**: every quote in the skill is word for word in the subsection it cites.

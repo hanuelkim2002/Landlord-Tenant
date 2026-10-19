@@ -50,3 +50,8 @@ item 1. Replaces the draft in `comparisons/lease/README.md`.
 `comparisons/skills/`: the shortlist of skill formats (an element checklist, worked examples, a short core with a
 details file) with v1's skill as the baseline; a test lease; five deposit stories with an answer key whose quotes and
 dates `check_key.py` checks against `statutes/`. Nothing replaced; no skill is written yet.
+
+## 2026-10-19: skills answers ranked side by side
+
+In the skills test the author ranks the four answers to each story side by side, blind (letters shuffled per story),
+1 to 4; the judge's grades are shown only after. Replaces marking each answer right, partly, or wrong.
