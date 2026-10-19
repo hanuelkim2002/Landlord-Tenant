@@ -1,0 +1,246 @@
+{
+  "source": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0083/0083PartIIContentsIndex.html",
+  "fetched_at": "2026-09-11T13:38:06",
+  "sections": [
+    {
+      "section": "83.40",
+      "catchline": "Short title",
+      "chars": 128,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.41",
+      "catchline": "Application",
+      "chars": 123,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.42",
+      "catchline": "Exclusions from application of part",
+      "chars": 1059,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.425",
+      "catchline": "Preemption",
+      "chars": 780,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.43",
+      "catchline": "Definitions",
+      "chars": 4078,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.44",
+      "catchline": "Obligation of good faith",
+      "chars": 181,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.45",
+      "catchline": "Unconscionable rental agreement or provision",
+      "chars": 778,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.46",
+      "catchline": "Rent; duration of tenancies",
+      "chars": 1569,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.47",
+      "catchline": "Prohibited provisions in rental agreements",
+      "chars": 713,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.48",
+      "catchline": "Attorney fees",
+      "chars": 554,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.49",
+      "catchline": "Deposit money or advance rent; duty of landlord and tenant",
+      "chars": 12740,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.491",
+      "catchline": "Fee in lieu of security deposit",
+      "chars": 8555,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.50",
+      "catchline": "Disclosure of landlord\u2019s address",
+      "chars": 833,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.505",
+      "catchline": "Electronic delivery of notices",
+      "chars": 3487,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.51",
+      "catchline": "Landlord\u2019s obligation to maintain premises",
+      "chars": 3513,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.512",
+      "catchline": "Disclosure of flood risks to prospective tenant of residential real property",
+      "chars": 2745,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.515",
+      "catchline": "Background screening of apartment employees; employment disqualification",
+      "chars": 1385,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.52",
+      "catchline": "Tenant\u2019s obligation to maintain dwelling unit",
+      "chars": 1113,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.53",
+      "catchline": "Landlord\u2019s access to dwelling unit",
+      "chars": 1647,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.535",
+      "catchline": "Flotation bedding system; restrictions on use",
+      "chars": 603,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.54",
+      "catchline": "Enforcement of rights and duties; civil action; criminal offenses",
+      "chars": 349,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.55",
+      "catchline": "Right of action for damages",
+      "chars": 251,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.56",
+      "catchline": "Termination of rental agreement",
+      "chars": 7581,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.5615",
+      "catchline": "Protecting Tenants at Foreclosure Act",
+      "chars": 2347,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.57",
+      "catchline": "Termination of tenancy without specific term",
+      "chars": 824,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.575",
+      "catchline": "Termination of tenancy with specific duration",
+      "chars": 1698,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.58",
+      "catchline": "Remedies; tenant holding over",
+      "chars": 540,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.59",
+      "catchline": "Right of action for possession",
+      "chars": 2287,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.595",
+      "catchline": "Choice of remedies upon breach or early termination by tenant",
+      "chars": 3274,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.60",
+      "catchline": "Defenses to action for rent or possession; procedure",
+      "chars": 3080,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.61",
+      "catchline": "Disbursement of funds in registry of court; prompt final hearing",
+      "chars": 716,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.62",
+      "catchline": "Restoration of possession to landlord",
+      "chars": 1368,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.625",
+      "catchline": "Power to award possession and enter money judgment",
+      "chars": 1115,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.63",
+      "catchline": "Casualty damage",
+      "chars": 952,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.64",
+      "catchline": "Retaliatory conduct",
+      "chars": 2012,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.67",
+      "catchline": "Prohibited practices",
+      "chars": 3706,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.681",
+      "catchline": "Orders to enjoin violations of this part",
+      "chars": 972,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.682",
+      "catchline": "Termination of rental agreement by a servicemember",
+      "chars": 3477,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.683",
+      "catchline": "Rental application by a servicemember",
+      "chars": 1809,
+      "parsed_via": "div.Section"
+    },
+    {
+      "section": "83.684",
+      "catchline": "Homes for Veterans Property Management Incentive Pilot Program",
+      "chars": 6757,
+      "parsed_via": "div.Section"
+    }
+  ]
+}

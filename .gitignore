@@ -1,10 +1,14 @@
+# Private data and local setup. Patterns without a leading folder match in v1/ and v2/ too.
 .env
 venv/
 matters/
+lease.pdf
 __pycache__/
 *.pyc
 .DS_Store
-lease.pdf
 .obsidian/
+# v1's local test leases and eval runs (in the main checkout, before and after the move into v1/)
 dev/eval_runs/
 dev/leases/
+v1/dev/eval_runs/
+v1/dev/leases/

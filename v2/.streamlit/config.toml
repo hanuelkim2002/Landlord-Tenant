@@ -1,0 +1,11 @@
+# Streamlit settings for app.py, read when `streamlit run app.py` starts in this folder.
+
+[server]
+address = "localhost"         # the page is reachable from this computer only, until deployment is decided
+headless = true               # no first-run e-mail prompt, no browser opened by Streamlit itself
+
+[browser]
+gatherUsageStats = false      # Streamlit sends no usage statistics
+
+[client]
+toolbarMode = "minimal"       # no Deploy button
