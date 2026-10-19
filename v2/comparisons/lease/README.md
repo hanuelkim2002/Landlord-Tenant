@@ -19,10 +19,16 @@ The new leases are made up. `python make_leases.py` builds them from the texts i
 ## The answer key
 
 `answer_key.json`: 64 questions, 10 to 15 per lease, in a tenant's words. 53 are answered by the lease (late fee,
-pets, where notices go, repairs, deposit, guests, entry, and more) and 11 are not. Each answered question lists the
-lease's exact words that answer it and the facts the answer must contain. Many carry a near miss: a nearby clause
-that looks right but isn't. `python check_key.py` confirms each passage is in its lease word for word and each
-"not covered" topic is truly absent.
+pets, where notices go, repairs, deposit, guests, entry, and more) and 11 are not. For each question the key gives:
+
+- the right answer in plain words;
+- the **points** a right answer must make, judged by meaning, so any wording counts;
+- the **mistakes** a reader could fall into (many questions have a near miss: a nearby clause that looks right but
+  isn't, or an unchecked box);
+- the lease's exact words that answer it, used only to check quotations.
+
+`python check_key.py` confirms each passage is in its lease word for word, each number in a point is the lease's
+number, and each "not covered" topic is truly absent.
 
 ## How a test run works
 
@@ -32,21 +38,37 @@ that looks right but isn't. `python check_key.py` confirms each passage is in it
 2. **The three methods.** Each prototype answers every question with nemotron (`nemotron-3-super-120b-a12b`), giving
    the model the lease its own way (A, B, or C). Every prototype uses the same instruction for each question:
 
-   > Answer the tenant's question from the lease only. Reply in JSON: {"covered": true or false, "answer": "...",
-   > "quotes": ["..."]}. "covered" is false only if the lease does not address the question. "quotes" are the lease's
-   > exact words your answer rests on.
+   > Answer the tenant's question from the lease only. If the lease does not address it, say so. Reply in JSON:
+   > {"answer": "...", "quotes": ["..."]}. "quotes" are the lease's exact words your answer rests on.
 
    Each writes `results/<method>.jsonl`, one line per question: the reply, the seconds it took, and the tool calls.
 
-## How it is scored (by code)
+## How it is scored
 
-- **Found it**: for an answered question, the model said covered and quoted the answering passage (at least 8 words
-  in a row from it, or a quote of 4+ words wholly inside it).
-- **Wrongly silent**: said "not covered" when the lease answers it. The worst mistake.
-- **Made up**: said "covered" when the lease does not answer it.
-- **Complete**: the answer has every must-say fact.
-- **Quotes check out**: every quote is word for word in the stored lease text.
-- **Time**: seconds to read each lease, and seconds per question (typical and slowest), on the long lease above all.
+The answer is judged by what it means, not how it is worded. Only quotations must match word for word.
 
-Right or wrong on a yes/no answer (for example "can I get a dog") is not scored by code; I list those answers for
-you to read.
+**By meaning (a judge model).** A different model from the one tested, `gpt-oss-120b` on the UF gateway, so
+nemotron never grades itself, reads each answer beside the key. It is told to judge meaning only: a point counts in
+any wording, and extra details are fine if the lease supports them. For each answer it says:
+
+- whether the answer says the lease does not address the question;
+- which points the answer makes;
+- which listed mistakes it makes, and any other claim that contradicts the lease.
+
+Code turns that into the scores:
+
+- **Right / partly / wrong.** Right: every point made, no mistake. Partly: some points, no mistake. Wrong: a
+  mistake, or no point made.
+- **Wrongly silent**: says the lease does not address a question it answers. The worst mistake.
+- **Made up**: answers a question the lease does not address as if it did.
+
+I check the judge: I read every answer it marks wrong or partly, and a sample of the ones it marks right, and tell
+you how many I would change.
+
+**Word for word (code).**
+
+- **Quotes check out**: every quote is word for word in the stored lease text (spacing and line breaks aside).
+- **Quoted the right clause**: a quote comes from the passage that answers the question (8 words in a row from it,
+  or a quote of 4 or more words wholly inside it).
+
+**Time.** Seconds to read each lease, and seconds per question (typical and slowest), on the long lease above all.

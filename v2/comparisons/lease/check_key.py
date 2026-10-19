@@ -1,6 +1,6 @@
 """Checks the answer key against the leases' own words, so the key itself can be trusted.
-Each passage must be in its lease word for word, each must-say fact must come from a passage, and each word a
-'not covered' question rules out must be nowhere in the lease. Run from this folder: python check_key.py
+Each passage must be in its lease word for word, each number or amount in a point must be in the lease, and each
+word a 'not covered' question rules out must be nowhere in the lease. Run from this folder: python check_key.py
 """
 import json
 import re
@@ -13,6 +13,9 @@ from make_leases import HERE, plain_text
 
 # v1's sample lease stays out of git (the .gitignore covers lease.pdf). It is read from v2/lease.pdf.
 SAMPLE = HERE.parent.parent / "lease.pdf"
+
+# A number as a lease prints it: "$1,798.00", "24", "12:00", "555-0177", "32608".
+NUMBER = re.compile(r"\$?\d[\d,.:/-]*")
 
 
 def squash(text):
@@ -31,13 +34,16 @@ def lease_text(name):
 def problems_with(question, text):
     """Every way one question disagrees with its lease's text."""
     found = []
-    passages = squash(" ".join(question["passages"])).lower()
+    if not question["points"]:
+        found.append("no points")
     for passage in question["passages"]:
         if squash(passage) not in text:
             found.append(f"passage not in the lease: {passage[:70]}")
-    for fact in question["must_say"]:
-        if not any(choice.strip().lower() in passages for choice in fact.split("|")):
-            found.append(f"must-say fact not in its passages: {fact}")
+    # The points are judged by meaning, but their numbers must still be the lease's numbers.
+    for point in question["points"]:
+        for number in NUMBER.findall(point):
+            if number.rstrip(".,:") not in text:
+                found.append(f"number in a point is not in the lease: {number}")
     if question["covered"] and not question["passages"]:
         found.append("covered, but no passage")
     if not question["covered"]:
