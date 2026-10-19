@@ -22,3 +22,8 @@ questions were replaced with cleaner ones. Replaces the key's `must_say` phrases
 
 The lease comparison adds v1's own method (PyPDF2, the four-clause form, the exact-phrase search), run unedited from
 `v1/` and scored like the three new methods, so the scores show the change from v1. Nothing replaced.
+
+## 2026-10-19: intake time as its own metric
+
+The lease comparison times each method's intake (PDF to ready for the first question, all its steps, the middle of
+three runs) apart from its answer time per question. Replaces the README's single "time" line.

@@ -74,4 +74,14 @@ you how many I would change.
 - **Quoted the right clause**: a quote comes from the passage that answers the question (8 words in a row from it,
   or a quote of 4 or more words wholly inside it).
 
-**Time.** Seconds to read each lease, and seconds per question (typical and slowest), on the long lease above all.
+**Time (code).** Two clocks, kept apart:
+
+- **Intake time**: seconds from the uploaded PDF to the moment the method is ready for the first question, for each
+  method and each lease. It counts everything the method does before a question: reading the PDF's text, reading
+  page images where the text is missing (Gemma 4), and the method's own setup (B and C: splitting the lease into
+  clauses and building the table of contents or the search index; v1: its four-clause form by Gemma 4 and the quote
+  check). A, B, and C share step 1's text, so their intake time is step 1's time for that lease plus their own setup,
+  both shown. Each intake is run three times and the middle time is reported, because the gateway's speed varies.
+- **Answer time**: seconds per question, from asking to the final answer, tool calls included (typical and slowest).
+
+Both are shown per lease, and the 46-page lease above all.
