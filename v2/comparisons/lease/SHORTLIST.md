@@ -5,7 +5,8 @@ Reading a lease has two steps, and they are tested apart so each answer is clear
 1. **Getting the text out of the PDF.** No chat model is involved, so code scores it alone: how close each reader's
    text is to the words I wrote, how fast it is, and whether it notices a PDF it cannot read.
 2. **How the chat model uses the text.** This is where the three methods differ. All three get the same text from
-   step 1 and use the same model, nemotron, so the method is the only difference.
+   step 1 and use the same model, nemotron, so the method is the only difference. v1's method runs beside them as a
+   baseline, so the scores show how much each one improves on it.
 
 ## Step 1: the PDF readers (scored by code, no agents)
 
@@ -67,11 +68,19 @@ best-matching whole clauses, ranked (BM25, a standard word-search score).
   A tenant asks "can I have a cat"; the lease says "animal".
 - Quote check: as in B.
 
+### Baseline: v1's method, as it was
+
+v1's own code, run unedited from `v1/`: PyPDF2 reads the text; Gemma 4 fills v1's form of four clauses (landlord,
+tenants, property, notices), each quote checked; in the chat, nemotron gets those four clauses and v1's
+`search_lease` (the exact phrase only, up to five clauses in the lease's order). It keeps v1's reader, so it does not
+get step 1's best text or the page images: the scanned and broken leases show what v1 did with them. It needs no
+agent, because the code already exists.
+
 ## Left off the list, and why
 
-- **A model summary of key clauses** (v1's four-clause extraction). It was v1's slow step (about four minutes for 57
-  pages), it covers only the clauses chosen in advance, and a summary is not the lease's words, so it cannot be
-  checked word for word.
+- **A model summary of key clauses** (v1's four-clause extraction) as a new method. It was v1's slow step (about four
+  minutes for 57 pages), it covers only the clauses chosen in advance, and a summary is not the lease's words, so it
+  cannot be checked word for word. It is still measured, as part of the v1 baseline.
 - **The chat model reading page images.** Nemotron cannot read images. Page images are used only in step 1, to turn
   a scan into text.
 - **Whole lease, with search as a fallback** ("Self-Route", [Li et al. 2024][lc]). Worth trying later if A wins but

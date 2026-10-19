@@ -42,6 +42,9 @@ number, and each "not covered" topic is truly absent.
    > {"answer": "...", "quotes": ["..."]}. "quotes" are the lease's exact words your answer rests on.
 
    Each writes `results/<method>.jsonl`, one line per question: the reply, the seconds it took, and the tool calls.
+3. **v1's method, as a baseline.** v1's own lease code, run unedited from `v1/` (PyPDF2, the four-clause form by
+   Gemma 4, and its exact-phrase `search_lease`), answers the same questions with nemotron and the same instruction,
+   into `results/v1.jsonl`. It is scored exactly like the three methods, so the chart shows each one beside v1.
 
 ## How it is scored
 
