@@ -59,8 +59,8 @@ titles; the model calls `read_clause` to read one, or a few.
 The same clauses as B, but no table of contents. The model calls `search_lease` with words, and gets back the
 best-matching whole clauses, ranked (BM25, a standard word-search score).
 
-- Why it is in the list: it is v1's method with its weakest part fixed (v1 matched exact phrases and returned
-  snippets). Word search finds exact terms like "late charge" well, which is why Anthropic adds it next to
+- Why it is in the list: it is v1's method with its weakest part fixed. v1 found only the exact phrase typed, and
+  returned up to five clauses in the lease's order, not the best matches first. Word search finds exact terms like "late charge" well, which is why Anthropic adds it next to
   meaning-based search ([Contextual Retrieval][contextual]). It also shows whether v1's "the lease is silent"
   mistakes came from the search or from the model.
 - The risk: legal search is hard; the right clause often uses other words than the question ([LegalBench-RAG][lbrag]).
