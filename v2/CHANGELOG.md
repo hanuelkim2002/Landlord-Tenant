@@ -33,3 +33,9 @@ three runs) apart from its answer time per question. Replaces the README's singl
 Step 1 (four PDF readers, Gemma 4 for pages without text) and the three methods plus v1, 64 questions each, scored by
 a judge that now sees the whole lease, with my review of its grades (`review.json`). Results in `SCORES.md`. The
 prototypes in `prototypes/` stay until the author chooses. Replaces nothing in the app.
+
+## 2026-10-19: lease method A chosen
+
+The author chose method A (the whole lease in the prompt). The prototype code is deleted (in git at 784dd82). README:
+five tools, no `search_lease`. AUTHOR.md and SLIPS.md started with the comparison's findings. Draft lease-reading
+rules await the author's OK. Replaces the open lease question and the planned `search_lease`.

@@ -32,8 +32,11 @@ The system prompt holds these rules, under about 400 words in all. A rule is add
 
 - **Stored law.** `statutes/` (40 sections and `index.json`, read-only). `skills/`, one file per situation; the model
   sees each skill's name and description and loads the ones that fit.
-- **The lease.** The tenant uploads a PDF. How the tool reads it is decided by a comparison (`comparisons/lease/`).
-- **Six tools.** `get_statute_section`, `search_statute`, `search_lease`, `load_skill`, `count_days`, `note_fact`.
+- **The lease.** The tenant uploads a PDF. PyMuPDF reads its text; a page with no usable text (a scan, or broken
+  text) is read from its image by Gemma 4 on the gateway. The text is stored page by page, and the whole lease goes
+  into the system prompt once, every turn (method A, chosen by comparison on 2026-10-19, `comparisons/lease/`).
+- **Five tools.** `get_statute_section`, `search_statute`, `load_skill`, `count_days`, `note_fact`. No `search_lease`:
+  the model has the whole lease.
 - **Facts.** `note_fact` saves what the tenant said as a pending fact. The tenant confirms or corrects it on the web
   page. Only confirmed facts count. Dates are written YYYY-MM-DD.
 - **Dates.** `count_days(fact, days)` is the only date math: calendar days from a confirmed date, start day not
@@ -52,7 +55,7 @@ The system prompt holds these rules, under about 400 words in all. A rule is add
 Two parts are settled by testing 2 or 3 methods side by side on the same test and the same model, test material
 written and approved before any build, scores kept in `comparisons/`:
 
-1. How to read the lease (`comparisons/lease/`): decides `lease.py`, `search_lease`, and how lease quotes are checked.
+1. How to read the lease (`comparisons/lease/`): settled 2026-10-19, method A, the whole lease in the prompt.
 2. How to write a skill (`comparisons/skills/`): decides the skill format and how the skill quote checker reads it.
    `deposit_not_returned` is rewritten first; the others follow only after the author approves the method.
 

@@ -42,8 +42,9 @@ number, and each "not covered" topic is truly absent.
    > {"answer": "...", "quotes": ["..."]}. "quotes" are the lease's exact words your answer rests on.
 
    Each writes `results/<method>.jsonl`, one line per question: the reply, the seconds it took, and the tool calls.
-   The methods share one harness (`prototypes/common.py`: the questions, the instruction, the tool loop, the clause
-   splitter B and C use), so only the method differs. It runs a tool call nemotron writes as text, and asks once
+   The methods shared one harness (the questions, the instruction, the tool loop, the clause splitter B and C used),
+   so only the method differed. The prototype code was deleted after the choice; it is in git history at commit
+   784dd82 (`v2/comparisons/lease/prototypes/`). It runs a tool call nemotron writes as text, and asks once
    more for an answer if the model is still calling tools after 8 rounds.
 3. **v1's method, as a baseline.** v1's own lease code, run unedited from `v1/` (PyPDF2, the four-clause form by
    Gemma 4, and its exact-phrase `search_lease`), answers the same questions with nemotron and the same instruction,
@@ -96,4 +97,24 @@ Both are shown per lease, and the 46-page lease above all.
 ## The results
 
 `SCORES.md` (the summary), `scores.json` (every answer and grade), `review.json` (my changes to the judge's grades),
-`readers.json` (step 1). Rerun with `python score_readers.py`, the prototypes, then `python score.py`.
+`readers.json` (step 1). `python score_readers.py` reruns step 1; `python score.py` rescores the saved answers. To
+check the chosen method again later, run v2's lease reading and chat on the same questions into `results/` and
+rescore.
+
+## The decision (2026-10-19)
+
+The author chose method A: PyMuPDF for the text, Gemma 4 for pages without usable text, and the whole lease in the
+system prompt. It scored 61 of 64 (v1: 35), was never wrongly silent, every quote checked out, and it was the
+fastest and simplest. B scored 60 and C 57; the gap is within one run's noise, so speed and simplicity decided.
+
+### Draft lease-reading rules for the system prompt (awaiting the author's OK)
+
+1. THE LEASE below is the tenant's whole lease, page by page. Read all of it, addenda and tables included, before
+   you say whether it covers a point.
+2. Say the lease does not address a point only if no part of it does. If a clause comes close but does not settle
+   the point, say what it does say.
+3. Quote the lease's own words, and cite the section number, or the page when there is none.
+4. (Optional, from a slip in this test.) A choice in the lease counts only if it is marked: a checked box, or
+   initials on the line. An unchecked box or a blank initials line was not chosen.
+5. (Optional, only if the author takes the first option in AUTHOR.md item 1.) A page marked "read from an image" may
+   have misread marks. When your answer turns on a check box or a number on such a page, say so.
