@@ -12,3 +12,7 @@ dev/eval_runs/
 dev/leases/
 v1/dev/eval_runs/
 v1/dev/leases/
+# The full text of v1's lease.pdf, read for the lease comparison (lease.pdf itself stays out of git)
+v2/comparisons/lease/texts/sample_v1.json
+# Run logs of the lease comparison
+v2/comparisons/lease/*.err
