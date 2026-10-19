@@ -44,3 +44,9 @@ rules await the author's OK. Replaces the open lease question and the planned `s
 
 Rules 1 to 4 for reading the lease are approved and in README.md, for the system prompt; rule 5 waits on AUTHOR.md
 item 1. Replaces the draft in `comparisons/lease/README.md`.
+
+## 2026-10-19: the skills test
+
+`comparisons/skills/`: the shortlist of skill formats (an element checklist, worked examples, a short core with a
+details file) with v1's skill as the baseline; a test lease; five deposit stories with an answer key whose quotes and
+dates `check_key.py` checks against `statutes/`. Nothing replaced; no skill is written yet.
