@@ -27,3 +27,9 @@ The lease comparison adds v1's own method (PyPDF2, the four-clause form, the exa
 
 The lease comparison times each method's intake (PDF to ready for the first question, all its steps, the middle of
 three runs) apart from its answer time per question. Replaces the README's single "time" line.
+
+## 2026-10-19: the lease comparison, run and scored
+
+Step 1 (four PDF readers, Gemma 4 for pages without text) and the three methods plus v1, 64 questions each, scored by
+a judge that now sees the whole lease, with my review of its grades (`review.json`). Results in `SCORES.md`. The
+prototypes in `prototypes/` stay until the author chooses. Replaces nothing in the app.

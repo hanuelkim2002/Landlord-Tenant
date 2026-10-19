@@ -1,424 +1,1180 @@
 {
-  "how_to_read": "One entry per question. 'covered' says whether the lease answers it. 'answer' is the right answer in plain words. 'points' are what a right answer must convey, judged by meaning: any wording counts. 'mistakes' are wrong answers a reader could fall into, each of which makes the answer wrong. 'passages' are the lease's own words that answer it, copied exactly; they are used to check quotations, which must be word for word. 'absent_words' must be nowhere in the lease, for a question it does not answer. 'note' says what makes the question hard.",
+  "how_to_read": "One entry per question. 'covered' says whether the lease answers it. 'answer' is the right answer in plain words. 'points' are what a right answer must convey, judged by meaning: any wording counts, and words in parentheses are helpful detail, not required. 'mistakes' are wrong answers a reader could fall into, each of which makes the answer wrong. 'passages' are the lease's own words that answer it, copied exactly; they are used to check quotations, which must be word for word. 'absent_words' must be nowhere in the lease, for a question it does not answer. 'note' says what makes the question hard.",
   "questions": [
-    {"id": "short-01", "lease": "short_headings", "covered": true, "where": "Late Rent",
-     "question": "My rent will be paid on the 7th this month. Do I owe a late fee, and how much?",
-     "answer": "Yes. Rent not paid by the end of the 5th owes a $40.00 late fee.",
-     "points": ["A late fee is owed, because rent is late once the 5th has passed.", "The late fee is $40.00."],
-     "mistakes": ["Says no late fee is owed.", "Gives a late fee amount other than $40.00."],
-     "passages": ["If rent is not paid by the end of the 5th day of the month, the Tenant owes a late fee of $40.00."]},
-    {"id": "short-02", "lease": "short_headings", "covered": true, "where": "Pets",
-     "question": "Can I keep a cat in my room?",
-     "answer": "No. No pets of any kind; the only exception is fish in one tank of 10 gallons or less.",
-     "points": ["No, a cat is not allowed, because the lease bans pets of any kind."],
-     "mistakes": ["Says a cat is allowed, or allowed with the landlord's permission."],
-     "passages": ["No pets of any kind may be kept in the house or yard, even for a short visit."]},
-    {"id": "short-03", "lease": "short_headings", "covered": true, "where": "Notices",
-     "question": "I need to send my landlord a formal written notice about my deposit. Where do I send it, and how?",
-     "answer": "By hand or by mail to Patricia Nguyen, 2840 NW 16th Boulevard, Gainesville, Florida 32605. Text or email is only for day-to-day messages.",
-     "points": ["Deliver it by hand or send it by mail.", "Send it to Patricia Nguyen at 2840 NW 16th Boulevard, Gainesville, Florida 32605."],
-     "mistakes": ["Says a text or email is enough for this notice."],
-     "passages": ["A formal written notice to the Landlord, such as a notice about the lease or about the deposit, must be delivered by hand or sent by mail to Patricia Nguyen, 2840 NW 16th Boulevard, Gainesville, Florida 32605."],
-     "note": "Near miss: the same clause allows text or email for day-to-day messages."},
-    {"id": "short-04", "lease": "short_headings", "covered": true, "where": "Repairs",
-     "question": "My air conditioning stopped working in July. How do I tell my landlord?",
-     "answer": "Call the landlord's phone, (352) 555-0198. No air conditioning in summer is an emergency, so don't just text.",
-     "points": ["Call the landlord on the phone, because no air conditioning in summer is an emergency; a text alone is not enough."],
-     "mistakes": ["Says a text or email is the way to report it."],
-     "passages": ["For an emergency, such as a leak, no air conditioning in summer, or a sparking outlet, call the Landlord's phone and do not just text."]},
-    {"id": "short-05", "lease": "short_headings", "covered": true, "where": "Security Deposit",
-     "question": "Where is my security deposit being kept, and does it earn interest?",
-     "answer": "In a separate account at Truist Bank in Gainesville. It does not earn interest.",
-     "points": ["It is kept in a separate account at Truist Bank in Gainesville.", "It does not earn interest."],
-     "mistakes": ["Says the deposit earns interest."],
-     "passages": ["The Landlord keeps the deposit in a separate account at Truist Bank in Gainesville that does not earn interest."]},
-    {"id": "short-06", "lease": "short_headings", "covered": true, "where": "Guests",
-     "question": "My girlfriend wants to stay over for a full week. Is that allowed?",
-     "answer": "No. A guest may stay no more than 3 nights in a row and 8 nights a month.",
-     "points": ["No, not a full week: a guest may stay overnight no more than 3 nights in a row."],
-     "mistakes": ["Says a week-long stay is allowed."],
-     "passages": ["A guest may stay overnight no more than 3 nights in a row and no more than 8 nights in a month."]},
-    {"id": "short-07", "lease": "short_headings", "covered": true, "where": "Utilities",
-     "question": "Do I have to pay for electricity?",
-     "answer": "Yes, a share. The three tenants split the electric bill equally; the share is due with the next month's rent.",
-     "points": ["Yes, a share of it: the three tenants split the monthly electric bill equally."],
-     "mistakes": ["Says electricity is included in the rent or paid by the landlord.", "Says the tenant pays the whole electric bill alone."],
-     "passages": ["Electricity is in the Landlord's name, and the three tenants split the monthly electric bill equally."]},
-    {"id": "short-08", "lease": "short_headings", "covered": true, "where": "Landlord's Entry",
-     "question": "Can my landlord come into my room without telling me first?",
-     "answer": "Not unless there is an emergency. For repairs or inspections, at least 24 hours' notice by text, between 9 a.m. and 6 p.m.",
-     "points": ["No, except in an emergency.", "The landlord must give at least 24 hours' notice by text before entering the room."],
-     "mistakes": ["Says the landlord may enter the tenant's room at any time."],
-     "passages": ["The Landlord will enter the Tenant's room only for repairs or inspections, after giving at least 24 hours' notice by text, between 9:00 a.m. and 6:00 p.m., unless there is an emergency."],
-     "note": "Near miss: the landlord may enter the shared parts of the house at any time."},
-    {"id": "short-09", "lease": "short_headings", "covered": true, "where": "Ending the Lease",
-     "question": "I want to stay in the house after July 2027. What do I need to do?",
-     "answer": "Tell the landlord in writing by May 31, 2027; the landlord will say whether a new agreement is offered.",
-     "points": ["Tell the landlord in writing by May 31, 2027."],
-     "mistakes": ["Says the lease renews on its own."],
-     "passages": ["If the Tenant wants to stay after July 31, 2027, the Tenant should tell the Landlord in writing by May 31, 2027, and the Landlord will say whether a new agreement is offered."]},
-    {"id": "short-10", "lease": "short_headings", "covered": true, "where": "Parking",
-     "question": "Can I park my second car on the lawn?",
-     "answer": "No. One car in the driveway space marked 3, and no parking on the grass.",
-     "points": ["No, parking on the grass is not allowed."],
-     "mistakes": ["Says parking on the lawn is allowed."],
-     "passages": ["The Tenant may park one car in the driveway, in the space marked \"3.\" No parking on the grass."]},
-    {"id": "short-11", "lease": "short_headings", "covered": false,
-     "question": "Do I need to have renter's insurance?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address renter's insurance."],
-     "mistakes": ["Says the lease requires renter's insurance.", "Says the lease states renter's insurance is not required."],
-     "passages": [], "absent_words": ["insurance", "insure"]},
-    {"id": "short-12", "lease": "short_headings", "covered": false,
-     "question": "If I move out before the lease ends, is there a fee for breaking the lease?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address moving out early or a fee for it."],
-     "mistakes": ["States an early termination fee as if the lease set one."],
-     "passages": [], "absent_words": ["early", "terminat", "break"],
-     "note": "Near miss: 'Ending the Lease' is only about the end of the term."},
-
-    {"id": "long-01", "lease": "long_numbered", "covered": true, "where": "Section 5.1",
-     "question": "My rent installment will be paid on the 6th. What late charges will I owe?",
-     "answer": "An initial $50.00 late charge on the 4th, plus $10.00 for each later day unpaid (daily charges capped at 15 days).",
-     "points": ["An initial late charge of $50.00.", "Plus a daily late charge of $10.00 for each additional day unpaid."],
-     "mistakes": ["Gives the $25.00 utility overage late charge as the rent late charge.", "Says no late charge is owed by the 6th."],
-     "passages": ["If any installment is not received in full by 11:59 p.m. on the third (3rd) day of the month, you will owe an initial late charge of $50.00 on the fourth (4th) day of the month, plus a daily late charge of $10.00 for each additional day the installment remains unpaid."],
-     "note": "Near miss: Addendum N lists a $25.00 late charge for a utility overage share."},
-    {"id": "long-02", "lease": "long_numbered", "covered": true, "where": "Addendum C",
-     "question": "Can I get a cat?",
-     "answer": "Yes, with written approval: Unit 3108 is pet-friendly, cats may be approved, every roommate must sign, and you pay a $300.00 non-refundable pet fee and $25.00 a month pet rent.",
-     "points": ["Yes, a cat can be approved, because Unit 3108 is a pet-friendly unit.", "It needs Manager's written approval and every roommate's signature on the Pet Approval Form.", "There is a non-refundable pet fee of $300.00.", "There is pet rent of $25.00 a month."],
-     "mistakes": ["Says no animals are allowed at all.", "Says pets are not allowed in this unit."],
-     "passages": ["Unit 3108 is a designated pet-friendly unit.",
-                  "Manager may approve domestic cats and domestic dogs only.",
-                  "You may keep a pet only after Manager approves the pet in writing and you and each of your Roommates have signed the Pet Approval Form for that pet.",
-                  "You will pay a non-refundable pet fee of $300.00 for each approved pet before the pet is brought into the Unit.",
-                  "You will pay pet rent of $25.00 per month for each approved pet, beginning in the month the pet is approved."],
-     "note": "The body of the lease (Section 15.1) says no animals without approval; the answer is deep in Addendum C."},
-    {"id": "long-03", "lease": "long_numbered", "covered": true, "where": "Section 30.1",
-     "question": "I need to give the landlord a written notice. Where and how do I deliver it?",
-     "answer": "In writing, by hand to the leasing office at 3800 SW Archer Road, Suite 100 (get a date-stamped copy), or by certified mail, return receipt requested, to that address. Email, text, or the portal alone does not count.",
-     "points": ["Deliver it by hand to the leasing office, or send it by certified mail, return receipt requested.", "The address is 3800 SW Archer Road, Suite 100, Gainesville, Florida 32608."],
-     "mistakes": ["Says to send it to the owner's Orlando address.", "Says email, text, or the portal is enough."],
-     "passages": ["Any notice you give us under this Lease or under Part II of Chapter 83, Florida Statutes, must be in writing and must be delivered by hand to the Archer Commons leasing office, 3800 SW Archer Road, Suite 100, Gainesville, Florida 32608, during office hours (ask the staff for a copy stamped with the date received), or sent to that address by certified mail, return receipt requested."],
-     "note": "Near miss: Section 30.3 gives the owner's address in Orlando, and says residents should still use the leasing office."},
-    {"id": "long-04", "lease": "long_numbered", "covered": true, "where": "Section 13.1",
-     "question": "The blinds in my bedroom are broken. How do I ask for a repair?",
-     "answer": "Submit a maintenance request through the Blue Heron resident portal or app.",
-     "points": ["Submit a maintenance request through the resident portal or mobile app."],
-     "mistakes": ["Says to call the emergency maintenance line for it."],
-     "passages": ["All requests for repairs and maintenance must be submitted through the Blue Heron resident portal or mobile app, under \"Maintenance Requests.\""]},
-    {"id": "long-05", "lease": "long_numbered", "covered": true, "where": "Sections 7.1 and 7.2",
-     "question": "How much was my security deposit, and where is it held?",
-     "answer": "$450.00, in a separate non-interest-bearing account at Ameris Bank, 3700 SW Archer Road, Gainesville.",
-     "points": ["The deposit is $450.00.", "It is held in a separate non-interest-bearing account at Ameris Bank in Gainesville."],
-     "mistakes": ["Says the deposit earns interest."],
-     "passages": ["You have paid us a security deposit of $450.00 (the \"Deposit\").",
-                  "We hold the Deposit in a separate non-interest-bearing account at Ameris Bank, 3700 SW Archer Road, Gainesville, Florida 32608, for the benefit of residents."]},
-    {"id": "long-06", "lease": "long_numbered", "covered": true, "where": "Addendum A, A-2.1",
-     "question": "My friend from home wants to stay in my room for a week. Is that allowed?",
-     "answer": "Not without Manager's prior written consent: no more than 3 nights in a row or 6 nights a month, and every roommate must agree.",
-     "points": ["Not without Manager's prior written consent: a guest may stay no more than 3 nights in a row (and 6 nights a month).", "Every roommate must agree to an overnight guest."],
-     "mistakes": ["Says a week-long stay is allowed without consent."],
-     "passages": ["A guest may stay overnight in the Unit no more than three (3) consecutive nights and no more than six (6) nights in any calendar month, unless Manager gives prior written consent."],
-     "note": "Section 10.2 only points to the Community Policies; the limit is in Addendum A."},
-    {"id": "long-07", "lease": "long_numbered", "covered": true, "where": "Addendum B, B-2",
-     "question": "Is electricity included in my rent?",
-     "answer": "Up to an allowance of $40.00 per bedroom per month ($160.00 for the unit); any overage is split equally among the residents.",
-     "points": ["Partly: electricity is included up to an allowance of $40.00 per bedroom per month ($160.00 for the unit).", "Any amount over the allowance is split equally among the unit's residents."],
-     "mistakes": ["Says electricity is fully included with no limit.", "Says electricity is not included at all."],
-     "passages": ["Your installment also includes electricity for the Unit up to an allowance of $40.00 per bedroom per month, which is $160.00 per month for a four-bedroom Unit (the \"Electricity Allowance\")."]},
-    {"id": "long-08", "lease": "long_numbered", "covered": true, "where": "Section 23.1",
-     "question": "Can I sublease my room for the summer?",
-     "answer": "No. Subletting is not allowed, for the summer or any other period. A full lease transfer under Addendum H is the only option.",
-     "points": ["No, subletting is not allowed, including for the summer."],
-     "mistakes": ["Says subletting is allowed, or allowed with permission."],
-     "passages": ["You may not sublet your Bedroom or any part of the Unit, whether for the summer or any other period, and you may not let anyone else live in your Bedroom in exchange for payment."]},
-    {"id": "long-09", "lease": "long_numbered", "covered": true, "where": "Addendum N",
-     "question": "I locked myself out at 11 at night. What will it cost to get let in?",
-     "answer": "$75.00 for lockout service after office hours.",
-     "points": ["$75.00, the charge for lockout service after office hours."],
-     "mistakes": ["Says $25.00 (the charge during office hours)."],
-     "passages": ["Lockout service, after office hours $75.00"],
-     "note": "The answer is a row in a table near the end; Section 21.2 only points to it."},
-    {"id": "long-10", "lease": "long_numbered", "covered": true, "where": "Addendum K",
-     "question": "Can I end my lease early? What would it cost?",
-     "answer": "Yes. The resident initialed Option 1: give at least 60 days' written notice, pay rent through the termination date, and pay a $1,798.00 early termination fee.",
-     "points": ["Yes, because the resident initialed Option 1 of the Early Termination Addendum.", "The early termination fee is $1,798.00.", "It takes at least 60 days' written notice, and rent paid through the termination date."],
-     "mistakes": ["Says the lease cannot be ended early.", "Says Option 2 applies."],
-     "passages": ["I agree, as provided in the rental agreement, to pay $1,798.00 (an amount that does not exceed 2 months' rent) as liquidated damages or an early termination fee if I elect to terminate the rental agreement, and the landlord waives the right to seek additional rent beyond the month in which the landlord retakes possession.",
-                  "If Resident initialed Option 1, Resident may end the Lease early by: (a) giving Manager written notice, delivered as Section 30.1 of the Lease requires, at least sixty (60) days before the termination date stated in the notice; (b) paying all installments and Additional Rent due through the termination date; and (c) paying the early termination fee of $1,798.00 on or before the termination date."],
-     "note": "The answer depends on which option has the resident's initials."},
-    {"id": "long-11", "lease": "long_numbered", "covered": true, "where": "Section 14.2",
-     "question": "How much notice does management have to give before entering my apartment?",
-     "answer": "At least 24 hours, by email or a note on the door, and entry only between 7:30 a.m. and 8:00 p.m., except in an emergency.",
-     "points": ["At least 24 hours' notice, except in an emergency."],
-     "mistakes": ["Gives a notice period other than 24 hours."],
-     "passages": ["Except in an emergency, we will give you at least twenty-four (24) hours' notice before entering, by email to the address in your resident portal account or by a written notice left on the Unit's front door, and we will enter only between 7:30 a.m. and 8:00 p.m."],
-     "note": "Near miss: Section 14.3 lets staff enter without more notice after you submit a maintenance request."},
-    {"id": "long-12", "lease": "long_numbered", "covered": true, "where": "Addendum A, A-1.1",
-     "question": "What are the quiet hours on a Saturday night?",
-     "answer": "From midnight to 9:00 a.m.",
-     "points": ["From 12:00 midnight to 9:00 a.m."],
-     "mistakes": ["Gives the weeknight hours, 10:00 p.m. to 8:00 a.m., for Saturday night."],
-     "passages": ["Quiet hours are from 10:00 p.m. to 8:00 a.m. Sunday night through Thursday night, and from 12:00 midnight to 9:00 a.m. on Friday night and Saturday night."]},
-    {"id": "long-13", "lease": "long_numbered", "covered": false,
-     "question": "Is there a discount if I pay the whole year's rent up front?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address a discount for paying up front."],
-     "mistakes": ["Says the lease offers a discount.", "Says the lease forbids paying up front."],
-     "passages": [], "absent_words": ["discount", "prepay", "up front"],
-     "note": "Near miss: Section 4.1 says Total Rent may be paid in installments, and the deposit disclosure mentions advance rents."},
-    {"id": "long-14", "lease": "long_numbered", "covered": false,
-     "question": "Can I use a space heater in my bedroom?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address space heaters."],
-     "mistakes": ["Says the lease allows or forbids space heaters.", "Treats the water heater clause as an answer."],
-     "passages": [], "absent_words": ["space heater", "portable heater"],
-     "note": "Near miss: a word search for 'heater' finds the water heater in Addendum O."},
-    {"id": "long-15", "lease": "long_numbered", "covered": false,
-     "question": "Do I get a rent credit if I refer a friend who signs a lease?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address a referral credit."],
-     "mistakes": ["Says the lease offers a referral credit or bonus.", "Says the lease forbids referral credits."],
-     "passages": [], "absent_words": ["referral", "refer a friend", "referring"],
-     "note": "Near miss: Addendum B says no credit is given for low electricity use."},
-
-    {"id": "scan-01", "lease": "scanned", "covered": true, "where": "Paragraph 4",
-     "question": "Rent is due on the 1st. If we pay on the 4th, what extra do we owe?",
-     "answer": "A $55.00 late charge, because rent was not received by 5:00 p.m. on the 3rd.",
-     "points": ["A late charge of $55.00, because rent was not received by 5:00 p.m. on the 3rd."],
-     "mistakes": ["Says nothing extra is owed.", "Adds the $5.00 daily charge, which starts only after the 10th."],
-     "passages": ["If any rent is not received by Landlord by 5:00 p.m. on the third (3rd) day of the month, Tenant shall pay a late charge of $55.00."]},
-    {"id": "scan-02", "lease": "scanned", "covered": true, "where": "Paragraph 8",
-     "question": "Can we get a dog?",
-     "answer": "Only with the landlord's written consent. The lease allows one cat.",
-     "points": ["Not without the landlord's written consent; the lease itself allows only one cat."],
-     "mistakes": ["Says a dog is allowed without consent.", "Says a dog can never be allowed."],
-     "passages": ["Tenant may keep one (1) cat at the Premises. No dogs or other animals are allowed without Landlord's written consent."]},
-    {"id": "scan-03", "lease": "scanned", "covered": true, "where": "Paragraph 20",
-     "question": "Where do we send a written notice to the landlord?",
-     "answer": "In writing, by hand to the office or by certified mail, to Hawthorne Rentals, Inc., 1702 NW 13th Street, Suite 4, Gainesville, Florida 32609 (mail may also go to P.O. Box 14077).",
-     "points": ["Deliver it by hand to the landlord's office or send it by certified mail.", "To Hawthorne Rentals, Inc., 1702 NW 13th Street, Suite 4, Gainesville, Florida 32609."],
-     "mistakes": ["Gives only the P.O. Box as where notices must go."],
-     "passages": ["All notices to Landlord must be in writing and delivered by hand to Landlord's office, or sent by certified mail, to Hawthorne Rentals, Inc., 1702 NW 13th Street, Suite 4, Gainesville, Florida 32609."]},
-    {"id": "scan-04", "lease": "scanned", "covered": true, "where": "Paragraph 10",
-     "question": "Our air conditioning quit on a Saturday night. Who do we call?",
-     "answer": "The after-hours maintenance line, (352) 555-0177.",
-     "points": ["Call the after-hours maintenance line at (352) 555-0177."],
-     "mistakes": ["Says to call the office number, (352) 555-0123."],
-     "passages": ["For a repair that cannot wait, such as a water leak, a sewer backup, or a loss of air conditioning, Tenant shall call Landlord's after-hours maintenance line at (352) 555-0177."],
-     "note": "Near miss: the office number, (352) 555-0123, is for weekday hours."},
-    {"id": "scan-05", "lease": "scanned", "covered": true, "where": "Paragraph 5",
-     "question": "Does our security deposit earn interest?",
-     "answer": "Yes. It is held in a separate interest-bearing account at Merchants and Southern Bank.",
-     "points": ["Yes, it is held in a separate interest-bearing account (at Merchants and Southern Bank), and the tenant receives interest."],
-     "mistakes": ["Says the deposit does not earn interest."],
-     "passages": ["Landlord will hold the deposit in a separate interest-bearing account at Merchants and Southern Bank, Gainesville, Florida, and Tenant will receive interest at the rate required by Florida law."]},
-    {"id": "scan-06", "lease": "scanned", "covered": true, "where": "Paragraph 18",
-     "question": "Can we end the lease early? What would it cost?",
-     "answer": "Yes: at least 60 days' written notice and an early termination fee of $2,200.00 (two months' rent).",
-     "points": ["Yes, with at least 60 days' written notice.", "An early termination fee of $2,200.00 (two months' rent)."],
-     "mistakes": ["Says the lease cannot be ended early."],
-     "passages": ["If Tenant wishes to end this Lease before the end of the term, Tenant may do so by giving Landlord at least sixty (60) days' written notice and paying an early termination fee equal to two months' rent ($2,200.00) by the date Tenant moves out, in which case Tenant owes no rent for any period after Tenant moves out and returns the keys."]},
-    {"id": "scan-07", "lease": "scanned", "covered": true, "where": "Paragraph 13",
-     "question": "How much notice does the landlord have to give before coming in?",
-     "answer": "At least 12 hours, entering only between 8:00 a.m. and 7:00 p.m., except in an emergency.",
-     "points": ["At least 12 hours' notice, except in an emergency."],
-     "mistakes": ["Gives a notice period other than 12 hours."],
-     "passages": ["Except in an emergency, Landlord will give Tenant at least twelve (12) hours' notice and will enter only between 8:00 a.m. and 7:00 p.m."]},
-    {"id": "scan-08", "lease": "scanned", "covered": true, "where": "Paragraph 7",
-     "question": "Who pays for garbage pickup?",
-     "answer": "The landlord.",
-     "points": ["The landlord pays for garbage collection."],
-     "mistakes": ["Says the tenants pay for garbage."],
-     "passages": ["Landlord shall pay for garbage collection."]},
-    {"id": "scan-09", "lease": "scanned", "covered": true, "where": "Paragraph 15",
-     "question": "Do we have to buy renter's insurance?",
-     "answer": "No. It is encouraged but not required.",
-     "points": ["No, renter's insurance is encouraged but not required."],
-     "mistakes": ["Says renter's insurance is required.", "Says the lease does not mention renter's insurance."],
-     "passages": ["Tenant is encouraged, but not required, to carry renter's insurance."]},
-    {"id": "scan-10", "lease": "scanned", "covered": true, "where": "Paragraph 6",
-     "question": "My brother wants to stay with us for three weeks this fall. Is that allowed?",
-     "answer": "Not without the landlord's written consent: a guest may not stay more than 14 days in any six-month period.",
-     "points": ["Not without the landlord's written consent, because a guest may not stay more than 14 days in any six-month period."],
-     "mistakes": ["Says a three-week stay is allowed without consent."],
-     "passages": ["A guest may not stay more than fourteen (14) days in any six-month period without Landlord's written consent."]},
-    {"id": "scan-11", "lease": "scanned", "covered": false,
-     "question": "Does the lease say anything about smoking?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address smoking."],
-     "mistakes": ["Says the lease bans or allows smoking.", "Treats the smoke detector clause as a smoking rule."],
-     "passages": [], "absent_words": ["smoking", "cigarette", "vaping"],
-     "note": "Near miss: a word search for 'smoke' finds the smoke detector batteries in Paragraph 11."},
-    {"id": "scan-12", "lease": "scanned", "covered": false,
-     "question": "Can we use a grill on the patio?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address grills."],
-     "mistakes": ["Says the lease allows or forbids grills."],
-     "passages": [], "absent_words": ["grill", "patio", "barbecue"]},
-
-    {"id": "broken-01", "lease": "broken_text", "covered": true, "where": "Item 4",
-     "question": "If I pay rent on the 6th, what late charges will I owe?",
-     "answer": "An initial $75.00 late charge plus $10.00 a day after that, at most $175.00 for the month.",
-     "points": ["An initial late charge of $75.00.", "Plus $10.00 a day after that, with total late charges capped at $175.00 a month."],
-     "mistakes": ["Says no late charge applies (the unchecked box)."],
-     "passages": ["If rent is not received by 11:59 p.m. on the 4th day of the month, Tenant will pay an initial late charge of $75.00 and a daily late charge of $10.00 per day after that, but total late charges for one month will not be more than $175.00."]},
-    {"id": "broken-02", "lease": "broken_text", "covered": true, "where": "Item 8",
-     "question": "My parents want to bring their dog when they visit. Is that allowed?",
-     "answer": "No. The 'no pets' box is checked, and it includes visiting pets.",
-     "points": ["No, no pets are allowed, and that includes visiting pets."],
-     "mistakes": ["Says pets are allowed under a Pet Agreement (the unchecked box)."],
-     "passages": ["No pets are allowed. This includes visiting pets."],
-     "note": "Two boxes; only the checked one applies."},
-    {"id": "broken-03", "lease": "broken_text", "covered": true, "where": "Item 14",
-     "question": "Can I send my landlord a written notice by email?",
-     "answer": "Yes. The email box is checked: leasing@brightwaterflats.example.",
-     "points": ["Yes, notices may be sent by email to leasing@brightwaterflats.example."],
-     "mistakes": ["Says email is not allowed for notices (the unchecked box)."],
-     "passages": ["by email to leasing@brightwaterflats.example"],
-     "note": "Near miss: the unchecked box says email is not allowed."},
-    {"id": "broken-04", "lease": "broken_text", "covered": true, "where": "Item 10",
-     "question": "How do I ask for a repair?",
-     "answer": "Submit a request through the resident portal (checked box). For an emergency, call (352) 555-0160 and also submit a portal request.",
-     "points": ["Submit a repair request through the resident portal."],
-     "mistakes": ["Says requests must be in writing to the office, or by phone only (unchecked boxes)."],
-     "passages": ["by submitting a request through the resident portal"],
-     "note": "The unchecked boxes are 'in writing to the office' and 'by phone only'."},
-    {"id": "broken-05", "lease": "broken_text", "covered": true, "where": "Item 5",
-     "question": "Does my security deposit earn interest?",
-     "answer": "No. The checked box is a separate non-interest-bearing account, at Florida Credit Union.",
-     "points": ["No, it is held in a separate non-interest-bearing account."],
-     "mistakes": ["Says the deposit is in an interest-bearing account (the unchecked box)."],
-     "passages": ["in a separate non-interest-bearing account"],
-     "note": "The unchecked box just before it says interest-bearing."},
-    {"id": "broken-06", "lease": "broken_text", "covered": true, "where": "Item 6",
-     "question": "Do I pay for water?",
-     "answer": "No. The landlord pays water and sewer.",
-     "points": ["No, the landlord pays for water and sewer."],
-     "mistakes": ["Says the tenant pays for water."],
-     "passages": ["Landlord pays: ☐ electricity   ☒ water and sewer"],
-     "note": "The answer is only in which boxes are checked."},
-    {"id": "broken-07", "lease": "broken_text", "covered": true, "where": "Item 13",
-     "question": "Do I need renter's insurance?",
-     "answer": "Yes, with at least $100,000 of personal liability coverage, and proof before move-in.",
-     "points": ["Yes, renter's insurance is required.", "With at least $100,000 of personal liability coverage."],
-     "mistakes": ["Says renter's insurance is not required (the unchecked box)."],
-     "passages": ["Tenant must carry renter's insurance with at least $100,000 of personal liability coverage and must give Manager proof of coverage before move-in."]},
-    {"id": "broken-08", "lease": "broken_text", "covered": true, "where": "Item 16",
-     "question": "Can I pay a fee to end my lease early?",
-     "answer": "No. The checked box says the lease has no early termination option.",
-     "points": ["No, the lease does not include an early termination option."],
-     "mistakes": ["Says the lease offers an early termination fee (the unchecked box)."],
-     "passages": ["This lease does not include an early termination option."],
-     "note": "The unchecked box offers a fee option with the amount left blank."},
-    {"id": "broken-09", "lease": "broken_text", "covered": true, "where": "Item 15",
-     "question": "How much notice do I give before moving out at the end of the lease?",
-     "answer": "Written notice at least 30 days before the lease ends, or owe one month's rent ($975.00).",
-     "points": ["Written notice at least 30 days before the lease ends."],
-     "mistakes": ["Gives a notice period other than 30 days."],
-     "passages": ["Tenant must give written notice of moving out at least 30 days before the lease ends."]},
-    {"id": "broken-10", "lease": "broken_text", "covered": true, "where": "Item 17",
-     "question": "Can I sublet my apartment for the summer?",
-     "answer": "No. The checked box says Tenant may not sublet.",
-     "points": ["No, the tenant may not sublet."],
-     "mistakes": ["Says subletting is allowed with approval (the unchecked box)."],
-     "passages": ["Tenant may not sublet or assign this lease."]},
-    {"id": "broken-11", "lease": "broken_text", "covered": false,
-     "question": "What are the quiet hours?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address quiet hours."],
-     "mistakes": ["Gives quiet hours as if the lease set them."],
-     "passages": [], "absent_words": ["quiet", "noise"]},
-    {"id": "broken-12", "lease": "broken_text", "covered": false,
-     "question": "Can I paint my bedroom walls?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address painting."],
-     "mistakes": ["Says the lease allows or forbids painting."],
-     "passages": [], "absent_words": ["paint", "alteration"]},
-
-    {"id": "sample-01", "lease": "sample_v1", "covered": true, "where": "Section 3.3",
-     "question": "If my rent comes in on the 8th, what late charge do I owe?",
-     "answer": "$75.00 plus $10.00 a day after that, at most $250.00 a month.",
-     "points": ["A late charge of $75.00.", "Plus $10.00 a day after that, at most $250.00 in a month."],
-     "mistakes": ["Says no late charge is owed.", "Gives the $40.00 returned-payment fee as the late charge."],
-     "passages": ["Rent not received by 11:59 p.m. on the fifth (5th) day of the month is late. Tenant shall pay a late charge of $75.00 plus $10.00 per day thereafter, not to exceed a total of $250.00 in any month."]},
-    {"id": "sample-02", "lease": "sample_v1", "covered": true, "where": "Section 10.1",
-     "question": "Can I get a second dog?",
-     "answer": "Not without a written Pet Addendum. The lease authorizes one dog, Biscuit.",
-     "points": ["Not without a written Pet Addendum; the lease authorizes only the one dog."],
-     "mistakes": ["Says a second dog is allowed as the lease stands."],
-     "passages": ["No other animals are permitted without a written Pet Addendum."]},
-    {"id": "sample-03", "lease": "sample_v1", "covered": true, "where": "Section 22.1",
-     "question": "How do I send my landlord a formal notice, and to what address?",
-     "answer": "In writing, by hand, certified mail (return receipt requested), or overnight courier, to Sunrise Property Holdings, LLC, Attn: Property Manager, 4120 NW 39th Avenue, Suite 210, Gainesville, Florida 32606. Email only for routine messages.",
-     "points": ["In writing, by hand, by certified mail (return receipt requested), or by overnight courier.", "To Sunrise Property Holdings, LLC, 4120 NW 39th Avenue, Suite 210, Gainesville, Florida 32606."],
-     "mistakes": ["Says email is enough for a formal notice."],
-     "passages": ["All notices required under this Lease or Chapter 83, Florida Statutes, shall be in writing and delivered by hand, by certified mail, return receipt requested, or by nationally recognized overnight courier to the following addresses",
-                  "Landlord: Sunrise Property Holdings, LLC, Attn: Property Manager, 4120 NW 39th Avenue, Suite 210, Gainesville, Florida 32606"]},
-    {"id": "sample-04", "lease": "sample_v1", "covered": true, "where": "Section 7.3",
-     "question": "How do I ask for a repair?",
-     "answer": "In writing, through the resident portal or by email to the address in Section 22.1, except in an emergency.",
-     "points": ["In writing, through the resident portal or by email, except in an emergency."],
-     "mistakes": ["Says a phone call is the way to ask for an ordinary repair."],
-     "passages": ["Except in an emergency, Tenant shall submit all repair requests in writing through the resident portal or by email to the address in Section 22.1."]},
-    {"id": "sample-05", "lease": "sample_v1", "covered": true, "where": "Section 4.2",
-     "question": "Where is my deposit held? Does it earn interest?",
-     "answer": "In a separate non-interest-bearing account at Capital City Bank, Gainesville. No interest.",
-     "points": ["In a separate account at Capital City Bank in Gainesville.", "It does not earn interest."],
-     "mistakes": ["Says the deposit earns interest."],
-     "passages": ["Landlord shall hold the Deposit in a separate non-interest-bearing account at Capital City Bank, Gainesville, Florida, and shall not commingle the Deposit with Landlord's other funds."]},
-    {"id": "sample-06", "lease": "sample_v1", "covered": true, "where": "Section 11.2",
-     "question": "How much notice must my landlord give before entering?",
-     "answer": "At least 24 hours, and only between 7:30 a.m. and 8:00 p.m., except in an emergency.",
-     "points": ["At least 24 hours' notice, except in an emergency."],
-     "mistakes": ["Gives a notice period other than 24 hours."],
-     "passages": ["Except in an emergency, Landlord shall give Tenant at least twenty-four (24) hours' notice and shall enter only between 7:30 a.m. and 8:00 p.m."]},
-    {"id": "sample-07", "lease": "sample_v1", "covered": true, "where": "Exhibit A",
-     "question": "Can I end my lease early for a set fee?",
-     "answer": "Not as the lease stands: neither option of the Early Termination Addendum is initialed, so Option 2 applies (no set fee; the landlord may seek damages as the law allows).",
-     "points": ["No set fee applies, because neither option is initialed, so Option 2 (no liquidated damages) applies.", "Under Option 2 the landlord may seek damages as the law provides."],
-     "mistakes": ["Says the tenant can end the lease early by paying the $3,700.00 fee of Option 1."],
-     "passages": ["If neither option is initialed, Option 2 applies.",
-                  "I do not agree to liquidated damages or an early termination fee, and I acknowledge that the landlord may seek damages as provided by law."],
-     "note": "Option 1 offers a $3,700.00 fee, but its initials line is blank."},
-    {"id": "sample-08", "lease": "sample_v1", "covered": true, "where": "Section 2.3",
-     "question": "I plan to move out when the lease ends. Do I need to give notice?",
-     "answer": "Yes. Written notice at least 60 days before the Expiration Date, or owe one month's rent as liquidated damages.",
-     "points": ["Yes, written notice at least 60 days before the Expiration Date."],
-     "mistakes": ["Says no notice is needed.", "Gives a notice period other than 60 days."],
-     "passages": ["Either Party wishing to terminate the tenancy at the Expiration Date shall give the other Party written notice at least sixty (60) days before the Expiration Date."]},
-    {"id": "sample-09", "lease": "sample_v1", "covered": true, "where": "Section 8.3",
-     "question": "Do I have to pay for small repairs myself?",
-     "answer": "The first $100.00 of any single repair not caused by the landlord's neglect, wear and tear, or a structural defect.",
-     "points": ["The tenant pays the first $100.00 of any single repair (not caused by the landlord's neglect, ordinary wear and tear, or a structural defect)."],
-     "mistakes": ["Says the tenant pays nothing for repairs.", "Says the tenant pays all small repairs in full."],
-     "passages": ["Tenant shall pay the first $100.00 of the cost of any single repair not caused by Landlord's neglect, ordinary wear and tear, or structural defect."]},
-    {"id": "sample-10", "lease": "sample_v1", "covered": true, "where": "Section 5.1",
-     "question": "My friend wants to stay with us for three weeks. Is that OK?",
-     "answer": "Not without the landlord's prior written consent: no one else may stay more than 14 days in a row or 30 days a year.",
-     "points": ["Not without the landlord's prior written consent, because no other person may stay more than 14 days in a row (or 30 days a year)."],
-     "mistakes": ["Says a three-week stay is allowed without consent."],
-     "passages": ["No other person may reside at the Premises for more than fourteen (14) consecutive days, or more than thirty (30) days in any calendar year, without Landlord's prior written consent."]},
-    {"id": "sample-11", "lease": "sample_v1", "covered": true, "where": "Section 12.1",
-     "question": "Can I sublet the house while I travel this summer?",
-     "answer": "Only with the landlord's prior written consent, which the landlord may refuse for any reason.",
-     "points": ["Only with the landlord's prior written consent, which the landlord may withhold in its sole discretion."],
-     "mistakes": ["Says subletting is allowed without consent.", "Says subletting is never allowed."],
-     "passages": ["Tenant shall not assign this Lease, sublet all or any part of the Premises, or license any person to occupy the Premises without Landlord's prior written consent, which Landlord may withhold in its sole discretion."]},
-    {"id": "sample-12", "lease": "sample_v1", "covered": false,
-     "question": "Does the lease limit how much the landlord can raise the rent if I renew?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address the rent for a renewal."],
-     "mistakes": ["Says the lease caps or sets the rent for a renewal."],
-     "passages": [], "absent_words": ["raise", "rent increase"],
-     "note": "Near miss: Section 2.3 says the lease does not renew automatically, and Section 2.4 keeps the same terms in a month-to-month holdover. Mentioning them is fine."},
-    {"id": "sample-13", "lease": "sample_v1", "covered": false,
-     "question": "Does the lease say anything about package deliveries?",
-     "answer": "The lease does not say.",
-     "points": ["The lease does not address package deliveries."],
-     "mistakes": ["Describes package rules as if the lease had them."],
-     "passages": [], "absent_words": ["package", "parcel"]}
+    {
+      "id": "short-01",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Late Rent",
+      "question": "My rent will be paid on the 7th this month. Do I owe a late fee, and how much?",
+      "answer": "Yes. Rent not paid by the end of the 5th owes a $40.00 late fee.",
+      "points": [
+        "A late fee is owed.",
+        "The late fee is $40.00."
+      ],
+      "mistakes": [
+        "Says no late fee is owed.",
+        "Gives a late fee amount other than $40.00."
+      ],
+      "passages": [
+        "If rent is not paid by the end of the 5th day of the month, the Tenant owes a late fee of $40.00."
+      ]
+    },
+    {
+      "id": "short-02",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Pets",
+      "question": "Can I keep a cat in my room?",
+      "answer": "No. No pets of any kind; the only exception is fish in one tank of 10 gallons or less.",
+      "points": [
+        "No, a cat is not allowed (the lease bans pets of any kind)."
+      ],
+      "mistakes": [
+        "Says a cat is allowed, or allowed with the landlord's permission."
+      ],
+      "passages": [
+        "No pets of any kind may be kept in the house or yard, even for a short visit."
+      ]
+    },
+    {
+      "id": "short-03",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Notices",
+      "question": "I need to send my landlord a formal written notice about my deposit. Where do I send it, and how?",
+      "answer": "By hand or by mail to Patricia Nguyen, 2840 NW 16th Boulevard, Gainesville, Florida 32605. Text or email is only for day-to-day messages.",
+      "points": [
+        "Deliver it by hand or send it by mail.",
+        "Send it to Patricia Nguyen at 2840 NW 16th Boulevard, Gainesville, Florida 32605."
+      ],
+      "mistakes": [
+        "Says a text or email is enough for this notice."
+      ],
+      "passages": [
+        "A formal written notice to the Landlord, such as a notice about the lease or about the deposit, must be delivered by hand or sent by mail to Patricia Nguyen, 2840 NW 16th Boulevard, Gainesville, Florida 32605."
+      ],
+      "note": "Near miss: the same clause allows text or email for day-to-day messages."
+    },
+    {
+      "id": "short-04",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Repairs",
+      "question": "My air conditioning stopped working in July. How do I tell my landlord?",
+      "answer": "Call the landlord's phone, (352) 555-0198. No air conditioning in summer is an emergency, so don't just text.",
+      "points": [
+        "Call the landlord's phone; a text alone is not enough (no air conditioning in summer is an emergency)."
+      ],
+      "mistakes": [
+        "Says a text or email is the way to report it."
+      ],
+      "passages": [
+        "For an emergency, such as a leak, no air conditioning in summer, or a sparking outlet, call the Landlord's phone and do not just text."
+      ]
+    },
+    {
+      "id": "short-05",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Security Deposit",
+      "question": "Where is my security deposit being kept, and does it earn interest?",
+      "answer": "In a separate account at Truist Bank in Gainesville. It does not earn interest.",
+      "points": [
+        "It is kept in a separate account at Truist Bank in Gainesville.",
+        "It does not earn interest."
+      ],
+      "mistakes": [
+        "Says the deposit earns interest."
+      ],
+      "passages": [
+        "The Landlord keeps the deposit in a separate account at Truist Bank in Gainesville that does not earn interest."
+      ]
+    },
+    {
+      "id": "short-06",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Guests",
+      "question": "My girlfriend wants to stay over for a full week. Is that allowed?",
+      "answer": "No. A guest may stay no more than 3 nights in a row and 8 nights a month.",
+      "points": [
+        "No, not a full week: a guest may stay overnight no more than 3 nights in a row."
+      ],
+      "mistakes": [
+        "Says a week-long stay is allowed."
+      ],
+      "passages": [
+        "A guest may stay overnight no more than 3 nights in a row and no more than 8 nights in a month."
+      ]
+    },
+    {
+      "id": "short-07",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Utilities",
+      "question": "Do I have to pay for electricity?",
+      "answer": "Yes, a share. The three tenants split the electric bill equally; the share is due with the next month's rent.",
+      "points": [
+        "Yes, a share of it: the three tenants split the monthly electric bill equally."
+      ],
+      "mistakes": [
+        "Says electricity is included in the rent or paid by the landlord.",
+        "Says the tenant pays the whole electric bill alone."
+      ],
+      "passages": [
+        "Electricity is in the Landlord's name, and the three tenants split the monthly electric bill equally."
+      ]
+    },
+    {
+      "id": "short-08",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Landlord's Entry",
+      "question": "Can my landlord come into my room without telling me first?",
+      "answer": "Not unless there is an emergency. For repairs or inspections, at least 24 hours' notice by text, between 9 a.m. and 6 p.m.",
+      "points": [
+        "No, except in an emergency.",
+        "The landlord must give at least 24 hours' notice by text before entering the room."
+      ],
+      "mistakes": [
+        "Says the landlord may enter the tenant's room at any time."
+      ],
+      "passages": [
+        "The Landlord will enter the Tenant's room only for repairs or inspections, after giving at least 24 hours' notice by text, between 9:00 a.m. and 6:00 p.m., unless there is an emergency."
+      ],
+      "note": "Near miss: the landlord may enter the shared parts of the house at any time."
+    },
+    {
+      "id": "short-09",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Ending the Lease",
+      "question": "I want to stay in the house after July 2027. What do I need to do?",
+      "answer": "Tell the landlord in writing by May 31, 2027; the landlord will say whether a new agreement is offered.",
+      "points": [
+        "Tell the landlord in writing by May 31, 2027."
+      ],
+      "mistakes": [
+        "Says the lease renews on its own."
+      ],
+      "passages": [
+        "If the Tenant wants to stay after July 31, 2027, the Tenant should tell the Landlord in writing by May 31, 2027, and the Landlord will say whether a new agreement is offered."
+      ]
+    },
+    {
+      "id": "short-10",
+      "lease": "short_headings",
+      "covered": true,
+      "where": "Parking",
+      "question": "Can I park my second car on the lawn?",
+      "answer": "No. One car in the driveway space marked 3, and no parking on the grass.",
+      "points": [
+        "No, parking on the grass is not allowed."
+      ],
+      "mistakes": [
+        "Says parking on the lawn is allowed."
+      ],
+      "passages": [
+        "The Tenant may park one car in the driveway, in the space marked \"3.\" No parking on the grass."
+      ]
+    },
+    {
+      "id": "short-11",
+      "lease": "short_headings",
+      "covered": false,
+      "question": "Do I need to have renter's insurance?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address renter's insurance."
+      ],
+      "mistakes": [
+        "Says the lease requires renter's insurance.",
+        "Says the lease states renter's insurance is not required."
+      ],
+      "passages": [],
+      "absent_words": [
+        "insurance",
+        "insure"
+      ]
+    },
+    {
+      "id": "short-12",
+      "lease": "short_headings",
+      "covered": false,
+      "question": "If I move out before the lease ends, is there a fee for breaking the lease?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address moving out early or a fee for it."
+      ],
+      "mistakes": [
+        "States an early termination fee as if the lease set one."
+      ],
+      "passages": [],
+      "absent_words": [
+        "early",
+        "terminat",
+        "break"
+      ],
+      "note": "Near miss: 'Ending the Lease' is only about the end of the term."
+    },
+    {
+      "id": "long-01",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Section 5.1",
+      "question": "My rent installment will be paid on the 6th. What late charges will I owe?",
+      "answer": "An initial $50.00 late charge on the 4th, plus $10.00 for each later day unpaid (daily charges capped at 15 days).",
+      "points": [
+        "An initial late charge of $50.00.",
+        "Plus a daily late charge of $10.00 for each additional day unpaid."
+      ],
+      "mistakes": [
+        "Gives the $25.00 utility overage late charge as the rent late charge.",
+        "Says no late charge is owed by the 6th."
+      ],
+      "passages": [
+        "If any installment is not received in full by 11:59 p.m. on the third (3rd) day of the month, you will owe an initial late charge of $50.00 on the fourth (4th) day of the month, plus a daily late charge of $10.00 for each additional day the installment remains unpaid."
+      ],
+      "note": "Near miss: Addendum N lists a $25.00 late charge for a utility overage share."
+    },
+    {
+      "id": "long-02",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Addendum C",
+      "question": "Can I get a cat?",
+      "answer": "Yes, with written approval: Unit 3108 is pet-friendly, cats may be approved, every roommate must sign, and you pay a $300.00 non-refundable pet fee and $25.00 a month pet rent.",
+      "points": [
+        "Yes, a cat can be approved, because Unit 3108 is a pet-friendly unit.",
+        "It needs Manager's written approval and every roommate's signature on the Pet Approval Form.",
+        "There is a non-refundable pet fee of $300.00.",
+        "There is pet rent of $25.00 a month."
+      ],
+      "mistakes": [
+        "Says no animals are allowed at all.",
+        "Says pets are not allowed in this unit."
+      ],
+      "passages": [
+        "Unit 3108 is a designated pet-friendly unit.",
+        "Manager may approve domestic cats and domestic dogs only.",
+        "You may keep a pet only after Manager approves the pet in writing and you and each of your Roommates have signed the Pet Approval Form for that pet.",
+        "You will pay a non-refundable pet fee of $300.00 for each approved pet before the pet is brought into the Unit.",
+        "You will pay pet rent of $25.00 per month for each approved pet, beginning in the month the pet is approved."
+      ],
+      "note": "The body of the lease (Section 15.1) says no animals without approval; the answer is deep in Addendum C."
+    },
+    {
+      "id": "long-03",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Section 30.1",
+      "question": "I need to give the landlord a written notice. Where and how do I deliver it?",
+      "answer": "In writing, by hand to the leasing office at 3800 SW Archer Road, Suite 100 (get a date-stamped copy), or by certified mail, return receipt requested, to that address. Email, text, or the portal alone does not count.",
+      "points": [
+        "Deliver it by hand to the leasing office, or send it by certified mail, return receipt requested.",
+        "The address is 3800 SW Archer Road, Suite 100, Gainesville, Florida 32608."
+      ],
+      "mistakes": [
+        "Says to send it to the owner's Orlando address.",
+        "Says email, text, or the portal is enough."
+      ],
+      "passages": [
+        "Any notice you give us under this Lease or under Part II of Chapter 83, Florida Statutes, must be in writing and must be delivered by hand to the Archer Commons leasing office, 3800 SW Archer Road, Suite 100, Gainesville, Florida 32608, during office hours (ask the staff for a copy stamped with the date received), or sent to that address by certified mail, return receipt requested."
+      ],
+      "note": "Near miss: Section 30.3 gives the owner's address in Orlando, and says residents should still use the leasing office."
+    },
+    {
+      "id": "long-04",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Section 13.1",
+      "question": "The blinds in my bedroom are broken. How do I ask for a repair?",
+      "answer": "Submit a maintenance request through the Blue Heron resident portal or app.",
+      "points": [
+        "Submit a maintenance request through the resident portal or mobile app."
+      ],
+      "mistakes": [
+        "Says to call the emergency maintenance line for it."
+      ],
+      "passages": [
+        "All requests for repairs and maintenance must be submitted through the Blue Heron resident portal or mobile app, under \"Maintenance Requests.\""
+      ]
+    },
+    {
+      "id": "long-05",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Sections 7.1 and 7.2",
+      "question": "How much was my security deposit, and where is it held?",
+      "answer": "$450.00, in a separate non-interest-bearing account at Ameris Bank, 3700 SW Archer Road, Gainesville.",
+      "points": [
+        "The deposit is $450.00.",
+        "It is held in a separate non-interest-bearing account at Ameris Bank in Gainesville."
+      ],
+      "mistakes": [
+        "Says the deposit earns interest."
+      ],
+      "passages": [
+        "You have paid us a security deposit of $450.00 (the \"Deposit\").",
+        "We hold the Deposit in a separate non-interest-bearing account at Ameris Bank, 3700 SW Archer Road, Gainesville, Florida 32608, for the benefit of residents."
+      ]
+    },
+    {
+      "id": "long-06",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Addendum A, A-2.1",
+      "question": "My friend from home wants to stay in my room for a week. Is that allowed?",
+      "answer": "Not without Manager's prior written consent: no more than 3 nights in a row or 6 nights a month, and every roommate must agree.",
+      "points": [
+        "Not without Manager's prior written consent: a guest may stay no more than 3 nights in a row (and 6 nights a month; every roommate must also agree)."
+      ],
+      "mistakes": [
+        "Says a week-long stay is allowed without consent."
+      ],
+      "passages": [
+        "A guest may stay overnight in the Unit no more than three (3) consecutive nights and no more than six (6) nights in any calendar month, unless Manager gives prior written consent."
+      ],
+      "note": "Section 10.2 only points to the Community Policies; the limit is in Addendum A."
+    },
+    {
+      "id": "long-07",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Addendum B, B-2",
+      "question": "Is electricity included in my rent?",
+      "answer": "Up to an allowance of $40.00 per bedroom per month ($160.00 for the unit); any overage is split equally among the residents.",
+      "points": [
+        "Partly: electricity is included only up to an allowance of $40.00 per bedroom per month ($160.00 for the unit).",
+        "Use over the allowance is billed to the residents (split equally among them)."
+      ],
+      "mistakes": [
+        "Says electricity is fully included with no limit.",
+        "Says electricity is not included at all."
+      ],
+      "passages": [
+        "Your installment also includes electricity for the Unit up to an allowance of $40.00 per bedroom per month, which is $160.00 per month for a four-bedroom Unit (the \"Electricity Allowance\")."
+      ]
+    },
+    {
+      "id": "long-08",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Section 23.1",
+      "question": "Can I sublease my room for the summer?",
+      "answer": "No. Subletting is not allowed, for the summer or any other period. A full lease transfer under Addendum H is the only option.",
+      "points": [
+        "No, subletting is not allowed, including for the summer."
+      ],
+      "mistakes": [
+        "Says subletting is allowed, or allowed with permission."
+      ],
+      "passages": [
+        "You may not sublet your Bedroom or any part of the Unit, whether for the summer or any other period, and you may not let anyone else live in your Bedroom in exchange for payment."
+      ]
+    },
+    {
+      "id": "long-09",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Addendum N",
+      "question": "I locked myself out at 11 at night. What will it cost to get let in?",
+      "answer": "$75.00 for lockout service after office hours.",
+      "points": [
+        "$75.00, the charge for lockout service after office hours."
+      ],
+      "mistakes": [
+        "Says $25.00 (the charge during office hours)."
+      ],
+      "passages": [
+        "Lockout service, after office hours $75.00"
+      ],
+      "note": "The answer is a row in a table near the end; Section 21.2 only points to it."
+    },
+    {
+      "id": "long-10",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Addendum K",
+      "question": "Can I end my lease early? What would it cost?",
+      "answer": "Yes. The resident initialed Option 1: give at least 60 days' written notice, pay rent through the termination date, and pay a $1,798.00 early termination fee.",
+      "points": [
+        "Yes, because the resident initialed Option 1 of the Early Termination Addendum.",
+        "The early termination fee is $1,798.00.",
+        "It takes at least 60 days' written notice, and rent paid through the termination date."
+      ],
+      "mistakes": [
+        "Says the lease cannot be ended early.",
+        "Says Option 2 applies."
+      ],
+      "passages": [
+        "I agree, as provided in the rental agreement, to pay $1,798.00 (an amount that does not exceed 2 months' rent) as liquidated damages or an early termination fee if I elect to terminate the rental agreement, and the landlord waives the right to seek additional rent beyond the month in which the landlord retakes possession.",
+        "If Resident initialed Option 1, Resident may end the Lease early by: (a) giving Manager written notice, delivered as Section 30.1 of the Lease requires, at least sixty (60) days before the termination date stated in the notice; (b) paying all installments and Additional Rent due through the termination date; and (c) paying the early termination fee of $1,798.00 on or before the termination date."
+      ],
+      "note": "The answer depends on which option has the resident's initials."
+    },
+    {
+      "id": "long-11",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Section 14.2",
+      "question": "How much notice does management have to give before entering my apartment?",
+      "answer": "At least 24 hours, by email or a note on the door, and entry only between 7:30 a.m. and 8:00 p.m., except in an emergency.",
+      "points": [
+        "At least 24 hours' notice, except in an emergency."
+      ],
+      "mistakes": [
+        "Gives a notice period other than 24 hours."
+      ],
+      "passages": [
+        "Except in an emergency, we will give you at least twenty-four (24) hours' notice before entering, by email to the address in your resident portal account or by a written notice left on the Unit's front door, and we will enter only between 7:30 a.m. and 8:00 p.m."
+      ],
+      "note": "Near miss: Section 14.3 lets staff enter without more notice after you submit a maintenance request."
+    },
+    {
+      "id": "long-12",
+      "lease": "long_numbered",
+      "covered": true,
+      "where": "Addendum A, A-1.1",
+      "question": "What are the quiet hours on a Saturday night?",
+      "answer": "From midnight to 9:00 a.m.",
+      "points": [
+        "From 12:00 midnight to 9:00 a.m."
+      ],
+      "mistakes": [
+        "Gives the weeknight hours, 10:00 p.m. to 8:00 a.m., for Saturday night."
+      ],
+      "passages": [
+        "Quiet hours are from 10:00 p.m. to 8:00 a.m. Sunday night through Thursday night, and from 12:00 midnight to 9:00 a.m. on Friday night and Saturday night."
+      ]
+    },
+    {
+      "id": "long-13",
+      "lease": "long_numbered",
+      "covered": false,
+      "question": "Is there a discount if I pay the whole year's rent up front?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address a discount for paying up front."
+      ],
+      "mistakes": [
+        "Says the lease offers a discount.",
+        "Says the lease forbids paying up front."
+      ],
+      "passages": [],
+      "absent_words": [
+        "discount",
+        "prepay",
+        "up front"
+      ],
+      "note": "Near miss: Section 4.1 says Total Rent may be paid in installments, and the deposit disclosure mentions advance rents."
+    },
+    {
+      "id": "long-14",
+      "lease": "long_numbered",
+      "covered": false,
+      "question": "Can I use a space heater in my bedroom?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address space heaters."
+      ],
+      "mistakes": [
+        "Says the lease allows or forbids space heaters.",
+        "Treats the water heater clause as an answer."
+      ],
+      "passages": [],
+      "absent_words": [
+        "space heater",
+        "portable heater"
+      ],
+      "note": "Near miss: a word search for 'heater' finds the water heater in Addendum O."
+    },
+    {
+      "id": "long-15",
+      "lease": "long_numbered",
+      "covered": false,
+      "question": "Do I get a rent credit if I refer a friend who signs a lease?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address a referral credit."
+      ],
+      "mistakes": [
+        "Says the lease offers a referral credit or bonus.",
+        "Says the lease forbids referral credits."
+      ],
+      "passages": [],
+      "absent_words": [
+        "referral",
+        "refer a friend",
+        "referring"
+      ],
+      "note": "Near miss: Addendum B says no credit is given for low electricity use."
+    },
+    {
+      "id": "scan-01",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 4",
+      "question": "Rent is due on the 1st. If we pay on the 4th, what extra do we owe?",
+      "answer": "A $55.00 late charge, because rent was not received by 5:00 p.m. on the 3rd.",
+      "points": [
+        "A late charge of $55.00 (rent was not received by 5:00 p.m. on the 3rd)."
+      ],
+      "mistakes": [
+        "Says nothing extra is owed.",
+        "Adds the $5.00 daily charge, which starts only after the 10th."
+      ],
+      "passages": [
+        "If any rent is not received by Landlord by 5:00 p.m. on the third (3rd) day of the month, Tenant shall pay a late charge of $55.00."
+      ]
+    },
+    {
+      "id": "scan-02",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 8",
+      "question": "Can we get a dog?",
+      "answer": "Only with the landlord's written consent. The lease allows one cat.",
+      "points": [
+        "Not without the landlord's written consent; the lease itself allows only one cat."
+      ],
+      "mistakes": [
+        "Says a dog is allowed without consent.",
+        "Says a dog can never be allowed."
+      ],
+      "passages": [
+        "Tenant may keep one (1) cat at the Premises. No dogs or other animals are allowed without Landlord's written consent."
+      ]
+    },
+    {
+      "id": "scan-03",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 20",
+      "question": "Where do we send a written notice to the landlord?",
+      "answer": "In writing, by hand to the office or by certified mail, to Hawthorne Rentals, Inc., 1702 NW 13th Street, Suite 4, Gainesville, Florida 32609 (mail may also go to P.O. Box 14077).",
+      "points": [
+        "Deliver it by hand to the landlord's office or send it by certified mail.",
+        "To Hawthorne Rentals, Inc., 1702 NW 13th Street, Suite 4, Gainesville, Florida 32609."
+      ],
+      "mistakes": [
+        "Gives only the P.O. Box as where notices must go."
+      ],
+      "passages": [
+        "All notices to Landlord must be in writing and delivered by hand to Landlord's office, or sent by certified mail, to Hawthorne Rentals, Inc., 1702 NW 13th Street, Suite 4, Gainesville, Florida 32609."
+      ]
+    },
+    {
+      "id": "scan-04",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 10",
+      "question": "Our air conditioning quit on a Saturday night. Who do we call?",
+      "answer": "The after-hours maintenance line, (352) 555-0177.",
+      "points": [
+        "Call the after-hours maintenance line at (352) 555-0177."
+      ],
+      "mistakes": [
+        "Says to call the office number, (352) 555-0123."
+      ],
+      "passages": [
+        "For a repair that cannot wait, such as a water leak, a sewer backup, or a loss of air conditioning, Tenant shall call Landlord's after-hours maintenance line at (352) 555-0177."
+      ],
+      "note": "Near miss: the office number, (352) 555-0123, is for weekday hours."
+    },
+    {
+      "id": "scan-05",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 5",
+      "question": "Does our security deposit earn interest?",
+      "answer": "Yes. It is held in a separate interest-bearing account at Merchants and Southern Bank.",
+      "points": [
+        "Yes, it earns interest (it is held in an interest-bearing account at Merchants and Southern Bank)."
+      ],
+      "mistakes": [
+        "Says the deposit does not earn interest."
+      ],
+      "passages": [
+        "Landlord will hold the deposit in a separate interest-bearing account at Merchants and Southern Bank, Gainesville, Florida, and Tenant will receive interest at the rate required by Florida law."
+      ]
+    },
+    {
+      "id": "scan-06",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 18",
+      "question": "Can we end the lease early? What would it cost?",
+      "answer": "Yes: at least 60 days' written notice and an early termination fee of $2,200.00 (two months' rent).",
+      "points": [
+        "Yes, with at least 60 days' written notice.",
+        "An early termination fee of $2,200.00 (two months' rent)."
+      ],
+      "mistakes": [
+        "Says the lease cannot be ended early."
+      ],
+      "passages": [
+        "If Tenant wishes to end this Lease before the end of the term, Tenant may do so by giving Landlord at least sixty (60) days' written notice and paying an early termination fee equal to two months' rent ($2,200.00) by the date Tenant moves out, in which case Tenant owes no rent for any period after Tenant moves out and returns the keys."
+      ]
+    },
+    {
+      "id": "scan-07",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 13",
+      "question": "How much notice does the landlord have to give before coming in?",
+      "answer": "At least 12 hours, entering only between 8:00 a.m. and 7:00 p.m., except in an emergency.",
+      "points": [
+        "At least 12 hours' notice, except in an emergency."
+      ],
+      "mistakes": [
+        "Gives a notice period other than 12 hours."
+      ],
+      "passages": [
+        "Except in an emergency, Landlord will give Tenant at least twelve (12) hours' notice and will enter only between 8:00 a.m. and 7:00 p.m."
+      ]
+    },
+    {
+      "id": "scan-08",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 7",
+      "question": "Who pays for garbage pickup?",
+      "answer": "The landlord.",
+      "points": [
+        "The landlord pays for garbage collection."
+      ],
+      "mistakes": [
+        "Says the tenants pay for garbage."
+      ],
+      "passages": [
+        "Landlord shall pay for garbage collection."
+      ]
+    },
+    {
+      "id": "scan-09",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 15",
+      "question": "Do we have to buy renter's insurance?",
+      "answer": "No. It is encouraged but not required.",
+      "points": [
+        "No, renter's insurance is encouraged but not required."
+      ],
+      "mistakes": [
+        "Says renter's insurance is required.",
+        "Says the lease does not mention renter's insurance."
+      ],
+      "passages": [
+        "Tenant is encouraged, but not required, to carry renter's insurance."
+      ]
+    },
+    {
+      "id": "scan-10",
+      "lease": "scanned",
+      "covered": true,
+      "where": "Paragraph 6",
+      "question": "My brother wants to stay with us for three weeks this fall. Is that allowed?",
+      "answer": "Not without the landlord's written consent: a guest may not stay more than 14 days in any six-month period.",
+      "points": [
+        "Not without the landlord's written consent: a guest may stay no more than 14 days in any six-month period."
+      ],
+      "mistakes": [
+        "Says a three-week stay is allowed without consent."
+      ],
+      "passages": [
+        "A guest may not stay more than fourteen (14) days in any six-month period without Landlord's written consent."
+      ]
+    },
+    {
+      "id": "scan-11",
+      "lease": "scanned",
+      "covered": false,
+      "question": "Does the lease say anything about smoking?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address smoking."
+      ],
+      "mistakes": [
+        "Says the lease bans or allows smoking.",
+        "Treats the smoke detector clause as a smoking rule."
+      ],
+      "passages": [],
+      "absent_words": [
+        "smoking",
+        "cigarette",
+        "vaping"
+      ],
+      "note": "Near miss: a word search for 'smoke' finds the smoke detector batteries in Paragraph 11."
+    },
+    {
+      "id": "scan-12",
+      "lease": "scanned",
+      "covered": false,
+      "question": "Can we use a grill on the patio?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address grills."
+      ],
+      "mistakes": [
+        "Says the lease allows or forbids grills."
+      ],
+      "passages": [],
+      "absent_words": [
+        "grill",
+        "patio",
+        "barbecue"
+      ]
+    },
+    {
+      "id": "broken-01",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 4",
+      "question": "If I pay rent on the 6th, what late charges will I owe?",
+      "answer": "An initial $75.00 late charge plus $10.00 a day after that, at most $175.00 for the month.",
+      "points": [
+        "An initial late charge of $75.00.",
+        "Plus $10.00 a day after that (total late charges capped at $175.00 a month)."
+      ],
+      "mistakes": [
+        "Says no late charge applies (the unchecked box)."
+      ],
+      "passages": [
+        "If rent is not received by 11:59 p.m. on the 4th day of the month, Tenant will pay an initial late charge of $75.00 and a daily late charge of $10.00 per day after that, but total late charges for one month will not be more than $175.00."
+      ]
+    },
+    {
+      "id": "broken-02",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 8",
+      "question": "My parents want to bring their dog when they visit. Is that allowed?",
+      "answer": "No. The 'no pets' box is checked, and it includes visiting pets.",
+      "points": [
+        "No, no pets are allowed, and that includes visiting pets."
+      ],
+      "mistakes": [
+        "Says pets are allowed under a Pet Agreement (the unchecked box)."
+      ],
+      "passages": [
+        "No pets are allowed. This includes visiting pets."
+      ],
+      "note": "Two boxes; only the checked one applies."
+    },
+    {
+      "id": "broken-03",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 14",
+      "question": "Can I send my landlord a written notice by email?",
+      "answer": "Yes. The email box is checked: leasing@brightwaterflats.example.",
+      "points": [
+        "Yes, notices may be sent by email (to leasing@brightwaterflats.example)."
+      ],
+      "mistakes": [
+        "Says email is not allowed for notices (the unchecked box)."
+      ],
+      "passages": [
+        "by email to leasing@brightwaterflats.example"
+      ],
+      "note": "Near miss: the unchecked box says email is not allowed."
+    },
+    {
+      "id": "broken-04",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 10",
+      "question": "How do I ask for a repair?",
+      "answer": "Submit a request through the resident portal (checked box). For an emergency, call (352) 555-0160 and also submit a portal request.",
+      "points": [
+        "Submit a repair request through the resident portal."
+      ],
+      "mistakes": [
+        "Says requests must be in writing to the office, or by phone only (unchecked boxes)."
+      ],
+      "passages": [
+        "by submitting a request through the resident portal"
+      ],
+      "note": "The unchecked boxes are 'in writing to the office' and 'by phone only'."
+    },
+    {
+      "id": "broken-05",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 5",
+      "question": "Does my security deposit earn interest?",
+      "answer": "No. The checked box is a separate non-interest-bearing account, at Florida Credit Union.",
+      "points": [
+        "No, it is held in a separate non-interest-bearing account."
+      ],
+      "mistakes": [
+        "Says the deposit is in an interest-bearing account (the unchecked box)."
+      ],
+      "passages": [
+        "in a separate non-interest-bearing account"
+      ],
+      "note": "The unchecked box just before it says interest-bearing."
+    },
+    {
+      "id": "broken-06",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 6",
+      "question": "Do I pay for water?",
+      "answer": "No. The landlord pays water and sewer.",
+      "points": [
+        "No, the landlord pays for water and sewer."
+      ],
+      "mistakes": [
+        "Says the tenant pays for water."
+      ],
+      "passages": [
+        "Landlord pays: ☐ electricity   ☒ water and sewer"
+      ],
+      "note": "The answer is only in which boxes are checked."
+    },
+    {
+      "id": "broken-07",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 13",
+      "question": "Do I need renter's insurance?",
+      "answer": "Yes, with at least $100,000 of personal liability coverage, and proof before move-in.",
+      "points": [
+        "Yes, renter's insurance is required.",
+        "With at least $100,000 of personal liability coverage."
+      ],
+      "mistakes": [
+        "Says renter's insurance is not required (the unchecked box)."
+      ],
+      "passages": [
+        "Tenant must carry renter's insurance with at least $100,000 of personal liability coverage and must give Manager proof of coverage before move-in."
+      ]
+    },
+    {
+      "id": "broken-08",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 16",
+      "question": "Can I pay a fee to end my lease early?",
+      "answer": "No. The checked box says the lease has no early termination option.",
+      "points": [
+        "No, the lease does not include an early termination option."
+      ],
+      "mistakes": [
+        "Says the lease offers an early termination fee (the unchecked box)."
+      ],
+      "passages": [
+        "This lease does not include an early termination option."
+      ],
+      "note": "The unchecked box offers a fee option with the amount left blank."
+    },
+    {
+      "id": "broken-09",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 15",
+      "question": "How much notice do I give before moving out at the end of the lease?",
+      "answer": "Written notice at least 30 days before the lease ends, or owe one month's rent ($975.00).",
+      "points": [
+        "Written notice at least 30 days before the lease ends."
+      ],
+      "mistakes": [
+        "Gives a notice period other than 30 days."
+      ],
+      "passages": [
+        "Tenant must give written notice of moving out at least 30 days before the lease ends."
+      ]
+    },
+    {
+      "id": "broken-10",
+      "lease": "broken_text",
+      "covered": true,
+      "where": "Item 17",
+      "question": "Can I sublet my apartment for the summer?",
+      "answer": "No. The checked box says Tenant may not sublet.",
+      "points": [
+        "No, the tenant may not sublet."
+      ],
+      "mistakes": [
+        "Says subletting is allowed with approval (the unchecked box)."
+      ],
+      "passages": [
+        "Tenant may not sublet or assign this lease."
+      ]
+    },
+    {
+      "id": "broken-11",
+      "lease": "broken_text",
+      "covered": false,
+      "question": "What are the quiet hours?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address quiet hours."
+      ],
+      "mistakes": [
+        "Gives quiet hours as if the lease set them."
+      ],
+      "passages": [],
+      "absent_words": [
+        "quiet",
+        "noise"
+      ]
+    },
+    {
+      "id": "broken-12",
+      "lease": "broken_text",
+      "covered": false,
+      "question": "Can I paint my bedroom walls?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address painting."
+      ],
+      "mistakes": [
+        "Says the lease allows or forbids painting."
+      ],
+      "passages": [],
+      "absent_words": [
+        "paint",
+        "alteration"
+      ]
+    },
+    {
+      "id": "sample-01",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 3.3",
+      "question": "If my rent comes in on the 8th, what late charge do I owe?",
+      "answer": "$75.00 plus $10.00 a day after that, at most $250.00 a month.",
+      "points": [
+        "A late charge of $75.00.",
+        "Plus $10.00 a day after that (at most $250.00 in a month)."
+      ],
+      "mistakes": [
+        "Says no late charge is owed.",
+        "Gives the $40.00 returned-payment fee as the late charge."
+      ],
+      "passages": [
+        "Rent not received by 11:59 p.m. on the fifth (5th) day of the month is late. Tenant shall pay a late charge of $75.00 plus $10.00 per day thereafter, not to exceed a total of $250.00 in any month."
+      ]
+    },
+    {
+      "id": "sample-02",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 10.1",
+      "question": "Can I get a second dog?",
+      "answer": "Not without a written Pet Addendum. The lease authorizes one dog, Biscuit.",
+      "points": [
+        "Not without a written Pet Addendum; the lease authorizes only the one dog."
+      ],
+      "mistakes": [
+        "Says a second dog is allowed as the lease stands."
+      ],
+      "passages": [
+        "No other animals are permitted without a written Pet Addendum."
+      ]
+    },
+    {
+      "id": "sample-03",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 22.1",
+      "question": "How do I send my landlord a formal notice, and to what address?",
+      "answer": "In writing, by hand, certified mail (return receipt requested), or overnight courier, to Sunrise Property Holdings, LLC, Attn: Property Manager, 4120 NW 39th Avenue, Suite 210, Gainesville, Florida 32606. Email only for routine messages.",
+      "points": [
+        "In writing, by hand, by certified mail (return receipt requested), or by overnight courier.",
+        "To Sunrise Property Holdings, LLC, 4120 NW 39th Avenue, Suite 210, Gainesville, Florida 32606."
+      ],
+      "mistakes": [
+        "Says email is enough for a formal notice."
+      ],
+      "passages": [
+        "All notices required under this Lease or Chapter 83, Florida Statutes, shall be in writing and delivered by hand, by certified mail, return receipt requested, or by nationally recognized overnight courier to the following addresses",
+        "Landlord: Sunrise Property Holdings, LLC, Attn: Property Manager, 4120 NW 39th Avenue, Suite 210, Gainesville, Florida 32606"
+      ]
+    },
+    {
+      "id": "sample-04",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 7.3",
+      "question": "How do I ask for a repair?",
+      "answer": "In writing, through the resident portal or by email to the address in Section 22.1, except in an emergency.",
+      "points": [
+        "In writing, through the resident portal or by email, except in an emergency."
+      ],
+      "mistakes": [
+        "Says a phone call is the way to ask for an ordinary repair."
+      ],
+      "passages": [
+        "Except in an emergency, Tenant shall submit all repair requests in writing through the resident portal or by email to the address in Section 22.1."
+      ]
+    },
+    {
+      "id": "sample-05",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 4.2",
+      "question": "Where is my deposit held? Does it earn interest?",
+      "answer": "In a separate non-interest-bearing account at Capital City Bank, Gainesville. No interest.",
+      "points": [
+        "In a separate account at Capital City Bank in Gainesville.",
+        "It does not earn interest."
+      ],
+      "mistakes": [
+        "Says the deposit earns interest."
+      ],
+      "passages": [
+        "Landlord shall hold the Deposit in a separate non-interest-bearing account at Capital City Bank, Gainesville, Florida, and shall not commingle the Deposit with Landlord's other funds."
+      ]
+    },
+    {
+      "id": "sample-06",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 11.2",
+      "question": "How much notice must my landlord give before entering?",
+      "answer": "At least 24 hours, and only between 7:30 a.m. and 8:00 p.m., except in an emergency.",
+      "points": [
+        "At least 24 hours' notice, except in an emergency."
+      ],
+      "mistakes": [
+        "Gives a notice period other than 24 hours."
+      ],
+      "passages": [
+        "Except in an emergency, Landlord shall give Tenant at least twenty-four (24) hours' notice and shall enter only between 7:30 a.m. and 8:00 p.m."
+      ]
+    },
+    {
+      "id": "sample-07",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Exhibit A",
+      "question": "Can I end my lease early for a set fee?",
+      "answer": "Not as the lease stands: neither option of the Early Termination Addendum is initialed, so Option 2 applies (no set fee; the landlord may seek damages as the law allows).",
+      "points": [
+        "No set fee applies, because neither option is initialed, so Option 2 (no liquidated damages) applies.",
+        "Under Option 2 the landlord may seek damages as the law provides."
+      ],
+      "mistakes": [
+        "Says the tenant can end the lease early by paying the $3,700.00 fee of Option 1."
+      ],
+      "passages": [
+        "If neither option is initialed, Option 2 applies.",
+        "I do not agree to liquidated damages or an early termination fee, and I acknowledge that the landlord may seek damages as provided by law."
+      ],
+      "note": "Option 1 offers a $3,700.00 fee, but its initials line is blank."
+    },
+    {
+      "id": "sample-08",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 2.3",
+      "question": "I plan to move out when the lease ends. Do I need to give notice?",
+      "answer": "Yes. Written notice at least 60 days before the Expiration Date, or owe one month's rent as liquidated damages.",
+      "points": [
+        "Yes, written notice at least 60 days before the Expiration Date."
+      ],
+      "mistakes": [
+        "Says no notice is needed.",
+        "Gives a notice period other than 60 days."
+      ],
+      "passages": [
+        "Either Party wishing to terminate the tenancy at the Expiration Date shall give the other Party written notice at least sixty (60) days before the Expiration Date."
+      ]
+    },
+    {
+      "id": "sample-09",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 8.3",
+      "question": "Do I have to pay for small repairs myself?",
+      "answer": "The first $100.00 of any single repair not caused by the landlord's neglect, wear and tear, or a structural defect.",
+      "points": [
+        "The tenant pays the first $100.00 of any single repair (not caused by the landlord's neglect, ordinary wear and tear, or a structural defect)."
+      ],
+      "mistakes": [
+        "Says the tenant pays nothing for repairs.",
+        "Says the tenant pays all small repairs in full."
+      ],
+      "passages": [
+        "Tenant shall pay the first $100.00 of the cost of any single repair not caused by Landlord's neglect, ordinary wear and tear, or structural defect."
+      ]
+    },
+    {
+      "id": "sample-10",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 5.1",
+      "question": "My friend wants to stay with us for three weeks. Is that OK?",
+      "answer": "Not without the landlord's prior written consent: no one else may stay more than 14 days in a row or 30 days a year.",
+      "points": [
+        "Not without the landlord's prior written consent, because no other person may stay more than 14 days in a row (or 30 days a year)."
+      ],
+      "mistakes": [
+        "Says a three-week stay is allowed without consent."
+      ],
+      "passages": [
+        "No other person may reside at the Premises for more than fourteen (14) consecutive days, or more than thirty (30) days in any calendar year, without Landlord's prior written consent."
+      ]
+    },
+    {
+      "id": "sample-11",
+      "lease": "sample_v1",
+      "covered": true,
+      "where": "Section 12.1",
+      "question": "Can I sublet the house while I travel this summer?",
+      "answer": "Only with the landlord's prior written consent, which the landlord may refuse for any reason.",
+      "points": [
+        "Only with the landlord's prior written consent (which the landlord may withhold in its sole discretion)."
+      ],
+      "mistakes": [
+        "Says subletting is allowed without consent.",
+        "Says subletting is never allowed."
+      ],
+      "passages": [
+        "Tenant shall not assign this Lease, sublet all or any part of the Premises, or license any person to occupy the Premises without Landlord's prior written consent, which Landlord may withhold in its sole discretion."
+      ]
+    },
+    {
+      "id": "sample-12",
+      "lease": "sample_v1",
+      "covered": false,
+      "question": "Does the lease limit how much the landlord can raise the rent if I renew?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address the rent for a renewal."
+      ],
+      "mistakes": [
+        "Says the lease caps or sets the rent for a renewal."
+      ],
+      "passages": [],
+      "absent_words": [
+        "raise",
+        "rent increase"
+      ],
+      "note": "Near miss: Section 2.3 says the lease does not renew automatically, and Section 2.4 keeps the same terms in a month-to-month holdover. Mentioning them is fine."
+    },
+    {
+      "id": "sample-13",
+      "lease": "sample_v1",
+      "covered": false,
+      "question": "Does the lease say anything about package deliveries?",
+      "answer": "The lease does not say.",
+      "points": [
+        "The lease does not address package deliveries."
+      ],
+      "mistakes": [
+        "Describes package rules as if the lease had them."
+      ],
+      "passages": [],
+      "absent_words": [
+        "package",
+        "parcel"
+      ]
+    }
   ]
 }

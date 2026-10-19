@@ -42,6 +42,9 @@ number, and each "not covered" topic is truly absent.
    > {"answer": "...", "quotes": ["..."]}. "quotes" are the lease's exact words your answer rests on.
 
    Each writes `results/<method>.jsonl`, one line per question: the reply, the seconds it took, and the tool calls.
+   The methods share one harness (`prototypes/common.py`: the questions, the instruction, the tool loop, the clause
+   splitter B and C use), so only the method differs. It runs a tool call nemotron writes as text, and asks once
+   more for an answer if the model is still calling tools after 8 rounds.
 3. **v1's method, as a baseline.** v1's own lease code, run unedited from `v1/` (PyPDF2, the four-clause form by
    Gemma 4, and its exact-phrase `search_lease`), answers the same questions with nemotron and the same instruction,
    into `results/v1.jsonl`. It is scored exactly like the three methods, so the chart shows each one beside v1.
@@ -51,8 +54,9 @@ number, and each "not covered" topic is truly absent.
 The answer is judged by what it means, not how it is worded. Only quotations must match word for word.
 
 **By meaning (a judge model).** A different model from the one tested, `gpt-oss-120b` on the UF gateway, so
-nemotron never grades itself, reads each answer beside the key. It is told to judge meaning only: a point counts in
-any wording, and extra details are fine if the lease supports them. For each answer it says:
+nemotron never grades itself, reads each answer beside the key and the whole lease. It is told to judge meaning
+only: a point counts in any wording, words in parentheses in a point are not required, and extra details are fine if
+the lease supports them. For each answer it says:
 
 - whether the answer says the lease does not address the question;
 - which points the answer makes;
@@ -64,13 +68,16 @@ Code turns that into the scores:
   mistake, or no point made.
 - **Wrongly silent**: says the lease does not address a question it answers. The worst mistake.
 - **Made up**: answers a question the lease does not address as if it did.
+- **Never answered**: still calling tools when the rounds ran out.
 
-I check the judge: I read every answer it marks wrong or partly, and a sample of the ones it marks right, and tell
-you how many I would change.
+I check the judge: I read every answer it marks wrong or partly, and a sample of the ones it marks right. Each grade
+I change is in `review.json`, with why; the scores use my grades and show the judge's own count beside them.
 
 **Word for word (code).**
 
-- **Quotes check out**: every quote is word for word in the stored lease text (spacing and line breaks aside).
+- **Quotes check out**: every quote is word for word in the stored lease text. Spacing, line breaks, capitals, the
+  kind of hyphen or quote mark, and a tool's label pasted in front ("Clause c14 (page 2):") are set aside; the words
+  must match.
 - **Quoted the right clause**: a quote comes from the passage that answers the question (8 words in a row from it,
   or a quote of 4 or more words wholly inside it).
 
@@ -85,3 +92,8 @@ you how many I would change.
 - **Answer time**: seconds per question, from asking to the final answer, tool calls included (typical and slowest).
 
 Both are shown per lease, and the 46-page lease above all.
+
+## The results
+
+`SCORES.md` (the summary), `scores.json` (every answer and grade), `review.json` (my changes to the judge's grades),
+`readers.json` (step 1). Rerun with `python score_readers.py`, the prototypes, then `python score.py`.
