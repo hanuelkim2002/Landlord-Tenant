@@ -39,3 +39,8 @@ prototypes in `prototypes/` stay until the author chooses. Replaces nothing in t
 The author chose method A (the whole lease in the prompt). The prototype code is deleted (in git at 784dd82). README:
 five tools, no `search_lease`. AUTHOR.md and SLIPS.md started with the comparison's findings. Draft lease-reading
 rules await the author's OK. Replaces the open lease question and the planned `search_lease`.
+
+## 2026-10-19: lease-reading rules approved
+
+Rules 1 to 4 for reading the lease are approved and in README.md, for the system prompt; rule 5 waits on AUTHOR.md
+item 1. Replaces the draft in `comparisons/lease/README.md`.

@@ -11,3 +11,4 @@ unmarked one.
 - 2026-10-19, lease comparison (nemotron): 6. On v1's sample lease (sample-07), A, B, and C offered the $3,700.00
   early termination fee of Option 1, whose initials line is blank. On the 46-page lease (long-10), A, B, and C said
   "if you initialed Option 1" though the resident did.
+- Answer: the author added lease-reading rule 4 (README.md), 2026-10-19.

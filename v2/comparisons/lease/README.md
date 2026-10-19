@@ -107,7 +107,7 @@ The author chose method A: PyMuPDF for the text, Gemma 4 for pages without usabl
 system prompt. It scored 61 of 64 (v1: 35), was never wrongly silent, every quote checked out, and it was the
 fastest and simplest. B scored 60 and C 57; the gap is within one run's noise, so speed and simplicity decided.
 
-### Draft lease-reading rules for the system prompt (awaiting the author's OK)
+### Lease-reading rules for the system prompt (rules 1 to 4 approved 2026-10-19; rule 5 waits on AUTHOR.md item 1)
 
 1. THE LEASE below is the tenant's whole lease, page by page. Read all of it, addenda and tables included, before
    you say whether it covers a point.

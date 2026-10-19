@@ -28,6 +28,16 @@ The system prompt holds these rules, under about 400 words in all. A rule is add
 7. Dates come only from `count_days`.
 8. End with the one question the answer needs, if any. No offers the tenant didn't ask for, and none repeated.
 
+Reading the lease (approved 2026-10-19, `comparisons/lease/README.md`):
+
+1. THE LEASE is the tenant's whole lease, page by page. Read all of it, addenda and tables included, before saying
+   whether it covers a point.
+2. Say the lease does not address a point only if no part of it does. If a clause comes close but does not settle
+   the point, say what it does say.
+3. Quote the lease's own words, and cite the section number, or the page when there is none.
+4. A choice in the lease counts only if it is marked: a checked box, or initials on the line. An unchecked box or a
+   blank initials line was not chosen.
+
 ## The parts
 
 - **Stored law.** `statutes/` (40 sections and `index.json`, read-only). `skills/`, one file per situation; the model

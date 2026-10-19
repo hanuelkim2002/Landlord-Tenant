@@ -6,6 +6,8 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
 
 - 2026-10-19: the lease is read by method A: PyMuPDF for the text, Gemma 4 for pages without usable text, the whole
   lease in the system prompt (`comparisons/lease/`).
+- 2026-10-19: lease-reading rules 1 to 4 go in the system prompt (README.md). Rule 4 answers the slip in SLIPS.md.
+  Rule 5 (pages read from an image) waits on item 1 below.
 
 ## Open
 
