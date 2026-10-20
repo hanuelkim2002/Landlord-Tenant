@@ -1,0 +1,42 @@
+New matter or existing matter? [new/existing] new
+Tenant id for this matter (Enter for a new tenant): 
+New matter t-taylor m-001
+Path to the lease PDF: <run folder>/program/magnolia_lease.pdf
+
+Describe the problem in your own words. Press Enter on an empty line when done.
+I live at Magnolia Row in Gainesville and the ads promised a resort-style pool, a 24-hour fitness center, study rooms and blazing fast Wi-Fi included. None of that is actually working.
+The pool has been closed since I moved in on Aug 15 (resurfacing, hopefully November). 3 of 5 treadmills are out of order and the gym AC has been dead since about Sept 20. Study rooms locked since Sept 8, and the Wi-Fi drops almost every night 8 to 11pm. I reported it on the portal three times and just get 'the provider is aware'.
+I pay $789 a month plus a $150 amenity fee and I want some of it back. Do the ads count for anything? And about 40 of us signed a petition, can we do something together?
+
+
+Part of what you described may not be covered by this tool yet (it has no playbook for it). The
+tool continues with what it does cover.
+
+Facts for your matter. Enter accepts a suggested answer, or type the right one. ? skips for now.
+
+[repair_not_made]
+  This looks like: Something in the unit needs repair and the landlord has not fixed it. Is that part of your situation? (yes/no)
+    suggested because of: the tenant's description
+    > no
+    Taken out of your matter; logged.
+
+None of the situations this tool covers applies, so it stops here. What you described is saved in your matter's record.
+
+This tool covers these situations:
+  - Tenant has received the landlord's written notice that the landlord intends to keep all or part of the security deposit (a claim on the deposit).
+  - The landlord has not returned the tenant's security deposit and has not sent a written claim against it.
+  - The landlord, or someone sent by the landlord, entered the tenant's unit without notice or at an unreasonable time.
+  - The lease is ending or the tenancy is being ended; notice to leave or renew, and staying on after the end.
+  - A neighbor or another tenant keeps disturbing the tenant (noise, parties, or similar), and the tenant wants the landlord to deal with it.
+  - Tenant received a landlord's written demand for unpaid rent or possession (the 3-day notice).
+  - Tenant received a landlord's written notice about a lease violation other than unpaid rent (the 7-day notice).
+  - The landlord has raised the rent or says the rent will go up.
+  - Something in the unit needs repair and the landlord has not fixed it.
+  - Tenant wants to move out before the lease term ends.
+If one of them is part of what happened, open this matter again (choose existing) and describe that part.
+
+Parts of your lease that may be on the subject, as printed in the lease:
+  Lease Section 6.2, Closure of Amenities, page 2: "Landlord may close any amenity, in whole or in part, for maintenance, repair, weather, or safety, for as long as Landlord reasonably determines. The closure of an amenity does not entitle Resident to any reduction of Rent or any refund of the amenity fee."
+  Lease Section 3.3, Fees, page 1: "Resident shall pay a non-refundable application fee of $50.00, a non-refundable administrative fee of $200.00, and a non-refundable amenity fee of $150.00, each due at signing. The amenity fee is for access to the Community amenities and is not refundable for any reason, including the closure of any amenity."
+  Lease Section 5.1, Included Services, page 2: "Rent includes water, sewer, trash removal, high-speed internet (Wi-Fi), and basic cable television. Electricity is included up to a monthly cap of $100.00 per Unit, and any amount over the cap is divided equally among the residents of the Unit."
+This tool has no playbook for this situation, so it does not apply them to your facts.

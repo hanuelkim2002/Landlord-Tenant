@@ -1,0 +1,51 @@
+{
+  "about": "wants_to_leave_early. The tenant's mother is ill in Miami; lease to 2027-07-31 at $1,050; plans to leave 2026-12-15; signed an addendum for two months' rent ($2,100); not military. Cost (never computed), the notice deadline, the deposit (not decided), and a lay question about judges and the fee (get_cases).",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/family_1050.pdf",
+    "description": "My mom got really sick and I need to move back home to Miami to take care of her. My lease here in Gainesville runs until July 31, 2027 and rent is $1,050 a month. I want to move out around December 15, 2026. When I signed the lease I also signed a paper saying I'd pay two months' rent if I leave early. I haven't told my landlord yet. I'm not in the military. It has nothing to do with repairs. The paper says the amount is $2,100."
+  },
+  "chat": [
+    "How much is this going to cost me?",
+    "When do I have to tell them?",
+    "Can they keep my deposit too?",
+    "Has a judge ever said a fee like that isn't allowed?"
+  ],
+  "expect": {
+    "skills": [
+      "wants_to_leave_early"
+    ],
+    "deadlines": [
+      "wants_to_leave_early"
+    ],
+    "turns": [
+      {
+        "say": "How much is this going to cost",
+        "must_not": [
+          "\\$\\s?4,?200|\\$\\s?3,?150|\\$\\s?7,?350"
+        ],
+        "applied": true
+      },
+      {
+        "say": "When do I have to tell them",
+        "called": [
+          "get_deadlines"
+        ]
+      },
+      {
+        "say": "keep my deposit",
+        "applied": true
+      },
+      {
+        "say": "Has a judge ever said",
+        "called": [
+          "get_cases"
+        ],
+        "topics": [
+          "Liquidated damages and early termination fees"
+        ],
+        "cases_used": true
+      }
+    ]
+  }
+}

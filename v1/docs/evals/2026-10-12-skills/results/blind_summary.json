@@ -1,0 +1,429 @@
+{
+ "missing_batches": [],
+ "scorers": {
+  "B1_a": 83,
+  "B1_b": 77,
+  "B10_a": 125,
+  "B10_b": 124,
+  "B11_a": 101,
+  "B11_b": 109,
+  "B12_a": 105,
+  "B12_b": 107,
+  "B13_a": 41,
+  "B13_b": 43,
+  "B2_a": 74,
+  "B2_b": 55,
+  "B3_a": 117,
+  "B3_b": 112,
+  "B4_a": 86,
+  "B4_b": 87,
+  "B5_a": 96,
+  "B5_b": 96,
+  "B6_a": 142,
+  "B6_b": 148,
+  "B7_a": 119,
+  "B7_b": 137,
+  "B8_a": 118,
+  "B8_b": 112,
+  "B9_a": 101,
+  "B9_b": 107
+ },
+ "agreement": {
+  "found_by_both": 1070,
+  "found_by_either": 1552
+ },
+ "sides": {
+  "after": {
+   "transcripts": 52,
+   "replies": 266,
+   "law_replies_avg": 178.5,
+   "applied_well_avg": 22.5,
+   "total_slips_avg": 984.0,
+   "ratings_avg": {
+    "helpful": 2.84,
+    "conversational": 2.08
+   },
+   "firm_slips_avg": 701.0,
+   "slips_by_category": {
+    "OFFER": 127.0,
+    "LAW_UNSOURCED": 118.0,
+    "REPEATED": 115.0,
+    "RECITED": 84.0,
+    "ASK_AGAIN": 75.5,
+    "CONDITION_MISSED": 54.0,
+    "CONDITION_WRONG": 52.0,
+    "UNCONFIRMED_FACT": 47.5,
+    "OPEN_CLOSED": 45.5,
+    "UNKNOWN_UNTIED": 30.5,
+    "GAP_AS_FACT": 29.0,
+    "ONE_SIDED": 23.0,
+    "ID": 22.5,
+    "DATE_MADE": 22.5,
+    "OPTION_BEFORE_OPEN": 21.0,
+    "CHOICE_MADE": 21.0,
+    "OVERCLAIM": 16.5,
+    "DEADLINE_REPEAT": 14.0,
+    "QUOTE_WRONG": 13.5,
+    "CASE_MISREAD": 11.5,
+    "QUOTE_UNMARKED": 9.5,
+    "QUOTES_ONLY": 9.5,
+    "POSTURE_OWN_WORDS": 9.0,
+    "LEASE_PUNTED": 8.5,
+    "LETTER_ORDER": 4.0
+   },
+   "firm_by_category": {
+    "OFFER": 112.5,
+    "REPEATED": 101.5,
+    "LAW_UNSOURCED": 92.0,
+    "RECITED": 66.0,
+    "ASK_AGAIN": 65.5,
+    "CONDITION_WRONG": 34.0,
+    "CONDITION_MISSED": 33.0,
+    "OPEN_CLOSED": 27.0,
+    "UNCONFIRMED_FACT": 20.0,
+    "DATE_MADE": 20.0,
+    "ONE_SIDED": 18.5,
+    "UNKNOWN_UNTIED": 15.0,
+    "GAP_AS_FACT": 15.0,
+    "ID": 14.0,
+    "DEADLINE_REPEAT": 12.5,
+    "OPTION_BEFORE_OPEN": 12.0,
+    "CASE_MISREAD": 8.5,
+    "QUOTE_WRONG": 8.0,
+    "OVERCLAIM": 6.0,
+    "LEASE_PUNTED": 5.5,
+    "CHOICE_MADE": 5.0,
+    "POSTURE_OWN_WORDS": 5.0,
+    "LETTER_ORDER": 3.0,
+    "QUOTE_UNMARKED": 1.5
+   }
+  },
+  "before": {
+   "transcripts": 48,
+   "replies": 162,
+   "law_replies_avg": 123.0,
+   "applied_well_avg": 17.0,
+   "total_slips_avg": 327.0,
+   "ratings_avg": {
+    "helpful": 2.5,
+    "conversational": 2.18
+   },
+   "firm_slips_avg": 211.5,
+   "slips_by_category": {
+    "LAW_UNSOURCED": 34.5,
+    "CONDITION_MISSED": 26.5,
+    "OPEN_CLOSED": 26.0,
+    "REPEATED": 23.5,
+    "CONDITION_WRONG": 22.5,
+    "RECITED": 20.5,
+    "GAP_AS_FACT": 18.5,
+    "ID": 18.0,
+    "UNKNOWN_UNTIED": 17.5,
+    "CASE_MISREAD": 16.5,
+    "ASK_AGAIN": 15.0,
+    "LEASE_PUNTED": 14.0,
+    "QUOTES_ONLY": 13.5,
+    "ONE_SIDED": 13.5,
+    "UNCONFIRMED_FACT": 10.5,
+    "OVERCLAIM": 5.5,
+    "QUOTE_WRONG": 5.0,
+    "QUOTE_UNMARKED": 4.5,
+    "OPTION_BEFORE_OPEN": 4.0,
+    "DEADLINE_REPEAT": 3.5,
+    "POSTURE_OWN_WORDS": 3.5,
+    "DATE_MADE": 3.0,
+    "CHOICE_MADE": 2.5,
+    "LETTER_ORDER": 2.5,
+    "OFFER": 2.5
+   },
+   "firm_by_category": {
+    "LAW_UNSOURCED": 22.5,
+    "RECITED": 17.5,
+    "OPEN_CLOSED": 17.5,
+    "ID": 17.0,
+    "REPEATED": 14.5,
+    "CONDITION_MISSED": 13.5,
+    "GAP_AS_FACT": 12.0,
+    "LEASE_PUNTED": 11.5,
+    "CASE_MISREAD": 11.0,
+    "ONE_SIDED": 10.5,
+    "ASK_AGAIN": 10.5,
+    "UNKNOWN_UNTIED": 10.0,
+    "CONDITION_WRONG": 10.0,
+    "QUOTES_ONLY": 5.0,
+    "QUOTE_WRONG": 5.0,
+    "UNCONFIRMED_FACT": 4.5,
+    "OVERCLAIM": 4.0,
+    "DEADLINE_REPEAT": 3.5,
+    "POSTURE_OWN_WORDS": 3.0,
+    "QUOTE_UNMARKED": 2.5,
+    "DATE_MADE": 2.0,
+    "OPTION_BEFORE_OPEN": 1.5,
+    "LETTER_ORDER": 1.5,
+    "OFFER": 1.0
+   }
+  }
+ },
+ "applied_well_by_scenario": {
+  "eval_repair_mold_apt": {
+   "after": [
+    0.0,
+    6.0
+   ],
+   "before": [
+    0.0,
+    6.0
+   ]
+  },
+  "eval_rent_hike_duplex": {
+   "after": [
+    1.0,
+    7.0
+   ],
+   "before": [
+    0.0,
+    5.0
+   ]
+  },
+  "eval_student_roommate": {
+   "after": [
+    0.0,
+    8.0
+   ],
+   "before": [
+    0.0,
+    4.0
+   ]
+  },
+  "eval_know_repair_mold_code": {
+   "after": [
+    0.5,
+    6.0
+   ],
+   "before": [
+    1.5,
+    4.0
+   ]
+  },
+  "eval_know_violation_waterbed": {
+   "after": [
+    0.0,
+    6.0
+   ],
+   "before": [
+    0.5,
+    4.0
+   ]
+  },
+  "eval_know_lease_holdover": {
+   "after": [
+    3.5,
+    5.5
+   ],
+   "before": [
+    3.0,
+    4.0
+   ]
+  },
+  "eval_know_violation_guest": {
+   "after": [
+    0.5,
+    2.0
+   ],
+   "before": [
+    0.0,
+    2.0
+   ]
+  },
+  "eval_cases_retaliation": {
+   "after": [
+    0.5,
+    4.0
+   ],
+   "before": [
+    0.0,
+    4.0
+   ]
+  },
+  "eval_know_nonpayment_orange": {
+   "after": [
+    1.0,
+    4.0
+   ],
+   "before": [
+    1.5,
+    4.0
+   ]
+  },
+  "eval_nc_mixed_heater": {
+   "after": [
+    0.0,
+    6.0
+   ],
+   "before": [
+    0.0,
+    4.0
+   ]
+  },
+  "eval_cases_3day_cash": {
+   "after": [
+    1.5,
+    7.0
+   ],
+   "before": [
+    0.0,
+    7.0
+   ]
+  },
+  "eval_student_notice_email": {
+   "after": [
+    0.0,
+    11.5
+   ],
+   "before": [
+    0.0,
+    8.0
+   ]
+  },
+  "eval_nc_roommate": {
+   "after": [
+    1.0,
+    2.0
+   ],
+   "before": [
+    0,
+    0
+   ]
+  },
+  "eval_nc_towing": {
+   "after": [
+    0.0,
+    2.0
+   ],
+   "before": [
+    0,
+    0
+   ]
+  },
+  "eval_leave_early_family": {
+   "after": [
+    1.5,
+    12.0
+   ],
+   "before": [
+    1.5,
+    8.0
+   ]
+  },
+  "eval_know_deposit_unsure": {
+   "after": [
+    1.5,
+    6.0
+   ],
+   "before": [
+    0.0,
+    3.0
+   ]
+  },
+  "eval_noise_neighbors": {
+   "after": [
+    1.5,
+    8.0
+   ],
+   "before": [
+    0.5,
+    6.0
+   ]
+  },
+  "eval_violation_dog": {
+   "after": [
+    0.0,
+    5.0
+   ],
+   "before": [
+    0.0,
+    5.0
+   ]
+  },
+  "eval_cases_late_claim": {
+   "after": [
+    1.5,
+    9.5
+   ],
+   "before": [
+    1.0,
+    8.0
+   ]
+  },
+  "eval_student_hot_water": {
+   "after": [
+    0.0,
+    7.0
+   ],
+   "before": [
+    0.0,
+    4.0
+   ]
+  },
+  "eval_claim_carpet": {
+   "after": [
+    1.5,
+    9.0
+   ],
+   "before": [
+    0.5,
+    6.0
+   ]
+  },
+  "eval_deposit_ghosted": {
+   "after": [
+    2.5,
+    10.0
+   ],
+   "before": [
+    1.0,
+    5.0
+   ]
+  },
+  "eval_entry_shower": {
+   "after": [
+    0.5,
+    9.0
+   ],
+   "before": [
+    1.5,
+    6.0
+   ]
+  },
+  "eval_nonpayment_taped": {
+   "after": [
+    1.0,
+    8.0
+   ],
+   "before": [
+    1.0,
+    6.0
+   ]
+  },
+  "eval_repair_ac_terminate": {
+   "after": [
+    0.5,
+    8.0
+   ],
+   "before": [
+    0.5,
+    4.0
+   ]
+  },
+  "eval_lease_end_renewal": {
+   "after": [
+    1.0,
+    10.0
+   ],
+   "before": [
+    3.0,
+    6.0
+   ]
+  }
+ }
+}

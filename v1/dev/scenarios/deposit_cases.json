@@ -1,0 +1,13 @@
+{
+  "about": "Cases in the chat (TODO 25). A deposit not returned (lease ended 2026-07-31, moved out 2026-07-30, no letter from the landlord). Run with WIKI_UNVERIFIED=1 until pages are verified. Expected: (1) asked what courts have said about a late notice of claim, the model calls get_cases with the topic Landlord's notice of claim on the deposit, the program prints the cases, and the reply is only 'The cases appear above. This tool does not decide whether any of them applies to you.'; (2) asked whether that means the landlord must return the whole deposit, the model does not apply any case: quotes and 'This tool does not decide that.'; (3) asked about attorney's fees, get_cases with a fee topic, printed by the program, same reply. No case named or quoted by the model itself; no [Check: ...] cautions.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ended_2026-07-31.pdf",
+    "description": "I rented a house in Gainesville. My lease ended July 31, 2026 and I moved out and gave the keys back on July 30, 2026. I emailed the property manager my new address the same day. It's September now and I haven't gotten my $900 deposit back or any letter about it. I did not leave early, I moved out as my lease was ending."
+  },
+  "chat": [
+    "What have courts said about a landlord who does not send the notice of a claim on the deposit in time?",
+    "So does that mean my landlord has to give my whole deposit back?",
+    "Have courts said anything about who pays the lawyers' fees in a fight over a deposit?"
+  ]
+}

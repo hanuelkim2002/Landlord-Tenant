@@ -1,0 +1,18 @@
+{
+  "how_to_read": "My review of the judge: every grade I would change, after reading every answer it marked wrong or partly and 16 it marked right (all 16 right). The scores use these grades; SCORES.md also gives the judge's own count.",
+  "A": {
+    "broken-01": {"verdict": "right", "why": "Gives $75.00 and $10.00 a day; the $175.00 cap is detail in parentheses, not required."}
+  },
+  "B": {
+    "short-11": {"verdict": "right", "why": "Says the lease does not mention renter's insurance; 'so it does not require it' is a fair inference, not a claim that the lease says so."},
+    "long-07": {"verdict": "right", "why": "Gives the $40.00 per bedroom allowance and says use above it is billed to the tenant; the equal split is detail in parentheses."},
+    "sample-11": {"verdict": "right", "why": "'Not without the landlord's prior written consent' is the point; the judge missed it."}
+  },
+  "C": {
+    "short-11": {"verdict": "right", "why": "Same as B: says the lease does not mention it."},
+    "sample-10": {"verdict": "partly", "why": "Right conclusion (needs written consent) but rests on the subletting clause, not the 14-day guest limit."}
+  },
+  "v1": {
+    "long-02": {"verdict": "partly", "why": "Says a cat needs written approval under the Animal Addendum, but misses that the unit is pet-friendly and the fees."}
+  }
+}

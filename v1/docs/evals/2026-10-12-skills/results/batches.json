@@ -1,0 +1,180 @@
+{
+  "B1": {
+    "eval_repair_mold_apt": [
+      "R022",
+      "R041",
+      "R074",
+      "R081"
+    ]
+  },
+  "B2": {
+    "eval_cases_3day_cash": [
+      "R021",
+      "R024",
+      "R030",
+      "R097"
+    ]
+  },
+  "B3": {
+    "eval_student_notice_email": [
+      "R049",
+      "R088",
+      "R089",
+      "R095"
+    ],
+    "eval_nc_roommate": [
+      "R052",
+      "R067"
+    ],
+    "eval_nc_towing": [
+      "R006",
+      "R014"
+    ]
+  },
+  "B4": {
+    "eval_leave_early_family": [
+      "R002",
+      "R011",
+      "R028",
+      "R070"
+    ],
+    "eval_know_deposit_unsure": [
+      "R032",
+      "R039",
+      "R077",
+      "R098"
+    ]
+  },
+  "B5": {
+    "eval_noise_neighbors": [
+      "R025",
+      "R047",
+      "R062",
+      "R071"
+    ],
+    "eval_violation_dog": [
+      "R035",
+      "R043",
+      "R058",
+      "R065"
+    ]
+  },
+  "B6": {
+    "eval_cases_late_claim": [
+      "R007",
+      "R042",
+      "R056",
+      "R099"
+    ],
+    "eval_student_hot_water": [
+      "R033",
+      "R055",
+      "R057",
+      "R060"
+    ]
+  },
+  "B7": {
+    "eval_claim_carpet": [
+      "R004",
+      "R034",
+      "R037",
+      "R082"
+    ],
+    "eval_deposit_ghosted": [
+      "R044",
+      "R048",
+      "R091",
+      "R100"
+    ]
+  },
+  "B8": {
+    "eval_entry_shower": [
+      "R012",
+      "R031",
+      "R087",
+      "R096"
+    ],
+    "eval_nonpayment_taped": [
+      "R015",
+      "R076",
+      "R080",
+      "R085"
+    ]
+  },
+  "B9": {
+    "eval_repair_ac_terminate": [
+      "R029",
+      "R038",
+      "R063",
+      "R086"
+    ],
+    "eval_lease_end_renewal": [
+      "R045",
+      "R054",
+      "R069",
+      "R084"
+    ]
+  },
+  "B10": {
+    "eval_rent_hike_duplex": [
+      "R003",
+      "R013",
+      "R018",
+      "R094"
+    ],
+    "eval_student_roommate": [
+      "R001",
+      "R005",
+      "R017",
+      "R023"
+    ]
+  },
+  "B11": {
+    "eval_know_repair_mold_code": [
+      "R050",
+      "R053",
+      "R072",
+      "R083"
+    ],
+    "eval_know_violation_waterbed": [
+      "R016",
+      "R068",
+      "R073",
+      "R093"
+    ],
+    "eval_know_lease_holdover": [
+      "R009",
+      "R027",
+      "R040",
+      "R079"
+    ]
+  },
+  "B12": {
+    "eval_know_violation_guest": [
+      "R010",
+      "R026",
+      "R066",
+      "R075"
+    ],
+    "eval_cases_retaliation": [
+      "R020",
+      "R051",
+      "R061",
+      "R090"
+    ],
+    "eval_know_nonpayment_orange": [
+      "R008",
+      "R046",
+      "R064",
+      "R092"
+    ]
+  },
+  "B13": {
+    "eval_nc_mixed_heater": [
+      "R019",
+      "R036",
+      "R059",
+      "R078"
+    ]
+  }
+}

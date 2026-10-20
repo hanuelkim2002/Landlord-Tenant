@@ -1,0 +1,43 @@
+{
+  "about": "lease_ending. The state: a lease clause the profile does not hold but the lease has. The lease ends 2026-12-31; asked whether the lease says what happens if the tenant keeps paying after it ends (the test lease's Section 2.4, a month-to-month holdover with consent) and whether it charges a late fee (Section 3.3); neither is a profile clause. The answers must search the lease and cite 2.4 and 3.3, never saying the lease does not mention them. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ends_2026-12-31.pdf",
+    "description": "My lease ends December 31, 2026 and I haven't decided yet if I'll stay. I might just keep paying rent after that without signing anything new. The landlord has not sent me anything in writing about the end of the lease, and I have not given them anything in writing about leaving."
+  },
+  "chat": [
+    "Does my lease say what happens if I keep paying rent after it ends?",
+    "Does my lease charge a late fee if I pay a few days late?"
+  ],
+  "expect": {
+    "skills": [
+      "lease_ending"
+    ],
+    "turns": [
+      {
+        "say": "keep paying rent after it ends",
+        "called": [
+          "search_lease"
+        ],
+        "must": [
+          "(?i)Lease Section 2\\.4"
+        ],
+        "must_not": [
+          "(?i)lease (does not|doesn't|did not) (mention|say|contain|address|include|have)"
+        ]
+      },
+      {
+        "say": "late fee",
+        "called": [
+          "search_lease"
+        ],
+        "must": [
+          "(?i)Lease Section 3\\.3"
+        ],
+        "must_not": [
+          "(?i)lease (does not|doesn't|did not) (mention|say|contain|address|include|have)"
+        ]
+      }
+    ]
+  }
+}

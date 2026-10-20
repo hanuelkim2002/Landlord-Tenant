@@ -1,0 +1,13 @@
+{
+  "about": "The landlord entered while the tenant was at class, 2026-09-28 around 2 pm, without telling the tenant, saying he was checking smoke detectors; the second such entry. Expected: the model loads landlord_entered_unannounced; the skill has no clocks, so no deadline; one preserve letter drafted. The tenant also asks whether the entry was legal, which the tool must not answer.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "I rent a house in Gainesville. On September 28, 2026 around 2 pm my landlord came into my house while I was at class. He did not tell me beforehand. My roommate saw him and he said he was checking the smoke detectors. This is the second time he has come in without telling me. My rent is paid up. I did not agree to him coming in, and he did not say it was an emergency. I had not told him I would be away. He has not changed my locks or cut off anything."
+  },
+  "chat": [
+    "What are my deadlines?",
+    "Was it legal for him to come in like that?",
+    "I would like a letter asking him to give me notice before he comes in again. Give him 7 days to reply. I will send it by certified mail, return receipt requested. Use the preserve posture."
+  ]
+}

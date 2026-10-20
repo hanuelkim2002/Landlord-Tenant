@@ -1,0 +1,13 @@
+{
+  "about": "The air conditioning broke 2026-09-01; the tenant hand-delivered a written notice on 2026-09-10 saying they will not pay rent until it is fixed. Expected: repair_not_made, the 83.60(1)(b) clock seven_days_after_withholding_notice at 2026-09-17 (7 calendar days), the 83.56(1) clock not applying (no intent to terminate), and a preserve letter. The story avoids saying rent went unpaid: that phrase made the old classifier add notice_received_nonpayment with no notice to report (seen 2026-09-28).",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "I rent a single-family house in Gainesville. The air conditioning has been broken since September 1, 2026. On September 10, 2026 I hand-delivered a written notice to the landlord describing the broken air conditioning and saying I will not pay rent until it is fixed. The landlord has not fixed it or replied. The notice says, \"The air conditioning has been broken since September 1, 2026. I will not pay rent until it is fixed.\" It does not say anything about ending my lease. As far as I know nothing anyone did caused it. Nobody has taken me to court."
+  },
+  "chat": [
+    "What are my deadlines?",
+    "I would like a letter asking the landlord to repair the air conditioning. Give them 5 days to reply. I will send it by certified mail, return receipt requested. Use the preserve posture, with no quotes.",
+    "Yes, that is everything. Please draft it now."
+  ]
+}

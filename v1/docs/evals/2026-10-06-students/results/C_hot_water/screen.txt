@@ -1,0 +1,565 @@
+New matter or existing matter? [new/existing] new
+Tenant id for this matter (Enter for a new tenant): 
+New matter t-sam m-001
+Path to the lease PDF: <run folder>/program/magnolia_lease.pdf
+
+Describe the problem in your own words. Press Enter on an empty line when done.
+Hello, I have a question about my apartment. There has been no hot water in my whole unit since Monday, September 28.
+I put in a request on the resident portal that day and maintenance came on the 29th. They said the water heater is broken and needs to be replaced, but nothing has happened since.
+Also the AC keeps cutting out in the afternoons since around September 14. I paid October rent already. How long can they leave me like this and can I get any money back?
+
+
+Facts for your matter. Enter accepts a suggested answer, or type the right one. ? skips for now.
+
+[repair_not_made]
+  This looks like: Something in the unit needs repair and the landlord has not fixed it. Is that part of your situation? (yes/no)
+    suggested because of: the tenant's description
+    > 
+    Please type yes or no, or ? to skip.
+  This looks like: Something in the unit needs repair and the landlord has not fixed it. Is that part of your situation? (yes/no)
+    suggested because of: the tenant's description
+    > yes
+    Its questions follow.
+  What is the problem that needs repair? Describe it in your own words. (words)
+    suggested: No hot water in the whole unit because the water heater is broken, and the AC keeps cutting out in the afternoons., from your words: "no hot water in my whole unit since Monday, September 28"
+    > 
+  Is the problem with the roof, windows, doors, floors, steps, porches, exterior walls, foundation, or another structural part of the building, or with the plumbing? (yes/no)
+    > yes
+  Does your lease say the landlord must repair this kind of problem (for example, in a clause on maintenance or repairs)? (yes/no)
+    your lease's clause on maintenance and repairs (Lease Section 7.1), as the tool read it: "7.1. Landlord's Repairs. Landlord shall maintain in good working order and repair the heating, air-conditioning, plumbing, and electrical systems serving the Unit and the appliances Landlord furnishes, including the refrigerator, range, dishwasher, microwave, washer, and dryer, except for damage caused by Resident, a roommate, or their guests. 7.2. Maintenance Requests. Resident shall report every repair need by submitting a maintenance request through the online resident portal, except in an emergency, which Resident shall report by calling the after-hours emergency line at (352) 555-0147."
+    > yes
+  What date did the problem start, or when did you first notice it? (YYYY-MM-DD)
+    > 2026-09-28
+  Is the place you rent a single-family house or a duplex (not a unit in an apartment building or a dorm)? (yes/no)
+    > no
+  Was the problem caused by you, a member of your household, or someone you let in? (yes/no)
+    > no
+  Have you delivered a written notice to the landlord describing the problem? (yes/no)
+    > no
+  Have you paid rent since you knew about the problem? (yes/no)
+    suggested: yes, from your words: "I paid October rent already"
+    > 
+  What has the landlord said or done about the problem so far? (words)
+    suggested: Maintenance came on the 29th and said the water heater is broken and needs to be replaced, but nothing has happened since., from your words: "maintenance came on the 29th. They said the water heater is broken and needs to be replaced, but nothing has happened since"
+    > 
+  Has the landlord filed an eviction case in court against you? (yes/no)
+    > no
+>> Hello, thank you. My main question is how long are they allowed to leave us without hot water? I have been showering at the campus rec center. Can I get any money back, or pay less rent?
+No deadlines: none of the deadlines this tool computes applies to your confirmed facts.
+
+Cases on "Landlord's maintenance duties under 83.51", in the courts' own words, oldest first:
+[Development run: some of these pages are not yet verified by the author.]
+
+Bennett v. Mattison, 382 So. 2d 873 (Fla. 1st DCA 1980) [not verified]
+  The court read: 83.51(2)(a) 3, F.S. (1977); 83.51(2)(a) (no year stated; in the special concurrence).
+  Facts:
+    "Melena Bennett, a tenant and part-time employee of the Casa Marina Apartments, slipped and fell in a hallway at the apartment complex on July 9, 1978." (at 874)
+    "Both the hallway and the patio were provided for the common use and benefit of the tenants." (at 874)
+    "The apartment manager testified that she had received numerous complaints from tenants about the slippery condition of the hallway when it was wet and that she had actually seen people slip in the hallway before Melena’s accident." (at 874)
+  Question: What bearing does 83.51(2)(a) 3 have on a negligence claim over a fall in a common hallway?
+  Rule:
+    "Since both the hallway and patio were provided for the common use and benefit of the tenants, appellees were required by Section 83.51(2)(a) 3, F.S. (1977) to keep these areas safe and clean." (at 875)
+    "The violation of this statutory duty would be evidence of negligence." (at 875)
+  Reasoning: none stated beyond the statute it cites.
+  Other cases on it:
+    Cites, on a statutory violation as evidence of negligence de Jesus v. Seaboard Coast Line Railroad Company, 281 So. 2d 198 (not in `cases/`): "The violation of this statutory duty would be evidence of negligence. See de Jesus v. Seaboard Coast Line Railroad Company, 281 So.2d 198 (Fla.1973)." (at 875)
+    Cites, on notice of a recurring condition as a jury question Manassa v. New Hampshire Insurance Company, 332 So. 2d 34 (not in `cases/`)
+    The special concurrence cites it for the common law rule it reads the statute to remove, in part Brooks v. Peters, 157 Fla. 141, 25 So. 2d 205 (not in `cases/`): "See Brooks v. Peters, 157 Fla. 141, 25 So.2d 205 (1946)" (at 875)
+    The special concurrence cites Judge Ervin's concurrence in the First District decision later reviewed in Mansur v. Eubanks, 401 So. 2d 1328 Mansur v. Eubanks (Fla. 1st DCA), 368 So. 2d 645 (not in `cases/`): "For a more exhaustive study of the problem, see Mansur v. Eubanks, 368 So.2d 645, 647 (Fla. 1st DCA 1978) (Ervin, J., concurring)." (at 876)
+    Paterson v. Deeb cites, on a violation of the act as evidence of negligence and on the sufficiency of the complaint this case: "A landlord’s violation of the act is at least evidence of negligence. Bennett v. Mattison, 382 So.2d 873 (Fla. 1st DCA 1980)" (Paterson v. Deeb at 1216)
+    Lockamy v. Byrne: a footnote in the dissent cites this case on a violation of the Act as evidence of negligence: "I am also aware that a landlord’s violation of the provisions of the Florida Residential Landlord and Tenant Act has been characterized as evidence of negligence." (Lockamy v. Byrne at 375)
+    Smith v. Grove Apartments, LLC: the dissent discusses this case: "In Bennett v. Mattison, 382 So.2d 873 (Fla. 1st DCA 1980), the court applied the statute to a slip and fall case reasoning that because the hallway and patio were provided for the common use and benefit of the tenants, the landlord was required by section 83.51(2)(a) 3 to keep these areas safe and clean." (Smith v. Grove Apartments, LLC at 592)
+
+Solomon v. Gentry, 388 So. 2d 52 (Fla. 4th DCA 1980) [not verified]
+  The court read: 83.42(3), Florida Statutes (1979); 83.43(2)(b), Florida Statutes (1979).
+  Facts:
+    "The facts before the trial court were that appellees, after renting and moving into their mobile home with the intention of remaining for a period of six to twelve months, discovered that the heating unit was not functioning properly." (at 53)
+    "Subsequently, after the landlord had the unit repaired, a fire, originating somewhere within the heating unit, broke out and destroyed the entire contents of the home." (at 53)
+    "The trial court held landlord liable for damages in the amount of $6,643.00, apparently concluding that the landlord breached an implied warranty that the mobile home be fit for the purpose intended." (at 53)
+  Question: May a landlord be liable to a tenant for breach of an implied warranty of fitness for a specific purpose?
+  The issue in the court's words: "The issue is whether a landlord may be liable to a tenant for breach of an implied warranty of fitness for a specific purpose." (at 53)
+  Rule:
+    "We hold that no such warranty arises under a lease of real property and reverse." (at 53)
+    "Accordingly, since we do not intend at this time to further extend the implied warranty of fitness for a specific purpose to leasehold estates in real property, we reverse that part of the judgment finding the landlord liable for breach of an implied warranty of fitness and remand for such further proceedings as may be appropriate." (at 54)
+  Reasoning:
+    "We further acknowledge that such classification will ultimately determine the landlord’s liability." (at 53)
+    "we are aware of no case extending this concept to used homes involving remote purchasers." (at 54)
+    "such implied warranties have never been extended to leasehold estates in Florida." (at 54)
+  Other cases on it:
+    Discusses the implied warranty that a chattel be fit for its purpose W. E. Johnson Equipment Co. v. United Airlines, Inc., 238 So. 2d 98 (not in `cases/`): "The trial court’s decision, if we assume that the mobile home is properly classified as a chattel, is consistent with the holding of W. E. Johnson Equipment Co. v. United Airlines, Inc., 238 So.2d 98 (Fla.1970)" (at 53)
+    Quotes the chattel or fixture test from Rompon Properties, Inc. v. Langelier, 341 So. 2d 1068 (not in `cases/`): "Upon consideration of the factors enumerated above" (at 53)
+    Cites on implied warranties in sales of new homes by the builder Gable v. Silver, 258 So. 2d 11 (not in `cases/`): "Although implied warranties of fitness and merchantability have been held applicable to sales of new homes by the builder" (at 54)
+    Cites as refusing to extend implied warranties to used homes Strathmore Riverside Villas Condominium Association, Inc. v. Paver Development Corp., 369 So. 2d 971 (not in `cases/`): "The Second District specifically refused to do so in Strathmore Riverside Villas Condominium Association, Inc. v. Paver Development Corp., 369 So.2d 971 (Fla.2d DCA 1979)" (at 54)
+
+Mansur v. Eubanks, 401 So. 2d 1328 (Fla. 1981) [not verified]
+  The court read: 83.51(1), Fla.Stat. (1977).
+  Facts:
+    "Sometime in mid-July, 1976, Marie Grigsby paid a deposit of $25 to Jean M. Barnett in order to reserve an apartment owned by Mrs. Barnett and Mary G. Eubanks." (at 1329)
+    "In an effort to get the gas-fueled appliances (stove and water heater) operational, Grigsby and Mansur opened the gas line from outside the apartment." (at 1329)
+    "Mansur struck a match and an explosion occurred." (at 1329)
+  Question: What duty does the landlord owe after the tenant takes possession?
+  Rule:
+    "After the tenant takes possession, the landlord has a continuing duty to exercise reasonable care to repair dangerous defective conditions upon notice of their existence by the tenant, unless waived by the tenant." (at 1330)
+  Reasoning:
+    "This latter duty corresponds to the statutory warranty of habitability noted by Judge Ervin in his concurring opinion below." (at 1330)
+  Other cases on it:
+    Overrules, after the district court quoted it at length on caveat lessee Brooks v. Peters, 157 Fla. 141, 25 So. 2d 205 (not in `cases/`): "We resolve the conflict by overruling Brooks v. Peters and adopting the Alexander rule." (at 1329)
+    Adopts the rule of Alexander v. Fiftieth Street Heights Co., 334 So. 2d 161 (not in `cases/`): "There it was held that a lessor has a duty “to properly inspect the premises prior to the occupancy” and “to furnish reasonably safe premises to the lessee.”" (at 1329)
+    Quashes, the decision under review; it cites Judge Ervin's concurrence there Mansur v. Eubanks (Fla. 1st DCA 1979), 368 So. 2d 645 (not in `cases/`): "The decision of the district court of appeal, affirming summary judgment, is quashed." (at 1330)
+    K.D. Lewis Enterprises Corp. v. Smith distinguishes this case: "First, Mansur was not a tenant in the unit where he was injured. Second, the court merely abandoned the doctrine of caveat lessee. It did not create a new cause of action in tort for the diminution in value of the premises." (K.D. Lewis Enterprises Corp. v. Smith at 1038)
+    Paterson v. Deeb cites for the statutory warranty of habitability, and leaves open a claim for breach of the implied warranty it recognized this case: "The act has been characterized as creating a “statutory warranty of habitability,” Mansur v. Eubanks, 401 So.2d 1328, 1330 (Fla.1981)." (Paterson v. Deeb at 1216)
+    Lockamy v. Byrne the dissent quotes its construction of the Act this case: "[T]he owner of a residential dwelling unit, who leases it to a tenant for residential purposes, has a duty to reasonably inspect the premises before allowing the tenant to take possession, and to make the repairs necessary to transfer a reasonably safe dwelling unit to the tenant unless defects are waived by the tenant." (Lockamy v. Byrne at 373)
+    Bennett M. Lifter, Inc. v. Varnado reads the standard jury instruction against this case: "While Mansur addressed a condition which was both defective and dangerous, it did not purport to exonerate the landlord from responsibility for faulty injury-producing conditions which are not inherently dangerous." (Bennett M. Lifter, Inc. v. Varnado at 1341)
+    Torres v. Garcia follows, and quotes the landlord's continuing duty from this case: "Assuming that the pressed down condition of the carpet could be said to constitute a dangerous condition, the landlord was entitled to a directed verdict on authority of Mansur v. Eubanks, 401 So.2d 1328 (Fla.1981)." (Torres v. Garcia at 95)
+    Charlemagne v. Francis quotes the landlord's continuing duty to repair from this case: "In Mansur v. Eubanks, 401 So.2d 1328, 1330 (Fla.1981), the supreme court stated that “[a]fter the tenant takes possession, the landlord has a continuing duty to exercise reasonable care to repair dangerous defective conditions upon notice of their existence by the tenant, unless waived by the tenant.”" (Charlemagne v. Francis at 159)
+    Menendez v. Palms West Condo. Ass'n cites for the landlord's duty to repair and quotes on the landlord's better position this case: "In these circumstances, we cannot say that the landlord was “in a much better position than the tenant to guard against [a] dangerous condition.”" (Menendez v. Palms West Condo. Ass'n at 62)
+    Smith v. Grove Apartments, LLC cites for the landlord's duty and quotes its policy reason this case: "The policy reason for imposing this duty on the landlord was explained by the Supreme Court in its seminal Mansur decision." (Smith v. Grove Apartments, LLC at 586)
+
+Paterson v. Deeb, 472 So. 2d 1210 (Fla. 1st DCA 1985) [not verified]
+  The court read: sections 83.40 through 83.63, Florida Statutes (1981); 83.51, Florida Statutes (1981); 83.51(2)(a), Florida Statutes (1981); 83.41, Fla.Stat. (1981); 83.43(2) (no year stated); 83.44, Fla.Stat. (1981); 83.54, Fla.Stat. (1981); 83.55, Fla.Stat. (1981); 83.55 as the Florida Law Revision Council recommended it, and ch. 73-330, Laws of Florida (1973).
+  Facts:
+    "The hallways and stairwell were common areas under the sole control of defendants and were poorly lighted." (at 1213)
+    "She specifically complained that the only lock to the front door of the building was broken and that the rear door of the building had no lock or other security device." (at 1213)
+    "Defendants’ rental agent discussed plaintiff’s requests with defendants and informed plaintiff that her requests for repairs and improved security would not be met because the building was to be demolished and improvements were impractical as a waste of money to defendants." (at 1213)
+  Question: Did the amended complaint state a cause of action in negligence for the attack, though it alleged no prior similar crime on the premises?
+  The issue in the court's words: "(1) Whether the allegations were sufficient to allege a cause of action for negligence" (at 1214)
+  Rule:
+    "Since the purpose of the statutory duty to provide locks is the prevention of criminal acts by unauthorized persons having unrestrained access to the premises, we conclude that the landlord’s duty to reasonably provide protection from criminal attack does not have to be implied from prior similar occurrences on the leased premises." (at 1217)
+    "In view of the obvious purpose of the statutory duty to provide locks and security to prevent potential damages caused by the acts of unwarranted trespassers on the leased premises, we expressly decline to require as the essential predicate to liability allegation and proof that the landlord had actual or constructive knowledge of prior similar criminal acts committed on the premises." (at 1218)
+    "These allegations, considered with the alleged violations of the statutory duty to provide locks and keys and to maintain the common areas in a safe condition, are sufficient to state a cause of action in negligence." (at 1220)
+  Reasoning:
+    "It is clear that the Florida Residential and Landlord-Tenant Act imposes definite obligations upon the landlord which continue throughout the term of the lease and which did not exist under the common law." (at 1216)
+    "Certainly the principal reason, if not the only reason, for furnishing locks and keys is to prevent a human being from making an unauthorized entry into the premises." (at 1217)
+    "We are not willing to give the landlord one free ride, as it were, and sacrifice the first victim’s right to safety upon the altar of foreseeability by slavishly adhering to the now-discredited notion that at least one criminal assault must have occurred on the premises before the landlord can be held liable." (at 1218)
+  Question: Is a landlord's violation of 83.51 negligence per se, or evidence of negligence?
+  Rule:
+    "A landlord’s violation of the act is at least evidence of negligence." (at 1216)
+    In a footnote: "We do not consider this section to be a “strict liability statute” in the sense that it protects a particular class of persons from their inability to protect themselves" (at 1217)
+  Reasoning:
+    In the same footnote: "nor is it a penal statute designed to protect a particular class of persons from a particular injury or type of injury, as was the statute in De Jesus, since no criminal penalties are imposed for violating section 83.51." (at 1217)
+  Question: Does the 83.51 duty to provide locks and keys reach the building's outside entrances and the hallway bathroom door?
+  Rule:
+    In a footnote: "Appellees argue that section 83.51 does not require the landlord to provide “locks and keys” for outside entrances to the building or the upstairs hallway bathroom door because these areas are not a part of the “dwelling unit.” We disagree." (at 1217)
+  Reasoning:
+    "The term “dwelling unit” is defined in section 83.43(2) to mean a structure or part of a structure that is rented for use as a residence, and is broad enough to include the bathroom and common areas." (at 1217)
+  Other cases on it:
+    Cites for the statutory warranty of habitability, and leaves open a claim for breach of the implied warranty it recognized Mansur v. Eubanks: "The act has been characterized as creating a “statutory warranty of habitability,” Mansur v. Eubanks, 401 So.2d 1328, 1330 (Fla.1981)." (at 1216)
+    Cites, on a violation of the act as evidence of negligence and on the sufficiency of the complaint Bennett v. Mattison: "A landlord’s violation of the act is at least evidence of negligence. Bennett v. Mattison, 382 So.2d 873 (Fla. 1st DCA 1980)" (at 1216)
+    Quotes at length and follows, on proving foreseeability without prior similar incidents Isaacs v. Huntington Memorial Hospital (Cal. 1985), 695 P.2d 653 (not in `cases/`): "The same principles relied on by the California Supreme Court in reaching this result have been applied in determining foreseeability in other contexts by Florida courts." (at 1220)
+    Quotes its analysis of an intervening cause Gibson v. Avis Rent-A-Car Systems, Inc., 386 So. 2d 520 (not in `cases/`): "The appropriate analysis of this issue was set forth in Gibson v. Avis Rent-A-Car Systems, Inc., 386 So.2d at 522" (at 1217)
+    Quotes and applies its punitive damages test Griffith v. Shamrock Village, 94 So. 2d 854 (not in `cases/`): "The rule as stated in Griffith v. Shamrock Village remains viable." (at 1221)
+    Discusses, noting its remark on the lack of a statutory allegation Whelan v. Dacoma Enterprises, Inc., 394 So. 2d 506 (not in `cases/`): "It is noteworthy that the court also commented on the lack of “an allegation of a violation of a statute such as the Landlord/Tenant Laws,” or a violation of the terms of the lease between the parties, or of any implied contract arising out of the relationship of landlord and tenant." (at 1215)
+    Describes the landowner and invitee rule it does not treat as the only basis for a landlord's duty Relyea v. State, 385 So. 2d 1378 (not in `cases/`): "Because there are often additional considerations incident to the contractual and statutory obligations found in the usual landlord/tenant relationship, we do not perceive the foreseeability premise of the general rule governing landowner/invitee liability to be the exclusive basis for the landlord’s liability to the tenant regarding criminal attacks committed on the leased premises." (at 1215)
+    Lockamy v. Byrne the dissent quotes it on the landlord's knowledge of a dangerous condition this case: "As we recognized in Paterson v. Deeb, 472 So.2d 1210, 1217 (Fla. 1st DCA 1985), “To state a cause of action in negligence, it should be alleged and proved that the landlord had actual or constructive knowledge of the violation said to be creating a dangerous condition for sufficient time to have it remedied." (Lockamy v. Byrne at 373)
+    Charlemagne v. Francis cites, on the statute's obligations that did not exist at common law this case: "Although, under that section, the landlord has the duty to keep the floors in good repair, the appellant did not sue for a violation of that duty, which imposes definite obligations upon a landlord that did not exist under the common law." (Charlemagne v. Francis at 160)
+    Menendez v. Palms West Condo. Ass'n follows on the duty to protect against crime, and distinguishes on the statutory duty this case: "The duty in Paterson was based on a violation of an express provision of the statute. No such violation occurred here." (Menendez v. Palms West Condo. Ass'n at 62)
+
+Bennett M. Lifter, Inc. v. Varnado, 480 So. 2d 1336 (Fla. 3d DCA 1985) [not verified]
+  The court read: 83.51, Florida Statutes (1983); section 17–23, Metropolitan Dade County Code (no year stated).
+  Facts:
+    "Louis Varnado, a four-year-old child, sustained serious bodily burns from boiling water carried in a pot by his grandmother when he collided with her." (at 1337)
+    "At the time of the accident on Saturday, March 28, 1981, the electric hot water heater at the Varnado house had been inoperable for three days." (at 1337)
+    "Although the grandmother, Mrs. Wilson, reported the problem to an employee of the defendant, no one was dispatched by the defendant to repair the heater between Wednesday afternoon and Saturday." (at 1337)
+  Question: Does Standard Civil Jury Instruction 3.5(i), on a landlord's failure to repair a dangerous or defective condition after notice, depart from Mansur v. Eubanks?
+  Rule:
+    "The revised instruction thus comports with the spirit of Mansur." (at 1341)
+    "None of the procedural issues raised as grounds for a new trial require reversal." (at 1341)
+  Reasoning:
+    "While Mansur addressed a condition which was both defective and dangerous, it did not purport to exonerate the landlord from responsibility for faulty injury-producing conditions which are not inherently dangerous." (at 1341)
+    "The duty, noted the court, corresponds to the statutory warranty of habitability, found in section 83.51, Florida Statutes (1983), which requires a landlord to provide hot running water." (at 1341)
+    "Further we must assume that the supreme court meant precisely what it said in adopting and promulgating the instruction." (at 1341)
+  Other cases on it:
+    Reads the standard jury instruction against Mansur v. Eubanks: "While Mansur addressed a condition which was both defective and dangerous, it did not purport to exonerate the landlord from responsibility for faulty injury-producing conditions which are not inherently dangerous." (at 1341)
+    Disagrees with the majority and sides with the dissenters, on similar facts Martinez v. Lazaroff (N.Y. 1979), 424 N.Y.S.2d 126, 399 N.E.2d 1148 (not in `cases/`): "We think the views of the court of this state are more in line with the dissenters than the majority of the Martinez court." (at 1339)
+    Quotes on proximate cause in an ordinance case, and describes its majority and dissent Enis v. Ba-Call Building Corp. (7th Cir. 1980), 639 F.2d 359 (not in `cases/`): "In Enis, the seventh circuit held that the foreseeability of injury from water being boiled on a stove for heating purposes where heat was not provided in an apartment in accordance with a local ordinance presented a jury question because reasonable men could differ." (at 1338)
+    Relies on, for when proximate cause goes to the jury Stahl v. Metropolitan Dade County, 438 So. 2d 14 (not in `cases/`): "It is said that the issue will be decided as a matter of law only in cases where reasonable men could not differ. Stahl, 438 So.2d at 21." (at 1339)
+    Cites, on the foreseeability test for intervening causes Gibson v. Avis Rent-A-Car Systems, Inc., 386 So. 2d 520 (not in `cases/`): "Application of the foreseeability test to intervening causes is generally the responsibility of the trier of fact. Gibson v. Avis Rent-A-Car System, Inc., 386 So.2d 520 (Fla.1980)." (at 1339)
+    Quotes, through K-Mart Enterprises of Florida, Inc. v. Keller, 439 So. 2d 283 Crislip v. Holland, 401 So. 2d 1115 (not in `cases/`): "Even more recently in K-Mart Enterprises of Florida, Inc. v. Keller, 439 So.2d 283 (Fla. 3d DCA 1983), rev. denied, 450 So.2d 487 (Fla.1984), we followed the holding of Crislip v. Holland, 401 So.2d 1115, 1117 (Fla. 4th DCA 1981)" (at 1340)
+    Smith v. Grove Apartments, LLC follows this case, calling itself virtually indistinguishable from it: "In fact, this case is virtually indistinguishable from our Bennett M. Lifter, Inc. decision." (Smith v. Grove Apartments, LLC at 588)
+
+Haynes v. Lloyd, 533 So. 2d 944 (Fla. 5th DCA 1988) [not verified]
+  The court read: 83.51(2)(a) 3., Florida Statutes (no year stated); 83.51(2)(a) (no year stated; quoted in the dissent).
+  Facts:
+    "Appellant, a four and one-half year old child visiting a tenant at apartments owned by appellee-landlord, fell from a tree and cut his arm on a piece of broken glass that was on the ground." (at 945)
+    "In an action alleging that the landlord was negligent in maintaining the apartment premises, the trial court granted summary judgment in favor of the landlord" (at 945)
+    "prior to the child’s injury the landlord had no actual knowledge of the broken glass and further, there was absolutely no evidence as to the period of time that the broken glass had been under the tree before the child fell." (at 946)
+    "The landlord testified on deposition that he had an employee named Hezikiah, who picked up around the apartments every morning, five days a week." (at 947)
+    "appellant relies heavily on the landlord’s answer to the following question on cross-examination: Q. If this material is here as it appears in the photograph, is it your testimony that he [Hezikiah] must not have picked up that day? A. Right." (at 947)
+  Question: What bearing does 83.51(2)(a)3., on the safe condition of common areas, have on the claim?
+  Rule:
+    "We also hold that section 83.51(2)(a) 3., Florida Statutes, which states that a landlord has a duty to keep common areas in safe condition, is not particularly relevant here" (at 945)
+  Reasoning:
+    "because that statute merely restates the landlord’s common law duty as it would exist in the absence of a statute." (at 945)
+  Dissent:
+    "It was established at oral argument that the building in question contained several units, and the statutory exclusion for duplex or single-family residences is not applicable." (at 947)
+    "The landlord therefore had a statutory duty to maintain the premises in a clean and safe condition." (at 947)
+  Other cases on it:
+    Distinguishes the case the trial court relied on Cassel v. Price, 396 So. 2d 258 (not in `cases/`): "Although Cassel, supra, also involves a child injured by falling from a tree, that case is not relevant here because we can, and do, rule as a matter of law that broken glass known to be on the ground where young children are known to play, constitutes a dangerous condition." (at 945)
+    Follows, on the lack of evidence of constructive knowledge Food Fair Stores of Florida, Inc. v. Patty, 109 So. 2d 5 (not in `cases/`): "Hence, in this case, as in Food Fair Stores of Florida, Inc. v. Patty, 109 So.2d 5 (Fla.1959), there is no evidence from which the jury could reasonably infer constructive knowledge of the dangerous condition on the premises." (at 946)
+    Quotes, in a footnote, on alleging how long a condition existed Sadowsky v. Levine, 135 So. 2d 776 (not in `cases/`): "Without any specific charge of knowledge upon the appellee-defendants and travelling upon the imputed knowledge by virtue of the existence of the dangerous condition, there must be some facts alleged to establish the period of time that the condition complained of existed, in order to demonstrate what opportunity the landlord had to discover the defect." (at 946)
+    Quotes, in a footnote, on constructive knowledge Grizzard v. Colonial Stores, Inc., 330 So. 2d 768 (not in `cases/`): "In Grizzard v. Colonial Stores, Inc., 330 So.2d 768 (Fla. 1st DCA 1976), the court stated that in a premises liability case, not involving actual knowledge on the part of the defendant, the plaintiff “must prove that the substance on the floor existed for a sufficient length of time to charge [the defendant] with constructive knowledge.”" (at 946)
+
+Ray v. Tampa Windridge Associates, 596 So. 2d 676 (Fla. 2d DCA 1991) [not verified]
+  The court read: 83.51(2)(a), Florida Statutes (1985); 83.47 (no year stated).
+  Facts:
+    "The injuries are alleged to have been from a rape of plaintiff which was allegedly the proximate result of, among other things, inadequate locks provided on plaintiff’s apartment" (at 677)
+    "Defendants are the landlords and the managing agent of the complex." (at 677)
+    "That document includes a provision that “I hereby release ... [the landlord] from any claim whatsoever with respect to any personal injury ... which is in any way related either to my reliance on any of the ... [door locks] mentioned above or to any defect, malfunction, or inadequacy concerning any of them.”" (at 677)
+  Question: Did the tenant's signed security release dispense with the landlord's duty under 83.51(2)(a) to make reasonable provisions for locks?
+  Rule:
+    "However, as plaintiff argues and as we conclude, even assuming that section 83.51(2)(a) permits a landlord-tenant agreement relieving the landlord of that duty, the Apartment Security Acknowledgement and Release document in this case does not do so but actually indicates that the landlord will make reasonable provisions for locks on the tenant’s apartment." (at 677)
+    "Thus, it does not appear that the duty of the landlord in this case to make reasonable provisions for locks was dispensed with." (at 677)
+  Reasoning:
+    "Aside from the language in the above-quoted provision in that document which indicates that the tenant may have relied upon the locks, the document, in another provision, contains an agreement by the tenant to inspect the locks to assure that they are “in good working order.”" (at 677)
+  Other cases on it:
+    Cites none of the other case pages.
+
+Menendez v. Palms West Condo. Ass'n, 736 So. 2d 58 (Fla. 1st DCA 1999) [not verified]
+  The court read: 83.51(2)(a), Florida Statutes (no year stated); Chapter 83, Florida Statutes, Part II (no year stated).
+  Facts:
+    "On April 18, 1995, Julio heard a knock at the front door of the apartment. He opened the door and allowed two or more people to come inside." (at 59)
+    "After Julio opened the door, someone in the apartment shot him in the head." (at 60)
+    "The door to the apartment was equipped with an operable lock but it did not have a viewing device such as a peephole or doorscope." (at 60)
+  Question: Did the Residential Landlord and Tenant Act impose a duty to install a doorscope?
+  Rule:
+    "In the present case, however, there is no evidence that the defendants violated any statutory provision relating to the security of the premises." (at 62)
+    "This argument must fail, however, because the “Residential Landlord and Tenant Act”, Chapter 83, Florida Statutes, Part II, does not require a landlord to assume such a duty." (at 62)
+  Reasoning:
+    "Whether the apartment could be locked is immaterial, because the individuals at the door were allowed inside. In any event, the apartment was secured by an operable lock as required by statute." (at 62)
+    "The duty in Paterson was based on a violation of an express provision of the statute. No such violation occurred here." (at 62)
+  Question: Could the managing association be liable for breach of the lease, or for failing to keep the common areas safe under 83.51(2)(a)?
+  Rule:
+    "Palms West cannot be liable on the theory that it breached the lease agreement, because the lease contained no provision that either expressly or by implication required the installation of a doorscope." (at 62)
+    "Nor can Palms West be liable on the theory that it failed to maintain safe conditions in the common areas of the complex as required by section 83.51(2)(a), Florida Statutes." (at 62)
+  Reasoning:
+    "The attack on Julio Menendez, Jr. did not occur in a common area of the Palms West complex." (at 62)
+  Other cases on it:
+    Follows on the duty to protect against crime, and distinguishes on the statutory duty Paterson v. Deeb: "The duty in Paterson was based on a violation of an express provision of the statute. No such violation occurred here." (at 62)
+    Cites for the landlord's duty to repair and quotes on the landlord's better position Mansur v. Eubanks: "In these circumstances, we cannot say that the landlord was “in a much better position than the tenant to guard against [a] dangerous condition.”" (at 62)
+    Cites as an example of a landlord's duty to repair Bosket v. Broward County Housing Authority, 676 So. 2d 72 (not in `cases/`): "Likewise, in Bosket v. Broward County Housing Authority, 676 So.2d 72 (Fla. 4th DCA 1996), the court held that the landlord had a duty to provide the tenant with an operable fire extinguisher and to install readable knobs on a kitchen stove." (at 61)
+    Cites as a contrasting example Fitzgerald v. Cestari, 569 So. 2d 1258 (not in `cases/`): "In contrast, the court held in Fitzgerald v. Cestari, 569 So.2d 1258 (Fla.1990), that a landlord had no duty to put decals or other markings on a sliding glass door, because a safety precaution of that nature could have been taken just as easily by the tenant." (at 61)
+    Cites, with Whelan v. Dacoma Enterprises, Inc., 394 So. 2d 506 (Fla. 5th DCA 1981), on the general duty Czerwinski v. Sunrise Point Condominium, 540 So. 2d 199 (not in `cases/`): "Florida courts have held that a landlord has no general duty to protect a tenant from criminal attacks by third persons." (at 61)
+
+Smith v. Grove Apartments, LLC, 976 So. 2d 582 (Fla. 3d DCA 2007) [not verified]
+  The court read: 83.51(2)(a) 3., Fla. Stat. (2007).
+  Facts:
+    "Smith resided as a tenant in an apartment complex owned by the landlord. He sustained personal injuries on July 28, 2002, when he fell from his step ladder. At the time, he was attempting to clear and trim back overgrown foliage above the parking lot of the leased premises." (at 583)
+    "Prior to his use of self-help to trim back this overgrown foliage, Smith had repeatedly complained to the landlord about this problem in the parking lot. However, the landlord refused and/or failed to take any corrective action." (at 583)
+    "On the day of the accident, Smith placed his 12 foot aluminum single ladder against a holly tree that he described as “almost all limbs.” ... He had with him a machete and chain saw that he utilized to remove tree branches. He fell from the ladder as he was reaching to pull a dead limb from the holly tree." (at 584)
+  Question: Did the landlord owe the tenant a statutory duty to maintain the parking lot, and was the tenant within the class the statute protects?
+  The issue in the court's words: "Accordingly, the threshold question is whether Smith comes within the class of persons this statute was intended to protect." (at 586)
+  Rule:
+    "The parking lot area in the instant case is most assuredly a common area of the leased premises." (at 586)
+    "Therefore, the landlord retained its statutory duty to maintain the parking lot area in a clean and safe condition." (at 586)
+    "However, in this case, it cannot be disputed that Smith as a tenant, was within the protected class." (at 587)
+  Reasoning:
+    "As stated earlier, the lease agreement did not impose a duty upon the tenants to maintain the parking lot area." (at 586)
+    "In the context of a landlord/tenant relationship, the law is well settled that after a tenant takes possession of a residential dwelling unit a landlord has a continuing statutory duty to maintain common areas in a safe condition and to repair dangerous, defective conditions upon notice of their existence, unless otherwise agreed to by the tenant." (at 586)
+    The court quoted Mansur v. Eubanks, 401 So. 2d 1328 (Fla. 1981), on the policy behind the duty: "We do not believe there are sufficient reasons to continue to completely insulate the landlord from liability. We live in an age when the complexities of housing construction place the landlord in a much better position than the tenant to guard against dangerous conditions." (at 586)
+  Dissent:
+    "I see a big difference between the duty to maintain the premises in a safe condition and the duty to insure the safety of Smith when he undertook the particular tree-trimming activity in this case." (at 591)
+    "While the landlord’s duty to maintain the premises may impose liability for any injury caused by the unsafe conditions, in my view, it does not extend to the tenant’s injuries sustained under the facts of this case." (at 593)
+    "My conclusion, however, is based entirely on the legal conclusion that the landlord had no duty to trim the high branches of the trees of the leased premises. Without a duty, there can be no liability." (at 596)
+  Other cases on it:
+    Follows, calling this case virtually indistinguishable from it Bennett M. Lifter, Inc. v. Varnado: "In fact, this case is virtually indistinguishable from our Bennett M. Lifter, Inc. decision." (at 588)
+    Cites for the landlord's duty and quotes its policy reason Mansur v. Eubanks: "The policy reason for imposing this duty on the landlord was explained by the Supreme Court in its seminal Mansur decision." (at 586)
+    Is discussed in the dissent Bennett v. Mattison: "In Bennett v. Mattison, 382 So.2d 873 (Fla. 1st DCA 1980), the court applied the statute to a slip and fall case reasoning that because the hallway and patio were provided for the common use and benefit of the tenants, the landlord was required by section 83.51(2)(a) 3 to keep these areas safe and clean." (at 592)
+    Quotes on proximate causation and foreseeability McCain v. Florida Power Corp., 593 So. 2d 500 (not in `cases/`): "The Florida Supreme Court has stated that proximate causation is established “if prudent human foresight would lead one to expect that similar harm is likely to be substantially caused by the specific act or omission in question" (at 587)
+    Quotes on summary judgment in negligence suits Moore v. Morris, 475 So. 2d 666 (not in `cases/`): "Summary judgments should be cautiously granted in negligence and malpractice suits." (at 585)
+    Relies on, for proximate cause and intervening cause as fact questions Bosket v. Broward County Housing Authority, 676 So. 2d 72 (not in `cases/`): "Rather, proximate causation exists where the injury “results as a consequence so natural and ordinary as to be regarded as probable.”" (at 588)
+    Is quoted at length in the dissent, which the majority calls a wholly distinguishable premise liability decision Miller v. Aldrich, 685 So. 2d 988 (not in `cases/`): "The Miller court affirmed summary judgment for the defendants, explaining in language equally applicable to our case:" (at 594)
+
+These are courts' words in other people's cases, each with the statute version it read. How far one reaches your situation turns on how alike its facts are to yours.
+
+Cases on "Tenant's notice of the landlord's noncompliance", in the courts' own words, oldest first:
+[Development run: some of these pages are not yet verified by the author.]
+
+K.D. Lewis Enterprises Corp. v. Smith, 445 So. 2d 1032 (Fla. 5th DCA 1984) [not verified]
+  The court read: 83.60, Florida Statutes (1981); 83.60(1), Fla.Stats. (1981); 83.60(2), Florida Statutes (1981); 83.56, Florida Statutes (1981); 83.56(1), Florida Statutes (1981).
+  Facts:
+    "The tenants withheld payment of rent claiming that the landlord did not maintain their apartments and that a rental increase was unfair." (at 1033)
+    "The landlord moved to require the tenants to deposit the rent into the registry of the court pursuant to section 83.60(2), Florida Statutes (1981). When they failed to do so, the court issued writs of possession against Smith and Lang and entered a judgment of possession against Williams who had already vacated the premises." (at 1033)
+    "In Lang’s case, clothes in the amount of $300 were damaged because of a leak in her closet. Williams testified she drove her car into a pothole in the parking area causing $100 in damage." (at 1037)
+  Question: Could the tenants recover the lost value of their apartments in negligence without the written notice in 83.56, and did the evidence support the compensatory awards?
+  The issue in the court's words: "The next question is whether the evidence supports a finding of compensatory damages." (at 1037)
+  Rule:
+    "In summary, we reject the tenants’ contention that they could recover damages under a negligence theory for the diminution in value of their premises." (at 1038)
+    "Of course, where a tenant or his property is injured by the negligence of the landlord, his cause of action requires no notice under the statute." (at 1038)
+    "However, since there was some evidence of damage to the property of Lang and Williams, and the jury allowed a set-off in the exact amount of the compensatory damages, we affirm those awards. As to Smith, we hold that the trial court should have directed a verdict in favor of the landlord on the negligence count." (at 1038)
+  Reasoning:
+    "We conclude, however, that the tenants are incorrect and that they are arguing a contract theory of recovery rather than tort." (at 1037)
+    "To recover for diminishment in the value of the premises, it is necessary for the tenant to comply with section 83.56, Florida Statutes (1981), which provides as follows" (at 1037)
+    "To accept the tenants’ argument that the notice under section 83.56 is not required because they framed their claim in negligence would defeat the legislative requirement of notice." (at 1038)
+  Other cases on it:
+    Distinguishes Mansur v. Eubanks: "First, Mansur was not a tenant in the unit where he was injured. Second, the court merely abandoned the doctrine of caveat lessee. It did not create a new cause of action in tort for the diminution in value of the premises." (at 1038)
+    Limits to its facts Freedman v. Geiger, 314 So. 2d 189 (not in `cases/`): "While this language is capable of the construction urged by the tenants, we think the holding should be limited to its facts." (at 1036)
+    Cites, on the standard for punitive damages, Winn & Lovett Grocery Co. v. Archer, 126 Fla. 308 (not in `cases/`)
+    First Hanover v. Vazquez follows, and quotes at length this case: "We find the same analysis applicable to the instant dispute." (First Hanover v. Vazquez at 1191)
+
+Lakeway Management Co. of Florida v. Stolowilsky, 527 So. 2d 950 (Fla. 3d DCA 1988) [not verified]
+  The court read: 83.20(2), Florida Statutes (1985); 83.60(1), Florida Statutes (1985).
+  Facts:
+    "The Stolowilsky’s leased a condominium at the Treasure Bay Club Condominium, North Bay Village, Florida, for a period of one year, November 15, 1985 to November 14, 1986." (at 950)
+    "The Stolowilskys paid $600.00 monthly rent in December, 1985, and then failed to pay any rent until they vacated the premises in March of 1986." (at 950)
+    "At the conclusion of a bench trial the trial court entered a judgment for the lessor, but only for the period of actual occupancy, having permitted an amendment at the outset of the trial to urge constructive eviction as a defense." (at 950)
+  Question: Could the tenants raise constructive eviction when their first written complaint came after the landlord's three-day notice?
+  The issue in the court's words: "Lakeway urges that the trial court erred in allowing appellees to raise the defense of constructive eviction, despite the fact that no such defense had been pleaded" (at 950)
+  Rule:
+    "We therefore find that the trial court erred in permitting this defense to be raised." (at 951)
+  Reasoning:
+    "Only after the lessor sent a three-day notice pursuant to Section 83.20(2), Florida Statutes (1985) did the tenant make a complaint in writing which would meet the condition precedent to urging constructive eviction. See Section 83.60(1), Florida Statutes (1985)." (at 951)
+  Other cases on it:
+    Cites Xanadu of Cocoa Beach, Inc. v. Lenz: "See & compare, Xanadu of Cocoa Beach, Inc. v. Lenz, 504 So.2d 518 (Fla. 5th DCA 1987)" (at 951)
+    Cites Machado v. Foreign Trade, Inc., 478 So. 2d 405 (not in `cases/`)
+    Cites Commodore Plaza at Century 21 Condominium Association, Inc. v. Cohen, 350 So. 2d 502 (not in `cases/`)
+    Cites Reiss v. Goldman, 196 So. 2d 184 (not in `cases/`)
+
+These are courts' words in other people's cases, each with the statute version it read. How far one reaches your situation turns on how alike its facts are to yours.
+
+The statute gives no set number of days for restoring hot water. Its only clock starts when you deliver a written notice, and the program's deadlines show none running, because you confirmed you have not delivered one.
+
+Hot water is a duty the statute names for a unit that is not a single-family home or duplex, "Unless otherwise agreed in writing" (Fla. Stat. 83.51(2)(a)). You confirmed yours is not a house or duplex. The tool found nothing on hot water or a water heater in your lease's text. Your lease does put plumbing and air-conditioning repair on the landlord (Lease Section 7.1).
+
+Pay less rent: open, as a defense if the landlord sues for possession (Fla. Stat. 83.60(1)(b)). It needs a written notice delivered to the landlord that names the problem and says you intend not to pay rent because of it, then 7 days. That notice is still to do. If the defense is made out, the court decides how much the rent is reduced (Fla. Stat. 83.60(1)(b)). If the landlord files a case, you must pay the rent into the court registry within 5 days, excluding Saturdays, Sundays, and legal holidays, after service to keep any defense other than payment (Fla. Stat. 83.60(2)). The tool does not compute that date.
+
+End the lease: not settled (Fla. Stat. 83.56(1)). It needs a written notice that names the problem and says you intend to end the lease, then 7 days without a fix. You confirmed you paid rent after you knew of the problem. The statute does not settle whether that waived ending the lease over a problem that is still not fixed (Fla. Stat. 83.56(5)(a)).
+- Reading one: an unfixed problem is a continuing noncompliance, so paying does not waive it, and this option is open.
+- Reading two: the noncompliance is the failure to fix a problem you already knew of, so paying waives it, and only a new or different failure starts over. Then this option is closed.
+
+Two more points the statute does not settle reach both options.
+- Which list the heater falls under. Fla. Stat. 83.56(1) and 83.60(1)(b) speak only of 83.51(1), which covers codes, structure, and plumbing, while hot water is named in 83.51(2)(a). On one reading, it is an 83.51(1) duty when a building, housing, or health code covers it (Fla. Stat. 83.51(3)). The tool does not hold those codes; your city or county code enforcement office can tell you. On the other, it is an 83.51(2) duty because that subsection names it, so neither notice route reaches it, and part II does not let you raise an 83.51(2) noncompliance as a defense to an action for possession (Fla. Stat. 83.51(2)(c)). On that reading the rent defense would not be open.
+- What "material" means. Both 7-day periods need a landlord who "materially fails to comply" or a "material noncompliance" (Fla. Stat. 83.56(1), 83.60(1)(b)). The statute does not define it. On one reading, failing a duty 83.51(1) lists is material whatever its size. On the other, it turns on how serious the condition is, how long it has lasted, and how it affects living in the unit.
+
+Your AC is separate. Your lease promises the landlord keeps the air-conditioning in good working order (Lease Section 7.1), and Fla. Stat. 83.56(1) also reaches "material provisions of the rental agreement", so that clause can support ending the lease over the AC. Fla. Stat. 83.60(1)(b) speaks only of 83.51(1), so a lease provision alone does not reach the rent defense.
+
+Money back: the aggrieved party "may recover the damages caused by the noncompliance" (Fla. Stat. 83.55). The statute gives no formula and the tool computes no amount. Your lease says no interruption of services "entitles Resident to any reduction or abatement of Rent" when it is "caused by a provider, a repair, or anything beyond Landlord's reasonable control" (Lease Section 5.2). A lease term is "void and unenforceable" to the extent it waives the rights or remedies in this part or limits the landlord's liability under law (Fla. Stat. 83.47(1)). So Section 5.2 cannot take away what 83.60(1)(b) and 83.55 give. Whether it reaches a broken heater the landlord has not replaced is a point you can check against its words.
+
+Cases, as the program printed them above:
+- K.D. Lewis Enterprises Corp. v. Smith, 445 So. 2d 1032 (Fla. 5th DCA 1984), read the 1981 statute. Tenants withheld rent over upkeep and sued for the lost value of their apartments; you paid rent and have sued no one. The court said "it is necessary for the tenant to comply with section 83.56" to recover for the lost value (at 1037). You have not delivered a written notice, so a claim for lost value would need one first. It cuts against you today. The tenants there also lost possession when they did not pay the registry (at 1033), which is the 83.60(2) risk above.
+- Lakeway Management Co. of Florida v. Stolowilsky, 527 So. 2d 950 (Fla. 3d DCA 1988), read the 1985 statute. Tenants stopped paying rent, and their first written complaint came only after the landlord's three-day notice; you have no such notice. The court called a written complaint the "condition precedent to urging constructive eviction" (at 951). You have not made one, so that defense would not be ready. It cuts against you today.
+- Bennett M. Lifter, Inc. v. Varnado, 480 So. 2d 1336 (Fla. 3d DCA 1985), read the 1983 statute. A hot water heater was out for days and a child was burned; you report no injury. The court said the statute "requires a landlord to provide hot running water" (at 1341). That supports hot water as a landlord duty here. It says nothing on how long or on rent.
+- Mansur v. Eubanks, 401 So. 2d 1328 (Fla. 1981), read the 1977 statute. A gas explosion followed an effort to get a gas water heater and stove working; no injury is in your facts. The court said the landlord must repair "dangerous defective conditions upon notice of their existence by the tenant" (at 1330). Your landlord has notice, but no danger is in your facts. K.D. Lewis says Mansur "did not create a new cause of action in tort for the diminution in value of the premises" (at 1038), so it does not help a claim for rent money.
+- Solomon v. Gentry, 388 So. 2d 52 (Fla. 4th DCA 1980), read the 1979 statute. A bad heating unit led to a fire. The court held "no such warranty arises under a lease of real property" (at 53). It cuts against you: a claim has to rest on the statute and the lease, not an implied warranty.
+- Ray v. Tampa Windridge Associates, 596 So. 2d 676 (Fla. 2d DCA 1991), read the 1985 statute. A tenant signed a release about locks. The court went on "even assuming" an agreement could relieve the 83.51(2)(a) duty, and found the release did not (at 677). It matters to you only if your lease relieves the hot water duty; the tool found nothing like that.
+- Menendez v. Palms West Condo. Ass'n, 736 So. 2d 58 (Fla. 1st DCA 1999). A doorscope claim failed because neither the statute nor the lease required one (at 62). It differs from yours: the statute names hot water.
+- Bennett v. Mattison, 382 So. 2d 873 (Fla. 1st DCA 1980), Paterson v. Deeb, 472 So. 2d 1210 (Fla. 1st DCA 1985), Haynes v. Lloyd, 533 So. 2d 944 (Fla. 5th DCA 1988), and Smith v. Grove Apartments, LLC, 976 So. 2d 582 (Fla. 3d DCA 2007) are injury suits over a hallway fall, locks and an attack, broken glass, and a parking lot. Bennett said a violation "would be evidence of negligence" (at 875), and Paterson said a violation "is at least evidence of negligence" (at 1216). You report no injury, so they do not reach your rent question. Haynes called the common-area duty "not particularly relevant" there (at 945), and Smith applied it to a parking lot (at 586). Neither is about hot water.
+
+The words the reply above cites, printed by the program from the stored statute and your lease:
+
+Fla. Stat. 83.51(2)(a): (a) Unless otherwise agreed in writing, in addition to the requirements of subsection (1), the landlord of a dwelling unit other than a single-family home or duplex shall, at all times during the tenancy, make reasonable provisions for: 1. The extermination of rats, mice, roaches, ants, wood-destroying organisms, and bedbugs. If the tenant must vacate the premises for such extermination, the landlord is not liable for damages but must abate the rent. The landlord must provide 7 days’ written notice, in person, by mail, or by e-mail in accordance with s. 83.505 , to the tenant if the tenant must temporarily vacate the premises for extermination pursuant to this subparagraph. A tenant is only required to vacate the premises for a period of time not to exceed 4 days. 2. Locks and keys. 3. The clean and safe condition of common areas. 4. Garbage removal and outside receptacles therefor. 5. Functioning facilities for heat during winter, running water, and hot water.
+
+Fla. Stat. 83.60(1)(b): (b) The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof. Such notice by the tenant may be given to the landlord, the landlord’s representative as designated pursuant to s. 83.50 , a resident manager, or the person or entity who collects the rent on behalf of the landlord. A material noncompliance with s. 83.51 (1) by the landlord is a complete defense to an action for possession based upon nonpayment of rent, and, upon hearing, the court or the jury, as the case may be, shall determine the amount, if any, by which the rent is to be reduced to reflect the diminution in value of the dwelling unit during the period of noncompliance with s. 83.51 (1). After consideration of all other relevant issues, the court shall enter appropriate judgment.
+
+Fla. Stat. 83.60(2): (2) In an action by the landlord for possession of a dwelling unit, if the tenant interposes any defense other than payment, including, but not limited to, the defense of a defective 3-day notice, the tenant shall pay into the registry of the court the accrued rent as alleged in the complaint or as determined by the court and the rent that accrues during the pendency of the proceeding, when due. The clerk shall notify the tenant of such requirement in the summons. Failure of the tenant to pay the rent into the registry of the court or to file a motion to determine the amount of rent to be paid into the registry within 5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process constitutes an absolute waiver of the tenant’s defenses other than payment, and the landlord is entitled to an immediate default judgment for removal of the tenant with a writ of possession to issue without further notice or hearing thereon. If a motion to determine rent is filed, documentation in support of the allegation that the rent as alleged in the complaint is in error is required. Public housing tenants or tenants receiving rent subsidies are required to deposit only that portion of the full rent for which they are responsible pursuant to the federal, state, or local program in which they are participating.
+
+Fla. Stat. 83.56(1): (1) If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement. If the failure to comply with s. 83.51 (1) or material provisions of the rental agreement is due to causes beyond the control of the landlord and the landlord has made and continues to make every reasonable effort to correct the failure to comply, the rental agreement may be terminated or altered by the parties, as follows: (a) If the landlord’s failure to comply renders the dwelling unit untenantable and the tenant vacates, the tenant shall not be liable for rent during the period the dwelling unit remains uninhabitable. (b) If the landlord’s failure to comply does not render the dwelling unit untenantable and the tenant remains in occupancy, the rent for the period of noncompliance shall be reduced by an amount in proportion to the loss of rental value caused by the noncompliance.
+
+Fla. Stat. 83.56(5)(a): (a) If the landlord accepts rent with actual knowledge of a noncompliance by the tenant or accepts performance by the tenant of any other provision of the rental agreement that is at variance with its provisions, or if the tenant pays rent with actual knowledge of a noncompliance by the landlord or accepts performance by the landlord of any other provision of the rental agreement that is at variance with its provisions, the landlord or tenant waives his or her right to terminate the rental agreement or to bring a civil action for that noncompliance, but not for any subsequent or continuing noncompliance. However, a landlord does not waive the right to terminate the rental agreement or to bring a civil action for that noncompliance by accepting partial rent for the period. If partial rent is accepted after posting the notice for nonpayment, the landlord must: 1. Provide the tenant with a receipt stating the date and amount received and the agreed-upon date and balance of rent due before filing an action for possession; 2. Place the amount of partial rent accepted from the tenant in the registry of the court upon filing the action for possession; or 3. Post a new 3-day notice reflecting the new amount due.
+
+Fla. Stat. 83.51(1): (1) The landlord at all times during the tenancy shall: (a) Comply with the requirements of applicable building, housing, and health codes; or (b) Where there are no applicable building, housing, or health codes, maintain the roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and all other structural components in good repair and capable of resisting normal forces and loads and the plumbing in reasonable working condition. The landlord, at commencement of the tenancy, must ensure that screens are installed in a reasonable condition. Thereafter, the landlord must repair damage to screens once annually, when necessary, until termination of the rental agreement. The landlord is not required to maintain a mobile home or other structure owned by the tenant. The landlord’s obligations under this subsection may be altered or modified in writing with respect to a single-family home or duplex.
+
+Fla. Stat. 83.51(3): (3) If the duty imposed by subsection (1) is the same or greater than any duty imposed by subsection (2), the landlord’s duty is determined by subsection (1).
+
+Fla. Stat. 83.51(2)(c): (c) Nothing in this part authorizes the tenant to raise a noncompliance by the landlord with this subsection as a defense to an action for possession under s. 83.59 .
+
+Fla. Stat. 83.55: 83.55 Right of action for damages. — If either the landlord or the tenant fails to comply with the requirements of the rental agreement or this part, the aggrieved party may recover the damages caused by the noncompliance.
+
+Fla. Stat. 83.47(1): (1) A provision in a rental agreement is void and unenforceable to the extent that it: (a) Purports to waive or preclude the rights, remedies, or requirements set forth in this part. (b) Purports to limit or preclude any liability of the landlord to the tenant or of the tenant to the landlord, arising under law.
+
+Lease Section 7.1, page 2 (maintenance and repairs): 7.1. Landlord's Repairs. Landlord shall maintain in good working order and repair the heating, air-conditioning, plumbing, and electrical systems serving the Unit and the appliances Landlord furnishes, including the refrigerator, range, dishwasher, microwave, washer, and dryer, except for damage caused by Resident, a roommate, or their guests. 7.2. Maintenance Requests. Resident shall report every repair need by submitting a maintenance request through the online resident portal, except in an emergency, which Resident shall report by calling the after-hours emergency line at (352) 555-0147.
+
+Lease Section 5.2, page 2 (Interruption of Services): Landlord is not liable for any interruption or failure of utilities, internet, or other services caused by a provider, a repair, or anything beyond Landlord's reasonable control, and no such interruption entitles Resident to any reduction or abatement of Rent.
+
+[Check: the quote "material noncompliance" (83.56(1)) is not in 83.56; it is in 83.60. Check it against the source yourself before relying on it.]
+
+This is the tool's reading of the stored law and your confirmed facts, not a lawyer's advice.
+
+>> Sorry that was a lot to read. I did put in a request on the resident portal on September 28, and one for the AC on September 15. Doesn't that count as written notice? I only said no because I didn't write a letter.
+The cases on "Tenant's notice of the landlord's noncompliance" are printed above in this chat.
+
+Sorry for the length. Short answer: it may count, but only if two things are true, and the tool cannot tell yet.
+
+The statute asks for "written notice", not a letter, so typing it in the portal is writing (Fla. Stat. 83.56(1)). The two points are:
+
+- What it said. The notice that starts the 7 days must name the problem and say you intend to end the lease (Fla. Stat. 83.56(1)) or not to pay rent (Fla. Stat. 83.60(1)(b)). A request that only asks for a repair is written, but it is not that notice, and no 7 days run from it. The sheet will ask what each request said.
+- How it was delivered. The statute lists mailing, delivering a true copy, e-mailing under 83.505, or leaving a copy if you are absent (Fla. Stat. 83.56(4)). Your lease says notices to the landlord go by hand to the leasing office, by certified mail, or by e-mail to the office address (Lease Section 13.1). The portal is the lease's channel for repair requests (Lease Section 7.1). Neither list names a portal message, and the text I have does not say whether one counts as delivery. E-mail delivery has its own conditions (Fla. Stat. 83.505(1)).
+
+So if a request named an intention and a portal message counts as delivery, the 7 days run from its delivery. If either fails, no 7 days have started, and a new notice sent by a listed method would start them. The same two points apply to your AC request. The program's deadlines are waiting for you to confirm on the sheet that you delivered a written notice.
+
+Cases, as already printed above:
+- Lakeway Management Co. of Florida v. Stolowilsky, 527 So. 2d 950 (Fla. 3d DCA 1988), read the 1985 statute. Tenants who stopped paying rent made their first written complaint only after the landlord's three-day notice. The court called that complaint the "condition precedent to urging constructive eviction" (at 951). It shows a written complaint matters, but it does not say what form counts. You paid rent and have no three-day notice.
+- K.D. Lewis Enterprises Corp. v. Smith, 445 So. 2d 1032 (Fla. 5th DCA 1984), read the 1981 statute. Tenants withheld rent over upkeep. The court said "it is necessary for the tenant to comply with section 83.56" to recover for the lost value of the premises (at 1037). It does not say whether a portal message is delivery. It cuts against you if your requests did not state an intention.
+
+The words the reply above cites, printed by the program from the stored statute and your lease:
+
+Fla. Stat. 83.56(1): (1) If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement. If the failure to comply with s. 83.51 (1) or material provisions of the rental agreement is due to causes beyond the control of the landlord and the landlord has made and continues to make every reasonable effort to correct the failure to comply, the rental agreement may be terminated or altered by the parties, as follows: (a) If the landlord’s failure to comply renders the dwelling unit untenantable and the tenant vacates, the tenant shall not be liable for rent during the period the dwelling unit remains uninhabitable. (b) If the landlord’s failure to comply does not render the dwelling unit untenantable and the tenant remains in occupancy, the rent for the period of noncompliance shall be reduced by an amount in proportion to the loss of rental value caused by the noncompliance.
+
+Fla. Stat. 83.60(1)(b): (b) The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof. Such notice by the tenant may be given to the landlord, the landlord’s representative as designated pursuant to s. 83.50 , a resident manager, or the person or entity who collects the rent on behalf of the landlord. A material noncompliance with s. 83.51 (1) by the landlord is a complete defense to an action for possession based upon nonpayment of rent, and, upon hearing, the court or the jury, as the case may be, shall determine the amount, if any, by which the rent is to be reduced to reflect the diminution in value of the dwelling unit during the period of noncompliance with s. 83.51 (1). After consideration of all other relevant issues, the court shall enter appropriate judgment.
+
+Fla. Stat. 83.56(4): (4) The delivery of the written notices required by subsections (1)-(3) shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505 , or, if the tenant is absent from the premises, by leaving a copy thereof at the residence. The notice requirements of subsections (1)-(3) may not be waived in the rental agreement.
+
+Fla. Stat. 83.505(1): (1) A landlord or tenant may electronically deliver via an e-mail address any notices required under this part to the other party if the parties have signed an addendum to the rental agreement that the parties specifically agree to the electronic delivery of notices and have each provided a valid e-mail address for such purpose, and the addendum conspicuously advises the parties that such election is voluntary and that they may revoke such agreement or update their e-mail addresses at any time. Such addendum must be in substantially the following form: Landlord election: Notices from a tenant may contain time-sensitive information about the tenant’s housing. The election to receive notices from the tenant by e-mail is voluntary. ☐ I (name) , the landlord or the landlord’s agent, agree to receive notices required by the rental agreement or under part II of chapter 83, Florida Statutes, from the tenant by e-mail. I designate the following e-mail address for receipt of notices from the tenant: (landlord’s or landlord’s agent’s e-mail address) . ☐ I do not agree to receive notices by e-mail. I may revoke my agreement to receive notices by e-mail by providing written notice to the tenant which is effective upon delivery of such written notice and does not affect the validity of any notice that was previously sent by e-mail. I may update my e-mail address designated for electronic delivery at any time by providing written notice to the tenant specifying the new e-mail address, ... (the rest is in Fla. Stat. 83.505(1))
+
+Lease Section 13.1, page 3 (where and how the tenant sends notices to the landlord): Every notice from Resident to Landlord under this Lease or Florida law must be in writing and delivered by hand to the leasing office at 2600 SW Hartwell Lane, Gainesville, Florida 32608, sent by certified mail to that address, or sent by e-mail to office@magnoliarow.example.
+
+Lease Section 7.1, page 2 (maintenance and repairs): 7.1. Landlord's Repairs. Landlord shall maintain in good working order and repair the heating, air-conditioning, plumbing, and electrical systems serving the Unit and the appliances Landlord furnishes, including the refrigerator, range, dishwasher, microwave, washer, and dryer, except for damage caused by Resident, a roommate, or their guests. 7.2. Maintenance Requests. Resident shall report every repair need by submitting a maintenance request through the online resident portal, except in an emergency, which Resident shall report by calling the after-hours emergency line at (352) 555-0147.
+
+This is the tool's reading of the stored law and your confirmed facts, not a lawyer's advice.
+
+
+Facts for your matter. Enter accepts a suggested answer, or type the right one. ? skips for now.
+
+[repair_not_made]
+  Have you delivered a written notice to the landlord describing the problem? (yes/no)
+    you confirmed: no   your update says: yes
+    suggested: yes, from your words: "I did put in a request on the resident portal on September 28"
+    > 
+  What date was your written notice delivered to the landlord? (YYYY-MM-DD)
+    > 2026-09-28
+  How did you deliver the written notice (for example, by hand, certified mail, or e-mail), and to whom? (words)
+    suggested: a request through the resident portal, from your words: "a request on the resident portal"
+    > 
+  Does your written notice say that you intend to end the lease because of the problem? (yes/no)
+    > no
+  Does your written notice say that you intend not to pay rent because of the problem? (yes/no)
+    > no
+
+>> ok so what should I actually do now? Can you help me write the notice to send them? I don't really want to stop paying rent, I just want the hot water fixed and some money back for the rec center.
+The cases on "Tenant's notice of the landlord's noncompliance" are printed above in this chat.
+
+You confirmed your portal request did not say you would end the lease or stop paying rent. So it is a written request, but not the notice in Fla. Stat. 83.56(1) or 83.60(1)(b), and the program's deadlines show no 7 days running from it.
+
+Your options:
+- Not paying rent over the problem: open (Fla. Stat. 83.60(1)(b)). It needs a notice that names the problem and says you intend not to pay rent because of it, then 7 days. You said you do not want this one.
+- Ending the lease: not settled (Fla. Stat. 83.56(1)). It needs a notice that says you intend to end the lease, then 7 days without a fix. You paid rent after you knew of the problem, and the statute does not settle whether that waived ending the lease over a problem still unfixed (Fla. Stat. 83.56(5)(a)). If it did not, this option is open; if it did, it is closed.
+- Asking for the repair and the rec center costs without stating either intention: a letter can ask for both, but it would start neither 7-day period, because those need one of the two intentions. The statute lets you recover "the damages caused by the noncompliance" (Fla. Stat. 83.55). K.D. Lewis Enterprises Corp. v. Smith, 445 So. 2d 1032, 1037 (Fla. 5th DCA 1984), tied a claim for the lost value of the premises to complying with 83.56, and it read the 1981 statute. Whether that reaches your rec center costs, the stored text and cases do not say.
+
+Before I draft the letter I need three answers:
+1. How many days to give the landlord to reply.
+2. How you will send it. Your lease says a notice must be "in writing and delivered by hand to the leasing office", "sent by certified mail to that address", or "sent by e-mail to office@magnoliarow.example" (Lease Section 13.1).
+3. Which posture:
+- preserve: "Describes the condition and asks for the repair. Cites nothing."
+- assert: "Adds the 83.51(1) duty, quoted."
+- escalate: "Adds the 83.56(1) sentence, quoted."
+
+Assert would quote the sentence in Fla. Stat. 83.51(1) that begins "The landlord at all times during the tenancy shall". Escalate would quote the sentence in Fla. Stat. 83.56(1) that begins "If the landlord materially fails to comply with s. 83.51 (1)". A letter is the 83.56(1) or 83.60(1)(b) notice only if it states one of those two intentions.
+
+The words the reply above cites, printed by the program from the stored statute and your lease:
+
+Fla. Stat. 83.56(1): (1) If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement. If the failure to comply with s. 83.51 (1) or material provisions of the rental agreement is due to causes beyond the control of the landlord and the landlord has made and continues to make every reasonable effort to correct the failure to comply, the rental agreement may be terminated or altered by the parties, as follows: (a) If the landlord’s failure to comply renders the dwelling unit untenantable and the tenant vacates, the tenant shall not be liable for rent during the period the dwelling unit remains uninhabitable. (b) If the landlord’s failure to comply does not render the dwelling unit untenantable and the tenant remains in occupancy, the rent for the period of noncompliance shall be reduced by an amount in proportion to the loss of rental value caused by the noncompliance.
+
+Fla. Stat. 83.60(1)(b): (b) The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof. Such notice by the tenant may be given to the landlord, the landlord’s representative as designated pursuant to s. 83.50 , a resident manager, or the person or entity who collects the rent on behalf of the landlord. A material noncompliance with s. 83.51 (1) by the landlord is a complete defense to an action for possession based upon nonpayment of rent, and, upon hearing, the court or the jury, as the case may be, shall determine the amount, if any, by which the rent is to be reduced to reflect the diminution in value of the dwelling unit during the period of noncompliance with s. 83.51 (1). After consideration of all other relevant issues, the court shall enter appropriate judgment.
+
+Fla. Stat. 83.56(5)(a): (a) If the landlord accepts rent with actual knowledge of a noncompliance by the tenant or accepts performance by the tenant of any other provision of the rental agreement that is at variance with its provisions, or if the tenant pays rent with actual knowledge of a noncompliance by the landlord or accepts performance by the landlord of any other provision of the rental agreement that is at variance with its provisions, the landlord or tenant waives his or her right to terminate the rental agreement or to bring a civil action for that noncompliance, but not for any subsequent or continuing noncompliance. However, a landlord does not waive the right to terminate the rental agreement or to bring a civil action for that noncompliance by accepting partial rent for the period. If partial rent is accepted after posting the notice for nonpayment, the landlord must: 1. Provide the tenant with a receipt stating the date and amount received and the agreed-upon date and balance of rent due before filing an action for possession; 2. Place the amount of partial rent accepted from the tenant in the registry of the court upon filing the action for possession; or 3. Post a new 3-day notice reflecting the new amount due.
+
+Fla. Stat. 83.55: 83.55 Right of action for damages. — If either the landlord or the tenant fails to comply with the requirements of the rental agreement or this part, the aggrieved party may recover the damages caused by the noncompliance.
+
+Fla. Stat. 83.51(1): (1) The landlord at all times during the tenancy shall: (a) Comply with the requirements of applicable building, housing, and health codes; or (b) Where there are no applicable building, housing, or health codes, maintain the roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and all other structural components in good repair and capable of resisting normal forces and loads and the plumbing in reasonable working condition. The landlord, at commencement of the tenancy, must ensure that screens are installed in a reasonable condition. Thereafter, the landlord must repair damage to screens once annually, when necessary, until termination of the rental agreement. The landlord is not required to maintain a mobile home or other structure owned by the tenant. The landlord’s obligations under this subsection may be altered or modified in writing with respect to a single-family home or duplex.
+
+Lease Section 13.1, page 3 (where and how the tenant sends notices to the landlord): Every notice from Resident to Landlord under this Lease or Florida law must be in writing and delivered by hand to the leasing office at 2600 SW Hartwell Lane, Gainesville, Florida 32608, sent by certified mail to that address, or sent by e-mail to office@magnoliarow.example.
+
+[Check: the quote "The landlord at all times during..." (83.56(1)) is not in 83.56; it is in 83.51. Check it against the source yourself before relying on it.]
+
+This is the tool's reading of the stored law and your confirmed facts, not a lawyer's advice.
+
+>> I guess 7 days? And I'll send it by e-mail since that's easiest. I don't really understand preserve, assert and escalate though. I don't want to threaten them since I live here, but I want it to actually count. Which one should I pick?
+The cases on "Tenant's notice of the landlord's noncompliance" are printed above in this chat.
+
+The choice is yours; I cannot pick it for you. What makes a letter count is not the posture. It is whether the letter states an intention.
+
+The three postures, in the tool's own words:
+- preserve: "Describes the condition and asks for the repair. Cites nothing."
+- assert: "Adds the 83.51(1) duty, quoted."
+- escalate: "Adds the 83.56(1) sentence, quoted."
+
+The tool's note on all three says the letter "states your request and any sentences quoted above" and is the statute's notice "only if it states one of those intentions". The two intentions are to end the lease (Fla. Stat. 83.56(1)) and not to pay rent (Fla. Stat. 83.60(1)(b)). So on any posture:
+- A letter that states neither is a written request on the record, and the statute's 7 days do not start from it.
+- A letter that states one of them is the statute's notice, and its 7 days run from delivery.
+- Assert and escalate add a quoted sentence of law. They do not add an intention. The escalate sentence is about ending the lease.
+
+You said you do not want to threaten the landlord. That is a choice between a letter that asks and a letter that states an intention. The 7 days you give the landlord to reply are yours to set and are separate from the statute's 7 days.
+
+Cases, as already printed above. Lakeway Management Co. of Florida v. Stolowilsky, 527 So. 2d 950, 951 (Fla. 3d DCA 1988), read the 1985 statute and called a written complaint the "condition precedent to urging constructive eviction", but it does not say what the complaint must state. K.D. Lewis Enterprises Corp. v. Smith, 445 So. 2d 1032, 1037 (Fla. 5th DCA 1984), read the 1981 statute and said "it is necessary for the tenant to comply with section 83.56" to recover for the lost value of the premises. So a later claim for lost value may need a notice that states the intention to end the lease. Whether rec center costs count as lost value, the cases do not say.
+
+E-mail: your lease lists e-mail to office@magnoliarow.example (Lease Section 13.1). The statute's list says e-mailing "in accordance with s. 83.505" (Fla. Stat. 83.56(4)), and that section requires an addendum both sides signed agreeing to e-mail notices (Fla. Stat. 83.505(1)). Whether you signed one is for you to check. Your lease also lists hand delivery to the leasing office and certified mail.
+
+Tell me which posture you choose. If you want the letter to state one of the two intentions, tell me which.
+
+The words the reply above cites, printed by the program from the stored statute and your lease:
+
+Fla. Stat. 83.56(1): (1) If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement. If the failure to comply with s. 83.51 (1) or material provisions of the rental agreement is due to causes beyond the control of the landlord and the landlord has made and continues to make every reasonable effort to correct the failure to comply, the rental agreement may be terminated or altered by the parties, as follows: (a) If the landlord’s failure to comply renders the dwelling unit untenantable and the tenant vacates, the tenant shall not be liable for rent during the period the dwelling unit remains uninhabitable. (b) If the landlord’s failure to comply does not render the dwelling unit untenantable and the tenant remains in occupancy, the rent for the period of noncompliance shall be reduced by an amount in proportion to the loss of rental value caused by the noncompliance.
+
+Fla. Stat. 83.60(1)(b): (b) The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof. Such notice by the tenant may be given to the landlord, the landlord’s representative as designated pursuant to s. 83.50 , a resident manager, or the person or entity who collects the rent on behalf of the landlord. A material noncompliance with s. 83.51 (1) by the landlord is a complete defense to an action for possession based upon nonpayment of rent, and, upon hearing, the court or the jury, as the case may be, shall determine the amount, if any, by which the rent is to be reduced to reflect the diminution in value of the dwelling unit during the period of noncompliance with s. 83.51 (1). After consideration of all other relevant issues, the court shall enter appropriate judgment.
+
+Fla. Stat. 83.56(4): (4) The delivery of the written notices required by subsections (1)-(3) shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505 , or, if the tenant is absent from the premises, by leaving a copy thereof at the residence. The notice requirements of subsections (1)-(3) may not be waived in the rental agreement.
+
+Fla. Stat. 83.505(1): (1) A landlord or tenant may electronically deliver via an e-mail address any notices required under this part to the other party if the parties have signed an addendum to the rental agreement that the parties specifically agree to the electronic delivery of notices and have each provided a valid e-mail address for such purpose, and the addendum conspicuously advises the parties that such election is voluntary and that they may revoke such agreement or update their e-mail addresses at any time. Such addendum must be in substantially the following form: Landlord election: Notices from a tenant may contain time-sensitive information about the tenant’s housing. The election to receive notices from the tenant by e-mail is voluntary. ☐ I (name) , the landlord or the landlord’s agent, agree to receive notices required by the rental agreement or under part II of chapter 83, Florida Statutes, from the tenant by e-mail. I designate the following e-mail address for receipt of notices from the tenant: (landlord’s or landlord’s agent’s e-mail address) . ☐ I do not agree to receive notices by e-mail. I may revoke my agreement to receive notices by e-mail by providing written notice to the tenant which is effective upon delivery of such written notice and does not affect the validity of any notice that was previously sent by e-mail. I may update my e-mail address designated for electronic delivery at any time by providing written notice to the tenant specifying the new e-mail address, ... (the rest is in Fla. Stat. 83.505(1))
+
+Lease Section 13.1, page 3 (where and how the tenant sends notices to the landlord): Every notice from Resident to Landlord under this Lease or Florida law must be in writing and delivered by hand to the leasing office at 2600 SW Hartwell Lane, Gainesville, Florida 32608, sent by certified mail to that address, or sent by e-mail to office@magnoliarow.example.
+
+[Check: the quote "only if it states one of..." (83.56) is not in 83.56. Check it against the source yourself before relying on it.]
+
+This is the tool's reading of the stored law and your confirmed facts, not a lawyer's advice.
+
+>> Ok I'll pick preserve then. I don't want to say I'll stop paying or move out. I looked in my lease and I don't see anything about an e-mail agreement, so I'll just hand it to the leasing office. Can you write it so it covers the hot water, the AC, and asks them about the rec center costs?
+October 06, 2026
+
+MR Gainesville Owner, LLC, by its managing agent, Hartwell Residential Management, LLC, 2600 SW Hartwell Lane, Gainesville, Florida 32608
+
+Re: Bedroom D in Unit 1406, a four-bedroom, four-bathroom apartment at Magnolia Row Student Apartments, 2600 SW Hartwell Lane, Unit 1406, Gainesville, Florida 32608
+
+Problem started: September 28, 2026
+Written notice date: September 28, 2026
+
+I request that you replace the broken water heater so the unit has hot water, repair the air-conditioning so it stops cutting out, and tell me whether you will reimburse the cost of my using the campus rec center for showers.
+Please respond by October 13, 2026.
+
+This letter is sent by by hand to the leasing office at 2600 SW Hartwell Lane, Gainesville, Florida 32608.
+
+Sam Patel ("Resident")
+
+[NOTE TO TENANT, not part of the letter: The 7-day periods this tool computes for this issue run from the delivery of a written notice. In Fla. Stat. 83.56(1) that is a notice "specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof", and in 83.60(1)(b) one "specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof". This letter states your request and any sentences quoted above. It is such a notice only if it states one of those intentions; ask in the chat to have this applied to your letter before you send it.]
+
+The letter appears above; tell me if you want changes.
+
+>> Thank you, this is really helpful. A few small things: it says "sent by by hand". Also the AC started around September 14, not September 28, and could it mention that I already put in portal requests on Sept 15 and Sept 28 and that maintenance said on Sept 29 the water heater needs replacing? Also how do I prove I handed it in?
+October 06, 2026
+
+MR Gainesville Owner, LLC, by its managing agent, Hartwell Residential Management, LLC, 2600 SW Hartwell Lane, Gainesville, Florida 32608
+
+Re: Bedroom D in Unit 1406, a four-bedroom, four-bathroom apartment at Magnolia Row Student Apartments, 2600 SW Hartwell Lane, Unit 1406, Gainesville, Florida 32608
+
+Problem started: September 28, 2026
+Written notice date: September 28, 2026
+
+I request that you replace the broken water heater, which maintenance told me on September 29 needs to be replaced after my portal request on September 28, and repair the air-conditioning, which has been cutting out in the afternoons since around September 14 and which I also reported by portal request on September 15, and tell me whether you will reimburse the cost of my using the campus rec center for showers.
+Please respond by October 13, 2026.
+
+This letter is sent by hand delivery to the leasing office at 2600 SW Hartwell Lane, Gainesville, Florida 32608.
+
+Sam Patel ("Resident")
+
+[NOTE TO TENANT, not part of the letter: The 7-day periods this tool computes for this issue run from the delivery of a written notice. In Fla. Stat. 83.56(1) that is a notice "specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof", and in 83.60(1)(b) one "specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof". This letter states your request and any sentences quoted above. It is such a notice only if it states one of those intentions; ask in the chat to have this applied to your letter before you send it.]
+
+I fixed the "by by hand" wording and added your portal requests, the AC's start, and what maintenance said. The "Problem started" line still shows the date you confirmed earlier, because it comes from the sheet. The sheet will now ask which date is right; once you answer, tell me if you want the letter drafted again.
+
+To prove you handed it in: your lease says a notice must be "delivered by hand to the leasing office at 2600 SW Hartwell Lane, Gainesville, Florida 32608" (Lease Section 13.1). The tool found nothing in your lease on proof of delivery, and the statute text I have does not say what proof hand delivery needs. The tool's evidence list for a repair problem says to keep the written notice together with proof of how and when it was delivered.
+
+The letter appears above; tell me if you want changes.
+
+The words the reply above cites, printed by the program from the stored statute and your lease:
+
+Lease Section 13.1, page 3 (where and how the tenant sends notices to the landlord): Every notice from Resident to Landlord under this Lease or Florida law must be in writing and delivered by hand to the leasing office at 2600 SW Hartwell Lane, Gainesville, Florida 32608, sent by certified mail to that address, or sent by e-mail to office@magnoliarow.example.
+
+This is the tool's reading of the stored law and your confirmed facts, not a lawyer's advice.
+
+
+Facts for your matter. Enter accepts a suggested answer, or type the right one. ? skips for now.
+
+[repair_not_made]
+  What date did the problem start, or when did you first notice it? (YYYY-MM-DD)
+    you confirmed: 2026-09-28   your update says: 2026-09-14
+    suggested: 2026-09-14, from your words: "the AC started around September 14"
+    > 
+
+>> bye

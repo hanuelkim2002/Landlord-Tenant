@@ -1,0 +1,35 @@
+{
+  "about": "rent_increased and repair_not_made. A month-to-month duplex at $950; a text on 2026-09-27 raises it to $1,150 from 2026-11-01, two weeks after the tenant e-mailed about a leaking roof (2026-09-12). Legality and 'is this payback' (retaliation), each not decided.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/month_to_month_950.pdf",
+    "description": "I rent one side of a duplex in Gainesville, month to month, for $950. On September 27, 2026 my landlord texted me that rent is going up to $1,150 starting November 1, 2026. Two weeks before that, on September 12, 2026, I emailed him asking him to fix the roof because it leaks into my bedroom when it rains, and he still hasn't fixed it. I feel like he's punishing me for complaining. The roof has been leaking since September 5, 2026. My email said, \"Please fix the roof. It leaks into my bedroom when it rains.\" It did not say anything about ending my lease or about not paying rent, and he never answered it. I have kept paying rent. As far as I know nothing anyone did caused the leak, and no court papers have come. I don't know whether other tenants got the same increase."
+  },
+  "chat": [
+    "Is he allowed to raise it that much?",
+    "Is this payback for me asking about the roof?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "skills": [
+      "rent_increased",
+      "repair_not_made"
+    ],
+    "turns": [
+      {
+        "say": "Is he allowed to raise",
+        "applied": true
+      },
+      {
+        "say": "payback",
+        "applied": true
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ]
+  }
+}

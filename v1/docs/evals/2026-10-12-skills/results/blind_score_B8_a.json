@@ -1,0 +1,235 @@
+{
+  "scorer": "B8_a",
+  "runs": [
+    {
+      "code": "R012",
+      "scenario": "eval_entry_shower",
+      "replies": 6,
+      "law_replies": 5,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: reply 3 does say the entry was not allowed under either reading and reply 4 answers the locks question from the lease, but the rent-current error and the unsourced eviction line weaken it. conversational: nearly every reply re-lists the facts, readings and options and ends with the same letter offer plus a three-part question."
+      },
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Entering twice this month for AC filter changes without notice could be seen as abusive or harassing (tenant said only 'second time this month'; reason and notice for the first entry not given)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "if you’re absent for half a rent period with rent current (83.53(2)(d) is absence for half the rent period; rent current plus notice of absence restricts entry, it does not enable it)"},
+        {"reply": 1, "category": "RECITED", "evidence": "**What happened:** On September 30, 2026 around 8 am, maintenance entered your apartment while you were in the shower to change the AC filter."},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "How many days you want to give the landlord to reply / Whether you have any specific costs or harms from these entries that you’d like to mention (three things asked at once)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Changing an AC filter could be either a repair (requiring notice) or an agreed service (requiring consent, emergency, etc.). The statute does not clearly say which, so this point remains open."},
+        {"reply": 2, "category": "RECITED", "evidence": "On September 30, 2026 around 8 am, maintenance entered your apartment to change the AC filter. You had no prior notice, did not consent"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: if you’re absent for half a rent period with rent current"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Whether entering twice this month for AC filter changes without notice counts as abuse or harassment"},
+        {"reply": 2, "category": "OFFER", "evidence": "Once you choose an option, I can help you draft the letter (letter offer already made in reply 1)"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "How many days you’d like to give the landlord to reply / Whether you’d like to mention any specific costs or harms from these entries (three things at once)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "You did not consent, no emergency was claimed, you were present (in the shower), and your rent was paid, so none of those circumstances applied."},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Repeated entries without notice could be seen as abusive or harassing"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "How many days you’d like to give the landlord to reply / Whether you want to mention any specific costs or harms from these entries (three things at once)"},
+        {"reply": 3, "category": "OFFER", "evidence": "If you’d like, I can help you draft such a letter and keep a record showing you followed the law."},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "That could give the landlord grounds for a lease violation notice or even eviction, depending on the circumstances."},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: Your lease and Florida law both limit your ability to change the locks to keep the landlord or maintenance out. (83.67(2) is a duty on the landlord)"},
+        {"reply": 4, "category": "OFFER", "evidence": "If you’d like, I can help you draft that letter and keep a record."},
+        {"reply": 5, "category": "REPEATED", "evidence": "So changing the locks yourself would likely violate your lease and could be seen as unreasonably withholding consent for the landlord to enter for legitimate purposes. (lease 9.1 and 9.2 lines repeated from reply 4)"},
+        {"reply": 5, "category": "OFFER", "evidence": "borderline: I can then help you draft the letter and keep a record showing you followed the law."},
+        {"reply": 6, "category": "GAP_AS_FACT", "evidence": "borderline: Therefore, there are no deadlines to track in this situation."}
+      ]
+    },
+    {
+      "code": "R031",
+      "scenario": "eval_entry_shower",
+      "replies": 6,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: tells the tenant the entry was not allowed and that the lease bars changing locks, with options and a no-deadline answer, but it rests the notice point on a lease clause (22.1) that is about notices to the landlord. conversational: the first two replies end with the same 'what would you like to achieve' question and reply 3 repeats reply 2 almost whole."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You’ve already shared some important details: this happened this morning, September 30, 2026, around 8 a.m.;"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "Your lease requires written notice for any entry (Section 22.1 is a clause on where and how the tenant sends notices to the landlord's addresses)"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "You said this is the second unannounced entry this month, which could support a claim of harassment if the pattern continues."},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you may be able to recover actual damages. The law does not guarantee a specific amount"},
+        {"reply": 2, "category": "OFFER", "evidence": "borderline: To move forward, I need to know: what would you like to achieve? (same goal question as reply 1)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "Your lease requires written notice for any entry (Lease Section 22.1). You received none."},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "you may be able to recover actual damages—the amount would be determined by a court"},
+        {"reply": 3, "category": "REPEATED", "evidence": "If the entry was to supply an agreed service (routine maintenance), the landlord may enter only with your consent, in an emergency, or if you were absent for half your rental period"},
+        {"reply": 3, "category": "OFFER", "evidence": "Tell me your goal, and I’ll explain exactly what steps you can take (third time the goal question is put)"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: stating that future entries must be scheduled with advance notice (as required by your lease and Florida law)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "could give the landlord grounds to pursue remedies (such as demanding you restore the locks or, in extreme cases, starting eviction proceedings for lease violation)"},
+        {"reply": 4, "category": "UNCONFIRMED_FACT", "evidence": "borderline: The proper way to address repeated unannounced entries is to:"},
+        {"reply": 4, "category": "OFFER", "evidence": "Would you like me to help you draft such a letter, or do you have another goal in mind?"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "stating that future entries must be scheduled with the advance notice required by your lease and Florida law (Lease Section 22.1; Fla. Stat. 83.53(2))"},
+        {"reply": 5, "category": "UNCONFIRMED_FACT", "evidence": "borderline: Whether a pattern of two unannounced entries this month amounts to “abuse of the right of access”"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "borderline: it would depend on whether the entries constitute a material failure to comply with the lease or statute (83.56(1) speaks of 83.51(1) or material provisions of the rental agreement)"},
+        {"reply": 5, "category": "UNKNOWN_UNTIED", "evidence": "borderline: so whether these entries qualify depends on how often they happen, at what times, with what notice, and whether they continue."}
+      ]
+    },
+    {
+      "code": "R087",
+      "scenario": "eval_entry_shower",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: the locks answer is clean and the options reply says what is closed, open and unknown for damages, but the entry answer never states where the tenant stands and the final reply gives no text. conversational: each reply stands alone, reply 3 repeats the locks answer, and the last reply is a stray note instead of a reply."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "borderline: You confirmed the landlord entered at 8 a.m. to change the AC filter, gave no notice, and you did not consent; you were present, your rent was current, and there was no emergency."},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: Whether the landlord was allowed to enter without notice turns on whether the entry was for the protection or preservation of the premises or for a repair. (the agreed-service reading, which needs consent, is left out)"},
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "borderline: You can check your lease or ask your local housing"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: Whether the entry was for the protection or preservation of the premises is not settled by the statute; if it was a repair"},
+        {"reply": 3, "category": "REPEATED", "evidence": "borderline: Changing the locks yourself would violate the lease, which says you may not change or add locks without the landlord’s prior written consent (Lease Section 9.1)."}
+      ]
+    },
+    {
+      "code": "R096",
+      "scenario": "eval_entry_shower",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 4,
+        "conversational": 2,
+        "why": "helpful: reply 1 gives both readings and says the entry is not authorized on either, reply 2 answers the locks question, and reply 3 lays out each option with what it needs and what is open, closed or outside the tool. conversational: reply 3 is a standalone options report that repeats the locks answer, and the last reply is a bare parenthetical."
+      },
+      "slips": [
+        {"reply": 1, "category": "UNCONFIRMED_FACT", "evidence": "You confirmed you made no such written request, so the landlord’s entry was not pursuant to a tenant request."},
+        {"reply": 2, "category": "OVERCLAIM", "evidence": "borderline: Changing the locks to keep the landlord out would likely be considered unreasonably withholding consent to entry (Fla. Stat. 83.53(1))."},
+        {"reply": 3, "category": "ID", "evidence": "see WHAT THE STATUTE DOES NOT SETTLE, issue landlord_entered_unannounced, open question on 83.53(2)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "requires reasonable notice (at least 24 hours prior) and your consent, and that you have not given either"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: Whether the entry was **for the protection or preservation of the premises** (the statute does not settle this; (agreed-service reading left out)"},
+        {"reply": 3, "category": "QUOTE_UNMARKED", "evidence": "if either the landlord or the tenant fails to comply with the requirements of the rental agreement or this part, the aggrieved party may recover the damages caused by the noncompliance (Fla. Stat. 83.55)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "This is **not allowed** without the landlord’s written consent. Your lease says the tenant shall not change or add locks without the landlord’s prior written consent (Lease Section 9.1)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: you would need to prove actual harm"},
+        {"reply": 3, "category": "CHOICE_MADE", "evidence": "borderline: If you want to start with a low‑conflict step, send a written notice to the landlord (option 1) / Do not change the locks without the landlord’s written consent (option 4)."},
+        {"reply": 3, "category": "POSTURE_OWN_WORDS", "evidence": "borderline: Send a written notice to the landlord demanding future compliance"}
+      ]
+    },
+    {
+      "code": "R015",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 6,
+      "law_replies": 5,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: each of the four chat questions gets a direct answer (not forced out, deadline passed per the program, partial rent does not bar eviction), but the late-fee answer wrongly says the lease has no late-fee term and the replies keep urging payment. conversational: replies 1 to 3 repeat the same lists and the same offers, and the deadlines reply is one line pointing up."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "- On September 29, 2026 you paid $550 through Zelle; the landlord accepted the payment but did not give you a receipt."},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "please confirm that the notice was delivered (taped to your door) on September 28, 2026; that the notice states the payment deadline is October 1, 2026; and that the property is in Alachua County"},
+        {"reply": 1, "category": "CHOICE_MADE", "evidence": "borderline: **Pay the remaining balance** ($625) as soon as you can, preferably before the deadline the program will calculate."},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: Yes—if you pay the remaining balance ($625) before the (a yes for a period the program had not yet counted)"},
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "You may want to check whether Zelle was an authorized method under your lease."},
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: To evaluate whether the notice you received is defective, I would need to see the exact wording of the notice (the form is set out but the tenant's stated $1,175 and date are not set beside it)"},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: the landlord now has the right to terminate the agreement based on this notice (counting assumption and open holiday question not mentioned)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "The landlord would still have to follow the eviction process (file a lawsuit and obtain a court order) before actually making you move out."},
+        {"reply": 2, "category": "CHOICE_MADE", "evidence": "borderline: **Pay the full amount demanded** ($1,175) as soon as possible."},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "The statute says that if a landlord accepts partial rent after posting a nonpayment notice, they must give you a receipt (registry and new-notice alternatives left out)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "in substantially the form the statute gives, the sum demanded for rent and use of the premises, the address (including county)"},
+        {"reply": 2, "category": "OFFER", "evidence": "Let me know if you want me to draft a letter to the landlord"},
+        {"reply": 2, "category": "ID", "evidence": "borderline: the “three day demand period” is marked as passed"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "Until a judge signs an order of eviction, you have the right to stay in the unit. (cited to 83.56(3), whose words do not say it)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "The law requires the landlord to give you a receipt for any partial rent accepted after posting a nonpayment notice (Fla. Stat. 83.56(5)(a))."},
+        {"reply": 3, "category": "CHOICE_MADE", "evidence": "borderline: Pay the full amount demanded ($1,175) as soon as you can."},
+        {"reply": 3, "category": "REPEATED", "evidence": "Keep a copy of the notice (photo or scan) and your payment records in case the landlord files an eviction action."},
+        {"reply": 3, "category": "OFFER", "evidence": "or I can help you draft a letter to the landlord (e.g., requesting a receipt or tendering the balance)"},
+        {"reply": 5, "category": "GAP_AS_FACT", "evidence": "Because your lease does not authorize a late fee, the landlord’s entitlement to the $75 amount is itself uncertain."},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "no clause authorizes a late charge for overdue rent (Lease Section 3.4, 10.1, 10.3) (lease Section 3.3 is a late charge clause)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "borderline: Until the landlord sues, you are not required to move out"},
+        {"reply": 5, "category": "OFFER", "evidence": "3. Explain how to preserve your records (notice, payment receipts, etc.) in case an eviction action is filed."},
+        {"reply": 6, "category": "REPEATED", "evidence": "2. Place the partial rent in the court registry if they file an eviction action; or"},
+        {"reply": 6, "category": "OFFER", "evidence": "I can help you draft a letter to the landlord requesting a receipt for the partial payment"},
+        {"reply": 6, "category": "CONDITION_MISSED", "evidence": "borderline: you can point out that they failed to provide the receipt required by the statute (the registry and new-notice alternatives, and the 83.60(2) deposit needed to raise a defense, left out of the conclusion)"}
+      ]
+    },
+    {
+      "code": "R076",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: the partial-rent answer is clear and tied to the confirmed facts, and the late-fee answer gives both readings, but the move-out answer leaves the form check to the tenant and the lease late-fee claim is wrong. conversational: replies are short standalone paragraphs with internal labels, and the deadlines reply is a stray note with no text for the tenant."
+      },
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE, notice_received_nonpayment) / (YOUR OPTIONS)"},
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: whether that meets the form is yours to check against those words"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "The statute does not settle how far a notice may differ and still be in substantially that form"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: (Lease Section 22.1 requires notices to be in writing and delivered by hand, by certified mail, return receipt requested, or by nationally recognized overnight courier) applied to the landlord's notice"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "(search_lease found nothing on “late fee”) (one wording tried; lease Section 3.3 is a late charge clause)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "Your lease does not contain a late"},
+        {"reply": 3, "category": "ID", "evidence": "(WHAT THE STATUTE DOES NOT SETTLE, notice_received_nonpayment) / (YOUR OPTIONS)"},
+        {"reply": 4, "category": "ID", "evidence": "(YOUR FACTS shows partial_payment_receipt false)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "borderline: they must still either give you that receipt, place the amount in the court registry upon filing an action for possession, or post a new"}
+      ]
+    },
+    {
+      "code": "R080",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: the opening answer contradicts itself (until the end of the period, which has passed) and misreads 83.56(5)(a), the deadlines reply is empty, and the lease late-fee claim is wrong; only the partial-rent reply is usable. conversational: reply 2 is a stray token with no words for the tenant and no reply builds on another."
+      },
+      "slips": [
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: has ended, the landlord may now terminate the rental agreement under the statute."},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "though the landlord may refuse partial rent without a receipt (see Fla. Stat. 83.56(5)(a))"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: (the tool found nothing on that in your lease’s text) (one wording tried; the tool said to try another wording)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "The lease does not contain a late (lease Section 3.3 is a late charge clause)"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "So whether the notice can include a late fee depends on whether it remains in substantially the required form, which the statute does not decide."},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "If an eviction case is filed, you could raise the landlord’s failure to give the required receipt as part of your defense (83.60(2) deposit within 5 days and the registry/new-notice alternatives left out)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "borderline: The case Multach v. Adams, 418 So. 2d 1254 (Fla. 4th DCA 1982) addresses refusal of a tender and holds that such refusal does not waive the debt (no word that it was a commercial lease and that the court said 83.56(5) reaches only dwellings)"}
+      ]
+    },
+    {
+      "code": "R085",
+      "scenario": "eval_nonpayment_taped",
+      "replies": 6,
+      "law_replies": 5,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: lists the open questions of the statute, answers the move-out and partial-rent questions and gives both readings on the late fee, but misses the lease late charge and keeps asking for the notice wording. conversational: reply 3 repeats reply 2 almost whole, each reply re-lists the confirmed facts or the statute, and the closing offer is the same each time."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "- You paid $550 through Zelle on September 29, 2026 and the landlord accepted it but gave no receipt."},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "I would need to see the exact wording you were given (the amount demanded, the date to pay by, how it was delivered / Please confirm the three facts above"},
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "Fla. Stat. 83.56(5)(a) says: “If partial rent is accepted after posting the notice for nonpayment, the landlord must: 1. Provide the tenant with a receipt (the first half, that accepting partial rent does not waive the right to terminate, is left out)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "Since no eviction action has been filed yet, the landlord could still provide that receipt before filing. (registry and new-notice alternatives left out)"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: Whether a notice that adds a late fee is still in substantially that form is an open question—the law does not settle how far a notice may differ and still be valid."},
+        {"reply": 2, "category": "RECITED", "evidence": "**Confirmed facts** ... - The notice demanded $1,175 (rent plus a $75 late fee)."},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "However, the landlord is not required to accept payment after the deadline; they may refuse and proceed with eviction."},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "Fla. Stat. 83.56(5)(a) requires the landlord to give you a receipt for any partial rent accepted after posting the notice."},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "How the days are counted (delivery day, delivery on a weekend or holiday, when the last day ends)."},
+        {"reply": 2, "category": "OFFER", "evidence": "Would you like me to show the computed deadline dates, or do you have the notice wording to share?"},
+        {"reply": 2, "category": "REPEATED", "evidence": "borderline: Whether a notice that adds a late fee is still in substantially that form is an open question"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "To regain possession, the landlord must file an eviction complaint, serve you with court papers, and obtain a judgment and writ of possession from the court."},
+        {"reply": 3, "category": "REPEATED", "evidence": "3. If you have the notice, you can share its exact wording so I can check whether it matches the statutory form. (what-you-can-still-do list, open-questions list and next steps repeat reply 2)"},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "requires the landlord to give you a receipt stating the date, amount received, and the agreed"},
+        {"reply": 3, "category": "OFFER", "evidence": "Would you like to proceed with any of those steps, or do you have the notice wording to share?"},
+        {"reply": 3, "category": "UNKNOWN_UNTIED", "evidence": "Which holidays count (the program skips"},
+        {"reply": 5, "category": "RECITED", "evidence": "*“You are hereby notified that you are indebted to me in the sum of dollars for the rent and use of the premises (address of leased premises, including county), Florida, now occupied by you"},
+        {"reply": 5, "category": "GAP_AS_FACT", "evidence": "(Your lease does not define the late fee as rent—search_lease found no late (one wording tried; lease Section 3.3 is a late charge clause)"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "(Your lease does not define the late fee as rent—search_lease found no late"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "borderline: you may want to keep the notice as evidence and be prepared to raise the issue of its form if the landlord files an eviction complaint (83.60(2) deposit condition left out here)"},
+        {"reply": 5, "category": "OFFER", "evidence": "Would you like to share the notice’s wording, or do you have any other questions about the notice or your options?"},
+        {"reply": 6, "category": "QUOTE_UNMARKED", "evidence": "Provide you with a receipt stating the date and amount received and the agreed"},
+        {"reply": 6, "category": "RECITED", "evidence": "borderline: the three-item list of what the landlord must do, pasted from 83.56(5)(a)"},
+        {"reply": 6, "category": "LAW_UNSOURCED", "evidence": "they would need to comply with the receipt requirement (or one of the other two options) before the court will allow the action to proceed"},
+        {"reply": 6, "category": "REPEATED", "evidence": "borderline: If you pay the remaining $625 before the landlord files an eviction complaint, that may stop the eviction for this notice"}
+      ]
+    }
+  ]
+}

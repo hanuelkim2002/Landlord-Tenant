@@ -1,0 +1,32 @@
+{
+  "about": "deposit_not_returned. The state: a fact the tenant has not given. Moved out 2026-07-31 when the lease ended, gave a new address, $900 deposit not back; the tenant does not know whether a notice of a claim came (the description says so). Asked whether the landlord can keep the deposit, the answer must say it turns on whether a written notice of a claim came, which the model asks about, and what follows either way; never that the landlord forfeited it as a fact. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ended_2026-07-31.pdf",
+    "description": "I moved out of my apartment on July 31, 2026, the day my lease ended, and I emailed the landlord my new address. It has been more than two months and my $900 deposit has not come back. I moved twice since, so I don't know if they mailed me anything."
+  },
+  "chat": [
+    "Can my landlord keep my deposit?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "skills": [
+      "deposit_not_returned"
+    ],
+    "turns": [
+      {
+        "say": "Can my landlord keep my deposit?",
+        "applied": true,
+        "must": [
+          "(?i)not known|turns on|depends on|whether you (got|received|were sent)|if (you|a notice|no notice|the landlord)"
+        ]
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ]
+  }
+}

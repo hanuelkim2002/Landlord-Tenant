@@ -1,0 +1,35 @@
+{
+  "about": "repair_not_made, story E of the student simulation of 2026-10-06: an in-unit washer a roommate broke, still leaking after a repair; portal requests. On the code before 2026-10-08 the sheet asked \"Was the problem caused by you, a member of your household, or someone you let in?\", the student said yes for the roommate, and both repair options showed closed (TODO item 92). Since the model asks who caused it, a roommate is not settled under 83.51(4), so no reply may call the repair options closed. The facts the old sheet rules gave are in the description.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "docs/evals/2026-10-06-students/results/E_washer_roommate/program/magnolia_lease.pdf",
+    "description": "so my apartment charged all 4 of us roommates $85 for a washer repair and it says \"resident damage\". it was my roommate devin who broke it, he literally admitted it in the group chat (washed his comforter and shoes) i didnt pay the $85 (paid my rent tho). office says they can charge late fees or take it out of my deposit at move out. also the washer still leaks a little bc they didnt really fix it, put in another request oct 3 can they actually do that? i dont think i should have to pay for something devin did the washer started leaking sept 15 and that day i put in a request on the portal that said \"The washer is leaking. Please fix it.\" it didnt say anything about ending the lease or not paying rent. a tech came sept 17, wrote it up as resident misuse (overloading) and fixed something, and the office says they cant tell who caused it so the charge is split per the lease. nobody has taken me to court."
+  },
+  "chat": [
+    "ok so what i really want to know is do i actually have to pay this $85 if it was devin, and can they hit me w/ late fees or take it from my deposit at move out",
+    "wait so bc devin did it i cant make them fix the washer? it STILL leaks after the tech came, thats not devins fault, they just didnt fix it right. i put in another request oct 3 and nothing"
+  ],
+  "expect": {
+    "skills": [
+      "repair_not_made"
+    ],
+    "turns": [
+      {
+        "say": "do i actually have to pay this $85",
+        "applied": true
+      },
+      {
+        "say": "bc devin did it i cant make them fix the washer",
+        "applied": true,
+        "must_not": [
+          "(?i)\\b(both|the|your) (repair )?options (are|were) closed\\b",
+          "(?i)\\b(ending the lease|withhold\\w*|not paying rent)[^.\\n]{0,60}\\b(is|are)\\s+closed\\b",
+          "(?i)\\bthe landlord is not responsible\\b"
+        ],
+        "must": [
+          "(?i)\\b(not settled|turns on|depends on)\\b"
+        ]
+      }
+    ]
+  }
+}

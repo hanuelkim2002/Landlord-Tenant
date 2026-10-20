@@ -1,0 +1,42 @@
+{
+  "about": "notice_received_nonpayment. Financial aid late; a notice taped to the door on 2026-09-28 demands $1,175 (rent plus a $75 late fee) by 2026-10-01; the tenant paid $550 by Zelle on 2026-09-29, accepted, no receipt. Panic, the late fee, and the partial payment, each a question the tool does not decide.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/taped_1100.pdf",
+    "description": "I couldn't pay my September rent ($1,100) because my financial aid refund came late. On September 28, 2026 I found a paper taped to my door that says I owe $1,175 (rent plus a $75 late fee) and I have to pay by October 1, 2026 or move out. I paid $550 through Zelle on September 29, 2026 and the landlord took it but didn't give me a receipt. I live in Gainesville, Alachua County. No court papers yet. I am not holding back any rent over repairs."
+  },
+  "chat": [
+    "Do I really have to move out in 3 days??",
+    "What are my deadlines?",
+    "Can they put the late fee in that notice?",
+    "I paid half and they took it, doesn't that mean they can't evict me now?"
+  ],
+  "expect": {
+    "skills": [
+      "notice_received_nonpayment"
+    ],
+    "deadlines": [
+      "notice_received_nonpayment"
+    ],
+    "turns": [
+      {
+        "say": "Do I really have to move out",
+        "applied": true
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      },
+      {
+        "say": "Can they put the late fee",
+        "applied": true
+      },
+      {
+        "say": "I paid half",
+        "applied": true
+      }
+    ]
+  }
+}

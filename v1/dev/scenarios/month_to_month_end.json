@@ -1,0 +1,12 @@
+{
+  "about": "A month-to-month tenant is giving up the tenancy at the end of the period ending 2026-11-30 and has given no notice; the period answered is the one ending 2026-11-30. Expected: the model loads lease_ending; the 83.57(3) clocks month_to_month_notice_by_tenant and month_to_month_notice_by_landlord, both 2026-10-31. The tenant asks whether they have to give 30 days notice, which the tool must not answer beyond quoting. Worded as ending a tenancy: \"I want to move out at the end of November\" was classified wants_to_leave_early, and a longer wording as other, by the old classifier (2026-10-01); the model now picks the skill from the story.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/month_to_month_950.pdf",
+    "description": "My month-to-month tenancy in Gainesville is ending: I am giving it up at the end of the rent period on November 30, 2026. I have not sent the landlord a notice yet and I will not stay on after that."
+  },
+  "chat": [
+    "What are my deadlines?",
+    "Do I have to give my landlord 30 days notice?"
+  ]
+}

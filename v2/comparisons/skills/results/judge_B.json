@@ -1,0 +1,233 @@
+{
+ "deposit-1/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer correctly states tenant gets full deposit, explains 30\u2011day notice period has passed, and notes landlord can still sue for damages."
+ },
+ "deposit-2/1": {
+  "answers_first": false,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the 15\u2011day and 30\u2011day rules but incorrectly tells the tenant they cannot request the deposit now."
+ },
+ "deposit-3/1": {
+  "answers_first": true,
+  "points_made": [
+   false,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly notes the text isn\u2019t a valid notice and that the tenant retains the deposit, but it wrongly states the landlord forfeited any claim, contradicting the statute."
+ },
+ "deposit-4/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "All required points are addressed and no listed mistakes appear."
+ },
+ "deposit-5/1": {
+  "answers_first": true,
+  "points_made": [
+   false,
+   false,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer omits the alternative view on the text notice and incorrectly states the $650 is not due, while correctly noting the tenant can sue separately."
+ },
+ "deposit-1/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly gives the tenant the full deposit and cites the missed 30\u2011day notice, but wrongly links forfeiture to the missed 15\u2011day return deadline."
+ },
+ "deposit-2/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "First sentence gives a direct answer; all required points are present and no listed mistakes occur."
+ },
+ "deposit-3/2": {
+  "answers_first": true,
+  "points_made": [
+   false,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   true,
+   false,
+   false
+  ],
+  "other_error": "The answer claims the statute is unsettled about whether termination occurs on move\u2011out or lease\u2011end, which contradicts the statute\u2019s clear provision that termination is upon vacating the premises.",
+  "reason": "The response gets the text\u2011message notice point and tenant\u2019s retained right correct, but misstates that the landlord\u2019s silence forfeits its claim and adds an unsupported claim about termination timing."
+ },
+ "deposit-4/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly affirms the tenant is owed $400, explains the notice requirement and 30\u2011day deadline, and notes the landlord may still sue for damages, without any of the listed errors."
+ },
+ "deposit-5/2": {
+  "answers_first": true,
+  "points_made": [
+   false,
+   false,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer presents only one interpretation of the notice requirement and ignores the alternative view and the overdue $650, though it correctly states the tenant can still sue."
+ },
+ "deposit-1/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is entitled to the full deposit, explains the landlord\u2019s missed 30\u2011day notice requirement, and notes the landlord can only sue for damages after returning the deposit."
+ },
+ "deposit-2/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "The answer suggests the landlord could send notice by e\u2011mail, but the lease explicitly states the parties have not agreed to electronic notice.",
+  "reason": "It covers the 15\u2011day and 30\u2011day rules but omits the forfeiture consequence and adds an unsupported e\u2011mail option."
+ },
+ "deposit-3/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly states the tenant\u2019s lack of proper notice, that a text is not an acceptable method, and that the tenant retains the right to the deposit, without making any contradictory claims."
+ },
+ "deposit-4/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly affirms the tenant is owed the $400, explains the notice requirement and missed deadline, and notes the landlord can still sue for damages."
+ },
+ "deposit-5/3": {
+  "answers_first": true,
+  "points_made": [
+   false,
+   false,
+   false
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer does not discuss the unsettled status of the text notice, omits that the $650 is overdue, and incorrectly implies the $650 is not due."
+ }
+}

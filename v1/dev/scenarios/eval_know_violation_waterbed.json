@@ -1,0 +1,33 @@
+{
+  "about": "notice_received_violation. The state: a lease that has no such clause. A 7-day notice says a waterbed violates the lease; the test lease says nothing of waterbeds or liquid-filled furniture. Asked whether the lease says anything about waterbeds, the answer must come from a search of the lease and say the tool found nothing on it in the lease's text; asked whether the landlord can end the lease over it, whether that is open first. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "On September 29, 2026 my landlord handed me a notice saying I am violating my lease by having a waterbed, and that I have 7 days to get rid of it or my lease will be terminated. I never got a warning before this. I still have the waterbed. The landlord has not taken any rent from me since the notice, and no court papers have come."
+  },
+  "chat": [
+    "Does my lease even say anything about waterbeds?",
+    "Can they end my lease over this?"
+  ],
+  "expect": {
+    "skills": [
+      "notice_received_violation"
+    ],
+    "turns": [
+      {
+        "say": "anything about waterbeds",
+        "called": [
+          "search_lease"
+        ],
+        "must": [
+          "(?i)found nothing|no clause|did not find|didn't find|does not find|nothing (on|about)|no (mention|term|provision)"
+        ]
+      },
+      {
+        "say": "Can they end my lease over this?",
+        "applied": true,
+        "open_first": true
+      }
+    ]
+  }
+}

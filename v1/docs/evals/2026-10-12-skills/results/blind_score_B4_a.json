@@ -1,0 +1,203 @@
+{
+  "scorer": "B4_a",
+  "runs": [
+    {
+      "code": "R002",
+      "scenario": "eval_leave_early_family",
+      "replies": 6,
+      "law_replies": 6,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "The tenant learns the fee option is open, that the landlord chooses the remedy, and that a 7-day notice is due, but the cost answer leaves out what 83.595(4)(a) adds, the deposit answer states rules with no cite, and the same offer and the same already-confirmed move-out date are asked for again in replies 2, 3, 4, 5."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Your situation (as you described it): Lease runs until July 31, 2027; Rent is $1,050 a month; You want to move out around December 15, 2026 (the tenant's own facts listed back, then listed again as eight items to confirm)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "I need you to confirm the facts I’ve listed above ... Please confirm each of the following (eight facts), then 'let me know which option you’d like to pursue first'"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: Section 4.3 says: “If Tenant vacates or abandons the Premises before the end of the Term, Tenant shall give Landlord seven (7) days’ written notice ...” That is a 7‑day notice requirement, which is no more than 60 days. → Met (4.3 is the deposit-return clause; the lease's own notice period for the fee was not found by any search, and the reply calls the condition met without saying so)"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: ending the lease and keeping you liable only for the fee (83.595(1) says 'terminating any further liability of the tenant'; the printed words under the reply are only 83.595(4) and 83.49(5))"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Use the early‑termination fee/liquidated‑damages addendum (Fla. Stat. 83.595(4)). All three conditions are met: ... then the same remedies sentence and the same 7-day notice steps as reply 1"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "Please confirm that you plan to move out on December 15, 2026 (YYYY‑MM‑DD format). (the planned move-out date was already confirmed on the sheet in the lines just above)"},
+        {"reply": 2, "category": "OFFER", "evidence": "Help you draft a notice to the landlord (preserve, assert, or escalate posture) with the correct delivery method and your forwarding address. (same offer as reply 1, plus 'Suggest what to keep for your record')"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: your lease’s Section 4.3 says you must give seven (7) days’ written notice before vacating, which is no more than 60 days (same call as reply 1)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: ending the lease and keeping you liable only for the fee (same misstatement of 83.595(1) as reply 1)"},
+        {"reply": 3, "category": "ONE_SIDED", "evidence": "Charge liquidated damages or an early‑termination fee – if the landlord chooses this, the amount is the $2,100 you agreed to in the addendum. (leaves out 83.595(4)(a): rent and other charges accrued through the end of the month the landlord retakes possession, and damages to the unit)"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "once you confirm the exact move‑out date you will use for the 7‑day deadline (the date was confirmed two lines above the question)"},
+        {"reply": 3, "category": "OFFER", "evidence": "If you would like, I can draft a notice letter for you to send to the landlord (preserve, assert, or escalate posture)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "borderline: Give the landlord at least 7 days’ written notice by certified mail or personal delivery before you vacate, and include in that notice the address where you can be reached (your forwarding address) (third time these steps appear)"},
+        {"reply": 4, "category": "OFFER", "evidence": "If you’d like, I can draft that notice for you now—just let me know whether you want a preserve, assert, or escalate posture"},
+        {"reply": 4, "category": "RECITED", "evidence": "borderline: Your lease requires that notice (Lease Section 4.3: “If Tenant vacates or abandons the Premises before the end of the Term, Tenant shall give Landlord seven (7) days’ written notice of the date of vacating …”), and the statute imposes the same requirement (Fla. Stat. 83.49(5): “must give at least 7 days’ written notice by certified mail ...”) (the program prints these words under the reply)"},
+        {"reply": 5, "category": "ONE_SIDED", "evidence": "“If the landlord fails to give the required written notice within the 30‑day period, he or she forfeits the right to impose a claim upon the security deposit …” (cut off before 'may file an action for damages after returning the security deposit')"},
+        {"reply": 5, "category": "QUOTE_WRONG", "evidence": "provide the tenant written notice … of his or her intention to impose a claim on the deposit and the reason for the claim. (statute reads 'the reason for imposing the claim')"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "If you do object, the landlord must either return the undisputed portion of the deposit or file a lawsuit to recover the claimed amount. ... They would have to prove any damages in a lawsuit if they wanted to retain money from the deposit. (no cite; not in stored 83.49)"},
+        {"reply": 5, "category": "RECITED", "evidence": "Statute: “If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice …” plus three more statute passages pasted in quote marks that the program already prints"},
+        {"reply": 5, "category": "REPEATED", "evidence": "Give the landlord the 7‑day written notice (by certified mail or personal delivery) before you move out, including your forwarding address where you can be reached. This is the notice whose deadline is shown above. (fourth time)"},
+        {"reply": 5, "category": "OFFER", "evidence": "If you’d like, I can draft the 7‑day notice letter for you to send to the landlord (preserve, assert, or escalate posture)"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "borderline: After you vacate, the landlord has 30 days to send you a written notice of intent to impose a claim (83.49(3)(a) runs the 30 days from 'the termination of the rental agreement', which for a tenant leaving in December 2026 under a lease to July 2027 is not the move-out day by the reply's own quote)"},
+        {"reply": 6, "category": "CASE_MISREAD", "evidence": "Yes. Florida appellate courts have ruled on exactly this kind of fee. ... In other words, a fee that exceeds two months’ rent, or that is not tied to the statutory options in 83.595, has been struck down. (Olen read the 2007 statute, before 83.595(4) and its two-month limit existed, and struck a default clause, not an addendum fee; no word on how alike or on the version)"},
+        {"reply": 6, "category": "CONDITION_MISSED", "evidence": "borderline: So a judge has said a fee like yours is allowed when it is (1) no more than two months’ rent, (2) set forth in a separate addendum, and (3) signed at the same time as the lease. (leaves out the 60-day notice condition of 83.595(4))"}
+      ]
+    },
+    {
+      "code": "R011",
+      "scenario": "eval_leave_early_family",
+      "replies": 6,
+      "law_replies": 6,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "The cost answer (reply 3) lays the four remedies beside the lease and rent and includes 83.595(4)(a), and the notice date is clear, but the deposit answer is thin and uncited, the Olen reading is wrong, and the same forwarding-address request and notice steps are pasted into every reply."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "Once you confirm the facts you've given me (your planned move-out date, that you signed a separate addendum for the fee, the amount, your monthly rent, your lease end date, that you're not a servicemember, that this isn't repair-related, and that you haven't given notice yet)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: Your lease says: 'If Tenant vacates or abandons the Premises before the end of the Term, Tenant shall give Landlord seven (7) days' written notice of the date of vacating' (Lease Section 4.3). Seven days is no more than 60 days. (4.3 is the deposit clause; no search found a notice period for the fee, yet 'all conditions are met')"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "This option does not waive any other rights you may have to your security deposit. (cited to 83.49(5), whose words only say failure to give the 7-day notice does not waive deposit rights); also 'those other ways out do not apply' with no cite"},
+        {"reply": 2, "category": "REPEATED", "evidence": "You can leave early and use the early termination fee/liquidated damages option you signed when you leased the unit. All conditions for that option are met: (the three conditions, the steps and the notes of reply 1 almost word for word)"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "borderline: 3. For the fee, the lease requires no more than 60 days' notice before early termination. ... Seven days is no more than 60 days. (same call as reply 1)"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "This option does not waive any other rights you may have to your security deposit. (same uncited rule as reply 1)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "What is your forwarding address in Miami (where you can be reached after you move out)? Once you provide that, I can help you draft the notice letter to your landlord and keep a record showing you followed the law. (verbatim from reply 2), with the 7-day notice steps a third time"},
+        {"reply": 3, "category": "OFFER", "evidence": "Once you provide that, I can help you draft the notice letter to your landlord and keep a record showing you followed the law. (same offer again)"},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "You must give your landlord written notice by that date (the 7-day rule has no cite in this reply; Lease Section 22.1 is cited only for how to deliver it, and 'the ways your lease and the statute allow' names the statute with no section)"},
+        {"reply": 4, "category": "OFFER", "evidence": "To draft the notice letter for you, I still need your forwarding address in Miami (where you can be reached after you move out). Once you provide that, I can help you draft the letter (same offer again)"},
+        {"reply": 4, "category": "REPEATED", "evidence": "borderline: the notice must include your forwarding address in Miami and be delivered by certified mail or personal delivery (the ways your lease and the statute allow for this notice—see Lease Section 22.1) (same sentence as replies 1 to 3)"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "The landlord may keep part or all of your deposit only if they have a valid claim for unpaid rent, damages beyond normal wear and tear, or other lease violations ... The early termination fee/liquidated damages ($2,100) is separate from any deposit claim. (no cite; the stored text names no such grounds, and 83.595(4)(a) adds accrued rent and damages)"},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "and they follow the legal notice procedure in Florida Statute 83.49(3). (never says the 30-day written notice by certified mail or email by addendum, nor that failing it forfeits the claim, so the tenant cannot tell when the landlord can keep it)"},
+        {"reply": 5, "category": "REPEATED", "evidence": "What is your forwarding address in Miami (where you can be reached after you move out)? Once you provide that, I can help you draft the notice letter ... I cannot calculate or write that date myself. (paragraph repeated from reply 3)"},
+        {"reply": 5, "category": "OFFER", "evidence": "Once you provide that, I can help you draft the notice letter to your landlord (same offer again)"},
+        {"reply": 6, "category": "CASE_MISREAD", "evidence": "However, it affirmed that a fee not exceeding two months’ rent is within the statutory limit set by section 83.595(4). (Olen read the 2007 statute, said nothing about 83.595(4) or a two-month limit; its holding struck a three-month default clause under 83.595(1))"},
+        {"reply": 6, "category": "CONDITION_MISSED", "evidence": "borderline: Your situation matches the enforceable pattern ... The statute allows such a fee if the amount does not exceed two months’ rent (Fla. Stat. 83.595(4)). (leaves out the notice-period condition and the time-of-agreement condition)"},
+        {"reply": 6, "category": "OFFER", "evidence": "To proceed with your notice, I still need your forwarding address in Miami ... Once you provide that, I can help you draft the notice (same offer again)"},
+        {"reply": 6, "category": "REPEATED", "evidence": "Even with a valid addendum, the landlord still chooses which remedy to pursue if you leave early (Fla. Stat. 83.595 lists four options: end the tenancy, relet for your account, stand by and hold you liable for rent, or charge liquidated damages/early termination fee). (the note of replies 1 and 2 again)"}
+      ]
+    },
+    {
+      "code": "R028",
+      "scenario": "eval_leave_early_family",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "Each reply answers the question asked and uses the sheet facts and lease sections, and the notice answer is clear, but the cost answer sends the tenant to read an addendum the tool holds and leaves out 83.595(4)(a), and the deposit and case answers have unsourced rules and a miscited subsection."
+      },
+      "slips": [
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "you can check the notice period required by the Early Termination Addendum (Exhibit A) to see if it asks for 60 days or less ... which you can verify by reviewing Exhibit A (Exhibit A is in the lease text the tool printed under Lease Section 22.2 and searched)"},
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "In short: the lease’s addendum sets a possible cost of $2,100.00, but whether that amount is actually owed depends on the notice requirement in the addendum (no word of 83.595(4)(a): accrued rent through the month the landlord retakes possession and damages to the unit)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: If any condition is not met, or if you choose not to rely on the addendum, the landlord may pursue other remedies ... or standing by and holding you liable for rent until the unit is relet. (the choice of remedy is the landlord's, not the tenant's; lists three as 'four paths'; 'until the unit is relet' is not in 83.595(3))"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "The landlord may keep your deposit only if they have a valid claim for damages or unpaid rent ... the landlord cannot treat the deposit as payment of liquidated damages unless they actually have a claim for damages that equals or exceeds the deposit amount. (no cite; not in the stored text)"},
+        {"reply": 3, "category": "QUOTE_WRONG", "evidence": "If they fail to send that notice, they forfeit the right to make a claim against the deposit, though they may still sue you for damages (Fla. Stat. 83.49(3)(b)). (the forfeiture and the later action for damages are in 83.49(3)(a))"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: the landlord must, within 30 days after you vacate, give you a written notice by certified mail (statute runs the 30 days from 'the termination of the rental agreement'; for a tenant leaving in December 2026 under a lease to July 2027 the two are not the same day)"},
+        {"reply": 3, "category": "GAP_AS_FACT", "evidence": "borderline: The lease and statute do not allow them to keep the deposit automatically for early termination. (flat statement about what the lease holds, with no lease search in this turn)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "So a judge has said a fee exceeding the statutory limit (e.g., three months’ rent) is not allowed (Olen read the 2007 statute, which had no two-month limit; it struck a default clause under 83.595(1); no word on the statute version or how alike the facts are)"}
+      ]
+    },
+    {
+      "code": "R070",
+      "scenario": "eval_leave_early_family",
+      "replies": 4,
+      "law_replies": 4,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "Short answers that use the sheet facts and the lease, with a clear notice date, but the cost answer gives the fee as the amount and not the landlord's four choices, and the deposit and case answers misstate Plakhov and Olen."
+      },
+      "slips": [
+        {"reply": 1, "category": "ID", "evidence": "(leave_notice_given: false)"},
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "The early termination fee you mentioned is $2,100, which equals two months’ rent ($1,050 × 2) (no word of 83.595(4)(a): accrued rent through the month the landlord retakes possession and damages to the unit)"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "so to use the fee option you would first need to deliver that seven‑day notice (the fee is treated as the tenant's option; the landlord's choice among the four remedies is mentioned only for 'other remedies' if the notice is not given)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: that period is no more than the 60 days’ notice the statute allows for a fee (Fla. Stat. 83.595(4)) (4.3 is the deposit clause; the 7-day deposit notice of 83.49(5) is said to be needed 'to use the fee option')"},
+        {"reply": 2, "category": "DEADLINE_REPEAT", "evidence": "minor: the notice must be delivered by 2026‑12‑08 (the date the program prints right after the reply)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "borderline: If you do not give that notice, the landlord may be relieved of the deposit‑notice requirement, but you could still be liable for rent or other remedies the landlord may choose under the statute (Fla. Stat. 83.595(1)–(3)). (nearly word for word from reply 1)"},
+        {"reply": 3, "category": "CASE_MISREAD", "evidence": "In that situation the landlord cannot simply keep the deposit; he or she must either return it or pursue a separate action for damages, and you may defend against any claim (Plakhov v. Serova). (Plakhov held the opposite: the landlord and tenant 'are free to litigate over their entitlement' and the deposit was applied to reduce the damages owed; no word on how alike the facts are)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "borderline: the landlord still cannot retain the deposit without following the legal process for claiming damages (no cite, and Plakhov says otherwise)"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: the landlord must, within thirty days after you move out, give you written notice by certified mail (statute runs the 30 days from 'the termination of the rental agreement'; leaves out the e-mail-by-addendum route)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "borderline: If you do not give the seven‑day notice, the lease provision relieves the landlord of the deposit‑notice obligation (Lease Section 4.3) (the third telling of this point after replies 1 and 2)"},
+        {"reply": 4, "category": "ID", "evidence": "(fee_in_writing: true, fee_written_where: in a separate paper I signed with the lease)"},
+        {"reply": 4, "category": "CASE_MISREAD", "evidence": "they have struck down fees that exceed two months’ rent (Olen read the 2007 statute with no two-month limit); and Wilson 'upheld an early‑termination fee of two months’ rent as enforceable when the tenant signed an addendum agreeing to it' (the holding turns on the addendum being signed at the same time as the lease)"},
+        {"reply": 4, "category": "CONDITION_MISSED", "evidence": "borderline: the statute permits it up to two months’ rent, and case law supports its enforceability when properly agreed (leaves out the notice-period condition of 83.595(4))"},
+        {"reply": 4, "category": "GAP_AS_FACT", "evidence": "borderline: a judge has not ruled that a fee like yours is disallowed (the tool knows only the two cases it printed)"}
+      ]
+    },
+    {
+      "code": "R032",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "Reply 1 says correctly that the deposit turns on whether a claim notice came, but gives the tenant no way to find out and leaves out the landlord's later suit; reply 2 is only a placeholder line after the program printed that nothing is confirmed yet."
+      },
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "If the landlord did not give that notice, they forfeit the right to keep any of the deposit and must return it (Fla. Stat. 83.49(3)(a)). (leaves out 'may file an action for damages after returning the security deposit')"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: You have not said whether you received such a notice, so that point is not known yet. (the tenant said they moved twice and do not know if anything was mailed; the reply does not say who can settle it or how, e.g. the tenant checking old addresses or asking the landlord)"}
+      ]
+    },
+    {
+      "code": "R039",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Reply 1 sets out what the deposit turns on with lease and statute applied and the next step, but the notice question is then asked a second and third time with the same conditions, never using that the tenant said they do not know if anything was mailed, and the deadline reply is one line."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "What you’ve said (waiting for your confirmation): You moved out and your lease ended on July 31, 2026. You emailed the landlord your new address ... (the tenant's own words listed back, then again as 'Please confirm the facts above')"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Have you received any written notice (letter, email, text, portal message) from the landlord about keeping part of your $900 deposit? If yes, please tell me: ... (the same question and the same follow-ups as reply 1)"},
+        {"reply": 2, "category": "OFFER", "evidence": "If you have not received any such notice, we can move to the next step: sending a letter demanding the return of your full deposit. (same offer as reply 1)"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "you said you emailed the landlord your new address at move‑out. Is that correct? (the tenant already said it; asked together with the notice question and its three follow-ups)"},
+        {"reply": 3, "category": "ONE_SIDED", "evidence": "the landlord forfeited the right to keep any of the deposit because they failed to give the required written notice within 30 days after your lease ended (July 31, 2026). (leaves out that the landlord may still file an action for damages after returning the deposit)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "the statute requires the notice to be sent by certified mail to your last known mailing address (or by email if you agreed to that) (no section cited in this reply; the 30-day rule and the forfeiture are also uncited here)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "I need to know whether you received any written notice from the landlord saying they intended to make a claim against the deposit (a letter, email, text, portal message, etc.). If you did not receive such a notice, the landlord forfeited ... (the conditions and the question of replies 1 and 2 again)"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "borderline: If you did receive a notice, we would need to check how it was delivered and whether it arrived in time, because the statute requires the notice to be sent by certified mail ... (gives only the reading that the method decides; the other reading, that a notice actually received in time is enough under 83.505(6), is not given)"}
+      ]
+    },
+    {
+      "code": "R077",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 4,
+      "law_replies": 3,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 4,
+        "conversational": 2,
+        "why": "The tenant leaves knowing what the deposit turns on, that both landlord clocks have passed, what follows if no notice came and if one did, and to check their records, but the same notice question, evidence list, and letter offer are repeated in each reply and reply 4 is a one-line placeholder."
+      },
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "If the landlord fails to do that, he forfeits the right to keep any of the deposit (Fla. Stat. 83.49(3)(a)). (leaves out 'may file an action for damages after returning the security deposit')"},
+        {"reply": 1, "category": "RECITED", "evidence": "The date your lease ended (tenancy terminated): 2026‑07‑31; The date you moved out and returned the keys (vacated): 2026‑07‑31; Whether you moved out before the lease end or have a month‑to‑month arrangement: no (the tenant's own facts listed back)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "Please confirm the two dates you already gave: (then three items to confirm, plus whether any notice arrived, how and when)"},
+        {"reply": 2, "category": "ONE_SIDED", "evidence": "he forfeited the right to keep any of your $900 deposit (Fla. Stat. 83.49(3)(a)). In that case, you are entitled to the full deposit back. (again without the landlord's later action for damages)"},
+        {"reply": 2, "category": "GAP_AS_FACT", "evidence": "Since more than two months have passed, that objection window is also closed (the 15 days run from the tenant's receipt of a notice, a date the program could not count and the tenant does not know)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "Please check your records for any written notice from the landlord about a deposit claim (letter, e‑mail, text, or portal message). Note: How it arrived ... The date you received it; and the same 'Keep evidence of' list as reply 1"},
+        {"reply": 2, "category": "OFFER", "evidence": "I can help you draft a letter to the landlord requesting the deposit back (or objecting to an improper claim). (same offer as reply 1)"},
+        {"reply": 3, "category": "REPEATED", "evidence": "If the landlord fails to give that required written notice within the 30‑day period, they forfeit the right to impose a claim on the deposit and must return it, though they may later sue you for damages ... (the rules, the notice question and the 'Keep evidence of' list of replies 1 and 2 again)"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "I need to know: 1. Did you receive any written notice ... how it arrived ... and the date you received it. 2. If you received a notice, was it sent by certified mail to your last known mailing address, or did you and the landlord have a signed addendum agreeing to e‑mail notices? (more than two things at once, after the tenant said they do not know if anything was mailed)"},
+        {"reply": 3, "category": "OFFER", "evidence": "help you draft a letter to request its return (or to object to an improper claim). (same offer a third time)"}
+      ]
+    },
+    {
+      "code": "R098",
+      "scenario": "eval_know_deposit_unsure",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "Reply 1 applies the sheet facts and the lease to the notice condition and tells the tenant how to settle the one unknown, but omits the landlord's later suit; reply 2 is a meta line ('Your instructions show the open facts') that tells the tenant nothing."
+      },
+      "slips": [
+        {"reply": 1, "category": "ONE_SIDED", "evidence": "If you did not receive such notice, the landlord forfeits the right to keep the deposit and must return it (Fla. Stat. 83.49(3)(a)). (leaves out 'may file an action for damages after returning the security deposit')"}
+      ]
+    }
+  ]
+}

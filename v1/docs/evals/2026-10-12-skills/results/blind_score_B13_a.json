@@ -1,0 +1,266 @@
+{
+  "scorer": "B13_a",
+  "runs": [
+    {
+      "code": "R019",
+      "scenario": "eval_nc_mixed_heater",
+      "replies": 3,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: the tenant learns nothing about the heater options and gets a muddled non-renewal answer plus 'no active deadlines' with no reason; conversational: reply 2 does build on the sheet facts ('You confirmed ...') but reply 1 and reply 3 are one-line standalones."
+      },
+      "slips": [
+        {
+          "reply": 2,
+          "category": "UNCONFIRMED_FACT",
+          "evidence": "You confirmed you have not sent any written notice to the landlord about the heater, and you have not complained to a governmental agency.  (no agency complaint question on the sheet and none in the tenant's words, yet called 'confirmed')"
+        },
+        {
+          "reply": 2,
+          "category": "CONDITION_MISSED",
+          "evidence": "Since your complaint is not a written notice under 83.56(1) nor a complaint to an agency, the statute does not clearly protect it, so the landlord’s refusal to renew may not be illegal retaliation.  (concludes from the protected-complaint condition only; leaves out whether non-renewal is one of the acts 83.64(1) bars and the good-faith condition)"
+        },
+        {
+          "reply": 2,
+          "category": "LAW_UNSOURCED",
+          "evidence": "(a written notice specifying the noncompliance and indicating intent to terminate the lease or withhold rent)  (cited to 83.56(1), whose printed words give only intent to terminate; withholding rent is 83.60(1)(b))"
+        }
+      ]
+    },
+    {
+      "code": "R036",
+      "scenario": "eval_nc_mixed_heater",
+      "replies": 4,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: by the end the tenant knows no clock runs until a written notice is delivered and that retaliation protection is doubtful, but never learns whether ending the lease or withholding rent is open for a heater in a single-family house; conversational: the same four questions are asked in replies 1 and 2 and the written-notice question is asked right after saying the tenant already said so."
+      },
+      "slips": [
+        {
+          "reply": 1,
+          "category": "ASK_AGAIN",
+          "evidence": "You said you've kept paying rent—have you paid any rent since September 15, 2026 ... have you mentioned it only in person, by text, or another way?  (four questions at once; rent and 'nothing in writing' were already given)"
+        },
+        {
+          "reply": 1,
+          "category": "LAW_UNSOURCED",
+          "evidence": "the landlord's comment about your religion is unacceptable and may be illegal retaliation ; (This affects whether the landlord can change repair duties in writing.)  (rules stated with no cite)"
+        },
+        {
+          "reply": 2,
+          "category": "ASK_AGAIN",
+          "evidence": "I need the details I asked for earlier: 1. Is the house you rent a single‑family house or a duplex? 2. Have you paid any rent since September 15, 2026 ... 3. Have you mentioned the heater issue only in person, by text ... 4. ... was that in writing"
+        },
+        {
+          "reply": 2,
+          "category": "REPEATED",
+          "evidence": "Now, to help you with the heater problem under the repair‑not‑made skill, I need the details I asked for earlier  (the same four-question list and closing sentence as reply 1)"
+        },
+        {
+          "reply": 2,
+          "category": "OFFER",
+          "evidence": "Once I have those, I can tell you what steps you can take—like ending the lease or using the repair problem as a defense  (same offer as reply 1, made again)"
+        },
+        {
+          "reply": 2,
+          "category": "RECITED",
+          "evidence": "borderline: lists all six examples of protected conduct ('complaining to a government agency ...', 'organizing or participating in a tenant organization', ... 'exercising rights under local, state, or federal fair‑housing laws') instead of citing 83.64; the program prints the words under the reply"
+        },
+        {
+          "reply": 2,
+          "category": "QUOTES_ONLY",
+          "evidence": "borderline: sets out the 83.64 rule and then 'this tool does not decide whether that statement violates fair‑housing laws', with nothing on whether the tenant's facts (no written notice to the landlord) meet any listed condition"
+        },
+        {
+          "reply": 2,
+          "category": "LAW_UNSOURCED",
+          "evidence": "borderline: decrease services (such as refusing to make repairs) ; could be evidence of discriminatory intent  (glosses with no cite)"
+        },
+        {
+          "reply": 3,
+          "category": "ASK_AGAIN",
+          "evidence": "Since you said you have not put anything in writing about the heater ... 1. Have you given your landlord any written notice about the heater problem?  2. When does your current lease end?  (the first was just stated as given; the lease holds its end date)"
+        },
+        {
+          "reply": 4,
+          "category": "OPTION_BEFORE_OPEN",
+          "evidence": "borderline: 1. 7 days to fix – if the notice says you intend to end the lease ... 2. ... if the notice says you intend not to pay rent  (how to start each option's clock, with no word on whether either is open for a heater in a single-family house)"
+        },
+        {
+          "reply": 4,
+          "category": "ASK_AGAIN",
+          "evidence": "borderline: I need to know ...: the date you deliver the written notice to the landlord, whether the notice says you intend to end the lease because of the heater, and whether the notice says you intend not to pay rent  (three things at once)"
+        }
+      ]
+    },
+    {
+      "code": "R059",
+      "scenario": "eval_nc_mixed_heater",
+      "replies": 5,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 2,
+        "why": "helpful: the tenant learns the lease makes the landlord repair heat, that a written notice is what starts any clock, and that the lease has a 60-day written non-renewal notice, but is never told whether the heater opens either option in a single-family house; conversational: replies 1, 2, 3, 4 and 5 each end on the same 'which option do you want' menu and restate the notice steps instead of building on earlier replies."
+      },
+      "slips": [
+        {
+          "reply": 1,
+          "category": "RECITED",
+          "evidence": "borderline: Lease Section 7.2 states: \"Landlord shall repair the heating, air‑conditioning, electrical, and plumbing systems and the Appliances, except where ...\"  (whole sentence pasted; the program prints it under the reply)"
+        },
+        {
+          "reply": 1,
+          "category": "OPTION_BEFORE_OPEN",
+          "evidence": "What you need to do first for either option: Send a written notice to the landlord that:  (steps for both options with no word on whether the heater, in a single-family house, opens either)"
+        },
+        {
+          "reply": 1,
+          "category": "LAW_UNSOURCED",
+          "evidence": "The statute gives you two main options when the landlord fails to make a required repair  (the two rules are stated with no cite to 83.56(1), 83.60(1)(b) or 83.56(5))"
+        },
+        {
+          "reply": 1,
+          "category": "CONDITION_MISSED",
+          "evidence": "Not pay rent and raise the problem as a defense if the landlord sues for possession, if you send a written notice ...  (leaves out that 83.60(1)(b) reaches only a material noncompliance with 83.51(1), not a lease repair duty, and the 'materially fails' condition of 83.56(1))"
+        },
+        {
+          "reply": 1,
+          "category": "OPEN_CLOSED",
+          "evidence": "for the statutory notices in options 1 and 2, the law requires delivery by mailing, delivering a true copy, or emailing under 83.505  (how the rent notice under 83.60(1)(b) is delivered is open; this applies 83.56(4)'s ways to it as settled)"
+        },
+        {
+          "reply": 1,
+          "category": "LEASE_PUNTED",
+          "evidence": "statutory notices like these may need hand, mail, or courier—check the lease's notices clause for details  (the tool had read Section 22.1 and the program printed it)"
+        },
+        {
+          "reply": 1,
+          "category": "UNKNOWN_UNTIED",
+          "evidence": "this is an open question the law does not settle  (rent paid with knowledge: no readings and no word on what follows for ending the lease either way)"
+        },
+        {
+          "reply": 1,
+          "category": "ASK_AGAIN",
+          "evidence": "borderline: What is left to know: Whether you have paid rent since you knew about the heater problem (you said you have kept paying rent).  (a given fact listed as unknown, then three more items plus a three-way question)"
+        },
+        {
+          "reply": 1,
+          "category": "CONDITION_WRONG",
+          "evidence": "borderline: Is delivered in a way the lease allows: hand delivery, regular mail, certified mail, or email only if ...  (Lease 22.1 lists hand, certified mail, return receipt, or courier; no regular mail)"
+        },
+        {
+          "reply": 2,
+          "category": "OPTION_BEFORE_OPEN",
+          "evidence": "Option 1: End the lease  You can terminate the rental agreement if you send a written notice to the landlord that:  (steps given; nothing on whether the option is open for a heater in the confirmed single-family house)"
+        },
+        {
+          "reply": 2,
+          "category": "CONDITION_MISSED",
+          "evidence": "you can raise the heater problem as a complete defense if you: Sent a written notice ... Seven days passed  (leaves out the material noncompliance with 83.51(1) condition, and never applies the confirmed single-family house)"
+        },
+        {
+          "reply": 2,
+          "category": "LAW_UNSOURCED",
+          "evidence": "The statute says paying rent with actual knowledge of a landlord’s noncompliance can waive the right to terminate  (and the option rules above): no section cited anywhere in the reply"
+        },
+        {
+          "reply": 2,
+          "category": "UNKNOWN_UNTIED",
+          "evidence": "it is unclear if this applies here  (rent paid with knowledge, with no readings and what each would mean for ending the lease)"
+        },
+        {
+          "reply": 2,
+          "category": "REPEATED",
+          "evidence": "Option 1: End the lease ... Option 2: Not pay rent and raise the problem as a defense ... What would you like to do?  (the two options, their steps, the open rent question, and the three-way closing question from reply 1)"
+        },
+        {
+          "reply": 2,
+          "category": "OFFER",
+          "evidence": "Once you choose, I can help you draft the required written notice and keep a record of the steps you take.  (same offer as reply 1)"
+        },
+        {
+          "reply": 3,
+          "category": "OFFER",
+          "evidence": "If you would like to continue with the heater repair issue, let me know which option you want to pursue ... and I can help you take the next steps.  (same offer a third time, on a religion question)"
+        },
+        {
+          "reply": 4,
+          "category": "UNKNOWN_UNTIED",
+          "evidence": "Whether a landlord’s refusal to renew a lease (without more) constitutes “threatening to bring an action for possession or other civil action” under 83.64(1).  (named with no readings and no word on what follows if it does or does not)"
+        },
+        {
+          "reply": 4,
+          "category": "RECITED",
+          "evidence": "borderline: Your lease’s renewal terms (Lease Section 2.3) say: - The lease does not automatically renew. - Either party wishing to terminate at the expiration date must give written notice at least 60 days ...  (three bullets restate the clause the program prints)"
+        },
+        {
+          "reply": 4,
+          "category": "LAW_UNSOURCED",
+          "evidence": "borderline: to preserve the repair‑and‑deduct defense  (not a defense in any stored section; withholding rent is 83.60(1)(b))"
+        },
+        {
+          "reply": 4,
+          "category": "OFFER",
+          "evidence": "Let me know which option you want to pursue, and I can help you draft the notice and keep a record.  (the same draft-a-notice offer again)"
+        },
+        {
+          "reply": 5,
+          "category": "ASK_AGAIN",
+          "evidence": "borderline: it needs three pieces of information that you have not confirmed: 1. The date you delivered a written notice ... 2. ... end the lease ... 3. ... not pay rent  (three things; the tenant confirmed no written notice was sent)"
+        },
+        {
+          "reply": 5,
+          "category": "OPTION_BEFORE_OPEN",
+          "evidence": "borderline: What you can do next: - Send a written notice to the landlord about the heater ... state clearly either that you intend to end the lease ... or that you intend not to pay rent  (steps with no word on whether either option is open)"
+        },
+        {
+          "reply": 5,
+          "category": "REPEATED",
+          "evidence": "Send a written notice to the landlord about the heater (hand delivery, regular mail, certified mail, or email only if you have a signed addendum ...)  and the 'Remember' list (notice must describe the problem, repair-request channel, paying rent while knowing) repeat replies 1 and 2"
+        },
+        {
+          "reply": 5,
+          "category": "OPEN_CLOSED",
+          "evidence": "for the statutory notices that start the 7‑day periods, the law requires delivery by mailing, delivering a true copy, or emailing under 83.505  (applies 83.56(4)'s ways to the 83.60(1)(b) rent notice as settled)"
+        },
+        {
+          "reply": 5,
+          "category": "UNKNOWN_UNTIED",
+          "evidence": "Paying rent while knowing of the problem (you said you have kept paying rent) may affect your right to end the lease—this is an open question the law does not settle.  (no readings, no what follows)"
+        },
+        {
+          "reply": 5,
+          "category": "LAW_UNSOURCED",
+          "evidence": "the two 7‑day periods (one for ending the lease, one for using the problem as a defense if the landlord sues for possession)  (no cite to 83.56(1) or 83.60(1)(b); the delivery rule cites only 83.505)"
+        }
+      ]
+    },
+    {
+      "code": "R078",
+      "scenario": "eval_nc_mixed_heater",
+      "replies": 3,
+      "law_replies": 2,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 1,
+        "conversational": 1,
+        "why": "helpful: the tenant gets 'not answered', then a contradictory 'not settled ... therefore not illegal', then 'no deadlines' with no reason and no word that a written notice is what starts a clock; conversational: three disconnected short answers that do not build on each other or on the sheet facts."
+      },
+      "slips": [
+        {
+          "reply": 2,
+          "category": "CONDITION_MISSED",
+          "evidence": "Therefore, the statute I have does not make refusing to renew your lease for that reason illegal.  (says 'not settled' then closes it; never applies the protected-conduct condition to the tenant's facts (no written notice, no agency complaint) or the good-faith condition, only 'You said the heater does not work.')"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "about": "deposit_claim_received. Moved out 2026-08-31; the manager e-mailed on 2026-09-21 a letter dated 2026-09-18 keeping $650 of $1,200 for carpet and paint; the tenant says the stains were there at move-in. Checks TODO 12 (the printed date suggested as the date received; the confirmation answers type the two dates), a legality question, the objection deadline, a letter, and a lay question about judges.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ended_2026-08-31.pdf",
+    "description": "I moved out of my townhouse on August 31, 2026, the day my lease ended. My deposit was $1,200. On September 21, 2026 the property manager emailed me a letter dated September 18, 2026 saying they're keeping $650 for carpet replacement and repainting. The carpet already had stains when I moved in and I have move-in photos. This is so unfair. The letter says I have 15 days to object in writing. I have not sent them anything yet."
+  },
+  "confirm": {
+    "claim notice dated": [
+      "9/18/2026"
+    ],
+    "claim notice date": [
+      "9/21/2026"
+    ]
+  },
+  "chat": [
+    "The stains were there before I moved in, I have pictures. Do I have to let them take that money?",
+    "How long do I have to tell them I disagree?",
+    "Please write a letter saying I don't agree with the charge because the stains were already there when I moved in. Give them 15 days to answer. I'll email it to the property manager. Use the preserve posture.",
+    "Yes, that's everything, please write it now.",
+    "Did a judge ever make a landlord give back money for damage that was already there?"
+  ],
+  "expect": {
+    "skills": [
+      "deposit_claim_received"
+    ],
+    "deadlines": [
+      "deposit_claim_received"
+    ],
+    "letters": 1,
+    "screen_must_not": [
+      "CONFIRM claim notice date: suggested 2026-09-18"
+    ],
+    "turns": [
+      {
+        "say": "Do I have to let them take",
+        "not_called": [
+          "draft_letter"
+        ],
+        "applied": true
+      },
+      {
+        "say": "How long do I have to tell them",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ]
+  }
+}

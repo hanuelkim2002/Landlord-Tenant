@@ -1,0 +1,12 @@
+{
+  "about": "The tenant wants to move out on 2026-11-15, before a one-year lease ends, for a job; no notice given, no addendum, not a servicemember. Expected: the model loads wants_to_leave_early; the 83.49(5) clock seven_day_notice_before_leaving at 2026-11-08. The tenant asks what happens if they just leave, which the tool must not answer.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "I rent a house in Gainesville on a one-year lease. I got a job in Tampa and want to move out on November 15, 2026. I have not told the landlord yet. I did not sign any early termination addendum, and I am not in the military. It has nothing to do with repairs."
+  },
+  "chat": [
+    "What are my deadlines?",
+    "What happens if I just leave in November?"
+  ]
+}

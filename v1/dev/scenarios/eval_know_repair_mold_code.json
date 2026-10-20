@@ -1,0 +1,33 @@
+{
+  "about": "repair_not_made. The state: a local code. Mold on a bedroom wall of a single-family house since 2026-09-08, reported by e-mail 2026-09-10; the landlord says it is the tenant's job; the problem is mold, not the structure or the plumbing, and whether the lease promises the repair is in its repairs clause, which the model reads with search_lease. Whether the landlord had a duty to fix it then turns on a building, housing, or health code the tool does not hold: the answer must say so and point to the code enforcement office, with what ending the lease would be either way. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "Black mold has been growing on my bedroom wall since September 8, 2026. I emailed the property manager about it on September 10, 2026 and they told me it's my job to keep the house dry. I have asthma. I'm still paying rent. I rent a single-family house. My email said, \"Black mold is growing on my bedroom wall. Please fix it.\" It did not say anything about ending my lease or about not paying rent. As far as I know nothing anyone did caused it, and no court papers have come."
+  },
+  "chat": [
+    "Can I break my lease because of the mold?",
+    "Who can tell me whether the mold breaks a housing code?"
+  ],
+  "expect": {
+    "skills": [
+      "repair_not_made"
+    ],
+    "turns": [
+      {
+        "say": "break my lease because of the mold",
+        "applied": true,
+        "open_first": true,
+        "must": [
+          "(?i)\\bcodes?\\b"
+        ]
+      },
+      {
+        "say": "Who can tell me",
+        "must": [
+          "(?i)code enforcement|health department|city|county"
+        ]
+      }
+    ]
+  }
+}

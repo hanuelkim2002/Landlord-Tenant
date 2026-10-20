@@ -1,0 +1,41 @@
+{
+  "about": "notice_received_violation and repair_not_made, with facts like Salmonte v. Eilertson: the tenant reported broken smoke detectors and mold to the city on 2026-09-10; a 7-day notice for a cat followed on 2026-09-24. Retaliation sits in 83.64, a section of repair_not_made (not of the violation skill), so its case topic is offered only because the repair skill is loaded.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current_no_pets.pdf",
+    "description": "On September 10, 2026 I called the city code enforcement about the broken smoke detectors and the mold in my apartment, because my landlord never fixed them. On September 24, 2026 my landlord handed me a 7-day notice saying I'm violating the lease by having a cat and I have 7 days to remove it or the lease ends. I've had the cat for a year and he never cared before. The smoke detectors and the mold have been like that since September 1, 2026, and the landlord has done nothing about them. I have kept paying rent. I have not sent him anything in writing about them, nothing anyone did caused them that I know of, and no court papers have come. I never got a written warning before the 7-day notice, I still have the cat, and the landlord has not taken any rent from me since."
+  },
+  "chat": [
+    "Is he doing this because I reported him to the city?",
+    "Has a court ever said a landlord can't go after you for reporting them?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "skills": [
+      "notice_received_violation",
+      "repair_not_made"
+    ],
+    "turns": [
+      {
+        "say": "because I reported him",
+        "applied": true
+      },
+      {
+        "say": "Has a court ever said",
+        "called": [
+          "get_cases"
+        ],
+        "topics": [
+          "Retaliatory eviction"
+        ],
+        "cases_used": true
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ]
+  }
+}

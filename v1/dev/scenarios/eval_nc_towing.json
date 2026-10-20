@@ -1,0 +1,25 @@
+{
+  "about": "Not covered. The complex towed the tenant's car over an expired parking sticker. Expected: the model loads no skill and says the tool has no skill for this, and since the tool holds the lease it searches the lease on the subject (the test lease's Section 5.4, Vehicles). Until 2026-10-12 the tool stopped before the chat and printed the lease's clause itself; the model's own search_lease call takes the place of that stop page.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "I came out this morning and my car was gone. My apartment complex had it towed from my own parking spot because my parking permit sticker expired yesterday. It cost me $250 to get it back. Can they do that?"
+  },
+  "chat": [
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "skills": [],
+    "turns": [
+      {
+        "say": "Can they do that",
+        "called": [
+          "search_lease"
+        ],
+        "must": [
+          "(?i)no skill|(?:not|n't) have a skill|(?:not|n't) cover"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "about": "Partly covered. A heater broken since 2026-09-15 (repair_not_made, covered) and a landlord's remark about the tenant's religion and refusal to renew (discrimination, not covered). Expected: the model loads repair_not_made and no other skill, and the chat goes on for the repair; asked about the remark, it says the tool has no skill for that, has nothing to quote, and cites no law from memory.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "My heater hasn't worked since September 15, 2026 and my landlord keeps saying he'll fix it but he doesn't. I rent a house in Gainesville. When I asked him about it again he said he regrets renting to 'people like you' because I'm Muslim, and now he says he won't renew my lease. I have kept paying rent. I have not put anything in writing to him about the heater, nothing anyone did broke it that I know of, and no court papers have come."
+  },
+  "chat": [
+    "Is it illegal for him to say that about my religion?",
+    "Can he refuse to renew my lease because I complained about the heater?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "skills": [
+      "repair_not_made"
+    ],
+    "turns": [
+      {
+        "say": "about my religion",
+        "must_not": [
+          "Fair Housing|42 U\\.?S\\.?C|760\\.\\d|Civil Rights Act"
+        ],
+        "must": [
+          "(?i)no skill|(?:not|n't) have a skill|(?:not|n't) cover"
+        ]
+      },
+      {
+        "say": "refuse to renew",
+        "must": [
+          "do not answer that|tool's reading"
+        ]
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "about": "The landlord emailed on 2026-09-20 that rent goes from $1,850 to $2,100 from 2026-11-01, mid-way through a one-year lease, after the tenant's written complaint of 2026-09-05. Expected: the model loads rent_increased (repair_not_made may be loaded too, for the broken water heater); the skill has no clocks, so no deadline. The tenant asks whether the landlord may do this and whether it is retaliation, which the tool must not answer.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "I rent a house in Gainesville on a one-year lease. My rent is $1,850 a month. On September 20, 2026 the landlord emailed me that my rent goes up to $2,100 starting November 1, 2026. On September 5, 2026 I had complained in writing about the broken water heater. I don't know whether other tenants got the same increase."
+  },
+  "chat": [
+    "What are my deadlines?",
+    "Can my landlord raise the rent in the middle of my lease?",
+    "Is this retaliation for my complaint?"
+  ]
+}

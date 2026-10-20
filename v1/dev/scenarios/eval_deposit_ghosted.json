@@ -1,0 +1,58 @@
+{
+  "about": "deposit_not_returned. A graduate moved out when the lease ended (2026-07-31), texted a new address, and has heard nothing for two months. Asks how long the landlord has, whether the landlord can keep it, then asks for a letter without knowing what a posture is and asks which one is nicest (the model copies the posture lines and asks; it does not call one gentle), then picks preserve.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ended_2026-07-31.pdf",
+    "description": "I just graduated from UF and moved out of my apartment on July 31, 2026, the day my lease ended. I paid a $900 security deposit. When I turned in my keys I texted the manager my mom's address in Orlando. It's been two months and I got nothing back, no money and no letter, and they won't answer my calls."
+  },
+  "chat": [
+    "How long is my landlord supposed to take to give my deposit back?",
+    "What are my deadlines?",
+    "They're ignoring me. Can they just keep my money if they never sent a letter?",
+    "Can you help me write something to send them asking for my $900 back?",
+    "Give them 10 days. I'll mail it certified to the leasing office. I don't really get the posture thing, which one is the nicest?",
+    "Ok, the preserve one. Send the money to my mom's address: 1420 Lake Ave, Orlando, FL 32801."
+  ],
+  "expect": {
+    "skills": [
+      "deposit_not_returned"
+    ],
+    "deadlines": [
+      "deposit_not_returned"
+    ],
+    "letters": 1,
+    "turns": [
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      },
+      {
+        "say": "Can they just keep my money",
+        "applied": true
+      },
+      {
+        "say": "Can you help me write something",
+        "not_called": [
+          "draft_letter"
+        ]
+      },
+      {
+        "say": "which one is the nicest",
+        "not_called": [
+          "draft_letter"
+        ],
+        "must_not": [
+          "\\b(nicest|gentlest|gentle|softest|friendliest|least aggressive|polite)\\b"
+        ]
+      },
+      {
+        "say": "Ok, the preserve one.",
+        "called": [
+          "draft_letter"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "about": "A problem outside every skill (a roommate who stopped paying his share). Expected: the model loads no skill and says the tool has no skill for this; the matter's record keeps the description and no skill. The chat goes on.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "My roommate moved out in August and stopped paying his half of the rent. I paid the whole rent for September myself. I want to know if I can make him pay me back."
+  },
+  "chat": [
+    "What are my deadlines?"
+  ]
+}

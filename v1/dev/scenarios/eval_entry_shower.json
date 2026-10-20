@@ -1,0 +1,47 @@
+{
+  "about": "landlord_entered_unannounced. Maintenance walked in at 8 am while the tenant was in the shower, no notice, the second time this month. Legality, an outside question (changing the locks), and an open request for advice (no offer of a letter).",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "This morning, September 30, 2026, around 8 am a maintenance guy from my apartment complex walked into my apartment while I was in the shower. Nobody told me anyone was coming. He said he was there to change the AC filter. This is the second time this month. I pay my rent on time and I feel really unsafe. I did not say he could come in, and he did not say it was an emergency. Nobody has changed my locks or cut off anything."
+  },
+  "chat": [
+    "Is he allowed to just come in like that?",
+    "Can I change the locks so they can't get in?",
+    "What should I do?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "skills": [
+      "landlord_entered_unannounced"
+    ],
+    "letters": 0,
+    "turns": [
+      {
+        "say": "Is he allowed",
+        "applied": true
+      },
+      {
+        "say": "change the locks",
+        "applied": true
+      },
+      {
+        "say": "What should I do?",
+        "not_called": [
+          "draft_letter"
+        ],
+        "must_not": [
+          "would you like|do you want (me|to)|if you would like|I can (draft|help|write)",
+          "(?<!what )(?<!whether )\\byou should\\b"
+        ],
+        "applied": true
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "about": "notice_received_nonpayment, with facts like Moskowitz v. Aslam (a notice demanding cash) and Stanley v. Quest (paying into the court registry): a 3-day notice handed over 2026-09-25 demanding $1,300 in cash only by 2026-09-30; eviction papers served 2026-09-30; Alachua County. Two lay questions about courts.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/cash_1300.pdf",
+    "description": "On September 25, 2026 my landlord handed me a 3-day notice saying I owe $1,300 for September rent and I have to pay in cash only by September 30, 2026 or leave. I always pay by check and he's never asked for cash before. I didn't pay because I didn't have the cash. Yesterday, September 30, 2026, someone served me with court papers for eviction. I live in Gainesville, Alachua County. I have not paid any part of it since, and I am not holding back rent over repairs."
+  },
+  "chat": [
+    "Can he make me pay in cash only?",
+    "Has a court ever said anything about a notice that says cash only?",
+    "Do I have to put money into the court to fight this? What have judges said about that?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "skills": [
+      "notice_received_nonpayment"
+    ],
+    "turns": [
+      {
+        "say": "Can he make me pay in cash only",
+        "applied": true
+      },
+      {
+        "say": "Has a court ever said",
+        "called": [
+          "get_cases"
+        ],
+        "topics": [
+          "Three-day notice for nonpayment of rent"
+        ],
+        "cases_used": true
+      },
+      {
+        "say": "put money into the court",
+        "called": [
+          "get_cases"
+        ],
+        "topics": [
+          "Rent paid into the court registry",
+          "Three-day notice for nonpayment of rent"
+        ],
+        "cases_used": true
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ]
+  }
+}

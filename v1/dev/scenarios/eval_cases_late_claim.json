@@ -1,0 +1,46 @@
+{
+  "about": "deposit_claim_received, with facts like Durene v. Alcime and Casey v. Picinich: the claim letter came about two months after the lease ended (lease end 2026-06-30; letter dated 2026-08-20, received 2026-08-24). A lay question first (no cases asked for), then 'has this happened to other people? did a judge ...' (get_cases on the notice-of-claim topic, names only to the model), then 'so I get my $700 back?' (never decided).",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ended_2026-06-30.pdf",
+    "description": "I moved out of my apartment on June 30, 2026 when my lease ended. My deposit was $1,000. I had texted them my new address. I got a letter from the landlord by certified mail on August 24, 2026 (it's dated August 20, 2026) saying they're keeping $700 for cleaning and painting. That's almost two months after I left. The letter tells me to object in writing within 15 days, and I have not sent them anything back."
+  },
+  "chat": [
+    "They sent this letter like 2 months after I moved out. Can they still keep my money?",
+    "Has this happened to other people? Did a judge ever make the landlord give the money back when the letter came late?",
+    "So that means I get my $700 back, right?",
+    "Who pays for a lawyer if I take them to court over this?"
+  ],
+  "expect": {
+    "skills": [
+      "deposit_claim_received"
+    ],
+    "turns": [
+      {
+        "say": "Can they still keep my money",
+        "applied": true
+      },
+      {
+        "say": "Has this happened to other people",
+        "called": [
+          "get_cases"
+        ],
+        "topics": [
+          "Landlord's notice of claim on the deposit"
+        ],
+        "cases_used": true
+      },
+      {
+        "say": "I get my $700 back",
+        "must_not": [
+          "\\byou will (get|receive)\\b"
+        ],
+        "applied": true
+      },
+      {
+        "say": "Who pays for a lawyer",
+        "applied": true
+      }
+    ]
+  }
+}

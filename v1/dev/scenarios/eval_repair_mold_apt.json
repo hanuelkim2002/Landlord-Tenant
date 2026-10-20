@@ -1,0 +1,53 @@
+{
+  "about": "repair_not_made. Apartment building; black mold and a leaking AC since 2026-08-20, reported on the resident portal 2026-08-22; maintenance painted over it; asthma. Withholding rent (not decided), deadlines, a letter with every detail given, a lay question about courts (get_cases on a maintenance topic), and 'would I win' (never decided).",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "I live in an apartment complex near campus. Since August 20, 2026 there's been black mold growing on the bathroom ceiling and the AC unit leaks water onto the floor. I reported it on the resident portal on August 22, 2026. Maintenance came once on September 3 and just painted over the mold and it came back. I have asthma and it's getting worse. I've been paying rent the whole time. My portal request said, \"There is black mold on the bathroom ceiling and the AC leaks water onto the floor. Please fix it.\" It did not say anything about ending my lease or about not paying rent. As far as I know nothing anyone did caused it, and no court papers have come."
+  },
+  "chat": [
+    "Can I stop paying rent until they fix it?",
+    "What are my deadlines?",
+    "Please write a letter to the leasing office asking them to get rid of the mold and fix the AC leak. Give them 7 days. I'll hand-deliver it to the leasing office. Use the preserve posture.",
+    "Has a court ever said anything about a landlord who doesn't fix mold?",
+    "So would I win if I sued them?"
+  ],
+  "expect": {
+    "skills": [
+      "repair_not_made"
+    ],
+    "letters": 1,
+    "turns": [
+      {
+        "say": "Can I stop paying rent",
+        "applied": true
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      },
+      {
+        "say": "Has a court ever said",
+        "called": [
+          "get_cases"
+        ],
+        "topics": [
+          "Landlord's maintenance duties under 83.51",
+          "Tenant's notice of the landlord's noncompliance",
+          "Landlord's notice of a dangerous condition",
+          "Constructive eviction"
+        ],
+        "cases_used": true
+      },
+      {
+        "say": "would I win",
+        "must_not": [
+          "\\byou (will|'ll|would likely|would probably) (win|lose)\\b"
+        ],
+        "applied": true
+      }
+    ]
+  }
+}

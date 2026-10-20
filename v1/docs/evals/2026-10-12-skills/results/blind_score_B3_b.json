@@ -1,0 +1,229 @@
+{
+  "scorer": "B3_b",
+  "runs": [
+    {
+      "code": "R049",
+      "scenario": "eval_student_notice_email",
+      "replies": 5,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "helpful: leaves the tenant with a concrete next step (new notice by hand or certified mail, wait seven days) and a letter, but the can-I-leave answer stays 'not known yet' and the fee-route 'closed' answer is only partly explained. conversational: later replies use the tenant's confirmed facts and refer back, but reply 2 re-lists reply 1's structure instead of simplifying for a tenant who said she was lost."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "You confirmed the AC blows warm air, water leaks from the air handler, and there is mold on the ceiling; the problem started 2026-09-10; you sent an e-mail on 2026-09-26 ..."},
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "turns on what your lease says about maintenance and repairs (Lease Article 7), which you can check against the problem (Article 7.1 is printed under the reply and names air-conditioning)"},
+        {"reply": 1, "category": "OPTION_BEFORE_OPEN", "evidence": "leaving early would trigger the lease's early-termination provisions: you may end the lease early by giving at least sixty days' written notice and paying an early termination fee of $1,578.00 (Lease Section 12.1) - steps given before saying whether the fee route is open (83.595(4) separate addendum; 60 days cannot be met before an Oct 11 move-out)"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "borderline: The statute does not settle whether a notice by e-mail satisfies the notice requirements for termination or for early termination - 83.56(4) says 83.56(1) notices may be e-mailed 'in accordance with s. 83.505', so for the termination notice the statute does speak"},
+        {"reply": 2, "category": "QUOTE_WRONG", "evidence": "the lease allows notices “by hand to the leasing office, sent by certified mail, or sent by e‑mail to office@magnoliarow.example” (Lease Section 13.1) - words omitted without an ellipsis (the address, 'to that address')"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "(Lease Section 12.1 requires such an addendum for that statutory option) - printed 12.1 says nothing about an addendum; also 'you may forfeit the security deposit (Lease Section 9.2; Fla. Stat. 83.49(5))' - printed 83.49(5) says failure to give notice 'does not waive any right the tenant may have to the security deposit'"},
+        {"reply": 2, "category": "LEASE_PUNTED", "evidence": "You should check your lease’s notice‑method clause (Lease Section 13.1) - the reply and the printed words already hold 13.1"},
+        {"reply": 2, "category": "CHOICE_MADE", "evidence": "borderline: Deliver a clear written notice to the landlord stating that you are terminating the lease because the landlord has failed to repair the AC/mold, and that you intend to vacate."},
+        {"reply": 2, "category": "OPEN_CLOSED", "evidence": "borderline: you may want to treat the problem as continuing and not rely on that payment as a waiver (the waiver reading is an open question of the context file)"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: The lease’s own early‑termination‑fee clause ($1,578) may still be enforceable as a contract term, but the tool does not decide that. - answers the tenant's 'do I have to pay it' with no word on what follows either way or who settles it"},
+        {"reply": 2, "category": "REPEATED", "evidence": "borderline: re-lists the same conditions as reply 1 (landlord duty, proper notice, intent to terminate, waiver by October rent) and the same termination steps for a tenant who said she was lost"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "borderline: turns on three points the tool does not yet know: ... (3) whether the e‑mail’s words specify the noncompliance and indicate intent to terminate ... then says the same words 'shows intent to terminate and references the problem' - lists the wording condition as unknown, then calls it met"},
+        {"reply": 4, "category": "CONDITION_WRONG", "evidence": "borderline: the notice to end the lease under Fla. Stat. 83.49(5) must include the address where you may be reached - 83.49(5) is the notice before vacating, not the notice that ends the lease"},
+        {"reply": 5, "category": "CONDITION_WRONG", "evidence": "Your letter does both: it describes the AC/mold problem, notes your asthma and the doctor’s note, and states you’re asking to be released from the lease effective immediately. - the preserve letter only asks for release; it is such a notice only if it states the intention to terminate by reason of the problem"},
+        {"reply": 5, "category": "OPEN_CLOSED", "evidence": "borderline: If you are concerned, you may treat the problem as continuing and not rely on that payment as a waiver."},
+        {"reply": 5, "category": "REPEATED", "evidence": "borderline: repeats reply 2's wait-seven-days steps, forwarding address and keys list, and the same waiver sentence"}
+      ]
+    },
+    {
+      "code": "R088",
+      "scenario": "eval_student_notice_email",
+      "replies": 5,
+      "law_replies": 4,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "helpful: gives the three options with open/closed labels, a first-step list for tomorrow, and answers the notice and letter questions, but the explanation of what 'closed' means for the fee is wrong and the wording and waiver questions are handed back to the tenant. conversational: replies 3 to 5 build on the earlier ones and the tenant's facts, but reply 2 re-states reply 1's option list and reply 4 is a bare line."
+      },
+      "slips": [
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "The option to withhold rent and raise it as a defense requires a notice stating you intend not to pay rent ... (no 83.60(1)(b) cite); also 'the early‑termination fee would not apply because the lease would be ended by statute, not by a breach' (no cite behind it)"},
+        {"reply": 1, "category": "CONDITION_MISSED", "evidence": "borderline: whether your e‑mail was sent to the address the lease requires for notices (office@magnoliarow.example) (Lease Section 13.1) - leaves out that 83.56(4) and 83.505 allow e-mail only under a signed addendum"},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "You must check: ... whether paying rent after you knew of the problem waived your right to terminate; closing line: which you can verify by checking your notice’s wording, its delivery address, and whether paying rent waived your right - the tenant is asked to settle an open question"},
+        {"reply": 2, "category": "CONDITION_WRONG", "evidence": "“Closed” means you cannot rely on that clause to avoid the fee; if you leave without a statutory right, the landlord may pursue the fee or other remedies. - 83.595(4) closed means the landlord cannot charge the fee as a remedy without a separate addendum; the explanation reverses it and contradicts 'closed'"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "borderline: If both points are satisfied—your notice was proper and indicated intent, and paying rent did **not** waive your right—then you may terminate the lease - no word on the 'materially fails' condition or on the 83.505 e-mail addendum"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "borderline: two readings exist (see WHAT THE STATUTE DOES NOT SETTLE under 83.56(5)(a)) - the readings and what each means for her October rent are never given to the tenant who asked exactly that"},
+        {"reply": 2, "category": "LEASE_PUNTED", "evidence": "borderline: you can check the lease clause, your e‑mail wording, and your delivery method yourself."},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "borderline: the early‑termination fee in the lease would not apply because you are not breaking the lease; you are exercising a statutory right."},
+        {"reply": 2, "category": "ID", "evidence": "see WHAT THE STATUTE DOES NOT SETTLE under 83.56(5)(a); also (via get_deadlines)"},
+        {"reply": 2, "category": "REPEATED", "evidence": "re-lists reply 1's two unsettled points and the same three options (withhold rent / leave early and pay the fee / seven days' notice) almost word for word"},
+        {"reply": 3, "category": "QUOTES_ONLY", "evidence": "borderline: Whether those words actually indicate that intention is for you to check against the statutory language. ... The tool cannot decide whether your e‑mail meets the intention requirement - rule and the tenant's exact words are both in hand; the legal reading is handed back as 'facts you can verify yourself'"},
+        {"reply": 5, "category": "QUOTES_ONLY", "evidence": "borderline: the tool does not settle what wording suffices; you can check the letter’s exact sentences against that requirement."},
+        {"reply": 5, "category": "CONDITION_MISSED", "evidence": "borderline: After delivering a proper notice, you must wait seven days without the landlord fixing the problem; if the landlord does not fix it within that period, you may then terminate the lease and stop paying rent after you vacate - no word on the October rent waiver or on 'materially'"},
+        {"reply": 5, "category": "REPEATED", "evidence": "borderline: repeats reply 3's quote of Lease 13.1 and its seven-day-wait paragraph almost word for word"}
+      ]
+    },
+    {
+      "code": "R089",
+      "scenario": "eval_student_notice_email",
+      "replies": 7,
+      "law_replies": 5,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 1,
+        "conversational": 1,
+        "why": "helpful: no letter is ever drafted, the notice question is never answered, and the fee-route 'closed' question is answered wrongly (confused with a repair-duty addendum); the tenant ends with the same question three times. conversational: replies 4 to 7 repeat one question word for word and ignore what the tenant just asked (even a thank-you for a letter that was never shown)."
+      },
+      "slips": [
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "Did that email say you would move out if the AC/mold wasn’t fixed? (You’ve already said yes, but I need to record it exactly.) ... plus the exact date, the rent point, other messages, the doctor's note, November rent - well over two things, most already given"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "you’d likely owe rent for the notice period unless the lease says otherwise (it doesn’t appear to)."},
+        {"reply": 1, "category": "OVERCLAIM", "evidence": "borderline: This avoids the $1,578 fee and may be faster if you can find a replacement quickly. - Lease 11.1 says nothing about the fee"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: (your lease allows email notices to the leasing office) - no lease section cited and no search of the notices clause shown; the e-mail addendum rule (83.505) is not mentioned"},
+        {"reply": 1, "category": "UNKNOWN_UNTIED", "evidence": "borderline: the law is unsettled on whether that payment waives your right to terminate ... I’ll explain that in detail once we have the facts. - no readings and no word on what each would mean"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "Specifies the noncompliance (AC blowing warm air, water leak, mold). ... Was sent by email to the office@magnoliarow.example address - the tenant gave only the one sentence and never said which address"},
+        {"reply": 2, "category": "CONDITION_MISSED", "evidence": "If all six are met, you can end the lease, stop paying rent after the termination date - the six omit 'materially fails' and that an e-mailed notice needs the 83.505 addendum"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you won’t owe the contractual early‑termination fee (Fla. Stat. 83.56(1); Lease Section 7.1) - neither printed cite says it; also 'give the landlord written notice of your move-out date ... (hand‑delivered, certified mail, or email ...)' with no cite"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "The exact date you sent it (you said September 26 ...) ... Did that email say you would move out ... (You’ve indicated yes ...) ... Did that email say you would stop paying rent ... (You’ve said no ...) - three facts the tenant already gave"},
+        {"reply": 2, "category": "REPEATED", "evidence": "repeats reply 1's three confirmation questions and its 'Once you confirm those, I can ...' list"},
+        {"reply": 2, "category": "UNKNOWN_UNTIED", "evidence": "this point is unsettled—we’ll need to see how a court would view it. - no readings, nothing on what each would mean for the tenant"},
+        {"reply": 3, "category": "CONDITION_WRONG", "evidence": "The “fee route is closed” notice is **good for you**: it tells us the landlord’s duty under the lease and the statute stands as written, and you don’t have to worry about a hidden addendum - confuses the 83.595(4) fee addendum with the 83.51(1) repair-duty provision; also says the email meets 83.56(1) 'if that email also did not say you would stop paying rent', a condition 83.56(1) does not contain"},
+        {"reply": 3, "category": "OPEN_CLOSED", "evidence": "listed under 'What we know for sure': Paying October rent while knowing about the problem does **not automatically** waive your right ... it does not outright block you from leaving."},
+        {"reply": 3, "category": "UNCONFIRMED_FACT", "evidence": "It specifies the noncompliance (AC blowing warm air, water leak, mold). ... It was sent by e‑mail to the address your lease allows for notices (Lease Section 13.1)."},
+        {"reply": 3, "category": "CONDITION_MISSED", "evidence": "then it meets the notice requirements for ending the lease under Fla. Stat. 83.56(1) - leaves out the 83.505 addendum for e-mail (and 'materially')"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "The exact date you sent it ... Did that email say you would move out ... (You’ve indicated yes, but I need to record it exactly.) ... Did that email say you would stop paying rent ..."},
+        {"reply": 3, "category": "REPEATED", "evidence": "the same three confirmations and 'Once you give me those three pieces, I can ...' list as reply 2; reassignment paragraph repeats reply 1"},
+        {"reply": 3, "category": "CHOICE_MADE", "evidence": "borderline: **Do not pay any more rent** after the seven‑day period ends; and 'send a short follow‑up e‑mail now ... I will vacate the unit and stop paying rent'"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "Do not pay any more rent after the seven‑day period ends - no 83.60(1)(b) cite; e-mail described as 'an allowed delivery method under your lease' with no word on 83.505"},
+        {"reply": 4, "category": "ASK_AGAIN", "evidence": "Could you please quote what you told me about that (or type it out exactly as you’d like it recorded)? - the tenant had already said the email said nothing about not paying rent; the law question is left unanswered"},
+        {"reply": 5, "category": "ASK_AGAIN", "evidence": "I need your exact words to confirm whether the September 26 email did not say you would stop paying rent ... - asked again after the program confirmed the date and the move-out wording"},
+        {"reply": 5, "category": "REPEATED", "evidence": "word for word the same reply as reply 4"},
+        {"reply": 6, "category": "ASK_AGAIN", "evidence": "Could you please tell me exactly what you said about whether the September 26 email mentioned not paying rent?"},
+        {"reply": 6, "category": "LETTER_ORDER", "evidence": "Once I have your exact wording, I can record it and then draft the letter you requested. - the letter is withheld and a detail already given is asked for again"},
+        {"reply": 6, "category": "REPEATED", "evidence": "same question as replies 4 and 5"},
+        {"reply": 7, "category": "ASK_AGAIN", "evidence": "Could you please tell me exactly what you said about whether the September 26 email mentioned not paying rent? - the tenant had asked about adding to the letter and whether it counts as notice"},
+        {"reply": 7, "category": "LETTER_ORDER", "evidence": "Once I have your exact wording, I can record it and then draft the letter you requested."},
+        {"reply": 7, "category": "REPEATED", "evidence": "same question as replies 4, 5 and 6, word for word"}
+      ]
+    },
+    {
+      "code": "R095",
+      "scenario": "eval_student_notice_email",
+      "replies": 7,
+      "law_replies": 6,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: very long replies end in a workable step (send a new notice by hand or certified mail, wait seven days) and a letter is produced, but the year is wrong (2025) throughout, the tenant's questions about 'closed', the guaranty and October rent are never answered plainly, and the final reply says the letter shows the intention to terminate. conversational: replies 2 to 5 repeat the same sections, open-question list and offer, and reply 6 pastes the prompt's instruction instead of talking to the tenant."
+      },
+      "slips": [
+        {"reply": 1, "category": "RECITED", "evidence": "### What you’ve told me so far (waiting for your confirmation) - You emailed the leasing office on September 26 ... You’ve already paid October rent. No court case has been filed against you."},
+        {"reply": 1, "category": "ID", "evidence": "(you said “message_mentions_ending: yes”) ... (you said “message_mentions_rent: no”)"},
+        {"reply": 1, "category": "ASK_AGAIN", "evidence": "(You’ve already said the email mentions ending and does not mention rent; we just need confirmation on the delivery date and the exact wording.) - three facts to confirm, two already given; also asks to re-confirm the move-out date"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "email notices only with an addendum, the 5-day registry rule and the withholding conditions are stated with no 83.505 / 83.60 cite (none printed); 'whether your payment was meant to waive your right to terminate' is a reading not in the context file"},
+        {"reply": 1, "category": "CONDITION_WRONG", "evidence": "The lease allows email notices *only* with such an addendum. - printed Lease 13.1 allows e-mail to office@magnoliarow.example and mentions no addendum"},
+        {"reply": 1, "category": "DATE_MADE", "evidence": "borderline: You plan to move out by October 11, 2026 (note: this date seems far in the future; if you meant October 11, 2025, please confirm)."},
+        {"reply": 1, "category": "CHOICE_MADE", "evidence": "borderline: Given you’ve already paid October rent and plan to move out, ending the lease seems more aligned with your goal."},
+        {"reply": 1, "category": "OPEN_CLOSED", "evidence": "borderline: You’d need to check your lease for any email‑notice addendum, weigh the seriousness of the continuing problem - the tenant is asked to settle 'material'"},
+        {"reply": 2, "category": "ASK_AGAIN", "evidence": "Just let me know: Whether you’ll deliver it by hand or certified mail. Any additional details ... The date you want the letter to be effective (today’s date). - three asks, plus a three-part 'check your email's delivery and content' list"},
+        {"reply": 2, "category": "LAW_UNSOURCED", "evidence": "you may be able to terminate ... without owing the $1,578 early‑termination fee (since the termination would be based on the landlord’s material noncompliance, not a voluntary early exit) - no cite behind the fee claim; 'whether your payment was meant to waive your right' is not a reading in the context file"},
+        {"reply": 2, "category": "REPEATED", "evidence": "repeats reply 1's open-question list, the new-notice steps and the Lease 13.1 quote (quoted twice in this reply)"},
+        {"reply": 2, "category": "CHOICE_MADE", "evidence": "borderline: Given you’ve already paid October rent and plan to move out, ending the lease seems more aligned with your goal."},
+        {"reply": 2, "category": "DEADLINE_REPEAT", "evidence": "the program has calculated that seven days have passed since September 26, 2025"},
+        {"reply": 2, "category": "UNCONFIRMED_FACT", "evidence": "borderline: September 26, 2025 (the date your email was delivered to the landlord) - then asks her to confirm the date the office received it"},
+        {"reply": 3, "category": "RECITED", "evidence": "### What you’ve confirmed - You emailed the leasing office on **September 26, 2025** saying ... The program has calculated that **seven days have passed**"},
+        {"reply": 3, "category": "ID", "evidence": "(you said *message_mentions_ending = true*) ... (*message_mentions_rent = false*)"},
+        {"reply": 3, "category": "LAW_UNSOURCED", "evidence": "If the termination is lawful, you would not owe the contractual early‑termination fee, because the lease ends due to the landlord’s breach, not your voluntary early exit. - no cite; 'meant to waive your right' again; 'Email counts only if you and the landlord signed an addendum' with no 83.505 cite"},
+        {"reply": 3, "category": "OFFER", "evidence": "### Offer to help ... I can help you draft one ... (same offer as reply 2)"},
+        {"reply": 3, "category": "ASK_AGAIN", "evidence": "Just let me know: Whether you’ll deliver it by hand or certified mail. Any additional details ... The date you want the letter to be effective (today’s date)."},
+        {"reply": 3, "category": "REPEATED", "evidence": "same sections as reply 2: what the tool does not decide, Options A to C, open questions, offer to help"},
+        {"reply": 3, "category": "CHOICE_MADE", "evidence": "borderline: Given you’ve already paid October rent and plan to move out, ending the lease seems more aligned with your goal."},
+        {"reply": 3, "category": "DEADLINE_REPEAT", "evidence": "The program has calculated that **seven days have passed** since September 26, 2025."},
+        {"reply": 4, "category": "LAW_UNSOURCED", "evidence": "In that case, you likely would not owe the contractual early‑termination fee, because the lease would end due to the landlord’s breach, not your voluntary early exit."},
+        {"reply": 4, "category": "OFFER", "evidence": "If you’d like, I can draft a letter for you ... Would you like me to draft that notice now? (same offer again)"},
+        {"reply": 4, "category": "ASK_AGAIN", "evidence": "Just let me know: Whether you’ll deliver it by hand or certified mail. Any additional dates or details ... The date you want the letter to be effective (today’s date)."},
+        {"reply": 4, "category": "REPEATED", "evidence": "repeats the two-point test, the Lease 13.1 quote (twice), the open-question list and the offer from replies 2 and 3; does not answer her questions about 'closed' or the guaranty"},
+        {"reply": 4, "category": "CHOICE_MADE", "evidence": "borderline: **Send a new written notice to the landlord that:** under 'What you can do first (tomorrow, before clinicals)'"},
+        {"reply": 4, "category": "DEADLINE_REPEAT", "evidence": "The tool shows that seven days have passed since September 26, 2025"},
+        {"reply": 5, "category": "ASK_AGAIN", "evidence": "Email wording: Does the email explicitly say you intend to end the lease *because* the AC/water/mold problem isn’t fixed? - the tenant gave the exact words; also three checks at once"},
+        {"reply": 5, "category": "REPEATED", "evidence": "same two-point test, open-question list, new-notice steps and offer as reply 4"},
+        {"reply": 5, "category": "OFFER", "evidence": "If you’d like, I can draft a letter for you ... Would you like me to draft that notice now (same offer a third time)"},
+        {"reply": 5, "category": "CHOICE_MADE", "evidence": "borderline: If you are unsure about the email, the safest step is to send a new written notice that:"},
+        {"reply": 5, "category": "LAW_UNSOURCED", "evidence": "In that case, you would likely not owe the contractual $1,578 early‑termination fee, because the lease would end due to the landlord’s breach"},
+        {"reply": 5, "category": "DEADLINE_REPEAT", "evidence": "The program shows that seven days have passed since September 26, 2025"},
+        {"reply": 6, "category": "RECITED", "evidence": "When a letter is shown, the loaded skill’s Letters section says to tell you this: The 7‑day periods the program computes run from the delivery of a written notice. In 83.56(1) that is a notice ... - the prompt's instruction pasted to the tenant, including 'Offer to apply this to the letter before the tenant sends it.'"},
+        {"reply": 6, "category": "ID", "evidence": "borderline: the loaded skill’s Letters section says to tell you this"},
+        {"reply": 7, "category": "CONDITION_WRONG", "evidence": "The letter you’ve drafted includes the two key parts the statute requires ... 2. **It indicates your intention to terminate the lease** – you request to be “released from the lease effective immediately” - a request for release is not stated as an intention to terminate by reason of the problem"},
+        {"reply": 7, "category": "LAW_UNSOURCED", "evidence": "you would likely not owe the contractual $1,578 early‑termination fee, because the lease would end due to the landlord’s breach; 'Email counts as delivery only if you and the landlord signed an addendum' with no 83.505 cite"},
+        {"reply": 7, "category": "REPEATED", "evidence": "repeats the open-question list and the Lease 13.1 delivery quote from earlier replies"}
+      ]
+    },
+    {
+      "code": "R052",
+      "scenario": "eval_nc_roommate",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 1,
+      "ratings": {
+        "helpful": 3,
+        "conversational": 3,
+        "why": "helpful: reads the lease (Section 21.3 joint and several), says the stored statute is silent, and points to a civil claim, but cannot say whether she can recover the $600. conversational: reply 2 follows from reply 1 but repeats a generic offer."
+      },
+      "slips": [
+        {"reply": 1, "category": "OFFER", "evidence": "If you have a landlord‑tenant issue (for example, a repair, a deposit dispute, or a notice from the landlord), let me know and I can help with that."},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: you may need to pursue a claim against your roommate in court (such as small claims court) - procedural route stated with no cite"},
+        {"reply": 2, "category": "OFFER", "evidence": "If you tell me what you want to do—for example, get your security deposit back, request a repair, or respond to a landlord’s notice—I can load the relevant skill and compute any applicable deadlines for you. (same generic offer again)"}
+      ]
+    },
+    {
+      "code": "R067",
+      "scenario": "eval_nc_roommate",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 3,
+        "why": "helpful: refuses without reading the lease the tenant said they share, so she gets only 'small claims or an attorney'. conversational: the two short replies are consistent and the second follows from the first."
+      },
+      "slips": [
+        {"reply": 1, "category": "QUOTES_ONLY", "evidence": "borderline: It does not have any skill or legal provision for recovering money from a roommate or co‑tenant. ... This tool cannot advise on that matter. - the lease was never searched although the tenant said both are on it (the lease holds a joint-and-several clause, seen in the other transcript of this story)"},
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "borderline: consult an attorney about your rights as co‑tenants under the lease and any applicable contract law - the tool could have searched the lease itself"},
+        {"reply": 1, "category": "LAW_UNSOURCED", "evidence": "borderline: you may need to pursue a civil claim (for example, in small‑claims court)"},
+        {"reply": 2, "category": "OFFER", "evidence": "If you have a landlord‑tenant issue (for example, a repair not made, a deposit not returned, or a notice you received), please let me know and I can load the appropriate skill and compute any deadlines that apply."}
+      ]
+    },
+    {
+      "code": "R006",
+      "scenario": "eval_nc_towing",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 2,
+        "why": "helpful: says honestly it cannot say if the tow was lawful and points to local ordinances, but states a lease search it did not run and leaves the tenant with nothing to act on. conversational: reply 2 repeats reply 1's closing offer almost word for word."
+      },
+      "slips": [
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "I checked your lease for any mention of “parking” or “tow” and found nothing ... neither your lease nor the statute addresses whether a landlord may tow - only “parking” was searched in the lease (the tool said to try other wording) and the statute search was only “tow”; 83.56(2)(b) does mention unauthorized vehicles and parking"},
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "borderline: a lease clause about parking (if it exists elsewhere in the lease), or any notice from the complex, you can share those details"},
+        {"reply": 1, "category": "OFFER", "evidence": "borderline: Let me know if you would like to keep a record of this incident or if you have another question"},
+        {"reply": 1, "category": "ID", "evidence": "borderline: (search_lease returned no matches) ... (search_statute returned no matches)"},
+        {"reply": 2, "category": "OFFER", "evidence": "If you obtain a lease clause about parking, a tow receipt, or any notice from the complex, you can share those details and I can record them for you. Let me know if you would like to keep a record of this incident (same offer again)"}
+      ]
+    },
+    {
+      "code": "R014",
+      "scenario": "eval_nc_towing",
+      "replies": 2,
+      "law_replies": 1,
+      "applied_well": 0,
+      "ratings": {
+        "helpful": 2,
+        "conversational": 3,
+        "why": "helpful: says plainly the tool cannot tell whether the tow was allowed, but sends her to look through her own lease and to local ordinances without searching further. conversational: two short consistent replies; the deadlines answer is one line that fits the first."
+      },
+      "slips": [
+        {"reply": 1, "category": "LEASE_PUNTED", "evidence": "Your lease for any parking‑permit or towing provisions (the search didn’t find the word “parking,” but you could look for related terms like “vehicle,” “towing,” or “permit”). - the tool could run those searches"},
+        {"reply": 1, "category": "GAP_AS_FACT", "evidence": "borderline: I searched your lease and the Florida Statutes chapter 83 ... and found no language about towing vehicles or expired parking permits. - the lease was searched for “parking” only"},
+        {"reply": 1, "category": "OFFER", "evidence": "If you have another concern that fits one of the tool’s skills—such as a repair not made, a deposit issue, or a notice you received—let me know and I can help with that."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "about": "notice_received_violation. A 7-day notice handed over on 2026-09-26 for a dog (no-pets clause); it is a friend's dog, for two weeks; no earlier warning; October rent was accepted. Legality twice, deadlines, and 'should I write them a letter?', which asks for advice, not for a letter.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current_no_pets.pdf",
+    "description": "On September 26, 2026 my landlord handed me a notice saying I'm violating my lease because there's a dog in my apartment and my lease says no pets. It says I have 7 days to get rid of the dog or my lease will be terminated. It's my friend's dog, I'm just watching her for two weeks while he's out of town. I've never gotten a warning before. I paid October rent today and they took it. The dog is still here, and no court papers have come."
+  },
+  "chat": [
+    "It's not even my dog. Can they really end my lease over this?",
+    "If my friend picks her up this weekend, am I safe?",
+    "What are my deadlines?",
+    "Should I write them a letter explaining?"
+  ],
+  "expect": {
+    "skills": [
+      "notice_received_violation"
+    ],
+    "deadlines": [
+      "notice_received_violation"
+    ],
+    "letters": 0,
+    "turns": [
+      {
+        "say": "Can they really end my lease",
+        "applied": true
+      },
+      {
+        "say": "am I safe",
+        "must_not": [
+          "\\byou (are|will be) safe"
+        ],
+        "applied": true
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      },
+      {
+        "say": "Should I write them a letter",
+        "not_called": [
+          "draft_letter"
+        ],
+        "must_not": [
+          "(?<!what )(?<!whether )\\byou should\\b"
+        ]
+      }
+    ]
+  }
+}

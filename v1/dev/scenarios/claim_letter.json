@@ -1,0 +1,20 @@
+{
+  "about": "A deposit not returned (lease ended 2026-07-31, moved out 2026-07-30). In the chat the tenant then reports the landlord's claim letter, dated 2026-09-22 and received 2026-09-25. Expected: the model loads deposit_claim_received next to deposit_not_returned and proposes the two dates; the confirmation after that turn shows them as separate facts (the printed date, claim notice dated, and the date received, claim notice date), and the answers typed there (9/22/2026 and 9/25/2026) correct a suggestion that swaps them; the deadlines then include the tenant's objection date 2026-10-10 and the landlord's remit date 2026-10-22, with the shared claim-notice deadline (2026-08-30) listed once for both skills.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ended_2026-07-31.pdf",
+    "description": "I rented a house in Gainesville. My lease ended July 31, 2026 and I moved out and gave the keys back on July 30, 2026. I emailed the property manager my new address the same day. It's September now and I haven't gotten my $900 deposit back or any letter about it. I did not leave early, I moved out as my lease was ending."
+  },
+  "confirm": {
+    "claim notice dated": [
+      "9/22/2026"
+    ],
+    "claim notice date": [
+      "9/25/2026"
+    ]
+  },
+  "chat": [
+    "I just got a letter from the landlord. It is dated September 22, 2026 and it arrived by certified mail on September 25, 2026. It says they are keeping $400 of my deposit for cleaning. The letter says I have 15 days to object in writing, and I have not sent them anything yet.",
+    "What are my deadlines now?"
+  ]
+}

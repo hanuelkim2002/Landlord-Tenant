@@ -1,0 +1,160 @@
+"""Timeline: the record as the tenant sees it. Not a tool. The web page draws this from the record, and the chat
+prints get_deadlines' result with render_deadlines, so the record never passes through the model."""
+import json
+import re
+from datetime import date
+
+import record
+from deterministic import matter_deadlines
+from record import read_events
+from sheet import shown
+from skills import clock_facts
+
+
+def label(ident):
+    """'tenancy_terminated' -> 'tenancy terminated'. Used for fact and clock ids."""
+    return ident.replace("_", " ")
+
+
+def is_iso_date(value):
+    """True if the fact's value is a date written YYYY-MM-DD (a date fact, or a plain-text fact that reads as one)."""
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        return False
+    try:
+        date.fromisoformat(value)
+    except ValueError:
+        return False
+    return True
+
+
+def corrected(ev):
+    """True if the tenant confirmed a different value from the one suggested. Compared as shown, so 400 and
+    "400" are the same answer."""
+    return ev.get("proposed_value") is not None and shown(ev["proposed_value"]) != shown(ev["value"])
+
+
+def confirmation_of(fact_id, events):
+    """How and when the tenant confirmed a fact, from the last fact_confirmed event for it."""
+    for ev in reversed(events):
+        if ev["kind"] == "fact_confirmed" and ev["id"] == fact_id:
+            how = "corrected" if corrected(ev) else ev["how"]
+            return f"tenant ({how}, confirmed {ev['when'][:10]})"
+    return "tenant"
+
+
+def render_deadlines(result):
+    """get_deadlines' result as the tenant reads it. The chat loop prints this itself after a turn in which the
+    model called get_deadlines, so no part of a deadline depends on the model reporting it: each row shows its
+    date, whose deadline, the rule and what it counts from, the cite, the status, the counting line, and its
+    skills; a clock with no date shows why. With no deadline at all, it says so in one line instead of printing an
+    empty heading: none yet while a skill waits for facts, else none that applies. Then the skills still waiting,
+    with the facts they wait for."""
+    data = json.loads(result)
+    waiting = data.get("waiting", {})
+    if data["deadlines"]:
+        lines = ["Deadlines, computed by the tool from your confirmed facts:"]
+    elif waiting:
+        lines = ["No deadlines yet: the facts below are not confirmed."]
+    else:
+        lines = ["No deadlines: none of the deadlines this tool computes applies to your confirmed facts."]
+    for d in data["deadlines"]:
+        names = ", ".join(d["skills"])
+        if "deadline" not in d:
+            lines.append(f"  (no date)   {label(d['clock'])} [{names}]: {d['status']}")
+            continue
+        lines.append(f"  {d['deadline']}  {d['actor']} deadline: {label(d['clock'])} [{names}], {d['status']}")
+        lines.append(f"              {d['rule']} {label(d['from'])}, Fla. Stat. {d['cite']}")
+        lines.append(f"              counting: {d['counting']}")
+        if "shown_with" in d:                          # a confirmed date shown beside the computed one
+            lines.append(f"              beside it, from your record: {label(d['shown_with'])}")
+        if "condition" in d:                           # what it counts only if, which the tool does not decide
+            lines.append(f"              counts only if {d['condition']}")
+    for name, fact_ids in waiting.items():
+        lines.append(f"  waiting [{name}]: {', '.join(label(f) for f in fact_ids)}")
+    return "\n".join(lines)
+
+
+def render_timeline(skill=None, full=False):
+    """One dated table for the matter: DATE, EVENT, SOURCE, FILE. Oldest first. Built from the record,
+    never from the model. skill=<name> keeps only that skill's deadlines and tagged events, plus everything
+    untagged. full=True adds the tool's own bookkeeping (skills loaded, facts confirmed, statute lookups,
+    computations, and, in matters from before skills, the issues suggested, confirmed, and dropped)."""
+    events = read_events()
+    facts = record.matter["facts"]
+    rows = []                                              # (date, event, source, file)
+
+    counted_from = {}                                      # fact id -> the loaded skills whose clocks count from it
+    for loaded in record.active_skills():
+        for fact_id in clock_facts(loaded):
+            counted_from.setdefault(fact_id, []).append(loaded.name)
+    for fact_id, value in facts.items():                   # real-world dates the tenant confirmed: every fact that reads as one
+        tagged = counted_from.get(fact_id)                 # None when no loaded skill counts from it: shown under every skill
+        if is_iso_date(value) and (not skill or not tagged or skill in tagged):
+            rows.append((value, label(fact_id), confirmation_of(fact_id, events), ""))
+
+    for d in matter_deadlines(record.active_skills(), facts, date.today()):   # a shared deadline once, both skills
+        if "deadline" in d and (not skill or skill in d["skills"]):
+            rows.append((str(d["deadline"]), f"[{', '.join(d['skills'])}] {d['actor']} deadline: {label(d['clock'])}",
+                         f"computed, {d['cite']}, {d['status']}" + (", if it counts" if "condition" in d else ""), ""))
+
+    for ev in events:
+        if skill and ev.get("issue", ev.get("skill")) not in (None, skill):
+            continue
+        day = ev.get("sent_on", ev["when"][:10])           # a message sorts by its own date, not the day it was recorded
+        if ev["kind"] == "communication":
+            source = "tenant reported" if ev["sender"].lower() == "tenant" else "tenant pasted"
+            draft = re.search(r"draft_\S+\.txt", ev.get("text", ""))     # a sent letter names its draft file
+            rows.append((day, f"{ev['channel']} from {ev['sender']} to {ev['recipient']}", source, draft.group() if draft else ""))
+        elif ev["kind"] == "artifact":
+            rows.append((day, ev["note"], "tenant provided", f"{ev['sha256'][:12]}_{ev['file']}"))
+        elif ev["kind"] == "tenant_update":
+            text = " ".join(ev["text"].split())
+            rows.append((day, "tenant update: " + text[:48] + ("..." if len(text) > 48 else ""), "tenant typed", ""))
+        elif ev["kind"] == "draft":
+            rows.append((day, f"letter drafted, {ev['posture']} posture", "tool, from confirmed facts", ev["file"]))
+        elif full and ev["kind"] == "fact_confirmed":
+            basis = (ev.get("basis") or "")[:50] + ("..." if len(ev.get("basis") or "") > 50 else "")
+            how = f"corrected from {ev['how']} {shown(ev['proposed_value'])}" if corrected(ev) else ev["how"]
+            source = f"{how}, basis: {basis}" if basis else how
+            rows.append((day, f"fact confirmed: {label(ev['id'])} = {ev['value']}", source, ""))
+        elif full and ev["kind"] == "fetch":
+            what = f"read statute {ev['section']}" if "section" in ev else f"searched statute for '{ev['search']}'"
+            rows.append((day, what, "tool", ""))
+        elif full and ev["kind"] == "skill_loaded":
+            rows.append((day, f"skill loaded: {label(ev['skill'])}", "tool, load_skill", ""))
+        elif full and ev["kind"] == "issue_added":                     # the issue events: matters from before skills
+            rows.append((day, f"issue added: {label(ev['issue'])}", f"{ev['source']}, {ev['because']}", ""))
+        elif full and ev["kind"] == "issue_proposed":
+            rows.append((day, f"issue suggested: {label(ev['issue'])}", f"{ev['source']}, {ev['because']}", ""))
+        elif full and ev["kind"] in ("issue_confirmed", "issue_rejected", "issue_dropped"):
+            what = ev["kind"].removeprefix("issue_")
+            where = "tenant, in the chat" if what == "dropped" else "tenant, on the sheet"
+            rows.append((day, f"issue {what}: {label(ev['issue'])}", where, ""))
+        elif full and ev["kind"] == "session_started":
+            rows.append((day, f"session {ev['session'][:8]} started ({ev['how']} matter)", "tool",
+                         f"sessions/{ev['session']}.jsonl"))            # the transcript of this session
+        elif full and ev["kind"] == "session_ended":
+            rows.append((day, f"session {ev['session'][:8]} ended", "tool", ""))
+        elif full and ev["kind"] == "reply_empty":
+            rows.append((day, "the model's reply was empty; asked again" + ("" if ev["recovered"] else ", still empty"),
+                         "tool, agent.retry_empty", ""))
+        elif full and ev["kind"] == "cite_flagged":
+            rows.append((day, f"a reply's cite flagged: {ev['cite']}", "tool, citations.check_cites", ""))
+        elif full and ev["kind"] == "quote_flagged":
+            words = ev["quote"].split()
+            rows.append((day, "a reply's quote flagged: \"" + " ".join(words[:5]) + ("...\"" if len(words) > 5 else "\""),
+                         "tool, citations.check_quoted", ""))
+        elif full and ev["kind"] == "cases_left_out":
+            rows.append((day, "a reply left out printed cases: " + "; ".join(ev["cases"]), "tool, replies.cases_left_out", ""))
+        elif full and ev["kind"] == "cases_shown":
+            rows.append((day, f"showed cases on {ev['topic']} ({len(ev['cases'])})" + (", unverified pages" if ev.get("unverified") else ""),
+                         "tool, get_cases", ""))
+        elif full and ev["kind"] == "deadlines_computed":
+            rows.append((day, "computed deadlines: " + ", ".join(label(c) for c in ev["clocks"]), "tool", ""))
+
+    rows.sort(key=lambda row: row[0])                     # by date only; within a day, rows keep the order
+                                                           # they were added, so events stay in log order
+    lines = [f"{'DATE':<12} {'EVENT':<64} {'SOURCE':<44} FILE"]
+    for day, what, source, file in rows:
+        lines.append(f"{day:<12} {what:<64} {source:<44} {file}")
+    return "\n".join(lines)

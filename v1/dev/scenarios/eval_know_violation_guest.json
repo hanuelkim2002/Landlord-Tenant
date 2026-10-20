@@ -1,0 +1,25 @@
+{
+  "about": "notice_received_violation. The state: an open question. A notice ends the lease at once, 7 days to move out, over a boyfriend staying too many nights (an unauthorized occupant); no warning before. Whether such a violation is one the tenant should be given a chance to cure is an open question the stored text does not settle (83.56(2)(a) and (b)); the answer must say it is not settled, with its readings, never pick one. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "On September 30, 2026 my landlord handed me a notice saying my lease is terminated and I have 7 days to move out, because my boyfriend has been staying over too many nights and they say that makes him an unauthorized occupant. I never got any warning before this. The landlord has not taken any rent from me since the notice, and no court papers have come."
+  },
+  "chat": [
+    "Can they end my lease without giving me a chance to fix it?"
+  ],
+  "expect": {
+    "skills": [
+      "notice_received_violation"
+    ],
+    "turns": [
+      {
+        "say": "without giving me a chance to fix it",
+        "applied": true,
+        "must": [
+          "(?i)not settled|does not settle|doesn't settle"
+        ]
+      }
+    ]
+  }
+}

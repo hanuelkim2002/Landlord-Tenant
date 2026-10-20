@@ -1,0 +1,144 @@
+{
+  "how_to_read": "Five deposit stories, all on lease.txt (a lease that ended July 31, 2026). 'today' is the date count_days compares with in that story. 'facts' are the confirmed facts the record holds (count_days reads the dates). 'message' is what the tenant writes. 'answer' is the right answer in plain words; 'points' are what a right answer must convey, judged by meaning (words in parentheses are helpful detail, not required); 'mistakes' make an answer wrong. 'law' quotes the statute words each point rests on, word for word from statutes/, with the subsection they sit in. 'dates' are the count_days results the answer needs.",
+  "stories": [
+    {
+      "id": "deposit-1",
+      "title": "No word at all, more than two months on",
+      "today": "2026-10-19",
+      "facts": {"lease_end_date": "2026-07-31", "move_out_date": "2026-07-31",
+                "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+                "landlord_notice_of_claim": "none received, by any means", "deposit_returned": "none"},
+      "message": "I moved out on July 31 when my lease ended. I mailed my new address to the office before I left. It's been over two months and my landlord hasn't returned my $1,050 deposit or told me anything. Can I get all of it back?",
+      "answer": "Yes. If the landlord meant to keep any of it, the landlord had 30 days after the lease ended to send written notice of the claim by certified mail (e-mail was not agreed). That date (2026-08-30, from count_days) has passed with no notice, so the landlord forfeits the right to impose a claim and must return the whole $1,050. The landlord can still sue for damages after returning it. If either side goes to court over the deposit, the winner gets court costs and a reasonable attorney's fee.",
+      "points": [
+        "Yes, the tenant can get the whole $1,050 back.",
+        "Because the landlord gave no written notice of a claim within 30 days after the lease ended, and those 30 days have passed (count_days: 2026-08-30).",
+        "The landlord may still file an action for damages after returning the deposit."
+      ],
+      "mistakes": [
+        "Says the landlord may still deduct for damage or cleaning.",
+        "Says the forfeiture comes from missing the 15-day return.",
+        "Gives a date it worked out itself instead of from count_days.",
+        "Promises a penalty or multiple of the deposit that the statute does not give."
+      ],
+      "law": [
+        {"cite": "83.49(3)(a)", "quote": "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."},
+        {"cite": "83.49(3)(a)", "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."},
+        {"cite": "83.49(3)(c)", "quote": "If either party institutes an action in a court of competent jurisdiction to adjudicate the party’s right to the security deposit, the prevailing party is entitled to receive his or her court costs plus a reasonable fee for his or her attorney."},
+        {"cite": "83.505(1)", "quote": "if the parties have signed an addendum to the rental agreement that the parties specifically agree to the electronic delivery of notices"}
+      ],
+      "dates": [{"fact": "lease_end_date", "days": 30, "date": "2026-08-30", "passed": true}]
+    },
+    {
+      "id": "deposit-2",
+      "title": "Fifteen days gone, thirty not yet",
+      "today": "2026-08-23",
+      "facts": {"lease_end_date": "2026-07-31", "move_out_date": "2026-07-31",
+                "forwarding_address": "given in writing, handed to the office on 2026-07-31",
+                "landlord_notice_of_claim": "none received yet", "deposit_returned": "none"},
+      "message": "My lease ended July 31 and I moved out that day and gave the office my new address in writing. It's been a little over three weeks and I haven't gotten my $1,050 deposit back. Isn't the landlord supposed to return it within 15 days? Can I demand all of it now?",
+      "answer": "Not yet all of it for certain. The 15 days apply only if the landlord does not intend to keep any of it, and that date (2026-08-15) has passed. But the landlord has 30 days after the lease ended to send written notice by certified mail of a claim on the deposit, and that date (2026-08-30) has not passed. If no such notice comes by then, the landlord forfeits the right to keep any of it. You can ask for it now, but whether all of it must come back turns on whether a notice arrives by 2026-08-30.",
+      "points": [
+        "Not yet settled: the landlord can still send written notice of a claim until 30 days after the lease ended (count_days: 2026-08-30, not passed).",
+        "The 15-day return (count_days: 2026-08-15, passed) applies only if the landlord intends no claim.",
+        "If no notice by certified mail comes within the 30 days, the landlord forfeits the right to impose a claim."
+      ],
+      "mistakes": [
+        "Says the landlord has already forfeited the deposit because 15 days passed.",
+        "Says the tenant must wait and cannot ask for the deposit now.",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {"cite": "83.49(3)(a)", "quote": "if the landlord does not intend to impose a claim on the security deposit, the landlord must return the security deposit, together with interest if otherwise required, within 15 days after the termination of the rental agreement"},
+        {"cite": "83.49(3)(a)", "quote": "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."},
+        {"cite": "83.49(3)(a)", "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit"}
+      ],
+      "dates": [{"fact": "lease_end_date", "days": 15, "date": "2026-08-15", "passed": true},
+                {"fact": "lease_end_date", "days": 30, "date": "2026-08-30", "passed": false}]
+    },
+    {
+      "id": "deposit-3",
+      "title": "Left early, told the manager by text",
+      "today": "2026-10-19",
+      "facts": {"lease_end_date": "2026-07-31", "move_out_date": "2026-06-15",
+                "notice_before_leaving": "a text message to the manager on 2026-06-08 saying the tenant would be out on June 15; no address in it; nothing by certified mail or delivered by hand",
+                "forwarding_address": "not given", "landlord_notice_of_claim": "none received", "deposit_returned": "none"},
+      "message": "I got a job in Tampa and moved out on June 15, about six weeks before my lease ended. I texted the manager a week before that I'd be out on the 15th. I never heard anything about my $1,050 deposit. The landlord never sent me any notice, so don't they have to give it all back?",
+      "answer": "Not for that reason. Because you moved out before the lease ended, the statute required you to give the landlord at least 7 days' written notice by certified mail or personal delivery, with an address where you can be reached. A text is neither, and it had no address. Without that notice, the landlord is relieved of the 30-day notice requirement, so the landlord's silence does not forfeit any claim. You have not lost your right to the deposit, though: the statute says so in the same sentence. Your lease does not set a different rule for notice before leaving early.",
+      "points": [
+        "No, the landlord's silence does not forfeit its claim here, because the tenant left before the lease ended without 7 days' written notice by certified mail or personal delivery with an address, which relieves the landlord of the notice requirement.",
+        "A text message is not one of the ways the statute names (certified mail or personal delivery).",
+        "The tenant has not lost the right to the deposit or part of it."
+      ],
+      "mistakes": [
+        "Says the landlord forfeited the right to keep any of the deposit.",
+        "Says the tenant lost all right to the deposit.",
+        "Says the lease provides otherwise on notice before leaving early (it does not)."
+      ],
+      "law": [
+        {"cite": "83.49(5)", "quote": "Except when otherwise provided by the terms of a written rental agreement, any tenant who vacates or abandons the premises before the expiration of the term specified in the rental agreement"},
+        {"cite": "83.49(5)", "quote": "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"},
+        {"cite": "83.49(5)", "quote": "Failure to give such notice relieves the landlord of the notice requirement of paragraph (3)(a) but does not waive any right the tenant may have to the security deposit or any part of it."}
+      ],
+      "dates": []
+    },
+    {
+      "id": "deposit-4",
+      "title": "A partial check, no explanation",
+      "today": "2026-10-19",
+      "facts": {"lease_end_date": "2026-07-31", "move_out_date": "2026-07-31",
+                "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+                "check_received_date": "2026-08-20",
+                "check": "$650.00 by regular mail, with no letter or note; nothing else from the landlord, by any means",
+                "landlord_notice_of_claim": "none received"},
+      "message": "My lease ended July 31 and I moved out that day. I'd mailed them my new address. On August 20 a check for $650 came in the mail with nothing else, no letter, no list of charges. My deposit was $1,050. Can I get the other $400?",
+      "answer": "Yes. Keeping $400 is a claim on the deposit, and to make one the landlord had to send written notice of the claim and the reason, by certified mail, within 30 days after the lease ended. A check with no letter is not that notice, and the 30 days (2026-08-30, from count_days) have passed. So the landlord forfeited the right to keep any of it and owes you the other $400. The landlord can still sue you for damages after returning it.",
+      "points": [
+        "Yes, the tenant can get the other $400.",
+        "Keeping part of the deposit is a claim, which needed written notice of the claim and its reason by certified mail within 30 days after the lease ended; a check with no letter is not that notice, and the 30 days have passed (count_days: 2026-08-30).",
+        "The landlord may still file an action for damages after returning the deposit."
+      ],
+      "mistakes": [
+        "Says the landlord could keep the $400 because the check came within 30 days.",
+        "Says the tenant had to object within 15 days (that runs only from a notice of claim).",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {"cite": "83.49(3)(a)", "quote": "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."},
+        {"cite": "83.49(3)(a)", "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."}
+      ],
+      "dates": [{"fact": "lease_end_date", "days": 30, "date": "2026-08-30", "passed": true}]
+    },
+    {
+      "id": "deposit-5",
+      "title": "The claim came by text",
+      "today": "2026-10-19",
+      "facts": {"lease_end_date": "2026-07-31", "move_out_date": "2026-07-31",
+                "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+                "landlord_text_date": "2026-08-18",
+                "landlord_text": "a text from the manager: 'We're keeping $400 of your deposit for carpet replacement. You'll get the rest.' Nothing by certified mail or e-mail.",
+                "tenant_objection": "none sent", "deposit_returned": "none"},
+      "message": "My lease ended July 31. On August 18 the manager texted me that they're keeping $400 of my $1,050 deposit for carpet replacement and I'd get the rest. I never got anything else, not even the rest of the money. I didn't reply. Can they keep the $400? And what about the $650?",
+      "answer": "Whether they can keep the $400 is not settled. The statute says the notice of a claim goes by certified mail, or by e-mail only if you both signed an addendum agreeing to it (your lease says you did not), and a text is neither. One reading: a text is not the required notice, so the landlord forfeited the claim and owes all $1,050. The other reading: you did receive written word of the claim in time, and the e-mail section says it does not rule out notice by other means the law permits. Either way, the $650 is overdue: even if the text counts as the notice, the landlord had to send the balance within 30 days after it (2026-09-17, from count_days), and that has passed. Not replying does not take away your right to sue for the $400 separately.",
+      "points": [
+        "Whether the text counts as the required notice of a claim is not settled, and the answer gives the reading on each side (certified mail or agreed e-mail only, so the claim is forfeited; or notice actually received in time is enough).",
+        "Either way, the $650 balance is overdue: even if the text counts, it was due within 30 days after the notice (count_days: 2026-09-17, passed).",
+        "Not objecting does not take away the tenant's right to seek damages in a separate action."
+      ],
+      "mistakes": [
+        "States either reading as settled.",
+        "Says the tenant lost the $400 for good by not objecting within 15 days.",
+        "Says the $650 is not yet due.",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {"cite": "83.49(3)(a)", "quote": "provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."},
+        {"cite": "83.505(1)", "quote": "if the parties have signed an addendum to the rental agreement that the parties specifically agree to the electronic delivery of notices"},
+        {"cite": "83.505(6)", "quote": "This section does not preclude service of notices by any other means permitted by law."},
+        {"cite": "83.49(3)(b)", "quote": "Unless the tenant objects to the imposition of the landlord’s claim or the amount thereof within 15 days after receipt of the landlord’s notice of intention to impose a claim, the landlord may then deduct the amount of his or her claim and shall remit the balance of the deposit to the tenant within 30 days after the date of the notice of intention to impose a claim for damages."},
+        {"cite": "83.49(3)(b)", "quote": "The failure of the tenant to make a timely objection does not waive any rights of the tenant to seek damages in a separate action."}
+      ],
+      "dates": [{"fact": "landlord_text_date", "days": 30, "date": "2026-09-17", "passed": true}]
+    }
+  ]
+}

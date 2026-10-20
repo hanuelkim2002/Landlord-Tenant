@@ -1,0 +1,52 @@
+{
+  "about": "repair_not_made, after the author's run on the web page (2026-10-04, TODO items 72 and 73): an AC not repaired, a written notice by e-mail that did not say the tenant would end the lease, rent paid since. Asked how to end the lease, the answer must say first that ending it is not settled (83.56(1) reaches a failure of a duty in 83.51(1) or of a material lease provision, and 83.51(1) names no AC), before any step; and it must cite, not recite. Asked whether the AC is part of the lease, the answer cites the lease's repairs clause (the test lease's Article 7, found with search_lease), and never says the lease does not mention it.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current.pdf",
+    "description": "The AC in my apartment stopped working on September 1, 2026. I emailed the leasing office on September 3, 2026 asking them to fix it. They said they would send someone but nobody ever came, and it is still broken. It is really hot in here. I have kept paying rent. I want to end my lease and move out because of this. My email said, \"The AC stopped working on September 1. Please fix it.\" It did not say anything about ending my lease or about not paying rent. As far as I know nothing anyone did caused it, and no court papers have come."
+  },
+  "chat": [
+    "How do I end my lease because of this?",
+    "Is the AC part of my lease?",
+    "Can I just stop paying rent instead?",
+    "What are my deadlines?"
+  ],
+  "expect": {
+    "skills": [
+      "repair_not_made"
+    ],
+    "turns": [
+      {
+        "say": "How do I end my lease",
+        "applied": true,
+        "must": [
+          "(?i)not settled|turns on|depends on"
+        ],
+        "open_first": true
+      },
+      {
+        "say": "Is the AC part of my lease",
+        "must": [
+          "(?i)Lease (?:Article|Section) 7\\b"
+        ],
+        "must_not": [
+          "(?i)lease (?:does not|doesn't) (?:mention|say|contain|address)"
+        ]
+      },
+      {
+        "say": "stop paying rent instead",
+        "applied": true,
+        "must": [
+          "(?i)not settled|turns on|depends on"
+        ],
+        "open_first": true
+      },
+      {
+        "say": "What are my deadlines?",
+        "called": [
+          "get_deadlines"
+        ]
+      }
+    ]
+  }
+}

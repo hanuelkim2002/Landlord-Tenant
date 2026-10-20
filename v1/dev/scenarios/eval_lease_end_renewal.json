@@ -1,0 +1,38 @@
+{
+  "about": "lease_ending. Lease ends 2026-12-31; the office e-mailed that the renewal must be signed by October 15; the tenant may study abroad and says the lease asks 60 days' written notice. The model must not count 60 days back from the end (2026-11-01).",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/ends_2026-12-31.pdf",
+    "description": "My lease ends December 31, 2026. The leasing office emailed me on September 25, 2026 saying I have to sign a renewal by October 15 or they'll start showing my unit. I'm not sure yet if I'm staying because I might study abroad in the spring. My lease says I have to give 60 days written notice if I'm not renewing. I have not told them anything in writing about leaving."
+  },
+  "chat": [
+    "Do I have to sign the renewal by October 15?",
+    "When is the last day I can tell them I'm leaving?",
+    "What happens if I just stay in January without signing anything?"
+  ],
+  "expect": {
+    "skills": [
+      "lease_ending"
+    ],
+    "letters": 0,
+    "turns": [
+      {
+        "say": "Do I have to sign",
+        "applied": true
+      },
+      {
+        "say": "When is the last day",
+        "called": [
+          "get_deadlines"
+        ],
+        "must_not": [
+          "November 1\\b|2026-11-01|November 2\\b|2026-11-02"
+        ]
+      },
+      {
+        "say": "What happens if I just stay",
+        "applied": true
+      }
+    ]
+  }
+}

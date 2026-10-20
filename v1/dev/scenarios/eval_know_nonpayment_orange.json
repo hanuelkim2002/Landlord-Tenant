@@ -1,0 +1,32 @@
+{
+  "about": "notice_received_nonpayment. The state: outside the tool. A house in Orlando, Orange County, for which the tool has no court holiday calendar; a 3-day notice taped to the door on 2026-10-01 for $1,850, stating 2026-10-06; the paycheck comes 2026-10-09. The 3 days cannot be counted, so whether paying on the 9th is in time is outside the tool: the answer must say the tool does not count it for Orange County, never a date of its own or a yes or no. Since TODO item 85 (2026-10-04): the stories of what the tool knows, one per state, across playbooks.",
+  "start": {
+    "tenant": "t-test",
+    "lease": "dev/leases/current_orange.pdf",
+    "description": "I rent a house in Orlando. On October 1, 2026 my landlord taped a notice to my door saying I owe $1,850 for October rent and have 3 days to pay or move out. My next paycheck comes October 9, 2026. The notice says the last day to pay or leave is October 6, 2026. I have not paid any of it yet, and I am not holding back rent over repairs. The house is in Orange County and no court papers have come."
+  },
+  "chat": [
+    "When is my last day to pay?",
+    "If I pay on October 9, can they still end my lease?"
+  ],
+  "expect": {
+    "skills": [
+      "notice_received_nonpayment"
+    ],
+    "turns": [
+      {
+        "say": "When is my last day to pay?",
+        "called": [
+          "get_deadlines"
+        ]
+      },
+      {
+        "say": "If I pay on October 9",
+        "applied": true,
+        "must": [
+          "(?i)not comput|cannot (count|compute|say)|can't (count|compute|say)|does not (count|compute|hold|have)|doesn't (count|compute|hold|have)|no court (holiday )?calendar|outside"
+        ]
+      }
+    ]
+  }
+}
