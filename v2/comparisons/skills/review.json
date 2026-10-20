@@ -1,0 +1,6 @@
+{
+  "how_to_read": "My review of the judge, after reading every answer it marked wrong or partly outside story 5. Story 2's mistake 2 ('must wait, cannot ask now') and story 5 (whether a text can be the notice) wait on the author, so those grades stand as the judge gave them.",
+  "A": {"deposit-4/2": {"verdict": "right", "why": "'You can get the other $400' and 'entitled to the entire $1,050' agree; the judge read a contradiction that is not there."}},
+  "B": {"deposit-1/2": {"verdict": "right", "why": "It says both deadlines passed, but ties the forfeiture to the 30-day notice; it does not say the 15-day return causes it."}},
+  "v1": {"deposit-2/2": {"verdict": "right", "why": "It says the landlord forfeits only if no notice comes by August 30, and that the tenant can ask now, as the key does; the judge flagged a mistake it did not make."}}
+}

@@ -67,8 +67,11 @@ def quotations(answer):
 
 
 def quote_checks_out(quote, texts):
-    """Whether a quotation is word for word in a statute or the lease; an ellipsis splits it into parts."""
-    parts = [p for p in re.split(r"\.\.\.|…", quote) if len(p.strip()) > 3]
+    """Whether a quotation is word for word in a statute or the lease. Bold marks and a closing comma or period are
+    typography; an ellipsis or a bracketed change ("forfeit[s]", "[The landlord]") marks where the words were cut or
+    changed, so each part between them must be there."""
+    quote = quote.replace("**", "").strip().rstrip(",.;:")
+    parts = [p for p in re.split(r"\.\.\.|…|\[[^\]]*\]", quote) if len(p.strip()) > 3]
     return bool(parts) and all(any(same_marks(squash(p)).lower() in t for t in texts) for p in parts)
 
 
@@ -127,26 +130,74 @@ def score_method(gateway, method, stories, texts):
         for a, g in zip(todo, pool.map(lambda a: judge(gateway, stories[a["story"]], a["answer"]), todo)):
             grades[f"{a['story']}/{a['run']}"] = g
     path.write_text(json.dumps(grades, indent=1))
-    rows = []
+    review, rows = review_of(method), []
     for a in answers:
         story, grade = stories[a["story"]], grades[f"{a['story']}/{a['run']}"]
         quotes = quotations(a["answer"])
         made_up = sorted(dates_in(a["answer"]) - allowed_dates(story, a["tool_calls"]))
-        rows.append({"story": a["story"], "run": a["run"], "verdict": verdict(story, grade),
+        judge_says = verdict(story, grade)
+        rows.append({"story": a["story"], "run": a["run"], "judge_verdict": judge_says,
+                     "verdict": review.get(f"{a['story']}/{a['run']}", {}).get("verdict", judge_says),
                      "answers_first": bool(grade.get("answers_first")), "quotes": len(quotes),
                      "quotes_ok": sum(quote_checks_out(q, texts) for q in quotes), "dates_made_up": made_up,
                      "seconds": a["seconds"], "tool_calls": len(a["tool_calls"]), "judge": grade})
     return rows
 
 
+def review_of(method):
+    """My changes to the judge's grades for one method (review.json), by "story/run"."""
+    path = HERE / "review.json"
+    return json.loads(path.read_text()).get(method, {}) if path.exists() else {}
+
+
+def ranks_by_method():
+    """The author's blind ranks (blind/ranks.json), matched to the methods through blind/key.json."""
+    ranks_file, key_file = HERE / "blind" / "ranks.json", HERE / "blind" / "key.json"
+    if not ranks_file.exists():
+        return {}
+    given, key = json.loads(ranks_file.read_text())["ranks_by_letter"], json.loads(key_file.read_text())
+    found = {}
+    for story, letters in given.items():
+        for letter, rank in letters.items():
+            found.setdefault(key[story][letter], {})[story] = rank
+    return found
+
+
 def summary(rows):
     """One method's totals."""
-    return {"right": sum(r["verdict"] == "right" for r in rows), "partly": sum(r["verdict"] == "partly" for r in rows),
+    return {"judge_right": sum(r["judge_verdict"] == "right" for r in rows),
+            "right": sum(r["verdict"] == "right" for r in rows), "partly": sum(r["verdict"] == "partly" for r in rows),
             "wrong": sum(r["verdict"] == "wrong" for r in rows), "answers": len(rows),
             "answers_first": sum(r["answers_first"] for r in rows),
             "quotes": sum(r["quotes"] for r in rows), "quotes_ok": sum(r["quotes_ok"] for r in rows),
             "answers_with_made_up_dates": sum(bool(r["dates_made_up"]) for r in rows),
             "seconds_median": statistics.median(r["seconds"] for r in rows)}
+
+
+def markdown(scores):
+    """SCORES.md: the author's ranks first, then the judge, then the code checks."""
+    lines = ["# Skill formats: scores", "",
+             "Your blind ranks (1 is best) of each story's first-run answers are the main score. Right, partly, wrong:",
+             "the judge's grades of all 15 answers per method (3 runs of 5 stories), after my review (review.json); the",
+             "judge's own count of right answers in brackets.", "",
+             "| Method | Your average rank | Your firsts | Right | Partly | Wrong | Answers first | Quotes in answers "
+             "check out | Answers with a date the model worked out | Skill words | Skill quotes check out | Time per answer |",
+             "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+    for m, s in scores.items():
+        lines.append(f"| {m} | {s['author_average_rank']} | {s['author_firsts']} of 5 | {s['right']} ({s['judge_right']}) "
+                     f"| {s['partly']} | {s['wrong']} | {s['answers_first']} of {s['answers']} | {s['quotes_ok']} of "
+                     f"{s['quotes']} | {s['answers_with_made_up_dates']} of {s['answers']} | {s['skill_words']} "
+                     f"| {s['skill_quotes_ok']} | {s['seconds_median']:.0f} s |")
+    stories = sorted({st for s in scores.values() for st in s["author_ranks"]})
+    lines += ["", "## Your ranks, per story", "", "| Story | " + " | ".join(scores) + " |", "| --- |" + " --- |" * len(scores)]
+    lines += [f"| {st} | " + " | ".join(str(s["author_ranks"].get(st, "")) for s in scores.values()) + " |" for st in stories]
+    lines += ["", "## The judge's grades after my review, per story (runs 1, 2, 3)", "",
+              "| Story | " + " | ".join(scores) + " |", "| --- |" + " --- |" * len(scores)]
+    for st in sorted({r["story"] for s in scores.values() for r in s["rows"]}):
+        cells = [", ".join(r["verdict"] for r in sorted(s["rows"], key=lambda r: r["run"]) if r["story"] == st)
+                 for s in scores.values()]
+        lines.append(f"| {st} | " + " | ".join(cells) + " |")
+    return "\n".join(lines) + "\n"
 
 
 if __name__ == "__main__":
@@ -161,4 +212,11 @@ if __name__ == "__main__":
                           "skill_quotes_ok": f"{sum(ok for _, _, ok in quotes_in_skill)} of {len(quotes_in_skill)}",
                           "rows": rows}
         print(method, {k: v for k, v in scores[method].items() if k != "rows"}, flush=True)
+    ranks = ranks_by_method()
+    for method in scores:
+        mine = ranks.get(method, {})
+        scores[method]["author_ranks"] = mine
+        scores[method]["author_average_rank"] = round(statistics.mean(mine.values()), 1) if mine else None
+        scores[method]["author_firsts"] = sum(r == 1 for r in mine.values())
     (HERE / "scores.json").write_text(json.dumps(scores, indent=1))
+    (HERE / "SCORES.md").write_text(markdown(scores))

@@ -1,0 +1,4 @@
+v1 {'judge_right': 9, 'right': 10, 'partly': 2, 'wrong': 3, 'answers': 15, 'answers_first': 13, 'quotes': 16, 'quotes_ok': 16, 'answers_with_made_up_dates': 3, 'seconds_median': 19.4, 'skill_words': 2680, 'skill_quotes_ok': '23 of 23'}
+A {'judge_right': 9, 'right': 10, 'partly': 0, 'wrong': 5, 'answers': 15, 'answers_first': 15, 'quotes': 12, 'quotes_ok': 11, 'answers_with_made_up_dates': 3, 'seconds_median': 22.6, 'skill_words': 1342, 'skill_quotes_ok': '15 of 15'}
+B {'judge_right': 7, 'right': 8, 'partly': 0, 'wrong': 7, 'answers': 15, 'answers_first': 14, 'quotes': 12, 'quotes_ok': 9, 'answers_with_made_up_dates': 5, 'seconds_median': 25.5, 'skill_words': 1337, 'skill_quotes_ok': '19 of 19'}
+C {'judge_right': 7, 'right': 7, 'partly': 1, 'wrong': 7, 'answers': 15, 'answers_first': 12, 'quotes': 5, 'quotes_ok': 5, 'answers_with_made_up_dates': 2, 'seconds_median': 29.1, 'skill_words': 1243, 'skill_quotes_ok': '15 of 15'}

@@ -17,3 +17,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    difference; or leave it. (`comparisons/lease/README.md`)
 2. **How `count_days` counts.** Calendar days, the start day not counted, no weekend or holiday shift. Nobody has
    checked this against the statute yet (`../v1/AUTHOR.md`, item 3); every result says so until you do.
+3. **Skills test, story 2: can the tenant demand the deposit at day 23?** The key says yes, they can ask now, and
+   lists "must wait, cannot ask now" as a mistake. Your blind ranking put an answer saying exactly that ("No, wait until
+   after August 30") first. Which is right? The judge's story-2 grades follow your answer. (`comparisons/skills/`)
+4. **Skills test, story 5: can a text be the notice of a claim?** The key follows v1's skill: not settled, with a
+   reading on each side (83.49(3)(a) names certified mail or agreed e-mail; 83.505(6) does not rule out other means).
+   No answer gave both readings; all 12 said the text does not count. If you read it as settled, the key changes and
+   so do those grades.

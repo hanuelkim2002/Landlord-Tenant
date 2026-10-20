@@ -55,3 +55,9 @@ dates `check_key.py` checks against `statutes/`. Nothing replaced; no skill is w
 
 In the skills test the author ranks the four answers to each story side by side, blind (letters shuffled per story),
 1 to 4; the judge's grades are shown only after. Replaces marking each answer right, partly, or wrong.
+
+## 2026-10-19: the skills test, run and scored
+
+Three versions of `deposit_not_returned` (`comparisons/skills/versions/`) and v1's skill answered five stories three
+times each; the author ranked the first runs blind; the judge graded all 60, with my review. Results in `SCORES.md`;
+AUTHOR.md items 3 and 4 and two SLIPS.md entries record the findings. Replaces nothing in the app.

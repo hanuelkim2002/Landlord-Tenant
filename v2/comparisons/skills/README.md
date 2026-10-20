@@ -52,3 +52,8 @@ and v1's skill as it is, as the baseline.
     `statutes/` or the lease.
   - **No dates made up**: every date in an answer is a fact's date or a `count_days` result.
   - **Time** per answer.
+
+## The results
+
+`SCORES.md` (the summary), `scores.json` (every answer and grade), `review.json` (my changes to the judge's grades),
+`blind/` (the page you ranked, your ranks, and the key to the letters). `python score.py` rescores the saved answers.

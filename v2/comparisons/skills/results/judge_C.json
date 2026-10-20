@@ -1,0 +1,233 @@
+{
+ "deposit-1/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer correctly states tenant gets full deposit, explains lack of 30\u2011day notice and landlord can still sue for damages."
+ },
+ "deposit-2/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly explains the 30\u2011day notice period and its effect but fails to explicitly note that the 15\u2011day return applies only if no claim is intended."
+ },
+ "deposit-3/1": {
+  "answers_first": false,
+  "points_made": [
+   false,
+   false,
+   false
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response does not answer the tenant\u2019s question and provides no substantive legal analysis."
+ },
+ "deposit-4/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed $400, explains the required notice and deadline, and notes the landlord can still sue for damages."
+ },
+ "deposit-5/1": {
+  "answers_first": false,
+  "points_made": [
+   false,
+   false,
+   false
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer only gives one reading on notice, omits the alternative view, does not address the overdue $650 or the tenant's right to sue despite no objection, and thus fails to cover required points."
+ },
+ "deposit-1/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly affirms the tenant\u2019s right to the full deposit, cites the missed 30\u2011day notice deadline (with the correct date), and notes the landlord can only sue for damages later, without making any erroneous statements."
+ },
+ "deposit-2/2": {
+  "answers_first": false,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer covers all required points but incorrectly says the tenant cannot request the deposit now."
+ },
+ "deposit-3/2": {
+  "answers_first": true,
+  "points_made": [
+   false,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer gets the text\u2011message and tenant\u2011right points right but wrongly concludes the landlord forfeits its claim, ignoring the statute\u2019s exception for the tenant\u2019s failure to give proper 7\u2011day notice."
+ },
+ "deposit-4/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed $400, explains the required notice and timing, and notes the landlord can still sue for damages."
+ },
+ "deposit-5/2": {
+  "answers_first": true,
+  "points_made": [
+   false,
+   false,
+   false
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer does not discuss the two possible readings on the text notice, omits that the $650 is already overdue, and does not state that the tenant\u2019s right to sue remains."
+ },
+ "deposit-1/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed the full deposit, explains the 30\u2011day notice rule and its lapse, and notes the landlord can still sue for damages."
+ },
+ "deposit-2/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the 30\u2011day notice window, the conditional 15\u2011day return rule, and the forfeiture consequence, without any contradictory statements."
+ },
+ "deposit-3/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer covers required points but incorrectly states landlord forfeited the right to impose a claim."
+ },
+ "deposit-4/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly tells the tenant they are owed the $400, explains the notice requirement and missed deadline, and notes the landlord can still sue for damages."
+ },
+ "deposit-5/3": {
+  "answers_first": true,
+  "points_made": [
+   false,
+   false,
+   false
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer omits the unsettled notice analysis and the overdue $650, and incorrectly treats the $650 as not due."
+ }
+}
