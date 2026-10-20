@@ -8,6 +8,8 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   lease in the system prompt (`comparisons/lease/`).
 - 2026-10-19: lease-reading rules 1 to 4 go in the system prompt (README.md). Rule 4 answers the slip in SLIPS.md.
   Rule 5 (pages read from an image) waits on item 1 below.
+- 2026-10-20: skills are written as element checklists (format A), each open question and `count_days` call inside the
+  condition that uses it (`comparisons/skills/`).
 
 ## Open
 

@@ -33,8 +33,9 @@ and v1's skill as it is, as the baseline.
    lease-reading rules 1 to 4, THE LEASE, the confirmed facts) with the skill already loaded, and the tenant's
    message. Tools: `count_days` (counting from the story's today), `get_statute_section`, and for method C a tool to
    read the skill's details file. Each story runs 3 times per method, to see how much answers vary.
-3. **One shared harness** for all four, so only the skill differs. As with the lease, I build it myself rather than
-   with agents.
+3. **One shared harness** for all four, so only the skill differs. As with the lease, I built it myself rather than
+   with agents. It was deleted after the choice; it is in git history at commit 50bd13b
+   (`v2/comparisons/skills/prototypes/run.py`).
 
 ## How it is scored
 
@@ -57,3 +58,11 @@ and v1's skill as it is, as the baseline.
 
 `SCORES.md` (the summary), `scores.json` (every answer and grade), `review.json` (my changes to the judge's grades),
 `blind/` (the page you ranked, your ranks, and the key to the letters). `python score.py` rescores the saved answers.
+
+## The decision (2026-10-20)
+
+The author chose format A, the element checklist, with one change from the tested version: each open question's
+readings and each `count_days` call go inside the condition that uses them, not in sections at the end. In the test,
+A ranked best on the author's blind ranks (average 1.8, first in 3 of 5 stories), answered first every time, and was
+half v1's length; every one of its misses came from something the model needed being filed in a later section.
+

@@ -61,3 +61,9 @@ In the skills test the author ranks the four answers to each story side by side,
 Three versions of `deposit_not_returned` (`comparisons/skills/versions/`) and v1's skill answered five stories three
 times each; the author ranked the first runs blind; the judge graded all 60, with my review. Results in `SCORES.md`;
 AUTHOR.md items 3 and 4 and two SLIPS.md entries record the findings. Replaces nothing in the app.
+
+## 2026-10-20: skill format A chosen
+
+The author chose the element checklist, with open questions and `count_days` calls inside their conditions. The
+skills prototype harness is deleted (in git at 50bd13b). Replaces the open skill-format question.
+

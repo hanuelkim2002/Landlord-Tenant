@@ -66,8 +66,9 @@ Two parts are settled by testing 2 or 3 methods side by side on the same test an
 written and approved before any build, scores kept in `comparisons/`:
 
 1. How to read the lease (`comparisons/lease/`): settled 2026-10-19, method A, the whole lease in the prompt.
-2. How to write a skill (`comparisons/skills/`): decides the skill format and how the skill quote checker reads it.
-   `deposit_not_returned` is rewritten first; the others follow only after the author approves the method.
+2. How to write a skill (`comparisons/skills/`): settled 2026-10-20, format A, an element checklist, with each
+   open question and each `count_days` call inside the condition that uses it. `deposit_not_returned` is rewritten
+   first; the others follow only after the author has tried it and approves the method.
 
 ## Non-negotiables
 
