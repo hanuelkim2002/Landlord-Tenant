@@ -67,3 +67,10 @@ AUTHOR.md items 3 and 4 and two SLIPS.md entries record the findings. Replaces n
 The author chose the element checklist, with open questions and `count_days` calls inside their conditions. The
 skills prototype harness is deleted (in git at 50bd13b). Replaces the open skill-format question.
 
+## 2026-10-20: v2 built
+
+`config.py`, `law.py`, `record.py`, `lease.py`, `checks.py`, `tools.py`, `chat.py`, `app.py` (695 lines in all),
+`tests.py` (22 checks, all OK), `skills/deposit_not_returned.md` (format A, 15 quotes checked), `setup.sh`,
+`requirements.txt`, DOCUMENTATION.md. The preview attaches to the page instead of starting it. Replaces the first-build
+items in TODO.md.
+

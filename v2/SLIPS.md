@@ -20,6 +20,17 @@ against rule 7).
 
 - 2026-10-19, skills test (nemotron): 13 of 60 answers (v1 3, A 3, B 5, C 2). Once (C, story 3) the model asked the
   tenant for today's date instead of calling `count_days`.
+- 2026-10-20, first run of the v2 page (nemotron): 1, "July 31 + 30 days = August 30" written before the dates were
+  confirmed.
+
+## Asks again for what the tenant said or the lease holds
+
+The answer asks the tenant for a fact they already gave, or one the lease states, instead of noting it with
+`note_fact` (or reading the lease), and asks several questions where rule 8 allows one.
+
+- 2026-10-20, first run of the v2 page (nemotron): the first reply asked for the lease end date (in the lease) and
+  the move-out date (in the tenant's message), four questions in all; the second asked the tenant to confirm the
+  dates in the chat after noting them for the sidebar.
 
 ## States an open question as settled
 

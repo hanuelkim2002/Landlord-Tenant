@@ -55,5 +55,11 @@ A law student (not admitted) and a beginning coder, building this to learn and t
 
 Commands run from `v2/`.
 
-    python tests.py          # the checks, no model call
+    bash setup.sh            # once: v2's venv, the packages, .env from .env.example, matters/
+    source venv/bin/activate
+    python tests.py          # the checks, no model call; every line OK
+    python law.py            # the skill quote checker; run it after any skill edit
     streamlit run app.py     # the web page, http://localhost:8501
+
+The app's preview attaches to the page at port 8501; start `streamlit run app.py` first, since the preview cannot
+start it itself (macOS does not let its launcher read the Documents folder).
