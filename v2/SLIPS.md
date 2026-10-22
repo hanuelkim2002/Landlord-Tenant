@@ -56,6 +56,8 @@ The tool loop ends with no text, so the page would show the tenant nothing.
 
 - 2026-10-21, model test: 2 of 392 answers, haiku (own lease, story 3, after 9 tool calls) and nemotron (own lease,
   the grill question).
+- 2026-10-22, live checks of story 5 (gemini, after the college-housing step): 2 of 5 answers empty. All 5 used the
+  full 8 tool rounds (one lookup per round) before being told to answer.
 
 ## Misreads a page image
 

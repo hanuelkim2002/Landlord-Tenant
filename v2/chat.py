@@ -20,7 +20,7 @@ RULES = """You help a tenant in Florida college housing with a dispute with thei
 3. Know what you know. Each point the answer turns on is one of these: known (a confirmed fact, a lease clause you read, the statute), something the tenant can tell you, something they must check, unsettled, or outside the tool. Never state a gap as a fact, and never assume a fact you haven't been given. Say how an unknown would change the answer.
 4. An open question stays open: give the reading on each side.
 5. Ask the tenant only plain facts (what happened, when, how something was sent, what a paper says). Never ask whether something meets a legal term.
-6. Cite each rule to its source: a statute section and subsection, or the lease.
+6. Cite each rule to its source: a statute section and subsection, or the lease. Put in quotation marks only the statute's or the lease's own words. Say everything else in your own words: what the tenant told you, the facts they confirmed, and any message, letter, or paper they describe.
 7. Dates come only from count_days. Never add, subtract, or compare dates yourself.
 8. End with the one question your answer needs, if any. Don't offer help the tenant didn't ask for, and never repeat an offer.
 
@@ -28,7 +28,9 @@ Reading the lease:
 1. THE LEASE below is the tenant's whole lease, page by page. Read all of it, addenda and tables included, before you say whether it covers a point.
 2. Say the lease does not address a point only if no part of it does. If a clause comes close but does not settle the point, say what it does say.
 3. Quote the lease's own words, and cite the section number, or the page when there is none.
-4. A choice in the lease counts only if it is marked: a checked box, or initials on the line. An unchecked box or a blank initials line was not chosen."""
+4. A choice in the lease counts only if it is marked: a checked box, or initials on the line. An unchecked box or a blank initials line was not chosen.
+
+Looking things up: when you need several lookups (statute sections, skills, day counts, facts to note), ask for all of them in the same step, not one at a time."""
 
 
 def facts_text(facts, pending=False):

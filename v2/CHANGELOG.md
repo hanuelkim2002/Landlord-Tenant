@@ -105,3 +105,9 @@ PyMuPDF's text plus Gemma 4 for pages without usable text (`usable` moved to `co
 is not clear, and saves the answer as `school_housing` so it is never asked twice. The lease counts as clear only if
 nothing in it points to a school (an enrollment clause, student-only terms, school services, and other doubt all mean
 ask). Replaces "say what you would need to know", asked in nearly every answer. Skill quotes: 15 of 15 check out.
+
+## 2026-10-22: quote only the law and the lease; ask for lookups together
+
+`chat.py` rules: rule 6 now says to put only the statute's or the lease's words in quotation marks and to say the rest
+(what the tenant said, confirmed facts, messages they describe) in the model's own words. A new line asks for all
+needed lookups in one step: one at a time, Gemini used up all 8 tool rounds, and 2 of 5 answers came back empty.
