@@ -5,12 +5,15 @@ import re
 
 import law
 
-QUOTE = re.compile(r'["“]([^"“”]{20,}?)["”]')
+# A quotation opens after the start, a space, a bracket, or a bold mark, and closes before anything but a letter or
+# digit. So the words between one quotation's closing mark and the next one's opening mark are never taken as a quote.
+QUOTE = re.compile(r'(?:^|(?<=[\s(\[*]))["“]([^"“”]{20,}?)["”](?!\w)')
 STATUTE_CITE = re.compile(r"\b(83\.\d+)((?:\(\w+\))*)")
 LEASE_CITE = re.compile(r"\blease,?\s*(?:§|section|clause|paragraph|article|item)\s*(\d+(?:\.\d+)*)"
                         r"|\b(?:section|clause|paragraph)\s+(\d+(?:\.\d+)*)\s+of\s+(?:the|your)\s+lease"
                         r"|\blease,?\s*page\s*(\d+)", re.I)
 SHOWN = 1500                                                 # characters of cited words printed under a reply
+NEAR = 150                                                   # characters on each side of a quote searched for its cite
 
 
 def quote_parts(quote):
@@ -26,15 +29,23 @@ def found_in(parts, text):
     return bool(parts) and all(p in text for p in parts)
 
 
+def nearby_cites(reply, match):
+    """The statute cites next to a quotation: the first one just after it, then the last one just before it."""
+    after = [c.group(0) for c in STATUTE_CITE.finditer(reply[match.end():match.end() + NEAR])]
+    before = [c.group(0) for c in STATUTE_CITE.finditer(reply[max(0, match.start() - NEAR):match.start()])]
+    return after[:1] + before[-1:]
+
+
 def check_quote(reply, match, lease):
-    """One quotation: where it is word for word (the section cited just after it, or the lease), or nowhere."""
+    """One quotation: where it is word for word (a section cited next to it, or the lease), or nowhere."""
     parts = quote_parts(match.group(1))
-    cite = STATUTE_CITE.search(reply[match.end():match.end() + 150])
-    if cite and found_in(parts, law.cited_text(cite.group(0)) or ""):
-        return {"quote": match.group(1), "ok": True, "where": f"Fla. Stat. {cite.group(0)}"}
+    cites = nearby_cites(reply, match)
+    for cite in cites:
+        if found_in(parts, law.cited_text(cite) or ""):
+            return {"quote": match.group(1), "ok": True, "where": f"Fla. Stat. {cite}"}
     if found_in(parts, lease):
         return {"quote": match.group(1), "ok": True, "where": "the lease"}
-    return {"quote": match.group(1), "ok": False, "where": f"not word for word in {cite.group(0) if cite else 'the lease'}"}
+    return {"quote": match.group(1), "ok": False, "where": f"not word for word in {cites[0] if cites else 'the lease'}"}
 
 
 def lease_passage(lease, number):

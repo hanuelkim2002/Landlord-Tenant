@@ -62,8 +62,10 @@ prompt (method A, `comparisons/lease/`).
 Shown under each reply; the reply is never blocked.
 
 - `quote_parts(quote)`, `found_in(parts, text)`: a quotation's words, cut at an ellipsis or a bracketed change.
-- `check_quote(reply, match, lease)`: where a quotation of 20+ characters is word for word: the section cited just
-  after it, or the lease.
+- `QUOTE`: a quotation of 20+ characters. Its opening mark must follow the start, a space, a bracket, or a bold mark,
+  and its closing mark must not be followed by a letter or digit, so the words between two quotations are not one.
+- `nearby_cites(reply, match)`: the statute cites next to a quotation: the first just after it, the last just before.
+- `check_quote(reply, match, lease)`: where a quotation is word for word: a section cited next to it, or the lease.
 - `lease_passage(lease, number)`: the lease's paragraph that starts with a section number.
 - `cited_words(reply, pages)`: the words each statute or lease cite points to. `check_reply(reply, pages)`: both.
 

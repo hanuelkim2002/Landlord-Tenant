@@ -111,3 +111,9 @@ ask). Replaces "say what you would need to know", asked in nearly every answer. 
 `chat.py` rules: rule 6 now says to put only the statute's or the lease's words in quotation marks and to say the rest
 (what the tenant said, confirmed facts, messages they describe) in the model's own words. A new line asks for all
 needed lookups in one step: one at a time, Gemini used up all 8 tool rounds, and 2 of 5 answers came back empty.
+
+## 2026-10-22: the page's quote check finds the cite before a quote
+
+`checks.py`: a quote is checked against a section cited just before it as well as just after it (`nearby_cites`), and a
+quote mark only opens after a space, bracket, or bold mark, so the words between two quotations are no longer checked
+as a quote. Replaces the cite-after-only search and the old pattern that paired any two quote marks. Two new tests.
