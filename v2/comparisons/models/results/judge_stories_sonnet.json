@@ -1,0 +1,233 @@
+{
+ "deposit-1/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "First sentence answers the tenant\u2019s question; the answer includes all three required points and contains none of the listed mistakes or contradictions."
+ },
+ "deposit-1/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant gets the full deposit, explains the missed 30\u2011day notice deadline, and notes the landlord can still sue for damages, without making any of the listed mistakes."
+ },
+ "deposit-1/3": {
+  "answers_first": false,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The first sentence adds an unnecessary conditional about Part\u202fII, so it does not directly answer the tenant\u2019s question."
+ },
+ "deposit-2/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "Incorrectly suggests that a claim notice delivered by regular mail, text, or portal message might be valid, contrary to the statute requiring certified mail or e\u2011mail.",
+  "reason": "The answer covers all required points without the listed mistakes, but misstates the permissible methods for claim notice."
+ },
+ "deposit-2/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer incorrectly suggests that notice by regular mail or other methods might be acceptable, contrary to the statute which requires certified mail (or e\u2011mail if agreed).",
+  "reason": "It correctly covered the required points but added an unsupported claim about acceptable notice methods."
+ },
+ "deposit-2/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer introduces an unsupported exception about housing tied to education (citing 83.42) which is not in the provided statute, and suggests that text or portal notices might satisfy the statutory notice requirement, contrary to the statute\u2019s explicit notice methods.",
+  "reason": "The response correctly covered all required points without the listed mistakes, but added extraneous, unsupported legal claims."
+ },
+ "deposit-3/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly explains that the tenant\u2019s early move\u2011out without proper written notice relieves the landlord of the forfeiture rule, a text is not an acceptable notice method, and the tenant retains the right to at least part of the deposit."
+ },
+ "deposit-3/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer adds an unsupported discussion of Part\u202fII and 83.42(1), which are not in the given statute, creating a claim without basis.",
+  "reason": "The response correctly addresses all required points but includes extraneous, unsupported statutory references."
+ },
+ "deposit-3/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that the landlord\u2019s silence does not forfeit any claim because the tenant failed to give proper 7\u2011day written notice, notes that a text is not an acceptable method, and confirms the tenant retains the right to the deposit."
+ },
+ "deposit-4/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer correctly states tenant can recover $400, explains notice requirement and 30\u2011day deadline, and notes landlord can still sue for damages."
+ },
+ "deposit-4/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant can recover the $400, explains the required notice and missed deadline, and notes the landlord can still sue for damages."
+ },
+ "deposit-4/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "Introduces an unsupported rule (83.42(1) about educational housing) that is not in the provided statute.",
+  "reason": "Answer covers the required points but adds a rule not supported by the given statute."
+ },
+ "deposit-5/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer covers all required points, makes no contradictory statements, and contains no listed mistakes."
+ },
+ "deposit-5/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer cites 83.42(1) and discusses school\u2011related exemptions, which are not in the provided statute or facts, adding an unsupported rule.",
+  "reason": "The response correctly addresses the required points without the listed mistakes, but introduces an unsupported statutory reference."
+ },
+ "deposit-5/3": {
+  "answers_first": false,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer suggests a text may satisfy the statutory notice requirement, which is not supported by the statute that requires certified mail or e\u2011mail (if agreed).",
+  "reason": "The answer covers all required points without the listed mistakes, but the first sentence does not address the $400 issue and it incorrectly implies text notice could be valid."
+ }
+}

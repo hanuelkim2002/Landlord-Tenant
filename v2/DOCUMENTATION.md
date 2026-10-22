@@ -13,10 +13,13 @@ and the reply and its checks are recorded in the matter's history and shown on t
 
 ### config.py
 
-Paths (`STATUTES`, `SKILLS`, `MATTERS`), the gateway, `AGENT_MODEL` (from the environment, default nemotron), and
-`VISION_MODEL` (Gemma 4, for lease pages without text).
+Paths (`STATUTES`, `SKILLS`, `MATTERS`) and the two gateways (`GATEWAYS`: `uf` and `openrouter`). The chat:
+`GATEWAY` (default `openrouter`) and `AGENT_MODEL` (default Gemini 3.8 Flash). The lease reader: `READER_GATEWAY` (default
+`openrouter`) and `VISION_MODEL` (default Claude Haiku 5.5). Each can be set in the environment.
 
-- `client()`: the gateway, with the key from `.env` or `UF_API_KEY`.
+- `temperature(gateway)`: temperature 0 on UF, nothing on OpenRouter, where Claude rejects it.
+- `client(gateway)`: a gateway (the chat's if none is named), with its key (`UF_API_KEY` or `OPENROUTER_API_KEY`)
+  from `.env` or the environment.
 
 ### law.py
 
@@ -47,11 +50,11 @@ Events: `matter_opened`, `lease_read`, `message`, `skill_loaded`, `fact_noted`, 
 
 ### lease.py
 
-Method A (`comparisons/lease/`): the whole lease goes into the prompt.
+Every page is read from its image by the vision model (`comparisons/models/`), and the whole lease goes into the
+prompt (method A, `comparisons/lease/`).
 
-- `usable(text)`: whether a page's text is real words.
 - `read_image(gateway, page)`: a page's text read from its image by the vision model (`[X]` for a checked box).
-- `read_lease(m, pdf_path)`: store the PDF and read each page, by text or from its image.
+- `read_lease(m, pdf_path)`: store the PDF and read every page from its image, one at a time.
 - `lease_pages(m)`, `lease_text(pages)`: the stored pages; the lease for the prompt, with page markers.
 
 ### checks.py

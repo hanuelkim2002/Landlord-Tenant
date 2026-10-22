@@ -74,7 +74,7 @@ def run_loop(m, messages):
     """Send the messages, run every tool call, send the results back, and repeat until the model answers."""
     gateway = config.client()
     for round_number in range(MAX_ROUNDS + 1):
-        request = {"model": config.AGENT_MODEL, "messages": messages, "temperature": 0, "max_tokens": 8000,
+        request = {"model": config.AGENT_MODEL, "messages": messages, **config.temperature(config.GATEWAY), "max_tokens": 8000,
                    "tools": tools.SCHEMAS}
         if round_number == MAX_ROUNDS:
             request["tool_choice"] = "none"                  # out of rounds: answer from what was read

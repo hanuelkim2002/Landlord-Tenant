@@ -1,0 +1,2362 @@
+{
+ "sample": {
+  "stories": {
+   "nemotron": {
+    "answers": 15,
+    "main": {
+     "right": 7,
+     "partly": 0,
+     "wrong": 2
+    },
+    "open": {
+     "right": 2,
+     "partly": 0,
+     "wrong": 4
+    },
+    "answers_first": 10,
+    "quotes": 9,
+    "quotes_ok": 7,
+    "quotes_ok_page": 2,
+    "made_up_dates": 3,
+    "asks_more_than_one": 0,
+    "skill_loaded": 4,
+    "count_days_used": 12,
+    "words_median": 317,
+    "seconds_median": 27.8,
+    "cost_mean": 0.001822,
+    "cost_estimated": true,
+    "errors": 0,
+    "answers_list": [
+     {
+      "story": "deposit-1",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-1",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-1",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-2",
+      "run": 1,
+      "verdict": "wrong",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-2",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-2",
+      "run": 3,
+      "verdict": "wrong",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 1,
+      "verdict": "wrong",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 2,
+      "verdict": "wrong",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-5",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-5",
+      "run": 2,
+      "verdict": "wrong",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-5",
+      "run": 3,
+      "verdict": "wrong",
+      "judge_verdict": "wrong"
+     }
+    ],
+    "author_average_rank": null,
+    "author_firsts": 0
+   },
+   "haiku": {
+    "answers": 15,
+    "main": {
+     "right": 7,
+     "partly": 1,
+     "wrong": 1
+    },
+    "open": {
+     "right": 6,
+     "partly": 0,
+     "wrong": 0
+    },
+    "answers_first": 15,
+    "quotes": 45,
+    "quotes_ok": 45,
+    "quotes_ok_page": 23,
+    "made_up_dates": 0,
+    "asks_more_than_one": 1,
+    "skill_loaded": 15,
+    "count_days_used": 15,
+    "words_median": 576,
+    "seconds_median": 29.3,
+    "cost_mean": 0.005306266666666667,
+    "cost_estimated": false,
+    "errors": 0,
+    "answers_list": [
+     {
+      "story": "deposit-1",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-1",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-1",
+      "run": 3,
+      "verdict": "partly",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-2",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-2",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-2",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-3",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 2,
+      "verdict": "wrong",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-4",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-4",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-5",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-5",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-5",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     }
+    ],
+    "author_average_rank": null,
+    "author_firsts": 0
+   },
+   "gemini": {
+    "answers": 15,
+    "main": {
+     "right": 9,
+     "partly": 0,
+     "wrong": 0
+    },
+    "open": {
+     "right": 6,
+     "partly": 0,
+     "wrong": 0
+    },
+    "answers_first": 15,
+    "quotes": 50,
+    "quotes_ok": 48,
+    "quotes_ok_page": 24,
+    "made_up_dates": 0,
+    "asks_more_than_one": 3,
+    "skill_loaded": 15,
+    "count_days_used": 15,
+    "words_median": 444,
+    "seconds_median": 37.0,
+    "cost_mean": 0.027592866666666667,
+    "cost_estimated": false,
+    "errors": 0,
+    "answers_list": [
+     {
+      "story": "deposit-1",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-1",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-1",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-2",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-2",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-2",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-3",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-5",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-5",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-5",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     }
+    ],
+    "author_average_rank": null,
+    "author_firsts": 0
+   },
+   "sonnet": {
+    "answers": 15,
+    "main": {
+     "right": 9,
+     "partly": 0,
+     "wrong": 0
+    },
+    "open": {
+     "right": 6,
+     "partly": 0,
+     "wrong": 0
+    },
+    "answers_first": 13,
+    "quotes": 57,
+    "quotes_ok": 55,
+    "quotes_ok_page": 38,
+    "made_up_dates": 0,
+    "asks_more_than_one": 0,
+    "skill_loaded": 15,
+    "count_days_used": 15,
+    "words_median": 489,
+    "seconds_median": 17.9,
+    "cost_mean": 0.05751333333333333,
+    "cost_estimated": false,
+    "errors": 0,
+    "answers_list": [
+     {
+      "story": "deposit-1",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-1",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-1",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-2",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-2",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-2",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-3",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-3",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-4",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-5",
+      "run": 1,
+      "verdict": "right",
+      "judge_verdict": "right"
+     },
+     {
+      "story": "deposit-5",
+      "run": 2,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     },
+     {
+      "story": "deposit-5",
+      "run": 3,
+      "verdict": "right",
+      "judge_verdict": "wrong"
+     }
+    ],
+    "author_average_rank": null,
+    "author_firsts": 0
+   }
+  },
+  "questions": {
+   "nemotron": {
+    "answers": 51,
+    "verdicts": {
+     "right": 48,
+     "partly": 0,
+     "wrong": 3
+    },
+    "covered": 42,
+    "wrongly_silent": 0,
+    "not_covered": 9,
+    "made_up": 0,
+    "quotes": 40,
+    "quotes_ok": 37,
+    "quotes_ok_page": 34,
+    "seconds_median": 6.2,
+    "cost_mean": 0.000963764705882353,
+    "cost_estimated": true,
+    "errors": 0,
+    "answers_list": [
+     {
+      "id": "short-01",
+      "verdict": "right"
+     },
+     {
+      "id": "short-02",
+      "verdict": "right"
+     },
+     {
+      "id": "short-03",
+      "verdict": "right"
+     },
+     {
+      "id": "short-04",
+      "verdict": "right"
+     },
+     {
+      "id": "short-05",
+      "verdict": "right"
+     },
+     {
+      "id": "short-06",
+      "verdict": "right"
+     },
+     {
+      "id": "short-07",
+      "verdict": "right"
+     },
+     {
+      "id": "short-08",
+      "verdict": "right"
+     },
+     {
+      "id": "short-09",
+      "verdict": "right"
+     },
+     {
+      "id": "short-10",
+      "verdict": "right"
+     },
+     {
+      "id": "short-11",
+      "verdict": "right"
+     },
+     {
+      "id": "short-12",
+      "verdict": "right"
+     },
+     {
+      "id": "long-01",
+      "verdict": "wrong"
+     },
+     {
+      "id": "long-02",
+      "verdict": "right"
+     },
+     {
+      "id": "long-03",
+      "verdict": "right"
+     },
+     {
+      "id": "long-04",
+      "verdict": "right"
+     },
+     {
+      "id": "long-05",
+      "verdict": "right"
+     },
+     {
+      "id": "long-06",
+      "verdict": "right"
+     },
+     {
+      "id": "long-07",
+      "verdict": "right"
+     },
+     {
+      "id": "long-08",
+      "verdict": "right"
+     },
+     {
+      "id": "long-09",
+      "verdict": "right"
+     },
+     {
+      "id": "long-10",
+      "verdict": "right"
+     },
+     {
+      "id": "long-11",
+      "verdict": "right"
+     },
+     {
+      "id": "long-12",
+      "verdict": "right"
+     },
+     {
+      "id": "long-13",
+      "verdict": "right"
+     },
+     {
+      "id": "long-14",
+      "verdict": "right"
+     },
+     {
+      "id": "long-15",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-01",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-02",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-03",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-04",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-05",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-06",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-07",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-08",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-09",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-10",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-11",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-12",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-01",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-02",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-03",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-04",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-05",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-06",
+      "verdict": "wrong"
+     },
+     {
+      "id": "broken-07",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-08",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-09",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-10",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-11",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-12",
+      "verdict": "wrong"
+     }
+    ]
+   },
+   "nemotron / gemini texts": {
+    "answers": 12,
+    "verdicts": {
+     "right": 11,
+     "partly": 0,
+     "wrong": 1
+    },
+    "covered": 10,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 13,
+    "quotes_ok": 13,
+    "quotes_ok_page": 12,
+    "seconds_median": 12.25,
+    "cost_mean": 0.0010069166666666666,
+    "cost_estimated": true,
+    "errors": 0,
+    "answers_list": [
+     {
+      "id": "broken-01",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-02",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-03",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-04",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-05",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-06",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-07",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-08",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-09",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-10",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-11",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-12",
+      "verdict": "wrong"
+     }
+    ]
+   },
+   "nemotron / gemma texts": {
+    "answers": 12,
+    "verdicts": {
+     "right": 10,
+     "partly": 0,
+     "wrong": 2
+    },
+    "covered": 10,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 13,
+    "quotes_ok": 13,
+    "quotes_ok_page": 13,
+    "seconds_median": 11.25,
+    "cost_mean": 0.0009430833333333333,
+    "cost_estimated": true,
+    "errors": 0,
+    "answers_list": [
+     {
+      "id": "broken-01",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-02",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-03",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-04",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-05",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-06",
+      "verdict": "wrong"
+     },
+     {
+      "id": "broken-07",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-08",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-09",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-10",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-11",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-12",
+      "verdict": "wrong"
+     }
+    ]
+   },
+   "nemotron / haiku texts": {
+    "answers": 12,
+    "verdicts": {
+     "right": 10,
+     "partly": 0,
+     "wrong": 2
+    },
+    "covered": 10,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 1,
+    "quotes": 12,
+    "quotes_ok": 12,
+    "quotes_ok_page": 12,
+    "seconds_median": 9.05,
+    "cost_mean": 0.000713,
+    "cost_estimated": true,
+    "errors": 0,
+    "answers_list": [
+     {
+      "id": "broken-01",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-02",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-03",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-04",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-05",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-06",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-07",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-08",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-09",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-10",
+      "verdict": "wrong"
+     },
+     {
+      "id": "broken-11",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-12",
+      "verdict": "wrong"
+     }
+    ]
+   },
+   "nemotron / sonnet texts": {
+    "answers": 12,
+    "verdicts": {
+     "right": 10,
+     "partly": 0,
+     "wrong": 2
+    },
+    "covered": 10,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 14,
+    "quotes_ok": 14,
+    "quotes_ok_page": 14,
+    "seconds_median": 8.100000000000001,
+    "cost_mean": 0.0008575,
+    "cost_estimated": true,
+    "errors": 0,
+    "answers_list": [
+     {
+      "id": "broken-01",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-02",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-03",
+      "verdict": "wrong"
+     },
+     {
+      "id": "broken-04",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-05",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-06",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-07",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-08",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-09",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-10",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-11",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-12",
+      "verdict": "wrong"
+     }
+    ]
+   },
+   "haiku": {
+    "answers": 51,
+    "verdicts": {
+     "right": 51,
+     "partly": 0,
+     "wrong": 0
+    },
+    "covered": 42,
+    "wrongly_silent": 0,
+    "not_covered": 9,
+    "made_up": 0,
+    "quotes": 113,
+    "quotes_ok": 82,
+    "quotes_ok_page": 77,
+    "seconds_median": 10.5,
+    "cost_mean": 0.0014840196078431372,
+    "cost_estimated": false,
+    "errors": 0,
+    "answers_list": [
+     {
+      "id": "short-01",
+      "verdict": "right"
+     },
+     {
+      "id": "short-02",
+      "verdict": "right"
+     },
+     {
+      "id": "short-03",
+      "verdict": "right"
+     },
+     {
+      "id": "short-04",
+      "verdict": "right"
+     },
+     {
+      "id": "short-05",
+      "verdict": "right"
+     },
+     {
+      "id": "short-06",
+      "verdict": "right"
+     },
+     {
+      "id": "short-07",
+      "verdict": "right"
+     },
+     {
+      "id": "short-08",
+      "verdict": "right"
+     },
+     {
+      "id": "short-09",
+      "verdict": "right"
+     },
+     {
+      "id": "short-10",
+      "verdict": "right"
+     },
+     {
+      "id": "short-11",
+      "verdict": "right"
+     },
+     {
+      "id": "short-12",
+      "verdict": "right"
+     },
+     {
+      "id": "long-01",
+      "verdict": "right"
+     },
+     {
+      "id": "long-02",
+      "verdict": "right"
+     },
+     {
+      "id": "long-03",
+      "verdict": "right"
+     },
+     {
+      "id": "long-04",
+      "verdict": "right"
+     },
+     {
+      "id": "long-05",
+      "verdict": "right"
+     },
+     {
+      "id": "long-06",
+      "verdict": "right"
+     },
+     {
+      "id": "long-07",
+      "verdict": "right"
+     },
+     {
+      "id": "long-08",
+      "verdict": "right"
+     },
+     {
+      "id": "long-09",
+      "verdict": "right"
+     },
+     {
+      "id": "long-10",
+      "verdict": "right"
+     },
+     {
+      "id": "long-11",
+      "verdict": "right"
+     },
+     {
+      "id": "long-12",
+      "verdict": "right"
+     },
+     {
+      "id": "long-13",
+      "verdict": "right"
+     },
+     {
+      "id": "long-14",
+      "verdict": "right"
+     },
+     {
+      "id": "long-15",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-01",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-02",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-03",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-04",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-05",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-06",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-07",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-08",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-09",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-10",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-11",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-12",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-01",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-02",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-03",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-04",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-05",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-06",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-07",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-08",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-09",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-10",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-11",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-12",
+      "verdict": "right"
+     }
+    ]
+   },
+   "gemini": {
+    "answers": 51,
+    "verdicts": {
+     "right": 50,
+     "partly": 1,
+     "wrong": 0
+    },
+    "covered": 42,
+    "wrongly_silent": 0,
+    "not_covered": 9,
+    "made_up": 0,
+    "quotes": 97,
+    "quotes_ok": 65,
+    "quotes_ok_page": 61,
+    "seconds_median": 15.2,
+    "cost_mean": 0.009817588235294118,
+    "cost_estimated": false,
+    "errors": 0,
+    "answers_list": [
+     {
+      "id": "short-01",
+      "verdict": "right"
+     },
+     {
+      "id": "short-02",
+      "verdict": "right"
+     },
+     {
+      "id": "short-03",
+      "verdict": "right"
+     },
+     {
+      "id": "short-04",
+      "verdict": "right"
+     },
+     {
+      "id": "short-05",
+      "verdict": "right"
+     },
+     {
+      "id": "short-06",
+      "verdict": "right"
+     },
+     {
+      "id": "short-07",
+      "verdict": "right"
+     },
+     {
+      "id": "short-08",
+      "verdict": "right"
+     },
+     {
+      "id": "short-09",
+      "verdict": "right"
+     },
+     {
+      "id": "short-10",
+      "verdict": "right"
+     },
+     {
+      "id": "short-11",
+      "verdict": "right"
+     },
+     {
+      "id": "short-12",
+      "verdict": "right"
+     },
+     {
+      "id": "long-01",
+      "verdict": "right"
+     },
+     {
+      "id": "long-02",
+      "verdict": "right"
+     },
+     {
+      "id": "long-03",
+      "verdict": "right"
+     },
+     {
+      "id": "long-04",
+      "verdict": "right"
+     },
+     {
+      "id": "long-05",
+      "verdict": "right"
+     },
+     {
+      "id": "long-06",
+      "verdict": "right"
+     },
+     {
+      "id": "long-07",
+      "verdict": "right"
+     },
+     {
+      "id": "long-08",
+      "verdict": "right"
+     },
+     {
+      "id": "long-09",
+      "verdict": "right"
+     },
+     {
+      "id": "long-10",
+      "verdict": "right"
+     },
+     {
+      "id": "long-11",
+      "verdict": "right"
+     },
+     {
+      "id": "long-12",
+      "verdict": "right"
+     },
+     {
+      "id": "long-13",
+      "verdict": "right"
+     },
+     {
+      "id": "long-14",
+      "verdict": "right"
+     },
+     {
+      "id": "long-15",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-01",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-02",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-03",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-04",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-05",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-06",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-07",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-08",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-09",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-10",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-11",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-12",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-01",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-02",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-03",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-04",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-05",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-06",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-07",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-08",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-09",
+      "verdict": "partly"
+     },
+     {
+      "id": "broken-10",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-11",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-12",
+      "verdict": "right"
+     }
+    ]
+   },
+   "sonnet": {
+    "answers": 51,
+    "verdicts": {
+     "right": 51,
+     "partly": 0,
+     "wrong": 0
+    },
+    "covered": 42,
+    "wrongly_silent": 0,
+    "not_covered": 9,
+    "made_up": 0,
+    "quotes": 154,
+    "quotes_ok": 122,
+    "quotes_ok_page": 107,
+    "seconds_median": 11.2,
+    "cost_mean": 0.020176411764705884,
+    "cost_estimated": false,
+    "errors": 0,
+    "answers_list": [
+     {
+      "id": "short-01",
+      "verdict": "right"
+     },
+     {
+      "id": "short-02",
+      "verdict": "right"
+     },
+     {
+      "id": "short-03",
+      "verdict": "right"
+     },
+     {
+      "id": "short-04",
+      "verdict": "right"
+     },
+     {
+      "id": "short-05",
+      "verdict": "right"
+     },
+     {
+      "id": "short-06",
+      "verdict": "right"
+     },
+     {
+      "id": "short-07",
+      "verdict": "right"
+     },
+     {
+      "id": "short-08",
+      "verdict": "right"
+     },
+     {
+      "id": "short-09",
+      "verdict": "right"
+     },
+     {
+      "id": "short-10",
+      "verdict": "right"
+     },
+     {
+      "id": "short-11",
+      "verdict": "right"
+     },
+     {
+      "id": "short-12",
+      "verdict": "right"
+     },
+     {
+      "id": "long-01",
+      "verdict": "right"
+     },
+     {
+      "id": "long-02",
+      "verdict": "right"
+     },
+     {
+      "id": "long-03",
+      "verdict": "right"
+     },
+     {
+      "id": "long-04",
+      "verdict": "right"
+     },
+     {
+      "id": "long-05",
+      "verdict": "right"
+     },
+     {
+      "id": "long-06",
+      "verdict": "right"
+     },
+     {
+      "id": "long-07",
+      "verdict": "right"
+     },
+     {
+      "id": "long-08",
+      "verdict": "right"
+     },
+     {
+      "id": "long-09",
+      "verdict": "right"
+     },
+     {
+      "id": "long-10",
+      "verdict": "right"
+     },
+     {
+      "id": "long-11",
+      "verdict": "right"
+     },
+     {
+      "id": "long-12",
+      "verdict": "right"
+     },
+     {
+      "id": "long-13",
+      "verdict": "right"
+     },
+     {
+      "id": "long-14",
+      "verdict": "right"
+     },
+     {
+      "id": "long-15",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-01",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-02",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-03",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-04",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-05",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-06",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-07",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-08",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-09",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-10",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-11",
+      "verdict": "right"
+     },
+     {
+      "id": "scan-12",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-01",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-02",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-03",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-04",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-05",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-06",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-07",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-08",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-09",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-10",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-11",
+      "verdict": "right"
+     },
+     {
+      "id": "broken-12",
+      "verdict": "right"
+     }
+    ]
+   }
+  },
+  "readers": {
+   "gemma": {
+    "reads": 21,
+    "errors": 0,
+    "box_total": 35,
+    "leases": {
+     "scanned": {
+      "reads": 12,
+      "accuracy": {
+       "1": 1.0,
+       "2": 1.0,
+       "3": 1.0
+      },
+      "accuracy_mean": 1.0,
+      "boxes_right": {},
+      "boxes_right_mean": null,
+      "pages_differ": 2,
+      "boxes_differ": 0,
+      "seconds_median": 3.7,
+      "cost_mean": 0.00020641666666666665
+     },
+     "broken_text": {
+      "reads": 9,
+      "accuracy": {
+       "1": 0.9987714987714987,
+       "2": 0.9987714987714987,
+       "3": 0.9975429975429976
+      },
+      "accuracy_mean": 0.9983619983619983,
+      "boxes_right": {
+       "1": 31,
+       "2": 31,
+       "3": 32
+      },
+      "boxes_right_mean": 31.333333333333332,
+      "pages_differ": 2,
+      "boxes_differ": 2,
+      "seconds_median": 2.6,
+      "cost_mean": 0.00021
+     }
+    },
+    "runs": {
+     "1": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 0.9987714987714987
+      },
+      "boxes_right": 31,
+      "seconds_median": 2.6,
+      "cost_mean": 0.000208
+     },
+     "2": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 0.9987714987714987
+      },
+      "boxes_right": 31,
+      "seconds_median": 3.1,
+      "cost_mean": 0.000208
+     },
+     "3": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 0.9975429975429976
+      },
+      "boxes_right": 32,
+      "seconds_median": 3.1,
+      "cost_mean": 0.00020785714285714285
+     }
+    },
+    "misses": {
+     "1": [
+      "'water and sewer': written empty, read checked",
+      "'trash': written empty, read checked",
+      "'trash': written checked, read empty",
+      "'by email to leasing brightwaterflats example': written checked, read not found"
+     ],
+     "2": [
+      "'by money order only': written empty, read checked",
+      "'water and sewer': written empty, read checked",
+      "'trash': written empty, read checked",
+      "'by email to leasing brightwaterflats example': written checked, read not found"
+     ],
+     "3": [
+      "'water and sewer': written empty, read checked",
+      "'trash': written empty, read checked",
+      "'by email to leasing brightwaterflats example': written checked, read not found"
+     ]
+    },
+    "all": {
+     "accuracy_mean": 0.9991809991809992,
+     "boxes_right_mean": 31.333333333333332,
+     "pages_differ": 4,
+     "boxes_differ": 2,
+     "seconds_median": 3.1,
+     "cost_mean": 0.00020795238095238096
+    }
+   },
+   "gemini": {
+    "reads": 21,
+    "errors": 0,
+    "box_total": 35,
+    "leases": {
+     "scanned": {
+      "reads": 12,
+      "accuracy": {
+       "1": 1.0,
+       "2": 1.0,
+       "3": 1.0
+      },
+      "accuracy_mean": 1.0,
+      "boxes_right": {},
+      "boxes_right_mean": null,
+      "pages_differ": 3,
+      "boxes_differ": 0,
+      "seconds_median": 11.4,
+      "cost_mean": 0.0075825833333333335
+     },
+     "broken_text": {
+      "reads": 9,
+      "accuracy": {
+       "1": 1.0,
+       "2": 1.0,
+       "3": 1.0
+      },
+      "accuracy_mean": 1.0,
+      "boxes_right": {
+       "1": 34,
+       "2": 34,
+       "3": 34
+      },
+      "boxes_right_mean": 34,
+      "pages_differ": 1,
+      "boxes_differ": 0,
+      "seconds_median": 12.0,
+      "cost_mean": 0.007416666666666667
+     }
+    },
+    "runs": {
+     "1": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 34,
+      "seconds_median": 11.9,
+      "cost_mean": 0.007158714285714286
+     },
+     "2": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 34,
+      "seconds_median": 10.9,
+      "cost_mean": 0.007147428571428571
+     },
+     "3": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 34,
+      "seconds_median": 12.0,
+      "cost_mean": 0.008228285714285714
+     }
+    },
+    "misses": {
+     "1": [
+      "'by email to leasing brightwaterflats example': written checked, read not found"
+     ],
+     "2": [
+      "'in a separate non interest bearing': written checked, read not found"
+     ],
+     "3": [
+      "'by email to leasing brightwaterflats example': written checked, read not found"
+     ]
+    },
+    "all": {
+     "accuracy_mean": 1.0,
+     "boxes_right_mean": 34,
+     "pages_differ": 4,
+     "boxes_differ": 0,
+     "seconds_median": 11.4,
+     "cost_mean": 0.007511476190476191
+    }
+   },
+   "haiku": {
+    "reads": 21,
+    "errors": 0,
+    "box_total": 35,
+    "leases": {
+     "scanned": {
+      "reads": 12,
+      "accuracy": {
+       "1": 1.0,
+       "2": 1.0,
+       "3": 1.0
+      },
+      "accuracy_mean": 1.0,
+      "boxes_right": {},
+      "boxes_right_mean": null,
+      "pages_differ": 0,
+      "boxes_differ": 0,
+      "seconds_median": 5.55,
+      "cost_mean": 0.0008285
+     },
+     "broken_text": {
+      "reads": 9,
+      "accuracy": {
+       "1": 1.0,
+       "2": 1.0,
+       "3": 1.0
+      },
+      "accuracy_mean": 1.0,
+      "boxes_right": {
+       "1": 35,
+       "2": 35,
+       "3": 35
+      },
+      "boxes_right_mean": 35,
+      "pages_differ": 0,
+      "boxes_differ": 0,
+      "seconds_median": 5.3,
+      "cost_mean": 0.0008245555555555556
+     }
+    },
+    "runs": {
+     "1": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 35,
+      "seconds_median": 5.8,
+      "cost_mean": 0.0008267142857142857
+     },
+     "2": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 35,
+      "seconds_median": 5.3,
+      "cost_mean": 0.000827
+     },
+     "3": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 35,
+      "seconds_median": 5.3,
+      "cost_mean": 0.0008267142857142857
+     }
+    },
+    "misses": {
+     "1": [],
+     "2": [],
+     "3": []
+    },
+    "all": {
+     "accuracy_mean": 1.0,
+     "boxes_right_mean": 35,
+     "pages_differ": 0,
+     "boxes_differ": 0,
+     "seconds_median": 5.3,
+     "cost_mean": 0.0008268095238095238
+    }
+   },
+   "sonnet": {
+    "reads": 21,
+    "errors": 0,
+    "box_total": 35,
+    "leases": {
+     "scanned": {
+      "reads": 12,
+      "accuracy": {
+       "1": 1.0,
+       "2": 1.0,
+       "3": 1.0
+      },
+      "accuracy_mean": 1.0,
+      "boxes_right": {},
+      "boxes_right_mean": null,
+      "pages_differ": 1,
+      "boxes_differ": 0,
+      "seconds_median": 8.55,
+      "cost_mean": 0.016574000000000002
+     },
+     "broken_text": {
+      "reads": 9,
+      "accuracy": {
+       "1": 1.0,
+       "2": 1.0,
+       "3": 1.0
+      },
+      "accuracy_mean": 1.0,
+      "boxes_right": {
+       "1": 35,
+       "2": 35,
+       "3": 35
+      },
+      "boxes_right_mean": 35,
+      "pages_differ": 0,
+      "boxes_differ": 0,
+      "seconds_median": 7.2,
+      "cost_mean": 0.016495111111111113
+     }
+    },
+    "runs": {
+     "1": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 35,
+      "seconds_median": 7.3,
+      "cost_mean": 0.016542571428571427
+     },
+     "2": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 35,
+      "seconds_median": 8.4,
+      "cost_mean": 0.016535428571428572
+     },
+     "3": {
+      "accuracy": {
+       "scanned": 1.0,
+       "broken_text": 1.0
+      },
+      "boxes_right": 35,
+      "seconds_median": 8.6,
+      "cost_mean": 0.016542571428571427
+     }
+    },
+    "misses": {
+     "1": [],
+     "2": [],
+     "3": []
+    },
+    "all": {
+     "accuracy_mean": 1.0,
+     "boxes_right_mean": 35,
+     "pages_differ": 1,
+     "boxes_differ": 0,
+     "seconds_median": 8.4,
+     "cost_mean": 0.016540190476190476
+    }
+   }
+  }
+ },
+ "own": {
+  "readers": {
+   "text layer (PyMuPDF)": {
+    "text_total": 39,
+    "text_right": 22,
+    "box_total": 32,
+    "box_right": 0,
+    "box_missing": 32,
+    "recall": null,
+    "printed_pages": 32,
+    "pages": 32,
+    "seconds_median": null,
+    "cost_mean": null
+   },
+   "app": {
+    "text_total": 39,
+    "text_right": 25,
+    "box_total": 32,
+    "box_right": 1,
+    "box_missing": 31,
+    "recall": 0.9865000856457691,
+    "printed_pages": 32,
+    "pages": 32,
+    "seconds_median": null,
+    "cost_mean": null
+   },
+   "gemma": {
+    "text_total": 39,
+    "text_right": 27,
+    "box_total": 32,
+    "box_right": 24,
+    "box_missing": 1,
+    "recall": 0.8426583128174261,
+    "printed_pages": 32,
+    "pages": 32,
+    "seconds_median": 17.7,
+    "cost_mean": 0.00043375
+   },
+   "gemini": {
+    "text_total": 39,
+    "text_right": 39,
+    "box_total": 32,
+    "box_right": 32,
+    "box_missing": 0,
+    "recall": 0.9635884450840296,
+    "printed_pages": 32,
+    "pages": 32,
+    "seconds_median": 19.1,
+    "cost_mean": 0.014149
+   },
+   "haiku": {
+    "text_total": 39,
+    "text_right": 39,
+    "box_total": 32,
+    "box_right": 32,
+    "box_missing": 0,
+    "recall": 0.9631121451759369,
+    "printed_pages": 32,
+    "pages": 32,
+    "seconds_median": 6.4,
+    "cost_mean": 0.00144384375
+   },
+   "sonnet": {
+    "text_total": 39,
+    "text_right": 39,
+    "box_total": 32,
+    "box_right": 32,
+    "box_missing": 0,
+    "recall": 0.9635884450840296,
+    "printed_pages": 32,
+    "pages": 32,
+    "seconds_median": 10.0,
+    "cost_mean": 0.02652425
+   }
+  },
+  "stories": {
+   "nemotron": {
+    "answers": 15,
+    "main": {
+     "right": 4,
+     "partly": 2,
+     "wrong": 3
+    },
+    "open": {
+     "right": 2,
+     "partly": 0,
+     "wrong": 4
+    },
+    "answers_first": 15,
+    "quotes": 7,
+    "quotes_ok": 5,
+    "quotes_ok_page": 4,
+    "made_up_dates": 6,
+    "asks_more_than_one": 1,
+    "skill_loaded": 0,
+    "count_days_used": 5,
+    "words_median": 340,
+    "seconds_median": 35.1,
+    "cost_mean": 0.005624533333333333,
+    "cost_estimated": true,
+    "errors": 0,
+    "author_average_rank": null,
+    "author_firsts": 0
+   },
+   "haiku": {
+    "answers": 15,
+    "main": {
+     "right": 6,
+     "partly": 0,
+     "wrong": 3
+    },
+    "open": {
+     "right": 6,
+     "partly": 0,
+     "wrong": 0
+    },
+    "answers_first": 14,
+    "quotes": 40,
+    "quotes_ok": 39,
+    "quotes_ok_page": 12,
+    "made_up_dates": 1,
+    "asks_more_than_one": 0,
+    "skill_loaded": 15,
+    "count_days_used": 15,
+    "words_median": 570,
+    "seconds_median": 36.8,
+    "cost_mean": 0.0112756,
+    "cost_estimated": false,
+    "errors": 0,
+    "author_average_rank": null,
+    "author_firsts": 0
+   },
+   "gemini": {
+    "answers": 15,
+    "main": {
+     "right": 9,
+     "partly": 0,
+     "wrong": 0
+    },
+    "open": {
+     "right": 6,
+     "partly": 0,
+     "wrong": 0
+    },
+    "answers_first": 14,
+    "quotes": 49,
+    "quotes_ok": 47,
+    "quotes_ok_page": 17,
+    "made_up_dates": 0,
+    "asks_more_than_one": 3,
+    "skill_loaded": 15,
+    "count_days_used": 15,
+    "words_median": 467,
+    "seconds_median": 20.5,
+    "cost_mean": 0.04857213333333333,
+    "cost_estimated": false,
+    "errors": 0,
+    "author_average_rank": null,
+    "author_firsts": 0
+   },
+   "sonnet": {
+    "answers": 15,
+    "main": {
+     "right": 9,
+     "partly": 0,
+     "wrong": 0
+    },
+    "open": {
+     "right": 6,
+     "partly": 0,
+     "wrong": 0
+    },
+    "answers_first": 15,
+    "quotes": 54,
+    "quotes_ok": 52,
+    "quotes_ok_page": 34,
+    "made_up_dates": 0,
+    "asks_more_than_one": 0,
+    "skill_loaded": 15,
+    "count_days_used": 15,
+    "words_median": 499,
+    "seconds_median": 20.2,
+    "cost_mean": 0.12464873333333333,
+    "cost_estimated": false,
+    "errors": 0,
+    "author_average_rank": null,
+    "author_firsts": 0
+   }
+  },
+  "questions": {
+   "nemotron": {
+    "answers": 17,
+    "verdicts": {
+     "right": 10,
+     "partly": 4,
+     "wrong": 3
+    },
+    "covered": 15,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 1,
+    "quotes": 10,
+    "quotes_ok": 8,
+    "quotes_ok_page": 8,
+    "seconds_median": 13.4,
+    "cost_mean": 0.003370529411764706,
+    "cost_estimated": true,
+    "errors": 0
+   },
+   "nemotron / app texts": {
+    "answers": 17,
+    "verdicts": {
+     "right": 9,
+     "partly": 1,
+     "wrong": 7
+    },
+    "covered": 15,
+    "wrongly_silent": 2,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 12,
+    "quotes_ok": 10,
+    "quotes_ok_page": 10,
+    "seconds_median": 21.0,
+    "cost_mean": 0.006026764705882353,
+    "cost_estimated": true,
+    "errors": 0
+   },
+   "nemotron / gemini texts": {
+    "answers": 17,
+    "verdicts": {
+     "right": 11,
+     "partly": 3,
+     "wrong": 3
+    },
+    "covered": 15,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 1,
+    "quotes": 12,
+    "quotes_ok": 11,
+    "quotes_ok_page": 11,
+    "seconds_median": 9.4,
+    "cost_mean": 0.0033971764705882355,
+    "cost_estimated": true,
+    "errors": 0
+   },
+   "nemotron / gemma texts": {
+    "answers": 17,
+    "verdicts": {
+     "right": 10,
+     "partly": 1,
+     "wrong": 6
+    },
+    "covered": 15,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 11,
+    "quotes_ok": 11,
+    "quotes_ok_page": 10,
+    "seconds_median": 11.7,
+    "cost_mean": 0.004337352941176471,
+    "cost_estimated": true,
+    "errors": 0
+   },
+   "nemotron / sonnet texts": {
+    "answers": 17,
+    "verdicts": {
+     "right": 13,
+     "partly": 2,
+     "wrong": 2
+    },
+    "covered": 15,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 12,
+    "quotes_ok": 11,
+    "quotes_ok_page": 11,
+    "seconds_median": 12.8,
+    "cost_mean": 0.0037401764705882355,
+    "cost_estimated": true,
+    "errors": 0
+   },
+   "haiku": {
+    "answers": 17,
+    "verdicts": {
+     "right": 17,
+     "partly": 0,
+     "wrong": 0
+    },
+    "covered": 15,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 72,
+    "quotes_ok": 56,
+    "quotes_ok_page": 55,
+    "seconds_median": 10.3,
+    "cost_mean": 0.002468411764705882,
+    "cost_estimated": false,
+    "errors": 0
+   },
+   "gemini": {
+    "answers": 17,
+    "verdicts": {
+     "right": 17,
+     "partly": 0,
+     "wrong": 0
+    },
+    "covered": 15,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 41,
+    "quotes_ok": 30,
+    "quotes_ok_page": 30,
+    "seconds_median": 11.8,
+    "cost_mean": 0.011007529411764706,
+    "cost_estimated": false,
+    "errors": 0
+   },
+   "sonnet": {
+    "answers": 17,
+    "verdicts": {
+     "right": 17,
+     "partly": 0,
+     "wrong": 0
+    },
+    "covered": 15,
+    "wrongly_silent": 0,
+    "not_covered": 2,
+    "made_up": 0,
+    "quotes": 75,
+    "quotes_ok": 47,
+    "quotes_ok_page": 47,
+    "seconds_median": 12.7,
+    "cost_mean": 0.03145929411764706,
+    "cost_estimated": false,
+    "errors": 0
+   }
+  }
+ }
+}

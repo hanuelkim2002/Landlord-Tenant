@@ -22,6 +22,8 @@ against rule 7).
   tenant for today's date instead of calling `count_days`.
 - 2026-10-20, first run of the v2 page (nemotron): 1, "July 31 + 30 days = August 30" written before the dates were
   confirmed.
+- 2026-10-21, model test, deposit stories (`comparisons/models/`): nemotron 3 of 15 (sample lease) and 6 of 15 (own
+  lease), haiku 1 of 15 (own), gemini and sonnet 0 of 30.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -38,3 +40,27 @@ The skill marks a point as not settled, with a reading on each side; the answer 
 
 - 2026-10-19, skills test (nemotron): 12 of 12 answers to story 5 (a claim sent by text), every format. Counts only
   if the author agrees the point is open (AUTHOR.md item 4).
+- 2026-10-21, model test, story 5: nemotron 2 of 3 (sample lease) and 3 of 3 (own lease); haiku, gemini, sonnet 0.
+
+## Does not load the skill
+
+The tenant's question fits a skill, but the model answers without calling `load_skill`, so the skill's checklist is
+never read.
+
+- 2026-10-21, model test, deposit stories (skill not loaded for it, as on the page): nemotron 4 of 15 (sample lease)
+  and 0 of 15 (own lease); haiku, gemini, sonnet 30 of 30.
+
+## Empty answer
+
+The tool loop ends with no text, so the page would show the tenant nothing.
+
+- 2026-10-21, model test: 2 of 392 answers, haiku (own lease, story 3, after 9 tool calls) and nemotron (own lease,
+  the grill question).
+
+## Misreads a page image
+
+The vision model gets a check box or a typed-in value wrong, or never finishes the page.
+
+- 2026-10-21, model test, gemma: broken sample lease 31.3 of 35 boxes right on average (water and trash shown
+  checked for the tenant); own lease 51 of 71 values and boxes; page 11 of the own lease (mostly blank lines) timed out
+  twice (2 minutes each). Haiku, Gemini, and Sonnet: 35 of 35 and 71 of 71.

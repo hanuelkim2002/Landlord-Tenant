@@ -74,3 +74,34 @@ skills prototype harness is deleted (in git at 50bd13b). Replaces the open skill
 `requirements.txt`, DOCUMENTATION.md. The preview attaches to the page instead of starting it. Replaces the first-build
 items in TODO.md.
 
+
+## 2026-10-20: OpenRouter for testing outside models
+
+`config.py` has two gateways: UF (still the default) and OpenRouter, chosen with `GATEWAY=openrouter`, with Claude
+Haiku 5.5 for chat and Gemini 3.8 Flash for lease pages by default. `VISION_MODEL` can now be set from the environment.
+Temperature 0 is sent only on UF. `OPENROUTER_API_KEY` added to `.env.example`. Replaces the single UF gateway.
+
+## 2026-10-21: model comparison
+
+`comparisons/models/`: nemotron, haiku, gemini, and sonnet on the deposit stories and lease questions through the app's
+own chat, and gemma, gemini, haiku, and sonnet reading lease pages, on the sample leases and the author's own lease
+(kept in `private/`, out of git). Judge grades reviewed (`review.json`). Results in SCORES.md and AUTHOR.md items 6 to 9.
+Nothing in the app replaced.
+
+## 2026-10-21: every lease page read from its image by Haiku
+
+`lease.py` reads every page from its image with Claude Haiku 5.5 on OpenRouter (`READER_GATEWAY`, `VISION_MODEL`).
+`config.temperature(gateway)` and `config.client(gateway)` let the chat and the reader use different gateways. Replaces
+PyMuPDF's text plus Gemma 4 for pages without usable text (`usable` moved to `comparisons/models/models.py`).
+
+## 2026-10-21: Gemini 3.8 Flash for the chat
+
+`config.py`: the chat now defaults to Gemini 3.8 Flash on OpenRouter (`GATEWAY=openrouter`), the author's choice after
+`comparisons/models/`. Replaces nemotron on the UF gateway, which can still be chosen with `GATEWAY=uf`.
+
+## 2026-10-21: the college-housing check asked once
+
+`skills/deposit_not_returned.md`: the 83.42(1) check reads the lease first, asks one plain question only if the lease
+is not clear, and saves the answer as `school_housing` so it is never asked twice. The lease counts as clear only if
+nothing in it points to a school (an enrollment clause, student-only terms, school services, and other doubt all mean
+ask). Replaces "say what you would need to know", asked in nearly every answer. Skill quotes: 15 of 15 check out.
