@@ -79,7 +79,7 @@ The five tools the model can call, their descriptions (`SCHEMAS`), and `run_tool
 
 ### chat.py
 
-- `RULES`: the system prompt's rules (README.md, 324 words).
+- `RULES`: the system prompt's rules (README.md, 390 words).
 - `facts_text`, `system_prompt(m, pages)`: the prompt, built fresh for each message.
 - `text_tool_calls(content)`: tool calls the model wrote as text; they are run like real ones.
 - `run_loop(m, messages)`: the tool loop; after 8 rounds the model is asked to answer with tools off.

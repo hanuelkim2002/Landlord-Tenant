@@ -24,7 +24,9 @@ The system prompt holds these rules, under about 400 words in all. A rule is add
    fact or assume a fact not given. Say how an unknown would change the answer.
 4. An open question stays open: give the reading on each side.
 5. Ask the tenant only plain facts, never whether something meets a legal term.
-6. Cite each rule to its source: a statute section and subsection, or the lease.
+6. Cite each rule to its source: a statute section and subsection, or the lease. Put in quotation marks only the
+   statute's or the lease's own words. Say everything else in your own words: what the tenant told you, the facts they
+   confirmed, and any message, letter, or paper they describe.
 7. Dates come only from `count_days`.
 8. End with the one question the answer needs, if any. No offers the tenant didn't ask for, and none repeated.
 
@@ -37,6 +39,9 @@ Reading the lease (approved 2026-10-19, `comparisons/lease/README.md`):
 3. Quote the lease's own words, and cite the section number, or the page when there is none.
 4. A choice in the lease counts only if it is marked: a checked box, or initials on the line. An unchecked box or a
    blank initials line was not chosen.
+
+Looking things up (2026-10-22): when the model needs several lookups (statute sections, skills, day counts, facts to
+note), it asks for all of them in the same step, not one at a time. One at a time, Gemini used up all 8 tool rounds.
 
 ## The parts
 

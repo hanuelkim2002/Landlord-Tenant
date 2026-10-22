@@ -21,6 +21,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   messages and facts now go to OpenRouter and Google (item 5).
 - 2026-10-21: the college-housing question (83.42(1)) is settled once per matter: the lease first, one plain question
   only if the lease is not clear, and the answer saved as a fact (item 8).
+- 2026-10-22: quotation marks only for the statute's and the lease's words; what the tenant said, the facts, and
+  messages are put in the model's own words, and the quote check does not check them (rule 6).
+- 2026-10-22: the model asks for all the lookups it needs in one step, not one at a time.
 
 ## Open
 
