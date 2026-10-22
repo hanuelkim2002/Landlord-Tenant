@@ -42,6 +42,12 @@ check("a lease quote checks out in the lease",
 check("a bracketed change and bold marks are not counted as changes",
       quotes('It "forfeit[s] the right to impose a claim upon the **security deposit**" (83.49(3)(a)).')[0]["ok"])
 check("a short quotation (under 20 characters) is not checked", quotes('It is "certified mail" here.') == [])
+first = quotes('Under 83.49(5), failing to give notice "relieves the landlord of the notice requirement of paragraph (3)(a)."')
+check("a statute quote whose cite comes first checks out", first[0]["ok"] and first[0]["where"] == "Fla. Stat. 83.49(5)")
+two = quotes('Under the "Notices" part of your lease, it says "delivered by hand to the office, or sent there by '
+             'certified mail."')
+check("the words between two quotations are not taken as a quote",
+      [q["quote"] for q in two] == ["delivered by hand to the office, or sent there by certified mail."] and two[0]["ok"])
 cited = checks.check_reply("See 83.49(5) and Lease section 7.", LEASE)["cited"]
 check("the cited statute words are the cited subsection", cited[0]["words"].startswith("(5) Except when otherwise"))
 check("the cited lease words are the cited section", cited[1]["words"].startswith("7. NOTICES TO LANDLORD")
