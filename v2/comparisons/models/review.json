@@ -1,0 +1,224 @@
+{
+ "nemotron": {
+  "deposit-1/2": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  }
+ },
+ "haiku": {
+  "deposit-1/1": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-2/1": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-4/1": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-5/3": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-3/1": {
+   "verdict": "right",
+   "why": "The judge misread it: the answer says the landlord's silence does not forfeit its claim (83.49(5)), the key's point, not the listed mistake."
+  },
+  "deposit-3/3": {
+   "verdict": "right",
+   "why": "All points made. 'The statute does not say how long the landlord has to make one' refers to a claim once the landlord is relieved of the notice; that is accurate, not a denial of the 30-day period."
+  },
+  "deposit-5/2": {
+   "verdict": "right",
+   "why": "All points made. 'Owed the $650 under either reading' is true (under one reading the whole $1,050 is owed, which includes it)."
+  },
+  "deposit-1/3": {
+   "verdict": "partly",
+   "why": "Core right (forfeiture from the missed 30-day notice), but it misstates the 15-day return rule. ('return the deposit, or send a notice of any claim, within 15 days')"
+  }
+ },
+ "gemini": {
+  "deposit-1/1": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-1/2": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-1/3": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-2/2": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-2/3": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-3/1": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  }
+ },
+ "sonnet": {
+  "deposit-2/3": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-3/2": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-4/3": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-5/2": {
+   "verdict": "right",
+   "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1) (whether part II covers housing tied to schooling); the words are in statutes/83.42.txt, and the deposit skill tells the model to read 83.42 and say what it would need to know. The judge had only 83.49 and 83.505."
+  },
+  "deposit-2/1": {
+   "verdict": "right",
+   "why": "All points made. Says a notice sent some other way (regular mail, a text, the portal) may or may not count and gives both readings, as the story 5 key does (83.505(6)); the judge applied its own reading."
+  },
+  "deposit-2/2": {
+   "verdict": "right",
+   "why": "All points made. Says a notice sent some other way (regular mail, a text, the portal) may or may not count and gives both readings, as the story 5 key does (83.505(6)); the judge applied its own reading."
+  },
+  "deposit-5/3": {
+   "verdict": "right",
+   "why": "All points made. Says a notice sent some other way (regular mail, a text, the portal) may or may not count and gives both readings, as the story 5 key does (83.505(6)); the judge applied its own reading."
+  }
+ },
+ "questions": {
+  "questions_nemotron": {
+   "short-08": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.53(2): entry at any time for protection or preservation.)"
+   },
+   "short-12": {
+    "verdict": "right",
+    "why": "Says the lease has no early termination fee; the 83.595 remedies it adds are accurate."
+   },
+   "long-14": {
+    "verdict": "right",
+    "why": "Says the lease does not address it; the conclusion drawn ('so it is not required' / 'so you may') is a fair inference, not a claim that the lease says so (as in the lease test's review of short-11)."
+   },
+   "scan-07": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.53(2): 24 hours for repairs.)"
+   }
+  },
+  "questions_haiku": {
+   "short-08": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.53(2).)"
+   },
+   "short-11": {
+    "verdict": "right",
+    "why": "Says the lease does not address it; the conclusion drawn ('so it is not required' / 'so you may') is a fair inference, not a claim that the lease says so (as in the lease test's review of short-11)."
+   },
+   "long-08": {
+    "verdict": "right",
+    "why": "The judge was wrong: Addendum H-1 does say 'Subletting is not allowed'."
+   },
+   "long-13": {
+    "verdict": "right",
+    "why": "Says the lease does not address it; the conclusion drawn ('so it is not required' / 'so you may') is a fair inference, not a claim that the lease says so (as in the lease test's review of short-11)."
+   },
+   "long-14": {
+    "verdict": "right",
+    "why": "Says the lease does not address it; the conclusion drawn ('so it is not required' / 'so you may') is a fair inference, not a claim that the lease says so (as in the lease test's review of short-11)."
+   },
+   "scan-04": {
+    "verdict": "right",
+    "why": "Right number; the added point on written notice is accurate."
+   },
+   "scan-07": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.53(2), 83.47(1)(a).)"
+   },
+   "broken-01": {
+    "verdict": "right",
+    "why": "Both points made. Reading error, not the chat model's: the stored text (Gemma 4's reading) marks this box wrongly, and the answer reports what that text says. (payment boxes)"
+   },
+   "broken-04": {
+    "verdict": "right",
+    "why": "Portal, as the checked box says; noting that another section lists other ways to give notice is a fair point, not a contradiction."
+   },
+   "broken-06": {
+    "verdict": "right",
+    "why": "Reading error, not the chat model's: the stored text (Gemma 4's reading) marks this box wrongly, and the answer reports what that text says. (water is checked under both lists; the answer says the lease contradicts itself)"
+   },
+   "broken-09": {
+    "verdict": "right",
+    "why": "30 days and $975 right. Reading error, not the chat model's: the stored text (Gemma 4's reading) marks this box wrongly, and the answer reports what that text says. (a stray [X] in section 2)"
+   },
+   "broken-10": {
+    "verdict": "right",
+    "why": "The judge was wrong: the answer says subletting is not allowed (checked box)."
+   }
+  },
+  "questions_gemini": {
+   "short-08": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.53(2).)"
+   },
+   "short-11": {
+    "verdict": "right",
+    "why": "Says the lease does not address it; the conclusion drawn ('so it is not required' / 'so you may') is a fair inference, not a claim that the lease says so (as in the lease test's review of short-11)."
+   },
+   "scan-06": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.595(4): the fee needs a signed addendum.)"
+   },
+   "scan-07": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.53(2).)"
+   },
+   "broken-01": {
+    "verdict": "right",
+    "why": "Both points made: it quotes the clause with the $10 a day and the $175.00 cap."
+   },
+   "broken-06": {
+    "verdict": "right",
+    "why": "Reading error, not the chat model's: the stored text (Gemma 4's reading) marks this box wrongly, and the answer reports what that text says. (water checked under both lists; the answer says the lease contradicts itself)"
+   },
+   "broken-09": {
+    "verdict": "partly",
+    "why": "30 days right, but it misstates 83.575(1) as 'between 30 and 60 days' (the statute sets only a 60-day maximum)."
+   }
+  },
+  "questions_sonnet": {
+   "short-04": {
+    "verdict": "right",
+    "why": "Says to call the landlord's phone first, then text for a record; not 'just text'."
+   },
+   "scan-06": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.595(4).)"
+   },
+   "scan-07": {
+    "verdict": "right",
+    "why": "Lease term reported right; the added statute point is accurate (in statutes/). The judge's prompt counts anything the lease does not say as an error, written for lease-only answers; the chat applies the law (rule 1). (83.53(2), 83.47(1)(a).)"
+   },
+   "scan-12": {
+    "verdict": "right",
+    "why": "Says the lease does not address it; the conclusion drawn ('so it is not required' / 'so you may') is a fair inference, not a claim that the lease says so (as in the lease test's review of short-11)."
+   },
+   "broken-06": {
+    "verdict": "right",
+    "why": "Reading error, not the chat model's: the stored text (Gemma 4's reading) marks this box wrongly, and the answer reports what that text says. (water checked under both lists; the answer says the lease gives no clear answer)"
+   },
+   "broken-10": {
+    "verdict": "right",
+    "why": "The judge was wrong: the answer says subletting is not allowed (checked box)."
+   }
+  }
+ }
+}

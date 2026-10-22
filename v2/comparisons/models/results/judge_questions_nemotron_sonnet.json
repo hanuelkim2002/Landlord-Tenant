@@ -1,0 +1,136 @@
+{
+ "broken-01": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly includes the $75 initial charge and the $10 daily charge with the $175 cap, matching the lease."
+ },
+ "broken-02": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that no pets, including visiting pets, are allowed per Section\u202f8 of the lease."
+ },
+ "broken-03": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "The answer claims email may not be a valid notice method without a separate addendum, contradicting the lease which explicitly allows email notices.",
+  "reason": "The answer correctly states email is allowed but adds an unsupported legal limitation."
+ },
+ "broken-04": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that repair requests must be submitted through the resident portal and adds the emergency procedure without contradicting the lease."
+ },
+ "broken-05": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the deposit is in a non\u2011interest\u2011bearing account and does not make any contradictory claims."
+ },
+ "broken-06": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant does not pay for water and cites the lease provision."
+ },
+ "broken-07": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer accurately states that renter's insurance is required with at least $100,000 liability coverage, matching the lease."
+ },
+ "broken-08": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease has no early termination option and does not claim a fee is available."
+ },
+ "broken-09": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease requires written notice at least 30 days before the lease ends."
+ },
+ "broken-10": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease prohibits subletting and does not contain any contradictory claims."
+ },
+ "broken-11": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease does not address quiet hours and adds no contradictory information."
+ },
+ "broken-12": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   true
+  ],
+  "other_error": "",
+  "reason": "The answer conveys that the lease is silent on painting but incorrectly asserts you cannot paint without permission, which the lease does not forbid."
+ }
+}

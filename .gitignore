@@ -16,3 +16,5 @@ v1/dev/leases/
 v2/comparisons/lease/texts/sample_v1.json
 # Run logs of the lease comparison
 v2/comparisons/lease/*.err
+# The model comparison's private part: the author's own lease, its keys, and every answer about it
+v2/comparisons/models/private/

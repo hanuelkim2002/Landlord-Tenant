@@ -1,0 +1,32 @@
+{
+ "deposit-1": {
+  "W": "haiku",
+  "X": "nemotron",
+  "Y": "sonnet",
+  "Z": "gemini"
+ },
+ "deposit-2": {
+  "W": "nemotron",
+  "X": "gemini",
+  "Y": "sonnet",
+  "Z": "haiku"
+ },
+ "deposit-3": {
+  "W": "haiku",
+  "X": "nemotron",
+  "Y": "sonnet",
+  "Z": "gemini"
+ },
+ "deposit-4": {
+  "W": "haiku",
+  "X": "sonnet",
+  "Y": "nemotron",
+  "Z": "gemini"
+ },
+ "deposit-5": {
+  "W": "nemotron",
+  "X": "sonnet",
+  "Y": "haiku",
+  "Z": "gemini"
+ }
+}

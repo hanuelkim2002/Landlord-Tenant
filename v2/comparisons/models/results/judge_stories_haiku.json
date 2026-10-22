@@ -1,0 +1,233 @@
+{
+ "deposit-1/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Introduces an unsupported reference to \u00a7\u202f83.42(1) and speculation about Part\u202fII applicability, which are not in the provided statutes.",
+  "reason": "All required points are present and no listed mistakes appear, but the answer adds an extraneous, unsupported legal rule."
+ },
+ "deposit-1/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is entitled to the full deposit, explains the missed 30\u2011day notice deadline, and notes the landlord can still sue for damages."
+ },
+ "deposit-1/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "Introduces an unsupported reference to 83.42(1) suggesting the statute might not apply, which is not in the provided materials.",
+  "reason": "The answer covers the required points but incorrectly conflates the 15\u2011day return rule and adds an irrelevant statutory reference."
+ },
+ "deposit-2/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "Adds an unsupported discussion of a non\u2011provided statute (Section\u202f83.42(1) about college housing), which is not in the given law.",
+  "reason": "The answer correctly states the 15\u2011day and 30\u2011day rules but introduces irrelevant, unsupported statutory content."
+ },
+ "deposit-2/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer includes all required points, makes no listed mistakes, and correctly reflects the statute and lease."
+ },
+ "deposit-2/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the 15\u2011day rule, the 30\u2011day notice window, and the forfeiture consequence, and makes no contradictory statements."
+ },
+ "deposit-3/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer covers all required points but incorrectly states that the landlord may forfeit any claim on the deposit, contradicting the correct rule."
+ },
+ "deposit-3/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer's 'Reading 2' suggests the landlord may still claim damages from the deposit despite not giving the required notice, which contradicts s.83.49(3)(a) that forfeits the landlord's claim if notice is not provided.",
+  "reason": "All required points are made, but an inaccurate alternative view conflicts with the statute."
+ },
+ "deposit-3/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer incorrectly states that the statute does not specify the 30\u2011day notice\u2011of\u2011claim period, contradicting \u00a7\u202f83.49(3)(a).",
+  "reason": "The response covers all required points but contains an inaccurate claim about the statutory notice period."
+ },
+ "deposit-4/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "Introduces an unsupported reference to a part\u2011II exclusion (Section 83.42) that is not in the provided statutes, adding a rule without support.",
+  "reason": "The answer correctly addresses all required points and contains no factual contradictions, but adds an extraneous, unsupported legal rule."
+ },
+ "deposit-4/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed the $400, explains the required 30\u2011day notice rule and that it was missed, and notes the landlord can still sue for damages."
+ },
+ "deposit-4/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant can recover $400, explains the required notice and missed deadline, and notes the landlord can still sue for damages."
+ },
+ "deposit-5/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly addresses the tenant's questions, covers all required points, and contains no contradictions or listed mistakes."
+ },
+ "deposit-5/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Incorrectly states the tenant is owed $650 under both readings, whereas under the reading that the notice is invalid the tenant is owed the full $1,050.",
+  "reason": "The answer covers all required points and avoids listed mistakes but contains an inaccurate claim about the amount owed under both readings."
+ },
+ "deposit-5/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer cites Section 83.42(1), which is not part of the provided statutes, so it adds an unsupported rule.",
+  "reason": "The response correctly addresses all required points without the listed mistakes, but introduces an extraneous statutory reference."
+ }
+}

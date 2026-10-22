@@ -1,0 +1,596 @@
+{
+ "short-01": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that a $40 late fee is owed for payment on the 7th."
+ },
+ "short-02": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states cats are not allowed per the lease and does not contain any contradictory statements."
+ },
+ "short-03": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the notice must be delivered by hand or mailed to the specified address and does not claim text/email suffices."
+ },
+ "short-04": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly says to call the landlord\u2019s phone and that a text alone is insufficient, and it does not contradict the lease."
+ },
+ "short-05": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the deposit is in a separate Truist Bank account in Gainesville and that it does not earn interest."
+ },
+ "short-06": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the guest limit and does not claim a week-long stay is allowed."
+ },
+ "short-07": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant must pay a share of the electric bill, matching the lease."
+ },
+ "short-08": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   true
+  ],
+  "other_error": "Incorrectly adds that the landlord may enter the tenant's room without notice for protection or preservation of the premises, which the lease does not permit.",
+  "reason": "The answer includes the required points but adds an unsupported claim about entry without notice."
+ },
+ "short-09": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer tells the tenant to give written notice by May\u202f31\u202f2027, matching the lease, and makes no contradictory statements."
+ },
+ "short-10": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that parking on the grass is not allowed and cites the lease provision."
+ },
+ "short-11": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   true
+  ],
+  "other_error": "",
+  "reason": "The answer correctly notes the lease is silent but incorrectly states the tenant does not need insurance, which is a mistake."
+ },
+ "short-12": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease is silent on early\u2011termination fees and does not assert any contrary provision."
+ },
+ "long-01": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the $50 initial charge and $10 daily charge, adding permissible speculation without contradicting the lease."
+ },
+ "long-02": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the unit is pet\u2011friendly, requires manager and roommate approval, and lists the $300 fee and $25 monthly pet rent."
+ },
+ "long-03": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly lists hand delivery or certified mail to the leasing office at 3800 SW Archer Road, Suite 100, Gainesville, FL 32608 and does not contain the listed mistakes."
+ },
+ "long-04": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer tells the resident to submit a maintenance request via the portal, which matches the required point, and makes no prohibited statements."
+ },
+ "long-05": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the $450 deposit and its holding in a non\u2011interest\u2011bearing account at Ameris Bank, matching the lease."
+ },
+ "long-06": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that a week-long stay requires manager consent, is limited to 3 consecutive nights/6 per month, and needs roommate agreement, matching the lease."
+ },
+ "long-07": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly notes electricity is included up to $40 per bedroom ($160 total) and that overages are split among residents."
+ },
+ "long-08": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states subletting is prohibited, matching the lease."
+ },
+ "long-09": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the $75.00 after\u2011hours lockout fee and does not contain any incorrect statements."
+ },
+ "long-10": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states Option 1 applies, the $1,798 fee, and the 60\u2011day notice plus rent payment requirement."
+ },
+ "long-11": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states at least 24 hours' notice except in emergencies and adds no incorrect notice period."
+ },
+ "long-12": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the quiet hours for Saturday night as midnight to 9\u202fa.m. and adds only lease\u2011supported extra information."
+ },
+ "long-13": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease does not provide a discount for paying the full year up front."
+ },
+ "long-14": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease does not address space heaters and makes no prohibited claims."
+ },
+ "long-15": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease does not provide a referral credit and makes no contradictory claims."
+ },
+ "scan-01": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the $55 late charge and does not incorrectly add any other fees."
+ },
+ "scan-02": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states a dog requires landlord written consent and notes the lease only permits one cat, with no contradictory statements."
+ },
+ "scan-03": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the hand\u2011delivery or certified\u2011mail requirement and provides the required address, and the optional P.O. Box is allowed by the lease."
+ },
+ "scan-04": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer correctly states to call the after\u2011hours line and makes no incorrect statements."
+ },
+ "scan-05": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly says the security deposit earns interest and cites the lease provision about the interest\u2011bearing account at Merchants and Southern Bank."
+ },
+ "scan-06": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "The answer claims the early termination fee may be unenforceable without a separate addendum, which contradicts the lease.",
+  "reason": "The answer includes the correct notice and fee but adds an unsupported claim that the fee might not be enforceable."
+ },
+ "scan-07": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   true
+  ],
+  "other_error": "states that statutory notice is 24 hours, contradicting the lease's 12\u2011hour notice provision",
+  "reason": "answer includes the correct 12\u2011hour notice but adds an unsupported claim about a 24\u2011hour statutory notice period"
+ },
+ "scan-08": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the landlord pays for garbage collection and does not contradict the lease."
+ },
+ "scan-09": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that renter's insurance is encouraged but not required, matching the lease."
+ },
+ "scan-10": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that a guest may stay no more than 14 days without written consent and that a three\u2011week stay requires landlord approval, with no contradictory claims."
+ },
+ "scan-11": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease does not address smoking and makes no contradictory claims."
+ },
+ "scan-12": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease is silent on grills and does not claim permission or prohibition."
+ },
+ "broken-01": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   false
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer includes the $75 initial fee and $10 daily charge but omits the $175 monthly cap."
+ },
+ "broken-02": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that no pets, including visiting pets, are allowed, and does not make any false claims."
+ },
+ "broken-03": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that notices may be sent by email to the lease\u2011specified address and does not claim email is disallowed."
+ },
+ "broken-04": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that repair requests are made through the resident portal and does not contain any incorrect statements about other request methods."
+ },
+ "broken-05": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the deposit does not earn interest and cites the checked non\u2011interest\u2011bearing account box."
+ },
+ "broken-06": {
+  "says_lease_silent": false,
+  "points_made": [
+   false
+  ],
+  "mistakes_made": [
+   true
+  ],
+  "other_error": "Claims the lease is contradictory and that the tenant may pay for water, which contradicts the lease.",
+  "reason": "The answer incorrectly states both tenant and landlord pay water and fails to assert that the landlord pays, contradicting the lease."
+ },
+ "broken-07": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states renter's insurance is required and includes the $100,000 liability requirement, matching the lease."
+ },
+ "broken-08": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease has no early termination option and does not claim a fee is available."
+ },
+ "broken-09": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "Provides unsupported details about Florida statutes and a landlord notice requirement that are not mentioned in the lease.",
+  "reason": "The answer includes the correct 30\u2011day notice requirement but adds extra, unsupported legal claims."
+ },
+ "broken-10": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant may not sublet and does not contain contradictions."
+ },
+ "broken-11": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that the lease does not address quiet hours and does not provide any incorrect quiet\u2011hour information."
+ },
+ "broken-12": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly notes the lease is silent on painting and makes no contradictory claim."
+ }
+}

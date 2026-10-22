@@ -10,6 +10,6 @@ pip install -r requirements.txt
 mkdir -p matters
 echo
 echo "Done. Next:"
-echo "  1. put your key in .env (UF_API_KEY=...)"
+echo "  1. put your key in .env (OPENROUTER_API_KEY=..., and UF_API_KEY=... for the UF models)"
 echo "  2. source venv/bin/activate"
 echo "  3. python tests.py, then streamlit run app.py   (the web page, on http://localhost:8501)"

@@ -9,13 +9,18 @@ Rests on 83.49 (the deposit) and 83.505 (notices by e-mail). Read a section in f
 ## First, whether this applies
 
 - 83.49 does not cover every deposit: "This section does not apply to transient rentals by hotels or motels as defined in chapter 509 or in those instances in which the amount of rent or deposit, or both, is regulated by law or by rules or regulations of a public body" (83.49(4)).
-- College housing may be outside part II. It does not apply to "Residency or detention in a facility, whether public or private, when residence or detention is incidental to the provision of medical, geriatric, educational, counseling, religious, or similar services." (83.42(1)). Read 83.42 before telling the tenant either way, and say what you would need to know.
+- College housing may be outside part II. It does not apply to "Residency or detention in a facility, whether public or private, when residence or detention is incidental to the provision of medical, geriatric, educational, counseling, religious, or similar services." (83.42(1)). Settle this once for the matter, in this order, and never ask it twice:
+  - The facts already hold school_housing, pending or confirmed: use it, and do not ask again.
+  - Otherwise read the lease: who the landlord is, and whether living there is tied to a school, to being enrolled, or to services a school provides. The lease is clear only if nothing in it points to a school and nothing leaves doubt. Treat it as not clear if it has anything like: a clause on enrollment or attendance (the landlord may ask about it, or end the lease if the tenant is not enrolled, suspended, or expelled); a title or terms for students, or housing only for students; a school named as owner, manager, or partner; rooms assigned by a school; services a school provides (meals, advising, resident programs); a term set by the school year or semesters; or anything else that leaves doubt. If the lease is clear, say what it shows in one line, cite the lease, and note it with note_fact as school_housing (tenant_words: "from the lease").
+  - If the lease does not make it clear, ask the tenant one plain question: is the housing run by or for their school, or can they live there only while enrolled? Note the answer with note_fact as school_housing.
+  - Read 83.42 before telling the tenant whether the exclusion applies.
 - Money the lease calls nonrefundable may fall under 83.491. Read it before treating that money as outside 83.49.
 
 ## Facts the answer turns on
 
 Read the lease first. Ask the tenant only plain facts, one or two at a time. Note each fact with note_fact under these names, dates written YYYY-MM-DD; a date counts only once the tenant has confirmed it.
 
+- school_housing: whether living there comes with the tenant's schooling (see "First, whether this applies").
 - lease_end_date: the date the rental agreement ended. move_out_date: the date they moved out and returned the keys.
 - Whether they moved out before the lease's end, or had a month-to-month or other periodic tenancy.
 - If so: what written notice they gave before leaving, how it reached the landlord, and whether it gave an address.

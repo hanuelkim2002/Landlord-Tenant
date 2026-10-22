@@ -42,9 +42,10 @@ Reading the lease (approved 2026-10-19, `comparisons/lease/README.md`):
 
 - **Stored law.** `statutes/` (40 sections and `index.json`, read-only). `skills/`, one file per situation; the model
   sees each skill's name and description and loads the ones that fit.
-- **The lease.** The tenant uploads a PDF. PyMuPDF reads its text; a page with no usable text (a scan, or broken
-  text) is read from its image by Gemma 4 on the gateway. The text is stored page by page, and the whole lease goes
-  into the system prompt once, every turn (method A, chosen by comparison on 2026-10-19, `comparisons/lease/`).
+- **The lease.** The tenant uploads a PDF. Every page is read from its image by Claude Haiku 5.5 on OpenRouter (a
+  PDF's own text can lose what was typed into the form and its check boxes). The text is stored page by page, and
+  the whole lease goes into the system prompt once, every turn (method A, 2026-10-19, `comparisons/lease/`; the
+  reader changed 2026-10-21, `comparisons/models/`).
 - **Five tools.** `get_statute_section`, `search_statute`, `load_skill`, `count_days`, `note_fact`. No `search_lease`:
   the model has the whole lease.
 - **Facts.** `note_fact` saves what the tenant said as a pending fact. The tenant confirms or corrects it on the web
@@ -65,7 +66,8 @@ Reading the lease (approved 2026-10-19, `comparisons/lease/README.md`):
 Two parts are settled by testing 2 or 3 methods side by side on the same test and the same model, test material
 written and approved before any build, scores kept in `comparisons/`:
 
-1. How to read the lease (`comparisons/lease/`): settled 2026-10-19, method A, the whole lease in the prompt.
+1. How to read the lease (`comparisons/lease/`): settled 2026-10-19, method A, the whole lease in the prompt. Since
+   2026-10-21 every page is read from its image by Haiku 5.5 (`comparisons/models/`).
 2. How to write a skill (`comparisons/skills/`): settled 2026-10-20, format A, an element checklist, with each
    open question and each `count_days` call inside the condition that uses it. `deposit_not_returned` is rewritten
    first; the others follow only after the author has tried it and approves the method.
@@ -88,6 +90,7 @@ footer.
 
 ## Stack
 
-Python. The `openai` package on the UF gateway (OpenAI-compatible) with a plain tool loop, no LangChain. The model is
-set in `config.py` from `AGENT_MODEL`, default `nemotron-3-super-120b-a12b`. Streamlit for the page. Under about 1,000
+Python. The `openai` package on OpenRouter (OpenAI-compatible; the UF gateway can still be chosen) with a plain tool
+loop, no LangChain. The chat model is set in `config.py` from `AGENT_MODEL`, default `google/gemini-3.8-flash`; the
+lease reader from `VISION_MODEL`, default `anthropic/claude-haiku-5.5` (both chosen 2026-10-21, `comparisons/models/`). Streamlit for the page. Under about 1,000
 lines of app code.

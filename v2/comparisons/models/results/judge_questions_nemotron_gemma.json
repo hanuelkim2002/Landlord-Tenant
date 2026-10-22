@@ -1,0 +1,136 @@
+{
+ "broken-01": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the $75 initial charge, $10 daily charge, and the $175 monthly cap, matching the lease."
+ },
+ "broken-02": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that no pets, including visiting pets, are allowed per the lease."
+ },
+ "broken-03": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer correctly states that email notices are allowed and provides the correct address."
+ },
+ "broken-04": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that repair requests must be submitted through the resident portal and adds the correct emergency procedure, with no contradictory or missing points."
+ },
+ "broken-05": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the deposit is held in a separate non\u2011interest\u2011bearing account and makes no contradictory claim."
+ },
+ "broken-06": {
+  "says_lease_silent": false,
+  "points_made": [
+   false
+  ],
+  "mistakes_made": [
+   true
+  ],
+  "other_error": "Incorrectly claims both tenant and landlord boxes are checked for water and sewer, which contradicts the lease.",
+  "reason": "The answer says the tenant pays for water, which is opposite of the lease stating the landlord pays."
+ },
+ "broken-07": {
+  "says_lease_silent": false,
+  "points_made": [
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer correctly states renter's insurance is required with $100,000 liability coverage and adds no contradictory information."
+ },
+ "broken-08": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease has no early termination option and does not claim a fee is available."
+ },
+ "broken-09": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease requires at least 30 days written notice before moving out."
+ },
+ "broken-10": {
+  "says_lease_silent": false,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states that subletting is prohibited per section\u202f17 and makes no contradictory claims."
+ },
+ "broken-11": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the lease does not address quiet hours and does not provide any contradictory information."
+ },
+ "broken-12": {
+  "says_lease_silent": true,
+  "points_made": [
+   true
+  ],
+  "mistakes_made": [
+   true
+  ],
+  "other_error": "",
+  "reason": "The answer correctly notes the lease is silent on painting but incorrectly claims the lease forbids painting without permission."
+ }
+}

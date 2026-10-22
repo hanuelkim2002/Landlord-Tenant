@@ -1,0 +1,233 @@
+{
+ "deposit-1/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer adds an unsupported statement about \u00a7\u202f83.42(1) and the applicability of part\u202fII, which is not in the provided statute, lease, or facts.",
+  "reason": "All required points are present and no listed mistakes, but an extraneous unsupported claim is included."
+ },
+ "deposit-1/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer cites an unsupported rule from Fla. Stat. \u00a7\u202f83.42(1) about educational housing, which is not in the provided statute, lease, or facts.",
+  "reason": "All required points are present and no listed mistakes appear, but an extraneous, unsupported statutory reference is included."
+ },
+ "deposit-1/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Introduces an unsupported claim about Fla. Stat. \u00a7\u202f83.42(1) and asks whether the property is university\u2011owned, which is not covered by the given statute, lease, or facts.",
+  "reason": "All required points are correctly made and no listed mistakes, but the answer adds an extraneous, unsupported legal assertion."
+ },
+ "deposit-2/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly covered all required points and made no contradictory statements."
+ },
+ "deposit-2/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer adds an unsupported reference to Fla. Stat. \u00a7\u202f83.42(1) about educational housing, which is not in the provided statutes.",
+  "reason": "The response correctly states the 15\u2011day and 30\u2011day rules and their implications, but introduces an extraneous statutory claim."
+ },
+ "deposit-2/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "Introduces an unrelated rule about educational housing that is not supported by the given statute, lease, or facts.",
+  "reason": "The answer correctly covers all required points but adds an unsupported claim about educational housing."
+ },
+ "deposit-3/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "The answer cites Fla. Stat. \u00a7\u202f83.42(1) about educational housing, which is not part of the provided statutes, lease, or facts.",
+  "reason": "All required points are correctly made and no listed mistakes appear, but an unsupported statutory reference is included."
+ },
+ "deposit-3/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly answered the tenant's question, covered all required points, and contained no contradictory statements."
+ },
+ "deposit-3/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly addressed the tenant's question and covered all required points without making any prohibited claims."
+ },
+ "deposit-4/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is entitled to the $400, explains the required 30\u2011day notice rule and that it was missed, and notes the landlord can still sue for damages."
+ },
+ "deposit-4/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed $400, explains the required 30\u2011day notice rule and that the landlord forfeited the claim, and notes the landlord can still sue for damages."
+ },
+ "deposit-4/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed $400, explains the required 30\u2011day notice and its lapse, and notes the landlord can still sue for damages."
+ },
+ "deposit-5/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly outlines both possible interpretations of the text notice, shows the $650 balance is overdue, and notes the tenant retains the right to sue despite not objecting, without contradicting the statute, lease, or facts."
+ },
+ "deposit-5/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly covers the unsettled status of the text notice, the overdue $650, and that lack of objection does not waive the tenant's right to sue."
+ },
+ "deposit-5/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer covers both notice readings, notes the $650 is overdue, and states objection does not waive rights, without making prohibited errors."
+ }
+}
