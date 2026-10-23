@@ -77,7 +77,8 @@ def dates_in(text, year_if_missing=2026):
     """Every date written in the text, as YYYY-MM-DD: "2026-08-30", "August 30, 2026", or "August 30" (a year given by
     the caller, 2026 unless said otherwise)."""
     found = set(re.findall(r"\b(20\d\d-\d\d-\d\d)\b", text))
-    for month, day, year in re.findall(rf"\b({'|'.join(MONTHS)})\s+(\d{{1,2}})(?:st|nd|rd|th)?(?:,\s*(20\d\d))?", text):
+    # \b after the day, so "July 2026" (a month and a year) is not read as July 20
+    for month, day, year in re.findall(rf"\b({'|'.join(MONTHS)})\s+(\d{{1,2}})(?:st|nd|rd|th)?\b(?:,\s*(20\d\d))?", text):
         found.add(f"{year or year_if_missing}-{MONTHS.index(month) + 1:02d}-{int(day):02d}")
     return found
 

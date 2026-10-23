@@ -117,3 +117,28 @@ needed lookups in one step: one at a time, Gemini used up all 8 tool rounds, and
 `checks.py`: a quote is checked against a section cited just before it as well as just after it (`nearby_cites`), and a
 quote mark only opens after a space, bracket, or bold mark, so the words between two quotations are no longer checked
 as a quote. Replaces the cite-after-only search and the old pattern that paired any two quote marks. Two new tests.
+
+## 2026-10-22: deposit skill gaps drafted; seven more deposit stories
+
+`skills/deposit_not_returned.md`, a draft waiting on AUTHOR.md item 10: public housing (all of 83.49(4)), where the
+notice went, a notice without the amount or the reason, a tenant who objected, a renewal (83.49(6)); 1,575 to 2,055
+words. `comparisons/skills/stories_more.json`: stories 6 to 12 with four lease
+variants. `check_key.py` takes a key file name and reads "(1)(a)" run together, as 83.491 writes it. Nothing replaced.
+
+## 2026-10-23: a notice with no reason is not the required notice
+
+`skills/deposit_not_returned.md`: a notice of a claim that gives no reason is not the required notice (one reading, the
+author's call); only a notice without the amount gets two readings. Replaces two readings for either one missing.
+
+## 2026-10-23: the deposit skill test
+
+`comparisons/deposit/`: Gemini answers the twelve deposit stories three times with v1's skill, the old v2 skill, and
+the new one, through the app's chat; graded blind by Claude Opus 5.5 subagents (`opus_judge.py`), with the model
+test's judge kept to compare. Right of 30 (Opus): new 27 (0 wrong), old 25 (2 wrong), v1 19 (7 wrong). `comparisons/models/score.py`: the made-up-date check no longer
+reads "July 2026" as July 20. Nothing replaced.
+
+## 2026-10-23: Claude from Anthropic for the chat and the lease reader
+
+`config.py`: a third gateway, `anthropic` (Anthropic's OpenAI-compatible endpoint, `ANTHROPIC_API_KEY`), now the
+default for the chat (Claude Sonnet 5.5) and the lease reader (Claude Haiku 5.5). No other code changed. Replaces
+Gemini 3.8 Flash and Haiku on OpenRouter as the defaults; both stay one setting away.

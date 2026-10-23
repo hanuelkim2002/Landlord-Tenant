@@ -1,16 +1,20 @@
 """Checks the skills test's answer key against statutes/, so the key itself can be trusted.
 Each quote must be word for word in the statute subsection (and paragraph) it cites, and each date the key gives
-must be the fact's date plus the days, compared with the story's today. Run from this folder: python check_key.py
+must be the fact's date plus the days, compared with the story's today. Run from this folder:
+python check_key.py            (checks stories.json)
+python check_key.py stories_more.json            (checks another key file in this folder)
 """
 import json
 import re
+import sys
 from datetime import date, timedelta
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 STATUTES = HERE.parent.parent / "statutes"
 CITE = re.compile(r"^(\d+\.\d+)((?:\(\w+\))*)$")            # "83.49(3)(a)" -> "83.49", "(3)(a)"
-MARKER = re.compile(r"\s\((\d+|[a-z])\)\s")                  # " (3) " or " (a) " where a subsection or paragraph starts
+MARKER = re.compile(r"\s\((\d+|[a-z])\)(?=\s|\()")           # " (3) " or " (a) " where a subsection or paragraph starts;
+                                                            # "(1)(a)" run together, as in 83.491, counts too
 
 
 def squash(text):
@@ -59,6 +63,8 @@ def problems_with(story, lease):
         due = start + timedelta(days=d["days"])
         if due.isoformat() != d["date"] or (due < today) != d["passed"]:
             found.append(f"date wrong: {d}")
+    if story.get("lease") and not (HERE / story["lease"]).exists():
+        found.append(f"lease file not found: {story['lease']}")
     if not story["points"] or not story["law"]:
         found.append("no points or no law")
     return found
@@ -66,7 +72,8 @@ def problems_with(story, lease):
 
 if __name__ == "__main__":
     lease = (HERE / "lease.txt").read_text()
-    stories = json.loads((HERE / "stories.json").read_text())["stories"]
+    key_file = sys.argv[1] if len(sys.argv) > 1 else "stories.json"      # which key to check
+    stories = json.loads((HERE / key_file).read_text())["stories"]
     failures = 0
     for story in stories:
         for problem in problems_with(story, lease):

@@ -24,6 +24,8 @@ against rule 7).
   confirmed.
 - 2026-10-21, model test, deposit stories (`comparisons/models/`): nemotron 3 of 15 (sample lease) and 6 of 15 (own
   lease), haiku 1 of 15 (own), gemini and sonnet 0 of 30.
+- 2026-10-23, deposit skill test (`comparisons/deposit/`, gemini): 0 of 108. Until that day the check read
+  "July 2026" as July 20; the counts above were not rechecked.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -33,6 +35,8 @@ The answer asks the tenant for a fact they already gave, or one the lease states
 - 2026-10-20, first run of the v2 page (nemotron): the first reply asked for the lease end date (in the lease) and
   the move-out date (in the tenant's message), four questions in all; the second asked the tenant to confirm the
   dates in the chat after noting them for the sidebar.
+- 2026-10-23, deposit skill test (gemini): more than one question in 1 of 36 answers (v1), 1 (old), 2 (new), all
+  in stories 2 and 5.
 
 ## States an open question as settled
 
@@ -41,6 +45,25 @@ The skill marks a point as not settled, with a reading on each side; the answer 
 - 2026-10-19, skills test (nemotron): 12 of 12 answers to story 5 (a claim sent by text), every format. Counts only
   if the author agrees the point is open (AUTHOR.md item 4).
 - 2026-10-21, model test, story 5: nemotron 2 of 3 (sample lease) and 3 of 3 (own lease); haiku, gemini, sonnet 0.
+
+## Says the balance is due on day 30 after an objection
+
+The answer says the landlord must send the balance within 30 days after the notice even if the tenant objects.
+83.49(3)(b) puts that duty in a sentence that begins "Unless the tenant objects".
+
+- 2026-10-23, deposit skill test (gemini), story 6: v1 2 of 3, old 1 of 3, new 0 of 3 (the new skill says what
+  follows an objection is not settled).
+
+## Says the tenant said something they did not
+
+- 2026-10-23, deposit skill test (gemini): "because you mentioned college housing" when the tenant had not, v1 2 of
+  36 (stories 1 and 2); old and new 0.
+
+## Treats the 15-day return date as due after a claim
+
+The 15-day return applies only when the landlord intends no claim (83.49(3)(a)); the answer applies it anyway.
+
+- 2026-10-23, deposit skill test (gemini), story 5: v1 3 of 3; old and new 0.
 
 ## Does not load the skill
 

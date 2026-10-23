@@ -1,0 +1,38 @@
+old skill, Gemini (google/gemini-3.8-flash), into old.jsonl
+old deposit-3 run 1: 20.2 s, 4 requests, 7 tool calls, $0.0191
+old deposit-5 run 1: 30.1 s, 4 requests, 8 tool calls, $0.0219
+old deposit-4 run 1: 30.6 s, 4 requests, 7 tool calls, $0.0196
+old deposit-2 run 1: 34.1 s, 4 requests, 6 tool calls, $0.0190
+old deposit-3 run 2: 21.6 s, 4 requests, 9 tool calls, $0.0189
+old deposit-1 run 1: 44.6 s, 4 requests, 7 tool calls, $0.0188
+old deposit-4 run 2: 14.1 s, 3 requests, 6 tool calls, $0.0145
+old deposit-6 run 1: 45.2 s, 4 requests, 7 tool calls, $0.0225
+old deposit-6 run 2: 15.9 s, 4 requests, 7 tool calls, $0.0193
+old deposit-5 run 2: 34.0 s, 4 requests, 8 tool calls, $0.0191
+old deposit-2 run 2: 33.7 s, 3 requests, 5 tool calls, $0.0192
+old deposit-1 run 2: 26.2 s, 3 requests, 6 tool calls, $0.0139
+old deposit-4 run 3: 26.6 s, 3 requests, 7 tool calls, $0.0200
+old deposit-6 run 3: 17.0 s, 4 requests, 7 tool calls, $0.0199
+old deposit-2 run 3: 13.8 s, 3 requests, 6 tool calls, $0.0143
+old deposit-3 run 3: 41.5 s, 3 requests, 8 tool calls, $0.0301
+old deposit-1 run 3: 19.8 s, 3 requests, 6 tool calls, $0.0171
+old deposit-5 run 3: 28.5 s, 5 requests, 8 tool calls, $0.0202
+old deposit-7 run 1: 25.9 s, 5 requests, 8 tool calls, $0.0250
+old deposit-8 run 1: 20.6 s, 4 requests, 8 tool calls, $0.0206
+old deposit-12 run 1: 17.8 s, 4 requests, 6 tool calls, $0.0162
+old deposit-9 run 1: 29.3 s, 4 requests, 9 tool calls, $0.0218
+old deposit-7 run 2: 19.9 s, 4 requests, 7 tool calls, $0.0198
+old deposit-8 run 2: 26.6 s, 5 requests, 8 tool calls, $0.0205
+old deposit-10 run 1: 43.4 s, 3 requests, 8 tool calls, $0.0228
+old deposit-12 run 2: 19.7 s, 4 requests, 7 tool calls, $0.0169
+old deposit-9 run 2: 20.6 s, 4 requests, 10 tool calls, $0.0237
+old deposit-11 run 1: 45.1 s, 3 requests, 6 tool calls, $0.0313
+old deposit-7 run 3: 21.8 s, 3 requests, 7 tool calls, $0.0124  ERROR
+old deposit-11 run 2: 8.4 s, 2 requests, 5 tool calls, $0.0073  ERROR
+old deposit-8 run 3: 19.1 s, 4 requests, 8 tool calls, $0.0238
+old deposit-12 run 3: 17.1 s, 3 requests, 5 tool calls, $0.0151  ERROR
+old deposit-10 run 2: 44.3 s, 3 requests, 8 tool calls, $0.0232
+old deposit-9 run 3: 43.9 s, 3 requests, 8 tool calls, $0.0296
+old deposit-10 run 3: 31.2 s, 3 requests, 6 tool calls, $0.0229
+old deposit-11 run 3: 64.7 s, 5 requests, 8 tool calls, $0.0475
+Done. 36 answers, $0.7478 by the logged costs.

@@ -24,6 +24,11 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
 - 2026-10-22: quotation marks only for the statute's and the lease's words; what the tenant said, the facts, and
   messages are put in the model's own words, and the quote check does not check them (rule 6).
 - 2026-10-22: the model asks for all the lookups it needs in one step, not one at a time.
+- 2026-10-23: the chat runs on Claude Sonnet 5.5 and the lease reader on Haiku 5.5, both straight from Anthropic
+  (your API credit), through its OpenAI-compatible endpoint so the code stays as it is. Tenant messages, facts,
+  and leases now go to Anthropic, not OpenRouter or Google. Gemini stays one setting away (GATEWAY=openrouter).
+- 2026-10-23: a notice of a claim that gives no reason is not the required notice, since 83.49(3)(a) names the
+  reason; only a notice without the amount gets two readings.
 
 ## Open
 
@@ -52,4 +57,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    of 83.42(1)'s "incidental to the provision of ... educational ... services."
 9. **Check my keys for your lease.** `comparisons/models/private/own_questions.json` and `own_stories.json`, written
    from the page images; the grades on your lease follow them.
-
+10. **The deposit skill's new law points (draft, 2026-10-22).** My readings for you to check: a housing authority as
+   landlord is still under (3), (5), (6) (83.49(4)); certified mail to the old address counts if no new one was
+   given; nothing is settled after an objection; a renewal's end starts the clocks (83.49(6)); a notice with the
+   amount and the reason counts without the 15-day warning or the objection address. Left open with two
+   readings: a private landlord in a housing program, mail to the old address after a new one was given, a notice
+   without the amount. Story 12's key reads 83.491(6) as putting a fee outside 83.49.

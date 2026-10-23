@@ -1,0 +1,38 @@
+new skill, Gemini (google/gemini-3.8-flash), into new.jsonl
+new deposit-6 run 1: 21.9 s, 3 requests, 7 tool calls, $0.0146
+new deposit-3 run 1: 25.3 s, 4 requests, 9 tool calls, $0.0190
+new deposit-4 run 1: 26.0 s, 3 requests, 7 tool calls, $0.0179
+new deposit-5 run 1: 33.7 s, 4 requests, 9 tool calls, $0.0246
+new deposit-2 run 1: 41.0 s, 4 requests, 6 tool calls, $0.0171
+new deposit-1 run 1: 41.7 s, 4 requests, 7 tool calls, $0.0176
+new deposit-6 run 2: 31.8 s, 4 requests, 7 tool calls, $0.0185
+new deposit-3 run 2: 29.9 s, 3 requests, 8 tool calls, $0.0163
+new deposit-1 run 2: 17.4 s, 4 requests, 7 tool calls, $0.0149
+new deposit-2 run 2: 24.7 s, 4 requests, 6 tool calls, $0.0155
+new deposit-4 run 2: 39.8 s, 4 requests, 6 tool calls, $0.0268
+new deposit-5 run 2: 35.0 s, 5 requests, 10 tool calls, $0.0227
+new deposit-6 run 3: 18.4 s, 4 requests, 7 tool calls, $0.0224
+new deposit-3 run 3: 18.4 s, 4 requests, 11 tool calls, $0.0224
+new deposit-2 run 3: 17.1 s, 3 requests, 6 tool calls, $0.0170
+new deposit-1 run 3: 24.2 s, 3 requests, 6 tool calls, $0.0201
+new deposit-4 run 3: 25.1 s, 3 requests, 6 tool calls, $0.0205
+new deposit-5 run 3: 22.9 s, 4 requests, 8 tool calls, $0.0183
+new deposit-7 run 1: 25.4 s, 5 requests, 7 tool calls, $0.0248
+new deposit-8 run 1: 24.2 s, 4 requests, 10 tool calls, $0.0224
+new deposit-12 run 1: 19.3 s, 4 requests, 7 tool calls, $0.0233
+new deposit-9 run 1: 28.8 s, 5 requests, 9 tool calls, $0.0258
+new deposit-8 run 2: 19.0 s, 4 requests, 8 tool calls, $0.0192
+new deposit-10 run 1: 42.4 s, 3 requests, 7 tool calls, $0.0209
+new deposit-11 run 1: 36.3 s, 3 requests, 6 tool calls, $0.0270
+new deposit-7 run 2: 31.0 s, 3 requests, 7 tool calls, $0.0179
+new deposit-12 run 2: 17.9 s, 4 requests, 6 tool calls, $0.0114
+new deposit-9 run 2: 23.0 s, 4 requests, 7 tool calls, $0.0165
+new deposit-10 run 2: 14.8 s, 2 requests, 6 tool calls, $0.0117  ERROR
+new deposit-7 run 3: 20.6 s, 4 requests, 7 tool calls, $0.0228
+new deposit-8 run 3: 37.9 s, 4 requests, 7 tool calls, $0.0264
+new deposit-11 run 2: 37.1 s, 3 requests, 6 tool calls, $0.0274
+new deposit-12 run 3: 36.7 s, 4 requests, 8 tool calls, $0.0240
+new deposit-9 run 3: 42.5 s, 4 requests, 10 tool calls, $0.0361
+new deposit-10 run 3: 37.0 s, 4 requests, 9 tool calls, $0.0331
+new deposit-11 run 3: 33.6 s, 3 requests, 5 tool calls, $0.0262
+Done. 36 answers, $0.7630 by the logged costs.

@@ -13,12 +13,13 @@ and the reply and its checks are recorded in the matter's history and shown on t
 
 ### config.py
 
-Paths (`STATUTES`, `SKILLS`, `MATTERS`) and the two gateways (`GATEWAYS`: `uf` and `openrouter`). The chat:
-`GATEWAY` (default `openrouter`) and `AGENT_MODEL` (default Gemini 3.8 Flash). The lease reader: `READER_GATEWAY` (default
-`openrouter`) and `VISION_MODEL` (default Claude Haiku 5.5). Each can be set in the environment.
+Paths (`STATUTES`, `SKILLS`, `MATTERS`) and the three gateways (`GATEWAYS`: `uf`, `openrouter`, and `anthropic`,
+Anthropic's OpenAI-compatible endpoint). The chat: `GATEWAY` (default `anthropic`) and `AGENT_MODEL` (default Claude
+Sonnet 5.5). The lease reader: `READER_GATEWAY` (default `anthropic`) and `VISION_MODEL` (default Claude Haiku 5.5).
+Each can be set in the environment.
 
-- `temperature(gateway)`: temperature 0 on UF, nothing on OpenRouter, where Claude rejects it.
-- `client(gateway)`: a gateway (the chat's if none is named), with its key (`UF_API_KEY` or `OPENROUTER_API_KEY`)
+- `temperature(gateway)`: temperature 0 on UF, nothing elsewhere, since Claude rejects it.
+- `client(gateway)`: a gateway (the chat's if none is named), with its key (`UF_API_KEY`, `OPENROUTER_API_KEY`, or `ANTHROPIC_API_KEY`)
   from `.env` or the environment.
 
 ### law.py
@@ -105,5 +106,5 @@ not let the preview's launcher read the Documents folder.
 
 ## Elsewhere in v2
 
-`statutes/` (read-only), `skills/` (one file per situation, format A), `comparisons/` (the lease and skills tests,
-their answer keys, and scores), `matters/` (private, not in git), `V2_PROMPT.md` (how v2 started).
+`statutes/` (read-only), `skills/` (one file per situation, format A), `comparisons/` (the lease, skills, model, and
+deposit skill tests, their answer keys, and scores), `matters/` (private, not in git), `V2_PROMPT.md` (how v2 started).

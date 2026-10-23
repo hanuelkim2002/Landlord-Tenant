@@ -1,0 +1,16 @@
+{
+ "v1": {
+  "deposit-2/3": {"verdict": "right", "why": "All points made, no listed mistake. The judge's only complaint was a mention of 83.42(1); the words are in statutes/83.42.txt and nothing contradicts them. (An open-call story, so not in the settled totals.)"},
+  "deposit-6/3": {"verdict": "wrong", "why": "Says 2026-09-19 'remains the 30-day deadline' even if the tenant objects. The duty to remit sits in the sentence that begins 'Unless the tenant objects' (83.49(3)(b)): mistake 3, the same error the judge marked wrong in v1 deposit-6/1."},
+  "deposit-9/2": {"verdict": "right", "why": "All points made, no listed mistake. The judge said the disclosure words 'WITHIN 30 DAYS AFTER YOU MOVE OUT' are not in the statute; they are, in 83.49(2)(d)."}
+ },
+ "old": {
+  "deposit-6/1": {"verdict": "wrong", "why": "Says the landlord must send the $650 by 2026-09-19 'regardless of whether you object'. The duty to remit sits in the sentence that begins 'Unless the tenant objects' (83.49(3)(b)): mistake 3, the error the judge marked wrong in v1 deposit-6/1."},
+  "deposit-11/1": {"verdict": "right", "why": "Opens with a conditional yes ('provided' part II applies), names the enrollment clause, and asks the one plain question, like old deposit-11/3 and new deposit-11/2 and 11/3, which the judge graded right. A conditional yes is not the final answer mistake 2 names. My call, for consistency."},
+  "deposit-11/2": {"verdict": "right", "why": "Opens with a conditional yes ('provided' part II applies), names the enrollment clause, and asks the one plain question, like old deposit-11/3 and new deposit-11/2 and 11/3, which the judge graded right. My call, for consistency."}
+ },
+ "new": {
+  "deposit-9/3": {"verdict": "right", "why": "All points made, no listed mistake. The judge said the disclosure words 'WITHIN 30 DAYS AFTER YOU MOVE OUT' are not in the statute; they are, in 83.49(2)(d)."},
+  "deposit-11/1": {"verdict": "right", "why": "Opens with a conditional yes ('provided' part II applies), names the enrollment clause, and asks the one plain question, like new deposit-11/2 and 11/3, which the judge graded right. My call, for consistency."}
+ }
+}
