@@ -1,0 +1,20 @@
+fixed skill, sonnet (claude-sonnet-5-5), into /Users/hanuelkim/Documents/ALL_CLAUDE_FILES/Landlord-Tenant/Landlord-Tenant ClaudeCode/.claude/worktrees/deposit-not-returned-scenarios-5e1bf0/v2/comparisons/deposit/results/sonnet/fixed.jsonl
+fixed deposit-14 run 1: 14.5 s, 2 requests, 4 tool calls, $0.0481
+fixed deposit-16 run 1: 19.7 s, 3 requests, 6 tool calls, $0.0794
+fixed deposit-17 run 1: 19.9 s, 3 requests, 6 tool calls, $0.0796
+fixed deposit-15 run 1: 19.9 s, 3 requests, 6 tool calls, $0.0802
+fixed deposit-8 run 1: 20.6 s, 3 requests, 9 tool calls, $0.0840
+fixed deposit-6 run 1: 20.9 s, 2 requests, 5 tool calls, $0.0559
+fixed deposit-14 run 2: 16.0 s, 2 requests, 4 tool calls, $0.0498
+fixed deposit-8 run 2: 17.2 s, 3 requests, 7 tool calls, $0.0797
+fixed deposit-17 run 2: 18.4 s, 3 requests, 8 tool calls, $0.0806
+fixed deposit-6 run 2: 18.1 s, 3 requests, 6 tool calls, $0.0768
+fixed deposit-16 run 2: 20.2 s, 3 requests, 6 tool calls, $0.0800
+fixed deposit-15 run 2: 20.8 s, 3 requests, 5 tool calls, $0.0819
+fixed deposit-14 run 3: 24.0 s, 3 requests, 6 tool calls, $0.0856
+fixed deposit-16 run 3: 15.3 s, 3 requests, 6 tool calls, $0.0751
+fixed deposit-8 run 3: 20.7 s, 3 requests, 7 tool calls, $0.0842
+fixed deposit-6 run 3: 20.9 s, 3 requests, 6 tool calls, $0.0799
+fixed deposit-15 run 3: 20.6 s, 3 requests, 7 tool calls, $0.0826
+fixed deposit-17 run 3: 24.6 s, 4 requests, 7 tool calls, $0.1116
+Done. 18 answers, $1.3952 by the logged costs.

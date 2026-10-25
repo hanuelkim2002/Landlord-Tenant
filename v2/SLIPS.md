@@ -45,6 +45,11 @@ The skill marks a point as not settled, with a reading on each side; the answer 
 - 2026-10-19, skills test (nemotron): 12 of 12 answers to story 5 (a claim sent by text), every format. Counts only
   if the author agrees the point is open (AUTHOR.md item 4).
 - 2026-10-21, model test, story 5: nemotron 2 of 3 (sample lease) and 3 of 3 (own lease); haiku, gemini, sonnet 0.
+- 2026-10-24, deposit skill test on Sonnet: not flat, but a lean. Story 14 (Section 8), every answer in all three
+  versions opens "Probably yes" before giving both readings; stories 15 and 16, once each.
+- 2026-10-24, the current skill on Sonnet: after the no-lean line, still a lean where the skill does not mark the
+  point not settled: story 11 ("Probably yes" on the college question), story 18 ("Yes, the 30-day deadline has
+  passed" after an objection), story 9 once.
 
 ## Says the balance is due on day 30 after an objection
 
@@ -53,17 +58,30 @@ The answer says the landlord must send the balance within 30 days after the noti
 
 - 2026-10-23, deposit skill test (gemini), story 6: v1 2 of 3, old 1 of 3, new 0 of 3 (the new skill says what
   follows an objection is not settled).
+- 2026-10-24, deposit skill test on Sonnet, story 18: old 3 of 3, v1 0, new 0.
 
 ## Says the tenant said something they did not
 
 - 2026-10-23, deposit skill test (gemini): "because you mentioned college housing" when the tenant had not, v1 2 of
   36 (stories 1 and 2); old and new 0.
+- 2026-10-24, deposit skill test on Sonnet, stories 13 to 18: "you called this college housing", v1 2 of 18, new 1
+  of 18, old 0.
 
 ## Treats the 15-day return date as due after a claim
 
 The 15-day return applies only when the landlord intends no claim (83.49(3)(a)); the answer applies it anyway.
 
 - 2026-10-23, deposit skill test (gemini), story 5: v1 3 of 3; old and new 0.
+- 2026-10-24, the current skill on Sonnet, story 5: 2 of 3.
+
+## States a rule the statute does not have
+
+- 2026-10-24, deposit skill test on Sonnet, story 16: "the landlord could deduct only what it can justify" (new 1
+  of 3); 83.49(3)(b) sets no such limit.
+- 2026-10-24, the fixed skill on Sonnet, story 14: reading two narrowed to "a program that sets or limits the
+  deposit amount", dropping the rent that 83.49(4) names (2 of 3).
+- 2026-10-24, the current skill on Sonnet: receipt as the test for the landlord's 30 days (story 9, 1 of 3); a
+  result 83.491 does not give, that a landlord who skips a fee notice cannot keep the fee (story 12, 1 of 3).
 
 ## Does not load the skill
 

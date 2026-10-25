@@ -1,0 +1,305 @@
+{
+ "deposit-14/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Reading two says 'If your deposit was not set or capped that way, 83.49 applies,' and the closing says whether the papers cap the deposit 'is the fact that decides which reading fits your situation.' 83.49(4) excludes cases where 'the amount of rent or deposit, or both' is regulated, so a deposit cap (or its absence) alone does not decide coverage or choose between the readings.",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives both readings of 83.49(4) without choosing one and explains the full-refund result under the second (no notice by 2026-08-30, forfeiture, landlord may sue after returning it). But it then treats the deposit-cap fact as deciding which reading fits, which drops the rent half of the exclusion."
+ },
+ "deposit-14/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Reading two says 'The exclusion covers only a program that sets or limits the deposit amount.' 83.49(4) reaches cases where 'the amount of rent or deposit, or both, is regulated,' so a reading limited to the deposit amount contradicts the statute's words.",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says coverage is unsettled, gives two readings without choosing, and under the applies-reading says no notice by 2026-08-30 means forfeiture and return of all $1,050 with the landlord free to sue for damages. Its second reading wrongly narrows the exclusion to deposit-setting programs only, leaving out rent."
+ },
+ "deposit-14/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Quotes 83.49(4), gives both readings (rent regulated by Section 8 so 83.49 does not apply and the rest is outside the tool; only programs that set or limit the rent or deposit amount count so 83.49 applies) and says the statute does not pick. Under the second reading it says no notice came by 2026-08-30, so the landlord forfeited its claim and owes all $1,050 but may sue for damages; its closing question is in plain words about setting or limiting the deposit."
+ },
+ "deposit-15/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It's not settled' and gives both readings: forfeiture and all $1,050 back (with the landlord's later damages suit) versus 83.505(6) other means, objection by 2026-09-11 from receipt, $650 by 2026-09-19. Says the lease 'points toward your side but doesn't settle it' mid-answer, but chooses neither and says an objection now protects under either reading."
+ },
+ "deposit-15/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'not settled', lays out Reading 1 (last known address was the new one, 30 days ran through 2026-08-30, forfeiture, full $1,050, landlord may sue after) and Reading 2 (83.505(6), objection by 2026-09-11 from 2026-08-27, balance by 2026-09-19). Says an objection by 2026-09-11 is valid under both readings."
+ },
+ "deposit-15/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'not settled' and gives both readings with the right dates (2026-08-30, 2026-09-11, 2026-09-19), forfeiture of all $1,050 with a later damages suit on one side and 83.505(6) on the other. Tells the tenant not to rely on Reading 1 and to object in writing, which keeps the address argument."
+ },
+ "deposit-16/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says it is not settled, gives both readings (forfeiture and full $1,050 with a later damages suit; or the claim stands with objection by 2026-09-08 and balance by 2026-09-19), all dates correct and counted from receipt. It does not urge objecting, but nothing contradicts the optional point."
+ },
+ "deposit-16/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says it is not settled and leans neither way, quotes the statutory form accurately, and gives both readings with the right consequences and dates (30 days ended 2026-08-30; object by 2026-09-08 from receipt; balance by 2026-09-19). Advises a written objection and says it does not concede the notice was valid."
+ },
+ "deposit-16/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens with 'not settled' and leans neither way; gives both readings with forfeiture of all $1,050 (and the later damages suit) and the 2026-09-08 / 2026-09-19 dates, all correct. It adds an unsupported hedge that whether objecting affects the Reading 1 argument is 'not settled', but still says objecting meets the deadline under either reading, so the optional point is not contradicted."
+ },
+ "deposit-17/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with yes, all $1,050; the letter gives no reason so it is not the required notice, the 30 days ended 2026-08-30, the landlord forfeited, silence does not change it, and the landlord may still sue for damages after returning the deposit. Statute quotes and the 83.49(5) point are accurate."
+ },
+ "deposit-17/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with yes, the whole $1,050, and the landlord lost the right to keep $400; no reason means no required notice, the 30 days ended 2026-08-30, forfeiture, silence does not revive the claim, and the landlord may still sue for damages. The fee-shifting quote from 83.49(3)(c) is exact."
+ },
+ "deposit-17/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with yes, full $1,050, holds flatly that a notice without a reason is not the required notice, gives forfeiture, the 2026-08-30 deadline and the later damages suit, and says not objecting does not hurt. Its added 'even if the letter counted' fallback (balance due 2026-09-19, at least $650 owed) is an alternative argument, not two readings, and its dates are correct."
+ },
+ "deposit-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the certified notice was proper and in time (30 days to 2026-08-30), gives the objection deadline 2026-09-08 counted from receipt and the balance date 2026-09-19 counted from the notice date, and says the statute sets no step after an objection except a court action with costs and fees to the winner. Dates are right."
+ },
+ "deposit-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the certified notice is the kind the statute asks for and was sent inside the 30 days ending 2026-08-30, gives 2026-09-08 from receipt and 2026-09-19 from the notice date, and says what follows an objection is not settled beyond a court action with costs and fees. 'The loser pays' is supported by the statute's 83.49(2)(d) disclosure text."
+ },
+ "deposit-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the notice was valid so no forfeiture, states the statute's 15 days after receipt (2026-09-08) and the 30 days from the notice date (2026-09-19), and leaves what follows an objection open with court costs and fees. Its added advice to send by September 4 'to be safe' (counting from the letter's date) is extra caution, not a miscount, since it states the statute's rule from receipt."
+ },
+ "deposit-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'on what we know' the e-mail counts, the landlord has not lost the claim (window ended 2026-08-30), objection in writing by 2026-09-04, balance by 2026-09-19, no waiver. Correctly notes the statute does not say whether the objection must be sent or received in 15 days; the addendum-wording check rests on 83.505(1)."
+ },
+ "deposit-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'No, you can't ignore the e-mail' and says it counts under 83.49(3)(a) and 83.505(1), timely by 2026-08-30, objection by 2026-09-04, $650 by 2026-09-19, no waiver. Its caveat that an unseen addendum lacking the voluntary/revocable wording 'might change the analysis' rests on 83.505(1) and is a fact check, not two readings."
+ },
+ "deposit-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Firmly says the e-mail counts, the notice was timely (2026-08-30), objection by 2026-09-04, $650 by 2026-09-19, and no waiver; says the statute sets only a court action after an objection. Ends by asking whether the addendum has the 83.505(1) voluntary/revocable wording, without treating the answer as open."
+ }
+}

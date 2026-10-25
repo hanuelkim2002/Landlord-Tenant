@@ -142,3 +142,38 @@ reads "July 2026" as July 20. Nothing replaced.
 `config.py`: a third gateway, `anthropic` (Anthropic's OpenAI-compatible endpoint, `ANTHROPIC_API_KEY`), now the
 default for the chat (Claude Sonnet 5.5) and the lease reader (Claude Haiku 5.5). No other code changed. Replaces
 Gemini 3.8 Flash and Haiku on OpenRouter as the defaults; both stay one setting away.
+
+## 2026-10-24: six stories for the deposit skill's new parts
+
+`comparisons/skills/stories_more.json`: stories 13 to 18 (a housing authority as landlord, a Section 8 voucher, a
+claim sent to the old address, a claim with no amount, one with no reason, an objection made in time), with two new
+lease variants (`lease_housing_authority.txt`, `lease_voucher.txt`). Keys checked by `check_key.py`. Not run yet.
+
+## 2026-10-24: stories 13 to 18 run on Sonnet
+
+`comparisons/deposit/`: `run.py` takes `--model sonnet` (Sonnet 5.5 from Anthropic, answers in `results/sonnet/`)
+and `--stories 13-18`; `opus_judge.py` and `grade.py` take the model too. Right of 18 (Opus, blind): new 11, old 2,
+v1 3. `comparisons/models/models.py` names Sonnet from Anthropic and prices it. Nothing replaced.
+
+## 2026-10-24: four fixes from the Sonnet run
+
+`skills/deposit_not_returned.md`: a point that is not settled leads the answer, with no lean ("probably yes"); a
+proper notice is named as such in one sentence; under a reading where a letter counts, both option 2 dates are given.
+`chat.py`: the rules no longer open "a tenant in Florida college housing", which led the model to say the tenant
+called it college housing. Replaces those lines.
+
+## 2026-10-24: the four fixes rerun
+
+`comparisons/deposit/`: the fixed skill (`versions/fixed.md`) on stories 6, 8, and 14 to 17 on Sonnet, 16 of 18 right
+(was 8). `run.py` takes a list of stories and the version `fixed`; `opus_judge.py` and `grade.py` take the versions.
+
+## 2026-10-24: the Section 8 reading names the rent and the deposit
+
+`skills/deposit_not_returned.md`: the second reading for a private landlord in a housing program now says a program
+that sets or limits "the amount of the rent or of the deposit", as 83.49(4) does. Replaces "the amount", which led
+answers to drop the rent. Story 14 rerun on Sonnet: 3 of 3 right (was 1 of 3).
+
+## 2026-10-24: all 18 stories on Sonnet with the current skill
+
+`comparisons/deposit/`: 37 of 48 settled answers right (`SCORES_opus_sonnet_fixed2.md`). Stories 13 to 18 rose from 11
+to 15 of 18 on the same model; stories 1 to 12 fell from 27 to 22 of 30, but they ran on Gemini before. Nothing replaced.

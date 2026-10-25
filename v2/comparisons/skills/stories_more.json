@@ -1,5 +1,5 @@
 {
-  "how_to_read": "Seven more deposit stories (deposit-6 to deposit-12), in the same shape as stories.json. Each runs on lease.txt unless it has a 'lease' field, which names a copy of lease.txt in this folder with only what the story needs changed: lease_email.txt (clause 8: a signed e-mail addendum), lease_monthtomonth.txt (clauses 3 and 9: month to month), lease_school.txt (new clause 11: enrollment), lease_fee.txt (clause 5: a fee instead of a deposit). 'today' is the date count_days compares with in that story. 'facts' are the confirmed facts the record holds (count_days reads the dates). 'message' is what the tenant writes. 'answer' is the right answer in plain words; 'points' are what a right answer must convey, judged by meaning (words in parentheses are helpful detail, not required); 'mistakes' make an answer wrong. 'law' quotes the statute words each point rests on, word for word from statutes/, with the subsection they sit in. 'dates' are the count_days results the answer needs. Two notes. In deposit-9 the statute does not say which date ends the rental agreement when a tenant leaves early, so the key requires both readings. In deposit-12, 83.491(6) points to 83.43(13) for the meaning of 'security deposit', but in the stored 83.43, (13) is 'Rental agreement' and 'Security deposits' is (14); the key quotes 83.491(6) as it stands. Check the key with: python check_key.py stories_more.json",
+  "how_to_read": "More deposit stories (deposit-6 to deposit-18), in the same shape as stories.json. Each runs on lease.txt unless it has a 'lease' field, which names a copy of lease.txt in this folder with only what the story needs changed: lease_email.txt (clause 8: a signed e-mail addendum), lease_monthtomonth.txt (clauses 3 and 9: month to month), lease_school.txt (new clause 11: enrollment), lease_fee.txt (clause 5: a fee instead of a deposit), lease_housing_authority.txt (clauses 1, 2, 4, 5 and the signature: a housing authority as landlord, $250 deposit), lease_voucher.txt (new clause 11: a Section 8 voucher). 'today' is the date count_days compares with in that story. 'facts' are the confirmed facts the record holds (count_days reads the dates). 'message' is what the tenant writes. 'answer' is the right answer in plain words; 'points' are what a right answer must convey, judged by meaning (words in parentheses are helpful detail, not required); 'mistakes' make an answer wrong. 'law' quotes the statute words each point rests on, word for word from statutes/, with the subsection they sit in. 'dates' are the count_days results the answer needs. Two notes. In deposit-9 the statute does not say which date ends the rental agreement when a tenant leaves early, so the key requires both readings. In deposit-12, 83.491(6) points to 83.43(13) for the meaning of 'security deposit', but in the stored 83.43, (13) is 'Rental agreement' and 'Security deposits' is (14); the key quotes 83.491(6) as it stands. Check the key with: python check_key.py stories_more.json",
   "stories": [
     {
       "id": "deposit-6",
@@ -230,6 +230,320 @@
         {"cite": "83.491(3)(g)", "quote": "That the fee is only for securing occupancy without paying a required security deposit."}
       ],
       "dates": []
+    },
+    {
+      "id": "deposit-13",
+      "title": "Public housing: the housing authority sent nothing",
+      "today": "2026-10-19",
+      "lease": "lease_housing_authority.txt",
+      "facts": {
+        "lease_end_date": "2026-07-31",
+        "move_out_date": "2026-07-31",
+        "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+        "landlord_notice_of_claim": "none received, by any means",
+        "deposit_returned": "none"
+      },
+      "message": "I lived in public housing run by the housing authority. My lease ended July 31 and I moved out that day, and I mailed them my new address before I left. It's been over two months and they haven't returned my $250 deposit or told me anything. A friend said the deposit law doesn't cover public housing. Can I get it back?",
+      "answer": "Yes. The deposit section mostly does not apply to housing authorities, but it keeps three of its parts for them, and one of them holds the rule on notice of a claim. Your landlord is a housing authority (your lease says so). If it meant to keep any of the deposit, it had to send written notice of the claim and the reason by certified mail within 30 days after the lease ended. That date (2026-08-30, from count_days) has passed with no notice, so it forfeited the right to keep any of it and must return all $250. It can still sue for damages after returning it.",
+      "points": [
+        "Yes, the tenant can get all $250 back.",
+        "83.49 does not apply to housing authorities except subsections (3), (5), and (6), so the notice rule in 83.49(3) still covers this landlord, a housing authority (the lease says so). (The friend is wrong on this point.)",
+        "No written notice of a claim came within 30 days after the lease ended (count_days: 2026-08-30, passed), so the landlord forfeited the right to impose a claim on the deposit.",
+        "The landlord may still file an action for damages after returning the deposit."
+      ],
+      "mistakes": [
+        "Says 83.49 does not cover this deposit because the landlord is a housing authority, or because a public body sets the rent.",
+        "Gives two readings of whether the notice rule covers a housing authority, as if that were open; the second sentence of 83.49(4) keeps subsection (3) for housing authorities.",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {
+          "cite": "83.49(4)",
+          "quote": "With the exception of subsections (3), (5), and (6), this section is not applicable to housing authorities or public housing agencies created pursuant to chapter 421 or other statutes."
+        },
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."
+        },
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
+        }
+      ],
+      "dates": [
+        {
+          "fact": "lease_end_date",
+          "days": 30,
+          "date": "2026-08-30",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "deposit-14",
+      "title": "A Section 8 voucher with a private landlord",
+      "today": "2026-10-19",
+      "lease": "lease_voucher.txt",
+      "facts": {
+        "lease_end_date": "2026-07-31",
+        "move_out_date": "2026-07-31",
+        "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+        "landlord_notice_of_claim": "none received, by any means",
+        "deposit_returned": "none"
+      },
+      "message": "I moved out on July 31 when my lease ended and mailed my new address to the office before I left. I have a Section 8 voucher, so the housing authority paid part of my rent. It's been over two months and the landlord hasn't returned my $1,050 deposit or told me anything. Can I get all of it back?",
+      "answer": "That turns on a point the statute does not settle, so here are both readings. The deposit section does not apply where the rent or deposit is regulated by law or by the rules of a public body, including federally administered or regulated housing programs, and it names section 8 of the National Housing Act among them. It does not say whether a voucher that pays part of a private landlord's rent makes your rent regulated in that sense. One reading: it does, so this deposit section does not decide your case, and what does is outside what this tool covers. The other: only a program that sets or limits the amount of the rent or deposit does that, so the section applies. Under that reading, no written notice of a claim came within 30 days after the lease ended (2026-08-30, from count_days), so the landlord forfeited the right to keep any of it and must return all $1,050, though it may still sue for damages after returning it.",
+      "points": [
+        "Does not settle whether 83.49 applies: 83.49(4) leaves out rentals whose rent or deposit is regulated by law or by a public body's rules, including federally administered or regulated housing programs and s. 8 of the National Housing Act, and the text does not say whether a voucher paying part of a private landlord's rent counts.",
+        "Gives both readings and chooses neither: (a) the rent counts as regulated, so 83.49 does not decide the deposit (and what does is outside the tool); (b) only a program that sets or limits the amount counts, so 83.49 applies.",
+        "Says what reading (b) means for the money: no notice of a claim within 30 days after the lease ended (count_days: 2026-08-30, passed), so the landlord forfeited the right to impose a claim and owes all $1,050 (and may still sue for damages after returning it)."
+      ],
+      "mistakes": [
+        "Says flatly that 83.49 applies, or flatly that it does not.",
+        "States what other law governs the deposit if 83.49 does not apply (for example federal program rules), as if the statute said so.",
+        "Asks the tenant in legal words whether the rent is 'regulated' by a public body.",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {
+          "cite": "83.49(4)",
+          "quote": "This section does not apply to transient rentals by hotels or motels as defined in chapter 509 or in those instances in which the amount of rent or deposit, or both, is regulated by law or by rules or regulations of a public body, including public housing authorities and federally administered or regulated housing programs including s. 202, s. 221(d)(3) and (4), s. 236, or s. 8 of the National Housing Act, as amended, other than for rent stabilization."
+        },
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
+        }
+      ],
+      "dates": [
+        {
+          "fact": "lease_end_date",
+          "days": 30,
+          "date": "2026-08-30",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "deposit-15",
+      "title": "The claim went to the old address and was forwarded",
+      "today": "2026-09-03",
+      "facts": {
+        "lease_end_date": "2026-07-31",
+        "move_out_date": "2026-07-31",
+        "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+        "claim_notice_date": "2026-08-20",
+        "claim_received_date": "2026-08-27",
+        "landlord_notice_of_claim": "a letter dated 2026-08-20, sent by certified mail to the tenant's old apartment (Apartment 12), not to the forwarding address; the post office forwarded it and the tenant signed for it at the new address on 2026-08-27; it says the landlord is keeping $400 for carpet replacement, tells the tenant to object in writing within 15 days, and gives the office address to send the objection to",
+        "tenant_objection": "none sent yet",
+        "deposit_returned": "none"
+      },
+      "message": "Before I moved out on July 31, when my lease ended, I mailed the office my new address. On August 27 I signed for a certified letter dated August 20. They sent it to my old apartment and the post office forwarded it to me. It says they're keeping $400 of my $1,050 deposit for the carpet. Since they sent it to the wrong address, does it even count?",
+      "answer": "That is not settled, so here are both readings. The notice of a claim must go by certified mail to the tenant's last known mailing address within 30 days after the lease ended, and you had given the landlord your new address in writing. One reading: a letter sent to your old apartment is not the required notice, so the landlord forfeited the claim and owes you all $1,050 (it may still sue you for damages after returning it); the 30 days ran out on 2026-08-30 (from count_days). The other: you actually received the letter in time, and the statute does not rule out notice by other means the law permits, so it counts. Under that reading you can object in writing within 15 days after you received it, by 2026-09-11 (from count_days), and unless you object, the landlord may deduct the $400 and must send you the $650 balance by 2026-09-19 (from count_days). Objecting in writing by 2026-09-11 keeps your position under either reading.",
+      "points": [
+        "Not settled whether the forwarded letter counts; gives both readings and chooses neither.",
+        "Reading one: the notice goes by certified mail to the tenant's last known mailing address, and the tenant had given a new one in writing, so a letter to the old apartment is not the required notice; the 30 days have passed (count_days: 2026-08-30), so the landlord forfeited the claim and owes all $1,050 (and may still sue for damages after returning it).",
+        "Reading two: the tenant actually received it in time, and 83.505(6) does not preclude other means, so it counts; the tenant may object in writing by 2026-09-11 (count_days, 15 days from the day received), and unless they object the landlord may deduct the $400 and must send the $650 by 2026-09-19 (count_days, 30 days from the date of the notice).",
+        "(Objecting in writing by 2026-09-11 keeps the tenant's position under either reading.)"
+      ],
+      "mistakes": [
+        "Says flatly that the letter counts, or flatly that it does not.",
+        "Counts the 15 days from the date on the letter instead of the day the tenant received it.",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."
+        },
+        {
+          "cite": "83.505(6)",
+          "quote": "This section does not preclude service of notices by any other means permitted by law."
+        },
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
+        },
+        {
+          "cite": "83.49(3)(b)",
+          "quote": "Unless the tenant objects to the imposition of the landlord’s claim or the amount thereof within 15 days after receipt of the landlord’s notice of intention to impose a claim, the landlord may then deduct the amount of his or her claim and shall remit the balance of the deposit to the tenant within 30 days after the date of the notice of intention to impose a claim for damages."
+        }
+      ],
+      "dates": [
+        {
+          "fact": "lease_end_date",
+          "days": 30,
+          "date": "2026-08-30",
+          "passed": true
+        },
+        {
+          "fact": "claim_received_date",
+          "days": 15,
+          "date": "2026-09-11",
+          "passed": false
+        },
+        {
+          "fact": "claim_notice_date",
+          "days": 30,
+          "date": "2026-09-19",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "deposit-16",
+      "title": "A certified claim with no amount",
+      "today": "2026-09-01",
+      "facts": {
+        "lease_end_date": "2026-07-31",
+        "move_out_date": "2026-07-31",
+        "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+        "claim_notice_date": "2026-08-20",
+        "claim_received_date": "2026-08-24",
+        "landlord_notice_of_claim": "a letter dated 2026-08-20, sent by certified mail to the forwarding address and signed for by the tenant on 2026-08-24; it says the landlord intends to keep part of the deposit to replace the carpet, tells the tenant to object in writing within 15 days, and gives the office address to send the objection to; it gives no dollar amount",
+        "tenant_objection": "none sent yet",
+        "deposit_returned": "none"
+      },
+      "message": "My lease ended July 31 and I moved out that day. On August 24 I signed for a certified letter dated August 20 saying they're keeping part of my $1,050 deposit to replace the carpet. It doesn't say how much. Does a letter like that even count if it doesn't give an amount?",
+      "answer": "That is not settled, so here are both readings. The statute says the written notice must contain a statement in substantially a set form, and that form gives the amount of the claim. One reading: without the amount it is not the required notice; the 30 days after the lease ended have passed (2026-08-30, from count_days), so the landlord forfeited the claim and owes all $1,050 (it may still sue for damages after returning it). The other: the form need only be followed substantially, and the letter gave the claim and its reason by certified mail in time, so it counts. Under that reading you can object in writing by 2026-09-08 (from count_days, 15 days after you received it), and unless you object, the landlord may deduct its claim and must send the balance by 2026-09-19 (from count_days). Objecting in writing by 2026-09-08 keeps your position under either reading.",
+      "points": [
+        "Not settled whether a notice with no amount counts; gives both readings and chooses neither.",
+        "Reading one: the required statement, in substantially the statute's form, gives the amount of the claim; without it the letter is not the required notice; the 30 days have passed (count_days: 2026-08-30), so the landlord forfeited the claim and owes all $1,050 (and may still sue for damages after returning it).",
+        "Reading two: the form need only be followed substantially, and the letter gave the claim and its reason by certified mail in time, so it counts; the tenant may object in writing by 2026-09-08 (count_days, 15 days from the day received), and unless they object the landlord may deduct its claim and must send the balance by 2026-09-19 (count_days, 30 days from the date of the notice).",
+        "(Objecting in writing by 2026-09-08 keeps the tenant's position under either reading.)"
+      ],
+      "mistakes": [
+        "Says flatly that the letter counts, or flatly that it does not.",
+        "Counts the 15 days from the date on the letter instead of the day the tenant received it.",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "The written notice must contain a statement in substantially the following form: This is a notice of my intention to impose a claim for damages in the amount of"
+        },
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
+        },
+        {
+          "cite": "83.49(3)(b)",
+          "quote": "Unless the tenant objects to the imposition of the landlord’s claim or the amount thereof within 15 days after receipt of the landlord’s notice of intention to impose a claim, the landlord may then deduct the amount of his or her claim and shall remit the balance of the deposit to the tenant within 30 days after the date of the notice of intention to impose a claim for damages."
+        }
+      ],
+      "dates": [
+        {
+          "fact": "lease_end_date",
+          "days": 30,
+          "date": "2026-08-30",
+          "passed": true
+        },
+        {
+          "fact": "claim_received_date",
+          "days": 15,
+          "date": "2026-09-08",
+          "passed": false
+        },
+        {
+          "fact": "claim_notice_date",
+          "days": 30,
+          "date": "2026-09-19",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "deposit-17",
+      "title": "A certified claim with no reason",
+      "today": "2026-10-19",
+      "facts": {
+        "lease_end_date": "2026-07-31",
+        "move_out_date": "2026-07-31",
+        "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+        "claim_notice_date": "2026-08-20",
+        "claim_received_date": "2026-08-24",
+        "landlord_notice_of_claim": "a letter dated 2026-08-20, sent by certified mail to the forwarding address and signed for by the tenant on 2026-08-24; it says the landlord intends to keep $400 of the deposit, tells the tenant to object in writing within 15 days, and gives the office address to send the objection to; it gives no reason for keeping the money",
+        "tenant_objection": "none sent",
+        "deposit_returned": "none"
+      },
+      "message": "I moved out July 31 when my lease ended. On August 24 I signed for a certified letter saying they're keeping $400 of my $1,050 deposit, but it doesn't say why. I didn't write back. I still haven't gotten any money at all. Can I get all of it back?",
+      "answer": "Yes. To keep any of the deposit, the landlord had to send written notice by certified mail, within 30 days after the lease ended, of its intention to impose a claim and the reason for imposing it. Your letter gives no reason, so it is not the required notice. The 30 days (2026-08-30, from count_days) have passed, so the landlord forfeited the right to keep any of the deposit and must return all $1,050. Not writing back does not change that. The landlord can still sue you for damages after returning the deposit.",
+      "points": [
+        "Yes, the tenant can get all $1,050 back.",
+        "The notice must give the reason for imposing the claim; this letter gives none, so it is not the required notice.",
+        "The 30 days after the lease ended have passed (count_days: 2026-08-30) without the required notice, so the landlord forfeited the right to impose a claim and must return the whole deposit; not objecting does not change that.",
+        "The landlord may still file an action for damages after returning the deposit."
+      ],
+      "mistakes": [
+        "Gives two readings of whether a notice with no reason counts, or says it counts.",
+        "Says the tenant lost the $400 because they did not object within 15 days.",
+        "Says the landlord may keep $400 and owes only $650.",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice by certified mail to the tenant’s last known mailing address or by e-mail in accordance with s. 83.505 of his or her intention to impose a claim on the deposit and the reason for imposing the claim."
+        },
+        {
+          "cite": "83.49(3)(a)",
+          "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
+        }
+      ],
+      "dates": [
+        {
+          "fact": "lease_end_date",
+          "days": 30,
+          "date": "2026-08-30",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "deposit-18",
+      "title": "The tenant objected in time; nothing since",
+      "today": "2026-10-19",
+      "facts": {
+        "lease_end_date": "2026-07-31",
+        "move_out_date": "2026-07-31",
+        "forwarding_address": "given in writing, mailed to the office on 2026-07-28",
+        "claim_notice_date": "2026-08-20",
+        "claim_received_date": "2026-08-24",
+        "landlord_notice_of_claim": "a letter dated 2026-08-20, sent by certified mail to the forwarding address and signed for by the tenant on 2026-08-24; it says the landlord is keeping $400 for carpet replacement, tells the tenant to object in writing within 15 days, and gives the office address to send the objection to",
+        "tenant_objection": "a letter sent by certified mail on 2026-08-30 to the office address in the landlord's notice, saying the tenant objects to the $400 claim because the carpet wear came from normal use; signed for at the office on 2026-09-01",
+        "landlord_reply": "none",
+        "deposit_returned": "none"
+      },
+      "message": "My lease ended July 31. My landlord sent a certified letter dated August 20 (I got it August 24) saying they're keeping $400 of my $1,050 deposit for the carpet. I sent a written objection by certified mail on August 30 and the office signed for it on September 1. Since then, nothing: no reply and not even the other $650. Weren't they supposed to send the $650 within 30 days? What happens now?",
+      "answer": "Your objection was in time: the last day was 2026-09-08 (from count_days, 15 days after you received the letter), and you sent it and the office signed for it before then. But the statute does not settle what happens after an objection. The landlord's right to deduct its claim, and its duty to send the balance within 30 days after the date of the notice, are both in a sentence that begins 'Unless the tenant objects'. You objected, so that sentence does not set a deadline for the $650, and the statute sets no other step except going to court. Either side can file an action in court to decide who is entitled to the deposit, and the winner gets court costs and a reasonable attorney's fee.",
+      "points": [
+        "The objection was in time (count_days: 2026-09-08, 15 days from the day the notice was received).",
+        "The statute does not settle what follows an objection: the right to deduct and the duty to send the balance within 30 days sit in a sentence that begins 'Unless the tenant objects', so it sets no deadline for the $650 once the tenant objected.",
+        "The statute names a court action: either party can go to court over the right to the deposit, and the prevailing party gets court costs and a reasonable attorney's fee."
+      ],
+      "mistakes": [
+        "Says the $650 was due by 2026-09-19, or is overdue, as if the statute settled it after an objection.",
+        "Says the landlord may now deduct the $400 anyway, or that the objection cancels the claim.",
+        "Says the landlord forfeited the whole deposit.",
+        "Gives a date it worked out itself instead of from count_days."
+      ],
+      "law": [
+        {
+          "cite": "83.49(3)(b)",
+          "quote": "Unless the tenant objects to the imposition of the landlord’s claim or the amount thereof within 15 days after receipt of the landlord’s notice of intention to impose a claim, the landlord may then deduct the amount of his or her claim and shall remit the balance of the deposit to the tenant within 30 days after the date of the notice of intention to impose a claim for damages."
+        },
+        {
+          "cite": "83.49(3)(c)",
+          "quote": "If either party institutes an action in a court of competent jurisdiction to adjudicate the party’s right to the security deposit, the prevailing party is entitled to receive his or her court costs plus a reasonable fee for his or her attorney."
+        }
+      ],
+      "dates": [
+        {
+          "fact": "claim_received_date",
+          "days": 15,
+          "date": "2026-09-08",
+          "passed": true
+        }
+      ]
     }
   ]
 }

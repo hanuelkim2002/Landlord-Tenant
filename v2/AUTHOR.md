@@ -24,6 +24,7 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
 - 2026-10-22: quotation marks only for the statute's and the lease's words; what the tenant said, the facts, and
   messages are put in the model's own words, and the quote check does not check them (rule 6).
 - 2026-10-22: the model asks for all the lookups it needs in one step, not one at a time.
+- 2026-10-24: the keys for deposit stories 13 to 18 (`comparisons/skills/stories_more.json`), as written.
 - 2026-10-23: the chat runs on Claude Sonnet 5.5 and the lease reader on Haiku 5.5, both straight from Anthropic
   (your API credit), through its OpenAI-compatible endpoint so the code stays as it is. Tenant messages, facts,
   and leases now go to Anthropic, not OpenRouter or Google. Gemini stays one setting away (GATEWAY=openrouter).

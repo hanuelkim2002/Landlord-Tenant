@@ -1,0 +1,293 @@
+{
+ "deposit-13/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, but lists the first sentence of 83.49(4) as an open point with readings for and against and says the statute does not say which controls."
+ },
+ "deposit-13/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Points made with hedges ('appears'), and it lists the rent-regulation reading as a point 'the statute leaves open', treating housing-authority coverage as unsettled."
+ },
+ "deposit-13/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'probably yes' and conditions the result on which reading of 83.49(4) wins, stating the statute does not say which; that is the two-readings mistake, though the points are all stated."
+ },
+ "deposit-14/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Both readings and the forfeiture analysis are correct and it says it cannot tell which a court would pick. But it opens 'Probably yes', a lean toward one reading."
+ },
+ "deposit-14/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Quotes 83.49(4), gives both readings, says it cannot settle them, and gives the forfeiture result. But it opens 'you should be entitled to all $1,050 back', which leans toward the reading that 83.49 applies."
+ },
+ "deposit-14/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Gives both readings, says the statute does not choose, and leaves other law outside the tool; the forfeiture result is right. But it opens 'Probably yes', a lean toward one reading."
+ },
+ "deposit-15/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"You called this college housing\": the tenant said nothing about college housing.",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Both readings given and neither chosen; objection deadline Sept 11 from receipt is right. Reading two omits the $650 balance deadline of 2026-09-19, and the answer invents a fact about college housing."
+ },
+ "deposit-15/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Both readings are given and left to a court; the Sept 11 objection deadline from receipt is right. The landlord's reading never mentions the $650 balance or its 2026-09-19 deadline."
+ },
+ "deposit-15/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Sound two-reading answer with 83.505(6), Sept 11 objection deadline and forfeiture of all $1,050 under reading one. Reading two never gives the landlord's duty to send the $650 by 2026-09-19."
+ },
+ "deposit-16/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Both readings, no choice; forfeiture reading complete; objection by 2026-09-08 from receipt with 2026-09-04 as a safe target; omits the 2026-09-19 balance deadline."
+ },
+ "deposit-16/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "'You called this college housing.' The tenant's message says nothing about college housing.",
+  "points_made": [
+   false,
+   true,
+   false,
+   true
+  ],
+  "reason": "Leads with 'the letter probably still counts', leaning to one reading rather than choosing neither; omits the 2026-09-19 balance deadline; and attributes a college-housing claim the tenant never made."
+ },
+ "deposit-16/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Gives both readings and picks neither; reading one ends in forfeiture after 2026-08-30; reading two and the 2026-09-08 objection date are there, but it never gives the landlord's 2026-09-19 deadline to send the balance."
+ },
+ "deposit-17/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   true
+  ],
+  "reason": "First sentence says only that the tenant can probably get at least $650, not whether all of it comes back. It gives two readings of the missing reason instead of concluding the notice fails."
+ },
+ "deposit-17/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   true
+  ],
+  "reason": "Opens 'Probably not all of it' and lists the tenant's failure to object as a reason the full refund 'isn't automatic', leaning toward the landlord keeping $400. It then gives two readings of the missing reason and declines to pick."
+ },
+ "deposit-17/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   true
+  ],
+  "reason": "Opens 'Possibly, but not for certain' and gives two readings of the missing reason, so it never concludes the notice fails and the whole deposit is owed. Dates and the damages-suit point are right."
+ },
+ "deposit-18/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the objection was timely by Sept 8, that the 30-day balance sentence is written for a tenant who did not object so the statute does not set a deadline after an objection (two readings, neither chosen), and names the court action with costs and fees. The opening line is muddled about which 30-day rule applies, but the body is correct."
+ },
+ "deposit-18/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Objection timely by Sept 8; explains that the 30-day balance duty covers the no-objection case and that the statute gives no express deadline after an objection; court action with costs and fees. The opening describes the statute's 30 days as only the notice deadline, but the body corrects this."
+ },
+ "deposit-18/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Objection timely by Sept 8. The balance deadline applies only without an objection, so the statute does not say when the $650 is due, and it picks neither reading. Names the court action with costs and fees."
+ }
+}

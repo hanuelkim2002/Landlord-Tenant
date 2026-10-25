@@ -1,6 +1,7 @@
-"""Runs one version of the deposit skill on the twelve deposit stories (1 to 5 from comparisons/skills/stories.json,
-6 to 12 from stories_more.json), three runs each, through the app's own chat with Gemini, as the page runs it.
-Run from this folder: python run.py new   (or old, v1; add --dry to try it with a fake model)
+"""Runs one version of the deposit skill on the deposit stories (1 to 5 from comparisons/skills/stories.json, 6 to 18
+from stories_more.json), three runs each, through the app's own chat, as the page runs it: with Gemini on OpenRouter
+(results/), or with Sonnet 5.5 from Anthropic (results/sonnet/).
+Run from this folder: python run.py new   (or old, v1, fixed; --model sonnet; --stories 6,8,13-18; --dry for a fake model)
 """
 import argparse
 import sys
@@ -15,15 +16,25 @@ sys.path.insert(0, str(V2 / "comparisons" / "models"))
 import models                                                 # the model test's set-up, request log, and file helpers
 import run_chat                                               # its answer_once: one message answered as the page does
 
-# old: the skill before 2026-10-22; new: with the gaps filled; v1: v1's skill, unchanged, under v2's header
-VERSIONS = {"old": HERE / "versions" / "old.md", "new": HERE / "versions" / "new.md",
-            "v1": V2.parent / "v1" / "skills" / "deposit_not_returned.md"}
+# old: the skill before 2026-10-22; new: with the gaps filled; fixed: new with the four fixes of 2026-10-24;
+# fixed2: fixed, with rent and deposit named in the Section 8 reading; v1: v1's skill, unchanged, under v2's header
+VERSIONS = {"old": HERE / "versions" / "old.md", "new": HERE / "versions" / "new.md", "fixed": HERE / "versions" / "fixed.md",
+            "fixed2": HERE / "versions" / "fixed2.md", "v1": V2.parent / "v1" / "skills" / "deposit_not_returned.md"}
+# the chat model: its name in models.CHAT_MODELS
+CHAT = {"gemini": "gemini", "sonnet": "sonnet-anthropic"}
+
+
+def results_folder(model):
+    """Where a chat model's answers and grades are kept: results/ for Gemini (the first run), results/<model>/ else."""
+    return HERE / "results" / ("" if model == "gemini" else model)
 
 
 def parse_args():
     """The command line."""
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("version", choices=list(VERSIONS))
+    parser.add_argument("--model", choices=list(CHAT), default="gemini")
+    parser.add_argument("--stories", help="only these story numbers, like 6,8,13-18")
     parser.add_argument("--dry", action="store_true", help="use a fake model; nothing is sent anywhere")
     return parser.parse_args()
 
@@ -41,9 +52,20 @@ def skill_folder(version):
 
 
 def all_stories():
-    """The twelve stories, in order."""
+    """Every deposit story, in order."""
     return [story for name in ("stories.json", "stories_more.json")
             for story in models.read_json(SKILLS_TEST / name)["stories"]]
+
+
+def chosen(stories, numbers):
+    """The stories named by numbers and ranges like "6,8,13-18" (all of them if none are given)."""
+    if not numbers:
+        return stories
+    wanted = set()
+    for part in numbers.split(","):
+        first, _, last = part.partition("-")
+        wanted |= set(range(int(first), int(last or first) + 1))
+    return [s for s in stories if int(s["id"].split("-")[1]) in wanted]
 
 
 def pages_for(story):
@@ -52,12 +74,12 @@ def pages_for(story):
 
 
 def main():
-    """Set up the app with Gemini and this skill version, and run each story three times."""
+    """Set up the app with the chat model and this skill version, and run each story three times."""
     args = parse_args()
-    gateway, model_id = models.CHAT_MODELS["gemini"]
+    gateway, model_id = models.CHAT_MODELS[CHAT[args.model]]
     app = models.setup(gateway, chat_model=model_id, dry=args.dry)
     app.law.SKILLS = skill_folder(args.version)               # load_skill reads the skills from here
-    folder = HERE / "results" / ("dry" if args.dry else "")
+    folder = results_folder(args.model) / ("dry" if args.dry else "")
     folder.mkdir(parents=True, exist_ok=True)
     path = folder / f"{args.version}.jsonl"
     done = {(line["story"], line["run"]) for line in models.lines_without_errors(path)}
@@ -72,9 +94,9 @@ def main():
             models.add_line(path, line)
             run_chat.progress(f"{args.version} {story['id']} run {run}", line)
 
-    print(f"{args.version} skill, Gemini ({model_id}), into {path.name}" + (" [dry]" if args.dry else ""))
+    print(f"{args.version} skill, {args.model} ({model_id}), into {path}" + (" [dry]" if args.dry else ""))
     with ThreadPoolExecutor(6) as pool:
-        list(pool.map(run_story, all_stories()))              # list() so that an error inside a thread is raised here
+        list(pool.map(run_story, chosen(all_stories(), args.stories)))   # list() so a thread's error is raised here
     lines = models.read_lines(path)
     print(f"Done. {len(lines)} answers, ${sum(line['cost'] for line in lines):.4f} by the logged costs.")
 

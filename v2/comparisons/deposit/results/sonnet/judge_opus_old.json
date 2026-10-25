@@ -1,0 +1,293 @@
+{
+ "deposit-13/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Correct outcome and all points, but flags the rent-regulation sentence of 83.49(4) as an 'open point' it cannot settle, presenting coverage of a housing authority as open."
+ },
+ "deposit-13/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "All points made and it calls the second sentence the better reading, but still offers the authority's contrary reading and says it cannot say how a court would rule, so it treats the point as open."
+ },
+ "deposit-13/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, but presents the first sentence of 83.49(4) (rent set by authority rules) as another reading and says it cannot say the point is settled, treating coverage as open."
+ },
+ "deposit-14/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Both readings and the forfeiture analysis are right, but it opens 'Probably yes, you can get all of it back' (a lean). Under reading one it says 'Your rights would come from your lease, your housing assistance contract, and other law', naming a governing source the statute does not."
+ },
+ "deposit-14/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Quotes 83.49(4), gives both readings, says nothing settles it, and works out the full forfeiture under the reading that 83.49 applies. But it opens 'Probably yes. You'd be entitled to the whole $1,050', a lean toward one reading, so it does not choose neither."
+ },
+ "deposit-14/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Gives both readings and the forfeiture result, but opens 'Probably yes' (a lean). Under reading 1 it says 'the Section 8 rules and that contract govern your deposit' and the claim would depend on the HAP contract and housing authority rules, which the statute does not say."
+ },
+ "deposit-15/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Calls it an open question and lays out both sides; the objection deadline of Sept 11 from receipt is right. The landlord's reading lacks the $650 balance deadline (2026-09-19) and rests on actual notice without the 83.505(6) point."
+ },
+ "deposit-15/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives both readings without choosing, with forfeiture and the right to sue under one, and 83.505(6), the Sept 11 objection deadline, the $400 deduction and the Sept 19 balance date under the other. Says objecting keeps the tenant's position under either reading."
+ },
+ "deposit-15/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with 'Probably yes, it counts', so it picks a side instead of leaving the question open, though it is hedged rather than flat. Otherwise both readings are complete, with forfeiture, Sept 11 from receipt, the $400 deduction and the $650 by Sept 19."
+ },
+ "deposit-16/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Both readings, no choice; forfeiture reading complete; objection by September 8 from receipt and deduction if silent, but no date for the landlord to send the balance (2026-09-19)."
+ },
+ "deposit-16/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings, says it cannot tell how a court would rule; forfeiture of all $1,050; objection by 2026-09-08 from receipt; deduction if no objection and balance by 2026-09-19."
+ },
+ "deposit-16/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Says the law does not settle it and gives both readings; objection by September 8 from receipt; omits the 2026-09-19 balance deadline under reading two."
+ },
+ "deposit-17/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   true
+  ],
+  "reason": "Treats whether a no-reason notice counts as unsettled and gives two readings, so it never says the tenant gets all $1,050 or that silence does not matter. It does note the landlord may sue for damages after returning the deposit."
+ },
+ "deposit-17/2": {
+  "answers_first": false,
+  "mistakes_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   true
+  ],
+  "reason": "First sentence says only that at least $650 is owed, not whether all of it comes back. It then gives two readings of the no-reason notice instead of concluding it is not the required notice."
+ },
+ "deposit-17/3": {
+  "answers_first": false,
+  "mistakes_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   true
+  ],
+  "reason": "First sentence says only that at least $650 is owed. It treats whether a no-reason notice counts as an open question with two readings, so it never says the whole deposit is owed."
+ },
+ "deposit-18/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Leads with 'the landlord was required to send you the $650, and the deadline has passed' and 'The $650 is owed', quoting the remit duty without its 'unless the tenant objects' condition. Objection timeliness and the court action with costs and fees are correct."
+ },
+ "deposit-18/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   true
+  ],
+  "reason": "Says flatly that the $650 deadline passed and that withholding it 'is a violation of the statute on any reading', treating the statute as settled after an objection. It gives the Sept 8 deadline but never says the objection was in time ('Check those two dates against September 8')."
+ },
+ "deposit-18/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"The statute also says the landlord's deadline-based duties don't depend on you arguing about the $400\": 83.49(3)(b) says no such thing; the duty to remit sits in the 'Unless the tenant objects' sentence.",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Headlines that 'The $650 is overdue' and calls the no-deadline reading less natural, so it treats the balance as late despite the objection. Objection timeliness and the court action with costs and fees are correct."
+ }
+}

@@ -27,7 +27,8 @@ PRIVATE = Path(os.environ.get("MODEL_TEST_PRIVATE", HERE / "private"))
 
 # name: (gateway, model id on that gateway)
 CHAT_MODELS = {"nemotron": ("uf", "nemotron-3-super-120b-a12b"), "haiku": ("openrouter", "anthropic/claude-haiku-5.5"),
-               "gemini": ("openrouter", "google/gemini-3.8-flash"), "sonnet": ("openrouter", "anthropic/claude-sonnet-5.5")}
+               "gemini": ("openrouter", "google/gemini-3.8-flash"), "sonnet": ("openrouter", "anthropic/claude-sonnet-5.5"),
+               "sonnet-anthropic": ("anthropic", "claude-sonnet-5-5")}
 READERS = {"gemma": ("uf", "gemma-4-31b-it"), "gemini": ("openrouter", "google/gemini-3.8-flash"),
            "haiku": ("openrouter", "anthropic/claude-haiku-5.5"), "sonnet": ("openrouter", "anthropic/claude-sonnet-5.5")}
 
@@ -35,7 +36,8 @@ READERS = {"gemma": ("uf", "gemma-4-31b-it"), "gemini": ("openrouter", "google/g
 # are the UF budget, not money; the OpenRouter ones are list prices.
 PRICES = {"nemotron-3-super-120b-a12b": (0.06, 0.24), "gemma-4-31b-it": (0.12, 0.36), "gpt-oss-120b": (0.06, 0.15),
           "anthropic/claude-haiku-5.5": (0.10, 0.50), "google/gemini-3.8-flash": (0.825, 4.125),
-          "anthropic/claude-sonnet-5.5": (2, 10)}
+          "anthropic/claude-sonnet-5.5": (2, 10),
+          "claude-sonnet-5-5": (2, 10), "claude-haiku-5-5": (0.10, 0.50)}
 
 LOCAL = threading.local()                                     # one log per thread: threads answer different stories at once
 LOCK = threading.Lock()                                       # one thread at a time writes to a file or to the screen
