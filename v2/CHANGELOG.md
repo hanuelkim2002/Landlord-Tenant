@@ -117,3 +117,17 @@ needed lookups in one step: one at a time, Gemini used up all 8 tool rounds, and
 `checks.py`: a quote is checked against a section cited just before it as well as just after it (`nearby_cites`), and a
 quote mark only opens after a space, bracket, or bold mark, so the words between two quotations are no longer checked
 as a quote. Replaces the cite-after-only search and the old pattern that paired any two quote marks. Two new tests.
+
+## 2026-10-25: the date rule, reworded
+
+CLAUDE.md, README.md, DOCUMENTATION.md, `tools.py`: the model never works out a date; code does all date math;
+`count_days` is the only date math for deadlines. Replaces "`count_days` is the only date math", so code can count
+the days since the tenant's last message (the memory, next entry). No code behavior changed.
+
+## 2026-10-25: memory, a timeline of the dispute
+
+`record.py`, `tools.py`, `chat.py`, `app.py`: each matter keeps numbered timeline lines (`save_line`, the sixth tool;
+every version in the history as `line_saved`), and after a gap of a day the prompt gets SINCE LAST VISIT (the days
+since the last message, counted by code, and the facts confirmed since). Rules 9 and 10; the page shows the timeline.
+Replaces memory by the old chat and the facts alone (the old chat stays). Spec and plan in `docs/superpowers/`; the
+live test in `comparisons/memory/`.

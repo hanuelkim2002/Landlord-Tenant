@@ -49,7 +49,7 @@ A law student (not admitted) and a beginning coder, building this to learn and t
   on their words. Show the author anything the new skill says about the law that v1's did not. Run the skill quote
   checker after every skill edit.
 - `matters/` and `.env` hold private data. Never print them in full, never commit them.
-- The model never computes a date; `count_days` is the only date math.
+- The model never works out a date. Code does all date math; `count_days` is the only date math for deadlines.
 
 ## Running
 

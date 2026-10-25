@@ -24,6 +24,8 @@ against rule 7).
   confirmed.
 - 2026-10-21, model test, deposit stories (`comparisons/models/`): nemotron 3 of 15 (sample lease) and 6 of 15 (own
   lease), haiku 1 of 15 (own), gemini and sonnet 0 of 30.
+- 2026-10-25, memory test (`comparisons/memory/`, Sonnet 5.5): 1 of 18, new memory, leave-early story: "May 15 to
+  July 31 would be about 2.5 months", a period it worked out itself.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -66,3 +68,12 @@ The vision model gets a check box or a typed-in value wrong, or never finishes t
 - 2026-10-21, model test, gemma: broken sample lease 31.3 of 35 boxes right on average (water and trash shown
   checked for the tenant); own lease 51 of 71 values and boxes; page 11 of the own lease (mostly blank lines) timed out
   twice (2 minutes each). Haiku, Gemini, and Sonnet: 35 of 35 and 71 of 71.
+
+## Leaves the old line open
+
+The tenant brings news that settles an open line of the timeline (the letter came, nobody came, the manager
+answered). The model saves the news as a new line but does not save the old line again as closed, so the open
+list keeps a line that is done.
+
+- 2026-10-25, memory test (`comparisons/memory/`, Sonnet 5.5): 6 of 9 new-memory answers left it open (deposit 1 of
+  3, repair 2 of 3, leave-early 3 of 3).

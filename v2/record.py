@@ -1,10 +1,11 @@
 """The record of a matter: its folder matters/<tenant id>/<matter id>/, its current state in matter.json, and its
 history in events.jsonl, which is only ever added to. A matter is a plain dict passed to these functions.
-confirm_fact is the only code that confirms a fact.
+confirm_fact is the only code that confirms a fact. The timeline's lines live in matter.json too, and every
+version of a line is in the history.
 """
 import json
 import re
-from datetime import datetime
+from datetime import date, datetime
 
 import config
 
@@ -37,7 +38,7 @@ def new_matter(tenant, description):
     if not NAME.match(tenant):
         raise ValueError("A tenant id is lowercase letters, digits, - or _, up to 40 characters.")
     m = {"tenant": tenant, "matter": datetime.now().strftime("m-%Y%m%d-%H%M%S"), "opened": now(),
-         "description": description, "skills": [], "pending": {}, "confirmed": {}}
+         "description": description, "skills": [], "pending": {}, "confirmed": {}, "lines": {}}
     folder(m).mkdir(parents=True)
     save(m)
     log(m, "matter_opened", description=description)
@@ -46,7 +47,9 @@ def new_matter(tenant, description):
 
 def load(tenant, matter):
     """Open a saved matter."""
-    return json.loads((config.MATTERS / tenant / matter / "matter.json").read_text())
+    m = json.loads((config.MATTERS / tenant / matter / "matter.json").read_text())
+    m.setdefault("lines", {})                                 # matters saved before the timeline have none
+    return m
 
 
 def saved_matters():
@@ -101,3 +104,35 @@ def confirm_fact(m, name, value):
 def confirmed_facts(m):
     """The confirmed facts, name to value."""
     return {name: fact["value"] for name, fact in m["confirmed"].items()}
+
+
+def save_line(m, number, date, what, open):
+    """Save one line of the timeline: number 0 adds a new line, a line's number saves a new version of it.
+    Returns the line's number."""
+    if not what.strip():
+        raise ValueError("A line needs what happened, in plain words.")
+    if number == 0:
+        number = len(m["lines"]) + 1                          # lines are never removed, so this counts up
+    elif str(number) not in m["lines"]:
+        raise ValueError(f"No line {number}. The lines: {', '.join(m['lines']) or 'none yet'}.")
+    m["lines"][str(number)] = {"date": date, "what": what, "open": open, "saved": now()}
+    save(m)
+    log(m, "line_saved", number=number, date=date, what=what, open=open)
+    return number
+
+
+def since_last_visit(m, today=None):
+    """After a gap of a day or more: the days since the last message, counted by code, and the facts confirmed
+    since then. None on the same day, or when there is no message yet."""
+    history = events(m)
+    messages = [e for e in history if e["kind"] == "message"]
+    if not messages:
+        return None
+    last = messages[-1]["time"]
+    today = today or date.today()                             # looked up here, so a test can stand in another day
+    days = (today - date.fromisoformat(last[:10])).days      # calendar days: 11 pm to the next morning is one
+    if days < 1:
+        return None
+    changed = [{"fact": e["fact"], "value": e["value"], "noted_value": e["noted_value"]}
+               for e in history if e["kind"] == "fact_confirmed" and e["time"] > last]
+    return {"days": days, "changed": changed}

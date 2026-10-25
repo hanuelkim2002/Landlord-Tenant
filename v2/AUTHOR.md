@@ -24,6 +24,13 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
 - 2026-10-22: quotation marks only for the statute's and the lease's words; what the tenant said, the facts, and
   messages are put in the model's own words, and the quote check does not check them (rule 6).
 - 2026-10-22: the model asks for all the lookups it needs in one step, not one at a time.
+- 2026-10-25: code may do date math besides deadlines; the first use is the days since the tenant's last message,
+  for the memory's "since last visit" (built the same day). The model still never works out a date, and
+  `count_days` stays the only date math for deadlines.
+- 2026-10-25: the memory is a timeline of numbered lines (date, what happened, open or not) and a since-last-visit
+  note counted by code; the old chat stays; no due dates and no confirming lines
+  (`docs/superpowers/specs/2026-10-25-memory-timeline-design.md`). The live test runs on Claude Sonnet 5.5 with the
+  Anthropic key (`comparisons/memory/`).
 
 ## Open
 
@@ -52,4 +59,8 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    of 83.42(1)'s "incidental to the provision of ... educational ... services."
 9. **Check my keys for your lease.** `comparisons/models/private/own_questions.json` and `own_stories.json`, written
    from the page images; the grades on your lease follow them.
-
+10. **The timeline's old open lines.** In the memory test, 6 of 9 answers saved the tenant's news as a new line but
+    left the line it settled open (SLIPS.md). Your call: leave it to a later model, change rule 9's wording, or add a
+    guard (for example, the save_line result lists the open lines). `comparisons/memory/SCORES.md`.
+11. **The 1,000-line limit.** App code is 816 lines without `tests.py` (722 on main) and 1,008 with it (811 on
+    main): the tests grew, not the app. Your call whether `tests.py` counts toward the limit in CLAUDE.md.

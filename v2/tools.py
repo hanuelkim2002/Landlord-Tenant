@@ -1,5 +1,5 @@
-"""The five tools the model can call, each a short function, and their descriptions as the model sees them.
-count_days is the only date math in the code.
+"""The six tools the model can call, each a short function, and their descriptions as the model sees them.
+count_days is the only date math for deadlines.
 """
 from datetime import date, timedelta
 
@@ -56,8 +56,24 @@ def note_fact(m, name, value, tenant_words):
     return f"Noted {name} = {value} as pending. It counts only once the tenant confirms it in the sidebar."
 
 
+def today():
+    """Today's date. A helper, because save_line's parameter named date hides the date class inside it."""
+    return date.today()
+
+
+def save_line(m, number, date, what, open):
+    """Save one line of the timeline. "today" as the date is turned into today's date here, by code."""
+    date = str(today()) if str(date).strip().lower() == "today" else str(date).strip()
+    open = str(open).lower() == "true"                       # a model may send the word instead of true or false
+    try:
+        number = record.save_line(m, int(number), date, str(what), open)
+    except ValueError as problem:
+        return str(problem)
+    return f"Saved line {number}: {date or 'no date'}: {what}" + (" (open)." if open else ".")
+
+
 RUN = {"get_statute_section": get_statute_section, "search_statute": search_statute, "load_skill": load_skill,
-       "count_days": count_days, "note_fact": note_fact}
+       "count_days": count_days, "note_fact": note_fact, "save_line": save_line}
 
 
 def tool(tool_name, about, **parameters):
@@ -66,7 +82,7 @@ def tool(tool_name, about, **parameters):
         "type": "object", "properties": parameters, "required": list(parameters)}}}
 
 
-TEXT, NUMBER = {"type": "string"}, {"type": "integer"}
+TEXT, NUMBER, BOOLEAN = {"type": "string"}, {"type": "integer"}, {"type": "boolean"}
 SCHEMAS = [
     tool("get_statute_section", "Read the full text of one section of Fla. Stat. ch. 83, part II, like 83.49.",
          section=TEXT),
@@ -80,6 +96,12 @@ SCHEMAS = [
     tool("note_fact", "Save a fact the tenant told you, as pending, for the tenant to confirm. name: lowercase words "
          "joined by underscores, like lease_end_date. value: a date as YYYY-MM-DD, otherwise plain words. "
          "tenant_words: what the tenant said, in their words.", name=TEXT, value=TEXT, tenant_words=TEXT),
+    tool("save_line", "Save one line of the timeline: one thing that happened between the people in the dispute, or "
+         "to the home (a message, a visit, a payment, a promise, a repair, a move). number: 0 for a new line, or a "
+         "line's number to save a new version of it, to fix it or close it. date: YYYY-MM-DD if the tenant gave the "
+         "exact day, \"today\" if it happened today, otherwise the tenant's words (like \"last Monday\"), or empty. "
+         "what: plain words, with who did it and how. open: true while something is still waiting on this line.",
+         number=NUMBER, date=TEXT, what=TEXT, open=BOOLEAN),
 ]
 
 

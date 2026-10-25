@@ -1,11 +1,20 @@
-"""The checks that need no model: the quote checker, the skill quote checker, and count_days.
+"""The checks that need no model: the quote checker, the skill quote checker, count_days, and the timeline.
 Run from this folder: python tests.py   (every line should say OK)
 """
+import atexit
+import json
+import shutil
 import sys
+import tempfile
+from datetime import date
+from pathlib import Path
 
+import chat
 import checks
+import config
 import law
-from tools import count_days
+import record
+from tools import count_days, save_line
 
 failures = 0
 
@@ -84,6 +93,100 @@ check("an unconfirmed fact cannot be counted from",
 check("a confirmed fact that is not a YYYY-MM-DD date is refused", "not a date" in count_days(MATTER, "not_a_date", 5))
 check("every result says the counting is not yet checked",
       "has not been checked against the statute yet" in count_days(MATTER, "old_date", 1))
+
+# ---- The timeline (record.py), in a throwaway matters folder, never the real matters/
+
+config.MATTERS = Path(tempfile.mkdtemp(prefix="matters_test_"))
+atexit.register(shutil.rmtree, config.MATTERS, ignore_errors=True)
+
+
+def refused(action):
+    """Whether an action is refused with a ValueError."""
+    try:
+        action()
+    except ValueError:
+        return True
+    return False
+
+
+lines_matter = record.new_matter("t-lines", "test")
+check("a new matter starts with no lines", lines_matter["lines"] == {})
+first = record.save_line(lines_matter, 0, "2026-10-13", "AC stopped working", True)
+second = record.save_line(lines_matter, 0, "", "Tenant texted the landlord about the AC", False)
+check("new lines are numbered in order", (first, second) == (1, 2))
+record.save_line(lines_matter, 1, "2026-10-14", "AC stopped working", True)
+versions = [e["date"] for e in record.events(lines_matter) if e["kind"] == "line_saved" and e["number"] == 1]
+check("a new version replaces the line, and the history keeps both",
+      record.load("t-lines", lines_matter["matter"])["lines"]["1"]["date"] == "2026-10-14"
+      and versions == ["2026-10-13", "2026-10-14"])
+check("an unknown line number is refused", refused(lambda: record.save_line(lines_matter, 9, "", "x", False)))
+check("a line with nothing in it is refused", refused(lambda: record.save_line(lines_matter, 0, "", "  ", False)))
+old_matter = record.new_matter("t-old", "test")
+saved = json.loads((record.folder(old_matter) / "matter.json").read_text())
+saved.pop("lines")
+(record.folder(old_matter) / "matter.json").write_text(json.dumps(saved))
+check("a matter saved before lines existed opens with no lines",
+      record.load("t-old", old_matter["matter"])["lines"] == {})
+
+
+def add_event(m, time, kind, **data):
+    """Write one event with a chosen time, as if it happened then."""
+    with (record.folder(m) / "events.jsonl").open("a") as f:
+        f.write(json.dumps({"time": time, "kind": kind, **data}) + "\n")
+
+
+visit = record.new_matter("t-visit", "test")
+check("a matter with no messages yet has no last visit", record.since_last_visit(visit, date(2026, 10, 25)) is None)
+add_event(visit, "2026-10-13T19:00:00", "message", role="user", text="hi")
+add_event(visit, "2026-10-13T19:00:05", "message", role="assistant", text="hello")
+add_event(visit, "2026-10-15T09:00:00", "fact_confirmed", fact="move_out_date", value="2026-07-30",
+          noted_value="2026-07-31")
+add_event(visit, "2026-10-15T09:01:00", "fact_confirmed", fact="deposit", value="800", noted_value="800")
+since = record.since_last_visit(visit, date(2026, 10, 25))
+check("the days since the last message are counted by code", since["days"] == 12)
+check("facts confirmed since then are listed, with the value first noted", since["changed"] == [
+    {"fact": "move_out_date", "value": "2026-07-30", "noted_value": "2026-07-31"},
+    {"fact": "deposit", "value": "800", "noted_value": "800"}])
+check("no block on the same day", record.since_last_visit(visit, date(2026, 10, 13)) is None)
+late = record.new_matter("t-late", "test")
+add_event(late, "2026-10-24T23:30:00", "message", role="assistant", text="night")
+check("a message late last night counts as one day", record.since_last_visit(late, date(2026, 10, 25))["days"] == 1)
+
+# ---- The save_line tool (tools.py)
+
+tool_matter = record.new_matter("t-tool", "test")
+check("the tool adds a line and says its number",
+      save_line(tool_matter, 0, "2026-10-20", "Landlord texted: fix Thursday", True).startswith("Saved line 1:"))
+save_line(tool_matter, 0, "Today", "Tenant got the landlord's letter", "false")
+check("'today' becomes today's date, written by code", tool_matter["lines"]["2"]["date"] == str(date.today()))
+check("open given as the word false is not open", tool_matter["lines"]["2"]["open"] is False)
+check("a number given as text works",
+      save_line(tool_matter, "1", "2026-10-21", "Landlord texted: fix Thursday", True).startswith("Saved line 1:"))
+check("an unknown number gets a plain reply", "No line 7" in save_line(tool_matter, 7, "", "x", False))
+
+# ---- The timeline and since-last-visit blocks of the prompt (chat.py)
+
+check("the timeline shows each line in order, open ones marked",
+      chat.timeline_text({"1": {"date": "2026-10-13", "what": "AC stopped working", "open": True},
+                          "2": {"date": "", "what": "Tenant texted the landlord", "open": False}})
+      == "- 1. 2026-10-13: AC stopped working (open)\n- 2. (no date): Tenant texted the landlord")
+check("no lines yet says so", chat.timeline_text({}) == "- none yet")
+check("no gap, no block", chat.since_text(None) == "")
+check("the block gives the days, and the facts confirmed since, with any correction",
+      chat.since_text({"days": 12, "changed": [
+          {"fact": "move_out_date", "value": "2026-07-30", "noted_value": "2026-07-31"},
+          {"fact": "deposit", "value": "800", "noted_value": "800"}]})
+      == "\n\nSINCE LAST VISIT (counted by code):\nThe last message was 12 days ago. Since then the tenant confirmed:"
+         "\n- move_out_date: 2026-07-30 (first noted as 2026-07-31)\n- deposit: 800")
+check("one day is said as one day", chat.since_text({"days": 1, "changed": []})
+      == "\n\nSINCE LAST VISIT (counted by code):\nThe last message was 1 day ago.")
+# The block's heading, not the words alone: rule 10 names the block too.
+TIMELINE_BLOCK, SINCE_BLOCK = "TIMELINE (what happened", "SINCE LAST VISIT (counted by code)"
+returning = chat.system_prompt(visit, [])
+check("a returning tenant's prompt holds the timeline and the since-last-visit block",
+      TIMELINE_BLOCK in returning and SINCE_BLOCK in returning)
+check("a brand-new matter's prompt has no since-last-visit block",
+      SINCE_BLOCK not in chat.system_prompt(record.new_matter("t-new", "test"), []))
 
 print(f"\n{'All checks passed.' if not failures else f'{failures} checks failed.'}")
 sys.exit(1 if failures else 0)
