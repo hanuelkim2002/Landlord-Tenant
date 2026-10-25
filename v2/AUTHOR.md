@@ -64,3 +64,6 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    amount and the reason counts without the 15-day warning or the objection address. Left open with two
    readings: a private landlord in a housing program, mail to the old address after a new one was given, a notice
    without the amount. Story 12's key reads 83.491(6) as putting a fee outside 83.49.
+11. **Judging story 17: is a backup "two readings"?** Answers say "yes, all $1,050" and then "even if the letter
+   counted, at least $650 is owed". One Opus judge counted that as two readings (wrong), another did not. Your rule
+   decides the grade; `comparisons/deposit/README.md`, fourth run.
