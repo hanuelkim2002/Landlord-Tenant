@@ -85,11 +85,12 @@ The six tools the model can call, their descriptions (`SCHEMAS`), and `run_tool(
   result).
 - `note_fact`: saves a pending fact for the tenant to confirm.
 - `save_line(m, number, date, what, open)`: saves a line of the timeline. "today" as the date becomes today's
-  date, by code (`today()`); `open` counts as true only for true or the word "true".
+  date, by code (`today()`); `open` counts as true only for true or the word "true". The reply ends with the
+  lines still open (`open_lines_text(m)`), so the model can close one the news settles.
 
 ### chat.py
 
-- `RULES`: the system prompt's rules (README.md, 498 words). Rule 9 keeps the timeline; rule 10 says how to pick
+- `RULES`: the system prompt's rules (README.md, 547 words). Rule 9 keeps the timeline; rule 10 says how to pick
   up after a gap.
 - `facts_text`, `timeline_text(lines)`, `since_text(since)`, `system_prompt(m, pages)`: the prompt, built fresh for
   each message. After the facts: TIMELINE, and SINCE LAST VISIT when the last message was on an earlier day.

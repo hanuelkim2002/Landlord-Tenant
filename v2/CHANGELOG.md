@@ -131,3 +131,10 @@ every version in the history as `line_saved`), and after a gap of a day the prom
 since the last message, counted by code, and the facts confirmed since). Rules 9 and 10; the page shows the timeline.
 Replaces memory by the old chat and the facts alone (the old chat stays). Spec and plan in `docs/superpowers/`; the
 live test in `comparisons/memory/`.
+
+## 2026-10-25: "open" means waiting for one thing; save_line lists the open lines
+
+Rule 9 and `save_line`'s description: a line is open only while it waits for one specific next thing; when that
+happens, the line that waited is closed. `save_line`'s reply now lists the lines still open. Replaces "open while
+something is still waiting", read as "the dispute goes on". Memory test: the old line closed in 15 of 15 answers
+with both, 13 of 15 with the wording alone, 3 of 9 before.

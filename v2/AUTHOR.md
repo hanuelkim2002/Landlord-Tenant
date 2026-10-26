@@ -31,6 +31,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   note counted by code; the old chat stays; no due dates and no confirming lines
   (`docs/superpowers/specs/2026-10-25-memory-timeline-design.md`). The live test runs on Claude Sonnet 5.5 with the
   Anthropic key (`comparisons/memory/`).
+- 2026-10-25: a line is open only while it waits for one specific next thing, and `save_line`'s reply lists the
+  open lines (item 10): the old line closed in 15 of 15 answers with both (13 of 15 with the wording alone), up
+  from 3 of 9.
 
 ## Open
 
@@ -59,8 +62,7 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    of 83.42(1)'s "incidental to the provision of ... educational ... services."
 9. **Check my keys for your lease.** `comparisons/models/private/own_questions.json` and `own_stories.json`, written
    from the page images; the grades on your lease follow them.
-10. **The timeline's old open lines.** In the memory test, 6 of 9 answers saved the tenant's news as a new line but
-    left the line it settled open (SLIPS.md). Your call: leave it to a later model, change rule 9's wording, or add a
-    guard (for example, the save_line result lists the open lines). `comparisons/memory/SCORES.md`.
-11. **The 1,000-line limit.** App code is 816 lines without `tests.py` (722 on main) and 1,008 with it (811 on
-    main): the tests grew, not the app. Your call whether `tests.py` counts toward the limit in CLAUDE.md.
+10. **Decided 2026-10-25:** the timeline's old open lines: rule 9 and `save_line` say what open means, and
+    `save_line`'s reply lists the open lines (see Decided; `comparisons/memory/SCORES.md`).
+11. **The 1,000-line limit.** App code is 826 lines without `tests.py` (722 on main) and 1,025 with it (811 on
+    main): the tests grew more than the app. Your call whether `tests.py` counts toward the limit in CLAUDE.md.

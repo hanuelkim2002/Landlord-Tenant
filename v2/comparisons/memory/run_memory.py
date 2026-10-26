@@ -1,7 +1,7 @@
 """The memory test: three made-up return visits (stories.json), each answered by the app's own chat after a first
 visit dated days earlier. "new" runs this branch's memory (the timeline and since last visit); "baseline" runs v2 as
 it is on main (the old chat and the facts only). Claude Sonnet 5.5 answers, through Anthropic's SDK.
-Run from this folder: python run_memory.py new|baseline [--runs 3] [--dry]   (--dry: a fake model, nothing sent)
+Run from this folder: python run_memory.py new|baseline [--runs 3] [--tag NAME] [--story ID] [--no-reminder] [--dry]
 """
 import argparse
 import atexit
@@ -31,6 +31,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("mode", choices=["new", "baseline"])
     parser.add_argument("--runs", type=int, default=3)
+    parser.add_argument("--tag", default="", help="a name for a rerun after a change: results/<mode>_<tag>.jsonl")
+    parser.add_argument("--story", help="run only this story, by its id")
+    parser.add_argument("--no-reminder", action="store_true", help="save_line's reply without the open lines")
     parser.add_argument("--dry", action="store_true", help="use a fake model; nothing is sent anywhere")
     return parser.parse_args()
 
@@ -52,7 +55,16 @@ def setup(args):
     app = models.setup("openrouter", chat_model=MODEL, dry=args.dry)   # the gateway only picks the app's settings
     if not args.dry:
         import claude_client
-        app.config.client = lambda gateway=None: models.LoggedClient(claude_client.ClaudeClient(), "anthropic")
+
+        def claude(gateway=None):
+            """A Claude client for one reply, kept on this thread's log so the answer can record its steps."""
+            client = claude_client.ClaudeClient()
+            models.log_for_thread().setdefault("claude_clients", []).append(client)
+            return models.LoggedClient(client, "anthropic")
+
+        app.config.client = claude
+    if args.no_reminder and hasattr(app.tools, "open_lines_text"):
+        app.tools.open_lines_text = lambda m: ""                # to compare: the reply as it was before the reminder
     if hasattr(app.record, "date"):
         app.record.date = models.StoryDate                     # why: since_last_visit must see the story's day
     return app
@@ -98,18 +110,20 @@ def answer(app, story, run, mode):
     except Exception as problem:                              # keep a failed answer, so one bad call does not end the run
         text, shown, error = f"ERROR: {type(problem).__name__}: {problem}", None, True
     requests, tool_calls = models.take_log()
+    steps = [step for client in models.log_for_thread().get("claude_clients", []) for step in client.steps]
     after = app.record.load(m["tenant"], m["matter"])
     return {"mode": mode, "story": story["id"], "run": run, "answer": text, "error": error, "tool_calls": tool_calls,
             "lines_after": after.get("lines"), "pending_after": after["pending"],
             "seconds": round(time.perf_counter() - start, 1), "requests": requests,
-            "cost": round(sum(r["cost"] for r in requests), 6), "checks": shown}
+            "cost": round(sum(r["cost"] for r in requests), 6), "checks": shown, "steps": steps}
 
 
 def main():
     """Run every story's runs, the stories in parallel, and write one line per answer."""
     args = parse_args()
     app = setup(args)
-    path = HERE / "results" / f"{'dry_' if args.dry else ''}{args.mode}.jsonl"
+    name = f"{'dry_' if args.dry else ''}{args.mode}" + (f"_{args.tag}" if args.tag else "")
+    path = HERE / "results" / f"{name}.jsonl"
     done = {(line["story"], line["run"]) for line in models.lines_without_errors(path)}
     print(f"{args.mode} memory, {MODEL}, {args.runs} runs per story, into {path.name}" + (" [dry]" if args.dry else ""))
 
@@ -123,8 +137,9 @@ def main():
                            f"${line['cost']:.4f}" + ("  ERROR" if line["error"] else ""))
 
     start = time.perf_counter()
-    with ThreadPoolExecutor(len(STORIES)) as pool:
-        list(pool.map(run_story, STORIES))                    # list() so that an error inside a thread is raised here
+    stories = [story for story in STORIES if not args.story or story["id"] == args.story]
+    with ThreadPoolExecutor(len(stories)) as pool:
+        list(pool.map(run_story, stories))                    # list() so that an error inside a thread is raised here
     lines = models.read_lines(path)
     print(f"Done in {time.perf_counter() - start:.0f} s. {len(lines)} answers, ${sum(l['cost'] for l in lines):.4f}.")
 

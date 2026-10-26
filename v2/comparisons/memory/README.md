@@ -20,10 +20,14 @@ reply says nothing about the law. Then the tenant comes back:
 the story's day as "today" for `count_days` and `since_last_visit`. The baseline is a copy of `main`'s v2 made with
 `git archive`. Claude Sonnet 5.5 answers through Anthropic's own SDK (`claude_client.py`, test-only), with the key
 `ANTHROPIC_API_KEY` from the environment. The SDK is not in v2's venv; it was installed into a scratch folder and put
-on `PYTHONPATH` for the run.
+on `PYTHONPATH` for the run. Every answer also records each step: the text Claude wrote, the tools it called, and why
+it stopped. `--tag NAME` writes a rerun to `results/<mode>_<NAME>.jsonl`; `--story ID` runs one story;
+`--no-reminder` leaves the open-lines list out of `save_line`'s reply, to compare.
 
 ## How it is scored (`score.py`, `review.json`, `SCORES.md`)
 
-Five checks per answer, out of 9 per mode: no retelling asked, picks up the open item, saves the new event as a line
-(new memory only), works out no date itself, answers first. Code counts the tool calls, the lines saved, and any date
-in the answer found nowhere in the story, the lease, or a tool's result. Claude reads every answer for the rest.
+Six checks per answer, out of 9 per mode: no retelling asked, picks up the open item, saves the new event as a line
+and closes the line left open (new memory only), works out no date itself, answers first. Code counts the tool calls,
+the lines saved, and any date in the answer found nowhere in the story, the lease, or a tool's result; Claude reads
+every answer for the rest. Each story's `settled_line` is the open line its news settles, so code counts the
+closing in the follow-up runs after the fix for open lines.

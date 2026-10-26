@@ -60,6 +60,10 @@ The tool loop ends with no text, so the page would show the tenant nothing.
   the grill question).
 - 2026-10-22, live checks of story 5 (gemini, after the college-housing step): 2 of 5 answers empty. All 5 used the
   full 8 tool rounds (one lookup per round) before being told to answer.
+- 2026-10-25, memory test with the open-lines reminder (Sonnet 5.5): 1 of 15 answers nearly empty (deposit story):
+  only "I've saved 2026-08-20 as your receipt date. Please confirm it in the sidebar...". A rerun logging every
+  step (12 answers, 6 with the reminder) found no text written beside tool calls, only hidden reasoning, so the
+  chat loop dropped nothing: the model ended its turn with a short note. Not seen again in 12 reruns.
 
 ## Misreads a page image
 
@@ -77,3 +81,6 @@ list keeps a line that is done.
 
 - 2026-10-25, memory test (`comparisons/memory/`, Sonnet 5.5): 6 of 9 new-memory answers left it open (deposit 1 of
   3, repair 2 of 3, leave-early 3 of 3).
+- 2026-10-25, after rewording what open means (rule 9, `save_line`): 2 of 15 (0 of 9, then 2 of 6 in the deposit
+  reruns); with the open-lines reminder too: 0 of 15.
+- Answer: the author kept both, 2026-10-25 (AUTHOR.md item 10).

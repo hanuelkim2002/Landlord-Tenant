@@ -61,6 +61,14 @@ def today():
     return date.today()
 
 
+def open_lines_text(m):
+    """The lines still open, for save_line's reply, so the model sees which one its news may settle."""
+    still = [f"line {n}, {line['date'] or 'no date'}: {line['what']}" for n, line in m["lines"].items() if line["open"]]
+    if not still:
+        return " No line is open now."
+    return " Still open: " + "; ".join(still) + ". If the news settles one of them, save it again with open false."
+
+
 def save_line(m, number, date, what, open):
     """Save one line of the timeline. "today" as the date is turned into today's date here, by code."""
     date = str(today()) if str(date).strip().lower() == "today" else str(date).strip()
@@ -69,7 +77,7 @@ def save_line(m, number, date, what, open):
         number = record.save_line(m, int(number), date, str(what), open)
     except ValueError as problem:
         return str(problem)
-    return f"Saved line {number}: {date or 'no date'}: {what}" + (" (open)." if open else ".")
+    return f"Saved line {number}: {date or 'no date'}: {what}" + (" (open)." if open else ".") + open_lines_text(m)
 
 
 RUN = {"get_statute_section": get_statute_section, "search_statute": search_statute, "load_skill": load_skill,
@@ -100,7 +108,9 @@ SCHEMAS = [
          "to the home (a message, a visit, a payment, a promise, a repair, a move). number: 0 for a new line, or a "
          "line's number to save a new version of it, to fix it or close it. date: YYYY-MM-DD if the tenant gave the "
          "exact day, \"today\" if it happened today, otherwise the tenant's words (like \"last Monday\"), or empty. "
-         "what: plain words, with who did it and how. open: true while something is still waiting on this line.",
+         "what: plain words, with who did it and how. open: true only while this line waits for one specific next "
+         "thing (a reply, a visit, a repair, a payment), not just because the dispute goes on. When that thing "
+         "happens, or can no longer happen, save the line that waited for it again with open false.",
          number=NUMBER, date=TEXT, what=TEXT, open=BOOLEAN),
 ]
 

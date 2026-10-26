@@ -11,7 +11,19 @@ Claude Sonnet 5.5, 3 runs of each of 3 return visits (`stories.json`), the new m
 | Works out no date itself | 8 of 9 | 9 of 9 |
 | Answers first | 9 of 9 | 9 of 9 |
 
-## Each answer
+## After the fix for open lines
+
+Rule 9 and `save_line` now say a line is open only while it waits for one specific next thing; the reminder lists the open lines in `save_line`'s reply. Counted by code from each story's `settled_line`. The one cut-short answer was a model slip (SLIPS.md, Empty answer); the two logged reruns found no text written beside tool calls.
+
+| Run | Answers | Old line closed | New lines left open | Answers cut short | Cost |
+| --- | --- | --- | --- | --- | --- |
+| First run | 9 | 3 of 9 | 9 of 9 | 0 of 9 | $0.3627 |
+| Open means waiting for one thing | 9 | 9 of 9 | 3 of 9 | 0 of 9 | $0.3895 |
+| Same, plus the open-lines reminder | 9 | 9 of 9 | 1 of 9 | 1 of 9 | $0.3666 |
+| Deposit story, reminder, every step logged | 6 | 6 of 6 | 5 of 6 | 0 of 6 | $0.3427 |
+| Deposit story, no reminder, every step logged | 6 | 4 of 6 | 3 of 7 | 0 of 6 | $0.3524 |
+
+## Each answer (first run and baseline)
 
 - **new, deposit_letter, run 1** (24.7 s, $0.0699): tools load_skill, get_statute_section, count_days, count_days, count_days, save_line, save_line, note_fact; lines saved 2; questions 1; dates from nowhere: none. Leads with 'object in writing'; closes the waiting line and saves the letter as a line dated by code; counts from the corrected move-out date; one question about how the letter came.
 - **new, deposit_letter, run 2** (19.0 s, $0.0507): tools load_skill, get_statute_section, save_line, count_days, count_days, note_fact; lines saved 1; questions 2; dates from nowhere: none. Same answer; saves the letter as a line but leaves the waiting line open.

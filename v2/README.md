@@ -30,8 +30,10 @@ The system prompt holds these rules, under about 400 words in all. A rule is add
 7. Dates come only from `count_days`.
 8. End with the one question the answer needs, if any. No offers the tenant didn't ask for, and none repeated.
 9. Keep the timeline with `save_line`: one line for each thing that happens between the tenant and the landlord, or
-   to the home; open while something waits on it; fixed or closed by saving it again with its number. A date a skill
-   counts from is also noted as a fact. (Rules 9 and 10 added 2026-10-25, with the memory.)
+   to the home. A line is open only while it waits for one specific next thing (a reply, a visit, a repair, a
+   payment), not just because the dispute goes on; when that thing happens or can no longer happen, the line that
+   waited for it is closed by saving it again with its number. A date a skill counts from is also noted as a fact.
+   (Rules 9 and 10 added 2026-10-25, with the memory.)
 10. After a gap (a SINCE LAST VISIT block), start from what the tenant says and the open lines, and ask about an
     unsettled open line once. Never ask again for what the facts, the timeline, or the chat already hold.
 

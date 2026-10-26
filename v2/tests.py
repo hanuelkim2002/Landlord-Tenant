@@ -163,6 +163,13 @@ check("open given as the word false is not open", tool_matter["lines"]["2"]["ope
 check("a number given as text works",
       save_line(tool_matter, "1", "2026-10-21", "Landlord texted: fix Thursday", True).startswith("Saved line 1:"))
 check("an unknown number gets a plain reply", "No line 7" in save_line(tool_matter, 7, "", "x", False))
+reminder = save_line(tool_matter, 0, "", "Tenant asked for a repair", True)
+check("the reply lists the lines still open, so the model can close one the news settles",
+      "Still open: line 1, 2026-10-21: Landlord texted: fix Thursday; line 3, no date: Tenant asked for a repair."
+      in reminder and "Tenant got the landlord's letter" not in reminder)
+save_line(tool_matter, 1, "2026-10-21", "Landlord texted: fix Thursday", False)
+check("with no line open, the reply says so",
+      "No line is open now." in save_line(tool_matter, 3, "", "Tenant asked for a repair", False))
 
 # ---- The timeline and since-last-visit blocks of the prompt (chat.py)
 

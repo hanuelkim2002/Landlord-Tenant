@@ -20,6 +20,7 @@ class ClaudeClient:
         """The Anthropic client, and Claude's replies kept by their first tool call."""
         self.client = anthropic.Anthropic(timeout=300, max_retries=2)
         self.replies = {}     # why: a reply with tool calls must go back exactly as it came, thinking blocks included
+        self.steps = []       # every step's text, tools, and stop reason, so the test can see where text goes
         self.chat = SimpleNamespace(completions=SimpleNamespace(create=self.create))
 
     def create(self, model, messages, tools=None, tool_choice=None, max_tokens=8000, **ignored):
@@ -56,6 +57,9 @@ class ClaudeClient:
         if calls:
             self.replies[calls[0].id] = reply.content
         text = "".join(block.text for block in reply.content if block.type == "text")
+        self.steps.append({"text": text, "tools": [call.function.name for call in calls], "stop": reply.stop_reason,
+                           "blocks": [block.type for block in reply.content],
+                           "output_tokens": reply.usage.output_tokens})
         message = SimpleNamespace(content=text, tool_calls=calls or None)
         finish = FINISH.get(reply.stop_reason, reply.stop_reason)   # "refusal" stays as it is, for the record
         return SimpleNamespace(choices=[SimpleNamespace(message=message, finish_reason=finish)],
