@@ -17,9 +17,11 @@ import models                                                 # the model test's
 import run_chat                                               # its answer_once: one message answered as the page does
 
 # old: the skill before 2026-10-22; new: with the gaps filled; fixed: new with the four fixes of 2026-10-24;
-# fixed2: fixed, with rent and deposit named in the Section 8 reading; v1: v1's skill, unchanged, under v2's header
+# fixed2: fixed, with rent and deposit named in the Section 8 reading; fixed3: fixed2 after the author's sign-off of
+# 2026-10-26 (form-only gaps get two readings); v1: v1's skill, unchanged, under v2's header
 VERSIONS = {"old": HERE / "versions" / "old.md", "new": HERE / "versions" / "new.md", "fixed": HERE / "versions" / "fixed.md",
-            "fixed2": HERE / "versions" / "fixed2.md", "v1": V2.parent / "v1" / "skills" / "deposit_not_returned.md"}
+            "fixed2": HERE / "versions" / "fixed2.md", "fixed3": HERE / "versions" / "fixed3.md",
+            "v1": V2.parent / "v1" / "skills" / "deposit_not_returned.md"}
 # the chat model: its name in models.CHAT_MODELS
 CHAT = {"gemini": "gemini", "sonnet": "sonnet-anthropic"}
 

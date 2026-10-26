@@ -204,3 +204,9 @@ with both, 13 of 15 with the wording alone, 3 of 9 before.
 `skills/deposit_not_returned.md`: a notice with the reason but without the 15-day warning or the objection address
 now gets two readings, as one without the amount does. Replaces "treat it as the required notice". The court costs
 part adds that the court hears these cases sooner (83.49(3)(c)). AUTHOR.md item 12 closed; item 14 (holdover) opened.
+
+## 2026-10-26: main merged; the signed-off skill checked on Sonnet
+
+Main's memory timeline merged in; AUTHOR.md's deposit items renumbered 12 to 14. `comparisons/deposit/run.py` adds
+the version `fixed3` (the skill after the sign-off). Stories 16 and 18 on Sonnet, 6 answers, no errors
+(`comparisons/deposit/README.md`, fifth run). Nothing replaced.

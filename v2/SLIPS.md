@@ -125,3 +125,10 @@ list keeps a line that is done.
 - 2026-10-25, after rewording what open means (rule 9, `save_line`): 2 of 15 (0 of 9, then 2 of 6 in the deposit
   reruns); with the open-lines reminder too: 0 of 15.
 - Answer: the author kept both, 2026-10-25 (AUTHOR.md item 10).
+
+## Changes the statute's words inside quote marks
+
+A quote ends with a period where the statute goes on, or changes a word's form. The page's quote check flags it.
+
+- 2026-10-26, deposit skill test (`comparisons/deposit/`, Sonnet 5.5, stories 16 and 18): 3 of 6 answers. A period
+  added inside the quote 3 times; "forfeited the right" for the statute's "forfeits the right" once.

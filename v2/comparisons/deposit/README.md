@@ -95,3 +95,16 @@ fixes, 15 now. Stories 1 to 12 ran on Gemini with the new skill before (27 of 30
   30-day deadline has passed" after an objection (story 18).
 - Story 17, 1 of 3: two answers add "even if the letter counted, at least $650 is owed". This judge counted that as
   two readings; the judge of the third run did not count the same thing. A judge call, not settled here.
+
+## Fifth run (2026-10-26): the signed-off skill, after merging main
+
+`versions/fixed3.md` is the skill after the author's sign-off (a notice missing a part of the form gets two readings;
+the court hears these cases sooner). Stories 16 and 18 ran three times on Sonnet with main's memory merged in
+(`run.py fixed3 --model sonnet --stories 16,18`), $0.54. A check, read by me, not judged by Opus.
+
+- No errors, the skill loaded, `count_days` gave every date, and every answer kept the timeline with `save_line`.
+- Story 16, 3 of 3 as the key asks: opens "not settled", both readings, no lean, both option 2 dates.
+- Story 18: every answer says what follows an objection is not settled and leans neither way (the fourth run had a
+  "Yes, the deadline has passed"), and all three say the court hears the case sooner. But each gives "the $650 is
+  overdue" as one of two readings, where the key has one point (no deadline is set). A judge call, like AUTHOR.md
+  item 13.
