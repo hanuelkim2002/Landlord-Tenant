@@ -24,6 +24,16 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
 - 2026-10-22: quotation marks only for the statute's and the lease's words; what the tenant said, the facts, and
   messages are put in the model's own words, and the quote check does not check them (rule 6).
 - 2026-10-22: the model asks for all the lookups it needs in one step, not one at a time.
+- 2026-10-25: code may do date math besides deadlines; the first use is the days since the tenant's last message,
+  for the memory's "since last visit" (built the same day). The model still never works out a date, and
+  `count_days` stays the only date math for deadlines.
+- 2026-10-25: the memory is a timeline of numbered lines (date, what happened, open or not) and a since-last-visit
+  note counted by code; the old chat stays; no due dates and no confirming lines
+  (`docs/superpowers/specs/2026-10-25-memory-timeline-design.md`). The live test runs on Claude Sonnet 5.5 with the
+  Anthropic key (`comparisons/memory/`).
+- 2026-10-25: a line is open only while it waits for one specific next thing, and `save_line`'s reply lists the
+  open lines (item 10): the old line closed in 15 of 15 answers with both (13 of 15 with the wording alone), up
+  from 3 of 9.
 
 ## Open
 
@@ -52,4 +62,7 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    of 83.42(1)'s "incidental to the provision of ... educational ... services."
 9. **Check my keys for your lease.** `comparisons/models/private/own_questions.json` and `own_stories.json`, written
    from the page images; the grades on your lease follow them.
-
+10. **Decided 2026-10-25:** the timeline's old open lines: rule 9 and `save_line` say what open means, and
+    `save_line`'s reply lists the open lines (see Decided; `comparisons/memory/SCORES.md`).
+11. **The 1,000-line limit.** App code is 826 lines without `tests.py` (722 on main) and 1,025 with it (811 on
+    main): the tests grew more than the app. Your call whether `tests.py` counts toward the limit in CLAUDE.md.

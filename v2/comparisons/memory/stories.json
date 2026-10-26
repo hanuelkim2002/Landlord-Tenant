@@ -1,0 +1,137 @@
+{
+ "about": "Three made-up return visits on the sample lease (comparisons/skills/lease.txt: Jordan Reyes, Lakeview Terrace, 2025-08-01 to 2026-07-31). Each first visit is dated days before 'today'; its reply says nothing about the law. Weekdays and gaps checked with Python's datetime on 2026-10-25. settled_line: the open line the return message settles (the line a good answer closes).",
+ "stories": [
+  {
+   "id": "deposit_letter",
+   "today": "2026-08-20",
+   "first_visit": "2026-08-08T19:00:00",
+   "chat": [
+    {
+     "role": "user",
+     "text": "i moved out of lakeview terrace and they still have my $1050 deposit. i returned the keys and emailed them my new address. what happens now?"
+    },
+    {
+     "role": "assistant",
+     "text": "Thanks, I've noted that you moved out, returned the keys, and emailed the manager your new address. Next, the landlord will either return the deposit or send you something about keeping part of it. If a letter or a payment comes, tell me the day it arrived and what it says."
+    }
+   ],
+   "facts": {
+    "school_housing": "no",
+    "lease_end_date": "2026-07-31",
+    "move_out_date": "2026-07-31"
+   },
+   "corrected": {
+    "fact": "move_out_date",
+    "value": "2026-07-30",
+    "noted_value": "2026-07-31",
+    "time": "2026-08-10T09:15:00"
+   },
+   "lines": [
+    {
+     "date": "2026-07-30",
+     "what": "Tenant moved out and returned the keys to the office",
+     "open": false
+    },
+    {
+     "date": "2026-07-30",
+     "what": "Tenant emailed the manager a forwarding address",
+     "open": false
+    },
+    {
+     "date": "",
+     "what": "Waiting for the landlord to return the deposit or send a notice about keeping some of it",
+     "open": true
+    }
+   ],
+   "message": "got a letter from him today, he's keeping $500 for carpet cleaning. what do i do",
+   "good": [
+    "Does not ask again when they moved out, whether they returned the keys, or how they gave the address.",
+    "Takes the letter as the news on the open 'waiting' line: saves the letter as a line and closes or updates the waiting line.",
+    "Uses the corrected move-out date (2026-07-30), not the one first noted.",
+    "Asks for what the answer still needs about the letter (the date on it, how it came, what it says), or notes it, at most one question.",
+    "Answers what to do first, without working out any date itself."
+   ],
+   "settled_line": 3
+  },
+  {
+   "id": "repair_no_show",
+   "today": "2026-04-18",
+   "first_visit": "2026-04-13T20:00:00",
+   "chat": [
+    {
+     "role": "user",
+     "text": "my AC died saturday and it's like 88 degrees inside. i texted the landlord saturday and he just texted back today saying someone comes thursday. is that ok?"
+    },
+    {
+     "role": "assistant",
+     "text": "That's a long time without AC in this heat. I've noted when it broke, that you told him by text, and his promise that someone comes Thursday. If Thursday comes and goes, tell me, and we'll look at your next step."
+    }
+   ],
+   "facts": {
+    "ac_stopped_date": "2026-04-11",
+    "landlord_told_date": "2026-04-11"
+   },
+   "lines": [
+    {
+     "date": "2026-04-11",
+     "what": "AC stopped working; it is about 88 degrees inside",
+     "open": true
+    },
+    {
+     "date": "2026-04-11",
+     "what": "Tenant texted the landlord that the AC stopped working",
+     "open": false
+    },
+    {
+     "date": "2026-04-13",
+     "what": "Landlord texted back: someone will come fix the AC Thursday",
+     "open": true
+    }
+   ],
+   "message": "nobody came thursday. still no AC",
+   "good": [
+    "Does not ask again when the AC broke or how the landlord was told.",
+    "Picks up the open promise: the landlord said Thursday and nobody came.",
+    "Saves that nobody came as a line, with no date it worked out itself (blank, or the tenant's word Thursday), and closes or updates the promise line.",
+    "Gives a next step that fits the lease and what was already done (only a text so far).",
+    "Asks at most one question, and works out no date itself."
+   ],
+   "settled_line": 3
+  },
+  {
+   "id": "leave_early_reply",
+   "today": "2026-03-02",
+   "first_visit": "2026-02-09T18:30:00",
+   "chat": [
+    {
+     "role": "user",
+     "text": "i'm transferring schools and need to be out by may 15. can i get out of my lease early?"
+    },
+    {
+     "role": "assistant",
+     "text": "I read your lease looking for a way to end it early, and I've noted your goal: out by May 15 to transfer schools. A good first step is to ask the manager in writing whether they'll let you end the lease early, and on what terms. Tell me what they say."
+    }
+   ],
+   "facts": {
+    "lease_end_date": "2026-07-31",
+    "planned_move_out_date": "2026-05-15"
+   },
+   "lines": [
+    {
+     "date": "2026-02-10",
+     "what": "Tenant emailed the manager asking to end the lease early, on May 15, to transfer schools",
+     "open": true
+    }
+   ],
+   "message": "he finally answered, says i owe rent through july no matter what",
+   "good": [
+    "Does not ask again for the move-out date, the reason, or whether they asked the manager.",
+    "Takes the answer as the reply to the open line: saves it as a line and closes or updates the email line.",
+    "Answers whether they owe rent through July from the lease and the law, citing them.",
+    "Gives what they can do next toward the May 15 goal.",
+    "Asks at most one question, and works out no date itself."
+   ],
+   "settled_line": 1
+  }
+ ]
+}

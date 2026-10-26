@@ -29,6 +29,13 @@ The system prompt holds these rules, under about 400 words in all. A rule is add
    confirmed, and any message, letter, or paper they describe.
 7. Dates come only from `count_days`.
 8. End with the one question the answer needs, if any. No offers the tenant didn't ask for, and none repeated.
+9. Keep the timeline with `save_line`: one line for each thing that happens between the tenant and the landlord, or
+   to the home. A line is open only while it waits for one specific next thing (a reply, a visit, a repair, a
+   payment), not just because the dispute goes on; when that thing happens or can no longer happen, the line that
+   waited for it is closed by saving it again with its number. A date a skill counts from is also noted as a fact.
+   (Rules 9 and 10 added 2026-10-25, with the memory.)
+10. After a gap (a SINCE LAST VISIT block), start from what the tenant says and the open lines, and ask about an
+    unsettled open line once. Never ask again for what the facts, the timeline, or the chat already hold.
 
 Reading the lease (approved 2026-10-19, `comparisons/lease/README.md`):
 
@@ -51,20 +58,24 @@ note), it asks for all of them in the same step, not one at a time. One at a tim
   PDF's own text can lose what was typed into the form and its check boxes). The text is stored page by page, and
   the whole lease goes into the system prompt once, every turn (method A, 2026-10-19, `comparisons/lease/`; the
   reader changed 2026-10-21, `comparisons/models/`).
-- **Five tools.** `get_statute_section`, `search_statute`, `load_skill`, `count_days`, `note_fact`. No `search_lease`:
-  the model has the whole lease.
+- **Six tools.** `get_statute_section`, `search_statute`, `load_skill`, `count_days`, `note_fact`, `save_line`. No
+  `search_lease`: the model has the whole lease.
 - **Facts.** `note_fact` saves what the tenant said as a pending fact. The tenant confirms or corrects it on the web
   page. Only confirmed facts count. Dates are written YYYY-MM-DD.
-- **Dates.** `count_days(fact, days)` is the only date math: calendar days from a confirmed date, start day not
-  counted, no weekend or holiday shift. That counting is not yet checked (`../v1/AUTHOR.md`, item 3), and every result
-  says so.
+- **Dates.** `count_days(fact, days)` is the only date math for deadlines: calendar days from a confirmed date, start
+  day not counted, no weekend or holiday shift. That counting is not yet checked (`../v1/AUTHOR.md`, item 3), and every
+  result says so.
 - **Checks under each reply.** Every quotation of 20 characters or more is checked word for word against the section
   it cites, or the lease. Below the reply, the program prints the words each cite points to. The tenant sees the
   results; the reply is never blocked.
 - **Record.** `matters/<tenant id>/<matter id>/` holds the lease PDF and what the tool read from it, `matter.json`
   (current state), and `events.jsonl` (the history, chat included, append-only).
-- **Web page.** One Streamlit page on this computer only. It starts or opens a matter, runs the chat, and lists the
-  pending facts to confirm.
+- **Memory (2026-10-25).** The timeline: numbered lines in `matter.json`, one for each thing that happened, each open
+  or not; every version of a line is in `events.jsonl` (`line_saved`). When the last message was on an earlier day,
+  code adds the days since then and the facts confirmed since then (SINCE LAST VISIT). The old chat stays in the
+  prompt. Spec: `docs/superpowers/specs/2026-10-25-memory-timeline-design.md`; test: `comparisons/memory/`.
+- **Web page.** One Streamlit page on this computer only. It starts or opens a matter, runs the chat, lists the
+  pending facts to confirm, and shows the timeline.
 
 ## Open questions, settled by comparison
 
@@ -79,7 +90,8 @@ written and approved before any build, scores kept in `comparisons/`:
 
 ## Non-negotiables
 
-- The model never computes a date. `count_days` does, from confirmed facts only.
+- The model never works out a date. Code does all date math. `count_days` is the only date math for deadlines,
+  from confirmed facts only.
 - The model never quotes from memory. Every quote is checked against `statutes/` or the lease's stored text.
 - A fact counts only after the tenant confirms it. The model can only note it.
 - The history is append-only. Nothing in `events.jsonl` is edited or deleted.

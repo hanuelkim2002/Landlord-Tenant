@@ -1,0 +1,123 @@
+"""Scores the memory test: per answer, what code can count (the tools called, the lines saved, any date the model
+wrote that comes from nowhere, the questions asked) and Claude's reading in review.json; then SCORES.md, the new
+memory and the baseline side by side. Run from this folder: python score.py
+"""
+import json
+import re
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent / "models"))
+from score import dates_in, question_count  # noqa: E402  (the model test's date and question counters)
+
+STORIES = {s["id"]: s for s in json.loads((HERE / "stories.json").read_text())["stories"]}
+LEASE = (HERE.parent / "skills" / "lease.txt").read_text()
+MODES = ["new", "baseline"]
+CHECKS = [("no_retelling", "Asks for nothing it was already told"), ("picks_up_open", "Picks up what was left open"),
+          ("saved_line", "Saves the new event as a line"), ("closes_open_line", "Closes the line left open"),
+          ("no_made_up_date", "Works out no date itself"), ("answers_first", "Answers first")]
+TIMELINE_ONLY = {"saved_line", "closes_open_line"}             # the baseline has no timeline to keep
+# The new memory's runs before and after the fix for open lines (2026-10-25), in order; each file is optional.
+FOLLOW_UPS = [("new", "First run"), ("new_open-meaning", "Open means waiting for one thing"),
+              ("new_open-meaning-reminder", "Same, plus the open-lines reminder"),
+              ("new_steps-reminder", "Deposit story, reminder, every step logged"),
+              ("new_steps-no-reminder", "Deposit story, no reminder, every step logged")]
+
+
+def counted(line):
+    """What code counts in one answer."""
+    story = STORIES[line["story"]]
+    year = int(story["today"][:4])                            # a date written without a year is in the story's year
+    allowed = dates_in(json.dumps(story), year) | dates_in(LEASE, year)
+    for call in line["tool_calls"]:                           # dates a tool gave the model are not made up
+        allowed |= set(re.findall(r"20\d\d-\d\d-\d\d", str(call["result"])))
+    saved = [c for c in line["tool_calls"] if c["name"] == "save_line"]
+    return {"tools": [c["name"] for c in line["tool_calls"]], "lines_saved": len(saved),
+            "saved_line": bool(saved), "made_up_dates": sorted(dates_in(line["answer"], year) - allowed),
+            "questions": question_count(line["answer"])}
+
+
+def row(line, reviewed):
+    """One answer's five checks: code's counts, with Claude's reading where code cannot tell."""
+    counts = counted(line)
+    return {**counts, "no_retelling": reviewed.get("no_retelling", False),
+            "picks_up_open": reviewed.get("picks_up_open", False), "answers_first": reviewed.get("answers_first", False),
+            "closes_open_line": reviewed.get("closes_open_line", False),
+            "no_made_up_date": reviewed.get("no_made_up_date", not counts["made_up_dates"]),
+            "why": reviewed.get("why", "not reviewed yet")}
+
+
+def table(rows_by_mode):
+    """The five checks, each mode out of its answers."""
+    lines = ["| Check | New memory | Baseline (main) |", "| --- | --- | --- |"]
+    for key, label in CHECKS:
+        cells = []
+        for mode in MODES:
+            rows = rows_by_mode[mode]
+            cells.append("n/a (no timeline)" if key in TIMELINE_ONLY and mode == "baseline"
+                         else f"{sum(r[key] for r in rows)} of {len(rows)}")
+        lines.append(f"| {label} | {cells[0]} | {cells[1]} |")
+    return "\n".join(lines)
+
+
+def follow_up_row(lines):
+    """By code, for one run: the old line closed, the new lines left open, the answers cut short, the cost."""
+    closed = new = new_open = short = 0
+    for line in lines:
+        story, after = STORIES[line["story"]], line["lines_after"] or {}
+        settled = str(story["settled_line"])
+        closed += settled in after and not after[settled]["open"]
+        added = [after[n] for n in after if int(n) > len(story["lines"])]
+        new += len(added)
+        new_open += sum(x["open"] for x in added)
+        short += len(line["answer"]) < 800                    # a full answer here runs 2,000 characters or more
+    return closed, new, new_open, short, sum(line["cost"] for line in lines)
+
+
+def follow_up_table():
+    """The new memory's runs before and after the fix for open lines, side by side, counted by code."""
+    rows = ["| Run | Answers | Old line closed | New lines left open | Answers cut short | Cost |",
+            "| --- | --- | --- | --- | --- | --- |"]
+    for name, label in FOLLOW_UPS:
+        path = HERE / "results" / f"{name}.jsonl"
+        if path.exists():
+            lines = [json.loads(text) for text in path.read_text().splitlines()]
+            closed, new, new_open, short, cost = follow_up_row(lines)
+            n = len(lines)
+            rows.append(f"| {label} | {n} | {closed} of {n} | {new_open} of {new} | {short} of {n} | ${cost:.4f} |")
+    return "\n".join(rows)
+
+
+def main():
+    """Read the results and the review, print the table, and write SCORES.md."""
+    review_path = HERE / "review.json"
+    review = json.loads(review_path.read_text()) if review_path.exists() else {}
+    rows_by_mode, notes = {}, []
+    for mode in MODES:
+        results = [json.loads(text) for text in (HERE / "results" / f"{mode}.jsonl").read_text().splitlines()]
+        results.sort(key=lambda line: (line["story"], line["run"]))
+        rows_by_mode[mode] = []
+        for line in results:
+            r = row(line, review.get(f"{mode}/{line['story']}/{line['run']}", {}))
+            rows_by_mode[mode].append(r)
+            notes.append(f"- **{mode}, {line['story']}, run {line['run']}** ({line['seconds']} s, ${line['cost']:.4f}): "
+                         f"tools {', '.join(r['tools']) or 'none'}; lines saved {r['lines_saved']}; questions "
+                         f"{r['questions']}; dates from nowhere: {', '.join(r['made_up_dates']) or 'none'}. {r['why']}")
+        cost = sum(json.loads(t)["cost"] for t in (HERE / "results" / f"{mode}.jsonl").read_text().splitlines())
+        notes.append(f"- {mode}: ${cost:.4f} in all")
+    summary, follow_up = table(rows_by_mode), follow_up_table()
+    print(summary, follow_up, sep="\n\n")
+    (HERE / "SCORES.md").write_text(
+        "# Memory test: scores\n\nClaude Sonnet 5.5, 3 runs of each of 3 return visits (`stories.json`), the new memory "
+        "against v2 on `main`. Code counts the tools, the lines saved, and dates found nowhere in the story, the lease, "
+        "or a tool's result; Claude read every answer for the rest (`review.json`).\n\n"
+        f"{summary}\n\n## After the fix for open lines\n\nRule 9 and `save_line` now say a line is open only while "
+        "it waits for one specific next thing; the reminder lists the open lines in `save_line`'s reply. Counted by "
+        "code from each story's `settled_line`. The one cut-short answer was a model slip (SLIPS.md, Empty answer); "
+        "the two logged reruns found no text written beside tool calls.\n\n"
+        f"{follow_up}\n\n## Each answer (first run and baseline)\n\n" + "\n".join(notes) + "\n")
+
+
+if __name__ == "__main__":
+    main()
