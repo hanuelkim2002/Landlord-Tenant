@@ -30,6 +30,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   and leases now go to Anthropic, not OpenRouter or Google. Gemini stays one setting away (GATEWAY=openrouter).
 - 2026-10-23: a notice of a claim that gives no reason is not the required notice, since 83.49(3)(a) names the
   reason; only a notice without the amount gets two readings.
+- 2026-10-26: item 10's readings, from your review: a housing authority stays under (3), (5), (6); nothing is settled
+  after an objection; a renewal's end starts the clocks; mail to the old address counts if no new one was given. A
+  notice missing the 15-day warning or the objection address now gets two readings, like one missing the amount.
+  The skill adds that the court hears these cases sooner (83.49(3)(c)).
 
 ## Open
 
@@ -58,12 +62,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    of 83.42(1)'s "incidental to the provision of ... educational ... services."
 9. **Check my keys for your lease.** `comparisons/models/private/own_questions.json` and `own_stories.json`, written
    from the page images; the grades on your lease follow them.
-10. **The deposit skill's new law points (draft, 2026-10-22).** My readings for you to check: a housing authority as
-   landlord is still under (3), (5), (6) (83.49(4)); certified mail to the old address counts if no new one was
-   given; nothing is settled after an objection; a renewal's end starts the clocks (83.49(6)); a notice with the
-   amount and the reason counts without the 15-day warning or the objection address. Left open with two
-   readings: a private landlord in a housing program, mail to the old address after a new one was given, a notice
-   without the amount. Story 12's key reads 83.491(6) as putting a fee outside 83.49.
+10. **Decided 2026-10-26:** the deposit skill's new law points (see Decided). Still yours to check: story 12's key
+   reads 83.491(6) as putting a fee outside 83.49.
 11. **Judging story 17: is a backup "two readings"?** Answers say "yes, all $1,050" and then "even if the letter
    counted, at least $650 is owed". One Opus judge counted that as two readings (wrong), another did not. Your rule
    decides the grade; `comparisons/deposit/README.md`, fourth run.
+12. **A tenant who stayed on month to month after the lease ran out.** 83.49(6) does not say whether that is a
+   renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?

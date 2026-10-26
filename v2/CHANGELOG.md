@@ -177,3 +177,9 @@ answers to drop the rent. Story 14 rerun on Sonnet: 3 of 3 right (was 1 of 3).
 
 `comparisons/deposit/`: 37 of 48 settled answers right (`SCORES_opus_sonnet_fixed2.md`). Stories 13 to 18 rose from 11
 to 15 of 18 on the same model; stories 1 to 12 fell from 27 to 22 of 30, but they ran on Gemini before. Nothing replaced.
+
+## 2026-10-26: the deposit skill's law points signed off
+
+`skills/deposit_not_returned.md`: a notice with the reason but without the 15-day warning or the objection address
+now gets two readings, as one without the amount does. Replaces "treat it as the required notice". The court costs
+part adds that the court hears these cases sooner (83.49(3)(c)). AUTHOR.md item 10 closed; item 12 (holdover) opened.
