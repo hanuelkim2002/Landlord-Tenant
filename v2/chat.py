@@ -1,5 +1,5 @@
-"""The chat: the system prompt (the rules, the whole lease, the facts, the skills) and the tool loop, which sends
-the messages, runs any tool calls, sends the results back, and repeats until the model answers.
+"""The chat: the system prompt (the rules, the whole lease, the facts, the timeline, the skills) and the tool loop,
+which sends the messages, runs any tool calls, sends the results back, and repeats until the model answers.
 """
 import json
 import re
@@ -23,6 +23,8 @@ RULES = """You help a tenant in Florida with a dispute with their landlord, unde
 6. Cite each rule to its source: a statute section and subsection, or the lease. Put in quotation marks only the statute's or the lease's own words. Say everything else in your own words: what the tenant told you, the facts they confirmed, and any message, letter, or paper they describe.
 7. Dates come only from count_days. Never add, subtract, or compare dates yourself.
 8. End with the one question your answer needs, if any. Don't offer help the tenant didn't ask for, and never repeat an offer.
+9. Keep the timeline with save_line: one line for each thing that happens between the tenant and the landlord, or to the home. A line is open only while it waits for one specific next thing, like a reply, a visit, a repair, or a payment; it is not open just because the dispute goes on. When the tenant reports that thing, or it can no longer happen, close the line that was waiting for it: save it again with its number and open false. To fix a line, save it again with its number. A date a skill counts from is also noted as a fact.
+10. When there is a SINCE LAST VISIT block, the tenant is back after a gap. Start from what they say and the open lines; if an open line is still unsettled, ask about it once. Never ask again for what the facts, the timeline, or the chat already hold.
 
 Reading the lease:
 1. THE LEASE below is the tenant's whole lease, page by page. Read all of it, addenda and tables included, before you say whether it covers a point.
@@ -40,6 +42,27 @@ def facts_text(facts, pending=False):
     return "\n".join(lines) or "- none yet"
 
 
+def timeline_text(lines):
+    """The timeline for the prompt, one line each, oldest first, the open ones marked."""
+    shown = [f"- {number}. {line['date'] or '(no date)'}: {line['what']}" + (" (open)" if line["open"] else "")
+             for number, line in lines.items()]
+    return "\n".join(shown) or "- none yet"
+
+
+def since_text(since):
+    """The since-last-visit block for the prompt, or nothing when the tenant has not been away a day."""
+    if since is None:
+        return ""
+    days = f"{since['days']} day" + ("" if since["days"] == 1 else "s")
+    text = f"\n\nSINCE LAST VISIT (counted by code):\nThe last message was {days} ago."
+    if since["changed"]:
+        text += " Since then the tenant confirmed:"
+        for c in since["changed"]:
+            corrected = f" (first noted as {c['noted_value']})" if c["value"] != c["noted_value"] else ""
+            text += f"\n- {c['fact']}: {c['value']}{corrected}"
+    return text
+
+
 def system_prompt(m, pages):
     """Everything the model is told for this matter, built fresh for each message."""
     all_skills = law.skills()
@@ -49,6 +72,8 @@ def system_prompt(m, pages):
             f"CONFIRMED FACTS (the tenant confirmed these; only these count):\n{facts_text(m['confirmed'])}\n\n"
             f"PENDING FACTS (noted with note_fact, not yet confirmed by the tenant; they do not count yet):\n"
             f"{facts_text(m['pending'], pending=True)}\n\n"
+            f"TIMELINE (what happened, oldest first; keep it with save_line):\n{timeline_text(m['lines'])}"
+            f"{since_text(record.since_last_visit(m))}\n\n"
             f"SKILLS (load each one that fits the tenant's situation with load_skill):\n{listed}\n\n"
             f"LOADED SKILLS:\n{loaded or 'none yet'}")
 

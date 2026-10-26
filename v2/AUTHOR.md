@@ -30,7 +30,17 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   and leases now go to Anthropic, not OpenRouter or Google. Gemini stays one setting away (GATEWAY=openrouter).
 - 2026-10-23: a notice of a claim that gives no reason is not the required notice, since 83.49(3)(a) names the
   reason; only a notice without the amount gets two readings.
-- 2026-10-26: item 10's readings, from your review: a housing authority stays under (3), (5), (6); nothing is settled
+- 2026-10-25: code may do date math besides deadlines; the first use is the days since the tenant's last message,
+  for the memory's "since last visit" (built the same day). The model still never works out a date, and
+  `count_days` stays the only date math for deadlines.
+- 2026-10-25: the memory is a timeline of numbered lines (date, what happened, open or not) and a since-last-visit
+  note counted by code; the old chat stays; no due dates and no confirming lines
+  (`docs/superpowers/specs/2026-10-25-memory-timeline-design.md`). The live test runs on Claude Sonnet 5.5 with the
+  Anthropic key (`comparisons/memory/`).
+- 2026-10-25: a line is open only while it waits for one specific next thing, and `save_line`'s reply lists the
+  open lines (item 10): the old line closed in 15 of 15 answers with both (13 of 15 with the wording alone), up
+  from 3 of 9.
+- 2026-10-26: item 12's readings, from your review: a housing authority stays under (3), (5), (6); nothing is settled
   after an objection; a renewal's end starts the clocks; mail to the old address counts if no new one was given. A
   notice missing the 15-day warning or the objection address now gets two readings, like one missing the amount.
   The skill adds that the court hears these cases sooner (83.49(3)(c)).
@@ -62,10 +72,14 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    of 83.42(1)'s "incidental to the provision of ... educational ... services."
 9. **Check my keys for your lease.** `comparisons/models/private/own_questions.json` and `own_stories.json`, written
    from the page images; the grades on your lease follow them.
-10. **Decided 2026-10-26:** the deposit skill's new law points (see Decided). Still yours to check: story 12's key
-   reads 83.491(6) as putting a fee outside 83.49.
-11. **Judging story 17: is a backup "two readings"?** Answers say "yes, all $1,050" and then "even if the letter
-   counted, at least $650 is owed". One Opus judge counted that as two readings (wrong), another did not. Your rule
-   decides the grade; `comparisons/deposit/README.md`, fourth run.
-12. **A tenant who stayed on month to month after the lease ran out.** 83.49(6) does not say whether that is a
-   renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?
+10. **Decided 2026-10-25:** the timeline's old open lines: rule 9 and `save_line` say what open means, and
+    `save_line`'s reply lists the open lines (see Decided; `comparisons/memory/SCORES.md`).
+11. **The 1,000-line limit.** App code is 826 lines without `tests.py` (722 on main) and 1,025 with it (811 on
+    main): the tests grew more than the app. Your call whether `tests.py` counts toward the limit in CLAUDE.md.
+12. **Decided 2026-10-26:** the deposit skill's new law points (see Decided). Still yours to check: story 12's key
+    reads 83.491(6) as putting a fee outside 83.49.
+13. **Judging story 17: is a backup "two readings"?** Answers say "yes, all $1,050" and then "even if the letter
+    counted, at least $650 is owed". One Opus judge counted that as two readings (wrong), another did not. Your rule
+    decides the grade; `comparisons/deposit/README.md`, fourth run.
+14. **A tenant who stayed on month to month after the lease ran out.** 83.49(6) does not say whether that is a
+    renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?

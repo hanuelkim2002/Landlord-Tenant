@@ -1,5 +1,5 @@
 """The web page, on this computer only: start a matter (a lease PDF and a description) or open a saved one, chat
-with the tool, and confirm the facts it noted. Run from this folder: streamlit run app.py
+with the tool, confirm the facts it noted, and read the timeline it keeps. Run from this folder: streamlit run app.py
 """
 import tempfile
 
@@ -82,6 +82,17 @@ def confirm_facts(m):
             st.markdown(safe(f"**{name}**: {fact['value']}"))
 
 
+def show_timeline(m):
+    """The sidebar's timeline, to read only: to fix a line, the tenant tells the tool."""
+    with st.sidebar:
+        st.header("Timeline")
+        if not m["lines"]:
+            st.caption("None yet.")
+        for number, line in m["lines"].items():
+            st.markdown(safe(f"**{number}.** {line['date'] or 'no date'}: {line['what']}")
+                        + (" *(open)*" if line["open"] else ""))
+
+
 def show_checks(shown):
     """Under a reply: whether each quotation checks out word for word, and the words each cite points to."""
     if not shown or not (shown["quotes"] or shown["cited"]):
@@ -103,6 +114,7 @@ if m is None:
     st.info("Start a new matter or open a saved one in the sidebar.")
     st.stop()
 confirm_facts(m)
+show_timeline(m)
 pages = lease.lease_pages(m)
 from_images = sum(p["read_by"] == "image" for p in pages)
 st.caption(f"{m['tenant']} / {m['matter']}. Lease: {len(pages)} pages"

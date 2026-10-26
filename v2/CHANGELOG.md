@@ -120,7 +120,7 @@ as a quote. Replaces the cite-after-only search and the old pattern that paired 
 
 ## 2026-10-22: deposit skill gaps drafted; seven more deposit stories
 
-`skills/deposit_not_returned.md`, a draft waiting on AUTHOR.md item 10: public housing (all of 83.49(4)), where the
+`skills/deposit_not_returned.md`, a draft waiting on AUTHOR.md item 12: public housing (all of 83.49(4)), where the
 notice went, a notice without the amount or the reason, a tenant who objected, a renewal (83.49(6)); 1,575 to 2,055
 words. `comparisons/skills/stories_more.json`: stories 6 to 12 with four lease
 variants. `check_key.py` takes a key file name and reads "(1)(a)" run together, as 83.491 writes it. Nothing replaced.
@@ -178,8 +178,29 @@ answers to drop the rent. Story 14 rerun on Sonnet: 3 of 3 right (was 1 of 3).
 `comparisons/deposit/`: 37 of 48 settled answers right (`SCORES_opus_sonnet_fixed2.md`). Stories 13 to 18 rose from 11
 to 15 of 18 on the same model; stories 1 to 12 fell from 27 to 22 of 30, but they ran on Gemini before. Nothing replaced.
 
+## 2026-10-25: the date rule, reworded
+
+CLAUDE.md, README.md, DOCUMENTATION.md, `tools.py`: the model never works out a date; code does all date math;
+`count_days` is the only date math for deadlines. Replaces "`count_days` is the only date math", so code can count
+the days since the tenant's last message (the memory, next entry). No code behavior changed.
+
+## 2026-10-25: memory, a timeline of the dispute
+
+`record.py`, `tools.py`, `chat.py`, `app.py`: each matter keeps numbered timeline lines (`save_line`, the sixth tool;
+every version in the history as `line_saved`), and after a gap of a day the prompt gets SINCE LAST VISIT (the days
+since the last message, counted by code, and the facts confirmed since). Rules 9 and 10; the page shows the timeline.
+Replaces memory by the old chat and the facts alone (the old chat stays). Spec and plan in `docs/superpowers/`; the
+live test in `comparisons/memory/`.
+
+## 2026-10-25: "open" means waiting for one thing; save_line lists the open lines
+
+Rule 9 and `save_line`'s description: a line is open only while it waits for one specific next thing; when that
+happens, the line that waited is closed. `save_line`'s reply now lists the lines still open. Replaces "open while
+something is still waiting", read as "the dispute goes on". Memory test: the old line closed in 15 of 15 answers
+with both, 13 of 15 with the wording alone, 3 of 9 before.
+
 ## 2026-10-26: the deposit skill's law points signed off
 
 `skills/deposit_not_returned.md`: a notice with the reason but without the 15-day warning or the objection address
 now gets two readings, as one without the amount does. Replaces "treat it as the required notice". The court costs
-part adds that the court hears these cases sooner (83.49(3)(c)). AUTHOR.md item 10 closed; item 12 (holdover) opened.
+part adds that the court hears these cases sooner (83.49(3)(c)). AUTHOR.md item 12 closed; item 14 (holdover) opened.
