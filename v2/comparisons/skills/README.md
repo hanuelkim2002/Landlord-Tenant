@@ -21,6 +21,13 @@ and v1's skill as it is, as the baseline.
 
   Each answer key gives the points a right answer must make (judged by meaning, as in the lease test), the mistakes
   that make it wrong, the statute words each point rests on, and the dates from `count_days`.
+- `stories_more.json` (2026-10-22): stories 6 to 12, for paths the first five do not test: a proper notice by
+  certified mail (inside and after the 15 days), an e-mail notice under a signed addendum, leaving early with the
+  right notice, a month-to-month tenancy, college housing, and a fee instead of a deposit. A `lease` field names
+  the variant of `lease.txt` a story uses. Check it with `python check_key.py stories_more.json`. Stories 6 to 12 ran in
+  `comparisons/deposit/`. Stories 13 to 18 (2026-10-24) test what the skill gained on 2026-10-22: a housing
+  authority as landlord, a Section 8 voucher, a claim sent to the old address, a claim with no amount, one with no
+  reason, and an objection made in time; they have not run yet.
 - `python check_key.py` confirms each quote is word for word in the statute subsection it cites, and each date is
   right.
 

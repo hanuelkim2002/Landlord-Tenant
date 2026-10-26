@@ -1,0 +1,20 @@
+new skill, sonnet (claude-sonnet-5-5), into /Users/hanuelkim/Documents/ALL_CLAUDE_FILES/Landlord-Tenant/Landlord-Tenant ClaudeCode/.claude/worktrees/deposit-not-returned-scenarios-5e1bf0/v2/comparisons/deposit/results/sonnet/new.jsonl
+new deposit-13 run 1: 19.4 s, 3 requests, 7 tool calls, $0.0784
+new deposit-14 run 1: 20.4 s, 3 requests, 9 tool calls, $0.0822
+new deposit-16 run 1: 24.8 s, 3 requests, 7 tool calls, $0.0852
+new deposit-18 run 1: 25.5 s, 3 requests, 7 tool calls, $0.0847
+new deposit-17 run 1: 26.3 s, 4 requests, 7 tool calls, $0.1121
+new deposit-15 run 1: 31.7 s, 3 requests, 8 tool calls, $0.0971
+new deposit-13 run 2: 17.6 s, 3 requests, 8 tool calls, $0.0780
+new deposit-14 run 2: 22.1 s, 3 requests, 7 tool calls, $0.0833
+new deposit-17 run 2: 21.8 s, 3 requests, 7 tool calls, $0.0823
+new deposit-16 run 2: 26.0 s, 3 requests, 9 tool calls, $0.0869
+new deposit-15 run 2: 23.4 s, 3 requests, 9 tool calls, $0.0885
+new deposit-13 run 3: 19.0 s, 3 requests, 7 tool calls, $0.0790
+new deposit-18 run 2: 34.6 s, 3 requests, 7 tool calls, $0.0992
+new deposit-14 run 3: 25.5 s, 3 requests, 7 tool calls, $0.0876
+new deposit-17 run 3: 23.8 s, 3 requests, 8 tool calls, $0.0861
+new deposit-16 run 3: 25.3 s, 3 requests, 7 tool calls, $0.0860
+new deposit-15 run 3: 24.0 s, 3 requests, 7 tool calls, $0.0846
+new deposit-18 run 3: 22.9 s, 3 requests, 8 tool calls, $0.0862
+Done. 18 answers, $1.5673 by the logged costs.

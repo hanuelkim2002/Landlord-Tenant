@@ -24,6 +24,8 @@ against rule 7).
   confirmed.
 - 2026-10-21, model test, deposit stories (`comparisons/models/`): nemotron 3 of 15 (sample lease) and 6 of 15 (own
   lease), haiku 1 of 15 (own), gemini and sonnet 0 of 30.
+- 2026-10-23, deposit skill test (`comparisons/deposit/`, gemini): 0 of 108. Until that day the check read
+  "July 2026" as July 20; the counts above were not rechecked.
 - 2026-10-25, memory test (`comparisons/memory/`, Sonnet 5.5): 1 of 18, new memory, leave-early story: "May 15 to
   July 31 would be about 2.5 months", a period it worked out itself.
 
@@ -35,6 +37,8 @@ The answer asks the tenant for a fact they already gave, or one the lease states
 - 2026-10-20, first run of the v2 page (nemotron): the first reply asked for the lease end date (in the lease) and
   the move-out date (in the tenant's message), four questions in all; the second asked the tenant to confirm the
   dates in the chat after noting them for the sidebar.
+- 2026-10-23, deposit skill test (gemini): more than one question in 1 of 36 answers (v1), 1 (old), 2 (new), all
+  in stories 2 and 5.
 
 ## States an open question as settled
 
@@ -43,6 +47,43 @@ The skill marks a point as not settled, with a reading on each side; the answer 
 - 2026-10-19, skills test (nemotron): 12 of 12 answers to story 5 (a claim sent by text), every format. Counts only
   if the author agrees the point is open (AUTHOR.md item 4).
 - 2026-10-21, model test, story 5: nemotron 2 of 3 (sample lease) and 3 of 3 (own lease); haiku, gemini, sonnet 0.
+- 2026-10-24, deposit skill test on Sonnet: not flat, but a lean. Story 14 (Section 8), every answer in all three
+  versions opens "Probably yes" before giving both readings; stories 15 and 16, once each.
+- 2026-10-24, the current skill on Sonnet: after the no-lean line, still a lean where the skill does not mark the
+  point not settled: story 11 ("Probably yes" on the college question), story 18 ("Yes, the 30-day deadline has
+  passed" after an objection), story 9 once.
+
+## Says the balance is due on day 30 after an objection
+
+The answer says the landlord must send the balance within 30 days after the notice even if the tenant objects.
+83.49(3)(b) puts that duty in a sentence that begins "Unless the tenant objects".
+
+- 2026-10-23, deposit skill test (gemini), story 6: v1 2 of 3, old 1 of 3, new 0 of 3 (the new skill says what
+  follows an objection is not settled).
+- 2026-10-24, deposit skill test on Sonnet, story 18: old 3 of 3, v1 0, new 0.
+
+## Says the tenant said something they did not
+
+- 2026-10-23, deposit skill test (gemini): "because you mentioned college housing" when the tenant had not, v1 2 of
+  36 (stories 1 and 2); old and new 0.
+- 2026-10-24, deposit skill test on Sonnet, stories 13 to 18: "you called this college housing", v1 2 of 18, new 1
+  of 18, old 0.
+
+## Treats the 15-day return date as due after a claim
+
+The 15-day return applies only when the landlord intends no claim (83.49(3)(a)); the answer applies it anyway.
+
+- 2026-10-23, deposit skill test (gemini), story 5: v1 3 of 3; old and new 0.
+- 2026-10-24, the current skill on Sonnet, story 5: 2 of 3.
+
+## States a rule the statute does not have
+
+- 2026-10-24, deposit skill test on Sonnet, story 16: "the landlord could deduct only what it can justify" (new 1
+  of 3); 83.49(3)(b) sets no such limit.
+- 2026-10-24, the fixed skill on Sonnet, story 14: reading two narrowed to "a program that sets or limits the
+  deposit amount", dropping the rent that 83.49(4) names (2 of 3).
+- 2026-10-24, the current skill on Sonnet: receipt as the test for the landlord's 30 days (story 9, 1 of 3); a
+  result 83.491 does not give, that a landlord who skips a fee notice cannot keep the fee (story 12, 1 of 3).
 
 ## Does not load the skill
 
@@ -84,3 +125,10 @@ list keeps a line that is done.
 - 2026-10-25, after rewording what open means (rule 9, `save_line`): 2 of 15 (0 of 9, then 2 of 6 in the deposit
   reruns); with the open-lines reminder too: 0 of 15.
 - Answer: the author kept both, 2026-10-25 (AUTHOR.md item 10).
+
+## Changes the statute's words inside quote marks
+
+A quote ends with a period where the statute goes on, or changes a word's form. The page's quote check flags it.
+
+- 2026-10-26, deposit skill test (`comparisons/deposit/`, Sonnet 5.5, stories 16 and 18): 3 of 6 answers. A period
+  added inside the quote 3 times; "forfeited the right" for the statute's "forfeits the right" once.

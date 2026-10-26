@@ -24,6 +24,12 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
 - 2026-10-22: quotation marks only for the statute's and the lease's words; what the tenant said, the facts, and
   messages are put in the model's own words, and the quote check does not check them (rule 6).
 - 2026-10-22: the model asks for all the lookups it needs in one step, not one at a time.
+- 2026-10-24: the keys for deposit stories 13 to 18 (`comparisons/skills/stories_more.json`), as written.
+- 2026-10-23: the chat runs on Claude Sonnet 5.5 and the lease reader on Haiku 5.5, both straight from Anthropic
+  (your API credit), through its OpenAI-compatible endpoint so the code stays as it is. Tenant messages, facts,
+  and leases now go to Anthropic, not OpenRouter or Google. Gemini stays one setting away (GATEWAY=openrouter).
+- 2026-10-23: a notice of a claim that gives no reason is not the required notice, since 83.49(3)(a) names the
+  reason; only a notice without the amount gets two readings.
 - 2026-10-25: code may do date math besides deadlines; the first use is the days since the tenant's last message,
   for the memory's "since last visit" (built the same day). The model still never works out a date, and
   `count_days` stays the only date math for deadlines.
@@ -34,6 +40,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
 - 2026-10-25: a line is open only while it waits for one specific next thing, and `save_line`'s reply lists the
   open lines (item 10): the old line closed in 15 of 15 answers with both (13 of 15 with the wording alone), up
   from 3 of 9.
+- 2026-10-26: item 12's readings, from your review: a housing authority stays under (3), (5), (6); nothing is settled
+  after an objection; a renewal's end starts the clocks; mail to the old address counts if no new one was given. A
+  notice missing the 15-day warning or the objection address now gets two readings, like one missing the amount.
+  The skill adds that the court hears these cases sooner (83.49(3)(c)).
 
 ## Open
 
@@ -66,3 +76,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     `save_line`'s reply lists the open lines (see Decided; `comparisons/memory/SCORES.md`).
 11. **The 1,000-line limit.** App code is 826 lines without `tests.py` (722 on main) and 1,025 with it (811 on
     main): the tests grew more than the app. Your call whether `tests.py` counts toward the limit in CLAUDE.md.
+12. **Decided 2026-10-26:** the deposit skill's new law points (see Decided). Still yours to check: story 12's key
+    reads 83.491(6) as putting a fee outside 83.49.
+13. **Judging story 17: is a backup "two readings"?** Answers say "yes, all $1,050" and then "even if the letter
+    counted, at least $650 is owed". One Opus judge counted that as two readings (wrong), another did not. Your rule
+    decides the grade; `comparisons/deposit/README.md`, fourth run.
+14. **A tenant who stayed on month to month after the lease ran out.** 83.49(6) does not say whether that is a
+    renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?

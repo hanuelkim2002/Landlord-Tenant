@@ -1,0 +1,593 @@
+{
+ "deposit-1/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed the full deposit, explains the missed 30\u2011day notice deadline, and notes the landlord can still sue for damages."
+ },
+ "deposit-1/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is entitled to the full deposit, explains the missed 30\u2011day notice, and notes the landlord can still sue for damages."
+ },
+ "deposit-1/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant can recover the full deposit, explains the landlord\u2019s missed 30\u2011day notice deadline, and notes the landlord may still sue for damages, with no statutory errors."
+ },
+ "deposit-2/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer covers all required points but incorrectly states the tenant must wait and cannot request the deposit now."
+ },
+ "deposit-2/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   true,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the 15\u2011day and 30\u2011day rules but incorrectly claims the tenant cannot request the deposit now."
+ },
+ "deposit-2/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the 15\u2011day and 30\u2011day rules and their implications without contradicting the statute, lease, or facts."
+ },
+ "deposit-3/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly explains the notice requirement, that a text is insufficient, and that the tenant retains rights to the deposit."
+ },
+ "deposit-3/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly addressed the tenant's question and covered all required points without making any prohibited claims."
+ },
+ "deposit-3/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly covered all required points and did not contain any contradictory statements."
+ },
+ "deposit-4/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed $400, explains the required 30\u2011day written notice and its failure, and notes the landlord can still sue for damages."
+ },
+ "deposit-4/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer correctly states the tenant is owed $400, explains the notice requirement and why the landlord\u2019s retention is invalid, and notes the landlord may still sue for damages."
+ },
+ "deposit-4/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the tenant is owed the $400, explains the required 30\u2011day notice rule and that the landlord forfeited the claim, and notes the landlord can still sue for damages."
+ },
+ "deposit-5/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "Answer covers all required points, no listed mistakes."
+ },
+ "deposit-5/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly presents both readings on the notice issue, states the $650 is overdue, and notes the tenant\u2019s right to sue despite no objection, without making any of the listed mistakes."
+ },
+ "deposit-5/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer covers all required points without contradicting the statute, lease, or facts."
+ },
+ "deposit-6/1": {
+  "answers_first": false,
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response omits the key point that the landlord\u2019s notice meets the statutory 30\u2011day deadline, but otherwise covers the required points without errors."
+ },
+ "deposit-6/2": {
+  "answers_first": false,
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer does not begin by answering the tenant's question and omits stating that the landlord has not forfeited the right to claim, but otherwise correctly outlines the objection deadline, deduction rights, and litigation consequences."
+ },
+ "deposit-6/3": {
+  "answers_first": false,
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response omitted the key point that the certified\u2011mail notice is the proper statutory notice, so the landlord has not forfeited his right to claim."
+ },
+ "deposit-7/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   false,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer covers most required points but fails to explicitly note that the certified\u2011mail notice was proper."
+ },
+ "deposit-7/2": {
+  "answers_first": false,
+  "points_made": [
+   true,
+   false,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly covers most required points but omits stating the notice was proper and the first sentence only answers one of the tenant's two questions."
+ },
+ "deposit-7/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   false,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer covers most required points and is accurate, but omits stating that the notice was proper (certified mail)."
+ },
+ "deposit-8/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the email is valid notice, the landlord\u2019s claim is timely, the objection deadline, the deduction timeline, and that rights to sue remain."
+ },
+ "deposit-8/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the email is valid notice, the landlord\u2019s claim is timely, the tenant can still object within 15 days, the landlord may deduct if no objection and must return the balance within 30 days, and non\u2011objection does not waive later legal rights."
+ },
+ "deposit-8/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   false,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly addresses the e\u2011mail notice and objection deadlines, but omits stating the 30\u2011day deadline for the landlord\u2019s claim."
+ },
+ "deposit-9/1": {
+  "answers_first": false,
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "All required points are covered and no mistakes are present, but the opening sentence does not directly answer the tenant's question."
+ },
+ "deposit-9/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly addresses the tenant\u2019s question and includes all required points without making any prohibited errors."
+ },
+ "deposit-9/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Incorrectly states that the statutory disclosure requires notice within 30 days after move\u2011out, which is not in the provided statute text.",
+  "reason": "The answer covers all required points without the listed mistakes, but mischaracterizes the statutory disclosure."
+ },
+ "deposit-10/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly addresses the tenant's question and includes all required points without any contradictory statements."
+ },
+ "deposit-10/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly addressed the tenant's question, included all required points, and contained no contradictory statements."
+ },
+ "deposit-10/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the notice requirement, that the landlord\u2019s silence does not forfeit its claim, and that the tenant retains the deposit right."
+ },
+ "deposit-11/1": {
+  "answers_first": false,
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response gave a final answer before determining if the statutory exclusion applies, which is not allowed."
+ },
+ "deposit-11/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly defers on the exemption, asks one plain question, explains why, and provides the proper deposit rule without any contradictions or errors."
+ },
+ "deposit-11/3": {
+  "answers_first": false,
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly follows the required points and makes no contradictory or prohibited statements, but the opening sentence gives a conditional answer rather than directly answering the tenant\u2019s question."
+ },
+ "deposit-12/1": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The response correctly states the fee is not a security deposit, silence doesn\u2019t create a refund right, and the nonrefundable agreement controls."
+ },
+ "deposit-12/2": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly identifies the fee as non\u2011deposit, cites the proper statute, and relies on the lease\u2019s nonrefundable term without misapplying deposit rules."
+ },
+ "deposit-12/3": {
+  "answers_first": true,
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "reason": "The answer correctly states the fee is not a security deposit, cites the statute, and relies on the lease\u2019s nonrefundable term without making prohibited claims."
+ }
+}

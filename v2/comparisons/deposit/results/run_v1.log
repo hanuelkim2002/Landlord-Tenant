@@ -1,0 +1,38 @@
+v1 skill, Gemini (google/gemini-3.8-flash), into v1.jsonl
+v1 deposit-1 run 1: 17.3 s, 3 requests, 5 tool calls, $0.0160
+v1 deposit-2 run 1: 26.5 s, 3 requests, 5 tool calls, $0.0160
+v1 deposit-3 run 1: 31.6 s, 4 requests, 8 tool calls, $0.0246
+v1 deposit-6 run 1: 39.7 s, 6 requests, 8 tool calls, $0.0290
+v1 deposit-5 run 1: 48.0 s, 4 requests, 9 tool calls, $0.0183
+v1 deposit-1 run 2: 42.7 s, 3 requests, 5 tool calls, $0.0268
+v1 deposit-4 run 1: 63.7 s, 3 requests, 5 tool calls, $0.0322
+v1 deposit-2 run 2: 38.3 s, 3 requests, 5 tool calls, $0.0169
+v1 deposit-6 run 2: 29.8 s, 3 requests, 6 tool calls, $0.0268
+v1 deposit-2 run 3: 11.8 s, 3 requests, 5 tool calls, $0.0152
+v1 deposit-3 run 2: 45.3 s, 3 requests, 8 tool calls, $0.0335
+v1 deposit-5 run 2: 35.0 s, 4 requests, 7 tool calls, $0.0172
+v1 deposit-6 run 3: 13.7 s, 3 requests, 5 tool calls, $0.0164
+v1 deposit-7 run 1: 12.8 s, 2 requests, 5 tool calls, $0.0124
+v1 deposit-1 run 3: 34.9 s, 3 requests, 5 tool calls, $0.0290
+v1 deposit-4 run 2: 38.0 s, 3 requests, 5 tool calls, $0.0299
+v1 deposit-5 run 3: 19.9 s, 4 requests, 7 tool calls, $0.0161
+v1 deposit-8 run 1: 23.7 s, 5 requests, 8 tool calls, $0.0260
+v1 deposit-3 run 3: 31.6 s, 3 requests, 7 tool calls, $0.0253
+v1 deposit-7 run 2: 26.2 s, 5 requests, 7 tool calls, $0.0259
+v1 deposit-9 run 1: 28.8 s, 3 requests, 8 tool calls, $0.0190
+v1 deposit-11 run 1: 21.0 s, 3 requests, 5 tool calls, $0.0197
+v1 deposit-4 run 3: 34.5 s, 3 requests, 5 tool calls, $0.0273
+v1 deposit-8 run 2: 33.1 s, 6 requests, 7 tool calls, $0.0342
+v1 deposit-10 run 1: 41.1 s, 2 requests, 5 tool calls, $0.0271
+v1 deposit-10 run 2: 0.3 s, 0 requests, 0 tool calls, $0.0000  ERROR
+v1 deposit-7 run 3: 29.2 s, 3 requests, 5 tool calls, $0.0253
+v1 deposit-8 run 3: 5.7 s, 1 requests, 5 tool calls, $0.0022  ERROR
+v1 deposit-9 run 2: 39.4 s, 3 requests, 7 tool calls, $0.0298
+v1 deposit-11 run 2: 35.1 s, 4 requests, 7 tool calls, $0.0328
+v1 deposit-12 run 1: 44.7 s, 5 requests, 6 tool calls, $0.0201
+v1 deposit-9 run 3: 20.9 s, 3 requests, 7 tool calls, $0.0202
+v1 deposit-10 run 3: 42.9 s, 2 requests, 5 tool calls, $0.0229
+v1 deposit-12 run 2: 14.6 s, 3 requests, 5 tool calls, $0.0160
+v1 deposit-11 run 3: 33.0 s, 3 requests, 5 tool calls, $0.0263
+v1 deposit-12 run 3: 20.5 s, 3 requests, 4 tool calls, $0.0107
+Done. 36 answers, $0.7870 by the logged costs.

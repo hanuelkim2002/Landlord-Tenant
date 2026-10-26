@@ -1,0 +1,593 @@
+{
+ "deposit-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says yes to all $1,050 because no written notice came within 30 days (Aug 30, passed), quotes the 83.49(3)(a) forfeiture accurately, and says the landlord may still sue for damages after returning it. Dates and quotes check out."
+ },
+ "deposit-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes all three points, correctly separates the 15-day return rule from the 30-day claim notice, and correctly reads lease clause 8 (no e-mail notices). Forfeiture tied to the 30-day notice."
+ },
+ "deposit-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes all three points; forfeiture rests on the missed 30-day notice, and the separate 15-day return date (Aug 15) is stated correctly without being treated as the source of forfeiture. Costs and fees stated correctly."
+ },
+ "deposit-10/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Answers no, explains the 7-day written notice rule, that spoken notice does not meet it, that the landlord is relieved of the 30-day notice, and that the tenant keeps the right to the deposit. Does not discuss the lease but says nothing wrong about it."
+ },
+ "deposit-10/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes all points, reads clause 6 correctly as not altering the notice rule, and quotes 83.49(5) exactly. Its line that the landlord may 'only' keep money for unpaid rent or damage beyond ordinary wear and tear is a loose general gloss, but close enough to a claim for damages under 83.49(3)(a) not to count."
+ },
+ "deposit-10/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says no, quotes the 83.49(5) month-to-month rule (7 days' written notice by certified mail or personal delivery with an address) and its effect, notes the spoken notice and same-day forwarding address did not meet it, and says the tenant keeps the right to the deposit. The added date (August 24, 7 days before move-out) is correct and could come from count_days."
+ },
+ "deposit-11/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Conditional yes, presents the exclusion both ways with the enrollment clause quoted, and asks the one plain question. No errors found."
+ },
+ "deposit-11/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with a yes conditioned on the law applying, says the lease alone does not settle the school exclusion, explains it, and asks the one plain question. No errors found."
+ },
+ "deposit-11/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Conditional yes, says coverage depends on the housing's tie to the school given the enrollment clause, and asks the plain question. No errors found."
+ },
+ "deposit-12/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Quotes 83.491(6), says 83.49(3) forfeiture rules do not apply, that lack of notice does not convert the fee into a refundable deposit, and relies on the lease's nonrefundable term and 83.491(3)(f), asking about the fee agreement."
+ },
+ "deposit-12/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "States the fee is not a security deposit under 83.491(6), that no 83.49(3) notice was needed to keep it, and that the lease calls it nonrefundable as 83.491(3)(f) allows; 83.491(2)(a) notice does not turn it into a deposit."
+ },
+ "deposit-12/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the fee is not a security deposit under 83.491(6), the 83.49(3) notice rule does not apply, and the lease's nonrefundable term with a written agreement under 83.491(3)(f) and (4) lets the landlord keep it."
+ },
+ "deposit-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "All three points made with correct dates; the opener is limited to 'on the ground that the landlord missed the statutory deadline.' The (3)(c) fee point and the lease reading are correct."
+ },
+ "deposit-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "All three points made with correct dates; the opener is limited to the forfeiture ground. The unprompted 83.42(1) aside reaches the right result on this lease."
+ },
+ "deposit-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "All three points made with correct dates; the opener is limited to 'based solely on the passage of time,' so it does not bar asking now. No errors found."
+ },
+ "deposit-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes all three points: texting is not personal delivery or certified mail, the landlord was relieved of the claim notice so silence forfeits nothing, and the tenant keeps the right to the deposit. Correctly reads the lease as setting no exception."
+ },
+ "deposit-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Explains that a text without an address is not certified mail or personal delivery, so the landlord's silence forfeits nothing, and quotes that the tenant waived nothing. Correctly says the lease sets no different early-leaving rule."
+ },
+ "deposit-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the text was not certified mail or personal delivery and had no address, so the landlord was relieved and did not forfeit, while the tenant did not waive the deposit. No errors."
+ },
+ "deposit-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says yes, explains the certified-mail notice of claim and reason within 30 days, that a bare check is not that notice, and that August 30 has passed; notes the landlord may still sue for damages after returning the deposit. Side points on 83.42(1), 83.49(5) and fees are accurate."
+ },
+ "deposit-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes all three points: no proper notice, 30 days passed on 2026-08-30, landlord must return the $400 but may sue separately. Its account of 83.49(5) (fixed-term early leaving or periodic tenancy) is accurate."
+ },
+ "deposit-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "First sentence answers yes and flags the later damages suit; explains the certified-mail notice rule, the bare check, and August 30 passing. Lease clauses 5, 7 and 8 read correctly."
+ },
+ "deposit-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the question is unsettled with both readings, the $650 overdue since September 17, and that not objecting does not waive a separate suit. The closing school-housing question is unneeded but not wrong."
+ },
+ "deposit-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings given, $650 overdue either way with September 17 passed, and the separate-action right is quoted. No errors found."
+ },
+ "deposit-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Lays out both readings as unsettled, says the $650 was due by September 17 and is overdue either way, and notes failure to object does not waive a separate suit. Quotes check out."
+ },
+ "deposit-6/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives the 15-day objection window from receipt (2026-09-08), the no-objection deduction and 2026-09-19 balance date, and says the statute sets no remit date after an objection, with court costs and fees. Never says the certified notice is the kind the statute requires, so no forfeiture; opens with Part II coverage instead of the answer."
+ },
+ "deposit-6/2": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Ties the certified letter to the 83.49(3)(a) notice and moves to the objection procedure, gives both deadlines from the right starting dates, and says it is unsettled whether the $650 is due by September 19 after an objection. Opens with Part II coverage rather than the answer."
+ },
+ "deposit-6/3": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Correct objection deadline from receipt, the conditional deduction and 2026-09-19 balance date, and says the statute sets no timeline after an objection, leaving agreement or court. Never says the notice is valid so the landlord has not forfeited; first sentence is about the lease's coverage."
+ },
+ "deposit-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes all points: $650 overdue since Sept 19, $400 deductible after the missed Sept 8 objection deadline, right to sue preserved, fee shifting. The phrase about the carpet replacement having 'exceeded ordinary wear and tear' is muddled but makes no clear wrong claim."
+ },
+ "deposit-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "First sentence answers the $650 question; then correctly gives Sept 19 and Sept 8, says the $400 could be deducted but the right to sue for it survives, and states the fee rule. Small-claims mention is practical advice."
+ },
+ "deposit-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Short and correct: $650 overdue since Sept 19, failure to object authorized the $400 deduction but the tenant can still sue for a refund, and the prevailing party gets costs and fees."
+ },
+ "deposit-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point: e-mail counts, 'timely notice of a claim,' object in writing by Sept 4, $650 by Sept 19, non-waiver. The Section 7 note is a correct reading of the lease."
+ },
+ "deposit-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point with the right dates (timely notice, Sept 4, $650 by Sept 19, non-waiver). 'Objecting stops the landlord from having immediate statutory permission to deduct' restates the (3)(b) 'unless' clause rather than claiming a settled outcome."
+ },
+ "deposit-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the e-mail counts, gives Sept 4, and quotes the deduct-and-remit-within-30-days rule and non-waiver. It states the 30-day notice rule but never says this notice met it, so the landlord's non-forfeiture is not conveyed."
+ },
+ "deposit-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Finds the notice met 83.49(5) by June 8 so the landlord was not relieved, and gives both readings: July 15 passed, forfeit and full $1,050 returned; August 30 not passed, landlord may still send a certified-mail claim. No errors."
+ },
+ "deposit-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the certified letter met the 7-day rule so the landlord was not relieved, then gives both readings: July 15 passed with forfeiture and full return (damages suit still possible), or August 30 not passed with a certified-mail claim still possible. No errors."
+ },
+ "deposit-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Finds the notice met the statute and lease, so the landlord was not excused, and gives both readings without choosing (2026-07-15 passed, forfeit and full return; 2026-08-30 not passed, claim notice still possible). Dates are correct."
+ }
+}

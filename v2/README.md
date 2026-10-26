@@ -54,10 +54,10 @@ note), it asks for all of them in the same step, not one at a time. One at a tim
 
 - **Stored law.** `statutes/` (40 sections and `index.json`, read-only). `skills/`, one file per situation; the model
   sees each skill's name and description and loads the ones that fit.
-- **The lease.** The tenant uploads a PDF. Every page is read from its image by Claude Haiku 5.5 on OpenRouter (a
+- **The lease.** The tenant uploads a PDF. Every page is read from its image by Claude Haiku 5.5 from Anthropic (a
   PDF's own text can lose what was typed into the form and its check boxes). The text is stored page by page, and
   the whole lease goes into the system prompt once, every turn (method A, 2026-10-19, `comparisons/lease/`; the
-  reader changed 2026-10-21, `comparisons/models/`).
+  reader changed 2026-10-21, `comparisons/models/`; from Anthropic since 2026-10-23).
 - **Six tools.** `get_statute_section`, `search_statute`, `load_skill`, `count_days`, `note_fact`, `save_line`. No
   `search_lease`: the model has the whole lease.
 - **Facts.** `note_fact` saves what the tenant said as a pending fact. The tenant confirms or corrects it on the web
@@ -107,7 +107,7 @@ footer.
 
 ## Stack
 
-Python. The `openai` package on OpenRouter (OpenAI-compatible; the UF gateway can still be chosen) with a plain tool
-loop, no LangChain. The chat model is set in `config.py` from `AGENT_MODEL`, default `google/gemini-3.8-flash`; the
-lease reader from `VISION_MODEL`, default `anthropic/claude-haiku-5.5` (both chosen 2026-10-21, `comparisons/models/`). Streamlit for the page. Under about 1,000
+Python. The `openai` package, pointed at Anthropic's OpenAI-compatible endpoint (OpenRouter and the UF gateway can
+still be chosen), with a plain tool loop, no LangChain. The chat model is set in `config.py` from `AGENT_MODEL`,
+default `claude-sonnet-5-5`; the lease reader from `VISION_MODEL`, default `claude-haiku-5-5` (2026-10-23). Streamlit for the page. Under about 1,000
 lines of app code.

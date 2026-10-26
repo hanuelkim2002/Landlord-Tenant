@@ -13,7 +13,7 @@ import tools
 
 MAX_ROUNDS = 8                                               # tool rounds before the model is asked to answer
 
-RULES = """You help a tenant in Florida college housing with a dispute with their landlord, under Fla. Stat. ch. 83, part II.
+RULES = """You help a tenant in Florida with a dispute with their landlord, under Fla. Stat. ch. 83, part II.
 
 1. Apply the law to the tenant's facts and give an answer, not a list of quotes.
 2. Answer what was asked first. When asked "can I ...", say whether they can before giving any step.
