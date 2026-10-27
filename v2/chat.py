@@ -1,5 +1,6 @@
 """The chat: the system prompt (the rules, the whole lease, the facts, the timeline, the skills) and the tool loop,
-which sends the messages, runs any tool calls, sends the results back, and repeats until the model answers.
+which sends the messages, runs any tool calls, sends the results back, and repeats until the model answers. Also the
+split of a reply into the short answer the page shows first and the points it shows behind a click.
 """
 import json
 import re
@@ -76,6 +77,27 @@ def system_prompt(m, pages):
             f"{since_text(record.since_last_visit(m))}\n\n"
             f"SKILLS (load each one that fits the tenant's situation with load_skill):\n{listed}\n\n"
             f"LOADED SKILLS:\n{loaded or 'none yet'}")
+
+
+DETAILS = "DETAILS"                                          # the line between the short answer and the points
+WHY = "Why, and the law behind it"                           # the title for reasons written before any heading
+# The marker line holds only DETAILS, in any case, maybe bold or with a colon. Spaces and tabs only, never a newline,
+# so the match stays on one line.
+MARKER = re.compile(rf"(?im)^[ \t]*\**[ \t]*{DETAILS}[ \t]*:?[ \t]*\**[ \t]*$")
+HEADING = re.compile(r"(?m)^#+[ \t]+(.*)$")
+
+
+def split_reply(text):
+    """A reply's short part, shown first, and its points as [(title, body)], each shown behind a click."""
+    marker = MARKER.search(text)
+    if not marker:
+        return text.strip(), []                              # an old reply, or no marker: show it whole
+    details = text[marker.end():]
+    headings = list(HEADING.finditer(details))
+    points = [(WHY, details[:headings[0].start()] if headings else details)]
+    for heading, following in zip(headings, headings[1:] + [None]):
+        points.append((heading.group(1).strip("* \t"), details[heading.end():following.start() if following else None]))
+    return text[:marker.start()].strip(), [(title, body.strip()) for title, body in points if body.strip()]
 
 
 TEXT_CALL = re.compile(r"<function=([\w-]+)>(.*?)</function>", re.S)

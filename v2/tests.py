@@ -1,4 +1,5 @@
-"""The checks that need no model: the quote checker, the skill quote checker, count_days, and the timeline.
+"""The checks that need no model: the quote checker, the skill quote checker, count_days, the timeline, and the
+split of a reply into its short answer and its points.
 Run from this folder: python tests.py   (every line should say OK)
 """
 import atexit
@@ -194,6 +195,29 @@ check("a returning tenant's prompt holds the timeline and the since-last-visit b
       TIMELINE_BLOCK in returning and SINCE_BLOCK in returning)
 check("a brand-new matter's prompt has no since-last-visit block",
       SINCE_BLOCK not in chat.system_prompt(record.new_matter("t-new", "test"), []))
+
+# ---- Splitting a reply into the short answer and its points (chat.py)
+
+check("each heading under DETAILS becomes a point, its title without the # and bold marks",
+      chat.split_reply("You get the deposit back.\n\nWhen did you move out?\n\nDETAILS\n### Does the law cover you?\n"
+                       "Yes.\n## **Why your landlord loses the deposit**\nNo letter came.")
+      == ("You get the deposit back.\n\nWhen did you move out?",
+          [("Does the law cover you?", "Yes."), ("Why your landlord loses the deposit", "No letter came.")]))
+check("DETAILS with no heading gives one Why point",
+      chat.split_reply("Short.\nDETAILS\nAll the reasons.")
+      == ("Short.", [("Why, and the law behind it", "All the reasons.")]))
+check("text before the first heading goes in the Why point",
+      chat.split_reply("Short.\nDETAILS\nFirst.\n### Point?\nBody.")
+      == ("Short.", [(chat.WHY, "First."), ("Point?", "Body.")]))
+check("no DETAILS line: the whole reply, no points",
+      chat.split_reply("All of it.\n### A heading\nBody.") == ("All of it.\n### A heading\nBody.", []))
+check("DETAILS inside a sentence is not the marker",
+      chat.split_reply("These DETAILS matter.\nMore.") == ("These DETAILS matter.\nMore.", []))
+check("the marker may be bold, end in a colon, or be in any case",
+      all(chat.split_reply(f"Short.\n{marker}\nWhy.") == ("Short.", [(chat.WHY, "Why.")])
+          for marker in ("**DETAILS**", "DETAILS:", "Details", "  details  ")))
+check("a heading with nothing under it gives no empty box",
+      chat.split_reply("Short.\nDETAILS\n### Empty\n### Full\nBody.") == ("Short.", [("Full", "Body.")]))
 
 print(f"\n{'All checks passed.' if not failures else f'{failures} checks failed.'}")
 sys.exit(1 if failures else 0)
