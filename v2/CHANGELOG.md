@@ -210,3 +210,9 @@ part adds that the court hears these cases sooner (83.49(3)(c)). AUTHOR.md item 
 Main's memory timeline merged in; AUTHOR.md's deposit items renumbered 12 to 14. `comparisons/deposit/run.py` adds
 the version `fixed3` (the skill after the sign-off). Stories 16 and 18 on Sonnet, 6 answers, no errors
 (`comparisons/deposit/README.md`, fifth run). Nothing replaced.
+
+## 2026-10-26: two stale AUTHOR.md items brought up to date
+
+Item 6 now names Claude Sonnet 5.5 as the chat model (the 2026-10-23 decision), with Gemini one setting away.
+Item 11 gives today's line counts (831 without `tests.py`, 1,030 with). Replaces "Gemini is the chat model" and the
+counts from before the deposit merge. No code changed.
