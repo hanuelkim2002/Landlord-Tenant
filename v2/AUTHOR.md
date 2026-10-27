@@ -44,6 +44,8 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   after an objection; a renewal's end starts the clocks; mail to the old address counts if no new one was given. A
   notice missing the 15-day warning or the objection address now gets two readings, like one missing the amount.
   The skill adds that the court hears these cases sooner (83.49(3)(c)).
+- 2026-10-27: replies lead with a short plain answer (3 to 5 sentences, no section numbers or quotes), each point
+  behind a click; the rules' cap is about 700 words (`docs/superpowers/specs/2026-10-27-plain-replies-design.md`).
 
 ## Open
 

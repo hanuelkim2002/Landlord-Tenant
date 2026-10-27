@@ -13,3 +13,4 @@ mistakes are in SLIPS.md.
   can be revoked (83.505(1)), so the key holds; rerun story 8 on Sonnet (`comparisons/deposit/README.md`).
 - Deposit skill: widen the no-lean line to any point the answer cannot settle (stories 9, 11, 18 leaned on Sonnet);
   rerun those three on Sonnet.
+- Trim the rules toward their old length, if the author wants it (about 700 words since 2026-10-27).

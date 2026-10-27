@@ -216,3 +216,10 @@ the version `fixed3` (the skill after the sign-off). Stories 16 and 18 on Sonnet
 Item 5 now says leases, messages, and facts go to Anthropic, and item 6 names Claude Sonnet 5.5 as the chat model
 (both the 2026-10-23 decision). Item 11 gives today's line counts (831 without `tests.py`, 1,030 with). Replaces
 "the chat to OpenRouter and Google", "Gemini is the chat model", and the old counts. No code changed.
+
+## 2026-10-27: a short plain answer first, each point behind a click
+
+`chat.py`: a "Writing the reply" rules block (3 to 5 plain sentences and the question, then a DETAILS line and a `###`
+question heading per point; everyday words; "it" only when it can mean one thing), rule 8 ends the short answer, and
+`split_reply` cuts a reply at DETAILS. `app.py`: `show_reply` shows the short part, then one closed box per point.
+Replaces one long reply shown whole; old replies still show whole. Rules about 700 words (cap raised from 400).

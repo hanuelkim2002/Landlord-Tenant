@@ -218,6 +218,11 @@ check("the marker may be bold, end in a colon, or be in any case",
           for marker in ("**DETAILS**", "DETAILS:", "Details", "  details  ")))
 check("a heading with nothing under it gives no empty box",
       chat.split_reply("Short.\nDETAILS\n### Empty\n### Full\nBody.") == ("Short.", [("Full", "Body.")]))
+# The rules tell the model the marker and the heading; the page splits on them. If the two drift apart, every
+# reply shows whole again.
+check("the rules ask for the marker the page looks for",
+      f"a line with only {chat.DETAILS} on it" in chat.RULES
+      and "### Does Florida's deposit law cover you?" in chat.RULES)
 
 print(f"\n{'All checks passed.' if not failures else f'{failures} checks failed.'}")
 sys.exit(1 if failures else 0)
