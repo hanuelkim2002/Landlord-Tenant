@@ -6,7 +6,8 @@ Sonnet 5.5 from Anthropic, 18 deposit stories, 3 runs each, with the old rules a
 
 - Met: Format followed in at least 52 of 54 new answers
 - Missed: Median short part 100 words or less
-- Met: Unclear words: median 0, and fewer in all than the old rules
+- Met: Unclear words, after my review: median 0, and fewer in all than the old rules
+- Missed: Unclear words, on the graders' own counts: median 0, and fewer in all than the old rules
 - Met: Unexplained legal words: median 0, and fewer in all than the old rules
 - Met: Right answers not fewer than the old rules
 
@@ -18,15 +19,23 @@ Sonnet 5.5 from Anthropic, 18 deposit stories, 3 runs each, with the old rules a
 | Partly | 2 | 2 |
 | Wrong | 6 | 5 |
 | Format followed (of 54) | 0 | 54 |
-| Median words seen first | 461.5 | 126.5 |
+| Median words in the short part | 461.5 | 126.5 |
+| Median words seen first, box titles included | 461.5 | 169.0 |
 | Median words in all | 461.5 | 672.5 |
 | Section number or quote seen first | 53 | 7 |
 | Question hidden in a box | 0 | 0 |
-| Unclear words, median | 1.0 | 0.0 |
-| Unclear words, in all | 79 | 21 |
+| Unclear words, median (after my review) | 1.0 | 0.0 |
+| Unclear words, in all (after my review) | 79 | 21 |
+| Unclear words, median (the graders' own counts) | 2.0 | 0.5 |
+| Unclear words, in all (the graders' own counts) | 99 | 39 |
+| Unclear words per 100 words seen first (after my review) | 0.32 | 0.23 |
+| Unclear words per 100 words seen first (the graders' own counts) | 0.41 | 0.42 |
 | Unexplained legal words, median | 2.0 | 0.0 |
 | Unexplained legal words, in all | 135 | 7 |
+| Unexplained legal words per 100 words seen first | 0.55 | 0.08 |
 | Seen first answers the question alone | 53 | 54 |
+| Median seconds per answer | 19.85 | 24.05 |
+| Median cost per answer, $ | 0.0875 | 0.0935 |
 | Cost of the run, $ | 4.95 | 5.3 |
 
 ## Each settled story (R right, P partly, W wrong; runs 1 to 3)

@@ -77,8 +77,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    from the page images; the grades on your lease follow them.
 10. **Decided 2026-10-25:** the timeline's old open lines: rule 9 and `save_line` say what open means, and
     `save_line`'s reply lists the open lines (see Decided; `comparisons/memory/SCORES.md`).
-11. **The 1,000-line limit.** On 2026-10-26 app code is 831 lines without `tests.py` and 1,030 with it (722 and
-    811 before the memory). Your call whether `tests.py` counts toward the limit in CLAUDE.md.
+11. **The 1,000-line limit.** On 2026-10-27 app code is 870 lines without `tests.py` and 1,098 with it (831 and
+    1,030 before plain replies; 722 and 811 before the memory). Your call whether `tests.py` counts toward the limit
+    in CLAUDE.md.
 12. **Decided 2026-10-26:** the deposit skill's new law points (see Decided). Still yours to check: story 12's key
     reads 83.491(6) as putting a fee outside 83.49.
 13. **Judging story 17: is a backup "two readings"?** Answers say "yes, all $1,050" and then "even if the letter
@@ -86,3 +87,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     decides the grade; `comparisons/deposit/README.md`, fourth run.
 14. **A tenant who stayed on month to month after the lease ran out.** 83.49(6) does not say whether that is a
     renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?
+15. **Plain replies test: two calls** (`comparisons/plain/README.md`). First, the short answer missed its target:
+    median 127 words and 7 sentences, where the rule asks for 3 to 5 sentences. Keep it, reword the rule, or change
+    the target? Second, my review dropped two kinds of flagged words that the approved wording would count: an "it"
+    echoing your question in the first sentence, and a "this" that can only mean the dispute ("What if this goes to
+    court?"). With them, the unclear-words target is met; on the graders' own counts it is missed (median 0.5), and
+    per 100 words the old and new rules come out the same. Accept or reject the two exemptions?

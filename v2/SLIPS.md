@@ -159,7 +159,8 @@ A pointing word whose thing is two or more sentences back, or that could mean tw
 the landlord last named two sentences before).
 
 - 2026-10-27, plain replies test (Sonnet 5.5, counted by Opus with my review, in what the tenant sees first): old
-  rules 79 in 54 answers, new rules 21 in 54. Most are a chain of "it" for the landlord or the letter.
+  rules 79 in 54 answers, new rules 21 in 54 (the graders' own counts: 99 and 39, the same per 100 words). Most are a
+  chain of "it" for the landlord or the letter.
 
 ## Shows the tenant a tool's name
 

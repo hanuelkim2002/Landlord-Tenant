@@ -91,8 +91,9 @@ The six tools the model can call, their descriptions (`SCHEMAS`), and `run_tool(
 
 ### chat.py
 
-- `RULES`: the system prompt's rules (README.md, 547 words). Rule 9 keeps the timeline; rule 10 says how to pick
-  up after a gap.
+- `RULES`: the system prompt's rules (README.md, 703 words). Rule 9 keeps the timeline; rule 10 says how to pick
+  up after a gap; rule 8 ends the short answer with its question. "Writing the reply" asks for the short answer, a
+  `DETAILS` line, and a `###` question heading per point, in plain words.
 - `facts_text`, `timeline_text(lines)`, `since_text(since)`, `system_prompt(m, pages)`: the prompt, built fresh for
   each message. After the facts: TIMELINE, and SINCE LAST VISIT when the last message was on an earlier day.
 - `split_reply(text)`: a reply's short part and its points, [(title, body)]. It cuts at the first line holding only

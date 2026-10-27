@@ -227,6 +227,7 @@ Replaces one long reply shown whole; old replies still show whole. Rules about 7
 ## 2026-10-27: the plain replies test, run and scored
 
 `comparisons/plain/`: Sonnet answered the 18 deposit stories 3 times with the old rules and the new (108 answers,
-$10.25), graded by Opus subagents with my review of the plain counts. New against old: 127 words seen first against
-462, unclear words 21 against 79, unexplained legal words 7 against 135, right 41 against 40 of 48. Missed: the short
-answer runs 7 sentences, not 3 to 5. Four new slips in SLIPS.md. Replaces nothing in the app.
+$10.25), graded by Opus subagents. New against old: short part 127 words against 462, unexplained legal words 7
+against 135, right 41 against 40 of 48. Unclear words 21 against 79 after my review, 39 against 99 on the graders'
+counts (the same per 100 words). Missed: the 100-word short part; on the graders' counts, the unclear-words median.
+Reply time 24.1 against 19.9 seconds. AUTHOR.md item 15; four new slips in SLIPS.md. Replaces nothing in the app.

@@ -11,11 +11,19 @@
    "question_hidden": 0,
    "answers_alone": 53,
    "short_words_median": 461.5,
+   "seen_words_median": 461.5,
    "words_median": 461.5,
    "unclear_median": 1.0,
    "unclear_total": 79,
+   "unclear_raw_median": 2.0,
+   "unclear_raw_total": 99,
    "legal_median": 2.0,
    "legal_total": 135,
+   "unclear_per_100": 0.32,
+   "unclear_raw_per_100": 0.41,
+   "legal_per_100": 0.55,
+   "seconds_median": 19.85,
+   "cost_median": 0.0875,
    "cost": 4.95,
    "per_story": {
     "deposit-1": [
@@ -111,11 +119,19 @@
    "question_hidden": 0,
    "answers_alone": 54,
    "short_words_median": 126.5,
+   "seen_words_median": 169.0,
    "words_median": 672.5,
    "unclear_median": 0.0,
    "unclear_total": 21,
+   "unclear_raw_median": 0.5,
+   "unclear_raw_total": 39,
    "legal_median": 0.0,
    "legal_total": 7,
+   "unclear_per_100": 0.23,
+   "unclear_raw_per_100": 0.42,
+   "legal_per_100": 0.08,
+   "seconds_median": 24.05,
+   "cost_median": 0.0935,
    "cost": 5.3,
    "per_story": {
     "deposit-1": [
@@ -211,8 +227,12 @@
    false
   ],
   [
-   "Unclear words: median 0, and fewer in all than the old rules",
+   "Unclear words, after my review: median 0, and fewer in all than the old rules",
    true
+  ],
+  [
+   "Unclear words, on the graders' own counts: median 0, and fewer in all than the old rules",
+   false
   ],
   [
    "Unexplained legal words: median 0, and fewer in all than the old rules",
@@ -235,9 +255,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 1,
+    "seen_words": 382,
     "answers_alone": true,
     "words": 382,
+    "seconds": 17.1,
     "cost": 0.080326
    },
    {
@@ -250,9 +273,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 2,
+    "seen_words": 428,
     "answers_alone": true,
     "words": 428,
+    "seconds": 18.5,
     "cost": 0.08208
    },
    {
@@ -265,9 +291,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 3,
+    "seen_words": 448,
     "answers_alone": true,
     "words": 448,
+    "seconds": 16.7,
     "cost": 0.079972
    },
    {
@@ -280,9 +309,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 2,
+    "seen_words": 486,
     "answers_alone": true,
     "words": 486,
+    "seconds": 16.0,
     "cost": 0.0792
    },
    {
@@ -295,9 +327,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 3,
+    "unclear_raw": 3,
     "legal_words": 5,
+    "seen_words": 505,
     "answers_alone": true,
     "words": 505,
+    "seconds": 14.6,
     "cost": 0.07585
    },
    {
@@ -310,9 +345,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 2,
+    "seen_words": 442,
     "answers_alone": true,
     "words": 442,
+    "seconds": 19.9,
     "cost": 0.082714
    },
    {
@@ -325,9 +363,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 2,
+    "seen_words": 413,
     "answers_alone": true,
     "words": 413,
+    "seconds": 20.3,
     "cost": 0.083776
    },
    {
@@ -340,9 +381,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 5,
+    "unclear_raw": 5,
     "legal_words": 3,
+    "seen_words": 416,
     "answers_alone": true,
     "words": 416,
+    "seconds": 19.6,
     "cost": 0.083866
    },
    {
@@ -355,9 +399,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 5,
+    "unclear_raw": 5,
     "legal_words": 1,
+    "seen_words": 421,
     "answers_alone": true,
     "words": 421,
+    "seconds": 21.6,
     "cost": 0.085004
    },
    {
@@ -370,9 +417,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 2,
+    "seen_words": 377,
     "answers_alone": true,
     "words": 377,
+    "seconds": 21.5,
     "cost": 0.086652
    },
    {
@@ -385,9 +435,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 2,
+    "seen_words": 362,
     "answers_alone": true,
     "words": 362,
+    "seconds": 19.3,
     "cost": 0.085076
    },
    {
@@ -400,9 +453,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 2,
+    "seen_words": 456,
     "answers_alone": true,
     "words": 456,
+    "seconds": 22.3,
     "cost": 0.088676
    },
    {
@@ -415,9 +471,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 5,
+    "seen_words": 491,
     "answers_alone": true,
     "words": 491,
+    "seconds": 22.7,
     "cost": 0.091946
    },
    {
@@ -430,9 +489,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 6,
+    "seen_words": 513,
     "answers_alone": true,
     "words": 513,
+    "seconds": 21.1,
     "cost": 0.089406
    },
    {
@@ -445,9 +507,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 3,
+    "unclear_raw": 3,
     "legal_words": 6,
+    "seen_words": 501,
     "answers_alone": true,
     "words": 501,
+    "seconds": 21.4,
     "cost": 0.091506
    },
    {
@@ -460,9 +525,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 2,
+    "seen_words": 524,
     "answers_alone": true,
     "words": 524,
+    "seconds": 19.4,
     "cost": 0.086498
    },
    {
@@ -475,9 +543,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 3,
+    "seen_words": 482,
     "answers_alone": true,
     "words": 482,
+    "seconds": 19.7,
     "cost": 0.086276
    },
    {
@@ -490,9 +561,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 3,
+    "seen_words": 452,
     "answers_alone": true,
     "words": 452,
+    "seconds": 19.2,
     "cost": 0.086716
    },
    {
@@ -505,9 +579,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 477,
     "answers_alone": true,
     "words": 477,
+    "seconds": 14.9,
     "cost": 0.080874
    },
    {
@@ -520,9 +597,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 2,
     "legal_words": 0,
+    "seen_words": 401,
     "answers_alone": true,
     "words": 401,
+    "seconds": 20.7,
     "cost": 0.086082
    },
    {
@@ -535,9 +615,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 393,
     "answers_alone": true,
     "words": 393,
+    "seconds": 19.8,
     "cost": 0.087258
    },
    {
@@ -550,9 +633,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 1,
+    "unclear_raw": 3,
     "legal_words": 3,
+    "seen_words": 570,
     "answers_alone": true,
     "words": 570,
+    "seconds": 21.6,
     "cost": 0.09347
    },
    {
@@ -565,9 +651,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 2,
+    "seen_words": 535,
     "answers_alone": true,
     "words": 535,
+    "seconds": 22.5,
     "cost": 0.093312
    },
    {
@@ -580,9 +669,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 2,
+    "seen_words": 549,
     "answers_alone": true,
     "words": 549,
+    "seconds": 23.0,
     "cost": 0.096946
    },
    {
@@ -595,9 +687,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 2,
+    "seen_words": 453,
     "answers_alone": true,
     "words": 453,
+    "seconds": 19.3,
     "cost": 0.085264
    },
    {
@@ -610,9 +705,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 1,
+    "seen_words": 496,
     "answers_alone": true,
     "words": 496,
+    "seconds": 18.6,
     "cost": 0.086448
    },
    {
@@ -625,9 +723,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 1,
+    "seen_words": 427,
     "answers_alone": true,
     "words": 427,
+    "seconds": 18.2,
     "cost": 0.08431
    },
    {
@@ -640,9 +741,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 2,
     "legal_words": 2,
+    "seen_words": 381,
     "answers_alone": true,
     "words": 381,
+    "seconds": 18.0,
     "cost": 0.083758
    },
    {
@@ -655,9 +759,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 4,
     "legal_words": 2,
+    "seen_words": 453,
     "answers_alone": true,
     "words": 453,
+    "seconds": 28.8,
     "cost": 0.09366
    },
    {
@@ -670,9 +777,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 2,
     "legal_words": 2,
+    "seen_words": 422,
     "answers_alone": true,
     "words": 422,
+    "seconds": 25.4,
     "cost": 0.09231
    },
    {
@@ -685,9 +795,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 5,
+    "seen_words": 393,
     "answers_alone": true,
     "words": 393,
+    "seconds": 17.6,
     "cost": 0.081284
    },
    {
@@ -700,9 +813,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 4,
+    "seen_words": 488,
     "answers_alone": true,
     "words": 488,
+    "seconds": 15.8,
     "cost": 0.080066
    },
    {
@@ -715,9 +831,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 3,
     "legal_words": 3,
+    "seen_words": 497,
     "answers_alone": true,
     "words": 497,
+    "seconds": 17.2,
     "cost": 0.080252
    },
    {
@@ -730,9 +849,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 2,
+    "seen_words": 404,
     "answers_alone": true,
     "words": 404,
+    "seconds": 24.5,
     "cost": 0.130724
    },
    {
@@ -745,9 +867,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 1,
+    "unclear_raw": 3,
     "legal_words": 2,
+    "seen_words": 551,
     "answers_alone": true,
     "words": 551,
+    "seconds": 28.7,
     "cost": 0.169458
    },
    {
@@ -760,9 +885,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 0,
     "answers_alone": false,
     "words": 0,
+    "seconds": 19.6,
     "cost": 0.124878
    },
    {
@@ -775,9 +903,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 2,
+    "seen_words": 467,
     "answers_alone": true,
     "words": 467,
+    "seconds": 19.3,
     "cost": 0.08912
    },
    {
@@ -790,9 +921,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 3,
+    "unclear_raw": 3,
     "legal_words": 3,
+    "seen_words": 424,
     "answers_alone": true,
     "words": 424,
+    "seconds": 18.7,
     "cost": 0.088138
    },
    {
@@ -805,9 +939,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 4,
+    "unclear_raw": 4,
     "legal_words": 3,
+    "seen_words": 432,
     "answers_alone": true,
     "words": 432,
+    "seconds": 16.8,
     "cost": 0.087678
    },
    {
@@ -820,9 +957,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 2,
+    "seen_words": 499,
     "answers_alone": true,
     "words": 499,
+    "seconds": 22.7,
     "cost": 0.091348
    },
    {
@@ -835,9 +975,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 2,
     "legal_words": 2,
+    "seen_words": 479,
     "answers_alone": true,
     "words": 479,
+    "seconds": 21.7,
     "cost": 0.090214
    },
    {
@@ -850,9 +993,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 2,
+    "seen_words": 475,
     "answers_alone": true,
     "words": 475,
+    "seconds": 19.1,
     "cost": 0.08642
    },
    {
@@ -865,9 +1011,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 2,
+    "seen_words": 517,
     "answers_alone": true,
     "words": 517,
+    "seconds": 25.0,
     "cost": 0.094964
    },
    {
@@ -880,9 +1029,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 2,
     "legal_words": 2,
+    "seen_words": 475,
     "answers_alone": true,
     "words": 475,
+    "seconds": 23.4,
     "cost": 0.093078
    },
    {
@@ -895,9 +1047,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 3,
     "legal_words": 4,
+    "seen_words": 478,
     "answers_alone": true,
     "words": 478,
+    "seconds": 24.6,
     "cost": 0.094436
    },
    {
@@ -910,9 +1065,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 4,
+    "unclear_raw": 4,
     "legal_words": 3,
+    "seen_words": 450,
     "answers_alone": true,
     "words": 450,
+    "seconds": 19.7,
     "cost": 0.088178
    },
    {
@@ -925,9 +1083,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 4,
+    "unclear_raw": 4,
     "legal_words": 4,
+    "seen_words": 519,
     "answers_alone": true,
     "words": 519,
+    "seconds": 21.9,
     "cost": 0.0936
    },
    {
@@ -940,9 +1101,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 5,
+    "unclear_raw": 6,
     "legal_words": 4,
+    "seen_words": 483,
     "answers_alone": true,
     "words": 483,
+    "seconds": 26.0,
     "cost": 0.098222
    },
    {
@@ -955,9 +1119,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 3,
+    "unclear_raw": 4,
     "legal_words": 5,
+    "seen_words": 418,
     "answers_alone": true,
     "words": 418,
+    "seconds": 28.7,
     "cost": 0.130034
    },
    {
@@ -970,9 +1137,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 5,
+    "seen_words": 416,
     "answers_alone": true,
     "words": 416,
+    "seconds": 22.0,
     "cost": 0.119478
    },
    {
@@ -985,9 +1155,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 1,
+    "seen_words": 390,
     "answers_alone": true,
     "words": 390,
+    "seconds": 18.9,
     "cost": 0.085442
    },
    {
@@ -1000,9 +1173,12 @@
     "question_hidden": false,
     "verdict": "partly",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 472,
     "answers_alone": true,
     "words": 472,
+    "seconds": 20.8,
     "cost": 0.090042
    },
    {
@@ -1015,9 +1191,12 @@
     "question_hidden": false,
     "verdict": "partly",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 3,
+    "seen_words": 479,
     "answers_alone": true,
     "words": 479,
+    "seconds": 18.3,
     "cost": 0.085518
    },
    {
@@ -1030,9 +1209,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 3,
+    "unclear_raw": 4,
     "legal_words": 3,
+    "seen_words": 498,
     "answers_alone": true,
     "words": 498,
+    "seconds": 20.1,
     "cost": 0.088546
    }
   ],
@@ -1047,9 +1229,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 0,
+    "seen_words": 103,
     "answers_alone": true,
     "words": 550,
+    "seconds": 17.8,
     "cost": 0.08364
    },
    {
@@ -1062,9 +1247,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 127,
     "answers_alone": true,
     "words": 601,
+    "seconds": 17.9,
     "cost": 0.084704
    },
    {
@@ -1077,9 +1265,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 122,
     "answers_alone": true,
     "words": 601,
+    "seconds": 20.1,
     "cost": 0.087914
    },
    {
@@ -1092,9 +1283,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 130,
     "answers_alone": true,
     "words": 674,
+    "seconds": 24.1,
     "cost": 0.091628
    },
    {
@@ -1107,9 +1301,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 184,
     "answers_alone": true,
     "words": 669,
+    "seconds": 17.3,
     "cost": 0.084646
    },
    {
@@ -1122,9 +1319,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 172,
     "answers_alone": true,
     "words": 666,
+    "seconds": 26.7,
     "cost": 0.120328
    },
    {
@@ -1137,9 +1337,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 2,
     "legal_words": 0,
+    "seen_words": 148,
     "answers_alone": true,
     "words": 663,
+    "seconds": 22.6,
     "cost": 0.091676
    },
    {
@@ -1152,9 +1355,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 114,
     "answers_alone": true,
     "words": 560,
+    "seconds": 22.4,
     "cost": 0.09064
    },
    {
@@ -1167,9 +1373,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 241,
     "answers_alone": true,
     "words": 916,
+    "seconds": 26.9,
     "cost": 0.095868
    },
    {
@@ -1182,9 +1391,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 181,
     "answers_alone": true,
     "words": 690,
+    "seconds": 22.8,
     "cost": 0.08674
    },
    {
@@ -1197,9 +1409,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 133,
     "answers_alone": true,
     "words": 633,
+    "seconds": 20.6,
     "cost": 0.08475
    },
    {
@@ -1212,9 +1427,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 141,
     "answers_alone": true,
     "words": 539,
+    "seconds": 19.8,
     "cost": 0.084574
    },
    {
@@ -1227,9 +1445,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 179,
     "answers_alone": true,
     "words": 758,
+    "seconds": 25.1,
     "cost": 0.098238
    },
    {
@@ -1242,9 +1463,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 182,
     "answers_alone": true,
     "words": 754,
+    "seconds": 25.9,
     "cost": 0.098058
    },
    {
@@ -1257,9 +1481,12 @@
     "question_hidden": false,
     "verdict": null,
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 201,
     "answers_alone": true,
     "words": 833,
+    "seconds": 29.9,
     "cost": 0.10334
    },
    {
@@ -1272,9 +1499,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 237,
     "answers_alone": true,
     "words": 750,
+    "seconds": 24.4,
     "cost": 0.094828
    },
    {
@@ -1287,9 +1517,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 158,
     "answers_alone": true,
     "words": 636,
+    "seconds": 24.4,
     "cost": 0.091998
    },
    {
@@ -1302,9 +1535,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 186,
     "answers_alone": true,
     "words": 691,
+    "seconds": 22.4,
     "cost": 0.092388
    },
    {
@@ -1317,9 +1553,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 1,
+    "seen_words": 104,
     "answers_alone": true,
     "words": 563,
+    "seconds": 21.6,
     "cost": 0.093146
    },
    {
@@ -1332,9 +1571,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 146,
     "answers_alone": true,
     "words": 580,
+    "seconds": 21.0,
     "cost": 0.092886
    },
    {
@@ -1347,9 +1589,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 211,
     "answers_alone": true,
     "words": 626,
+    "seconds": 25.1,
     "cost": 0.098198
    },
    {
@@ -1362,9 +1607,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 1,
+    "seen_words": 211,
     "answers_alone": true,
     "words": 764,
+    "seconds": 25.2,
     "cost": 0.099744
    },
    {
@@ -1377,9 +1625,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 1,
+    "seen_words": 142,
     "answers_alone": true,
     "words": 700,
+    "seconds": 21.2,
     "cost": 0.09421
    },
    {
@@ -1392,9 +1643,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 0,
+    "unclear_raw": 2,
     "legal_words": 1,
+    "seen_words": 168,
     "answers_alone": true,
     "words": 744,
+    "seconds": 20.5,
     "cost": 0.09396
    },
    {
@@ -1407,9 +1661,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 243,
     "answers_alone": true,
     "words": 707,
+    "seconds": 22.6,
     "cost": 0.089618
    },
    {
@@ -1422,9 +1679,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 274,
     "answers_alone": true,
     "words": 702,
+    "seconds": 25.4,
     "cost": 0.093074
    },
    {
@@ -1437,9 +1697,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 165,
     "answers_alone": true,
     "words": 860,
+    "seconds": 27.7,
     "cost": 0.09677
    },
    {
@@ -1452,9 +1715,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 2,
     "legal_words": 0,
+    "seen_words": 122,
     "answers_alone": true,
     "words": 543,
+    "seconds": 35.1,
     "cost": 0.130384
    },
    {
@@ -1467,9 +1733,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 1,
+    "seen_words": 222,
     "answers_alone": true,
     "words": 662,
+    "seconds": 22.4,
     "cost": 0.089712
    },
    {
@@ -1482,9 +1751,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 1,
+    "seen_words": 128,
     "answers_alone": true,
     "words": 563,
+    "seconds": 20.5,
     "cost": 0.08725
    },
    {
@@ -1497,9 +1769,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 185,
     "answers_alone": true,
     "words": 759,
+    "seconds": 22.1,
     "cost": 0.09003
    },
    {
@@ -1512,9 +1787,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 127,
     "answers_alone": true,
     "words": 666,
+    "seconds": 20.0,
     "cost": 0.087736
    },
    {
@@ -1527,9 +1805,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 192,
     "answers_alone": true,
     "words": 681,
+    "seconds": 20.4,
     "cost": 0.087942
    },
    {
@@ -1542,9 +1823,12 @@
     "question_hidden": false,
     "verdict": "partly",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 185,
     "answers_alone": true,
     "words": 624,
+    "seconds": 31.8,
     "cost": 0.176584
    },
    {
@@ -1557,9 +1841,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 176,
     "answers_alone": true,
     "words": 716,
+    "seconds": 29.1,
     "cost": 0.139758
    },
    {
@@ -1572,9 +1859,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 208,
     "answers_alone": true,
     "words": 752,
+    "seconds": 29.7,
     "cost": 0.13958
    },
    {
@@ -1587,9 +1877,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 140,
     "answers_alone": true,
     "words": 632,
+    "seconds": 24.3,
     "cost": 0.092822
    },
    {
@@ -1602,9 +1895,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 4,
+    "unclear_raw": 4,
     "legal_words": 0,
+    "seen_words": 202,
     "answers_alone": true,
     "words": 715,
+    "seconds": 26.6,
     "cost": 0.098044
    },
    {
@@ -1617,9 +1913,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 2,
+    "unclear_raw": 3,
     "legal_words": 0,
+    "seen_words": 166,
     "answers_alone": true,
     "words": 651,
+    "seconds": 21.7,
     "cost": 0.08812
    },
    {
@@ -1632,9 +1931,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 1,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 159,
     "answers_alone": true,
     "words": 670,
+    "seconds": 24.0,
     "cost": 0.094152
    },
    {
@@ -1647,9 +1949,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 248,
     "answers_alone": true,
     "words": 812,
+    "seconds": 26.3,
     "cost": 0.097204
    },
    {
@@ -1662,9 +1967,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 200,
     "answers_alone": true,
     "words": 768,
+    "seconds": 22.5,
     "cost": 0.091742
    },
    {
@@ -1677,9 +1985,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 187,
     "answers_alone": true,
     "words": 771,
+    "seconds": 27.0,
     "cost": 0.097388
    },
    {
@@ -1692,9 +2003,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 3,
+    "unclear_raw": 3,
     "legal_words": 0,
+    "seen_words": 129,
     "answers_alone": true,
     "words": 680,
+    "seconds": 20.4,
     "cost": 0.091266
    },
    {
@@ -1707,9 +2021,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 148,
     "answers_alone": true,
     "words": 601,
+    "seconds": 23.1,
     "cost": 0.093924
    },
    {
@@ -1722,9 +2039,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 182,
     "answers_alone": true,
     "words": 869,
+    "seconds": 31.8,
     "cost": 0.102516
    },
    {
@@ -1737,9 +2057,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 276,
     "answers_alone": true,
     "words": 815,
+    "seconds": 28.4,
     "cost": 0.098808
    },
    {
@@ -1752,9 +2075,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 1,
+    "unclear_raw": 2,
     "legal_words": 0,
+    "seen_words": 207,
     "answers_alone": true,
     "words": 726,
+    "seconds": 32.9,
     "cost": 0.103978
    },
    {
@@ -1767,9 +2093,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 1,
     "legal_words": 0,
+    "seen_words": 164,
     "answers_alone": true,
     "words": 590,
+    "seconds": 21.4,
     "cost": 0.09187
    },
    {
@@ -1782,9 +2111,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 146,
     "answers_alone": true,
     "words": 613,
+    "seconds": 31.5,
     "cost": 0.133492
    },
    {
@@ -1797,9 +2129,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 170,
     "answers_alone": true,
     "words": 639,
+    "seconds": 23.5,
     "cost": 0.09276
    },
    {
@@ -1812,9 +2147,12 @@
     "question_hidden": false,
     "verdict": "wrong",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 1,
+    "seen_words": 119,
     "answers_alone": true,
     "words": 640,
+    "seconds": 25.5,
     "cost": 0.094462
    },
    {
@@ -1827,9 +2165,12 @@
     "question_hidden": false,
     "verdict": "partly",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 168,
     "answers_alone": true,
     "words": 671,
+    "seconds": 24.1,
     "cost": 0.094462
    },
    {
@@ -1842,9 +2183,12 @@
     "question_hidden": false,
     "verdict": "right",
     "unclear_words": 0,
+    "unclear_raw": 0,
     "legal_words": 0,
+    "seen_words": 154,
     "answers_alone": true,
     "words": 695,
+    "seconds": 24.1,
     "cost": 0.094318
    }
   ]
