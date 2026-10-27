@@ -223,3 +223,10 @@ Item 5 now says leases, messages, and facts go to Anthropic, and item 6 names Cl
 question heading per point; everyday words; "it" only when it can mean one thing), rule 8 ends the short answer, and
 `split_reply` cuts a reply at DETAILS. `app.py`: `show_reply` shows the short part, then one closed box per point.
 Replaces one long reply shown whole; old replies still show whole. Rules about 700 words (cap raised from 400).
+
+## 2026-10-27: the plain replies test, run and scored
+
+`comparisons/plain/`: Sonnet answered the 18 deposit stories 3 times with the old rules and the new (108 answers,
+$10.25), graded by Opus subagents with my review of the plain counts. New against old: 127 words seen first against
+462, unclear words 21 against 79, unexplained legal words 7 against 135, right 41 against 40 of 48. Missed: the short
+answer runs 7 sentences, not 3 to 5. Four new slips in SLIPS.md. Replaces nothing in the app.

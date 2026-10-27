@@ -1,0 +1,562 @@
+{
+ "deposit-1/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The landlord, but the landlord is not named in this sentence or the one before (that one only says \"it\").",
+    "sentence": "It can still sue you for damages, but only after it returns the deposit.",
+    "word": "It"
+   },
+   {
+    "could_mean": "The landlord again, in \"after it returns the deposit\"; not named in this sentence or the one before.",
+    "sentence": "It can still sue you for damages, but only after it returns the deposit.",
+    "word": "it"
+   }
+  ],
+  "why": "It says yes, the whole $1,050, because the landlord sent no notice within the 30 days."
+ },
+ "deposit-1/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says yes, the full $1,050, because the 30-day notice deadline passed with no notice."
+ },
+ "deposit-1/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says yes, all $1,050, because no notice came within the 30 days."
+ },
+ "deposit-10/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "Whether you get the whole deposit back; nothing is named.",
+    "sentence": "Why doesn't that settle it in your favor?",
+    "word": "it"
+   },
+   {
+    "could_mean": "The whole answer, or the box title just before it.",
+    "sentence": "What does this mean for getting the money?",
+    "word": "this"
+   }
+  ],
+  "why": "It says no, not automatically, gives the reason, and says the landlord must return the deposit or show a reason."
+ },
+ "deposit-10/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeit"
+  ],
+  "unclear_words": [],
+  "why": "It says not automatically, explains the spoken notice is why, and says the deposit is still the tenant's."
+ },
+ "deposit-10/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeiture"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The deposit dispute; nothing is named.",
+    "sentence": "What if this goes to court?",
+    "word": "this"
+   }
+  ],
+  "why": "It says no, not automatically, because the tenant's notice was only spoken, and the tenant still has a right to the deposit."
+ },
+ "deposit-11/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The deposit dispute; nothing is named.",
+    "sentence": "Can you recover court costs if this goes to court?",
+    "word": "this"
+   }
+  ],
+  "why": "It says yes, all $1,050, as long as the rental law covers the apartment."
+ },
+ "deposit-11/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says yes, all $1,050, as long as the deposit law covers the apartment."
+ },
+ "deposit-11/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says yes, it looks like all $1,050 can come back, with one fact to check."
+ },
+ "deposit-12/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says probably not, because a fee paid instead of a deposit is not a deposit under the law."
+ },
+ "deposit-12/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says probably not, because the fee isn't treated as a security deposit."
+ },
+ "deposit-12/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The whole answer, or only the point just before that the landlord may not keep the fee no matter what.",
+    "sentence": "One thing could change this: whether your signed fee agreement has everything the law requires.",
+    "word": "this"
+   }
+  ],
+  "why": "It says no, a fee instead of a deposit isn't a deposit, though the effect of the missed notice is unsettled."
+ },
+ "deposit-13/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says yes up front and why the authority lost its right to keep the money."
+ },
+ "deposit-13/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "the housing authority (first 'It'); last named two sentences back",
+    "sentence": "It still owes you the full $250, and it may still sue you for damages after it returns the deposit.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the housing authority (second 'it'); last named two sentences back",
+    "sentence": "It still owes you the full $250, and it may still sue you for damages after it returns the deposit.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the housing authority (third 'it'); last named two sentences back",
+    "sentence": "It still owes you the full $250, and it may still sue you for damages after it returns the deposit.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the housing authority (first 'it'); not named in this sentence or the one before",
+    "sentence": "You can ask for the money in writing, and if it still doesn't pay, you can sue to recover it.",
+    "word": "it"
+   }
+  ],
+  "why": "Opens with yes, the $250 can come back, and gives the reason in plain words."
+ },
+ "deposit-13/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "the landlord (first 'It'); last named two sentences back",
+    "sentence": "It still has to return the full $250, though it may sue you for damages afterward.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the landlord (second 'it'); last named two sentences back",
+    "sentence": "It still has to return the full $250, though it may sue you for damages afterward.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the notice question in the box just above, or the whole finding that the landlord lost its right to keep the deposit",
+    "sentence": "[ > What does this mean for your money? ]",
+    "word": "this"
+   }
+  ],
+  "why": "Opens with yes and says the landlord lost the right to keep any of it."
+ },
+ "deposit-14/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "your deposit (named two sentences back) or the written claim (named in the sentence before)",
+    "sentence": "If the law doesn't cover it, a different rule applies, and that rule is outside what I can look up.",
+    "word": "it"
+   }
+  ],
+  "why": "Says it is unsettled, and yes, all $1,050, if the law covers the deposit."
+ },
+ "deposit-14/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says not settled, and yes, the whole $1,050, if the deposit law covers it."
+ },
+ "deposit-14/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says it is unsettled because of the voucher, and yes if the deposit law applies."
+ },
+ "deposit-15/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says the law does not settle it and what each outcome means."
+ },
+ "deposit-15/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "your old address or the new one you gave, both named in the sentence before",
+    "sentence": "The statute doesn't say whether that address counts.",
+    "word": "that"
+   },
+   {
+    "could_mean": "that address or the letter",
+    "sentence": "If it doesn't count, the landlord loses its claim and owes you all $1,050.",
+    "word": "it"
+   },
+   {
+    "could_mean": "that address or the letter",
+    "sentence": "If it does count, the landlord can keep the $400 unless you object in writing.",
+    "word": "it"
+   }
+  ],
+  "why": "Says the law does not settle it, gives both outcomes and the objection deadline."
+ },
+ "deposit-15/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says it is not settled, gives both outcomes, and says to object by September 11."
+ },
+ "deposit-16/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "the objection in the box just above, or the whole deposit dispute",
+    "sentence": "[ > What if this goes to court? ]",
+    "word": "this"
+   }
+  ],
+  "why": "Says it is not settled and what happens either way."
+ },
+ "deposit-16/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "the objection in the box just above, or the whole deposit dispute",
+    "sentence": "[ > What if this ends up in court? ]",
+    "word": "this"
+   }
+  ],
+  "why": "Says the law does not settle it and gives both readings."
+ },
+ "deposit-16/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "the letter, last named two sentences back",
+    "sentence": "It leaves out the amount.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the objection in the box just above, or the whole deposit dispute",
+    "sentence": "[ > What if this goes to court? ]",
+    "word": "this"
+   }
+  ],
+  "why": "Says it is not settled and what each outcome means."
+ },
+ "deposit-17/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "the objection question in the box just above, or the whole deposit dispute",
+    "sentence": "[ > What if this goes to court? ]",
+    "word": "this"
+   }
+  ],
+  "why": "Says yes, all $1,050, because the letter gave no reason."
+ },
+ "deposit-17/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says yes, all $1,050, because the letter gave no reason."
+ },
+ "deposit-17/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says yes and that the landlord lost the right to keep any of it."
+ },
+ "deposit-18/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeit"
+  ],
+  "unclear_words": [],
+  "why": "Says not quite, the $650 question is unsettled after an objection, and the next step is a court case."
+ },
+ "deposit-18/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says not settled after an objection and that the only step is a court case."
+ },
+ "deposit-18/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "Says the reading is partly right, unsettled after an objection, and court is the next step."
+ },
+ "deposit-2/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The landlord's right to keep part of the deposit (first sentence) or its right to send a claim notice until 2026-08-30 (the sentence before).",
+    "sentence": "Nothing in the statute takes that right away at day 15.",
+    "word": "that"
+   }
+  ],
+  "why": "It says you can ask for it all now, but the landlord has until 2026-08-30 to claim part, so it hasn't lost that right yet."
+ },
+ "deposit-2/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "The short answer says you can ask now, but the landlord has until August 30, 2026 to send a claim notice."
+ },
+ "deposit-2/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The deposit (in \"some of it\"), last named two sentences back; the sentence before says only \"anything\".",
+    "sentence": "If the landlord does plan to keep some of it, the law gives it 30 days to send you written notice.",
+    "word": "it"
+   }
+  ],
+  "why": "It says not yet: you can ask now, but the 30-day period for a claim notice hasn't ended."
+ },
+ "deposit-3/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The deposit, last named two sentences back; the sentence before only says \"it\".",
+    "sentence": "Whether the landlord can lawfully keep any of it depends on whether you owe anything, such as rent after June 15 or damage.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The rule that the landlord must send a claim notice (the box above) or the early-leaving notice rule the reply already called \"that rule\".",
+    "sentence": "Why doesn't that rule help you?",
+    "word": "that"
+   }
+  ],
+  "why": "The short answer says no, silence doesn't mean you get all $1,050, but the landlord can't just keep it."
+ },
+ "deposit-3/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The usual rule that a landlord who sends no notice loses its claim (the box above), or the early-leaving notice rule the reply already called \"that rule\".",
+    "sentence": "Why doesn't that rule help you here?",
+    "word": "that"
+   }
+  ],
+  "why": "It says no, not automatically, because your text wasn't proper notice, but you keep your right to the deposit."
+ },
+ "deposit-3/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says not automatically: you left early without proper written notice, so silence alone doesn't entitle you to all $1,050."
+ },
+ "deposit-4/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says yes, you can get the other $400, since no claim notice came within the 30 days."
+ },
+ "deposit-4/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "The short answer says yes, you are owed the other $400."
+ },
+ "deposit-4/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says yes, you can claim the other $400; the deadline passed without a proper notice."
+ },
+ "deposit-5/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The $650 (the sentence before) or the written notice (two sentences back).",
+    "sentence": "The law gave the landlord until the date counted below to send it, and that date has passed.",
+    "word": "it"
+   }
+  ],
+  "why": "It says the $400 is unsettled (it turns on whether a text counts) and the $650 is owed now, though the date is left to a closed box."
+ },
+ "deposit-5/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "The short answer says the $400 is unsettled (two readings) and the $650 is owed either way."
+ },
+ "deposit-5/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says the $400 is unsettled and the $650 is owed and overdue."
+ },
+ "deposit-6/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "September 19 or the date on the letter, both named in the sentence before.",
+    "sentence": "Today is August 27, so that date hasn't passed.",
+    "word": "that"
+   }
+  ],
+  "why": "It says object in writing by September 8, and gives the $650 deadline of September 19 if you don't object."
+ },
+ "deposit-6/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says object in writing by September 8, and the $650 is due September 19 if you don't object, unsettled if you do."
+ },
+ "deposit-6/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "The short answer says object so it arrives by September 8, and the $650 is due September 19 if you don't object."
+ },
+ "deposit-7/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The whole answer, or just the point in the box title before it; nothing is named.",
+    "sentence": "Do any exceptions change this?",
+    "word": "this"
+   }
+  ],
+  "why": "It says the $650 is owed and late, and the $400 is not automatically gone."
+ },
+ "deposit-7/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The whole answer, or only the $650 question in the box title just before; it names nothing.",
+    "sentence": "Does your lease change any of this?",
+    "word": "this"
+   }
+  ],
+  "why": "It says the $650 is owed and overdue, and that not objecting does not stop a suit for the $400."
+ },
+ "deposit-7/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "It says the $650 is owed and overdue, and the tenant can still sue for the $400."
+ },
+ "deposit-8/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The whole answer, or the point just before about certified mail arriving in time.",
+    "sentence": "One thing could change this.",
+    "word": "this"
+   }
+  ],
+  "why": "It says don't ignore the e-mail, it counts as notice, and the objection is due 2026-09-04."
+ },
+ "deposit-8/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The $400 dispute or the whole deposit matter; nothing is named.",
+    "sentence": "What if this goes to court?",
+    "word": "this"
+   }
+  ],
+  "why": "It says don't ignore the e-mail, it is valid notice, and the objection is due 2026-09-04."
+ },
+ "deposit-8/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The e-mail, named only in the tenant's question, whose last sentence is about the carpet.",
+    "sentence": "No, don't ignore it.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The whole answer, or the point just before that the tenant could still sue later.",
+    "sentence": "One thing could change this.",
+    "word": "this"
+   }
+  ],
+  "why": "It says don't ignore the e-mail, it counts, and gives the deadline and how to object."
+ },
+ "deposit-9/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The deposit dispute; nothing is named.",
+    "sentence": "What if this goes to court?",
+    "word": "this"
+   }
+  ],
+  "why": "It says it is not settled, gives both outcomes, and says the landlord keeps nothing without a proper notice in time."
+ },
+ "deposit-9/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The landlord suing for the last six weeks' rent, or leaving early in general.",
+    "sentence": "Nothing in the lease sets a different rule for that.",
+    "word": "that"
+   }
+  ],
+  "why": "It says not necessarily yet and explains both possible outcomes."
+ },
+ "deposit-9/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The deposit dispute; nothing is named.",
+    "sentence": "What if this goes to court?",
+    "word": "this"
+   }
+  ],
+  "why": "It says the answer is not settled and gives both outcomes: all $1,050 now, or all of it unless a proper notice comes by August 30."
+ }
+}
