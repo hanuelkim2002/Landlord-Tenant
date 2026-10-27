@@ -61,9 +61,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    reading on each side (83.49(3)(a) names certified mail or agreed e-mail; 83.505(6) does not rule out other means).
    No answer gave both readings; all 12 said the text does not count. If you read it as settled, the key changes and
    so do those grades.
-5. **Decided 2026-10-21:** tenant data leaves UF: leases go to OpenRouter and Anthropic, the chat to OpenRouter and
-   Google (see Decided).
-6. **Decided 2026-10-21:** Gemini 3.8 Flash is the chat model (see Decided; scores in `comparisons/models/SCORES.md`).
+5. **Decided 2026-10-21, changed 2026-10-23:** tenant data leaves UF. Leases, messages, and facts now go to
+   Anthropic, not OpenRouter or Google (see Decided, 2026-10-23).
+6. **Decided 2026-10-21, changed 2026-10-23:** the chat model is Claude Sonnet 5.5 from Anthropic (see Decided,
+   2026-10-23). Gemini 3.8 Flash, chosen first (scores in `comparisons/models/SCORES.md`), is one setting away.
 7. **Decided 2026-10-21:** every lease page is read from its image by Haiku 5.5 (see Decided).
 8. **Decided 2026-10-21:** the deposit skill settles the college-housing question once: lease first, then one question
    if the lease is not clear, and the answer is saved as `school_housing` (see Decided). The lease is clear only if
@@ -74,8 +75,8 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    from the page images; the grades on your lease follow them.
 10. **Decided 2026-10-25:** the timeline's old open lines: rule 9 and `save_line` say what open means, and
     `save_line`'s reply lists the open lines (see Decided; `comparisons/memory/SCORES.md`).
-11. **The 1,000-line limit.** App code is 826 lines without `tests.py` (722 on main) and 1,025 with it (811 on
-    main): the tests grew more than the app. Your call whether `tests.py` counts toward the limit in CLAUDE.md.
+11. **The 1,000-line limit.** On 2026-10-26 app code is 831 lines without `tests.py` and 1,030 with it (722 and
+    811 before the memory). Your call whether `tests.py` counts toward the limit in CLAUDE.md.
 12. **Decided 2026-10-26:** the deposit skill's new law points (see Decided). Still yours to check: story 12's key
     reads 83.491(6) as putting a fee outside 83.49.
 13. **Judging story 17: is a backup "two readings"?** Answers say "yes, all $1,050" and then "even if the letter

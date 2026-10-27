@@ -210,3 +210,9 @@ part adds that the court hears these cases sooner (83.49(3)(c)). AUTHOR.md item 
 Main's memory timeline merged in; AUTHOR.md's deposit items renumbered 12 to 14. `comparisons/deposit/run.py` adds
 the version `fixed3` (the skill after the sign-off). Stories 16 and 18 on Sonnet, 6 answers, no errors
 (`comparisons/deposit/README.md`, fifth run). Nothing replaced.
+
+## 2026-10-26: three stale AUTHOR.md items brought up to date
+
+Item 5 now says leases, messages, and facts go to Anthropic, and item 6 names Claude Sonnet 5.5 as the chat model
+(both the 2026-10-23 decision). Item 11 gives today's line counts (831 without `tests.py`, 1,030 with). Replaces
+"the chat to OpenRouter and Google", "Gemini is the chat model", and the old counts. No code changed.
