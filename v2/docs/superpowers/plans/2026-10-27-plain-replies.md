@@ -31,6 +31,11 @@ subagents in Claude Code as graders.
 - No rule changes beyond the spec. If a target is missed, report it; the author decides what changes.
 - Commit at the end of each task. Push and open a PR only on the author's OK.
 - A CHANGELOG.md entry is at most about five lines.
+- Skills (the author's rule): invoke each task's **Skills** before its first step. For the whole build:
+  superpowers:executing-plans (native) or superpowers:subagent-driven-development; superpowers:systematic-debugging
+  for any failing check or odd result, before any fix; superpowers:verification-before-completion before saying a
+  task is done; at the end, superpowers:requesting-code-review (one fresh reviewer, the whole branch),
+  superpowers:receiving-code-review for its findings, and superpowers:finishing-a-development-branch.
 
 ## Review Focus
 
@@ -43,6 +48,8 @@ subagents in Claude Code as graders.
 ---
 
 ### Task 1: `split_reply`
+
+**Skills:** superpowers:test-driven-development, superpowers:verification-before-completion.
 
 **Files:**
 - Modify: `chat.py` (new `DETAILS`, `WHY`, `split_reply`; module docstring names the split)
@@ -95,6 +102,9 @@ check("a heading with nothing under it gives no empty box",
 
 ### Task 2: The page shows the short part and one box per point
 
+**Skills:** anthropic-skills:built-in-browser (before the first browser step),
+superpowers:verification-before-completion. The page has no automated test; the browser check in Step 3 is its test.
+
 **Files:**
 - Modify: `app.py` (new `show_reply`; the chat loop uses it for the tool's replies)
 - Modify: `DOCUMENTATION.md` (app.py section)
@@ -125,6 +135,8 @@ check("a heading with nothing under it gives no empty box",
 
 ### Task 3: The rules
 
+**Skills:** superpowers:test-driven-development, superpowers:verification-before-completion.
+
 **Files:**
 - Create: `comparisons/plain/rules_old.txt` (today's `chat.RULES`, written by code before any edit, byte for byte)
 - Modify: `chat.py` (`RULES`: rule 8, and the "Writing the reply" block after rule 10)
@@ -142,7 +154,8 @@ check("a heading with nothing under it gives no empty box",
 
 ```python
 check("the rules ask for the marker the page looks for",
-      f"a line with only {chat.DETAILS} on it" in chat.RULES and "### Does Florida's deposit law cover you?" in chat.RULES)
+      f"a line with only {chat.DETAILS} on it" in chat.RULES
+      and "### Does Florida's deposit law cover you?" in chat.RULES)
 ```
 
 - [ ] **Step 3: Run `$PY tests.py`.** Expected: that check FAILs.
@@ -164,6 +177,8 @@ check("the rules ask for the marker the page looks for",
   "Rules: a short plain answer first, each point under DETAILS".
 
 ### Task 4: The live test's runs
+
+**Skills:** superpowers:verification-before-completion (the dry run proves the runner before any paid call).
 
 **Files:**
 - Create: `comparisons/plain/run.py`, `comparisons/plain/README.md` (what the test asks, how to run it)
@@ -188,6 +203,9 @@ check("the rules ask for the marker the page looks for",
 - [ ] **Step 4: Commit** (`comparisons/plain/`): "Plain replies test: 108 answers on Sonnet, old rules and new".
 
 ### Task 5: Grading, scores, and the chart
+
+**Skills:** superpowers:dispatching-parallel-agents (the nine graders), dataviz (before the chart),
+superpowers:verification-before-completion.
 
 **Files:**
 - Create: `comparisons/plain/judge.py`, `comparisons/plain/score.py`, `comparisons/plain/review_plain.json`
