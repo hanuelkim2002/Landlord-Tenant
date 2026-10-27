@@ -61,8 +61,8 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    reading on each side (83.49(3)(a) names certified mail or agreed e-mail; 83.505(6) does not rule out other means).
    No answer gave both readings; all 12 said the text does not count. If you read it as settled, the key changes and
    so do those grades.
-5. **Decided 2026-10-21:** tenant data leaves UF: leases go to OpenRouter and Anthropic, the chat to OpenRouter and
-   Google (see Decided).
+5. **Decided 2026-10-21, changed 2026-10-23:** tenant data leaves UF. Leases, messages, and facts now go to
+   Anthropic, not OpenRouter or Google (see Decided, 2026-10-23).
 6. **Decided 2026-10-21, changed 2026-10-23:** the chat model is Claude Sonnet 5.5 from Anthropic (see Decided,
    2026-10-23). Gemini 3.8 Flash, chosen first (scores in `comparisons/models/SCORES.md`), is one setting away.
 7. **Decided 2026-10-21:** every lease page is read from its image by Haiku 5.5 (see Decided).
