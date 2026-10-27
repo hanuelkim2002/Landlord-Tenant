@@ -106,8 +106,9 @@ The six tools the model can call, their descriptions (`SCHEMAS`), and `run_tool(
 
 The page: `choose_matter` (open a saved matter, or start one from a lease PDF and a description, whose first reply
 answers the description), `confirm_facts` (pending facts with a box to correct and a Confirm button; the confirmed
-ones), `show_timeline` (the timeline's lines, to read only, the open ones marked), `show_checks` (the quote checks
-and cited words under a reply). `safe` keeps a "$" from starting a formula.
+ones), `show_timeline` (the timeline's lines, to read only, the open ones marked), `show_reply` (a reply's short
+answer, then one click-to-open box per point, from `chat.split_reply`), `show_checks` (the quote checks and cited
+words under a reply). `safe` keeps a "$" from starting a formula, in box titles too.
 
 ### tests.py
 
