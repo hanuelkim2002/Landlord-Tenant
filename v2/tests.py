@@ -57,6 +57,11 @@ check("a lease quote checks out in the lease",
 check("a bracketed change and bold marks are not counted as changes",
       quotes('It "forfeit[s] the right to impose a claim upon the **security deposit**" (83.49(3)(a)).')[0]["ok"])
 check("a short quotation (under 20 characters) is not checked", quotes('It is "certified mail" here.') == [])
+check("a section number written without the stored text's space, s. 83.51(1), checks out",
+      quotes('The defense needs "a material noncompliance with s. 83.51(1)" (83.60(1)(b)).')[0]["ok"])
+check('a cut written ". . ." is read as a cut',
+      quotes('A tenant may not "damage . . . any part of the premises . . . nor permit any person to do so" '
+             '(83.52(6)).')[0]["ok"])
 first = quotes('Under 83.49(5), failing to give notice "relieves the landlord of the notice requirement of paragraph (3)(a)."')
 check("a statute quote whose cite comes first checks out", first[0]["ok"] and first[0]["where"] == "Fla. Stat. 83.49(5)")
 two = quotes('Under the "Notices" part of your lease, it says "delivered by hand to the office, or sent there by '

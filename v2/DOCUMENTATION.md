@@ -71,7 +71,10 @@ Every page is read from its image by the vision model (`comparisons/models/`), 1
 
 Shown under each reply; the reply is never blocked.
 
-- `quote_parts(quote)`, `found_in(parts, text)`: a quotation's words, cut at an ellipsis or a bracketed change.
+- `plain(text)`: text as the check compares it: squashed, lowercase, no space before a section number's "(" (the
+  stored statutes write "s. 83.51 (1)").
+- `quote_parts(quote)`, `found_in(parts, text)`: a quotation's words, cut at an ellipsis ("...", "…", ". . .") or a
+  bracketed change.
 - `QUOTE`: a quotation of 20+ characters. Its opening mark must follow the start, a space, a bracket, or a bold mark,
   and its closing mark must not be followed by a letter or digit, so the words between two quotations are not one.
 - `nearby_cites(reply, match)`: the statute cites next to a quotation: the first just after it, the last just before.

@@ -14,7 +14,7 @@ Written by grade.py.
 | Errors | 0 | 0 |
 | Empty answers | 0 | 0 |
 | Cost, $ | 2.83 | 2.6 |
-| Quotes right | 195 of 202 | 185 of 193 |
+| Quotes right | 198 of 202 | 189 of 193 |
 
 ## Each story (R right, P partly, W wrong; runs 1 to 3)
 

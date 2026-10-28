@@ -161,8 +161,8 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
 - 2026-10-28, repair rerun (quotes not found word for word anywhere): keys2 4 of 193 ("will not pay rent by reason"
   for "not to pay rent by reason"; "provision" for "provisions"; "beyond the landlord's control"; "is the landlord
   covered", nobody's words); v1's new answers 4 times the sign's words from the facts, "closed until further notice".
-  Not slips: 5 more are right but flagged, since the stored text writes "s. 83.51 (1)" with a space (TODO.md), and
-  2 (v1) mark a cut with ". . .", which the check does not read as one.
+  Not slips: 7 more were right but flagged, since the stored text writes "s. 83.51 (1)" with a space (5) and the
+  check did not read ". . ." as a cut (2, v1). The check reads both since 2026-10-28.
 
 ## Writes a short answer longer than asked
 

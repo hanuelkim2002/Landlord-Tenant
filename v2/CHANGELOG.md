@@ -321,3 +321,9 @@ guest and a pool repair in the facts, three new dates, notes telling graders wha
 `keys2` (the repair skill with the attorney-fees line, frozen) ran all nine stories; v1 ran stories 1, 4, 5, 8, 9 and
 its first-round answers to 2, 3, 6, 7 were regraded. Right of 27: keys2 19, v1 12; about $4.05. The first round's
 answers, grades, scores, and `review.json` moved to `results/round1/`. Replaces SCORES.md's first-round scores.
+
+## 2026-10-28: the quote check reads two more ways of writing
+
+`checks.py`: a new `plain()` drops the space before a section number's "(" on both sides, since the stored statutes
+write "s. 83.51 (1)" and replies "s. 83.51(1)"; ". . ." now marks a cut like "...". Seven right quotes in the repair
+rerun had shown "Does not check out". Two tests added. Replaces the check's exact-spacing match.
