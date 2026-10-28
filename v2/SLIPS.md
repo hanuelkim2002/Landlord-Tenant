@@ -31,6 +31,7 @@ against rule 7).
 - 2026-10-28, repair skill test (`comparisons/each_skill/`, Sonnet 5.5), story 3: a leak that began 13 days
   before called "about a month" or "over a month" (new skill 2 of 3, v1 2 of 3), and once (new) "the 7 days would
   probably not be over by May 1" for a notice delivered April 10.
+  After the round of fixes (shared skill only changed): 2 of 3 again.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -185,3 +186,5 @@ tells the tenant the noted fact waits for them to confirm.
 
 - 2026-10-28, repair skill test (Sonnet 5.5), story 3 (no `school_housing` in the facts): new skill 3 of 3, a box
   titled "Does Florida's landlord-tenant law cover your home?"; once it names the fact as "school_housing = no".
+- 2026-10-28, after the shared skill asked for one line inside another point: 2 of 3 still give it a box. The reply
+  rules' example heading, "Does Florida's deposit law cover you?", may invite it.

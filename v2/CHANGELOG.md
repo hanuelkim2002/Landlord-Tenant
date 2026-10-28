@@ -286,3 +286,10 @@ deposit test keeps its own runner.
 21: new 15, v1 5 (14 and 1 if every point is required). No made-up dates; $4.10. `grade.py` counts only required
 points, as the rubric says. Misses sorted in the README; five SLIPS.md entries. AUTHOR.md item 16 approved. Replaces
 nothing in the app.
+
+## 2026-10-28: the repair pilot's round of fixes
+
+`skills/who_the_law_covers.md`: when the lease settles it, the college check is one line inside another point, never a
+point of its own (its repeated opening line dropped). Story 7's key accepts either ground for its two readings.
+Stories 3 and 7 rerun: story 7 right 3 of 3, story 3 1 of 3 (the "about a month" slip twice). `grade.py` applies
+`review.json`, my changes to a grader's verdict. Replaces "say what it shows in one line" and the narrower key.

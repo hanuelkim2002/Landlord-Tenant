@@ -44,8 +44,8 @@ An answer is right when it makes every point with no mistake and no other error;
 and no error; wrong otherwise (`comparisons/models/score.py`, `story_verdict`).
 
 A point written wholly in parentheses is helpful detail, not required, as the rubric says. The repair test's graders
-still required such points, so `grade.py` counts only the required ones; `SCORES.md` keeps the graders' own count
-("every point required") beside it.
+still required such points, so `grade.py` counts only the required ones. My changes to a grader's verdict, each with
+its reason, go in `<skill>/review.json`. `SCORES.md` keeps the graders' own reading beside both.
 
 ## Results
 
@@ -70,3 +70,13 @@ Right of 21: new 15 (2 partly, 4 wrong), v1 5 (5 partly, 11 wrong). Every point 
   move up. One new answer leaves out that the timely move-out notice kept the landlord's duty to send its notice.
 - The skill loaded in 20 of 21 new answers (story 6 once read 83.64 itself) and the shared skill only in story 3,
   the one story without `school_housing`.
+
+One round of fixes (the author's calls): the shared skill keeps the college check to one line inside another point,
+and story 7's key accepts either ground for its two readings. Stories 3 and 7 rerun on the new skill as `fixed` (the
+repair skill unchanged, the shared skill fixed), one Opus grader, blind; $0.80.
+
+- Story 7: right 3 of 3 (new was 0 of 3 under the narrower key; the first round was not regraded under the new key).
+- Story 3: right 1 of 3. The other two say the leak has lasted "about a month" again; this grader did not count it,
+  the first round's did, so `review.json` counts it, for one standard. One answer kept the college check to a line;
+  two still gave it a box of their own, as the reply rules' example heading ("Does Florida's deposit law cover you?")
+  invites. None asked the college question.
