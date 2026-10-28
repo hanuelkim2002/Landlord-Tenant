@@ -5,9 +5,6 @@ mistakes are in SLIPS.md.
 
 ## Now
 
-- The other skills' pilot: `who_the_law_covers` and `repair_not_made`, tested
-  (`docs/superpowers/plans/2026-10-28-other-skills-pilot.md`).
-
 ## Later
 
 - The other skills, two at a time after the pilot: leaving early and the 7-day notice; lease ending and rent going

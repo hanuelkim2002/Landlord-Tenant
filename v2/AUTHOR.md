@@ -113,3 +113,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
       (83.51(2)(a)). Screens (83.51(1)). A mobile home the tenant owns is not the landlord's to maintain (83.51(1)).
     - A lease cannot waive the notice rules of 83.56(1) to (3) (83.56(4)); e-mail counts only with every condition of
       83.505(1), not the signed addendum alone.
+17. **Three corrections to the repair skill, from the branch review** (2026-10-28, not yet in a live run). Each
+    quotes stored text the skill had left out or narrowed:
+    - For an item only 83.51(2)(a) names (pests, locks, common areas, garbage, heat, water), a writing may change the
+      landlord's duty in any home: the paragraph applies "Unless otherwise agreed in writing". v1 said the same.
+    - An e-mail notice under 83.505 counts from when it was sent, not received (83.505(4)). New against v1.
+    - Once sued, paying the rent into the registry "or" filing "a motion to determine the amount of rent" within the 5
+      days keeps the defenses (83.60(2)); the skill had named only paying. New against v1.

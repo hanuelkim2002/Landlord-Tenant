@@ -14,6 +14,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent.parent))
 import law                                                    # the app's own splitter, so keys and skills read alike
 
+squash = law.squash                                           # score.py in this folder imports it from here
+
 
 def quote_in_cite(quote, cite):
     """Whether the quote is word for word in the cited subsection or paragraph of statutes/."""

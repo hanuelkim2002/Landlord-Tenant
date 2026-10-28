@@ -27,6 +27,12 @@ def verdict(story, grade):
     return score.story_verdict({"points": [p for p, _ in required]}, {**grade, "points_made": [m for _, m in required]})
 
 
+def applies(reviewed, answer):
+    """Whether a change in review.json still fits this answer: it quotes the words it turns on, and they are there. A
+    rerun writes new answers under the same story and run, and an old change must not carry over to them."""
+    return bool(reviewed.get("quote")) and reviewed["quote"] in answer
+
+
 def rows_for(skill, version, stories, dry):
     """Every answer of one version, graded and counted, in the stories' order."""
     order = list(stories)
@@ -35,7 +41,7 @@ def rows_for(skill, version, stories, dry):
                    key=lambda line: (order.index(line["story"]), line["run"]))
     grades = run.models.read_json(folder / f"judge_opus_{version}.json")
     review_file = run.test_folder(skill) / "review.json"      # my changes to the graders' verdicts, each with why
-    review = run.models.read_json(review_file).get(version, {}) if review_file.exists() else {}
+    review = run.models.read_json(review_file).get(version, {}) if review_file.exists() and not dry else {}
     missing = [f"{line['story']}/{line['run']}" for line in lines if f"{line['story']}/{line['run']}" not in grades]
     if missing:
         raise SystemExit(f"These {version} answers are not graded yet: {missing}")
@@ -48,7 +54,8 @@ def rows_for(skill, version, stories, dry):
         if not line.get("error"):                             # judge_verdict keeps the graders' own reading
             row["verdict"] = verdict(story, grades[f"{story['id']}/{line['run']}"])
         reviewed = review.get(f"{story['id']}/{line['run']}", {})
-        row["verdict"], row["why_reviewed"] = reviewed.get("verdict", row["verdict"]), reviewed.get("why", "")
+        if applies(reviewed, line["answer"]):
+            row["verdict"], row["why_reviewed"] = reviewed["verdict"], reviewed["why"]
         rows.append(row)
     return rows
 

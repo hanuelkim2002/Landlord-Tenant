@@ -291,5 +291,13 @@ nothing in the app.
 
 `skills/who_the_law_covers.md`: when the lease settles it, the college check is one line inside another point, never a
 point of its own (its repeated opening line dropped). Story 7's key accepts either ground for its two readings.
-Stories 3 and 7 rerun: story 7 right 3 of 3, story 3 1 of 3 (the "about a month" slip twice). `grade.py` applies
+Stories 3 and 7 rerun: story 7 right 3 of 3 under the widened key (the first round was graded on the old one), story
+3 1 of 3 (the "about a month" slip twice). `grade.py` applies
 `review.json`, my changes to a grader's verdict. Replaces "say what it shows in one line" and the narrower key.
+
+## 2026-10-28: fixes from the whole-branch review
+
+`comparisons/skills/check_key.py` again offers `squash`, so `score.py` imports. `skills/repair_not_made.md` quotes
+three rules it had narrowed: an 83.51(2)(a) item may be changed in writing in any home, an 83.505 e-mail counts when
+sent (83.505(4)), and 83.60(2)'s motion to determine rent; some quotes put in plain words to stay under 3,200 words.
+`grade.py` applies a `review.json` change only when its quoted words are in the answer, never to a dry run. AUTHOR.md 17.
