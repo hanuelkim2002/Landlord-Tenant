@@ -50,6 +50,11 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   past the rule's 3 to 5 sentences (median 7, 127 words). Both exemptions in my review of the plain counts are
   accepted: an "it" echoing the tenant's question in the first sentence, and a "this" or "it" that can only mean
   the dispute or the answer ("What if this goes to court?"), box titles included. The reviewed counts stand.
+- 2026-10-28: the other skills follow the deposit skill's method (format A, built from v1's skill and statutes/).
+  A shared skill holds the college-housing check (`who_the_law_covers`); the repair skill is the pilot, then the
+  rest go two at a time, each with a small test (about 6 to 8 stories, 3 runs, v1 beside it, judged blind). Every
+  skill has a "what the lease adds" step. Weekday counting for the unpaid-rent notice is decided when that skill is
+  reached; it goes last (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
 
 ## Open
 

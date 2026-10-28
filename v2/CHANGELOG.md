@@ -258,3 +258,10 @@ and 16 at once.
 83.51(2)(a), 83.51(4), and 83.60(1)(b) are found (they were not, and 83.51(1)(b) ran to the end of the section). The
 page's quote check gains the same. `comparisons/skills/check_key.py` uses `law`'s splitter and takes a key file by its
 path. Replaces the space-only marker and the key checker's own copy of the splitter.
+
+## 2026-10-28: the shared skill, who the law covers
+
+`skills/who_the_law_covers.md`: the deposit skill's college-housing check (83.42(1)), word for word, and one line on
+83.42's other four exclusions, checked only when the facts point to one. The new skills load it instead of carrying
+their own copy. AUTHOR.md records the method approved for the other skills; README.md and TODO.md follow. Replaces
+"the others follow only after the author approves".

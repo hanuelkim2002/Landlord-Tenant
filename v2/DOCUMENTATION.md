@@ -129,6 +129,7 @@ not let the preview's launcher read the Documents folder.
 
 ## Elsewhere in v2
 
-`statutes/` (read-only), `skills/` (one file per situation, format A), `comparisons/` (the lease, skills, model,
+`statutes/` (read-only), `skills/` (one file per situation, format A; `who_the_law_covers` holds the college-housing check the new skills
+share), `comparisons/` (the lease, skills, model,
 deposit skill, plain replies, and intake speed tests, the memory tests, their answer keys, and scores),
 `docs/superpowers/` (the memory's spec and plan), `matters/` (private, not in git), `V2_PROMPT.md` (how v2 started).
