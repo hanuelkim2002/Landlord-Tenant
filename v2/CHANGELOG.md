@@ -308,3 +308,10 @@ sent (83.505(4)), and 83.60(2)'s motion to determine rent; some quotes put in pl
 named or not; two worked examples show the handling (a broken dishwasher, a pool closed under a clause). Replaces the
 example lists of amenities and the air-conditioning-only rule. Some quotes put in cited plain words (3,196 words).
 Two new repair stories, 8 and 9, use amenities the skill never names (furniture, covered parking). Not yet run.
+
+## 2026-10-28: the repair keys take the author's answers
+
+`comparisons/each_skill/repair_not_made/STORIES_REVIEW.md` reviews the nine stories and keys; the author's 25 answers,
+at its end, are now in `stories.json`: softer wording on other rent defenses, either 7-day count in story 2, a careless
+guest and a pool repair in the facts, three new dates, notes telling graders what not to count, and six sections more.
+`skills/repair_not_made.md` option 3 adds attorney fees (83.48); 3,199 words. Replaces the keys as first written.

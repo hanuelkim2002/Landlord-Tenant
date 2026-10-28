@@ -55,6 +55,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   rest go two at a time, each with a small test (about 6 to 8 stories, 3 runs, v1 beside it, judged blind). Every
   skill has a "what the lease adds" step. Weekday counting for the unpaid-rent notice is decided when that skill is
   reached; it goes last (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
+- 2026-10-28: the nine repair stories' keys, with your 25 answers in
+  `comparisons/each_skill/repair_not_made/STORIES_REVIEW.md` (every recommended choice; Q4 accepts either date). The
+  repair skill's new law point, against v1's: the winner of a suit may recover attorney fees and court costs (83.48).
 
 ## Open
 
