@@ -334,3 +334,9 @@ rerun had shown "Does not check out". Two tests added. Replaces the check's exac
 v1's date rule and rule 7 naming spans each cut model-counted spans from 3 of 15 to 1; code's day counts raised it to
 5 (3 with the rule). Right answers 12 to 14 in all. Results in `repair_not_made/results/spans/`. Nothing in the app
 changed yet; AUTHOR.md 19 asks which way to take.
+
+## 2026-10-28: rule 7 names time spans
+
+`chat.py` rule 7 adds: how long something has lasted or how long until a date, and whether one date will have passed
+by another, are said only in the tenant's own words, or not at all. In the side-by-side test it cut model-counted
+spans from 3 of 15 answers to 1. Replaces the rule's dates-only wording. One test added.

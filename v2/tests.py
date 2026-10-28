@@ -244,6 +244,9 @@ check("a heading with nothing under it gives no empty box",
 check("the rules ask for the marker the page looks for",
       f"a line with only {chat.DETAILS} on it" in chat.RULES
       and "### Does Florida's deposit law cover you?" in chat.RULES)
+# The model counts time spans itself unless rule 7 names them (comparisons/each_skill/README.md, 2026-10-28).
+check("rule 7 names time spans: only in the tenant's own words",
+      "how long something has lasted" in chat.RULES and "say a span only in the tenant's own words" in chat.RULES)
 
 # ---- Reading the lease (lease.py), with a stand-in for the vision model, so no model is called
 

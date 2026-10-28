@@ -58,6 +58,8 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
 - 2026-10-28: the nine repair stories' keys, with your 25 answers in
   `comparisons/each_skill/repair_not_made/STORIES_REVIEW.md` (every recommended choice; Q4 accepts either date). The
   repair skill's new law point, against v1's: the winner of a suit may recover attorney fees and court costs (83.48).
+- 2026-10-28: rule 7 also names time spans: say how long something lasted, or how long until a date, only in the
+  tenant's own words. Chosen over v1's date rule and code's day counts (item 19, `comparisons/each_skill/README.md`).
 
 ## Open
 
@@ -129,7 +131,7 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     tenant; "doesn't spell out any other remedy", hedged at once (story 6, keys2). Not counted: keys2 19 of 27 right,
     v1 12. Counted: 16 and 10. Your call. Also: should 83.57 join the graders' sections? Every story-6 answer cites it.
     (`comparisons/each_skill/README.md`, the rerun.)
-19. **Which way to stop the model counting time spans.** Side by side on five repair stories, 15 answers each: rule 7
-    naming spans (say one only in the tenant's words) cut model-counted spans from 3 to 1, with the fewest spans of
-    any kind (2 answers) and no made-up date; v1's longer date rule also 1; code's day counts made it worse (5, and 3
-    with the rule). Right answers 12 to 14 in all. My pick: the rule. (`comparisons/each_skill/README.md`)
+19. **Decided 2026-10-28: rule 7 names time spans** (see Decided). Side by side on five repair stories, 15 answers
+    each: rule 7 naming spans cut model-counted spans from 3 to 1, with the fewest spans of any kind (2 answers) and
+    no made-up date; v1's longer date rule also 1; code's day counts made it worse (5, and 3 with the rule). Right
+    answers 12 to 14 in all. (`comparisons/each_skill/README.md`)
