@@ -98,3 +98,18 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?
 15. **Decided 2026-10-27:** the plain replies test's two calls: the short answer stays as it is, and both exemptions
     in my review of the plain counts are accepted (see Decided; `comparisons/plain/README.md`).
+16. **The repair skill's new law points** (`skills/repair_not_made.md`, drafted 2026-10-28). What it says that v1's
+    repair skill did not, each to check before the live test:
+    - Option 3, damages (83.55), for a lease promise or an 83.51 duty; rent paid with knowledge may give it up too
+      (83.56(5)(a) names "a civil action").
+    - Option 4, retaliation (83.64): good faith, being treated differently (83.64(4)), and good cause, whose examples
+      include actions for nonpayment of rent (83.64(3)), so a tenant sued over rent held back looks to option 2.
+    - Option 5, a landlord trying but unable to fix it (83.56(1)(a) and (b)); two readings of "terminated or altered
+      by the parties".
+    - Lease-promised items (an appliance, air conditioning, a pool): ending the lease, damages, and retaliation can
+      reach them, holding back rent never does; two readings of whether a clause limiting an amenity is void under
+      83.47(1).
+    - Air conditioning is named nowhere in 83.51. Pest treatment: rent abated, 7 days' notice, at most 4 days out
+      (83.51(2)(a)). Screens (83.51(1)). A mobile home the tenant owns is not the landlord's to maintain (83.51(1)).
+    - A lease cannot waive the notice rules of 83.56(1) to (3) (83.56(4)); e-mail counts only with every condition of
+      83.505(1), not the signed addendum alone.

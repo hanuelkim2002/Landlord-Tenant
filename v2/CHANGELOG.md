@@ -265,3 +265,10 @@ path. Replaces the space-only marker and the key checker's own copy of the split
 83.42's other four exclusions, checked only when the facts point to one. The new skills load it instead of carrying
 their own copy. AUTHOR.md records the method approved for the other skills; README.md and TODO.md follow. Replaces
 "the others follow only after the author approves".
+
+## 2026-10-28: the repair skill, drafted
+
+`skills/repair_not_made.md`, from v1's repair skill and 83.51, 83.56, 83.60, 83.55, 83.64, 83.47, 83.505: whose job
+the repair is (the statute's lists, the lease, who caused it), then five options (end the lease, hold back rent,
+damages, retaliation, a landlord unable to fix it), each open point inside its condition. 42 quotes check out. What
+it says beyond v1 waits for the author (AUTHOR.md item 16). Replaces nothing; v1's skill stays as the baseline.
