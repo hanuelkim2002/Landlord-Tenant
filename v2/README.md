@@ -71,7 +71,8 @@ note), it asks for all of them in the same step, not one at a time. One at a tim
 - **The lease.** The tenant uploads a PDF. Every page is read from its image by Claude Haiku 5.5 from Anthropic (a
   PDF's own text can lose what was typed into the form and its check boxes). The text is stored page by page, and
   the whole lease goes into the system prompt once, every turn (method A, 2026-10-19, `comparisons/lease/`; the
-  reader changed 2026-10-21, `comparisons/models/`; from Anthropic since 2026-10-23).
+  reader changed 2026-10-21, `comparisons/models/`; from Anthropic since 2026-10-23; 16 pages at once since
+  2026-10-27, `comparisons/intake/`).
 - **Six tools.** `get_statute_section`, `search_statute`, `load_skill`, `count_days`, `note_fact`, `save_line`. No
   `search_lease`: the model has the whole lease.
 - **Facts.** `note_fact` saves what the tenant said as a pending fact. The tenant confirms or corrects it on the web

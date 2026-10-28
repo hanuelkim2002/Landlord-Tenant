@@ -1,5 +1,5 @@
-"""The checks that need no model: the quote checker, the skill quote checker, count_days, the timeline, and the
-split of a reply into its short answer and its points.
+"""The checks that need no model: the quote checker, the skill quote checker, count_days, the timeline, the
+split of a reply into its short answer and its points, and the lease reader (with a stand-in for the model).
 Run from this folder: python tests.py   (every line should say OK)
 """
 import atexit
@@ -7,13 +7,18 @@ import json
 import shutil
 import sys
 import tempfile
+import threading
+import time
 from datetime import date
 from pathlib import Path
+
+import pymupdf
 
 import chat
 import checks
 import config
 import law
+import lease
 import record
 from tools import count_days, save_line
 
@@ -223,6 +228,42 @@ check("a heading with nothing under it gives no empty box",
 check("the rules ask for the marker the page looks for",
       f"a line with only {chat.DETAILS} on it" in chat.RULES
       and "### Does Florida's deposit law cover you?" in chat.RULES)
+
+# ---- Reading the lease (lease.py), with a stand-in for the vision model, so no model is called
+
+def make_pdf(path, count):
+    """A PDF of `count` pages, each saying its own number."""
+    pdf = pymupdf.open()
+    for number in range(1, count + 1):
+        pdf.new_page().insert_text((72, 72), f"Page {number}")
+    pdf.save(path)
+
+
+reading, most_at_once, reading_lock = 0, 0, threading.Lock()
+
+
+def stand_in_reader(gateway, page):
+    """Reads a page as its number. The early pages take longest, so the pages finish out of order."""
+    global reading, most_at_once
+    with reading_lock:
+        reading += 1
+        most_at_once = max(most_at_once, reading)
+    time.sleep(0.1 + 0.01 * (20 - page.number))
+    with reading_lock:
+        reading -= 1
+    return f"text of page {page.number + 1}"
+
+
+real_reader, real_client = lease.read_image, config.client
+lease.read_image, config.client = stand_in_reader, lambda gateway=None: None
+make_pdf(config.MATTERS / "twenty_pages.pdf", 20)
+lease_matter = record.new_matter("t-lease", "test")
+read = lease.read_lease(lease_matter, config.MATTERS / "twenty_pages.pdf")
+lease.read_image, config.client = real_reader, real_client
+check("every page is read and kept in order, though the pages finish out of order",
+      [(p["page"], p["text"]) for p in read] == [(n, f"text of page {n}") for n in range(1, 21)])
+check("the pages read are the pages stored", lease.lease_pages(lease_matter) == read)
+check("PAGES_AT_ONCE pages are read at once (16 since 2026-10-27)", most_at_once == lease.PAGES_AT_ONCE == 16)
 
 print(f"\n{'All checks passed.' if not failures else f'{failures} checks failed.'}")
 sys.exit(1 if failures else 0)

@@ -56,11 +56,14 @@ Events: `matter_opened`, `lease_read`, `message`, `skill_loaded`, `fact_noted`, 
 
 ### lease.py
 
-Every page is read from its image by the vision model (`comparisons/models/`), and the whole lease goes into the
-prompt (method A, `comparisons/lease/`).
+Every page is read from its image by the vision model (`comparisons/models/`), 16 pages at once (`PAGES_AT_ONCE`,
+`comparisons/intake/`), and the whole lease goes into the prompt (method A, `comparisons/lease/`).
 
 - `read_image(gateway, page)`: a page's text read from its image by the vision model (`[X]` for a checked box).
-- `read_lease(m, pdf_path)`: store the PDF and read every page from its image, one at a time.
+- `read_page(gateway, pdf_path, number)`: one page read from its image. It opens its own copy of the PDF, since
+  PyMuPDF is not built for threads; Python lets one thread into PyMuPDF at a time, so only the waits for the model
+  overlap.
+- `read_lease(m, pdf_path)`: store the PDF and read every page, 16 at once, kept in page order.
 - `lease_pages(m)`, `lease_text(pages)`: the stored pages; the lease for the prompt, with page markers.
 
 ### checks.py
@@ -114,7 +117,8 @@ words under a reply). `safe` keeps a "$" from starting a formula, in box titles 
 ### tests.py
 
 No model call: the quote checker, the skill quote checker, `count_days`, the timeline (lines, since last visit,
-`save_line`, the prompt's two blocks), in a throwaway matters folder, and `split_reply`. Every line should say OK.
+`save_line`, the prompt's two blocks), in a throwaway matters folder, `split_reply`, and `read_lease` with a stand-in
+reader (pages kept in order, 16 at once). Every line should say OK.
 
 ## Running and testing
 
@@ -124,6 +128,6 @@ not let the preview's launcher read the Documents folder.
 
 ## Elsewhere in v2
 
-`statutes/` (read-only), `skills/` (one file per situation, format A), `comparisons/` (the lease, skills, model, and
-deposit skill tests, the memory tests, their answer keys, and scores), `docs/superpowers/` (the memory's spec
-and plan), `matters/` (private, not in git), `V2_PROMPT.md` (how v2 started).
+`statutes/` (read-only), `skills/` (one file per situation, format A), `comparisons/` (the lease, skills, model,
+deposit skill, plain replies, and intake speed tests, the memory tests, their answer keys, and scores),
+`docs/superpowers/` (the memory's spec and plan), `matters/` (private, not in git), `V2_PROMPT.md` (how v2 started).
