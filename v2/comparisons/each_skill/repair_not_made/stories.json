@@ -1,0 +1,397 @@
+{
+ "how_to_read": "The repair skill's stories, in the deposit stories' shape (comparisons/skills/stories_more.json). Each runs on comparisons/skills/lease.txt unless it has a 'lease' field naming a copy in this folder: lease_repairs.txt (new clause 11: appliances, air conditioning, the pool, repair requests, damage by guests) or lease_monthtomonth.txt (clauses 3 and 9: month to month). 'today' is the date count_days compares with. 'facts' are confirmed facts. 'answer' is the right answer in plain words; 'points' are what a right answer must convey, judged by meaning (words in parentheses are helpful detail, not required); 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story but repair-3 holds school_housing. Check with: python ../../skills/check_key.py stories.json (from this folder) or from comparisons/skills/.",
+ "sections": [
+  "83.42",
+  "83.47",
+  "83.49",
+  "83.505",
+  "83.51",
+  "83.55",
+  "83.56",
+  "83.60",
+  "83.64"
+ ],
+ "stories": [
+  {
+   "id": "repair-1",
+   "title": "The air conditioning is out, and the lease lists it",
+   "today": "2026-06-15",
+   "lease": "lease_repairs.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "problem": "the central air conditioning has not worked since 2026-06-03",
+    "problem_noticed_date": "2026-06-03",
+    "cause": "nothing the tenant knows of; it stopped working",
+    "repair_request": "a resident portal request on 2026-06-04; the office replied that a part is on order, and nothing since",
+    "rent_paid_since": "none; June rent was paid on 2026-06-01, before it stopped, and July rent is due 2026-07-01",
+    "eviction_filed": "no"
+   },
+   "message": "My AC stopped working on June 3 and it's been almost two weeks. It's 90 degrees in my apartment. I put in a portal request on June 4 and the office said a part was on order, and nothing since. Can I stop paying rent until they fix it? Or can I just break my lease?",
+   "answer": "Florida's repair statute does not name air conditioning, but your lease does: clause 11 says the landlord will keep the central air conditioning in working order, so fixing it is the landlord's job under the lease. Holding back rent is risky here: the defense for unpaid rent covers only the duties in 83.51(1) (the building's structure and plumbing, and local codes), not a promise only the lease makes, so it would not protect you unless a local code requires air conditioning, which this tool cannot check; the city or county code office can. To end the lease, you first deliver a written notice (by hand to the office or by certified mail, as clause 7 says) naming the broken air conditioning and saying you will end the lease if it is not fixed within 7 days. Your portal request is not that notice. Whether a broken air conditioner is 'material' enough is not settled. A part on order may bring in the rule for problems beyond the landlord's control, and you may also have a claim for damages.",
+   "points": [
+    "Air conditioning is not named in 83.51; here it is the landlord's job because the lease promises it (clause 11). (A local code may also require it, which is outside the tool; the code office can say.)",
+    "Holding back rent is not supported by the lease promise alone: the 83.60(1)(b) defense reaches only a failure of 83.51(1), so withholding rent over the air conditioning would not protect the tenant (unless a code covers it), and it risks an eviction case. The answer says this plainly.",
+    "To end the lease, the tenant must first deliver a written notice (by hand or mail; the lease names hand delivery to the office or certified mail) that names the problem and says they will end the lease over it; the portal request is not that notice. If it is not fixed within 7 days after delivery, the tenant may end the lease (83.56(1)); whether the failure is material is not settled.",
+    "(The part on order may bring in 83.56(1)'s rule for causes beyond the landlord's control; damages under 83.55 are possible.)"
+   ],
+   "mistakes": [
+    "Says 83.51 requires the landlord to provide or repair air conditioning.",
+    "Says the tenant may hold back rent over the air conditioning as a defense under 83.60(1)(b), or explains holding back rent without its risk.",
+    "Treats the portal request as the written notice that lets the tenant end the lease.",
+    "Says flatly that the broken air conditioning is, or is not, material.",
+    "Gives a date it worked out itself instead of from count_days."
+   ],
+   "law": [
+    {
+     "cite": "83.51(1)(b)",
+     "quote": "maintain the roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and all other structural components in good repair and capable of resisting normal forces and loads and the plumbing in reasonable working condition"
+    },
+    {
+     "cite": "83.60(1)(b)",
+     "quote": "The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof."
+    },
+    {
+     "cite": "83.56(1)",
+     "quote": "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement."
+    },
+    {
+     "cite": "83.56(4)",
+     "quote": "The delivery of the written notices required by subsections (1)-(3) shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "repair-2",
+   "title": "No hot water; a notice to end the lease, delivered after it was mailed",
+   "today": "2026-03-20",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "problem": "no hot water in the apartment since 2026-02-25; the water heater stopped",
+    "problem_noticed_date": "2026-02-25",
+    "cause": "the water heater stopped; nothing the tenant did",
+    "repair_notice": "a letter saying the water heater is broken and that the tenant will end the lease if it is not fixed within 7 days; sent by certified mail on 2026-03-06 and signed for at the office on 2026-03-09",
+    "repair_notice_sent": "2026-03-06",
+    "repair_notice_delivered": "2026-03-09",
+    "rent_paid_since": "paid March rent on 2026-03-01, while the hot water was out",
+    "landlord_response": "none; still no hot water",
+    "eviction_filed": "no"
+   },
+   "message": "We've had no hot water since February 25. On March 6 I mailed a certified letter saying I'll end my lease if they don't fix it in 7 days, and the office signed for it March 9. It's been two weeks since I mailed it and still nothing. Can I move out now and stop paying rent?",
+   "answer": "Your letter is the kind of notice the statute asks for: written, naming the problem, saying you will end the lease, and delivered by mail. The 7 days count from the day it was delivered, March 9, so they ended on 2026-03-16 (from count_days), and that has passed. Two points are not settled. First, hot water: the plumbing is on the statute's main repair list (83.51(1)), but hot water is also named on a second list (83.51(2)(a)) that the rule on ending the lease does not reach; under the first reading you may end the lease now, under the second the statute does not give you that right for hot water unless a local code or the lease covers it, and this lease has no repair clause. Second, you paid March rent while the hot water was out: one reading says a problem that goes on is a continuing failure, so you gave up nothing; the other says paying rent with knowledge gave up ending the lease over it. Stopping rent is a different path: it needs its own written notice saying you will not pay rent, and your letter did not say that.",
+   "points": [
+    "The letter is the kind of notice 83.56(1) asks for (written, names the problem, says the tenant will end the lease, delivered by mail as 83.56(4) allows), and its 7 days count from delivery: they ended on 2026-03-16 (count_days from the delivery date), which has passed.",
+    "Whether hot water is an 83.51(1) duty (the plumbing) or only an 83.51(2)(a) item is not settled; the answer gives both readings and leans neither way: under one, the tenant may end the lease; under the other, 83.56(1) does not reach it unless a code or the lease covers it (this lease has no repair clause).",
+    "Paying March rent while the problem went on: not settled whether it gave up ending the lease (a continuing failure under 83.56(5)(a), or a waiver of that failure); both readings.",
+    "(Stopping rent is a different path: 83.60(1)(b) needs its own written notice saying the tenant will not pay rent, which this letter does not say. Whether the failure is material is not settled.)"
+   ],
+   "mistakes": [
+    "Counts the 7 days from the day the letter was mailed (giving 2026-03-13) instead of the day it was delivered.",
+    "Says flatly that the tenant may end the lease now, without the hot-water reading or the rent-paid question, or says flatly that they may not.",
+    "Treats the letter as a notice to hold back rent, or says the tenant may stop paying rent because of it.",
+    "Gives a date it worked out itself instead of from count_days."
+   ],
+   "law": [
+    {
+     "cite": "83.56(1)",
+     "quote": "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement."
+    },
+    {
+     "cite": "83.56(4)",
+     "quote": "The delivery of the written notices required by subsections (1)-(3) shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505"
+    },
+    {
+     "cite": "83.51(1)(b)",
+     "quote": "maintain the roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and all other structural components in good repair and capable of resisting normal forces and loads and the plumbing in reasonable working condition"
+    },
+    {
+     "cite": "83.51(2)(a)",
+     "quote": "Functioning facilities for heat during winter, running water, and hot water."
+    },
+    {
+     "cite": "83.51(3)",
+     "quote": "If the duty imposed by subsection (1) is the same or greater than any duty imposed by subsection (2), the landlord’s duty is determined by subsection (1)."
+    },
+    {
+     "cite": "83.56(5)(a)",
+     "quote": "if the tenant pays rent with actual knowledge of a noncompliance by the landlord or accepts performance by the landlord of any other provision of the rental agreement that is at variance with its provisions, the landlord or tenant waives his or her right to terminate the rental agreement or to bring a civil action for that noncompliance, but not for any subsequent or continuing noncompliance."
+    }
+   ],
+   "dates": [
+    {
+     "fact": "repair_notice_delivered",
+     "days": 7,
+     "date": "2026-03-16",
+     "passed": true
+    }
+   ]
+  },
+  {
+   "id": "repair-3",
+   "title": "A leaking roof; the tenant wants to stop paying rent but has sent nothing",
+   "today": "2026-04-10",
+   "facts": {
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "problem": "the roof leaks into the bedroom whenever it rains, since 2026-03-28",
+    "problem_noticed_date": "2026-03-28",
+    "cause": "rain; nothing the tenant did",
+    "repair_request": "phoned the manager on 2026-03-29 and again on 2026-04-03; nothing in writing",
+    "rent_paid_since": "paid April rent on 2026-04-01",
+    "eviction_filed": "no"
+   },
+   "message": "My bedroom ceiling leaks every time it rains, since March 28. I've called the manager twice and nobody has come. My May rent is due May 1. Can I just not pay it until they fix the roof?",
+   "answer": "Not yet. The roof is part of the building the landlord must keep in repair, so the statute does give a defense for holding back rent, but only after you deliver a written notice that names the leak and says you will not pay rent because of it, and 7 days pass after it is delivered. Your phone calls are not that notice. Holding back rent also risks an eviction case: if the landlord sues, you must pay the rent into the court registry within 5 days after you are served, not counting weekends and legal holidays, or you lose every defense except payment; the summons says so, and the court decides whether and how much the rent is reduced. Other paths: a written 7-day notice to end the lease, a complaint to the city or county code office (the law protects you from retaliation for it), or a claim for damages. Whether the leak is 'material' is not settled.",
+   "points": [
+    "The roof is an 83.51(1) duty, so the 83.60(1)(b) defense can apply, but only after the tenant delivers a written notice naming the leak and saying they will not pay rent because of it, and 7 days pass after delivery; the phone calls are not that notice, so nothing yet lets the tenant hold back May rent.",
+    "Holding back rent risks an eviction case: if sued, the tenant must pay the rent into the court registry within 5 days of being served, not counting weekends and legal holidays, or lose defenses other than payment (83.60(2)); the answer gives no date for those 5 days.",
+    "(Other paths: a written 7-day notice to end the lease (83.56(1)); a code office complaint, protected from retaliation (83.64); damages (83.55). Whether the leak is material is not settled. The lease shows nothing tying the home to a school: at most one line on it, no question.)"
+   ],
+   "mistakes": [
+    "Says the tenant may stop paying rent now, or treats the phone calls as the written notice.",
+    "Explains holding back rent without the eviction risk or the registry requirement of 83.60(2), or gives a date for the 5 days.",
+    "Asks the tenant whether the home is college housing, though the lease shows nothing tying it to a school.",
+    "Gives a date it worked out itself instead of from count_days."
+   ],
+   "law": [
+    {
+     "cite": "83.51(1)(b)",
+     "quote": "maintain the roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and all other structural components in good repair and capable of resisting normal forces and loads and the plumbing in reasonable working condition"
+    },
+    {
+     "cite": "83.60(1)(b)",
+     "quote": "The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof."
+    },
+    {
+     "cite": "83.60(2)",
+     "quote": "the tenant shall pay into the registry of the court the accrued rent as alleged in the complaint or as determined by the court and the rent that accrues during the pendency of the proceeding, when due."
+    },
+    {
+     "cite": "83.60(2)",
+     "quote": "5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "repair-4",
+   "title": "A closed pool and a broken dishwasher the lease promises",
+   "today": "2026-05-12",
+   "lease": "lease_repairs.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "problem": "the dishwasher has not worked since 2026-04-20, and the community pool has been closed since 2026-04-15 with a sign saying 'closed until further notice'",
+    "problem_noticed_date": "2026-04-15",
+    "cause": "nothing the tenant did",
+    "repair_request": "resident portal requests on 2026-04-21 and 2026-05-01; no reply",
+    "rent_paid_since": "paid May rent on 2026-05-01",
+    "eviction_filed": "no"
+   },
+   "message": "The pool's been closed for almost a month and my dishwasher has been broken for three weeks. I pay for a place with a pool and a dishwasher! Can I hold back part of my rent until they fix them?",
+   "answer": "No, holding back rent would not protect you here. The statute's defense for unpaid rent covers only the landlord's duties in 83.51(1), the building's structure and plumbing and local codes. The pool and the dishwasher are promised by your lease (clause 11), not by that list, so holding back rent risks an eviction case with no defense behind it. The lease does help in other ways. You can end the lease over a failure of a material lease promise: deliver a written notice by hand or certified mail (your portal requests are not that notice) naming the problems and saying you will end the lease if they are not fixed within 7 days. Whether a dishwasher or a pool is 'material' is not settled. The lease also lets the landlord close the pool for cleaning, repairs, or weather, and whether that clause limits what the lease promises is not settled either. You may have a claim for damages for the lease failure.",
+   "points": [
+    "No: the 83.60(1)(b) defense reaches only a failure of 83.51(1); a dishwasher and a pool are promised by the lease (clause 11), not by 83.51, so holding back rent does not protect the tenant here and risks an eviction case.",
+    "The lease promises both (clause 11: the landlord keeps the dishwasher in working order; it may close the pool for cleaning, repairs, or weather). Ending the lease under 83.56(1) can reach a material lease provision after a written 7-day notice delivered by hand or mail (the portal requests are not that notice); whether these are material is not settled.",
+    "(Damages under 83.55 for the lease failure; whether the pool clause limits the promise (83.47) is not settled; paying May rent with knowledge raises the 83.56(5)(a) question.)"
+   ],
+   "mistakes": [
+    "Says the tenant may hold back part or all of the rent over the pool or the dishwasher.",
+    "Says 83.51 requires the landlord to provide or keep up a pool or a dishwasher.",
+    "Treats the portal requests as the written notice to end the lease.",
+    "Says flatly that the closed pool or the broken dishwasher is, or is not, material."
+   ],
+   "law": [
+    {
+     "cite": "83.60(1)(b)",
+     "quote": "The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof."
+    },
+    {
+     "cite": "83.56(1)",
+     "quote": "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement."
+    },
+    {
+     "cite": "83.56(4)",
+     "quote": "The delivery of the written notices required by subsections (1)-(3) shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505"
+    },
+    {
+     "cite": "83.55",
+     "quote": "If either the landlord or the tenant fails to comply with the requirements of the rental agreement or this part, the aggrieved party may recover the damages caused by the noncompliance."
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "repair-5",
+   "title": "A guest broke the window",
+   "today": "2026-02-10",
+   "lease": "lease_repairs.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "problem": "a broken bedroom window",
+    "problem_noticed_date": "2026-02-01",
+    "cause": "a friend the tenant invited to a party on 2026-02-01 broke it by accident",
+    "repair_request": "a resident portal request on 2026-02-02; the office replied that the tenant must pay for the repair",
+    "rent_paid_since": "paid February rent on 2026-02-01, before the party",
+    "eviction_filed": "no"
+   },
+   "message": "A friend at my party accidentally broke my bedroom window on February 1. The office says I have to pay to fix it, but windows are the landlord's job, right? It's cold. Can I make them fix it?",
+   "answer": "Windows are on the statute's list of things the landlord keeps in repair, but the statute also says the landlord is not responsible for damage caused by the tenant, the tenant's family, or someone on the premises with the tenant's consent. A friend you invited to your party is such a person, so the statute does not make this repair the landlord's job, and your lease (clause 11) says the tenant pays for damage caused by guests. That means the statute's repair remedies, ending the lease or holding back rent, do not apply to this window. You can still ask the landlord to make the repair and pay for it, as the office says.",
+   "points": [
+    "Windows are on 83.51(1)(b)'s list, but the landlord is not responsible under 83.51 for conditions caused by the tenant, a family member, or someone on the premises with the tenant's consent (83.51(4)); a guest the tenant invited broke it, so 83.51 does not make it the landlord's job.",
+    "The lease (clause 11) puts damage caused by the tenant's guests on the tenant, so the tenant's repair remedies (ending the lease, holding back rent) do not reach this damage."
+   ],
+   "mistakes": [
+    "Says the landlord must fix the window at its own cost under 83.51.",
+    "Tells the tenant they may hold back rent or end the lease over the window.",
+    "Treats the invited guest as someone the tenant did not let in."
+   ],
+   "law": [
+    {
+     "cite": "83.51(1)(b)",
+     "quote": "maintain the roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and all other structural components in good repair and capable of resisting normal forces and loads and the plumbing in reasonable working condition"
+    },
+    {
+     "cite": "83.51(4)",
+     "quote": "The landlord is not responsible to the tenant under this section for conditions created or caused by the negligent or wrongful act or omission of the tenant, a member of the tenant’s family, or other person on the premises with the tenant’s consent."
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "repair-6",
+   "title": "Rent goes up right after a code complaint",
+   "today": "2026-05-20",
+   "lease": "lease_monthtomonth.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "tenancy": "month to month since 2025-08-01 (lease clause 3)",
+    "problem": "mold in the bathroom since 2026-03",
+    "cause": "nothing the tenant did",
+    "code_complaint_date": "2026-04-28",
+    "code_complaint": "complained to the city code enforcement office about the mold on 2026-04-28; an inspector came on 2026-05-05",
+    "rent_notice": "a letter dated 2026-05-08 saying the rent goes from $1,050 to $1,300 a month starting 2026-07-01",
+    "others_rent": "two neighbors in the building say their rent did not change",
+    "eviction_filed": "no"
+   },
+   "message": "I reported mold to the city on April 28 and an inspector came May 5. Three days later I got a letter raising my rent from $1,050 to $1,300 starting July 1. My neighbors' rent didn't go up. Is that even legal?",
+   "answer": "It may be unlawful retaliation. Florida's statute makes it unlawful for a landlord to raise a tenant's rent in a way that treats them differently primarily because the landlord is retaliating, and complaining to a code enforcement agency is one of the acts it protects. Being treated differently is required, and your neighbors' rent not changing goes to that. Whether your landlord acted mainly to retaliate is for a court to decide, not something the statute settles from the dates. The protection works mainly as a defense: if the landlord sues to evict you, you can raise the retaliation, as long as you acted in good faith, and it does not apply if the landlord proves good cause. The mold itself is for the code office, which this tool cannot check.",
+   "points": [
+    "It may be unlawful retaliation: 83.64(1) makes it unlawful to discriminatorily increase a tenant's rent primarily because the landlord is retaliating, and a complaint to a code agency is a protected act (83.64(1)(a)); being treated differently is required (83.64(4)), and the neighbors' unchanged rent goes to that. Whether the landlord acted primarily to retaliate is for a court; the answer does not say flatly that it was or was not.",
+    "Retaliation is a defense if the landlord sues for possession (83.64(2)); the tenant must have acted in good faith, and it does not apply if the landlord proves good cause (83.64(3)).",
+    "(The answer gives the dates as the tenant gave them and counts no days between them.)"
+   ],
+   "mistakes": [
+    "Says flatly that the increase is, or is not, illegal retaliation.",
+    "Leaves out that the tenant must be treated differently, or leaves out both the good-faith and the good-cause limits.",
+    "Counts the days between the complaint and the letter itself.",
+    "States a limit on how much or how often rent may rise that the statute does not have."
+   ],
+   "law": [
+    {
+     "cite": "83.64(1)",
+     "quote": "It is unlawful for a landlord to discriminatorily increase a tenant’s rent or decrease services to a tenant, or to bring or threaten to bring an action for possession or other civil action, primarily because the landlord is retaliating against the tenant."
+    },
+    {
+     "cite": "83.64(1)",
+     "quote": "In order for the tenant to raise the defense of retaliatory conduct, the tenant must have acted in good faith."
+    },
+    {
+     "cite": "83.64(1)(a)",
+     "quote": "The tenant has complained to a governmental agency charged with responsibility for enforcement of a building, housing, or health code of a suspected violation applicable to the premises"
+    },
+    {
+     "cite": "83.64(4)",
+     "quote": "a tenant is being treated differently as to the rent charged, the services rendered, or the action being taken by the landlord, which shall be a prerequisite to a finding of retaliatory conduct."
+    },
+    {
+     "cite": "83.64(2)",
+     "quote": "Evidence of retaliatory conduct may be raised by the tenant as a defense in any action brought against him or her for possession."
+    },
+    {
+     "cite": "83.64(3)",
+     "quote": "In any event, this section does not apply if the landlord proves that the eviction is for good cause."
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "repair-7",
+   "title": "The lease ended over a repair; now the deposit",
+   "today": "2026-05-25",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "problem": "the only toilet broke and the pipe under the bathroom sink leaked, from 2026-03-20",
+    "problem_noticed_date": "2026-03-20",
+    "cause": "nothing the tenant did",
+    "repair_notice": "a letter handed to the office on 2026-03-24 naming the toilet and the leak and saying the tenant will end the lease if they are not fixed within 7 days",
+    "repair_notice_delivered": "2026-03-24",
+    "ending_notice": "a letter handed to the office on 2026-04-02 saying the tenant is ending the lease because nothing was fixed, will move out on 2026-04-15, and giving the new address where the tenant can be reached",
+    "early_notice_date": "2026-04-02",
+    "lease_end_date": "2026-07-31",
+    "move_out_date": "2026-04-15",
+    "forwarding_address": "given in writing in the letter handed to the office on 2026-04-02",
+    "rent_paid_since": "March rent was paid on 2026-03-01, before the problem; April rent was not paid, and the landlord has not asked for it",
+    "landlord_notice_of_claim": "none received, by any means",
+    "deposit_returned": "none"
+   },
+   "message": "In March my only toilet broke and the pipe under the sink leaked. I handed the office a letter on March 24 saying I'd end my lease if they didn't fix it in 7 days. They didn't, so on April 2 I gave them another letter saying I was ending the lease and moving out April 15, with my new address. I moved out April 15. It's been over a month and I haven't gotten my $1,050 deposit back or heard anything. Do they have to give it back?",
+   "answer": "The deposit rules decide this. A landlord who means to keep any of the deposit must send written notice of a claim within 30 days after the rental agreement ends, and you have had none. When your rental agreement ended is not settled. If your ending of the lease over the repairs holds, it ended when you moved out on April 15; the 30 days ran out on 2026-05-15 (from count_days), so the landlord has lost the right to make a claim and owes you the whole $1,050, though it may still sue you for damages after returning it. If your ending does not hold (for example, if the failure is found not 'material', which is also not settled), the lease's end date of July 31 counts, the 30 days run to 2026-08-30 (from count_days), and a notice may still come. Your April 2 letter, handed over with your new address at least 7 days before you left (the last day was 2026-04-08, from count_days), was the notice a tenant leaving early must give, so the landlord was not excused from sending its notice.",
+   "points": [
+    "The deposit rules (83.49(3)(a)) decide this: a landlord who intends to keep any of the deposit must give written notice of a claim within 30 days after the rental agreement ended, and none came by any means.",
+    "When the rental agreement ended is not settled, and the answer gives both readings with no lean: if the tenant's ending of the lease under 83.56(1) holds, it ended at move-out on 2026-04-15, the 30 days ran out on 2026-05-15 (count_days, passed), and the landlord forfeited the right to claim and owes the whole $1,050 (and may still sue for damages after returning it); if not (for example, if the failure was not material, also not settled), the lease end of 2026-07-31 counts, the 30 days run to 2026-08-30 (count_days, not passed), and a notice may still come.",
+    "The tenant gave the 7-day written notice with an address before leaving, by personal delivery (83.49(5)), on 2026-04-02, on or before 2026-04-08 (count_days), so the landlord was not relieved of the notice."
+   ],
+   "mistakes": [
+    "Says flatly that the whole deposit is owed now, or flatly that it is not owed yet, without both readings of when the rental agreement ended.",
+    "Says the landlord was relieved of the notice under 83.49(5).",
+    "Decides the deposit by the repair rules (83.51, 83.56) instead of 83.49.",
+    "Gives a date it worked out itself instead of from count_days."
+   ],
+   "law": [
+    {
+     "cite": "83.49(3)(a)",
+     "quote": "If the landlord fails to give the required written notice within the 30-day period, he or she forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit but may file an action for damages after returning the security deposit to the tenant."
+    },
+    {
+     "cite": "83.49(5)",
+     "quote": "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached."
+    },
+    {
+     "cite": "83.56(1)",
+     "quote": "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement."
+    }
+   ],
+   "dates": [
+    {
+     "fact": "move_out_date",
+     "days": 30,
+     "date": "2026-05-15",
+     "passed": true
+    },
+    {
+     "fact": "lease_end_date",
+     "days": 30,
+     "date": "2026-08-30",
+     "passed": false
+    },
+    {
+     "fact": "move_out_date",
+     "days": -7,
+     "date": "2026-04-08",
+     "passed": true
+    },
+    {
+     "fact": "repair_notice_delivered",
+     "days": 7,
+     "date": "2026-03-31",
+     "passed": true
+    }
+   ]
+  }
+ ]
+}
