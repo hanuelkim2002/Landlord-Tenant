@@ -1,0 +1,130 @@
+{
+ "new": {
+  "deposit-8/3": {
+   "unclear_words": 0,
+   "why": "Not counted: \"it\" in \"No, don't ignore it.\" echoes the tenant's own words in the first sentence; \"this\" in \"One thing could change this.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-7/1": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"Do any exceptions change this?\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-7/2": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"Does your lease change any of this?\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-8/1": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"One thing could change this.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-8/2": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"What if this goes to court?\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-9/1": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"What if this goes to court?\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-9/3": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"What if this goes to court?\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-10/1": {
+   "unclear_words": 0,
+   "why": "Not counted: \"it\" in \"Why doesn't that settle it in your favor?\" can only mean the dispute or the answer as a whole; \"this\" in \"What does this mean for getting the money?\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-10/3": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"What if this goes to court?\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-11/1": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"Can you recover court costs if this goes to court?\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-12/3": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"One thing could change this: whether your signed fee agreeme\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-13/3": {
+   "unclear_words": 2,
+   "why": "Not counted: \"this\" in \"[ > What does this mean for your money? ]\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-16/1": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"[ > What if this goes to court? ]\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-16/2": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"[ > What if this ends up in court? ]\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-16/3": {
+   "unclear_words": 1,
+   "why": "Not counted: \"this\" in \"[ > What if this goes to court? ]\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-17/1": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"[ > What if this goes to court? ]\" can only mean the dispute or the answer as a whole."
+  }
+ },
+ "old": {
+  "deposit-7/2": {
+   "unclear_words": 1,
+   "why": "Not counted: \"they\" in \"Yes, they have to send the $650, and it's overdue.\" echoes the tenant's own words in the first sentence."
+  },
+  "deposit-7/3": {
+   "unclear_words": 0,
+   "why": "Not counted: \"they\" in \"Yes, they had to send you the $650, and it's overdue.\" echoes the tenant's own words in the first sentence."
+  },
+  "deposit-8/1": {
+   "unclear_words": 1,
+   "why": "Not counted: \"it\" in \"No, don't ignore it.\" echoes the tenant's own words in the first sentence; \"it\" in \"If it goes to court, that is a factual dispute.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-12/2": {
+   "unclear_words": 1,
+   "why": "Not counted: \"this\" in \"Short answer: No, as the statute reads, this probably isn't \" echoes the tenant's own words in the first sentence; \"that\" in \"What that means for you.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-10/1": {
+   "unclear_words": 1,
+   "why": "Not counted: \"this\" in \"What this means for you\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-10/2": {
+   "unclear_words": 2,
+   "why": "Not counted: \"it\" in \"Why the deadlines don't settle it for you\" can only mean the dispute or the answer as a whole; \"this\" in \"What this means in practice\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-10/3": {
+   "unclear_words": 0,
+   "why": "Not counted: \"it\" in \"Why the silence doesn't settle it\" can only mean the dispute or the answer as a whole; \"it\" in \"If it goes to court\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-14/2": {
+   "unclear_words": 1,
+   "why": "Not counted: \"it\" in \"Why it is unsettled.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-15/2": {
+   "unclear_words": 1,
+   "why": "Not counted: \"it\" in \"Why it matters.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-15/3": {
+   "unclear_words": 2,
+   "why": "Not counted: \"this\" in \"What this means for you now.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-16/3": {
+   "unclear_words": 5,
+   "why": "Not counted: \"this\" in \"The lease (§§7–8) doesn't change any of this.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-18/3": {
+   "unclear_words": 3,
+   "why": "Not counted: \"this\" in \"The lease has no clause that changes any of this.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-17/1": {
+   "unclear_words": 3,
+   "why": "Not counted: \"it\" in \"If it goes to court.\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-11/1": {
+   "unclear_words": 0,
+   "why": "Not counted: \"this\" in \"If this is school-run housing, the deposit rules above might\" can only mean the dispute or the answer as a whole."
+  },
+  "deposit-11/3": {
+   "unclear_words": 1,
+   "why": "Not counted: \"this\" in \"If this is an ordinary apartment rental, you get back the wh\" can only mean the dispute or the answer as a whole; \"this\" in \"The enrollment clause leaves me unable to tell from the leas\" can only mean the dispute or the answer as a whole."
+  }
+ }
+}

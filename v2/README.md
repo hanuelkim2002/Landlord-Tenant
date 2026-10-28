@@ -15,7 +15,8 @@ test matters only. No real tenant uses it until the unlicensed-practice question
 
 ## How the model answers
 
-The system prompt holds these rules, under about 400 words in all. A rule is added only when the author asks.
+The system prompt holds these rules, about 700 words in all (raised from 400 on 2026-10-27, with "Writing the
+reply"). A rule is added only when the author asks.
 
 1. Apply the law to the tenant's facts and give an answer, not a list of quotes.
 2. Answer what was asked first. Asked "can I ...", say whether they can before any step.
@@ -28,7 +29,8 @@ The system prompt holds these rules, under about 400 words in all. A rule is add
    statute's or the lease's own words. Say everything else in your own words: what the tenant told you, the facts they
    confirmed, and any message, letter, or paper they describe.
 7. Dates come only from `count_days`.
-8. End with the one question the answer needs, if any. No offers the tenant didn't ask for, and none repeated.
+8. End the short answer with the one question the answer needs, if any. No offers the tenant didn't ask for, and
+   none repeated.
 9. Keep the timeline with `save_line`: one line for each thing that happens between the tenant and the landlord, or
    to the home. A line is open only while it waits for one specific next thing (a reply, a visit, a repair, a
    payment), not just because the dispute goes on; when that thing happens or can no longer happen, the line that
@@ -36,6 +38,18 @@ The system prompt holds these rules, under about 400 words in all. A rule is add
    (Rules 9 and 10 added 2026-10-25, with the memory.)
 10. After a gap (a SINCE LAST VISIT block), start from what the tenant says and the open lines, and ask about an
     unsettled open line once. Never ask again for what the facts, the timeline, or the chat already hold.
+
+Writing the reply (added 2026-10-27, `docs/superpowers/specs/2026-10-27-plain-replies-design.md`). The tenant has no
+legal training.
+
+1. Start with the short answer: 3 to 5 plain sentences that answer what was asked (rule 2), give the main reason, and
+   say what it means for the tenant. Then the one question (rule 8). No section numbers or quotations here.
+2. Then a line with only DETAILS on it. Below it, put each point the answer rests on under its own heading: a line
+   that starts with ### and asks a plain question, like ### Does Florida's deposit law cover you? The reasons,
+   citations (rule 6), and quotations go there.
+3. Use short sentences and everyday words. Say what a legal word means the first time you use it.
+4. Use "it", "this", "that", or "they" only when it can mean just one thing, named in the same sentence or the one
+   before. Otherwise name the thing again: "the deposit", "the law", "your landlord".
 
 Reading the lease (approved 2026-10-19, `comparisons/lease/README.md`):
 
@@ -75,7 +89,8 @@ note), it asks for all of them in the same step, not one at a time. One at a tim
   code adds the days since then and the facts confirmed since then (SINCE LAST VISIT). The old chat stays in the
   prompt. Spec: `docs/superpowers/specs/2026-10-25-memory-timeline-design.md`; test: `comparisons/memory/`.
 - **Web page.** One Streamlit page on this computer only. It starts or opens a matter, runs the chat, lists the
-  pending facts to confirm, and shows the timeline.
+  pending facts to confirm, and shows the timeline. Each reply shows its short answer first, with each point behind
+  a click (2026-10-27).
 
 ## Open questions, settled by comparison
 

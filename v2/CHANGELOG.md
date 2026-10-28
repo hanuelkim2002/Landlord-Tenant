@@ -216,3 +216,24 @@ the version `fixed3` (the skill after the sign-off). Stories 16 and 18 on Sonnet
 Item 5 now says leases, messages, and facts go to Anthropic, and item 6 names Claude Sonnet 5.5 as the chat model
 (both the 2026-10-23 decision). Item 11 gives today's line counts (831 without `tests.py`, 1,030 with). Replaces
 "the chat to OpenRouter and Google", "Gemini is the chat model", and the old counts. No code changed.
+
+## 2026-10-27: a short plain answer first, each point behind a click
+
+`chat.py`: a "Writing the reply" rules block (3 to 5 plain sentences and the question, then a DETAILS line and a `###`
+question heading per point; everyday words; "it" only when it can mean one thing), rule 8 ends the short answer, and
+`split_reply` cuts a reply at DETAILS. `app.py`: `show_reply` shows the short part, then one closed box per point.
+Replaces one long reply shown whole; old replies still show whole. Rules about 700 words (cap raised from 400).
+
+## 2026-10-27: the plain replies test, run and scored
+
+`comparisons/plain/`: Sonnet answered the 18 deposit stories 3 times with the old rules and the new (108 answers,
+$10.25), graded by Opus subagents. New against old: short part 127 words against 462, unexplained legal words 7
+against 135, right 41 against 40 of 48. Unclear words 21 against 79 after my review, 39 against 99 on the graders'
+counts (the same per 100 words). Missed: the 100-word short part; on the graders' counts, the unclear-words median.
+Reply time 24.1 against 19.9 seconds. AUTHOR.md item 15; four new slips in SLIPS.md. Replaces nothing in the app.
+
+## 2026-10-27: the plain replies test's two calls decided
+
+AUTHOR.md item 15: the short answer stays as it is (median 7 sentences, 127 words), and both exemptions in the review
+of the plain counts are accepted, so the reviewed counts (21 unclear words against 79) stand. Replaces the open item.
+No code changed.

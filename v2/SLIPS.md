@@ -84,6 +84,10 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
   deposit amount", dropping the rent that 83.49(4) names (2 of 3).
 - 2026-10-24, the current skill on Sonnet: receipt as the test for the landlord's 30 days (story 9, 1 of 3); a
   result 83.491 does not give, that a landlord who skips a fee notice cannot keep the fee (story 12, 1 of 3).
+- 2026-10-27, plain replies test (`comparisons/plain/`, Sonnet 5.5): new rules 2 of 54 ("the deposit is still yours
+  unless your landlord shows it has a right to keep some of it", story 14; the landlord "would have to show the
+  carpet damage is more than ordinary wear", story 18); old rules 1 of 54 (the fee might be a deposit "under another
+  name", against the confirmed facts, story 12).
 
 ## Does not load the skill
 
@@ -105,6 +109,8 @@ The tool loop ends with no text, so the page would show the tenant nothing.
   only "I've saved 2026-08-20 as your receipt date. Please confirm it in the sidebar...". A rerun logging every
   step (12 answers, 6 with the reminder) found no text written beside tool calls, only hidden reasoning, so the
   chat loop dropped nothing: the model ended its turn with a short note. Not seen again in 12 reruns.
+- 2026-10-27, plain replies test (Sonnet 5.5, old rules): 1 of 54 (story 12, run 3, after 8 tool calls). New
+  rules: 0 of 54.
 
 ## Misreads a page image
 
@@ -132,3 +138,33 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
 
 - 2026-10-26, deposit skill test (`comparisons/deposit/`, Sonnet 5.5, stories 16 and 18): 3 of 6 answers. A period
   added inside the quote 3 times; "forfeited the right" for the statute's "forfeits the right" once.
+
+## Writes a short answer longer than asked
+
+The "Writing the reply" rules ask for 3 to 5 plain sentences before the question; the answer writes more.
+
+- 2026-10-27, plain replies test (`comparisons/plain/`, Sonnet 5.5, new rules): 45 of 54 short answers had more than
+  5 sentences before the question (median 7, median 127 words with the question; the longest 16 sentences).
+
+## Quotes the law in the short answer
+
+The rules keep quotations and section numbers behind the click; the short answer quotes anyway.
+
+- 2026-10-27, plain replies test (Sonnet 5.5, new rules): 7 of 54 short answers held a quotation; none held a
+  section number.
+
+## Uses "it" or "this" for something not named nearby
+
+A pointing word whose thing is two or more sentences back, or that could mean two things ("It can still sue you",
+the landlord last named two sentences before).
+
+- 2026-10-27, plain replies test (Sonnet 5.5, counted by Opus with my review, in what the tenant sees first): old
+  rules 79 in 54 answers, new rules 21 in 54 (the graders' own counts: 99 and 39, the same per 100 words). Most are a
+  chain of "it" for the landlord or the letter.
+
+## Shows the tenant a tool's name
+
+The reply names one of the model's tools, like "(count_days)", which means nothing to a tenant.
+
+- 2026-10-27, plain replies test (Sonnet 5.5): old rules 2 of 54, both in what the tenant sees first; new rules 1 of
+  54, inside a box.

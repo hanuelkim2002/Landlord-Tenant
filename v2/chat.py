@@ -1,5 +1,6 @@
 """The chat: the system prompt (the rules, the whole lease, the facts, the timeline, the skills) and the tool loop,
-which sends the messages, runs any tool calls, sends the results back, and repeats until the model answers.
+which sends the messages, runs any tool calls, sends the results back, and repeats until the model answers. Also the
+split of a reply into the short answer the page shows first and the points it shows behind a click.
 """
 import json
 import re
@@ -22,9 +23,15 @@ RULES = """You help a tenant in Florida with a dispute with their landlord, unde
 5. Ask the tenant only plain facts (what happened, when, how something was sent, what a paper says). Never ask whether something meets a legal term.
 6. Cite each rule to its source: a statute section and subsection, or the lease. Put in quotation marks only the statute's or the lease's own words. Say everything else in your own words: what the tenant told you, the facts they confirmed, and any message, letter, or paper they describe.
 7. Dates come only from count_days. Never add, subtract, or compare dates yourself.
-8. End with the one question your answer needs, if any. Don't offer help the tenant didn't ask for, and never repeat an offer.
+8. End the short answer with the one question your answer needs, if any. Don't offer help the tenant didn't ask for, and never repeat an offer.
 9. Keep the timeline with save_line: one line for each thing that happens between the tenant and the landlord, or to the home. A line is open only while it waits for one specific next thing, like a reply, a visit, a repair, or a payment; it is not open just because the dispute goes on. When the tenant reports that thing, or it can no longer happen, close the line that was waiting for it: save it again with its number and open false. To fix a line, save it again with its number. A date a skill counts from is also noted as a fact.
 10. When there is a SINCE LAST VISIT block, the tenant is back after a gap. Start from what they say and the open lines; if an open line is still unsettled, ask about it once. Never ask again for what the facts, the timeline, or the chat already hold.
+
+Writing the reply. The tenant has no legal training.
+1. Start with the short answer: 3 to 5 plain sentences that answer what was asked (rule 2), give the main reason, and say what it means for the tenant. Then the one question (rule 8). No section numbers or quotations here.
+2. Then a line with only DETAILS on it. Below it, put each point the answer rests on under its own heading: a line that starts with ### and asks a plain question, like ### Does Florida's deposit law cover you? The reasons, citations (rule 6), and quotations go there.
+3. Use short sentences and everyday words. Say what a legal word means the first time you use it.
+4. Use "it", "this", "that", or "they" only when it can mean just one thing, named in the same sentence or the one before. Otherwise name the thing again: "the deposit", "the law", "your landlord".
 
 Reading the lease:
 1. THE LEASE below is the tenant's whole lease, page by page. Read all of it, addenda and tables included, before you say whether it covers a point.
@@ -76,6 +83,27 @@ def system_prompt(m, pages):
             f"{since_text(record.since_last_visit(m))}\n\n"
             f"SKILLS (load each one that fits the tenant's situation with load_skill):\n{listed}\n\n"
             f"LOADED SKILLS:\n{loaded or 'none yet'}")
+
+
+DETAILS = "DETAILS"                                          # the line between the short answer and the points
+WHY = "Why, and the law behind it"                           # the title for reasons written before any heading
+# The marker line holds only DETAILS, in any case, maybe bold or with a colon. Spaces and tabs only, never a newline,
+# so the match stays on one line.
+MARKER = re.compile(rf"(?im)^[ \t]*\**[ \t]*{DETAILS}[ \t]*:?[ \t]*\**[ \t]*$")
+HEADING = re.compile(r"(?m)^#+[ \t]+(.*)$")
+
+
+def split_reply(text):
+    """A reply's short part, shown first, and its points as [(title, body)], each shown behind a click."""
+    marker = MARKER.search(text)
+    if not marker:
+        return text.strip(), []                              # an old reply, or no marker: show it whole
+    details = text[marker.end():]
+    headings = list(HEADING.finditer(details))
+    points = [(WHY, details[:headings[0].start()] if headings else details)]
+    for heading, following in zip(headings, headings[1:] + [None]):
+        points.append((heading.group(1).strip("* \t"), details[heading.end():following.start() if following else None]))
+    return text[:marker.start()].strip(), [(title, body.strip()) for title, body in points if body.strip()]
 
 
 TEXT_CALL = re.compile(r"<function=([\w-]+)>(.*?)</function>", re.S)

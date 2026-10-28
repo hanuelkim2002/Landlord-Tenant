@@ -93,6 +93,15 @@ def show_timeline(m):
                         + (" *(open)*" if line["open"] else ""))
 
 
+def show_reply(text):
+    """A reply from the tool: the short answer first, then each point behind a click, so the reasons cost no wait."""
+    short, points = chat.split_reply(text)
+    st.markdown(safe(short))
+    for title, body in points:
+        with st.expander(safe(title)):
+            st.markdown(safe(body))
+
+
 def show_checks(shown):
     """Under a reply: whether each quotation checks out word for word, and the words each cite points to."""
     if not shown or not (shown["quotes"] or shown["cited"]):
@@ -122,9 +131,11 @@ st.caption(f"{m['tenant']} / {m['matter']}. Lease: {len(pages)} pages"
            + f". Skills loaded: {', '.join(m['skills']) or 'none yet'}.")
 for message in record.chat(m):
     with st.chat_message(message["role"]):
-        st.markdown(safe(message["text"]))
         if message["role"] == "assistant":
+            show_reply(message["text"])
             show_checks(message["checks"])
+        else:
+            st.markdown(safe(message["text"]))
 if text := st.chat_input("Write to the tool"):
     with st.spinner("Answering..."):
         chat.reply(m, text)

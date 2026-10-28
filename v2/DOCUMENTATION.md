@@ -91,10 +91,14 @@ The six tools the model can call, their descriptions (`SCHEMAS`), and `run_tool(
 
 ### chat.py
 
-- `RULES`: the system prompt's rules (README.md, 547 words). Rule 9 keeps the timeline; rule 10 says how to pick
-  up after a gap.
+- `RULES`: the system prompt's rules (README.md, 703 words). Rule 9 keeps the timeline; rule 10 says how to pick
+  up after a gap; rule 8 ends the short answer with its question. "Writing the reply" asks for the short answer, a
+  `DETAILS` line, and a `###` question heading per point, in plain words.
 - `facts_text`, `timeline_text(lines)`, `since_text(since)`, `system_prompt(m, pages)`: the prompt, built fresh for
   each message. After the facts: TIMELINE, and SINCE LAST VISIT when the last message was on an earlier day.
+- `split_reply(text)`: a reply's short part and its points, [(title, body)]. It cuts at the first line holding only
+  `DETAILS` (any case, maybe bold or with a colon); each `#` heading under it starts a point; text before the first
+  heading becomes the point titled `WHY`; a point with nothing in it is dropped. No marker: the whole reply, no points.
 - `text_tool_calls(content)`: tool calls the model wrote as text; they are run like real ones.
 - `run_loop(m, messages)`: the tool loop; after 8 rounds the model is asked to answer with tools off.
 - `reply(m, text)`: one message in, one checked reply out, both recorded.
@@ -103,13 +107,14 @@ The six tools the model can call, their descriptions (`SCHEMAS`), and `run_tool(
 
 The page: `choose_matter` (open a saved matter, or start one from a lease PDF and a description, whose first reply
 answers the description), `confirm_facts` (pending facts with a box to correct and a Confirm button; the confirmed
-ones), `show_timeline` (the timeline's lines, to read only, the open ones marked), `show_checks` (the quote checks
-and cited words under a reply). `safe` keeps a "$" from starting a formula.
+ones), `show_timeline` (the timeline's lines, to read only, the open ones marked), `show_reply` (a reply's short
+answer, then one click-to-open box per point, from `chat.split_reply`), `show_checks` (the quote checks and cited
+words under a reply). `safe` keeps a "$" from starting a formula, in box titles too.
 
 ### tests.py
 
-No model call: the quote checker, the skill quote checker, `count_days`, and the timeline (lines, since last visit,
-`save_line`, the prompt's two blocks), in a throwaway matters folder. Every line should say OK.
+No model call: the quote checker, the skill quote checker, `count_days`, the timeline (lines, since last visit,
+`save_line`, the prompt's two blocks), in a throwaway matters folder, and `split_reply`. Every line should say OK.
 
 ## Running and testing
 

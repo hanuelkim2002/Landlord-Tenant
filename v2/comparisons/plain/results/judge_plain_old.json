@@ -1,0 +1,1046 @@
+{
+ "deposit-1/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The deposit ($1,050), last named two sentences back; the sentence just before is about suing for damages.",
+    "sentence": "Why the landlord lost the right to keep any of it",
+    "word": "it"
+   },
+   {
+    "could_mean": "The fee award, the faster hearing, or both; the sentence before names both.",
+    "sentence": "That only applies if a case is actually filed and you win.",
+    "word": "That"
+   }
+  ],
+  "why": "The bold first line says yes, you get the whole $1,050 back."
+ },
+ "deposit-1/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "periodic tenancy"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The rule that excuses the landlord (the line before) or the lease, the nearest thing named.",
+    "sentence": "You stayed until the lease ended (Lease \u00a73), so it doesn't apply to you.",
+    "word": "it"
+   }
+  ],
+  "why": "The bold first line says yes, you get the whole $1,050 back."
+ },
+ "deposit-1/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "periodic tenancy",
+   "setoff"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The landlord (named two sentences back) or the statute, the subject of the sentence before.",
+    "sentence": "It would have to return your deposit first.",
+    "word": "It"
+   }
+  ],
+  "why": "The bold first line says yes, you can demand the full $1,050."
+ },
+ "deposit-10/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "forfeits"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The landlord, named two sentences back, or the notice, named in the sentence just before.",
+    "sentence": "If it misses that window, it \"forfeits the right to impose a claim upon the security deposit\" (83.49(3)(a)).",
+    "word": "it"
+   },
+   {
+    "could_mean": "The whole rule above, or only the quoted sentence just before.",
+    "sentence": "What this means for you",
+    "word": "this"
+   }
+  ],
+  "why": "The first line says no, not automatically, and that the tenant keeps the right to the deposit."
+ },
+ "deposit-10/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits",
+   "prevailing party"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "Whether you get the whole deposit back, or the deposit itself; neither is named.",
+    "sentence": "Why the deadlines don't settle it for you",
+    "word": "it"
+   },
+   {
+    "could_mean": "In 'If it meant': the landlord, last named two sentences back.",
+    "sentence": "If it meant to claim some of it, it had to send written notice within 30 days, and that date was 2026-09-30 (83.49(3)(a)).",
+    "word": "it"
+   },
+   {
+    "could_mean": "In 'some of it': the deposit, last named two sentences back.",
+    "sentence": "If it meant to claim some of it, it had to send written notice within 30 days, and that date was 2026-09-30 (83.49(3)(a)).",
+    "word": "it"
+   },
+   {
+    "could_mean": "The whole analysis above, or only the last point that you keep your right to the deposit.",
+    "sentence": "What this means in practice",
+    "word": "this"
+   }
+  ],
+  "why": "The first line says no, not automatically, and that the tenant still has a right to the deposit."
+ },
+ "deposit-10/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeited",
+   "cure"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "Whether you get the whole deposit back; nothing is named.",
+    "sentence": "Why the silence doesn't settle it",
+    "word": "it"
+   },
+   {
+    "could_mean": "The deposit dispute; nothing is named.",
+    "sentence": "If it goes to court",
+    "word": "it"
+   }
+  ],
+  "why": "The first line says not automatically, and the next says the landlord has not lost its claim just by staying silent."
+ },
+ "deposit-11/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "forfeits",
+   "setoff",
+   "periodic tenancy",
+   "incidental"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "Your apartment or the building, not named in this sentence or the one before, which is about the enrollment clause.",
+    "sentence": "If this is school-run housing, the deposit rules above might not apply.",
+    "word": "this"
+   }
+  ],
+  "why": "The first lines say probably yes, the whole $1,050, if the state law covers the housing."
+ },
+ "deposit-11/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "periodic tenancy",
+   "advance the cause on the calendar",
+   "incidental"
+  ],
+  "unclear_words": [],
+  "why": "The first lines say probably yes, the whole $1,050, if the state law covers the housing."
+ },
+ "deposit-11/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "periodic tenancy",
+   "incidental"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "Your apartment or your rental; nothing is named yet.",
+    "sentence": "If this is an ordinary apartment rental, you get back the whole $1,050.",
+    "word": "this"
+   },
+   {
+    "could_mean": "All four points above, or only the last one about the forwarding address.",
+    "sentence": "If all of that holds, the statute says the landlord \"forfeits the right to impose a claim upon the security deposit and may not seek a setoff against the deposit\" (83.49(3)(a)).",
+    "word": "that"
+   },
+   {
+    "could_mean": "Your apartment or the building; the sentence before is about the landlord company.",
+    "sentence": "The enrollment clause leaves me unable to tell from the lease alone whether this is ordinary housing or housing tied to the school.",
+    "word": "this"
+   }
+  ],
+  "why": "The first lines say probably yes, the whole $1,050, if it is an ordinary rental."
+ },
+ "deposit-12/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "in lieu of",
+   "forfeits"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "In 'takes it outside': the lease, the fee, or your rental.",
+    "sentence": "It also shows no tie to a school or a government program, so nothing there takes it outside this part.",
+    "word": "it"
+   },
+   {
+    "could_mean": "In 'this part': a part of the law never named in the reply, or this part of the reply.",
+    "sentence": "It also shows no tie to a school or a government program, so nothing there takes it outside this part.",
+    "word": "this"
+   }
+  ],
+  "why": "The first line says no, the $350 isn't treated like a deposit the landlord must return."
+ },
+ "deposit-12/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "in lieu of",
+   "forfeiture"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The $350 fee, named only in the tenant's question.",
+    "sentence": "Short answer: No, as the statute reads, this probably isn't a deposit the landlord must return.",
+    "word": "this"
+   },
+   {
+    "could_mean": "The landlord's missed notice, or the whole analysis above.",
+    "sentence": "What that means for you.",
+    "word": "that"
+   },
+   {
+    "could_mean": "Filing an insurance claim against you, which nothing says happened, or skipping the notice.",
+    "sentence": "No notice came, so the landlord shouldn't have done this.",
+    "word": "this"
+   }
+  ],
+  "why": "The first line says no, the fee probably isn't a deposit the landlord must return."
+ },
+ "deposit-12/3": {
+  "answers_alone": false,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "The reply is empty, so it tells the tenant nothing."
+ },
+ "deposit-13/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "pursuant to",
+   "periodic tenancy"
+  ],
+  "unclear_words": [],
+  "why": "Opens with yes, the $250 can come back."
+ },
+ "deposit-13/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "pursuant to",
+   "forfeiture rule",
+   "setoff"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "subsections (3), (5), and (6) from two sentences back, or the return deadlines and forfeiture rule named in the sentence before",
+    "sentence": "Your lease (\u00b61) names the landlord as the Riverbend Housing Authority, \"a public housing agency created under chapter 421,\" so those parts apply to it.",
+    "word": "those"
+   },
+   {
+    "could_mean": "your lease or the Riverbend Housing Authority",
+    "sentence": "Your lease (\u00b61) names the landlord as the Riverbend Housing Authority, \"a public housing agency created under chapter 421,\" so those parts apply to it.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the $250 deposit, not named in this sentence or the heading before it",
+    "sentence": "You can sue in court to recover it.",
+    "word": "it"
+   }
+  ],
+  "why": "Opens with yes, the $250 can come back."
+ },
+ "deposit-13/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "pursuant to",
+   "forfeits",
+   "setoff"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "your lease or the Riverbend Housing Authority, both named in the sentence before",
+    "sentence": "So subsection (3) applies to it.",
+    "word": "it"
+   },
+   {
+    "could_mean": "subsection (3), the deposit statute, or the exclusion in 83.42(1) named in the sentence just before",
+    "sentence": "Applying it to your facts.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the 2026-08-30 deadline or July 31, both named in the sentence before",
+    "sentence": "It has passed.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the housing authority, last named as \"the landlord\" two sentences back and called \"it\" since",
+    "sentence": "If they keep ignoring you.",
+    "word": "they"
+   }
+  ],
+  "why": "Opens with yes, the deposit can come back, and says why the friend is only partly right."
+ },
+ "deposit-14/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits",
+   "setoff"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "lease \u00a711 or the Riverbend Housing Authority, both named in the sentence before",
+    "sentence": "It says nothing about who sets the rent or the deposit.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the two readings, not named in the sentence before; could also be read as the programs or the rent and deposit just mentioned",
+    "sentence": "I can't choose between them.",
+    "word": "them"
+   }
+  ],
+  "why": "Says it is unsettled and that the facts favor getting all $1,050 back if the statute applies."
+ },
+ "deposit-14/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits",
+   "setoff"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the statute (called \"it\" in the sentence before) or the question whether it applies, named two sentences back",
+    "sentence": "Why it is unsettled.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the two readings, last named several sentences back",
+    "sentence": "I can't pick between these.",
+    "word": "these"
+   }
+  ],
+  "why": "Says it turns on an unsettled point and that the whole $1,050 is owed if the statute applies."
+ },
+ "deposit-14/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits",
+   "setoff"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the deposit, not named in this sentence or the one before (\"I'm not leaning either way.\")",
+    "sentence": "If \u00a783.49 applies, the answer is yes, all of it.",
+    "word": "it"
+   }
+  ],
+  "why": "Says it is unsettled and that the answer is yes, all of it, if the statute applies."
+ },
+ "deposit-15/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeited",
+   "preclude service of notices"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the statute itself, the landlord's notice, or the e-mail notice section",
+    "sentence": "The statute says it \"does not preclude service of notices by any other means permitted by law\" (83.505(6)).",
+    "word": "it"
+   }
+  ],
+  "why": "Says plainly that whether the letter counts is not settled, with both readings."
+ },
+ "deposit-15/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits",
+   "preclude service of notices"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "whether the letter counts, or what \"last known mailing address\" means",
+    "sentence": "Why it matters.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the letter, named only in the heading two sentences back",
+    "sentence": "You actually received it on August 27, which is before the 30 days ran out.",
+    "word": "it"
+   }
+  ],
+  "why": "Says it is not settled and lays out both readings and what to do."
+ },
+ "deposit-15/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits",
+   "setoff",
+   "preclude service of notices",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the letter, not named in the sentence before (\"The landlord could still sue you for the carpet afterward.\")",
+    "sentence": "Reading 2: it counts.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the statute itself, the letter, or the e-mail notice section",
+    "sentence": "The statute says it \"does not preclude service of notices by any other means permitted by law\" (83.505(6)).",
+    "word": "it"
+   },
+   {
+    "could_mean": "the two readings, the dates, or the deduction rule quoted just before",
+    "sentence": "What this means for you now.",
+    "word": "this"
+   }
+  ],
+  "why": "Says it is not settled and lays out both readings."
+ },
+ "deposit-16/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits",
+   "action for damages",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the letter, last named two sentences back",
+    "sentence": "It also states a reason, the carpet.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the letter, not named in this sentence or the one before",
+    "sentence": "That is 15 days from August 24, when you received it.",
+    "word": "it"
+   },
+   {
+    "could_mean": "your last day to object (2026-09-08), named two sentences back, or August 24, named in the sentence before",
+    "sentence": "It has not passed.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the landlord's last day (2026-09-19), named two sentences back, or August 20, named in the sentence before",
+    "sentence": "It has not passed.",
+    "word": "It"
+   }
+  ],
+  "why": "Says it is not settled whether a letter with no amount counts."
+ },
+ "deposit-16/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits",
+   "setoff",
+   "action for damages",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the letter, last named two sentences back",
+    "sentence": "It gives a reason, the carpet.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the letter, not named in the sentence before",
+    "sentence": "What it left out.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the statute's form (named in the sentence before) or the landlord's letter",
+    "sentence": "It also tells you to object in writing within 15 days and says where to send the objection.",
+    "word": "It"
+   },
+   {
+    "could_mean": "your not objecting, or the landlord's deducting its claim",
+    "sentence": "That doesn't waive your right to sue later for a refund (83.49(3)(b)).",
+    "word": "That"
+   }
+  ],
+  "why": "Says whether the letter counts is not settled, with both readings."
+ },
+ "deposit-16/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeit[ed]",
+   "thereof",
+   "waive",
+   "separate action"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the landlord's letter, or the statute's required notice described in the sentence before",
+    "sentence": "It also warns you to object within 15 days and gives the address to send the objection to.",
+    "word": "It"
+   },
+   {
+    "could_mean": "the dates in the sentence before, or everything said about the letter so far",
+    "sentence": "The lease (\u00a7\u00a77\u20138) doesn't change any of this.",
+    "word": "this"
+   },
+   {
+    "could_mean": "the lease, named in the sentence before, or the letter",
+    "sentence": "What it lacks.",
+    "word": "it"
+   },
+   {
+    "could_mean": "your objection, or the full deposit named in the sentence before (first 'it')",
+    "sentence": "Lease \u00a77 says to deliver it by hand to the office at 1840 SW 13th Street, Suite A, or send it there by certified mail.",
+    "word": "it"
+   },
+   {
+    "could_mean": "your objection, or the full deposit named in the sentence before (second 'it')",
+    "sentence": "Lease \u00a77 says to deliver it by hand to the office at 1840 SW 13th Street, Suite A, or send it there by certified mail.",
+    "word": "it"
+   },
+   {
+    "could_mean": "your objection, not named in this sentence or the one before",
+    "sentence": "The 15-day count comes from receipt, but sending it well before 2026-09-08 leaves you room.",
+    "word": "it"
+   }
+  ],
+  "why": "Says it is not settled and to object anyway."
+ },
+ "deposit-17/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "periodic tenancy",
+   "forfeits",
+   "setoff",
+   "action for damages",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the landlord, named only in the heading two sentences back",
+    "sentence": "After that, it may file its own lawsuit against you for actual damages, such as any damage to the unit.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the landlord's, named only in the heading two sentences back",
+    "sentence": "After that, it may file its own lawsuit against you for actual damages, such as any damage to the unit.",
+    "word": "its"
+   },
+   {
+    "could_mean": "the landlord, not named in this sentence or the one before",
+    "sentence": "Forfeiting the deposit claim doesn't erase whatever damages it could prove in court.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the landlord's own lawsuit for damages just discussed, or your claim for the deposit",
+    "sentence": "If it goes to court.",
+    "word": "it"
+   }
+  ],
+  "why": "Opens with yes, all $1,050, and says the landlord lost its right to keep any."
+ },
+ "deposit-17/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "periodic tenancy",
+   "forfeits",
+   "setoff",
+   "properly noticed",
+   "waive"
+  ],
+  "unclear_words": [],
+  "why": "Opens with yes, all $1,050."
+ },
+ "deposit-17/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "waive"
+  ],
+  "unclear_words": [],
+  "why": "Opens with yes, all $1,050."
+ },
+ "deposit-18/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "the statute or the \"Unless the tenant objects\" sentence, both named in the sentence before",
+    "sentence": "It sets no step for what happens after an objection.",
+    "word": "It"
+   }
+  ],
+  "why": "Says the 30 days count from the letter, the $650 question is unsettled, and court is the route."
+ },
+ "deposit-18/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeited",
+   "thereof",
+   "adjudicate"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "your objection (first 'it'), not named in the sentence before",
+    "sentence": "You sent it to the office address, which is where lease \u00a77 and the landlord's own letter said to send it.",
+    "word": "it"
+   },
+   {
+    "could_mean": "your objection (second 'it'), not named in the sentence before",
+    "sentence": "You sent it to the office address, which is where lease \u00a77 and the landlord's own letter said to send it.",
+    "word": "it"
+   }
+  ],
+  "why": "Says it is not settled whether the $650 was due and that court is the path."
+ },
+ "deposit-18/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeited",
+   "thereof",
+   "waived"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "the 30 days, not named in the sentence before (\"That runs from the notice date, not from move-out.\")",
+    "sentence": "Counting from August 20, it ended 2026-09-19, which has passed.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the two readings, not named in the sentence before",
+    "sentence": "The statute doesn't choose between these.",
+    "word": "these"
+   },
+   {
+    "could_mean": "the landlord's silence or the landlord",
+    "sentence": "The landlord's silence after your objection does not end its $400 claim, and it does not settle that claim in your favor.",
+    "word": "it"
+   },
+   {
+    "could_mean": "the two readings, the deadlines, or the court route",
+    "sentence": "The lease has no clause that changes any of this.",
+    "word": "this"
+   }
+  ],
+  "why": "Says the 30 days run from the letter, the $650 question is unsettled after an objection, and court is next."
+ },
+ "deposit-2/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "setoff"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The notice (named two sentences back) or your lease, named in the sentence just before.",
+    "sentence": "It must also state the reason for the claim.",
+    "word": "It"
+   },
+   {
+    "could_mean": "The demand or the statute, which is the subject of the sentence.",
+    "sentence": "The statute doesn't require a demand, but it puts the landlord on notice and gives you a record.",
+    "word": "it"
+   }
+  ],
+  "why": "The short answer says you can ask now, but can't yet say the landlord lost its right; the 30-day window is open."
+ },
+ "deposit-2/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "the parties",
+   "forfeit",
+   "periodic tenancy",
+   "setoff",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The condition that the landlord isn't excused (the bold heading two sentences back) or the 83.49(5) excuse in the sentence before, which would reverse the meaning.",
+    "sentence": "You stayed to the end of your lease term, so this appears to be met.",
+    "word": "this"
+   },
+   {
+    "could_mean": "The written demand, named two sentences back; the sentence before only says \"It\".",
+    "sentence": "It doesn't change the landlord's deadline.",
+    "word": "It"
+   },
+   {
+    "could_mean": "Your housing (named two sentences back) or your lease, named in the sentence before.",
+    "sentence": "If it were, 83.49 might not apply.",
+    "word": "it"
+   }
+  ],
+  "why": "The short answer says you can ask now, but the landlord's deadline to claim part hasn't passed."
+ },
+ "deposit-2/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "setoff",
+   "advance the cause on the calendar"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The landlord's right to keep any of the deposit, or your right to demand the whole deposit.",
+    "sentence": "That right depends on the 30-day deadline, which hasn't passed.",
+    "word": "That"
+   }
+  ],
+  "why": "The bold opening says the 15 days passed but you can't yet demand it all on that ground until the 30-day deadline passes."
+ },
+ "deposit-3/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "forfeits"
+  ],
+  "unclear_words": [],
+  "why": "The bold opening says no, silence alone doesn't force a full return, but you keep your right to the deposit."
+ },
+ "deposit-3/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "the parties",
+   "addendum",
+   "forfeits"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "Your claim to the whole deposit, the landlord's loss of its claim, or your notice; none is named nearby.",
+    "sentence": "This is where it fails.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The text you did send (\"Your notice\" two sentences back) or the early-departure notice the law requires, named in the heading several sentences back.",
+    "sentence": "Because that notice wasn't given, 83.49(5) says the failure \"relieves the landlord of the notice requirement of paragraph (3)(a).\"",
+    "word": "that"
+   },
+   {
+    "could_mean": "The landlord, named two sentences back; the sentence before only says \"It\".",
+    "sentence": "It may have claims of its own, such as rent for the weeks after you left.",
+    "word": "It"
+   },
+   {
+    "could_mean": "The landlord, not named in this sentence or the one before.",
+    "sentence": "It may have claims of its own, such as rent for the weeks after you left.",
+    "word": "its"
+   },
+   {
+    "could_mean": "The landlord, last named three sentences back.",
+    "sentence": "Whether it can actually deduct those claims is a separate question.",
+    "word": "it"
+   }
+  ],
+  "why": "It opens with not automatically: silence doesn't force a full return, but you still have a right to the deposit."
+ },
+ "deposit-3/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "forfeits"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The text you sent (\"the notice\" in the sentence before) or the 7-day written notice the law requires, quoted several sentences back.",
+    "sentence": "The result: 83.49(5) says that failing to give that notice \"relieves the landlord of the notice requirement of paragraph (3)(a).\"",
+    "word": "that"
+   },
+   {
+    "could_mean": "The landlord, or the deposit (the \"it\" that ends the sentence before).",
+    "sentence": "The landlord's silence is not a free pass for it, and you can still ask for the deposit.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The 30-day window (the heading) or your rental agreement, which the sentence before says \"ended\".",
+    "sentence": "Counting from the move-out date, it ended July 15, 2026.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The 30-day window, named only in the heading three sentences back, or the rental agreement.",
+    "sentence": "Counting from the lease end date, it ended August 30, 2026.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The landlord's notice of a claim or your 7-day notice of leaving; neither is named in this sentence or the one before.",
+    "sentence": "Which date applies is not settled, but it doesn't change the answer, because you were never owed that notice.",
+    "word": "that"
+   }
+  ],
+  "why": "The bold opening says no, silence doesn't get you the whole deposit, but you keep your right to it."
+ },
+ "deposit-4/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "periodic tenancy",
+   "advance the cause on the calendar"
+  ],
+  "unclear_words": [],
+  "why": "The bold first line says yes, you can get the other $400 because the landlord missed its deadline."
+ },
+ "deposit-4/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "the parties"
+  ],
+  "unclear_words": [],
+  "why": "The bold first line says yes, you can claim the other $400."
+ },
+ "deposit-4/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "periodic tenancy"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "July 31 (what the first \"that date\" means) or 2026-08-30.",
+    "sentence": "Thirty days from that date was 2026-08-30, and that date has passed.",
+    "word": "that"
+   }
+  ],
+  "why": "The bold first line says yes, you can claim the other $400."
+ },
+ "deposit-5/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "setoff",
+   "file an action for damages",
+   "preclude service of notices",
+   "remit",
+   "statutory form"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The date of the notice (August 18), the nearest date named, or the deadline 30 days after it.",
+    "sentence": "That date was September 17, so the $650 is overdue.",
+    "word": "That"
+   }
+  ],
+  "why": "The short answer says the $400 is unsettled and the landlord should already have paid the $650."
+ },
+ "deposit-5/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "the parties",
+   "setoff",
+   "file an action for damages",
+   "preclude service of notices",
+   "substantial compliance",
+   "remit"
+  ],
+  "unclear_words": [],
+  "why": "The short answer says the $400 is unsettled and the $650 is overdue either way."
+ },
+ "deposit-5/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "the parties",
+   "setoff",
+   "preclude service of notices",
+   "waive",
+   "substantial compliance"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "Section 83.505 itself, or the text message named in the heading just before (\"The text is enough.\").",
+    "sentence": "Section 83.505(6) says it \"does not preclude service of notices by any other means permitted by law.\"",
+    "word": "it"
+   },
+   {
+    "could_mean": "The date of the notice (the nearest date named) or the deadline 30 days after it.",
+    "sentence": "That date was 2026-09-17, and it has passed.",
+    "word": "That"
+   },
+   {
+    "could_mean": "Your rental home, which is not named, or your lease.",
+    "sentence": "Nothing in your lease suggests it is school or subsidized housing.",
+    "word": "it"
+   }
+  ],
+  "why": "The short answer says the $400 is unsettled and the $650 is owed and overdue."
+ },
+ "deposit-6/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "waive",
+   "separate action"
+  ],
+  "unclear_words": [],
+  "why": "It says object in writing by 2026-09-08 and explains when the $650 is due either way."
+ },
+ "deposit-6/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "imposition of the landlord's claim or the amount thereof",
+   "remit",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The certified letter, named two lines back; the line before only says \"It\".",
+    "sentence": "It states the reason, the amount, the 15-day deadline, and where to send an objection.",
+    "word": "It"
+   },
+   {
+    "could_mean": "The fee rule (two sentences back) or the faster-calendar rule in the sentence just before.",
+    "sentence": "That works both ways: you could owe the landlord's costs and fees if you lose.",
+    "word": "That"
+   }
+  ],
+  "why": "It says object in writing by September 8, 2026 and explains when the $650 is due either way."
+ },
+ "deposit-6/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "remit",
+   "waive",
+   "disclosure"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "Your objection, named two sentences back, or the notices named in the sentence before.",
+    "sentence": "The landlord's letter also says to send it to the office.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The date of the landlord's notice (the nearest date named) or the deadline 30 days after it.",
+    "sentence": "That date is September 19.",
+    "word": "That"
+   }
+  ],
+  "why": "It says object in writing before September 8, and explains when the $650 comes either way."
+ },
+ "deposit-7/1": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [],
+  "why": "The opening line says the landlord must send the $650 and the $400 is not necessarily gone."
+ },
+ "deposit-7/2": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The landlord, not yet named in the reply; only the tenant's question named them.",
+    "sentence": "Yes, they have to send the $650, and it's overdue.",
+    "word": "they"
+   },
+   {
+    "could_mean": "Your written request for the $650, which is only implied, or the $650 itself.",
+    "sentence": "If so, how did you send it, and on what date?",
+    "word": "it"
+   }
+  ],
+  "why": "The first line answers both: the $650 is owed and overdue, and the $400 is not automatically gone."
+ },
+ "deposit-7/3": {
+  "answers_alone": true,
+  "legal_words": [],
+  "unclear_words": [
+   {
+    "could_mean": "The landlord, but the reply has not named the landlord yet; only the tenant's question did.",
+    "sentence": "Yes, they had to send you the $650, and it's overdue.",
+    "word": "they"
+   }
+  ],
+  "why": "The first line says yes, the $650 is owed and overdue, and the $400 is not gone for good."
+ },
+ "deposit-8/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "election",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The e-mail, named only in the tenant's question, whose last sentence is about the carpet.",
+    "sentence": "No, don't ignore it.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The carpet question, the $400 claim, or the whole deposit matter; none is named.",
+    "sentence": "If it goes to court, that is a factual dispute.",
+    "word": "it"
+   },
+   {
+    "could_mean": "The objection, named two sentences back, or the copy or the receipt named in the sentence before.",
+    "sentence": "Sending it by e-mail as well costs nothing.",
+    "word": "it"
+   }
+  ],
+  "why": "The first line says don't ignore it, the e-mail counts, and the last day to object is 2026-09-04."
+ },
+ "deposit-8/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The $400 claim, not named in this sentence or the one before, or the objection.",
+    "sentence": "Whether the landlord can still deduct while you dispute it is not settled.",
+    "word": "it"
+   }
+  ],
+  "why": "The first line says the e-mail can't be ignored, counts as notice, and the deadline to object is close."
+ },
+ "deposit-8/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "waive"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "The lack of certified mail, the timing of the notice, or the 'whole deposit back' argument, which the tenant never made.",
+    "sentence": "On the \"whole deposit back\" argument, the landlord has not lost its claim on this ground.",
+    "word": "this"
+   },
+   {
+    "could_mean": "In 'it could change': the addendum, or the missing statement that e-mail notice is voluntary and can be revoked.",
+    "sentence": "If yours doesn't say that, check it, because it could change this answer.",
+    "word": "it"
+   }
+  ],
+  "why": "The first line says no, the e-mail can't be ignored, and the next says certified mail isn't required."
+ },
+ "deposit-9/1": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum",
+   "forfeits"
+  ],
+  "unclear_words": [],
+  "why": "The first line says it is not settled whether the full $1,050 is already owed or the landlord can still claim part."
+ },
+ "deposit-9/2": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum"
+  ],
+  "unclear_words": [
+   {
+    "could_mean": "That the lease sets no different rule (the sentence before), or that the tenant's early notice was proper (the whole paragraph).",
+    "sentence": "This means the landlord is not excused from the claim-notice requirement.",
+    "word": "This"
+   }
+  ],
+  "why": "The first line says the whole $1,050 is owed unless a proper claim notice comes in time."
+ },
+ "deposit-9/3": {
+  "answers_alone": true,
+  "legal_words": [
+   "addendum"
+  ],
+  "unclear_words": [],
+  "why": "It says the deposit is the tenant's and that whether the landlord can still deduct turns on an unsettled date."
+ }
+}
