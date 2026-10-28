@@ -279,3 +279,10 @@ it says beyond v1 waits for the author (AUTHOR.md item 16). Replaces nothing; v1
 version), `judge.py` packs the answers blind for Opus graders and unpacks their grades, `grade.py` writes the scores.
 The repair skill's seven stories sit in `repair_not_made/`. Tried with a fake model end to end. Replaces nothing; the
 deposit test keeps its own runner.
+
+## 2026-10-28: the repair skill test, run and graded
+
+`comparisons/each_skill/repair_not_made/`: seven stories, 3 runs each, on Sonnet; three Opus graders, blind. Right of
+21: new 15, v1 5 (14 and 1 if every point is required). No made-up dates; $4.10. `grade.py` counts only required
+points, as the rubric says. Misses sorted in the README; five SLIPS.md entries. AUTHOR.md item 16 approved. Replaces
+nothing in the app.

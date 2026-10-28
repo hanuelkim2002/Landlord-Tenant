@@ -14,6 +14,19 @@ sys.path.insert(0, str(run.V2))                               # score's quote co
 ORDER = ("v1", "new")                                         # the baseline first; other versions follow by name
 
 
+def optional(point):
+    """A point written wholly in parentheses: helpful detail, not required, as the rubric says."""
+    return point.strip().startswith("(") and point.strip().endswith(")")
+
+
+def verdict(story, grade):
+    """Right, partly, or wrong, as score.story_verdict reads a grade, counting only the required points. The graders
+    were told parentheses mark helpful detail, but some still required a point written wholly in parentheses."""
+    made = (list(grade.get("points_made") or []) + [False] * len(story["points"]))[:len(story["points"])]
+    required = [(p, m) for p, m in zip(story["points"], made) if not optional(p)]
+    return score.story_verdict({"points": [p for p, _ in required]}, {**grade, "points_made": [m for _, m in required]})
+
+
 def rows_for(skill, version, stories, dry):
     """Every answer of one version, graded and counted, in the stories' order."""
     order = list(stories)
@@ -30,6 +43,8 @@ def rows_for(skill, version, stories, dry):
         row = score.story_row(line, story, order.index(story["id"]) + 1, grades[f"{story['id']}/{line['run']}"], {},
                               run.pages_for(skill, story)[0]["text"], [])
         row["skill_loaded"] = skill in line["skills_loaded"]  # story_row looks for the deposit skill only
+        if not line.get("error"):                             # judge_verdict keeps the graders' own reading
+            row["verdict"] = verdict(story, grades[f"{story['id']}/{line['run']}"])
         rows.append(row)
     return rows
 
@@ -42,6 +57,7 @@ def summary(rows, stories):
         per_story.setdefault(r["story"], []).append(r["verdict"])
     return {"answers": len(rows), "settled": len(settled),
             **{v: sum(r["verdict"] == v for r in settled) for v in ("right", "partly", "wrong")},
+            "right_every_point": sum(r["judge_verdict"] == "right" for r in settled),
             "made_up_dates": sum(bool(r["made_up_dates"]) for r in rows), "errors": sum(r["error"] for r in rows),
             "empty": sum(r["words"] == 0 for r in rows), "skill_loaded": sum(r["skill_loaded"] for r in rows),
             "quotes": sum(r["quotes"] for r in rows), "quotes_ok": sum(r["quotes_ok"] for r in rows),
@@ -55,6 +71,7 @@ def markdown(skill, summaries, stories):
     lines = [f"# {skill}: scores", "", "Claude Sonnet 5.5 answers, 3 runs a story, graded blind by Claude Opus 5.5.",
              "Written by grade.py.", "", "| | " + " | ".join(versions) + " |", "|---|" + "---|" * len(versions)]
     for name, label in (("right", "Right (settled)"), ("partly", "Partly"), ("wrong", "Wrong"),
+                        ("right_every_point", "Right, every point required"),
                         ("made_up_dates", "Made-up dates"), ("skill_loaded", "Skill loaded"), ("errors", "Errors"),
                         ("empty", "Empty answers"), ("cost", "Cost, $")):
         lines.append(f"| {label} | " + " | ".join(str(summaries[v][name]) for v in versions) + " |")

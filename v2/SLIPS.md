@@ -28,6 +28,9 @@ against rule 7).
   "July 2026" as July 20; the counts above were not rechecked.
 - 2026-10-25, memory test (`comparisons/memory/`, Sonnet 5.5): 1 of 18, new memory, leave-early story: "May 15 to
   July 31 would be about 2.5 months", a period it worked out itself.
+- 2026-10-28, repair skill test (`comparisons/each_skill/`, Sonnet 5.5), story 3: a leak that began 13 days
+  before called "about a month" or "over a month" (new skill 2 of 3, v1 2 of 3), and once (new) "the 7 days would
+  probably not be over by May 1" for a notice delivered April 10.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -52,6 +55,8 @@ The skill marks a point as not settled, with a reading on each side; the answer 
 - 2026-10-24, the current skill on Sonnet: after the no-lean line, still a lean where the skill does not mark the
   point not settled: story 11 ("Probably yes" on the college question), story 18 ("Yes, the 30-day deadline has
   passed" after an objection), story 9 once.
+- 2026-10-28, repair skill test (Sonnet 5.5), story 2: "You probably can move out" on the hot-water question,
+  v1 3 of 3, new 0 of 3.
 
 ## Says the balance is due on day 30 after an objection
 
@@ -88,6 +93,9 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
   unless your landlord shows it has a right to keep some of it", story 14; the landlord "would have to show the
   carpet damage is more than ordinary wear", story 18); old rules 1 of 54 (the fee might be a deposit "under another
   name", against the confirmed facts, story 12).
+- 2026-10-28, repair skill test (Sonnet 5.5): v1 8 of 21 answers (a lease cannot change the hot-water duty; 83.64
+  bars any retaliatory end; no way to sue over a rent increase; the 83.60 defense only in an eviction), new 1 of 21
+  (story 7: the repair question "does not change the notice rules").
 
 ## Does not load the skill
 
@@ -96,6 +104,7 @@ never read.
 
 - 2026-10-21, model test, deposit stories (skill not loaded for it, as on the page): nemotron 4 of 15 (sample lease)
   and 0 of 15 (own lease); haiku, gemini, sonnet 30 of 30.
+- 2026-10-28, repair skill test (Sonnet 5.5): new 1 of 21 (story 6, read 83.64 itself), v1 0 of 21.
 
 ## Empty answer
 
@@ -168,3 +177,11 @@ The reply names one of the model's tools, like "(count_days)", which means nothi
 
 - 2026-10-27, plain replies test (Sonnet 5.5): old rules 2 of 54, both in what the tenant sees first; new rules 1 of
   54, inside a box.
+
+## Gives the college-housing check its own point when the lease settles it
+
+The shared skill asks for one line when the lease shows no tie to a school; the answer gives it a box of its own and
+tells the tenant the noted fact waits for them to confirm.
+
+- 2026-10-28, repair skill test (Sonnet 5.5), story 3 (no `school_housing` in the facts): new skill 3 of 3, a box
+  titled "Does Florida's landlord-tenant law cover your home?"; once it names the fact as "school_housing = no".

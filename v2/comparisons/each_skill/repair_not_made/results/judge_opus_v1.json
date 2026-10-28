@@ -1,0 +1,341 @@
+{
+ "repair-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "'Air conditioning isn't on the structure or plumbing list' and withholding is 'Probably not safely'; the portal request 'doesn't start either 7-day clock'. It covers the part on order but never mentions damages under 83.55."
+ },
+ "repair-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Minor: 'Sending your notice before July 1 would avoid the question' of waiver by paying July rent is unsupported; 83.56(5)(a) turns on paying rent with knowledge, so a notice sent before July 1 avoids it only if the 7 days run and the lease ends before July rent is paid.",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "'You can't safely stop paying rent right now' and the defense's list 'air conditioning isn't named in it' carry the withholding point, though it softens it as 'a weaker option'. Notice, portal and part on order are covered, but there is no mention of damages under 83.55."
+ },
+ "repair-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "'The lease promise in clause 11 does not help with this defense' and the portal request 'still isn't the statutory notice'; materiality given two readings. It covers the part on order but never mentions damages under 83.55."
+ },
+ "repair-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   true
+  ],
+  "reason": "Right on delivery, March 16 and the separate rent notice, but it leads 'You probably can end your lease and move out now' and casts the second hot-water reading as what 'your landlord could argue', so it leans instead of leaning neither way. Not flat, since it says 'the law leaves two points open'."
+ },
+ "repair-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   true
+  ],
+  "reason": "Right on delivery, March 16 counted 'from delivery, not from the day you mailed', the two readings and the separate rent notice, but it leads 'You probably can move out and end the lease', which leans toward the favorable hot-water reading instead of leaning neither way. Not flat, since it adds 'Two points aren't settled, so it isn't certain.'"
+ },
+ "repair-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says 'The landlord's duties can't be changed by the lease for this kind of unit'; 83.51(2)(a), which names hot water, applies 'Unless otherwise agreed in writing', so subsection (2) duties can be changed in writing for an apartment.",
+  "points_made": [
+   true,
+   false,
+   true,
+   true
+  ],
+  "reason": "Right on the notice, 2026-03-16 and the separate rent notice, but it leads 'You probably can move out and end the lease' and its short answer lists the open points as 'material' and March rent, leaving out the hot-water question, so it leans instead of holding both readings even."
+ },
+ "repair-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says the leak 'has lasted about a month'; it began 2026-03-28 and today is 2026-04-10, about two weeks.",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "'Not yet. Right now, skipping May rent would not be protected'; the registry deadline is stated with no date. But it offers no 7-day notice to end the lease (only that April rent 'may affect your right to end the lease'), no retaliation protection, and no damages."
+ },
+ "repair-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "'You shouldn't skip May rent yet' and 'Your two phone calls don't count'; registry 'within 5 days (not counting weekends and legal holidays)' with no date. But it gives no 7-day notice to end the lease, no retaliation protection for a code complaint, and no damages."
+ },
+ "repair-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says the leak is 'unfixed for over a month'; it began 2026-03-28 and today is 2026-04-10, about two weeks.",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "'Not safely' and 'Your two phone calls don't count'; the registry deadline is quoted with no date. It gives ending the lease but not retaliation protection for a code complaint or damages."
+ },
+ "repair-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says the 83.60 defense 'only helps if your landlord sues to evict you', but 83.60(1)(a) also lets the tenant raise a 83.51(1) noncompliance in a landlord's 83.55 action for unpaid rent (minor).",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "'A promise in your lease doesn't count for this defense' and 'you could lose' make point 1; the 83.56(1) notice by hand or certified mail ('your portal requests probably don't count') and 'Whether a broken dishwasher is \"material\" is not settled' make point 2; the pool clause and May rent waiver are covered but 83.55 damages are never mentioned."
+ },
+ "repair-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The short answer says 'I wouldn't hold back rent yet' and 'your facts don't fit it so far', and asks whether the portal requests said 'you would stop paying rent', implying a proper notice could make withholding available; the 83.60(1)(b) defense reaches only 83.51(1) duties, not these lease-only items.",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Details make the core point ('A lease promise alone does not give you the rent-withholding defense'), the 83.56(1) notice by hand or certified mail ('Your portal requests probably don't qualify'), and materiality 'not settled by the statute'; it covers the pool clause and May rent waiver but never mentions damages under 83.55."
+ },
+ "repair-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Makes the core no ('A dishwasher and a pool aren't on that list... You would not have the legal protection'), the 83.56(1) route with hand or certified-mail delivery ('your portal requests likely don't count'), and hedges materiality ('may count as a \"material provision.\" The law doesn't define \"material\"'); covers the pool clause and the May rent 83.56(5)(a) question as unsettled but never mentions damages under 83.55, so point 3 is incomplete."
+ },
+ "repair-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false
+  ],
+  "reason": "Makes the 83.51(4) point with a hedge ('83.51(4) likely removes that duty here') and notes the lease lets the office bill, but it ties the remedies only to the open negligence question and says 'I'd hold off on that step until the cause question is clearer', leaving withholding open instead of saying the remedies do not reach guest damage."
+ },
+ "repair-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true
+  ],
+  "reason": "Quotes 83.51(1)(b) and 83.51(4) and says 'A guest you invited is the kind of person the law describes'; lease section 11 'says the same thing' and 'neither step is likely to work' for ending the lease or withholding rent."
+ },
+ "repair-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "Cites 'Fla. Stat. 83.52(6)' (a tenant must not damage the premises 'nor permit any person to do so'), a rule not in the packet's statute files, so unsupported here.",
+  "points_made": [
+   true,
+   true
+  ],
+  "reason": "Quotes 83.51(1)(b) and 83.51(4) and says the landlord 'can likely say the repair is yours to pay for. That would also stop you from ending the lease or withholding rent', and even under the no-negligence reading 'your lease clause makes you pay for guest damage'."
+ },
+ "repair-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'Whatever happens, 83.64 still bars an end to the tenancy or a new rent that is retaliation' overstates the statute: 83.64(1) bars a discriminatory increase or an action for possession brought primarily to retaliate, subject to different treatment, good faith, and the good-cause exception in 83.64(3).",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Makes the core point ('the increase may be illegal,' the 83.64(4) difference 'is required,' 'This is the open question') and gives the 83.64(2) defense and good faith, but never mentions the good-cause limit in 83.64(3), so point 2 is incomplete (good faith alone keeps mistake 2 false)."
+ },
+ "repair-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says 'The text I have doesn't give you a separate way to sue over the increase'; 83.55 (in the files) lets the aggrieved party recover damages for the landlord's noncompliance with this part, which includes 83.64(1).",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It may be illegal, but it isn't settled,' cites 83.64(1), (1)(a) and 83.64(4) as 'a prerequisite' with the neighbors' rent, and gives the defense with good faith and good cause ('does not apply if the landlord proves that the eviction is for good cause'); it counts no days beyond the tenant's 'three days later.'"
+ },
+ "repair-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Makes point 1 ('It can be illegal, but the law doesn't settle it'; 'A judge would decide that') and gives the 83.64(2) defense and good faith, but on good cause says only 'The good-cause examples in 83.64(3) concern evictions ... and your landlord hasn't filed an eviction,' never that the protection does not apply if the landlord proves good cause."
+ },
+ "repair-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Gives both readings with no lean and the right outcomes (30 days 'end on 2026-08-30' or 'ended 2026-05-15' with forfeiture) plus the 83.49(5) notice, but rests the split on the statute's wording ('treats vacating and termination as two separate things'), not on whether the tenant's 83.56(1) ending holds; its repair section says only 'the landlord might argue you left without good reason.'"
+ },
+ "repair-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says the repair question 'affects whether you owe rent after April 15, not whether the deposit is yours' and cites 83.49(5) for keeping the deposit 'even if the lease ending were disputed'; 83.49(5) only says failing to give the 7-day notice does not waive deposit rights, and the answer itself says a valid ending 'supports the earlier date.'",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives both readings without choosing, ties them to the repair ending ('If you validly ended the lease early ... That supports the earlier date'), states the landlord 'must return all $1,050' on the move-out reading and can still send notice until August 30 on the other, and says 'The landlord is not excused from sending a claim notice.'"
+ },
+ "repair-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The lead says the landlord must 'either return the deposit or send you a written claim notice within 30 days after the lease ends'; 83.49(3)(a) gives 15 days to return a deposit when no claim is intended (the details later state the 15-day rule correctly).",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Opens 'It's not settled whether your landlord can still claim part of your deposit' and gives both readings without choosing, plus the April 2 notice before April 8, but grounds the readings in 83.49's wording and says the exit's validity 'matters if the landlord later sues over rent,' not that it decides when the agreement ended."
+ }
+}

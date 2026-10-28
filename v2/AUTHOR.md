@@ -98,8 +98,8 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?
 15. **Decided 2026-10-27:** the plain replies test's two calls: the short answer stays as it is, and both exemptions
     in my review of the plain counts are accepted (see Decided; `comparisons/plain/README.md`).
-16. **The repair skill's new law points** (`skills/repair_not_made.md`, drafted 2026-10-28). What it says that v1's
-    repair skill did not, each to check before the live test:
+16. **Decided 2026-10-28: the repair skill's new law points approved,** with the seven repair stories' keys
+    (`comparisons/each_skill/repair_not_made/stories.json`). What it says that v1's repair skill did not:
     - Option 3, damages (83.55), for a lease promise or an 83.51 duty; rent paid with knowledge may give it up too
       (83.56(5)(a) names "a civil action").
     - Option 4, retaliation (83.64): good faith, being treated differently (83.64(4)), and good cause, whose examples
