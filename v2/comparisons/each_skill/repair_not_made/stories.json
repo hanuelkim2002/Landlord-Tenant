@@ -1,5 +1,5 @@
 {
- "how_to_read": "The repair skill's stories, in the deposit stories' shape (comparisons/skills/stories_more.json). Each runs on comparisons/skills/lease.txt unless it has a 'lease' field naming a copy in this folder: lease_repairs.txt (new clause 11: appliances, air conditioning, the pool, repair requests, damage by guests) or lease_monthtomonth.txt (clauses 3 and 9: month to month). 'today' is the date count_days compares with. 'facts' are confirmed facts. 'answer' is the right answer in plain words; 'points' are what a right answer must convey, judged by meaning (words in parentheses are helpful detail, not required); 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story but repair-3 holds school_housing. Check with: python ../../skills/check_key.py stories.json (from this folder) or from comparisons/skills/.",
+ "how_to_read": "The repair skill's stories, in the deposit stories' shape (comparisons/skills/stories_more.json). Each runs on comparisons/skills/lease.txt unless it has a 'lease' field naming a copy in this folder: lease_repairs.txt (new clause 11: appliances, air conditioning, the pool, repair requests, damage by guests) lease_monthtomonth.txt (clauses 3 and 9: month to month), lease_furnished.txt (new clause 11: furnishings), or lease_parking.txt (new clause 11: a reserved covered parking space). Stories 8 and 9 test amenities the skill never names. 'today' is the date count_days compares with. 'facts' are confirmed facts. 'answer' is the right answer in plain words; 'points' are what a right answer must convey, judged by meaning (words in parentheses are helpful detail, not required); 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story but repair-3 holds school_housing. Check with: python ../../skills/check_key.py stories.json (from this folder) or from comparisons/skills/.",
  "sections": [
   "83.42",
   "83.47",
@@ -396,6 +396,109 @@
      "passed": true
     }
    ]
+  },
+  {
+   "id": "repair-8",
+   "title": "A furnished apartment: the bed frame the lease promises broke",
+   "today": "2026-04-20",
+   "lease": "lease_furnished.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "problem": "the bed frame the landlord provided broke on 2026-04-08; the slats split and it sags to the floor",
+    "problem_noticed_date": "2026-04-08",
+    "cause": "age; nothing the tenant did",
+    "repair_request": "a resident portal request on 2026-04-09 and an e-mail to the office on 2026-04-14; the office replied that furniture is 'low priority'",
+    "rent_paid_since": "none; April rent was paid on 2026-04-01, before it broke, and May rent is due 2026-05-01",
+    "eviction_filed": "no"
+   },
+   "message": "My apartment came furnished, and the bed frame the landlord provided broke on April 8. I've been sleeping on a mattress on the floor for almost two weeks. The office says furniture is 'low priority.' Can I take the cost of a new frame out of my May rent, or stop paying until they fix it?",
+   "answer": "No, neither would be protected. Your lease (clause 11) says the landlord provides the bed frame and will keep it in good repair, so fixing it is the landlord's job under the lease. But Florida's repair statute does not name furniture, and the defense for holding back rent covers only the duties in that statute, so holding back or cutting your rent over a lease-only item would risk an eviction case with no defense behind it. Nothing in Florida's landlord-tenant law lets you take a repair cost out of rent. What the lease does give you: you can end the lease if a material lease promise is not kept within 7 days after a written notice that names the problem and says you will end the lease over it, delivered by hand to the office or by certified mail as clause 7 says. Your portal request and your e-mail are not that notice, since you and the landlord have not agreed to notices by e-mail. Whether a broken bed frame is 'material' is not settled. You may also have a claim for damages for the lease failure.",
+   "points": [
+    "The bed frame is not on 83.51's lists; it is the landlord's job because the lease promises it (clause 11: the landlord provides it and will keep it in good repair).",
+    "Holding back rent, or taking the cost of a new frame out of rent, would not be protected: the 83.60(1)(b) defense reaches only an 83.51(1) duty, not a lease-only item, and the stored statute gives no right to deduct a repair cost from rent; doing it risks an eviction case. The answer says this plainly.",
+    "To end the lease, the tenant must deliver a written notice (by hand or certified mail, as clause 7 says) naming the problem and saying they will end the lease over it; the portal request and the e-mail are not that notice (no e-mail agreement); if it is not fixed within 7 days after delivery, the tenant may end the lease (83.56(1)), and whether the failure is material is not settled.",
+    "(Damages under 83.55 for the lease failure.)"
+   ],
+   "mistakes": [
+    "Says the tenant may hold back rent, or deduct the cost of a new frame from rent, as a protected step.",
+    "Says 83.51 requires the landlord to provide or repair furniture.",
+    "Treats the portal request or the e-mail as the written notice that lets the tenant end the lease.",
+    "Says flatly that the broken bed frame is, or is not, material."
+   ],
+   "law": [
+    {
+     "cite": "83.60(1)(b)",
+     "quote": "The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof."
+    },
+    {
+     "cite": "83.56(1)",
+     "quote": "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement."
+    },
+    {
+     "cite": "83.56(4)",
+     "quote": "The delivery of the written notices required by subsections (1)-(3) shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505"
+    },
+    {
+     "cite": "83.505(1)",
+     "quote": "if the parties have signed an addendum to the rental agreement that the parties specifically agree to the electronic delivery of notices"
+    },
+    {
+     "cite": "83.55",
+     "quote": "If either the landlord or the tenant fails to comply with the requirements of the rental agreement or this part, the aggrieved party may recover the damages caused by the noncompliance."
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "repair-9",
+   "title": "The reserved covered parking the lease promises is closed",
+   "today": "2026-05-20",
+   "lease": "lease_parking.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "problem": "the covered garage, with the tenant's reserved space, has been closed since 2026-04-10 for repaving the landlord ordered; a sign on the gate says 'closed until further notice'; the tenant parks on the street",
+    "problem_noticed_date": "2026-04-10",
+    "cause": "the landlord's repaving project",
+    "repair_request": "asked the office in person on 2026-04-15 when it would reopen; no date given; nothing in writing",
+    "rent_paid_since": "paid May rent on 2026-05-01 while the garage was closed",
+    "eviction_filed": "no"
+   },
+   "message": "Our lease includes a reserved covered parking space, but the landlord closed the whole garage on April 10 for repaving and still hasn't reopened it. I've been parking on the street for over a month. Shouldn't my rent go down? What can I do?",
+   "answer": "Not on its own. The parking space is promised by your lease (clause 11), not by Florida's repair statute, and nothing in the lease lets the landlord close the garage. But the statute does not lower your rent by itself for a broken lease promise, and holding back or cutting rent would not be protected: the defense for unpaid rent covers only the duties in the repair statute, so you would risk an eviction case. What you can do: deliver a written notice by hand to the office or by certified mail (clause 7) naming the closed garage and saying you will end the lease if your space is not back within 7 days; your in-person question was not that notice. Whether losing the parking is 'material' is not settled. You may also claim damages for the parking you have lost, in court. Paying May rent while the garage was closed raises a question the law does not settle: whether that gave up ending the lease over it, or whether a closure that goes on is a continuing failure.",
+   "points": [
+    "The parking space is a lease promise (clause 11), not on 83.51's lists, and the lease has no clause letting the landlord close the garage.",
+    "The rent does not go down on its own, and holding back or cutting rent would not be protected: the 83.60(1)(b) defense reaches only an 83.51(1) duty, so it risks an eviction case.",
+    "The tenant's paths: a written 7-day notice to end the lease over a material lease provision, delivered by hand or certified mail (the in-person question is not that notice), with whether the closure is material not settled; and damages under 83.55 for the lost parking.",
+    "(Paying May rent while the garage was closed raises the 83.56(5)(a) question: a continuing failure, or a waiver; both readings.)"
+   ],
+   "mistakes": [
+    "Says the tenant may hold back rent or simply pay less as a protected step.",
+    "Says the rent goes down by law on its own.",
+    "Says 83.51 requires the landlord to provide parking.",
+    "Treats the in-person question as the written notice to end the lease.",
+    "Says flatly that the closed garage is, or is not, material."
+   ],
+   "law": [
+    {
+     "cite": "83.60(1)(b)",
+     "quote": "The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant if 7 days have elapsed after the delivery of written notice by the tenant to the landlord, specifying the noncompliance and indicating the intention of the tenant not to pay rent by reason thereof."
+    },
+    {
+     "cite": "83.56(1)",
+     "quote": "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement."
+    },
+    {
+     "cite": "83.55",
+     "quote": "If either the landlord or the tenant fails to comply with the requirements of the rental agreement or this part, the aggrieved party may recover the damages caused by the noncompliance."
+    },
+    {
+     "cite": "83.56(5)(a)",
+     "quote": "if the tenant pays rent with actual knowledge of a noncompliance by the landlord or accepts performance by the landlord of any other provision of the rental agreement that is at variance with its provisions, the landlord or tenant waives his or her right to terminate the rental agreement or to bring a civil action for that noncompliance, but not for any subsequent or continuing noncompliance."
+    }
+   ],
+   "dates": []
   }
  ]
 }

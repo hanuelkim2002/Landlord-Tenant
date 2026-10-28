@@ -301,3 +301,10 @@ Stories 3 and 7 rerun: story 7 right 3 of 3 under the widened key (the first rou
 three rules it had narrowed: an 83.51(2)(a) item may be changed in writing in any home, an 83.505 e-mail counts when
 sent (83.505(4)), and 83.60(2)'s motion to determine rent; some quotes put in plain words to stay under 3,200 words.
 `grade.py` applies a `review.json` change only when its quoted words are in the answer, never to a dry run. AUTHOR.md 17.
+
+## 2026-10-28: the repair skill's lease step, general
+
+`skills/repair_not_made.md`: anything the lease says comes with the home, or that the landlord keeps up, counts,
+named or not; two worked examples show the handling (a broken dishwasher, a pool closed under a clause). Replaces the
+example lists of amenities and the air-conditioning-only rule. Some quotes put in cited plain words (3,196 words).
+Two new repair stories, 8 and 9, use amenities the skill never names (furniture, covered parking). Not yet run.
