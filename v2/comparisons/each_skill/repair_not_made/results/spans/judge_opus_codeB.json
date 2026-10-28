@@ -1,0 +1,290 @@
+{
+ "repair-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says \"your lease, not the statute, promises the air conditioning,\" \"The rent-withholding defense doesn't reach it,\" withholding \"risks an eviction case,\" the portal request \"is not this notice,\" materiality \"not settled,\" and covers the part-on-order rule, damages and fees."
+ },
+ "repair-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says the withholding defense \"doesn't cover an AC that only the lease promises,\" the portal request \"wasn't that notice,\" materiality is \"an open question,\" and covers the part-on-order rule, damages and fees; \"don't pay July rent before you decide what to do\" reads as deciding first, not as withholding."
+ },
+ "repair-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says \"Your AC is a lease promise, not an 83.51(1) duty, so that defense likely doesn't reach it,\" withholding risks eviction, notice by hand or certified mail, the portal \"doesn't qualify,\" materiality \"not settled\"; \"so this promise counts\" refers to lease provisions generally, not a flat materiality claim."
+ },
+ "repair-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "Counts \"from March 9\" to March 16 and gives both waiver readings and the separate withholding notice, but on hot water it gives only plumbing versus \"\u00a783.51(2)(a)5\" and never says a code could bring hot water under 83.51(1) (it mentions no code at all), so the second reading misses \"unless a code or the lease covers it\"."
+ },
+ "repair-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens \"Maybe. Two points are unsettled\", counts \"from delivery on March 9, not from mailing on March 6\" to March 16, gives both hot-water readings including a code under 83.51(1)(a), both waiver readings, and the separate withholding notice."
+ },
+ "repair-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"The 7 days count from delivery, not from mailing. They ran out on March 16\", both hot-water readings with \"A local code could settle this\", both waiver readings, and withholding needs its own notice; the vague \"three of the four requirements\" line is harmless and the 23-day span is left to the script."
+ },
+ "repair-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "Makes the notice point (\"Your two phone calls don't count\") and the 83.60(2) rule \"within 5 days (not counting weekends or legal holidays) after you are served,\" but gives no code-complaint, retaliation, or damages path, so the optional other-paths point is not made; \"confirm it in the sidebar\" is not a question about college housing."
+ },
+ "repair-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"You shouldn't just stop paying\" because the defense needs written notice and 7 days and \"Phone calls don't count,\" gives the 5-day registry rule \"(not counting weekends and legal holidays) after you are served,\" and covers ending the lease, damages with fees, retaliation, and both readings of the April payment; \"you would have no defense to an eviction case\" is read as the repair defense and not counted."
+ },
+ "repair-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   false,
+   false
+  ],
+  "reason": "Makes the notice point (\"Your two phone calls don't count as that notice\") and the other paths, but on the eviction risk says only \"you must do it quickly\" with no 5-day window after service, so point 2 is not made though the registry requirement is stated."
+ },
+ "repair-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings with no lean ('On the first, you can demand the whole deposit now. On the second, you are still owed the deposit unless the landlord sends a proper claim in time'), right dates, and the April 2 notice met the rule."
+ },
+ "repair-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings with no lean ('Choosing between these readings is something a court would do. I can't tell you which one wins'), right dates, and 'the landlord is not excused from sending you a claim notice.'"
+ },
+ "repair-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings with the right dates ('ran out on 2026-05-15, so the whole $1,050 is owed now' vs 'run until 2026-08-30, so the landlord can still send a claim notice'); 'Either way, you have a strong basis to demand the money back in writing now' was judged advice, not a lean or a rule."
+ },
+ "repair-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Your rent doesn't drop automatically, and you shouldn't just pay less,\" says withholding risks eviction without the 83.60(1)(b) defense, that \"Your April 15 visit was spoken only, so it doesn't count,\" keeps materiality and the May payment open, and covers 83.55 with 83.48; suggesting a written request first is advice, not an error."
+ },
+ "repair-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"Whether a short closure for repaving is a breach is open,\" with a reading that \"a temporary closure for upkeep is normal and doesn't break it\"; the lease promises the space with no closure exception and can change only in a signed writing (clauses 10, 11), and nothing in the statute supports that reading.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point (\"Your rent doesn't go down automatically,\" the 83.60(1)(b) limit, written notice by hand or certified mail, the April 15 visit \"No,\" open materiality, 83.55 and 83.48, both May-rent readings), and the span is not judged, but it invents an open question about whether the closure is a breach at all."
+ },
+ "repair-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Your rent doesn't go down automatically,\" says the April 15 question \"isn't this notice,\" keeps \"material\" and the May payment unsettled, and covers 83.55 with 83.48; \"Rent is next due June 1 under lease \u00a74\" is read from the lease's first-of-the-month term, not a counted date, and the span is not judged."
+ }
+}

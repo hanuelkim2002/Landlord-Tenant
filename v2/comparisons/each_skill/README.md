@@ -7,6 +7,8 @@ skill run beside the new one as the baseline, graded blind by Claude Opus 5.5 su
 ## The files
 
 - `run.py`, `judge.py`, `grade.py`: one runner, packer, and scorer for every skill.
+- `spans.py`: finds the time spans in answers ("more than three weeks") and sorts each: the tenant's words, a count
+  code would give, or the model's own counting. It misses spans with no number ("for weeks"); read those by hand.
 - `<skill>/stories.json`: the stories and their keys, in the deposit stories' shape, plus `sections` (the statute
   sections the graders read) and, on a story, `lease` (a lease file in that folder; none means
   `comparisons/skills/lease.txt`) and `open: true` (a key that turns on an open call; not counted as settled).
@@ -102,3 +104,26 @@ Right of 27: keys2 19 (1 partly, 7 wrong), v1 12 (1 partly, 14 wrong). Every poi
   dropped those flags. Told also that any other error fails an answer, it moved four narrow wordings it called
   harmless here to its reason (story 4 once, story 5 three times) and one hedged line (story 6). Counted as errors:
   keys2 16, v1 10 (AUTHOR.md 18).
+
+### Time spans the model counts itself: five ways side by side (2026-10-28)
+
+The model says how long something has lasted from its own counting ("more than three weeks", "about a month" for 13
+days), against rule 7. Five versions on repair stories 1, 2, 3, 7, 9, 3 runs each, the keys2 skill in all; each
+built in its own worktree by a Sonnet agent, run live, then graded blind by five Opus graders, one story each, told
+to leave spans to `spans.py` (`repair_not_made/results/spans/`, `SPANS.txt`). About $5.96 for the 60 new answers.
+
+| Version | Change (branch) | Model-counted span | Any span | Right |
+|---|---|---|---|---|
+| keys2 | none (the rerun's answers, regraded) | 3 of 15 | 8 | 13 |
+| v1rule | v1's date rule as rule 7 (`spans-v1rule`) | 1 | 5 | 13 |
+| ruleA | rule 7 adds: no span unless in the tenant's words (`spans-ruleA`) | 1 | 2 | 12 |
+| codeB | today and a day count beside each date fact (`spans-codeB`) | 5 | 12 | 12 |
+| codeBA | both (`spans-codeBA`) | 3 | 4 | 14 |
+
+- Code's counts made it worse: the model writes about time more and misapplies the count ("more than 9 weeks" for a
+  leak that ended at move-out, 26 days in), or rounds it ("a month" for 23 days). Rule-only versions cut spans most.
+- ruleA's one slip is "for weeks" (13 days), v1rule's "about a month" (13 days). Right answers are within noise
+  (12 to 14); every version's wrong answers are about other things. ruleA had no made-up date; v1rule and codeB
+  one each, a next rent day read from the lease's "due on the 1st".
+- Nearly every model-counted span sits in the repair skill's materiality reading ("how long it lasted"), which
+  invites a number.

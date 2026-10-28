@@ -1,0 +1,290 @@
+{
+ "repair-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says \"A broken item that only the lease promises is outside that rule. Unless a local code covers AC, the withholding defense is not available,\" withholding invites eviction, the portal request \"doesn't count,\" materiality \"not settled,\" and covers the part-on-order rule, damages and fees."
+ },
+ "repair-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens \"No,\" says \"An item that only the lease promises is outside that defense. That includes AC, unless a local code also covers it,\" warns of eviction, says the portal request \"isn't this notice,\" materiality \"not settled,\" and covers the part-on-order rule, damages and fees."
+ },
+ "repair-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says \"AC is a lease promise, not a listed item, so that defense doesn't reach it,\" \"withholding rent risks an eviction case,\" the portal request \"doesn't count as the notice,\" materiality \"not settled,\" and covers the part-on-order rule, damages and fees; dates are the tenant's, and \"1 week and 5 days\" is a span left to the script."
+ },
+ "repair-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"the 7 days counted from that date [2026-03-09] ended on 2026-03-16\", both hot-water readings (\"I'm leaning neither way\") with the code route, both waiver readings, and the separate withholding notice; the \"3 weeks and 2 days\" span is left to the script."
+ },
+ "repair-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"The 7 days count from delivery ... 7 days after that is March 16\", reading two \"reaches hot water only if a code or your lease also covers it\", both waiver readings, and a separate withholding notice; the \"a month without hot water\" heading is a span left to the script."
+ },
+ "repair-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"Seven days after March 9 is March 16\" from delivery, both hot-water readings with the code route and the silent lease, both waiver readings, and \"Holding back rent needs a different letter\"; the 83.51(4) and 83.64 remarks are supported."
+ },
+ "repair-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Opens \"Not as things stand,\" says \"A phone call doesn't set up the legal right to hold back rent,\" gives the registry rule \"within 5 days (not counting weekends and holidays) after you are served,\" and covers ending the lease, damages, and a protected code complaint; the dates given are the tenant's own facts."
+ },
+ "repair-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Opens \"Not as things stand,\" says \"Your two phone calls were not written notice,\" gives the motion or registry rule \"within 5 days (not counting weekends and legal holidays) after you are served,\" and covers ending the lease with both readings of the April payment, damages, and a code complaint protected by 83.64."
+ },
+ "repair-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"You shouldn't just skip May rent\" because a written notice and 7 days are needed and \"Your two phone calls don't count,\" gives the registry rule \"within 5 days (not counting weekends and legal holidays) after you are served,\" and covers ending the lease, damages, and a protected code complaint."
+ },
+ "repair-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings with no lean ('The statute doesn't say which date applies, and I can't pick one for you'), right dates, and the April 2 notice met the 83.49(5) condition."
+ },
+ "repair-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings with no lean ('passed on 2026-05-15 ... must return the full $1,050' vs 'the deadline is 2026-08-30'), and 'So the landlord is not excused from sending a claim notice.'"
+ },
+ "repair-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Lists the forfeiture conditions including 'You didn't skip your own notice. This is met', and gives both readings with no lean ('May 15, which has passed' vs 'August 30, 2026, which has not passed')."
+ },
+ "repair-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Your rent doesn't go down automatically, and the statute doesn't let you cut it on your own,\" ties withholding to 83.60(1)(b) and 83.51(1), says the April 15 question \"doesn't count,\" keeps materiality and the May payment open with both readings, and raises 83.56(1)(b) with both conditions; \"you would have no 83.60 defense\" read as about the withholding defense, and the span is not judged."
+ },
+ "repair-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"Your landlord has told you nothing in writing, so nothing has started the 7-day clock yet\"; under 83.56(1) the 7 days run from delivery of the tenant's written notice, not from anything the landlord writes.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "All points made (\"Your rent doesn't go down automatically,\" the 83.60(1)(b) limit, \"Your April 15 question at the office was spoken, so it doesn't count,\" open materiality, 83.55 and 83.48, both May-rent readings), and the span \"about 5 weeks and 5 days\" is not judged, but the summary misstates what starts the 7-day clock."
+ },
+ "repair-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Your rent doesn't go down on its own, and you shouldn't just pay less,\" ties withholding to 83.51(1), says \"Asking the office in person on April 15 was not a written notice,\" keeps materiality and the May payment open, and covers 83.55 with 83.48; the span is not judged."
+ }
+}

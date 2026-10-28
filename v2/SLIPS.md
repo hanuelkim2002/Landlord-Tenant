@@ -34,6 +34,9 @@ against rule 7).
   After the round of fixes (shared skill only changed): 2 of 3 again.
 - 2026-10-28, repair rerun on the new keys (Sonnet 5.5): story 2's outage, 23 days, called "more than three weeks"
   or "about three and a half weeks", keys2 3 of 3; story 3, 0 of 3. Spans that repeat the tenant's words not counted.
+- 2026-10-28, five ways side by side (repair stories 1, 2, 3, 7, 9; `comparisons/each_skill/README.md`): answers with
+  a span the model counted, of 15: current 3, v1's rule 1, rule 7 naming spans 1, code's day counts 5, both 3. With
+  code's counts it also misapplied one ("more than 9 weeks" for a leak that ended 26 days in).
 
 ## Asks again for what the tenant said or the lease holds
 

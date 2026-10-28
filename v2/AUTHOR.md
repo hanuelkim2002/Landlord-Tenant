@@ -129,3 +129,7 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     tenant; "doesn't spell out any other remedy", hedged at once (story 6, keys2). Not counted: keys2 19 of 27 right,
     v1 12. Counted: 16 and 10. Your call. Also: should 83.57 join the graders' sections? Every story-6 answer cites it.
     (`comparisons/each_skill/README.md`, the rerun.)
+19. **Which way to stop the model counting time spans.** Side by side on five repair stories, 15 answers each: rule 7
+    naming spans (say one only in the tenant's words) cut model-counted spans from 3 to 1, with the fewest spans of
+    any kind (2 answers) and no made-up date; v1's longer date rule also 1; code's day counts made it worse (5, and 3
+    with the rule). Right answers 12 to 14 in all. My pick: the rule. (`comparisons/each_skill/README.md`)

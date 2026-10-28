@@ -1,0 +1,290 @@
+{
+ "repair-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Explains the withholding defense does not reach the lease-only AC promise, but the short answer then directs \"Don't pay rent in the meantime,\" telling the tenant to hold back rent with no risk attached and contrary to its own warning."
+ },
+ "repair-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says \"the law's rent-withholding defense doesn't cover a promise that comes only from the lease,\" \"You would risk losing the apartment,\" the portal request didn't say you'd end the lease, materiality \"not settled,\" and covers the part-on-order rule, damages and fees."
+ },
+ "repair-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says AC is \"a lease promise, not an 83.51(1) item, unless a local code covers it,\" you \"could be evicted for nonpayment,\" the portal request \"doesn't count,\" materiality \"not settled,\" with the part-on-order rule and damages; the \"5 days\" registry deadline was not judged as a span."
+ },
+ "repair-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"Your letter was delivered on 2026-03-09, and the 7 days ended on 2026-03-16\" from delivery, both hot-water readings with \"\u00a783.51(1)(a) applies directly\" if a code requires hot water, both waiver readings, and the separate withholding notice."
+ },
+ "repair-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"The program counted 7 days from that date [2026-03-09] and got 2026-03-16\", both hot-water readings with the local-code question, both waiver readings, and a separate withholding notice; \"April 1 rent\" comes from the lease's first-of-month due date, not date math."
+ },
+ "repair-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"The office signed on 2026-03-09, and the 7 days ended 2026-03-16\", both hot-water readings with the code question, both waiver readings, and a separate 83.60(1)(b) notice; \"Do not pay April rent ... without first deciding\" follows the waiver reading and does not say to stop paying."
+ },
+ "repair-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"You shouldn't simply stop paying\" since \"phone calls don't count,\" gives the registry rule \"within 5 days (not counting weekends and legal holidays) after you are served,\" and covers the other paths; the guess that the calls \"didn't say you would withhold rent\" is not contradicted by the facts and is not counted."
+ },
+ "repair-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"You shouldn't stop paying yet\" since \"phone calls don't count,\" gives the registry or motion rule \"within 5 days (not counting weekends and legal holidays) after you are served,\" and covers damages, ending the lease, the code office, retaliation, and materiality as open."
+ },
+ "repair-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"You shouldn't skip May rent yet, because a phone call doesn't give you the right to hold back rent,\" gives the registry rule \"within 5 days (not counting weekends and legal holidays) after you are served,\" and covers ending the lease, damages, a code complaint, and both readings of the April payment."
+ },
+ "repair-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings with no lean and right dates ('the 30 days ended May 15, 2026' vs 'end August 30, 2026'), and 'If you had missed this step, the landlord would be excused from sending a claim notice' after finding the notice timely."
+ },
+ "repair-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says 'Which date counts depends on one fact: the day you returned your keys', a rule with no support in the statute or lease; which reading of termination applies is a legal question the answer itself calls unsettled, not one a key-return date decides.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The two readings, dates and the 7-day notice are right, but it then says 'Which date counts depends on one fact: the day you returned your keys', which the statute does not support."
+ },
+ "repair-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives both readings with no lean and the right dates: 'If it means your move-out date, the 30 days have passed and your landlord can't keep any of the deposit. If it means the lease's end date, your landlord still has time to send a claim notice', and the April 2 notice was timely so the landlord was not excused."
+ },
+ "repair-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"You can't just cut your rent on your own\" answers the rent question; it covers lease clause 11, the 83.60(1)(b) limit, the written hand or certified-mail notice (\"it was spoken, so it doesn't count\"), open materiality, 83.55 damages with 83.48, and both May-rent readings, and its reading that 83.56(1)(b) might apply keeps the statute's conditions, so it is not mistake 2."
+ },
+ "repair-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Your rent does not drop automatically, and Florida's law doesn't let you hold back rent,\" says the April 15 visit \"is not the notice,\" gives hand or certified-mail delivery, keeps materiality and the May payment open with both readings, and covers 83.55 damages, 83.48, and 83.56(1)(b) with its conditions."
+ },
+ "repair-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Your rent does not drop automatically,\" says parking is on neither 83.51(1) nor 83.51(2), that \"Asking the office in person on April 15 was not the notice,\" keeps materiality and the May payment unsettled, and covers 83.55 with 83.48; \"April 10, 2026\" comes from the facts."
+ }
+}

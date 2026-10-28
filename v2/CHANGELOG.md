@@ -327,3 +327,10 @@ answers, grades, scores, and `review.json` moved to `results/round1/`. Replaces 
 `checks.py`: a new `plain()` drops the space before a section number's "(" on both sides, since the stored statutes
 write "s. 83.51 (1)" and replies "s. 83.51(1)"; ". . ." now marks a cut like "...". Seven right quotes in the repair
 rerun had shown "Does not check out". Two tests added. Replaces the check's exact-spacing match.
+
+## 2026-10-28: five ways to stop the model counting time spans, side by side
+
+`comparisons/each_skill/spans.py` counts the spans in answers and sorts them. Five versions on five repair stories:
+v1's date rule and rule 7 naming spans each cut model-counted spans from 3 of 15 to 1; code's day counts raised it to
+5 (3 with the rule). Right answers 12 to 14 in all. Results in `repair_not_made/results/spans/`. Nothing in the app
+changed yet; AUTHOR.md 19 asks which way to take.
