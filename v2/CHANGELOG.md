@@ -272,3 +272,10 @@ their own copy. AUTHOR.md records the method approved for the other skills; READ
 the repair is (the statute's lists, the lease, who caused it), then five options (end the lease, hold back rent,
 damages, retaliation, a landlord unable to fix it), each open point inside its condition. 42 quotes check out. What
 it says beyond v1 waits for the author (AUTHOR.md item 16). Replaces nothing; v1's skill stays as the baseline.
+
+## 2026-10-28: one test runner for every skill
+
+`comparisons/each_skill/`: `run.py` runs any skill's stories through the app's chat on Sonnet (new, v1, or a frozen
+version), `judge.py` packs the answers blind for Opus graders and unpacks their grades, `grade.py` writes the scores.
+The repair skill's seven stories sit in `repair_not_made/`. Tried with a fake model end to end. Replaces nothing; the
+deposit test keeps its own runner.
