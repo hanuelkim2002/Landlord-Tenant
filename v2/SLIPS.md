@@ -32,6 +32,8 @@ against rule 7).
   before called "about a month" or "over a month" (new skill 2 of 3, v1 2 of 3), and once (new) "the 7 days would
   probably not be over by May 1" for a notice delivered April 10.
   After the round of fixes (shared skill only changed): 2 of 3 again.
+- 2026-10-28, repair rerun on the new keys (Sonnet 5.5): story 2's outage, 23 days, called "more than three weeks"
+  or "about three and a half weeks", keys2 3 of 3; story 3, 0 of 3. Spans that repeat the tenant's words not counted.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -58,6 +60,8 @@ The skill marks a point as not settled, with a reading on each side; the answer 
   passed" after an objection), story 9 once.
 - 2026-10-28, repair skill test (Sonnet 5.5), story 2: "You probably can move out" on the hot-water question,
   v1 3 of 3, new 0 of 3.
+- 2026-10-28, repair rerun, story 7: both readings of when the lease ended, then one outcome for both ("Under either
+  reading, the 15-day return date ... has passed"), keys2 2 of 3; v1's first-round answers, regraded, 2 of 3.
 
 ## Says the balance is due on day 30 after an objection
 
@@ -97,6 +101,11 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
 - 2026-10-28, repair skill test (Sonnet 5.5): v1 8 of 21 answers (a lease cannot change the hot-water duty; 83.64
   bars any retaliatory end; no way to sue over a rent increase; the 83.60 defense only in an eviction), new 1 of 21
   (story 7: the repair question "does not change the notice rules").
+- 2026-10-28, repair rerun: keys2 2 of 27 (83.51(4) read as making the landlord answer for whatever the tenant did
+  not cause, story 8; "no defense based on the garage", though 83.60(1)(a) allows other defenses, story 9). v1's new
+  answers 5 of 15, stories 8 and 9 (the 83.56(1)(b) rent cut for the landlord's own repaving, twice; ending the
+  lease "the only remedy" rent paid could affect; notice before May 1 "avoids" that question; the garage "a
+  structural component", against the lease).
 
 ## Does not load the skill
 
@@ -106,6 +115,7 @@ never read.
 - 2026-10-21, model test, deposit stories (skill not loaded for it, as on the page): nemotron 4 of 15 (sample lease)
   and 0 of 15 (own lease); haiku, gemini, sonnet 30 of 30.
 - 2026-10-28, repair skill test (Sonnet 5.5): new 1 of 21 (story 6, read 83.64 itself), v1 0 of 21.
+- 2026-10-28, repair rerun: keys2 0 of 27, v1 0 of 15.
 
 ## Empty answer
 
@@ -148,6 +158,11 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
 
 - 2026-10-26, deposit skill test (`comparisons/deposit/`, Sonnet 5.5, stories 16 and 18): 3 of 6 answers. A period
   added inside the quote 3 times; "forfeited the right" for the statute's "forfeits the right" once.
+- 2026-10-28, repair rerun (quotes not found word for word anywhere): keys2 4 of 193 ("will not pay rent by reason"
+  for "not to pay rent by reason"; "provision" for "provisions"; "beyond the landlord's control"; "is the landlord
+  covered", nobody's words); v1's new answers 4 times the sign's words from the facts, "closed until further notice".
+  Not slips: 5 more are right but flagged, since the stored text writes "s. 83.51 (1)" with a space (TODO.md), and
+  2 (v1) mark a cut with ". . .", which the check does not read as one.
 
 ## Writes a short answer longer than asked
 
@@ -188,3 +203,5 @@ tells the tenant the noted fact waits for them to confirm.
   titled "Does Florida's landlord-tenant law cover your home?"; once it names the fact as "school_housing = no".
 - 2026-10-28, after the shared skill asked for one line inside another point: 2 of 3 still give it a box. The reply
   rules' example heading, "Does Florida's deposit law cover you?", may invite it.
+- 2026-10-28, repair rerun (keys2), story 3: 3 of 3, each a box titled "Does Florida's landlord-tenant law cover your
+  home?". The key now allows one line at most, as optional detail, so the graders did not count it.

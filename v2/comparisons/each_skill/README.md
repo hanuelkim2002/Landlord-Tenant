@@ -13,6 +13,8 @@ skill run beside the new one as the baseline, graded blind by Claude Opus 5.5 su
 - `<skill>/versions/<name>.md`: a frozen copy of the skill, when a run needs one (after a round of fixes).
 - `<skill>/results/`: the answers (`<version>.jsonl`) and the graders' grades (`judge_opus_<version>.json`).
 - `<skill>/SCORES.md`, `<skill>/scores.json`: written by `grade.py`.
+- `<skill>/results/round1/`: an earlier round's answers, grades, scores, and `review.json`, set aside when the keys
+  changed, since `grade.py` scores every answer file in `results/`.
 
 ## Running a test
 
@@ -52,7 +54,7 @@ its reason, go in `<skill>/review.json`. `SCORES.md` keeps the graders' own read
 ### repair_not_made (2026-10-28)
 
 Seven stories, 3 runs each, the new skill against v1's, on Sonnet 5.5; three Opus graders, blind
-(`repair_not_made/SCORES.md`). About $4.10; no errors, no empty answers, no made-up dates.
+(`repair_not_made/results/round1/SCORES.md`). About $4.10; no errors, no empty answers, no made-up dates.
 
 Right of 21: new 15 (2 partly, 4 wrong), v1 5 (5 partly, 11 wrong). Every point required: new 14, v1 1.
 
@@ -80,3 +82,23 @@ repair skill unchanged, the shared skill fixed), one Opus grader, blind; $0.80.
   the first round's did, so `review.json` counts it, for one standard. One answer kept the college check to a line;
   two still gave it a box of their own, as the reply rules' example heading ("Does Florida's deposit law cover you?")
   invites. None asked the college question.
+
+### repair_not_made, rerun on the new keys (2026-10-28)
+
+Nine stories under the keys with the author's 25 answers. `keys2` (the skill as of the attorney-fees line, frozen in
+`versions/`) ran all nine; v1 ran fresh on stories 1, 4, 5, 8, 9 (new facts, or never run), and its first-round
+answers to 2, 3, 6, 7 were regraded. Three Opus graders, blind, three stories each (`repair_not_made/SCORES.md`).
+About $4.05; no errors, no empty answers, no made-up dates; both skills loaded in every answer.
+
+Right of 27: keys2 19 (1 partly, 7 wrong), v1 12 (1 partly, 14 wrong). Every point required: keys2 11, v1 4.
+
+- Stories 8 and 9, amenities the skill never names (a bed frame, covered parking): keys2 right 2 of 3 in each, v1 0
+  of 6. v1 twice gives the 83.56(1)(b) rent cut for the landlord's own repaving, and states rules the statute lacks.
+- Story 2, 0 of 3 in both: every keys2 answer makes every point, then counts the outage itself ("more than three
+  weeks"), a mistake in the new key. Story 3: keys2 2 right, 1 partly; the "about a month" slip is gone.
+- Story 7, keys2 1 of 3: two answers give both readings of when the lease ended, then say the deposit comes out the
+  same under both. v1's first-round answers do it too (2 of 3).
+- The packets left out 83.57; all six story-6 answers cite 83.57(3) right, from the stored text. Told so, the grader
+  dropped those flags. Told also that any other error fails an answer, it moved four narrow wordings it called
+  harmless here to its reason (story 4 once, story 5 three times) and one hedged line (story 6). Counted as errors:
+  keys2 16, v1 10 (AUTHOR.md 18).

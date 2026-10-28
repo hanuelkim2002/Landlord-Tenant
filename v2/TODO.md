@@ -7,6 +7,9 @@ mistakes are in SLIPS.md.
 
 ## Later
 
+- The quote check (`checks.py`) flags right quotes: the stored statutes write "s. 83.51 (1)" with a space, the model
+  "s. 83.51(1)"; and ". . ." is not read as a cut. 7 right quotes flagged in the repair rerun (SLIPS.md).
+
 - The other skills, two at a time after the pilot: leaving early and the 7-day notice; lease ending and rent going
   up; entry and the neighbor; unpaid rent last (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
 - Once the deposit fixes are merged, `deposit_not_returned` loads `who_the_law_covers` instead of its own copy.

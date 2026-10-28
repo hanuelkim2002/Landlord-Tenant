@@ -123,3 +123,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     - An e-mail notice under 83.505 counts from when it was sent, not received (83.505(4)). New against v1.
     - Once sued, paying the rent into the registry "or" filing "a motion to determine the amount of rent" within the 5
       days keeps the defenses (83.60(2)); the skill had named only paying. New against v1.
+18. **Judging the repair rerun: narrow but harmless wordings.** Told that any other error fails an answer, one grader
+    moved five lines to its reasons: the 83.60 defense "only if" sued for eviction (story 4, v1); ending the lease
+    only for an 83.51(1) duty (story 5, keys2 twice, v1 once), harmless since the lease puts guest damage on the
+    tenant; "doesn't spell out any other remedy", hedged at once (story 6, keys2). Not counted: keys2 19 of 27 right,
+    v1 12. Counted: 16 and 10. Your call. Also: should 83.57 join the graders' sections? Every story-6 answer cites it.
+    (`comparisons/each_skill/README.md`, the rerun.)

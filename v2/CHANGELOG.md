@@ -315,3 +315,9 @@ Two new repair stories, 8 and 9, use amenities the skill never names (furniture,
 at its end, are now in `stories.json`: softer wording on other rent defenses, either 7-day count in story 2, a careless
 guest and a pool repair in the facts, three new dates, notes telling graders what not to count, and six sections more.
 `skills/repair_not_made.md` option 3 adds attorney fees (83.48); 3,199 words. Replaces the keys as first written.
+
+## 2026-10-28: the repair test, rerun on the new keys
+
+`keys2` (the repair skill with the attorney-fees line, frozen) ran all nine stories; v1 ran stories 1, 4, 5, 8, 9 and
+its first-round answers to 2, 3, 6, 7 were regraded. Right of 27: keys2 19, v1 12; about $4.05. The first round's
+answers, grades, scores, and `review.json` moved to `results/round1/`. Replaces SCORES.md's first-round scores.
