@@ -40,6 +40,8 @@ answer). The three plain graders drew two lines differently, so I put every coun
 can only mean the dispute or the answer as a whole ("What if this goes to court?"), are not counted; a chain of "it"
 with its thing two sentences back is. Those two exemptions are mine, not the approved wording, and my review was not
 blind: the layout shows which rules wrote an answer. They dropped 20 of 99 old flags and 18 of 39 new ones, and they
-decide whether the unclear-words target is met (AUTHOR.md item 15). The grader for stories 7 to 12 did not count
-such chains at all, under either rules, so its counts are low on both sides. I added no legal words: the ones graders disagreed on ("addendum", "remit") appear only in old answers.
+decide whether the unclear-words target is met. The author accepted both, and kept the short answer's length, on
+2026-10-27 (AUTHOR.md item 15). The grader for stories 7 to 12 did not count such chains at all, under either
+rules, so its counts are low on both sides. I added no legal words: the ones graders disagreed on ("addendum",
+"remit") appear only in old answers.
 The runs cost $10.25 on the Anthropic key ($4.95 old, $5.30 new); the graders ran on the Claude plan.

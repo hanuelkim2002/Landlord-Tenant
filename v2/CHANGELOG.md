@@ -231,3 +231,9 @@ $10.25), graded by Opus subagents. New against old: short part 127 words against
 against 135, right 41 against 40 of 48. Unclear words 21 against 79 after my review, 39 against 99 on the graders'
 counts (the same per 100 words). Missed: the 100-word short part; on the graders' counts, the unclear-words median.
 Reply time 24.1 against 19.9 seconds. AUTHOR.md item 15; four new slips in SLIPS.md. Replaces nothing in the app.
+
+## 2026-10-27: the plain replies test's two calls decided
+
+AUTHOR.md item 15: the short answer stays as it is (median 7 sentences, 127 words), and both exemptions in the review
+of the plain counts are accepted, so the reviewed counts (21 unclear words against 79) stand. Replaces the open item.
+No code changed.

@@ -46,6 +46,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   The skill adds that the court hears these cases sooner (83.49(3)(c)).
 - 2026-10-27: replies lead with a short plain answer (3 to 5 sentences, no section numbers or quotes), each point
   behind a click; the rules' cap is about 700 words (`docs/superpowers/specs/2026-10-27-plain-replies-design.md`).
+- 2026-10-27: after the plain replies test (`comparisons/plain/`), the short answer stays as it is, though it runs
+  past the rule's 3 to 5 sentences (median 7, 127 words). Both exemptions in my review of the plain counts are
+  accepted: an "it" echoing the tenant's question in the first sentence, and a "this" or "it" that can only mean
+  the dispute or the answer ("What if this goes to court?"), box titles included. The reviewed counts stand.
 
 ## Open
 
@@ -87,9 +91,5 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     decides the grade; `comparisons/deposit/README.md`, fourth run.
 14. **A tenant who stayed on month to month after the lease ran out.** 83.49(6) does not say whether that is a
     renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?
-15. **Plain replies test: two calls** (`comparisons/plain/README.md`). First, the short answer missed its target:
-    median 127 words and 7 sentences, where the rule asks for 3 to 5 sentences. Keep it, reword the rule, or change
-    the target? Second, my review dropped two kinds of flagged words that the approved wording would count: an "it"
-    echoing your question in the first sentence, and a "this" that can only mean the dispute ("What if this goes to
-    court?"). With them, the unclear-words target is met; on the graders' own counts it is missed (median 0.5), and
-    per 100 words the old and new rules come out the same. Accept or reject the two exemptions?
+15. **Decided 2026-10-27:** the plain replies test's two calls: the short answer stays as it is, and both exemptions
+    in my review of the plain counts are accepted (see Decided; `comparisons/plain/README.md`).
