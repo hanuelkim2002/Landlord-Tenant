@@ -81,9 +81,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
    from the page images; the grades on your lease follow them.
 10. **Decided 2026-10-25:** the timeline's old open lines: rule 9 and `save_line` say what open means, and
     `save_line`'s reply lists the open lines (see Decided; `comparisons/memory/SCORES.md`).
-11. **The 1,000-line limit.** On 2026-10-27 app code is 870 lines without `tests.py` and 1,098 with it (831 and
-    1,030 before plain replies; 722 and 811 before the memory). Your call whether `tests.py` counts toward the limit
-    in CLAUDE.md.
+11. **The 1,000-line limit.** On 2026-10-27 app code is 883 lines without `tests.py` and 1,152 with it (870 and
+    1,098 before reading 16 pages at once; 831 and 1,030 before plain replies; 722 and 811 before the memory). Your
+    call whether `tests.py` counts toward the limit in CLAUDE.md.
 12. **Decided 2026-10-26:** the deposit skill's new law points (see Decided). Still yours to check: story 12's key
     reads 83.491(6) as putting a fee outside 83.49.
 13. **Judging story 17: is a backup "two readings"?** Answers say "yes, all $1,050" and then "even if the letter

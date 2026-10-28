@@ -237,3 +237,17 @@ Reply time 24.1 against 19.9 seconds. AUTHOR.md item 15; four new slips in SLIPS
 AUTHOR.md item 15: the short answer stays as it is (median 7 sentences, 127 words), and both exemptions in the review
 of the plain counts are accepted, so the reviewed counts (21 unclear words against 79) stand. Replaces the open item.
 No code changed.
+
+## 2026-10-27: the intake speed test, run and scored
+
+`comparisons/intake/`: the lease read one page at a time, 4, 8, and 16 at once, and 8 at once with smaller pictures,
+3 runs on three sample leases, with v1's text step as a baseline (its Gemma step failed: UF's key expired). The
+46-page lease: 132 seconds one at a time, 10 at 16 at once; every word and all 35 boxes right either way. Smaller
+pictures cost less but did not save time. Replaces nothing in the app.
+
+## 2026-10-27: the lease is read 16 pages at once
+
+`lease.py`: `read_lease` reads the pages 16 at a time (`PAGES_AT_ONCE`, from the intake speed test), each through
+the new `read_page`, which opens the PDF itself; the pages are kept in order. Replaces one page at a time. Live on
+the 46-page sample lease: 11 seconds, every word and all 35 boxes right. `tests.py`: a stand-in reader checks order
+and 16 at once.
