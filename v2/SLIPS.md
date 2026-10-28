@@ -37,6 +37,8 @@ against rule 7).
 - 2026-10-28, five ways side by side (repair stories 1, 2, 3, 7, 9; `comparisons/each_skill/README.md`): answers with
   a span the model counted, of 15: current 3, v1's rule 1, rule 7 naming spans 1, code's day counts 5, both 3. With
   code's counts it also misapplied one ("more than 9 weeks" for a leak that ended 26 days in).
+- 2026-10-28, the repair skill under rule 7 naming spans (all nine stories, graded beside keys2): 1 of 27, "no
+  repair for several days after your notice" (story 7), a span with no number. keys2, same graders: 4 of 27.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -109,6 +111,9 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
   answers 5 of 15, stories 8 and 9 (the 83.56(1)(b) rent cut for the landlord's own repaving, twice; ending the
   lease "the only remedy" rent paid could affect; notice before May 1 "avoids" that question; the garage "a
   structural component", against the lease).
+- 2026-10-28, the repair skill under the new rule 7: 1 of 27 (story 2: stopping rent after moving out "isn't safe
+  yet, because your letter only said you would end the lease", as if ending the lease needed the notice for holding
+  back rent).
 
 ## Does not load the skill
 
@@ -119,6 +124,8 @@ never read.
   and 0 of 15 (own lease); haiku, gemini, sonnet 30 of 30.
 - 2026-10-28, repair skill test (Sonnet 5.5): new 1 of 21 (story 6, read 83.64 itself), v1 0 of 21.
 - 2026-10-28, repair rerun: keys2 0 of 27, v1 0 of 15.
+- 2026-10-28, the repair skill under the new rule 7: 2 of 27, both story 6 (retaliation), which read 83.64 itself and
+  was right both times.
 
 ## Empty answer
 
@@ -166,6 +173,8 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
   covered", nobody's words); v1's new answers 4 times the sign's words from the facts, "closed until further notice".
   Not slips: 7 more were right but flagged, since the stored text writes "s. 83.51 (1)" with a space (5) and the
   check did not read ". . ." as a cut (2, v1). The check reads both since 2026-10-28.
+- 2026-10-28, the repair skill under the new rule 7: 3 of 183 ("beyond the landlord's control" twice, for "beyond
+  the control of the landlord"; "after delivery" for "after the delivery").
 
 ## Writes a short answer longer than asked
 

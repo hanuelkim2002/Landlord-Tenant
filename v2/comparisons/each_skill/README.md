@@ -17,6 +17,8 @@ skill run beside the new one as the baseline, graded blind by Claude Opus 5.5 su
 - `<skill>/SCORES.md`, `<skill>/scores.json`: written by `grade.py`.
 - `<skill>/results/round1/`: an earlier round's answers, grades, scores, and `review.json`, set aside when the keys
   changed, since `grade.py` scores every answer file in `results/`.
+- `<skill>/results/spans/`, `<skill>/results/rule7/`: side tests, each with its own answers, grades, and scores. Run
+  in `results/dry/` (the folder `--dry` reads), then renamed, so the main scores stay as they were.
 
 ## Running a test
 
@@ -127,3 +129,25 @@ to leave spans to `spans.py` (`repair_not_made/results/spans/`, `SPANS.txt`). Ab
   one each, a next rent day read from the lease's "due on the 1st".
 - Nearly every model-counted span sits in the repair skill's materiality reading ("how long it lasted"), which
   invites a number.
+
+### repair_not_made under the new rule 7 (2026-10-28)
+
+Rule 7 now keeps time spans to the tenant's own words. The repair skill, unchanged (`versions/rule7.md`, the same as
+keys2), ran all nine stories under it as `rule7`. Its answers were shuffled blind among keys2's from the rerun, and
+three Opus graders graded both, three stories each (`repair_not_made/results/rule7/`). Told up front what the rerun's
+second grader was told late: read a cited section before calling it unsupported, and keep notes out of other_error.
+About $2.50; no errors, no empty answers, no made-up dates. v1 was not rerun.
+
+Right of 27, same graders: rule7 24 (3 wrong), keys2 20 (1 partly, 6 wrong; the rerun's graders gave 19).
+
+- Spans the model counted (`spans.py`): keys2 3, all story 2; rule7 0. Story 2 now says "No hot water since
+  February 25". The graders found one more each with no number or a changed one: rule7 "no repair for several days
+  after your notice" (story 7); keys2 "about a month" for the tenant's "over a month" (story 9).
+- Story 2: rule7 right 2 of 3, keys2 0 of 3. The third rule7 answer says stopping rent after moving out "isn't safe
+  yet, because your letter only said you would end the lease": the notice for holding back rent made a condition of
+  ending the lease.
+- Story 3: one rule7 answer counted wrong for "I've saved 'no school housing' as a pending fact for you to confirm",
+  read as asking the college question. Round 1's review read that line as the page's usual confirming. A judge's
+  call; read that way, rule7 is 25.
+- The skill was not loaded in 2 of 3 story-6 answers (retaliation); the model read 83.64 itself and was right both
+  times. keys2 loaded it in all 27.

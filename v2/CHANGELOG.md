@@ -340,3 +340,10 @@ changed yet; AUTHOR.md 19 asks which way to take.
 `chat.py` rule 7 adds: how long something has lasted or how long until a date, and whether one date will have passed
 by another, are said only in the tenant's own words, or not at all. In the side-by-side test it cut model-counted
 spans from 3 of 15 answers to 1. Replaces the rule's dates-only wording. One test added.
+
+## 2026-10-28: the repair skill tested under the new rule 7
+
+The repair skill ran all nine stories under rule 7's new wording, graded blind beside keys2's rerun answers by the
+same graders: right 24 of 27, against 20; spans the model counted itself fell from 3 to 0 by `spans.py` (the graders found
+1 against 4). Results in `comparisons/each_skill/repair_not_made/results/rule7/`; about $2.50. Nothing in the app
+changed.
