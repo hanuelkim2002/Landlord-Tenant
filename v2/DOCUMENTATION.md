@@ -29,7 +29,8 @@ The statutes in `statutes/`, the skills in `skills/`, and the skill quote checke
 - `squash(text)`: spacing, line breaks, quote marks, and hyphens made uniform, so only words are compared.
 - `section_text(section)`: one section's full text. `section_titles()`: each section's title, from `index.json`.
 - `search_statute(phrase)`: the sections holding a phrase, with the words around it.
-- `parts_of(text)`: a section cut into subsections and paragraphs, `(3)` and `(3)(a)`, in order.
+- `parts_of(text)`: a section cut into subsections and paragraphs, `(3)` and `(3)(a)`, in order, also when the
+  statute writes them run together, `(2)(a)`; a cross-reference like "paragraph (3)(a)" starts no part.
 - `cited_text(cite)`: the words a cite like `83.49(3)(a)` points to, without the history note.
 - `read_skill(path)`, `skills()`: a skill's name, description, and body; every skill by name.
 - `check_quotes(text)`: each quote followed by a cite, and whether it is word for word in that part.

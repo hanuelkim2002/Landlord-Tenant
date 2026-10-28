@@ -79,6 +79,17 @@ wrong_part = law.check_quotes('"must give at least 7 days’ written notice by c
 check("a real quote cited to the wrong paragraph is caught", wrong_part and not wrong_part[0][2])
 check("a cite finds its paragraph", law.cited_text("83.49(3)(b)").startswith("(b) Unless the tenant objects"))
 check("the history note is not part of the cited words", "History" not in law.cited_text("83.505(6)"))
+# The statute often writes a subsection and its first paragraph run together, "(2)(a) Unless", with no space.
+check("a run-together part is found: 83.51(2)(a)",
+      (law.cited_text("83.51(2)(a)") or "").startswith("(a) Unless otherwise agreed in writing"))
+check("the parts after it are found: 83.51(4)",
+      (law.cited_text("83.51(4)") or "").startswith("(4) The landlord is not responsible"))
+check("83.51(1)(b) stops where (2) starts", "Unless otherwise agreed" not in law.cited_text("83.51(1)(b)"))
+check("83.60(1)(b) and 83.56(5)(a) are found",
+      (law.cited_text("83.60(1)(b)") or "").startswith("(b) The defense of a material noncompliance")
+      and (law.cited_text("83.56(5)(a)") or "").startswith("(a) If the landlord accepts rent"))
+check("a cross-reference like 'paragraph (3)(a)' starts no part",
+      "(5)(a)" not in law.parts_of(law.section_text("83.49")))
 
 # ---- count_days (tools.py), with facts made up for the test
 

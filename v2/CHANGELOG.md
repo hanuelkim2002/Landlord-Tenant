@@ -251,3 +251,10 @@ pictures cost less but did not save time. Replaces nothing in the app.
 the new `read_page`, which opens the PDF itself; the pages are kept in order. Replaces one page at a time. Live on
 the 46-page sample lease: 11 seconds, every word and all 35 boxes right. `tests.py`: a stand-in reader checks order
 and 16 at once.
+
+## 2026-10-28: the quote checker finds run-together parts
+
+`law.py`: `parts_of` reads a subsection written run together with its first paragraph, "(2)(a)", so cites like
+83.51(2)(a), 83.51(4), and 83.60(1)(b) are found (they were not, and 83.51(1)(b) ran to the end of the section). The
+page's quote check gains the same. `comparisons/skills/check_key.py` uses `law`'s splitter and takes a key file by its
+path. Replaces the space-only marker and the key checker's own copy of the splitter.

@@ -7,7 +7,7 @@ import re
 from config import SKILLS, STATUTES
 
 CITE = re.compile(r"^(\d+\.\d+)((?:\(\w+\))*)$")            # "83.49(3)(a)" -> "83.49" and "(3)(a)"
-MARKER = re.compile(r"\s\((\d+|[a-z])\)\s")                  # where a subsection " (3) " or a paragraph " (a) " starts
+MARKER = re.compile(r"\s\((\d+|[a-z])\)(?:\(([a-z])\))?\s")  # where " (3) ", " (a) ", or run together " (2)(a) " starts
 QUOTED = re.compile(r'"([^"]{8,})"\s*\((\d+\.\d+(?:\(\w+\))*)\)')   # a quote and its cite: "words" (83.49(3)(a))
 
 
@@ -47,10 +47,13 @@ def parts_of(text):
     order (1, 2, 3) and letters in order inside each, so a cross-reference like "s. 83.49 (3)" is not a new part."""
     starts, number, letter = [], 0, ""
     for m in MARKER.finditer(text):
-        label = m.group(1)
+        label, joined = m.group(1), m.group(2)                # joined: a paragraph written right after it, "(2)(a)"
         if label.isdigit() and int(label) == number + 1:
             number, letter = number + 1, ""
             starts.append((m.start(), f"({number})"))
+            if joined == "a":                                 # its own first paragraph; "paragraph (3)(a)" never gets here
+                letter = joined
+                starts.append((m.start(2) - 1, f"({number})({letter})"))
         elif label.isalpha() and number and ord(label) == ord(letter or "`") + 1:
             letter = label
             starts.append((m.start(), f"({number})({letter})"))
