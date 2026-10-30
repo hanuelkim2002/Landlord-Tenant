@@ -243,10 +243,15 @@ check("a heading with nothing under it gives no empty box",
 # reply shows whole again.
 check("the rules ask for the marker the page looks for",
       f"a line with only {chat.DETAILS} on it" in chat.RULES
-      and "### Does Florida's deposit law cover you?" in chat.RULES)
-# The model counts time spans itself unless rule 7 names them (comparisons/each_skill/README.md, 2026-10-28).
-check("rule 7 names time spans: only in the tenant's own words",
-      "how long something has lasted" in chat.RULES and "say a span only in the tenant's own words" in chat.RULES)
+      and "### Did your letter count as notice?" in chat.RULES)
+# The model copied the old example, "### Does Florida's deposit law cover you?", into a box of its own for the
+# college check (comparisons/each_skill/README.md, 2026-10-28).
+check("the rules' example heading is not about whether the law covers the tenant",
+      "law cover you" not in chat.RULES)
+# The model counts time spans itself unless rule 7 names them, vague ones too (comparisons/each_skill/README.md).
+check("rule 7 names time spans: the tenant's words, the start date, or nothing",
+      "how long something has lasted" in chat.RULES and '"several days"' in chat.RULES
+      and "only in the tenant's own words, give the date it began from the facts" in chat.RULES)
 
 # ---- Reading the lease (lease.py), with a stand-in for the vision model, so no model is called
 

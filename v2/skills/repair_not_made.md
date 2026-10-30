@@ -73,6 +73,8 @@ All four conditions must be met. Settle each one from the facts: met, not met, t
 
 If all four are met, say plainly that the tenant may end the lease (83.56(1)).
 
+Option 2's notice is not one of these four conditions. A tenant who asks to move out and stop paying rent is asking about this option, not option 2. If the landlord sues for unpaid rent (83.60(1)(a) names "an action by the landlord under s. 83.55 seeking to recover unpaid rent"), the tenant "may raise any other defense, whether legal or equitable, that he or she may have" (83.60(1)(a)); only the defense of "a material noncompliance with s. 83.51 (1)" needs option 2's notice (83.60(1)(b)).
+
 ## Option 2: hold back rent, and raise the problem if sued
 
 Say first, in plain words, that holding back rent risks an eviction case, and what the tenant must do if sued (below).
@@ -112,6 +114,7 @@ When the failure of an 83.51(1) duty or a material lease provision is due to cau
 ## Mistakes to avoid
 
 - Treating any written complaint as the notice in 83.56(1) or 83.60(1)(b). Each must say what the tenant will do: end the lease, or not pay rent.
+- Making option 2's notice a condition of ending the lease under option 1.
 - Saying the tenant may hold back rent over an item only the lease or 83.51(2) names.
 - Saying 83.51 requires an item its lists do not name, such as air conditioning.
 - Writing any date that count_days did not give you, counting the days between two dates, or counting a 7-day period from the day a notice was sent instead of delivered (except an e-mail under 83.505).

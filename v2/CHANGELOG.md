@@ -347,3 +347,10 @@ The repair skill ran all nine stories under rule 7's new wording, graded blind b
 same graders: right 24 of 27, against 20; spans the model counted itself fell from 3 to 0 by `spans.py` (the graders found
 1 against 4). Results in `comparisons/each_skill/repair_not_made/results/rule7/`; about $2.50. Nothing in the app
 changed.
+
+## 2026-10-29: three fixes from the repair test under rule 7
+
+`skills/repair_not_made.md` option 1: option 2's notice is not one of its conditions, and in a suit for unpaid rent
+only the 83.51(1) defense needs it (83.60(1)), with one more mistake to avoid. `chat.py`: rule 7 names vague spans and
+allows the date a problem began; the reply rules' example heading is "### Did your letter count as notice?", replacing
+"### Does Florida's deposit law cover you?". Two tests changed, one added. Not yet run live.

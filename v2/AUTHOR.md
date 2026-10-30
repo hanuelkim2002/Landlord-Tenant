@@ -60,6 +60,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   repair skill's new law point, against v1's: the winner of a suit may recover attorney fees and court costs (83.48).
 - 2026-10-28: rule 7 also names time spans: say how long something lasted, or how long until a date, only in the
   tenant's own words. Chosen over v1's date rule and code's day counts (item 19, `comparisons/each_skill/README.md`).
+- 2026-10-29: after the repair test under the new rule 7, rule 7 also names vague spans ("several days", "for weeks")
+  and allows the date a problem began from the facts ("since March 20"); the reply rules' example heading is now
+  "### Did your letter count as notice?", since answers copied the old one ("Does Florida's deposit law cover you?")
+  into a box of its own. The pending-fact line ("for you to confirm", 1 of 54) is logged in SLIPS.md, not fixed.
 
 ## Open
 
@@ -135,3 +139,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     each: rule 7 naming spans cut model-counted spans from 3 to 1, with the fewest spans of any kind (2 answers) and
     no made-up date; v1's longer date rule also 1; code's day counts made it worse (5, and 3 with the rule). Right
     answers 12 to 14 in all. (`comparisons/each_skill/README.md`)
+20. **The repair skill's new law point on moving out and rent** (2026-10-29, applied on your OK, not yet in a live
+    run). Option 1 now says option 2's notice is not one of its conditions, and that if the landlord sues for unpaid
+    rent (83.60(1)(a) names "an action by the landlord under s. 83.55 seeking to recover unpaid rent"), only the
+    defense of "a material noncompliance with s. 83.51 (1)" needs that notice (83.60(1)(b)). New against v1, which
+    says neither. It does not say rent stops once the lease ends: the stored text says only that the tenant "may
+    terminate the rental agreement" (83.56(1)). The grader's ground in story 2 ("applies only to a tenant who stays")
+    overstates 83.60(1)(a); the answer still reads as if the notice decided it.

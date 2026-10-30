@@ -144,8 +144,12 @@ Right of 27, same graders: rule7 24 (3 wrong), keys2 20 (1 partly, 6 wrong; the 
   February 25". The graders found one more each with no number or a changed one: rule7 "no repair for several days
   after your notice" (story 7); keys2 "about a month" for the tenant's "over a month" (story 9).
 - Story 2: rule7 right 2 of 3, keys2 0 of 3. The third rule7 answer says stopping rent after moving out "isn't safe
-  yet, because your letter only said you would end the lease": the notice for holding back rent made a condition of
-  ending the lease.
+  yet, because your letter only said you would end the lease", as if that notice decided it. The grader said the
+  notice "applies only to a tenant who stays", which overstates 83.60(1)(a): it also needs it for the 83.51(1)
+  defense in a suit for unpaid rent (AUTHOR.md 20).
+- Fixes from these answers (2026-10-29, not yet run live): the repair skill says how options 1 and 2 fit together;
+  rule 7 names vague spans and allows the date a problem began; the rules' example heading no longer asks whether the
+  law covers the tenant.
 - Story 3: one rule7 answer counted wrong for "I've saved 'no school housing' as a pending fact for you to confirm",
   read as asking the college question. Round 1's review read that line as the page's usual confirming. A judge's
   call; read that way, rule7 is 25.

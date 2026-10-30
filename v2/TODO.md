@@ -5,6 +5,9 @@ mistakes are in SLIPS.md.
 
 ## Now
 
+- Before the next live run: teach `comparisons/each_skill/spans.py` vague spans ("several days", "for weeks"),
+  then rerun the repair stories on the 2026-10-29 fixes (about $2.50, on the author's OK).
+
 ## Later
 
 - The other skills, two at a time after the pilot: leaving early and the 7-day notice; lease ending and rent going

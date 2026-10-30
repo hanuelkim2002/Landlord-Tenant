@@ -112,8 +112,8 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
   lease "the only remedy" rent paid could affect; notice before May 1 "avoids" that question; the garage "a
   structural component", against the lease).
 - 2026-10-28, the repair skill under the new rule 7: 1 of 27 (story 2: stopping rent after moving out "isn't safe
-  yet, because your letter only said you would end the lease", as if ending the lease needed the notice for holding
-  back rent).
+  yet, because your letter only said you would end the lease", as if the notice for holding back rent decided it;
+  that notice is needed only for the 83.51(1) defense if sued for rent (83.60(1)), and ending the lease needs none).
 
 ## Does not load the skill
 
@@ -217,3 +217,7 @@ tells the tenant the noted fact waits for them to confirm.
   rules' example heading, "Does Florida's deposit law cover you?", may invite it.
 - 2026-10-28, repair rerun (keys2), story 3: 3 of 3, each a box titled "Does Florida's landlord-tenant law cover your
   home?". The key now allows one line at most, as optional detail, so the graders did not count it.
+- 2026-10-28, the repair skill under the new rule 7, story 3: 3 of 3 a box of its own; once it ends "I've saved 'no
+  school housing' as a pending fact for you to confirm", which the grader read as asking (1 of 54 answers say so).
+  The example heading also shows up where the check is settled: "Does Florida's deposit law cover you?" in story 7,
+  2 of 3 in both versions. The example was changed on 2026-10-29.

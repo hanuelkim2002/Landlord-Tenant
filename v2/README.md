@@ -45,7 +45,7 @@ legal training.
 1. Start with the short answer: 3 to 5 plain sentences that answer what was asked (rule 2), give the main reason, and
    say what it means for the tenant. Then the one question (rule 8). No section numbers or quotations here.
 2. Then a line with only DETAILS on it. Below it, put each point the answer rests on under its own heading: a line
-   that starts with ### and asks a plain question, like ### Does Florida's deposit law cover you? The reasons,
+   that starts with ### and asks a plain question, like ### Did your letter count as notice? The reasons,
    citations (rule 6), and quotations go there.
 3. Use short sentences and everyday words. Say what a legal word means the first time you use it.
 4. Use "it", "this", "that", or "they" only when it can mean just one thing, named in the same sentence or the one
