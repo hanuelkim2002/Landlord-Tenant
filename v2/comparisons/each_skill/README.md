@@ -200,3 +200,13 @@ Each new answer not right:
 Code's made-up-date flags, one each way per skill, are read by hand: "May 1" as a rent day from the lease (leave-6, both
 versions), "November 10", a fact's date with no year (notice-6, new), and "June 9", which is real (notice-9, v1). The
 check for quotes flags 3 right ones, since it does not read the stored text's space before a comma (SLIPS.md).
+
+The round of fixes (the author's OK, 2026-10-30): the skill says a violation must be over when the rent is taken; it and
+the repair skill give the 5 days but no calendar date; a mistake line says the lists are only examples; the quote check
+reads the stored text's space before a comma. notice-2 and notice-8 rerun as `fixed` (`versions/fixed.md`), one Opus
+grader, blind; $0.63. Right 4 of 6 (3 of 6 before). All three lawsuit answers now give the 5 days, and the guest's stay is
+not called over. Both misses are new model slips, in SLIPS.md: a closed list, and a burden of proof. Quotes not found
+in the new answers: 5 of 271 (8 before), by the same count.
+
+Then both skills were trimmed (about 3,590 and 3,380 words, from 3,820 and 3,560): repeated lines and long quotes put in
+cited plain words, with no citation lost. The trim has not been run live; these scores are from the longer text.

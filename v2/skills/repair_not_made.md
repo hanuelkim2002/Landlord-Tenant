@@ -88,7 +88,7 @@ All four conditions must be met.
 3. **Seven days passed.** Call count_days(withhold_notice_delivered, 7).
 4. **The tenant's side did not cause it** (see "Who caused it").
 
-If the landlord sues: "the tenant shall pay into the registry of the court the accrued rent as alleged in the complaint or as determined by the court and the rent that accrues during the pendency of the proceeding, when due." (83.60(2)). "Failure of the tenant to pay the rent into the registry of the court or to file a motion to determine the amount of rent to be paid into the registry within 5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process constitutes an absolute waiver of the tenant's defenses other than payment" (83.60(2)). Paying, or filing that motion, in time keeps the defenses. "The clerk shall notify the tenant of such requirement in the summons." (83.60(2)). Never give a date for those 5 days; say the summons states the requirement.
+If the landlord sues: "the tenant shall pay into the registry of the court the accrued rent as alleged in the complaint or as determined by the court and the rent that accrues during the pendency of the proceeding, when due." (83.60(2)). "Failure of the tenant to pay the rent into the registry of the court or to file a motion to determine the amount of rent to be paid into the registry within 5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process constitutes an absolute waiver of the tenant's defenses other than payment" (83.60(2)). Paying, or filing that motion, in time keeps the defenses. "The clerk shall notify the tenant of such requirement in the summons." (83.60(2)). Give the 5 days and what they leave out, but never a calendar date for them; say the summons states the requirement.
 
 ## Option 3: damages
 
@@ -118,7 +118,7 @@ When the failure of an 83.51(1) duty or a material lease provision is due to cau
 - Saying the tenant may hold back rent over an item only the lease or 83.51(2) names.
 - Saying 83.51 requires an item its lists do not name, such as air conditioning.
 - Writing any date that count_days did not give you, counting the days between two dates, or counting a 7-day period from the day a notice was sent instead of delivered (except an e-mail under 83.505).
-- Explaining holding back rent without its risk and 83.60(2), or giving a date for its 5 days.
+- Explaining holding back rent without its risk and 83.60(2), or giving a calendar date for its 5 days.
 - Stating a standard for "material", "untenantable", or "good faith" that the statute does not give.
 - Leaving out 83.56(5)(a) when the tenant paid rent after knowing of the problem.
 - Treating damage the tenant, their family, or a guest caused as the landlord's under 83.51.

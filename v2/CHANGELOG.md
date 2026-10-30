@@ -387,3 +387,10 @@ Both new skills against v1's, 102 answers on Sonnet, six Opus graders, blind; $9
 v1 12; the 7-day notice, new 20, v1 13, with one grader's verdict changed in `review.json`. Misses sorted in
 `comparisons/each_skill/README.md`; new SLIPS.md entries. The graders' instructions now say packets hold no tool calls.
 Nothing in the app replaced.
+
+## 2026-10-30: the round of fixes and the trim
+
+`skills/notice_received_violation.md`: a violation must be over when the rent is taken; the 5 days given, with no calendar
+date (also in `skills/repair_not_made.md`); a mistake line on the open lists. `checks.py`: `plain` reads a stored space
+before a comma or period, replacing "(" only; two tests. Guest and lawsuit stories rerun: 4 of 6, was 3. Both new skills
+trimmed of repeats and long quotes, no citation lost; the trim is not yet run live.

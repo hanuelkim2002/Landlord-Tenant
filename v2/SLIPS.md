@@ -129,6 +129,9 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
   the statute's list is only examples). "You wouldn't be admitting anything" (notice-6, no support). A guest's stay
   called "a one-time event that has ended" when it ran past the rent payment (notice-2). Old versions: "doesn't settle"
   for a repeat the statute covers (notice-4, 3 of 3); "affects the whole home", against the facts (leave-7).
+- 2026-10-30, the guest and lawsuit stories after the round of fixes: 2 of 6. A lease-over notice "fits three situations",
+  a closed list where the statute's is open (notice-2). "The landlord must prove the damage was intentional and that it
+  was you", a burden of proof the stored text does not set (notice-8). A line against the first was already in the skill.
 
 ## Does not load the skill
 
@@ -196,8 +199,8 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
   facts, 4 times.
 - 2026-10-30, the two new tests, new: 8 of 456 not found word for word. 5 are slips: a clause cut out of 83.56(2) with
   no ellipsis, the notice's or the skill's words in quote marks ("lease over, leave in 7 days"), and "accepted with
-  reservation", nobody's words. 3 are right but flagged: the stored text writes "s. 83.505 , or" with a space before the
-  comma.
+  reservation", nobody's words. 3 were right but flagged, since the stored text writes "s. 83.505 , or" with a space before
+  the comma; the check reads that since 2026-10-30.
 
 ## Writes a short answer longer than asked
 

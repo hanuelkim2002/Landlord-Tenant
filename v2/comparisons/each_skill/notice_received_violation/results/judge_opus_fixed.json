@@ -1,0 +1,110 @@
+{
+ "notice-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"No, not necessarily\", says the letter \"looks like a notice that should have offered a chance to fix the problem\", says \"You can raise that in writing to the landlord now, or as a defense if you are sued\", and gives April 13 with the point that \"this notice doesn't give you a right to fix the problem\"."
+ },
+ "notice-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says a lease-over notice \"fits three situations (83.56(2)(a))\": intentional damage, fraudulent entry, and a repeat after a written warning. 83.56(2)(a) also names \"a subsequent or continued unreasonable disturbance\" and says its examples \"include, but are not limited to\" those listed, so the count of three is wrong; the answer's later line that the lists \"are only examples\" softens this but does not supply the missing one.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"You don't have to be out in 7 days just because the letter says so\", calls a guest problem one a tenant \"gets 7 days to fix\", gives April 13, and says the effect of the wrong notice \"is a question for a court\", but misstates the statute's list with \"fits three situations\"; \"you give up your defenses\" without \"other than payment\" is a harmless shortening."
+ },
+ "notice-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"No, you don't have to be out in 7 days, and the letter doesn't put you out\", then says the guest problem should get 7 days to fix so it \"looks like the wrong kind of notice\" and \"a court decides what the flaw means\", while the wording \"a flaw doesn't cancel it\" is harmless because the court caveat follows it at once."
+ },
+ "notice-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "States a burden of proof with no support: \"The landlord must prove the damage was intentional and that it was you\", next to \"The landlord has to show\" citing 83.56(2). Neither 83.56(2) nor any other section given says who must prove what, and \"that it was you\" is too flat given the \"permit any person\" duty in 83.52(6) that the answer raises right after.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"You can fight this case, but you have to act fast\", gives the 5-day registry-or-motion step and says the defense \"only counts if you keep your defenses alive by taking that step\", with no calendar date for the 5 days, but adds the unsupported rule \"The landlord must prove the damage was intentional and that it was you\"."
+ },
+ "notice-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Dispute the eviction in court, and do it quickly\", calls the rent deposit \"The most urgent step\" for raising any defense \"including 'I didn't do it'\", quotes the waiver and default judgment, says \"I can't give you a calendar date\", and \"You were served yesterday\" only repeats the tenant's words."
+ },
+ "notice-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Do not ignore the court papers\", then gives the registry-or-motion step within 5 days, says the defense is real \"but only if you protect it by making that deposit or filing that motion on time\", and declines a date with \"I am not giving you a calendar date for the 5 days\"."
+ }
+}

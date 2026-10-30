@@ -71,8 +71,8 @@ Every page is read from its image by the vision model (`comparisons/models/`), 1
 
 Shown under each reply; the reply is never blocked.
 
-- `plain(text)`: text as the check compares it: squashed, lowercase, no space before a section number's "(" (the
-  stored statutes write "s. 83.51 (1)").
+- `plain(text)`: text as the check compares it: squashed, lowercase, no space after a section number before "(", a
+  comma, or a period (the stored statutes write "s. 83.51 (1)" and "s. 83.505 ,").
 - `quote_parts(quote)`, `found_in(parts, text)`: a quotation's words, cut at an ellipsis ("...", "…", ". . .") or a
   bracketed change.
 - `QUOTE`: a quotation of 20+ characters. Its opening mark must follow the start, a space, a bracket, or a bold mark,
