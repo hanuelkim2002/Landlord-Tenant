@@ -5,12 +5,12 @@ mistakes are in SLIPS.md.
 
 ## Now
 
-- Leaving early and the 7-day notice: fixed and trimmed. The trim has not run live; the author decides whether to check
-  it on the stories with open points (leave-6, notice-3, 6, 7, 9, about $1.60).
+- The next pair of skills, `lease_ending` and `rent_increased`: draft them, write stories and keys, then the author's OK
+  before any run (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
 
 ## Later
 
-- The other skills, two at a time: lease ending and rent going up; entry and the neighbor; unpaid rent last
+- The other skills after that, two at a time: entry and the neighbor; unpaid rent last
   (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
 - Once the deposit fixes are merged, `deposit_not_returned` loads `who_the_law_covers` instead of its own copy.
 - Story 8's lease (`comparisons/skills/lease_email.txt`): have the e-mail addendum say the election is voluntary and

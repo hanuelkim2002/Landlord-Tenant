@@ -209,4 +209,15 @@ not called over. Both misses are new model slips, in SLIPS.md: a closed list, an
 in the new answers: 5 of 271 (8 before), by the same count.
 
 Then both skills were trimmed (about 3,590 and 3,470 words, from 3,820 and 3,590): repeated lines and long quotes put in
-cited plain words, with no citation lost. The trim has not been run live; these scores are from the longer text.
+cited plain words, with no citation lost. The scores above are from the longer text.
+
+The trim, checked live (2026-10-30, the author's OK): leave-6 and notice-3, 6, 7, 9, 3 runs each, as `trimmed`
+(`versions/trimmed.md`), one Opus grader, blind; $1.79. It was not graded beside the longer text, so the two are not
+strictly comparable. Settled stories, right of 12: trimmed 9 (1 partly, 2 wrong), longer text 11 (1 partly). The risk the
+trim carried, dropping a reading, did not show: every answer on an open point gave both, and none said "probably".
+
+- The skill's: notice-7 once, "It starts the count" on a text, against its own first reading. That line was the skill's,
+  in the longer text too, so it is removed, not rerun.
+- Model slips, in SLIPS.md: notice-3 once ("normally"), leave-6 once ("supports the second reading"), and notice-6's "for
+  four months", 3 of 3 against 0 of 3. The trim did not touch anything about spans, but so few answers cannot rule it out.
+

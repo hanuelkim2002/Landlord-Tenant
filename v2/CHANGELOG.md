@@ -394,3 +394,9 @@ Nothing in the app replaced.
 date (also in `skills/repair_not_made.md`); a mistake line on the open lists. `checks.py`: `plain` reads a stored space
 before a comma or period, replacing "(" only; two tests. Guest and lawsuit stories rerun: 4 of 6, was 3. Both new skills
 trimmed of repeats and long quotes, no citation lost; the trim is not yet run live.
+
+## 2026-10-30: the trim checked live; one line out of the 7-day notice
+
+The trimmed skills on five stories: right 9 of 12 settled, 11 on the longer text, not graded side by side; every answer on
+an open point gave both readings; $1.79. `skills/notice_received_violation.md` drops "it starts the count" from the line
+said in every answer, which contradicted the reading that a text starts no count; not rerun. New SLIPS.md entries.

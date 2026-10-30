@@ -45,6 +45,8 @@ against rule 7).
   after the office received it" (leave-5). Old versions 2, "June 9" for the day after a count (notice-9) and "accepted
   rent for months" (notice-6). `spans.py` also counts words from the statute and the lease ("2 months' rent", "14 nights
   in any six months"); those were read by hand and left out.
+- 2026-10-30, the trimmed text on five stories: "for four months" for rent taken from December to March (notice-6, 3 of 3;
+  0 of 3 on the longer text, and nothing about spans was trimmed). notice-6 is not counted, so the score does not show it.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -76,6 +78,8 @@ The skill marks a point as not settled, with a reading on each side; the answer 
 - 2026-10-30, the two new tests: a lean, "A text is probably not a notice in the form the statute names" (notice-7,
   new 1 of 3, old 1 of 3). Old versions also lean on a first noise complaint (notice-3, 3 of 3), on a dog still there
   (notice-6, 1), and on how serious a leak is (leave-6, 1).
+- 2026-10-30, the trimmed text: a leak "supports the second reading" of "material" (leave-6, 1 of 3), and "the law
+  normally gives a tenant a chance to fix a problem" on a point not settled (notice-3, 1 of 3). No answer says "probably".
 
 ## Says the balance is due on day 30 after an objection
 

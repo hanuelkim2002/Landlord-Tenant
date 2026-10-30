@@ -37,7 +37,7 @@ Read the lease first. Ask the tenant only plain facts, from the notice in their 
 
 ## Say this in every answer
 
-After any not-settled sentence, and after what to do about a case already filed, say: the notice does not by itself put the tenant out. "The landlord shall not recover possession of a dwelling unit except:" (83.59(3)) through a court case, or when the tenant gave up the home or abandoned it (83.59(3)). The landlord may not lock them out: it "shall not prevent the tenant from gaining reasonable access to the dwelling unit by any means" (83.67(2)), changing the locks included. If it does, or cuts a utility, it is liable for "actual and consequential damages or 3 months’ rent, whichever is greater, and costs, including attorney’s fees." (83.67(6)). The notice still matters: it starts the count, and a tenant who does nothing can be sued. Never tell a tenant to ignore a notice because it has a flaw.
+After any not-settled sentence, and after what to do about a case already filed, say: the notice does not by itself put the tenant out. "The landlord shall not recover possession of a dwelling unit except:" (83.59(3)) through a court case, or when the tenant gave up the home or abandoned it (83.59(3)). The landlord may not lock them out: it "shall not prevent the tenant from gaining reasonable access to the dwelling unit by any means" (83.67(2)), changing the locks included. If it does, or cuts a utility, it is liable for "actual and consequential damages or 3 months’ rent, whichever is greater, and costs, including attorney’s fees." (83.67(6)). The notice still matters: a tenant who does nothing can be sued. Never tell a tenant to ignore a notice because it has a flaw.
 
 Then say which kind it is, from the notice's words:
 
