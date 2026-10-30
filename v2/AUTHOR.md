@@ -64,6 +64,10 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   and allows the date a problem began from the facts ("since March 20"); the reply rules' example heading is now
   "### Did your letter count as notice?", since answers copied the old one ("Does Florida's deposit law cover you?")
   into a box of its own. The pending-fact line ("for you to confirm", 1 of 54) is logged in SLIPS.md, not fixed.
+- 2026-10-30: the leaving-early and 7-day-notice skills, with your answers to the review's ten questions. A fee after
+  military orders is not owed, and a fee over two months' rent falls away, both stated plainly. A date in the facts may
+  be set beside a date `count_days` gave. The 12 months use `count_days(date, 365)`, with anything within a day too
+  close to tell. Two small fixes to the repair skill. Item 22 waits on case law.
 
 ## Open
 
@@ -146,7 +150,9 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     says neither. It does not say rent stops once the lease ends: the stored text says only that the tenant "may
     terminate the rental agreement" (83.56(1)). The grader's ground in story 2 ("applies only to a tenant who stays")
     overstates 83.60(1)(a); the answer still reads as if the notice decided it.
-21. **The leaving-early and 7-day-notice skills: new law points and test keys** (2026-10-30, nothing run yet). Your
-    checks before any test, with ten questions, a recommended answer on each:
-    `comparisons/each_skill/REVIEW_leave_and_notice.md`. Q1 reaches back to the repair skill: a problem still going on
-    may simply be "continuing" (83.56(5)(a)), not an open point. Q10 takes three words out of that skill.
+21. **Decided 2026-10-30: the leaving-early and 7-day-notice skills' new law points and keys** (see Decided; the review
+    is `comparisons/each_skill/REVIEW_leave_and_notice.md`).
+22. **A violation still going on, and rent taken or paid (83.56(5)(a), "but not for any subsequent or continuing
+    noncompliance").** You agree the words point one way, that nothing is given up. Before the repair skill and its
+    stories 2, 3, and 9 change from "not settled", someone checks Florida case law on that sentence. Until then the
+    7-day notice skill matches the repair skill, and its story notice-6 runs but is not counted.

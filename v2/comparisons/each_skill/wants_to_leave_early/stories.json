@@ -132,17 +132,16 @@
     "leaving_notice_given": "none yet"
    },
    "message": "I signed an early termination addendum when I moved in that says I pay $3,000 to break the lease. My rent is $1,050. I want to leave April 30. Do I have to pay the $3,000?",
-   "answer": "The law does not settle what happens here. The limit on a fee is two months' rent, which is $2,100, and yours is $3,000, so it does not meet that condition as written. One reading: the remedy exists only within the limit, so this addendum gives no fee at all, and your landlord is left with its other choices, including holding you to the rent as it comes due. The other reading: the addendum is good up to the limit, so your landlord may charge $2,100, plus rent and charges through the end of the month it takes the apartment back.",
+   "answer": "No. The limit on this kind of fee is two months' rent, which is $2,100, and yours is $3,000, so the addendum does not meet the condition and the fee falls away. Nothing in the law cuts it down to $2,100. That does not make leaving free. Your landlord still has its other choices: end the lease with nothing more owed, re-rent in good faith and hold you to the difference, or wait and hold you to the rent as it comes due through July 31. The choice is your landlord's, so no one can give you a total.",
    "points": [
-    "Opens by saying what happens to a fee over the limit is not settled, and says $3,000 is above the limit of two months' rent ($2,100), so the condition is not met as written.",
-    "Gives both readings and leans neither way: one, the addendum gives no fee at all; the other, it is good up to the limit.",
-    "Says what each reading means for the tenant: under the first, the landlord's other choices apply (83.595(1) to (3)), which may include rent as it comes due; under the second, $2,100.",
-    "(Under the second reading, rent and charges through the end of the month the landlord retakes possession, and charges for damage, come on top.)",
+    "Says the tenant need not pay the $3,000: it is above the limit of two months' rent ($2,100), so the condition is not met and the fee falls away. It is not cut down to the limit.",
+    "Says leaving is still not free: the landlord's other choices apply (83.595(1) to (3)), which may include rent as it comes due, and the answer picks none and gives no total.",
     "(Clause 11's 30-day notice has a last day of 2026-03-31, from count_days; the 7-day notice, 2026-04-23.)"
    ],
    "mistakes": [
-    "Says the tenant must pay the $3,000.",
-    "Says flatly that the fee falls away, or flatly that it is cut to $2,100.",
+    "Says the tenant must pay the $3,000, or that the landlord may charge $2,100 under the addendum.",
+    "Says the tenant will owe nothing for leaving.",
+    "States one total the tenant owes, says which choice the landlord will make, or counts the months left or totals the rent left.",
     "Gives a date it worked out itself instead of from count_days.",
     "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
    ],
@@ -170,18 +169,18 @@
     "planned_move_out": "2026-05-31"
    },
    "message": "I'm active duty Air Force and got PCS orders to San Diego. On April 6 I handed the office a letter with a copy of my orders saying my lease ends May 31. The office says I still owe the $2,100 early termination fee from my addendum and rent through July. Is that right?",
-   "answer": "Not the rent through July. Your orders and your letter meet the servicemember rule, and May 31 is later than the earliest date the rule allows, May 6. You owe rent prorated to May 31, and no other rent or damages because of the early end; your lease and addendum cannot change that. Whether the $2,100 is still owed is not settled. One reading: it is owed only because of the early end, so the rule bars it. The other: the rule names rent and damages, and names penalties only for a tenant who has not moved in, so it does not reach a fee.",
+   "answer": "Not the rent through July. Your orders and your letter meet the servicemember rule, and May 31 is later than the earliest date the rule allows, May 6. You owe rent prorated to May 31, and no other rent or damages because of the early end; your lease and addendum cannot change that. The $2,100 is not owed either: you are using a right the law gives you, not breaking the lease, and the fee is for ending the lease as the lease provides, not under this law.",
    "points": [
     "Says the tenant may end the lease under 83.682: permanent change of station orders 35 miles or more away; a written notice with a copy of the orders; a date at least 30 days after the landlord's receipt. The earliest date is 2026-05-06, from count_days, and May 31 meets it.",
     "Says the tenant owes the rent prorated to the effective date, and is not liable for any other rent or damages due to the early end, so not rent through July (83.682(4)).",
     "Says the lease cannot change this (83.682(5)).",
-    "Says whether the fee is still owed is not settled, gives both readings, and leans neither way.",
+    "Says the $2,100 is not owed. (Reasons an answer may give: ending the lease under 83.682 is not a breach under 83.595; the fee is for ending the lease as the agreement provides; liquidated damages are damages under 83.682(4); 83.682(5) bars any agreement otherwise.)",
     "(The landlord may not retaliate for this termination: 83.64(1)(d).)",
     "(The 7-day notice's last day is 2026-05-24, from count_days. An answer need not raise it, since the tenant gave written notice with the date.)"
    ],
    "mistakes": [
     "Says the tenant owes rent through July 31.",
-    "Says flatly that the fee is owed, or flatly that it is not.",
+    "Says the fee is owed.",
     "Treats this as ordinary leaving early, with the landlord's choices under 83.595, without 83.682.",
     "Works out the prorated amount in dollars, since that counts days.",
     "Gives a date it worked out itself instead of from count_days.",
@@ -192,7 +191,9 @@
     {"cite": "83.682(1)(a)", "quote": "required, pursuant to a permanent change of station orders, to move 35 miles or more from the location of the rental premises"},
     {"cite": "83.682(2)", "quote": "The notice to the landlord must be accompanied by either a copy of the official military orders or a written verification signed by the servicemember’s commanding officer."},
     {"cite": "83.682(4)", "quote": "The tenant is not liable for any other rent or damages due to the early termination of the tenancy as provided for in this section."},
-    {"cite": "83.682(5)", "quote": "The provisions of this section may not be waived or modified by the agreement of the parties under any circumstances."}
+    {"cite": "83.682(5)", "quote": "The provisions of this section may not be waived or modified by the agreement of the parties under any circumstances."},
+    {"cite": "83.595", "quote": "If the tenant breaches the rental agreement"},
+    {"cite": "83.43(6)", "quote": "when a tenant elects to terminate the rental agreement, as provided in the agreement"}
    ],
    "dates": [
     {"fact": "servicemember_notice_received", "days": 30, "date": "2026-05-06", "passed": false},

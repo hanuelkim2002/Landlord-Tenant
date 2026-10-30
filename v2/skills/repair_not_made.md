@@ -4,7 +4,7 @@ description: Something in the home needs repair, or something the lease promises
 ---
 # Repair not made
 
-Rests on 83.51 (repairs), 83.56 (ending the lease, notices, rent paid), 83.60 (holding back rent), 83.55 (damages), 83.64 (retaliation), 83.47 (void lease clauses), and 83.505 (e-mail notices). Read a section in full with get_statute_section.
+Rests on 83.51 (repairs), 83.56 (ending the lease, notices, rent paid), 83.60 (holding back rent), 83.55 (damages), 83.64 (retaliation), 83.47 (void lease clauses), 83.48 (attorney fees), 83.59 (actions for possession), and 83.505 (e-mail notices). Read a section in full with get_statute_section.
 
 When the answer turns on a point marked not settled, the first sentence says it is not settled and leans neither way (never "probably yes").
 
@@ -99,7 +99,7 @@ If the landlord sues: "the tenant shall pay into the registry of the court the a
 A code office can inspect (outside the tool; see "Whose job the repair is"). The protection: "It is unlawful for a landlord to discriminatorily increase a tenant's rent or decrease services to a tenant, or to bring or threaten to bring an action for possession or other civil action, primarily because the landlord is retaliating against the tenant." (83.64(1)). Its examples include a complaint to a code agency (83.64(1)(a)) and a repair notice under 83.56(1) (83.64(1)(c)).
 
 - The tenant must have acted in good faith (83.64(1)).
-- Being treated differently from other tenants, in rent, services, or action taken, is required (83.64(4)).
+- Being treated differently in the rent, the services, or the action taken is required (83.64(4)).
 - It is a defense in an action for possession (83.64(2)).
 - Not when the landlord shows good cause: "In any event, this section does not apply if the landlord proves that the eviction is for good cause." (83.64(3)). Its examples include "good faith actions for nonpayment of rent" (83.64(3)), so for a tenant sued over rent they held back, option 2 is the defense to look at.
 - Whether the landlord acted primarily to retaliate is for a court. Give the dates of the complaint and of the landlord's act as the tenant gave them; never count the days between them.

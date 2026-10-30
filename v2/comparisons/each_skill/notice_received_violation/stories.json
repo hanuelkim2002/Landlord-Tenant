@@ -1,5 +1,5 @@
 {
- "how_to_read": "The 7-day notice skill's stories, in the repair stories' shape. Each runs on lease_rules.txt in this folder: comparisons/skills/lease.txt with a new clause 11 on pets, guests, parking, and noise. 'today' is the date count_days compares with. 'facts' are confirmed facts. 'points' are what a right answer must convey, judged by meaning; a point written wholly in parentheses is helpful detail, not required. 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story holds school_housing. Check with: python ../skills/check_key.py notice_received_violation/stories.json (from comparisons/each_skill/).",
+ "how_to_read": "The 7-day notice skill's stories, in the repair stories' shape. Each runs on lease_rules.txt in this folder: comparisons/skills/lease.txt with a new clause 11 on pets, guests, parking, and noise. 'today' is the date count_days compares with. 'facts' are confirmed facts. 'points' are what a right answer must convey, judged by meaning; a point written wholly in parentheses is helpful detail, not required. 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. 'open': true marks a key waiting on the author (notice-6, AUTHOR.md item 22), not counted as settled. Every story holds school_housing. Check with: python ../skills/check_key.py notice_received_violation/stories.json (from comparisons/each_skill/).",
  "sections": ["83.42", "83.43", "83.44", "83.47", "83.48", "83.49", "83.505", "83.52", "83.55", "83.56", "83.57", "83.575", "83.58", "83.59", "83.595", "83.60", "83.62", "83.64", "83.67", "83.681"],
  "stories": [
   {
@@ -30,7 +30,7 @@
     "Counts the 7 days from the date on the letter (2026-03-09).",
     "Says the tenant must leave within 7 days whatever they do.",
     "Says that fixing it ends the matter for good, leaving out the next 12 months.",
-    "Works out when the 12 months end.",
+    "Gives an end date for the 12 months that is not from count_days.",
     "Gives a date it worked out itself instead of from count_days.",
     "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
    ],
@@ -134,21 +134,22 @@
     "earlier_warning_date": "2026-01-15",
     "notice_words": "You are advised that your lease is terminated effective immediately. You shall have 7 days from the delivery of this letter to vacate the premises. This action is taken because of another loud party in your apartment after midnight on March 20, which disturbed your neighbors, after our written warning of January 15.",
     "notice_delivered": "2026-03-23",
+    "event_date": "2026-03-20",
     "how_it_came": "the manager handed it to the tenant at the door",
     "eviction_filed": "no"
    },
    "message": "I got a warning letter in January about noise, then we had another loud party last weekend, and now I got a letter saying my lease is terminated and I've got 7 days. Can I just promise no more parties and fix it? Do I get another chance?",
-   "answer": "No, the law does not give you another chance under this kind of notice. A repeat of a similar violation within 12 months of a written warning is one the statute lets a landlord end without a chance to fix. Your warning is dated January 15 and the party was March 20; this tool counts days, not months, so check those two dates on a calendar. You may still ask your landlord to let it go, but your landlord does not have to. The notice does not put you out by itself: your landlord needs a court case. The 7 days end March 30, and after that your landlord can sue.",
+   "answer": "No, the law does not give you another chance under this kind of notice. A repeat of a similar violation within 12 months of a written warning is one the statute lets a landlord end without a chance to fix. Your warning is dated January 15, its 12 months run to about January 15, 2027, and the party on March 20 falls inside them. You may still ask your landlord to let it go, but your landlord does not have to. The notice does not put you out by itself: your landlord needs a court case. The 7 days end March 30, and after that your landlord can sue.",
    "points": [
     "Says the tenant has no right to fix it under this notice: a similar violation within 12 months of a written warning, or a subsequent unreasonable disturbance, is the kind the landlord may end without a chance to fix (83.56(2)(a)). Either ground is right.",
-    "Sets the two dates beside the 12 months as the facts give them, without counting the time between them.",
+    "Says the party falls inside the 12 months after the written warning. (The end date, about 2027-01-15, comes from count_days(earlier_warning_date, 365). Setting March 20 beside it is not counting.)",
     "Says the notice does not by itself put the tenant out: the landlord needs a court case; gives the 7-day date as 2026-03-30, from count_days.",
-    "(The tenant may still ask the landlord to agree to something; an answer may say so. An answer that says January 15 and March 20 fall within 12 months is not counting; working out when the 12 months end, or saying 'two months later', is. 'Similar' is not defined.)"
+    "(The tenant may still ask the landlord to agree to something; an answer may say so. 'Similar' is not defined.)"
    ],
    "mistakes": [
     "Says the tenant has a right to fix it within 7 days and keep the lease.",
     "Says the tenant must be out by the date, or may be removed without a court case.",
-    "Works out when the 12 months end, or says how long it was between the warning and the party.",
+    "Gives an end date for the 12 months that is not from count_days, or says how long it was between the warning and the party, like 'two months later'.",
     "Gives a date it worked out itself instead of from count_days.",
     "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
    ],
@@ -158,7 +159,8 @@
     {"cite": "83.59(3)", "quote": "The landlord shall not recover possession of a dwelling unit except:"}
    ],
    "dates": [
-    {"fact": "notice_delivered", "days": 7, "date": "2026-03-30", "passed": false}
+    {"fact": "notice_delivered", "days": 7, "date": "2026-03-30", "passed": false},
+    {"fact": "earlier_warning_date", "days": 365, "date": "2027-01-15", "passed": false}
    ]
   },
   {
@@ -200,6 +202,7 @@
   {
    "id": "notice-6",
    "title": "The dog is still there, and the landlord has taken rent for months",
+   "open": true,
    "today": "2026-03-11",
    "lease": "lease_rules.txt",
    "facts": {
@@ -223,7 +226,7 @@
    "mistakes": [
     "Says flatly that the landlord lost the right, or flatly that it did not.",
     "Leaves out 83.56(5)(a).",
-    "Works out when the 12 months end, or says how long the landlord has known.",
+    "Says how long the landlord has known, or gives an end date for the 12 months that is not from count_days.",
     "Gives a date it worked out itself instead of from count_days.",
     "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
    ],

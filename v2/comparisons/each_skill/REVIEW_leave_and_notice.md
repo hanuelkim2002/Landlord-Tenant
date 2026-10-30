@@ -112,8 +112,8 @@ These are the points for your check. Everything else comes from the old versions
   83.67(2)), and a lockout has a price (83.67(6)).
 - A letter that only warns starts no count, but can count later as the written warning.
 - How the notice came, for the first time: the ways the statute names (83.56(4)); a copy at the door counts only if the
-  tenant is away; e-mail counts from when it was sent; for mail or a door copy, both dates; for a text or portal message,
-  two readings.
+  tenant is away; e-mail under the signed addendum (83.505(1)) counts from when it was sent; for mail or a door copy,
+  both dates; for a text or portal message, two readings.
 - Flaws: no violation at all, the wrong kind of notice, or missing words. Whether conduct on one of the statute's lists
   is also "material" is not settled. A notice that does not say what the tenant did is not the required notice, the
   same call you made for a deposit notice with no reason. Missing form words get two
@@ -139,8 +139,8 @@ with the points and the mistakes that fail an answer, are in `stories.json`.
 | leave-1 | New job, plain lease. "Can I just give notice?" | No such right. Landlord's three choices, no total. The 7 days' notice by March 24, and it does not stop the rent. |
 | leave-2 | A signed addendum, $2,100, 30 days' notice | The fee is open. It costs the fee plus rent through the month the landlord retakes the home. Notice by May 1. |
 | leave-3 | $1,500 charge and loss of deposit, only in the lease | Cannot be charged that way, but leaving is not free. The deposit goes through its own steps. |
-| leave-4 | A signed addendum, $3,000 | Above the limit. Not settled what follows, both readings. |
-| leave-5 | Military orders; the office wants the fee and rent through July | Lease can end. Prorated rent only. Earliest date May 6. The fee: not settled. |
+| leave-4 | A signed addendum, $3,000 | Above the limit, so the fee falls away. Leaving is still not free: the landlord's other choices. |
+| leave-5 | Military orders; the office wants the fee and rent through July | Lease can end. Prorated rent only. Earliest date May 6. The fee is not owed. |
 | leave-6 | A leak; portal requests only | Needs a written notice first. Portal requests are not it. Two points not settled. Otherwise the landlord's choices. |
 | leave-7 | A fire next door | May end the lease at once, or leave the ruined part and pay less. No test for "substantially impaired". |
 | leave-8 | A flood, no flood paper | May end the lease with written notice and moving out by July 20. Refund of rent paid ahead. |
@@ -152,9 +152,9 @@ with the points and the mistakes that fail an answer, are in `stories.json`.
 | notice-1 | Dog; 7 days to fix; dated March 2, handed over March 9 | Need not move if fixed by March 16, counted from delivery. If it recurs within 12 months, no new notice. |
 | notice-2 | Guest; lease over; no earlier warning | The wrong kind of notice, but do not ignore it. A court case is needed. |
 | notice-3 | A first noise complaint; lease over | Not settled, both readings. A court case is needed. |
-| notice-4 | A second loud party after a written warning | No right to fix. Both dates set beside the 12 months. |
+| notice-4 | A second loud party after a written warning | No right to fix. The party falls inside the 12 months, whose end comes from the tool. |
 | notice-5 | One event, then the landlord took all of April's rent | The landlord gave up ending the lease over that event, not for anything new. |
-| notice-6 | Dog still there; rent taken for months | Depends on Q1. Fixing it by March 16 is safe either way. |
+| notice-6 | Dog still there; rent taken for months | Waits on Q1, so it is not counted yet. Fixing it by March 16 is safe either way. |
 | notice-7 | A text about parking | Not settled whether a text counts. Moving the car by February 23 meets both. |
 | notice-8 | Sued; served yesterday | Lead with the registry rule and what missing it costs. No date for the 5 days. |
 | notice-9 | Leaving within the 7 days | Not settled whether rent through July is owed. The deposit rules. The 7 days' notice is due today. |
@@ -166,3 +166,20 @@ blind by Opus. That is 102 answers, about $10 of your API credit, with the resul
 
 Both new files are longer than planned: about 3,800 and 3,500 words, against 2,500 to 3,000. I left them long for the
 test and will trim whatever the test shows does nothing.
+
+## Your answers (2026-10-30)
+
+| Q | Your answer | Where it went |
+|---|---|---|
+| Q1 | Waits. You agree with the reading, but the repair skill changes only after someone checks Florida case law on "continuing noncompliance". | Nothing changed. AUTHOR.md item 22. notice-6 runs but is not counted. |
+| Q2 | count_days(earlier_warning_date, 365), with anything within one day of that date too close to tell. | The 7-day notice skill; notice-1, 4, 6. |
+| Q3 | Allowed, for a date in the facts against a date count_days gave. No rule change. | Both new skills' mistakes lists; notice-4. |
+| Q4 | Barred. Not a breach (83.595); not a termination "as provided in the agreement" (83.43(6)); damages are ruled out (83.682(4)); no agreement can change it (83.682(5)). | The leaving-early skill, option 1; leave-5. |
+| Q5 | As recommended: that charge cannot be made. | No change. |
+| Q6 | It falls away. Nothing in 83.595(4) cuts it down to the limit. | The leaving-early skill, option 5; leave-4. |
+| Q7 | As recommended. | No change. |
+| Q8 | As recommended: not settled. | No change. |
+| Q9 | As recommended: not settled. | No change. |
+| Q10 | As recommended: both fixes. | `skills/repair_not_made.md`. |
+
+The e-mail line in the summary above now keeps its condition, the signed addendum.

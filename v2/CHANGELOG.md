@@ -374,3 +374,9 @@ From a check the author passed on: 83.575(3) limited to staying on after a set t
 the "casualty" reading rests on that word; the abandonment quote keeps its opening words; "does not undo the
 termination" replaced, since that is the point in doubt; a lease-over notice can have two dates; whether listed conduct
 is "material" is not settled. Both opening lists name every section used; the graders now get 83.67. Not run yet.
+
+## 2026-10-30: the author's answers on the leaving-early and 7-day-notice drafts
+
+A fee after military orders is not owed, and a fee over two months' rent falls away (both were "not settled"). The 12
+months use `count_days(date, 365)`, with a one-day band, replacing "check a calendar". The repair skill loses "from other
+tenants" and names 83.48 and 83.59. notice-6 runs but is not counted until the case-law check (AUTHOR.md 22).

@@ -57,7 +57,7 @@ All of these must be met.
 
 What it gives: "the tenant is liable for the rent due under the rental agreement prorated to the effective date of the termination" (83.682(4)), and "The tenant is not liable for any other rent or damages due to the early termination of the tenancy as provided for in this section." (83.682(4)). Terminating 14 or more days before moving in: "no damages or penalties of any kind will be assessable." (83.682(4)). "The provisions of this section may not be waived or modified by the agreement of the parties under any circumstances." (83.682(5)). The landlord may not retaliate for it (83.64(1)(d)). Do not work out the prorated amount.
 
-If the tenant also signed an addendum for a fee: liquidated damages are damages. Whether an early termination fee is among "any other rent or damages" (83.682(4)) is not settled. Give both readings and choose neither. One: the fee is owed only because of the early end, so (4) and (5) bar it. The other: (4) names rent and damages, and names "penalties" only for a tenant who has not moved in, so it does not reach a fee.
+If the tenant also signed an addendum for a fee or liquidated damages, it is not owed; say so plainly. Ending the lease this way is a right, not a breach, and 83.595 opens "If the tenant breaches the rental agreement" (83.595). A fee is assessed when a tenant terminates "as provided in the agreement" (83.43(6)), and this termination is under the statute. Liquidated damages are damages, which (4) rules out. And no agreement can change this section (83.682(5)).
 
 If the servicemember died on active duty, an adult in the immediate family may end the lease the same way, with the death certificate (83.682(3)).
 
@@ -91,7 +91,7 @@ All of these must be met.
 1. **A separate signed addendum, from when the lease was made.** "This remedy is available only if the tenant and the landlord, at the time the rental agreement was made, indicated acceptance of liquidated damages or an early termination fee." (83.595(4)). "The tenant must indicate acceptance of liquidated damages or an early termination fee by signing a separate addendum to the rental agreement" (83.595(4)).
    - A separate signed paper with "I agree" marked, or words that agree to the amount: met.
    - The charge is only in the body of the lease, or "I do not agree" is marked, or no choice is marked: not met. Say plainly the fee cannot be charged this way, whatever the lease says, and go to option 6.
-2. **The amount.** "if the amount does not exceed 2 months’ rent" (83.595(4)). Set it beside two months of the lease's rent. If it is more: not met as written, and whether the fee falls away or is only cut to the limit is not settled. Give both readings and choose neither. One: the remedy is available only within the limit, so this addendum gives no fee, and option 6 applies. The other: it is good up to the limit, so the landlord may charge two months' rent.
+2. **The amount.** "if the amount does not exceed 2 months’ rent" (83.595(4)). Set it beside two months of the lease's rent. If it is more: not met, and the fee falls away; nothing in 83.595(4) cuts an amount down to the limit. Say so plainly, and go to option 6.
 3. **For a fee, the notice.** "the tenant is required to give no more than 60 days’ notice, as provided in the rental agreement, prior to the proposed date of early termination." (83.595(4)). Read the lease's notice period. If it is more than 60 days: not met for a fee. The words apply only "in the case of an early termination fee" (83.595(4)). If the paper names both a fee and liquidated damages and asks more than 60 days, whether this limit applies is not settled. Give both readings and choose neither.
 
 What it costs: the amount, and "the rent and other charges accrued through the end of the month in which the landlord retakes possession of the dwelling unit and charges for damages to the dwelling unit." (83.595(4)(a)).
@@ -136,5 +136,5 @@ Any tenant moving out before the end date, and any tenant with no set end date. 
 - Leaving out what is still owed with a fee (83.595(4)(a)), or the prorated rent for a servicemember (83.682(4)).
 - Missing a way out the facts point to.
 - Counting the 7 days forward from the notice instead of back from the move.
-- Writing any date count_days did not give you, or counting how long something has lasted or how long until a date.
+- Writing any date count_days did not give you, or counting how long something has lasted or how long until a date. Setting a date from the facts beside a date count_days gave is not counting.
 - Stating a test for "substantially impaired" that the statute does not give.
