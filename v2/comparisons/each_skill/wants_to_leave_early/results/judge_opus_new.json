@@ -1,0 +1,458 @@
+{
+ "leave-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point ('It doesn't end the lease or stop the rent', 'Your landlord picks, and I can't say which', 'by March 24, 2026', 'If you reach a deal, get it in writing'); 'Giving written notice avoids that' on abandonment is loose but has some footing in 83.59(3)(c), so it is only a wording note."
+ },
+ "leave-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point ('giving notice won't end your lease or stop your rent', 'The landlord picks one of these', 'by March 24, 2026', 'If you didn't sign a separate paper, the landlord has only the first three choices', 'if your landlord agrees to let you out, get that in writing') with no total or pick."
+ },
+ "leave-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Makes the required points ('giving notice won't end your lease or stop the rent', 'The landlord makes this choice, not you', 'It keeps your landlord's duty to send you the notice about your deposit') but only quotes clause 10 without suggesting a release; 'it must reach your landlord' is a cautious gloss on 'give' and only a wording note."
+ },
+ "leave-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with what is owed ('You owe the $2,100 early termination fee you agreed to, plus your rent and other charges through the end of the month your landlord retakes the apartment, plus any damage charges'), says the landlord 'gave up the right to charge more rent after that month', and gives May 1 and May 24 with 'That covers both notices'."
+ },
+ "leave-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with 'you would owe the $2,100 early termination fee you agreed to' plus rent through the retake month and damage, says the landlord 'gave up the right to ask for more rent', and gives May 1 and May 24 with 'meets both requirements'; 'has to reach the office by May 1' is a cautious gloss on clause 7 and only a wording note."
+ },
+ "leave-2/3": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence says only 'the addendum you remember is a valid early termination fee', not what is owed, but the answer then gives the fee 'On top of that' rent and damage, the waiver, and May 1 and May 24; 'in the landlord's hands by May 1' and the garbled 'correct only if you want to rely on it' are wording notes only."
+ },
+ "leave-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point ('Calling it a re-rental charge doesn't change that', 'The missing separate signed addendum is the problem', 'only allowed by following the steps in 83.49(3)', 'It is the landlord's choice', 'March 8, 2026', 'monetary damage to the landlord') with no total."
+ },
+ "leave-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point ('whatever the lease calls it', 'Losing the deposit is part of the same clause, so it falls with the fee', 'only by following the deposit steps in 83.49(3)', 'I can't tell which one they will pick', '2026-03-08', 'real losses') with no total."
+ },
+ "leave-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point ('Calling it a re-rental charge doesn't change that', 'A lease clause that simply keeps the deposit is an early termination fee', 'has to follow the deposit steps in 83.49(3)', 'I can't say which one your landlord will pick', 'March 8', 'a loss from your breaking the lease'); 'still be responsible for the rent through July 31' is followed at once by the landlord's choices, so it is only a wording note."
+ },
+ "leave-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "It says \"The fee falls away, and the landlord can't charge $3,000 or $2,100 under that subsection\" and \"That doesn't mean leaving is free\"; the added point that the landlord \"may also argue that clause 11 is a separate agreement\" under 83.43(6) is framed as an argument, not a rule, so it is not counted as an error."
+ },
+ "leave-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "It says \"the law doesn't cut it down to the cap. The fee is just not allowed,\" lists the three other choices, and says \"I can't tell you which one your landlord would pick,\" with both notice dates matching the story."
+ },
+ "leave-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "It says \"The law doesn't cut the fee down to $2,100. The fee just can't be charged,\" warns that \"That doesn't free you from the lease,\" and says \"I can't say which one it will pick,\" with both notice dates matching the story."
+ },
+ "leave-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It opens \"No, the office is wrong on both the fee and the rent through July,\" explains the fee with \"which is a right, not a breach\" and 83.682(4) and (5), says \"I haven't worked out the exact amount,\" and gives retaliation and May 24."
+ },
+ "leave-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It opens \"No, the office is wrong,\" gives May 6 as the earliest date with \"Your date of May 31 is later,\" says \"I have not calculated the prorated amount,\" and covers the fee, the waiver bar, retaliation, and May 24."
+ },
+ "leave-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "All points are made and it declines to work out the proration, but \"The notice gave an end date well over 30 days after the office received it\" states a span from its own counting rather than the May 6 date alone."
+ },
+ "leave-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "It says \"Neither says you will end the lease, so neither is this notice,\" gives both readings under \"This is not settled\" twice, lists the three choices, and says \"The last day is 2026-05-08,\" but does not raise 83.63."
+ },
+ "leave-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It opens \"Not yet,\" says the portal requests \"didn't say you would end the lease,\" gives both readings under \"This is not settled\" twice, lists the 83.595 choices, and gives May 8 and 83.63 as \"a backup argument, not a plan.\""
+ },
+ "leave-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It says \"Your two portal requests don't count as that step,\" gives both readings of \"material\" and of paying rent under \"Both points are unsettled,\" lists the 83.595 paths, and adds May 8 and 83.63 with its \"substantially impaired\" condition."
+ },
+ "leave-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says \"The section names no waiting period and no notice requirement\" and \"I won't invent a test for it,\" gives both choices and cites 83.595 only for leaving if the standard is not met; \"satisfies both readings\" drops the 7-day timing only in wording, since the 7 days are stated just above."
+ },
+ "leave-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 83.63 \"names no notice and no waiting period\" and \"I won't invent a test,\" gives both choices and raises 83.49(5) with both readings; \"would meet both readings\" drops the 7-day timing only in wording, since the 7-day notice is named in the same bullet."
+ },
+ "leave-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 83.63 \"names no notice period and no waiting time\" and \"I won't invent a test,\" gives both choices and raises 83.49(5) with both readings; \"a fee wouldn't apply to it anyway\" fits 83.43(6), and \"would satisfy both readings\" drops the 7-day timing only in wording, since the 7 days are stated just above."
+ },
+ "leave-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Applies 83.512, requires \"written notice and hand back the apartment by July 20, 2026,\" gives the refund and unpaid rent, raises 83.63 with its conditions and says the stored text \"doesn't say from what date\" the section applies."
+ },
+ "leave-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Names the three conditions and the 50 percent test, requires \"a written notice and hand over the apartment by July 20, 2026,\" quotes the refund and unpaid-rent subsections, and raises 83.63 and the start-date question."
+ },
+ "leave-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Applies 83.512, requires \"written notice and move out by July 20, 2026,\" says \"The lease ends only when you hand over possession,\" gives the refund and unpaid rent, and raises both 83.63 and the start-date question."
+ }
+}

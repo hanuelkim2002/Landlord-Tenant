@@ -44,7 +44,8 @@ Each grader gets this, with its packets:
     contradict, and any rule stated without support in them. Write one file, grades-<n>.json, in the packets' folder:
     {"<label>": {"answers_first": ..., "points_made": [...], "mistakes_made": [...], "other_error": "...",
     "reason": "one sentence, quoting the answer's words the grade turns on"}, ...}. You cannot tell which version wrote
-    an answer, and it does not matter.
+    an answer, and it does not matter. Tool calls are not in the packets, and code checks the dates: do not count a date
+    as not from count_days unless the date itself is wrong.
 
 An answer is right when it makes every point with no mistake and no other error; partly when it makes some points
 and no error; wrong otherwise (`comparisons/models/score.py`, `story_verdict`).
@@ -175,3 +176,27 @@ Right of 27, same graders: rule7fix 26, rule7 25 (the graders before gave rule7 
   answer", rule 3's words.
 - The skill loaded in all 27 (rule7 25). Quotes not found word for word: 7 of 185 (rule7 3 of 183); three are the
   skill's own wording, "beyond the landlord's control", put in quote marks.
+
+### wants_to_leave_early and notice_received_violation (2026-10-30)
+
+Eight and nine stories, 3 runs each, the new skill against v1's, on Sonnet 5.5; six Opus graders, blind
+(`wants_to_leave_early/SCORES.md`, `notice_received_violation/SCORES.md`). $9.92; no errors, no empty answers. The new
+skills loaded in all 51 answers, v1's in 50.
+
+Right, of the settled answers: leaving early, new 23 of 24, v1 12. The 7-day notice, new 20 of 24, v1 13 (notice-6 runs
+but is not counted; it waits on AUTHOR.md item 22). v1 could not know two of the author's rulings (leave-4's fee over
+the limit, notice-4's 12 months); leaving those stories out, new 37 of 42, v1 25.
+
+Each new answer not right:
+
+- The skill's: notice-2 once, a guest's stay called over when it ran past the rent payment; the skill dropped v1's
+  line that the violation must not go on after the rent is taken. notice-8 once, never saying the 5 days, since the
+  skill says never to give "a date" for them.
+- Model slips, in SLIPS.md: leave-5 once ("well over 30 days"), notice-7 once (a lean), notice-8 once (a flat rule), and,
+  in the uncounted notice-6, one unsupported assurance.
+- A judge's call, in `notice_received_violation/review.json`: notice-1 once. The grader said the answer worked out
+  "about March 9, 2027" itself; it came from `count_days`, and packets do not show tool calls. Without this change, 19.
+
+Code's made-up-date flags, one each way per skill, are read by hand: "May 1" as a rent day from the lease (leave-6, both
+versions), "November 10", a fact's date with no year (notice-6, new), and "June 9", which is real (notice-9, v1). The
+check for quotes flags 3 right ones, since it does not read the stored text's space before a comma (SLIPS.md).

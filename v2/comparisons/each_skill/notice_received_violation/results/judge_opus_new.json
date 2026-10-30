@@ -1,0 +1,479 @@
+{
+ "notice-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   true,
+   true,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Covers all five points ('Your last day to fix it is March 16, 2026', 'Only a court case can do that') but works out the 12-month end itself: 'That means about March 9, 2027.'"
+ },
+ "notice-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point: 'The last day is March 16, 2026', 'Written consent from the landlord for the dog should also fix it', 'go straight to court without giving you another chance', and 'Your landlord would have to win a court case first.'"
+ },
+ "notice-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, including 'Your landlord can't remove you without a court case' and written consent as 'a different way to meet the clause'; 'By my count' is a harmless wording on the correct March 16 date, since nothing shows it came from outside the tool."
+ },
+ "notice-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says the guest violation 'looks like a one-time event that has ended, so it isn't a continuing one' and calls the waiver argument 'strong' if the landlord knew by April 1, but the facts have the boyfriend staying until April 7, so the noncompliance was ongoing when April rent was paid, and 83.56(5)(a) does not waive a continuing noncompliance.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point: 'should have given you 7 days to fix it', 'The seventh day after you got it is April 13, 2026', 'Don't ignore the notice', and on 83.60(1)(a) 'It is not settled whether it reaches this kind of case.'"
+ },
+ "notice-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point: 'Only a court case can do that', 'Don't ignore the letter, because your landlord can still sue you', 'Whether this flaw defeats the termination is for a court', and 'fixing the problem is not a right.'"
+ },
+ "notice-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, including 'probably the wrong kind', 'the 7 days run to April 13, 2026', 'don't ignore the notice', and 'It's not settled whether it applies to your kind of case.'"
+ },
+ "notice-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It's not settled', says 'Because noise is on neither list, this is not settled' and that the lists are examples, gives both readings, and says 'Your landlord needs a court case' and 'you can be sued if you ignore it' with May 11, 2026."
+ },
+ "notice-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It isn't settled', gives both readings after 'A first noise complaint is on neither list, and both lists are only examples', and says 'Your landlord needs a court case' with May 11, 2026."
+ },
+ "notice-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It isn't settled', says 'A first noise complaint fits neither list neatly' and 'Both lists are only examples', gives both readings, and says 'Your landlord needs a court case' with May 11 and 'If you stay and the landlord sues.'"
+ },
+ "notice-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'Fixing the problem is not a right under this kind', 'ends about January 15, 2027. March 20 is well inside it', 'The letter alone doesn't put you out' and 'The 7 days run to March 30', and notes 'The statute doesn't define similar' though not that the tenant may ask the landlord; 'A 12-month stand-in' is odd but harmless wording."
+ },
+ "notice-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'fixing the problem is not a right under this letter', '12 months from the warning runs to about January 15, 2027' and 'March 20 falls inside that window', 'The letter alone doesn't put you out', 'the 7 days end March 30', and 'Your landlord could choose to accept a promise'."
+ },
+ "notice-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'the law lets your landlord skip the fix it step', 'Twelve months from the warning runs to about January 15, 2027. March 20 falls well inside that', 'Your landlord has to win a court case', 'March 30 the last day', and 'you can ask your landlord to take it back'."
+ },
+ "notice-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'On those facts, the landlord gave up ending the lease or suing over the March 14 fight', 'The landlord could still act on a new incident', 'This is a defense you would raise if the landlord tried to evict you', and taking only 'partial rent' does not give up the right."
+ },
+ "notice-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'that gives up the right to end your lease over that fight', 'A new incident could lead to a new notice', and 'You can raise it as an answer to the notice, or as a defense if you are sued'; 'within 5 days after you are served' omits the weekend and holiday exclusion, a harmless shortcut that only makes the stated deadline stricter."
+ },
+ "notice-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'it most likely gave up the right to end your lease over the March 14 fight', 'The waiver only covers the March 14 incident', and 'Accepting the April rent would be one of your defenses'; 'Rent for a later month' not being covered is awkward but harmless."
+ },
+ "notice-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It isn't settled', says 'I'm choosing neither', gives both readings and says 'If the dog is gone by then, you meet the deadline whichever way the waiver argument comes out' with March 16, 2026, and treats the manager's sighting under 'Knowledge'."
+ },
+ "notice-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says of removing the dog 'You wouldn't be admitting anything', an assurance with no support in the statute or the lease.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It isn't settled', gives both readings and says 'Removing the dog by then meets the notice's demand whichever side is right about waiver'; 'four times' counts payments, not a length of time, so it is not a counting mistake."
+ },
+ "notice-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'it is not settled', gives both readings ('Taking rent then gives up nothing' and 'Only a new violation starts the clock again'), and says getting the dog out 'by March 16, 2026' 'meets the notice's deadline however the waiver argument turns out', tying the manager's sighting to the landlord 'knowing about the dog'."
+ },
+ "notice-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   false
+  ],
+  "reason": "The opening 'A text is probably not a notice in the form the statute names' tilts one way before saying the law does not settle it, so the first point fails even though the details give two even readings and 'Moving the car by February 23 works under both readings'; the optional point lacks that the landlord could send a proper notice."
+ },
+ "notice-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens 'Whether a text counts as a legal notice is not settled in Florida's statute', labels 'Reading one' and 'Reading two' without a lean, and says moving by February 23 'protects you whichever reading is right'; the optional point lacks only that the landlord could send a proper notice."
+ },
+ "notice-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens 'The law is not settled on whether a text counts as a legal notice', gives both readings, and says 'If you move the car by February 23, you are covered under both readings'; the optional point is false only because it never says the landlord could send a proper notice."
+ },
+ "notice-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'The notice only works if the damage was your intentional act' is a flat rule without support: 83.56(2)(a) gives intentional damage only as an example ('include, but are not limited to'), and 83.52(6) also reaches damage the tenant permits.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with reading the summons for the deadline 'to pay rent into the court or file a motion about the amount', gives '5 days after service, not counting Saturdays, Sundays, and legal holidays' with the waiver and default, and says 'you only get to make that argument if you meet the rent deadline', but overstates the rule with 'only works if'."
+ },
+ "notice-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with acting on the papers and paying 'into the court registry, or file a motion about the amount, within 5 days (not counting weekends or court holidays)', states the 'absolute waiver' and default, says 'You can only make that argument if you keep your defenses by meeting the deposit rule', and says 'Other court steps ... are outside this tool'."
+ },
+ "notice-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Never states the 5 days, saying only 'The deadline is short' and 'Read the summons for the exact deadline', so the first point fails, though it gives the registry rule, the 'absolute waiver', and 'you only keep it if you meet the rent requirement'; its paraphrase of 83.52(7) as conducting themselves 'properly' is loose but harmless because 83.52(6) carries the point."
+ },
+ "notice-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'Moving out by June 8 meets the notice, but you are not fully done', says 'Whether you still owe July rent is not settled' with 'No more rent' and 'Rent can continue' readings, says the landlord 'must follow the deposit steps (83.56(6))', and gives 'that date is today, June 1' with the landlord 'relieved of the claim-notice step' if it is missed."
+ },
+ "notice-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'whether you still owe rent through July is not settled', gives 'For you' and 'For the landlord' readings, requires a certified-mail claim notice within 30 days for the deposit, and says 'the last day is June 1, which is today' with the landlord 'relieved of the claim-notice rule' if it is missed."
+ },
+ "notice-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'leaving does not by itself settle what you owe' and 'I lean neither way' with 'Reading one' and 'Reading two', says 'your landlord must follow the deposit rules (83.56(6))', and gives 'June 1, which is today' with the landlord 'excused from sending its deposit notice' if it is missed."
+ }
+}

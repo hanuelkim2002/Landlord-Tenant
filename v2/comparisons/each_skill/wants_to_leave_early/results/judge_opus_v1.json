@@ -1,0 +1,458 @@
+{
+ "leave-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Makes the required points ('giving notice won't end your lease', 'I can't give you one number', 'The last day to do that is March 24') but no release or buyout; 'The most it could be is rent as it comes due through July' leaves out damage and court costs but is no single total, so it is only a wording note."
+ },
+ "leave-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Makes the required points ('Giving notice doesn't cancel the lease', 'Which one is the landlord's call', 'the last day for the notice is March 24') but offers no written release or buyout; 'Once you've moved out, the landlord has 15 days' loosely restates a clock 83.49(3)(a) runs from termination, yet 83.49(2)(d) itself says 'after you move out', so it is only a wording note."
+ },
+ "leave-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens 'Yes, you can give notice and move out' and at once adds 'the notice doesn't end your lease', then makes the required points ('The landlord makes this choice, and I can't tell you which one it will be', 'March 24, 2026') but no release or buyout; 'rent until the landlord re-rents' simplifies the shortfall rule it states correctly later, only a wording note."
+ },
+ "leave-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives the fee, rent, damage, waiver and both dates, but says 'Your landlord could still try a different remedy, so I can't promise $2,100 is the final amount' and 'Which one the landlord uses is the landlord's choice', listing 'wait and charge you rent as it comes due', which the addendum's waiver and clause 11 rule out, even with its hedge 'not settled by the statute's text'."
+ },
+ "leave-2/2": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence says only that the fee 'looks valid', not what is owed, and despite quoting the waiver it tells the tenant 'Your landlord still has other options under the law, so I can't give you one firm total', including 'Wait and hold you liable for rent as it comes due', which the addendum's waiver and clause 11 rule out, so the mistake is marked though the words are 'instead of' rather than 'after' the fee."
+ },
+ "leave-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives the fee, rent, damage, waiver and both dates, but says 'the law lets the landlord choose among several remedies', lists 'Wait and charge you rent as it comes due', and leaves it open ('Reading it the other way, the landlord chooses among the four'), which the addendum's waiver and clause 11 close, so the mistake is marked though this is the most hedged of the answers that raise it."
+ },
+ "leave-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Treats both as the fee without using a 'whatever it is called' phrase ('that forfeiture depends on the same missing addendum'), ties keeping the deposit to 83.49(3)(a), says 'The choice is your landlord's, and I can't say which one it will be', gives March 8, and notes 'It can still sue you for damages'."
+ },
+ "leave-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says the fee option 'looks unavailable' and 'I can't say which one the landlord will pick', but does not treat the deposit loss as the same fee ('It does not mention keeping the deposit as well') and never ties keeping it to 83.49(3); 'Open question' softens the fee point, while 'Your reading' (the tenant gave none) and the misquote 'not more than 2 months' rent' are wording notes only."
+ },
+ "leave-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says the fee option 'doesn't appear to be open to your landlord' and picks no remedy, but never calls the deposit loss a fee whatever its label and declines the deposit question ('I have not looked at the deposit rules in 83.49 for this answer'); the hedge 'I would not treat section 11 as settled either way' softens the fee point without reversing it."
+ },
+ "leave-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true
+  ],
+  "reason": "It says the fee is over the cap and leaving is not free, but leaves the result open, \"It could be void entirely, or enforceable only up to $2,100. I can't settle that for you,\" so it misses that the fee is not cut down."
+ },
+ "leave-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true
+  ],
+  "reason": "It gets the cap and the landlord's other choices right but leaves the fee's fate open, \"A court enforces only up to the limit. The landlord could then claim up to $2,100\" and \"I can't tell you which reading a court would follow,\" so it never says the fee is not cut down."
+ },
+ "leave-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "It treats a court enforcing the full $3,000 as an open possibility (\"The statute doesn't say whether a court would cut the fee to $2,100, throw out the addendum, or enforce the amount. I can't pick one\"), but 83.595(4) allows the charge only \"if the amount does not exceed 2 months' rent.\"",
+  "points_made": [
+   false,
+   true,
+   true
+  ],
+  "reason": "\"Probably not the full $3,000\" and \"I can't pick one\" stop short of saying the fee falls away and is not cut down, though the other choices and both notice dates are right."
+ },
+ "leave-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "It says the tenant owes \"not the $2,100 fee and not rent through July\" and \"Your lease can't take that right away\" but omits retaliation and the 7-day notice; \"check that your letter's date is not earlier than May 6\" is a needless but harmless hedge given the stated May 31."
+ },
+ "leave-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "It says \"May 31 is after May 6\" and that the fee and later rent are \"other rent or damages,\" but omits retaliation and the 7-day notice; \"The statute does not set the exact proration or how it is paid\" is loose wording, since 83.682(4) ties payment to the lease's schedule, but harmless here."
+ },
+ "leave-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "It says \"You would owe rent only up to your termination date, May 31. You would not owe the $2,100 fee or rent through July\" and that \"A lease or addendum can't make you pay the fee,\" but raises neither retaliation nor the 7-day notice."
+ },
+ "leave-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "It says \"your portal requests don't count as that notice,\" gives \"two readings\" on both open questions, and says \"Which choice the landlord makes is the landlord's decision,\" but gives no last day for the 7-day notice and does not raise 83.63."
+ },
+ "leave-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "It says \"Neither says you will end the lease, so neither is that notice,\" gives \"Reading one\" and \"Reading two\" on both open questions, lists the landlord's options, and says \"that date is May 8,\" but does not raise 83.63."
+ },
+ "leave-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "The notice route and May 8 are right, but on materiality it adds \"Those facts support the second reading, but a court decides,\" which leans rather than staying neutral (a lean, not the flat statement the mistake requires), and it does not raise 83.63."
+ },
+ "leave-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true,
+   true
+  ],
+  "reason": "Gives both 83.63 choices and weighs the facts with \"The statute doesn't say how much damage counts,\" but on notice says only \"Section 83.63 doesn't say how to tell the landlord,\" which leaves the method open and never says no notice or waiting is required."
+ },
+ "leave-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"smoke and water damage affects the whole home,\" but the facts place the damage in the kitchen and living room and say the bedroom and bathroom can be used.",
+  "points_made": [
+   true,
+   true,
+   false,
+   true,
+   true
+  ],
+  "reason": "Gives both choices and sets the facts on each side with \"The statute doesn't define it,\" but says only \"Section 83.63 doesn't say how to give notice,\" so it never says no notice or waiting is required."
+ },
+ "leave-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true,
+   true
+  ],
+  "reason": "Gives both choices and sets the facts on each side under \"'Substantially impaired' isn't defined\" (\"badly damages\" is a plain paraphrase, not a test), but says only \"Section 83.63 doesn't say how to give notice\" and then speaks of \"the written notice,\" so it never says no notice or waiting is required."
+ },
+ "leave-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Applies 83.512, says \"give written notice and hand back the apartment by July 20, 2026\" and \"The lease ends when you hand back possession,\" gives the refund and unpaid rent and raises 83.63 with its conditions; the aside that a landlord \"could argue\" about a full year is called weak and is harmless."
+ },
+ "leave-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Applies 83.512 with \"a written termination notice and move out by July 20, 2026,\" the correct date, and gives the refund and unpaid rent, but raises neither 83.63 nor the start date of 83.512, which is only the optional point."
+ },
+ "leave-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Applies 83.512, requires \"written notice and hand back possession of the apartment by July 20, 2026,\" says \"A notice alone does not end the lease,\" gives the refund and unpaid rent, and raises 83.63 with its conditions."
+ }
+}

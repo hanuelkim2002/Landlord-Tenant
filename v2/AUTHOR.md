@@ -156,3 +156,6 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     noncompliance").** You agree the words point one way, that nothing is given up. Before the repair skill and its
     stories 2, 3, and 9 change from "not settled", someone checks Florida case law on that sentence. Until then the
     7-day notice skill matches the repair skill, and its story notice-6 runs but is not counted.
+    So far (2026-10-30): the three opinions in `../v1/cases/` that hold the words only quote them (Multach v. Adams, K.D.
+    Lewis v. Smith; Wolf v. State quotes the (2)(a) phrase in a jury instruction), and one web search found no appellate
+    decision on them. Neither rules one out. A Westlaw or Lexis search is still yours to run.

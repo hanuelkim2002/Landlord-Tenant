@@ -5,8 +5,8 @@ mistakes are in SLIPS.md.
 
 ## Now
 
-- Leaving early and the 7-day notice: drafted; on the author's OK (AUTHOR.md item 21), apply the answers, run the test
-  (`comparisons/each_skill/`), one round of fixes, trim both skills.
+- Leaving early and the 7-day notice: tested (`comparisons/each_skill/README.md`). On the author's OK, one round of
+  fixes, rerunning the missed stories; then trim both skills.
 
 ## Later
 

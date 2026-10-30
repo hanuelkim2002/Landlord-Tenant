@@ -380,3 +380,10 @@ is "material" is not settled. Both opening lists name every section used; the gr
 A fee after military orders is not owed, and a fee over two months' rent falls away (both were "not settled"). The 12
 months use `count_days(date, 365)`, with a one-day band, replacing "check a calendar". The repair skill loses "from other
 tenants" and names 83.48 and 83.59. notice-6 runs but is not counted until the case-law check (AUTHOR.md 22).
+
+## 2026-10-30: the leaving-early and 7-day-notice test, run and graded
+
+Both new skills against v1's, 102 answers on Sonnet, six Opus graders, blind; $9.92. Right of 24: leaving early, new 23,
+v1 12; the 7-day notice, new 20, v1 13, with one grader's verdict changed in `review.json`. Misses sorted in
+`comparisons/each_skill/README.md`; new SLIPS.md entries. The graders' instructions now say packets hold no tool calls.
+Nothing in the app replaced.

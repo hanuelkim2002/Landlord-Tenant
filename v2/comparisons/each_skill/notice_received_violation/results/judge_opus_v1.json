@@ -1,0 +1,479 @@
+{
+ "notice-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Gives the date and both fixes but never mentions the 12 months and never says a court case is needed, only that the landlord 'could file an eviction case'; it does not claim fixing ends the matter for good, since it limits the point to 'based on this notice.'"
+ },
+ "notice-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, with the repeat rule in 'the landlord can end your tenancy without another chance to fix it' and the court rule in 'Only a court can order you out', and declines the 12-month date: 'it can't compute that 12-month period.'"
+ },
+ "notice-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says the waiver rule 'doesn't clearly cover rent paid before the landlord sent the notice', but 83.56(5)(a) turns on the landlord's actual knowledge when it accepts rent and draws no line at the notice.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Gives the date, both fixes, and the repeat rule ('may be ended without another warning or chance to fix it') but never mentions a court case or says the notice does not itself put the tenant out."
+ },
+ "notice-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Says 'only a court can order you out', 'through April 13, 2026', 'It means the landlord could then file a case', and that the wrong notice is a defense a court decides, which conveys the warning without a literal 'don't ignore', but it omits 83.60(1)(a)."
+ },
+ "notice-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "Makes the wrong-notice point ('I think it was the wrong kind of notice') and the court and date point ('which means a court case', 'April 13'), but gives no warning that the landlord may still sue, only 'I wouldn't treat the lease as over', and omits 83.60(1)(a)."
+ },
+ "notice-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "Says 'The letter doesn't make you leave on its own' with 'No eviction case has been filed' and the April 13 date, and calls the flaw 'a question for a court', but never warns against ignoring the notice or that the landlord may still sue, and never mentions 83.60(1)(a)."
+ },
+ "notice-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   false,
+   true
+  ],
+  "reason": "Opens with a lean, 'Probably not, but the law doesn't settle it', and on removal says only 'this letter is not a court order' without saying the landlord needs a case or may sue after May 11, though it gives both readings and cites 83.60(2)."
+ },
+ "notice-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens with a lean, 'may not be able to end your lease this way', and never says noise is off the fix list or that the lists are only examples, though it gives both readings and says 'the landlord still has to file an eviction case' with May 11."
+ },
+ "notice-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens by leaning, 'Your landlord probably can't end your lease this way', so it fails the neutral opening, though 'The law doesn't settle the point completely' keeps it from a flat statement, and it gives both readings, the court rule, and May 11."
+ },
+ "notice-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says 'The statute doesn't settle which reading a court would pick' on whether this repeat party gets a chance to fix it, but 83.56(2)(a) expressly covers a subsequent noncompliance within 12 months of a written warning of a similar violation and a subsequent unreasonable disturbance.",
+  "points_made": [
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "Says 'The law doesn't give you a right to a second chance here' and 'Your landlord could still choose to let you stay', but leaves the 12 months to the reader ('you can see both dates') and never says the landlord needs a court case, only 'If your landlord files one, you would raise your defenses there'; 'exists only when the notice offers it' is loose wording the answer then qualifies."
+ },
+ "notice-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says 'The law doesn't settle this' about whether this repeat party gets a chance to fix it, but 83.56(2)(a) expressly covers a subsequent noncompliance within 12 months of a written warning of a similar violation and a subsequent unreasonable disturbance.",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens 'Probably not' and says the letter 'doesn't offer a chance to fix the problem'; it will not compare the dates ('you can see both dates') but says 'the repeat-within-12-months wording in (2)(a) works against you', says the landlord 'would have to file a court case first' with the 7 days running 'through March 30', and says nothing about asking the landlord or 'similar' being undefined."
+ },
+ "notice-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says 'The statute doesn't settle which paragraph a second noise incident falls under', but 83.56(2)(a) expressly covers a subsequent noncompliance within 12 months of a written warning of a similar violation and a subsequent unreasonable disturbance.",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says the letter 'doesn't offer a chance to fix the problem', that 'your facts point to both' routes and 'both dates are in 2026', and 'Your landlord can't remove you without filing a court case' with the 7 days ending 'March 30, 2026', but nothing on asking the landlord and no note that 'similar' is undefined."
+ },
+ "notice-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'the landlord gave up the right to end your lease over that fight', 'If something new happens, the landlord could act on it', 'You would raise these points as defenses in that case', and cites the partial-rent exception and 83.60(2)."
+ },
+ "notice-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'that probably means the landlord gave up the right to end your lease over that March 14 fight', 'The waiver covers only that fight', and 'a defense is raised in that case'; 'the case can go forward without you' is a loose but harmless summary of the default judgment rule."
+ },
+ "notice-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the landlord 'gives up the right to end the lease for that violation', 'a new incident would not be covered', 'the waiver is something you raise in that case', and cites the partial-rent exception and 83.60(2)."
+ },
+ "notice-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'Maybe' with 'the law doesn't settle it', gives both readings and says 'If you fix it in time, the landlord can't end the lease on this notice' with 'March 16, 2026'; 'four times' counts payments, not a span, and 'You handed over and received the notice' is a harmless slip."
+ },
+ "notice-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives both readings but does not open unsettled and leans to the landlord ('it probably doesn't fully protect you', 'The carve-out's wording favors the landlord's reading'), while 'Removing the dog by then would take away the landlord's basis' makes the fix point with no limit to one reading."
+ },
+ "notice-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'The law doesn't settle whether that counts as continuing', gives 'Reading that helps you' and 'Reading that helps the landlord', and says 'Removing the dog by March 16 is the one step that works under every reading'; 'the one step' overlooks written consent under lease clause 11 but is harmless since consent is up to the landlord."
+ },
+ "notice-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens 'Whether a text counts as a legal notice is not settled', gives 'Reading 1' and 'Reading 2' with no lean, and calls fixing by February 23 'the safest step whichever way the text question is decided'; the optional point is false because it never says the text alone does not put the tenant out, and 'before February 23' is harmless, slightly early wording."
+ },
+ "notice-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   false
+  ],
+  "reason": "The opening 'A text probably isn't a proper written notice under Florida's statute' leans one way, so the first point fails though it later says 'The statute doesn't settle' it and gives both readings, while 'before February 23, 2026' and 'under either reading' meet the date point; the optional point covers only the parking list."
+ },
+ "notice-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens 'The law doesn't clearly settle whether a text counts as a valid notice', gives two readings with 'I can't tell you which reading a court would pick', and says moving the car 'by February 23' protects 'under either reading'; the optional point lacks that the notice does not itself put the tenant out and that a proper notice could follow, and the mention of 'Section 83.56(6)' is an odd but harmless aside."
+ },
+ "notice-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Leads with 'You must pay the rent into the court registry, or file a motion', gives '5 days, excluding Saturdays, Sundays, and legal holidays' and the 'absolute waiver', and says the court decides the door dispute 'only if you meet the deadline first'; the optional point is false because it never says other court steps are outside the tool."
+ },
+ "notice-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Leads with paying 'the rent into the court's registry or file a motion about the amount' 'within 5 days of being served, not counting weekends and court holidays', states the waiver and default, and says the defense 'only counts if you meet that deadline'; 'probably only days away' is a loose description of the 5-day rule, not a count, and it gives no date."
+ },
+ "notice-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Leads with 'pay the rent into the court registry, or file a motion asking the court to set the amount', quotes '5 days, excluding Saturdays, Sundays, and legal holidays', states the waiver and default, and says 'Once you've done that' the door defense can be raised; the optional point is false because it never says other court steps are outside the tool."
+ },
+ "notice-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'You may not be done with money' and 'The law doesn't settle whether you owe rent', gives 'Rent stops' and 'Rent may continue' without a lean, says 'the landlord must follow the deposit rules', and gives 'the last day for that notice is June 1, which is today' with the landlord freed from the claim notice if it is missed."
+ },
+ "notice-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'It does not clearly end what you owe' with two readings and no lean, ties any claim to 'the claim steps in the statute', and gives 'June 1, which is today'; 'June 9 through July' is only the day after the move-out date, not a counted deadline, and 'can also keep the deposit' is loose wording that its next lines narrow to the repair cost."
+ },
+ "notice-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'You can't be sure you're done' and says 'I'm not leaning either way' over two readings, ties any deposit claim to 'a formal written notice in time' so 'can likely keep part of it' is not a flat loss, and gives 'June 1, which is today' from the tool with the landlord 'relieved of the duty to send the deposit-claim notice' if it is missed."
+ }
+}

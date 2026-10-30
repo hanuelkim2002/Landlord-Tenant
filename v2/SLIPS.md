@@ -41,6 +41,10 @@ against rule 7).
   repair for several days after your notice" (story 7), a span with no number. keys2, same graders: 4 of 27.
 - 2026-10-29, after rule 7 named vague spans and allowed the start date: 0 of 27 by `spans.py`, which now finds
   vague spans too; the run before, 1. No span in the tenant's words either (the run before, 5).
+- 2026-10-30, the leaving-early and 7-day-notice tests (51 answers each way, Sonnet 5.5): new 1, "well over 30 days
+  after the office received it" (leave-5). Old versions 2, "June 9" for the day after a count (notice-9) and "accepted
+  rent for months" (notice-6). `spans.py` also counts words from the statute and the lease ("2 months' rent", "14 nights
+  in any six months"); those were read by hand and left out.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -69,6 +73,9 @@ The skill marks a point as not settled, with a reading on each side; the answer 
   v1 3 of 3, new 0 of 3.
 - 2026-10-28, repair rerun, story 7: both readings of when the lease ended, then one outcome for both ("Under either
   reading, the 15-day return date ... has passed"), keys2 2 of 3; v1's first-round answers, regraded, 2 of 3.
+- 2026-10-30, the two new tests: a lean, "A text is probably not a notice in the form the statute names" (notice-7,
+  new 1 of 3, old 1 of 3). Old versions also lean on a first noise complaint (notice-3, 3 of 3), on a dog still there
+  (notice-6, 1), and on how serious a leak is (leave-6, 1).
 
 ## Says the balance is due on day 30 after an objection
 
@@ -118,6 +125,10 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
   that notice is needed only for the 83.51(1) defense if sued for rent (83.60(1)), and ending the lease needs none).
 - 2026-10-29, the rule 7 run's answers regraded beside the fixes: story 6 once, "Your lease is month to month, so your
   landlord can generally change the rent", against the lease's clause on changes in a writing both sign.
+- 2026-10-30, the two new tests: new 3 of 51. "The notice only works if the damage was your intentional act" (notice-8;
+  the statute's list is only examples). "You wouldn't be admitting anything" (notice-6, no support). A guest's stay
+  called "a one-time event that has ended" when it ran past the rent payment (notice-2). Old versions: "doesn't settle"
+  for a repeat the statute covers (notice-4, 3 of 3); "affects the whole home", against the facts (leave-7).
 
 ## Does not load the skill
 
@@ -130,6 +141,7 @@ never read.
 - 2026-10-28, repair rerun: keys2 0 of 27, v1 0 of 15.
 - 2026-10-28, the repair skill under the new rule 7: 2 of 27, both story 6 (retaliation), which read 83.64 itself and
   was right both times.
+- 2026-10-30, the two new tests: new 0 of 51; old 1 of 51 (leave-8, read 83.512 itself and was right).
 
 ## Empty answer
 
