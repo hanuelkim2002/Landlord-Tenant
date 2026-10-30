@@ -208,5 +208,5 @@ grader, blind; $0.63. Right 4 of 6 (3 of 6 before). All three lawsuit answers no
 not called over. Both misses are new model slips, in SLIPS.md: a closed list, and a burden of proof. Quotes not found
 in the new answers: 5 of 271 (8 before), by the same count.
 
-Then both skills were trimmed (about 3,590 and 3,380 words, from 3,820 and 3,560): repeated lines and long quotes put in
+Then both skills were trimmed (about 3,590 and 3,470 words, from 3,820 and 3,590): repeated lines and long quotes put in
 cited plain words, with no citation lost. The trim has not been run live; these scores are from the longer text.

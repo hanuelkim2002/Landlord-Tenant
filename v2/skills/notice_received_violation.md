@@ -118,4 +118,4 @@ If the landlord sues: "Any tenant who wishes to defend against an action by the 
 - Explaining how to defend a case without 83.56(5)(b) and 83.60(2), leaving out its 5 days, or giving a calendar date for them.
 - Saying a kind of notice fits only if the conduct is on one of the statute's lists. The lists are only examples.
 - Working out when 12 months end except by count_days(the date, 365), writing any date count_days did not give you, or counting how long something has lasted or how long until a date. Setting a date from the facts beside a date count_days gave is not counting.
-- Stating a test for "material", "reasonable", "similar", or "unreasonable disturbance", or who must prove what, that the statute does not give.
+- Stating a test for "material", "reasonable", "similar", or "unreasonable disturbance" that the statute does not give.
