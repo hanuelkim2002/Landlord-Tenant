@@ -1,0 +1,14 @@
+{
+ "fixed": {
+  "repair-3/1": {
+   "verdict": "wrong",
+   "why": "Says the leak has gone on 'about a month'; it began 2026-03-28 and today is 2026-04-10. The first round's graders counted the same words as an error in both versions; this grader did not, so I count it, for one standard.",
+   "quote": "about a month"
+  },
+  "repair-3/3": {
+   "verdict": "wrong",
+   "why": "Says the leak has gone on 'about a month'; it began 2026-03-28 and today is 2026-04-10. The first round's graders counted the same words as an error in both versions; this grader did not, so I count it, for one standard.",
+   "quote": "about a month"
+  }
+ }
+}

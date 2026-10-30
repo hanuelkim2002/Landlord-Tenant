@@ -57,6 +57,11 @@ check("a lease quote checks out in the lease",
 check("a bracketed change and bold marks are not counted as changes",
       quotes('It "forfeit[s] the right to impose a claim upon the **security deposit**" (83.49(3)(a)).')[0]["ok"])
 check("a short quotation (under 20 characters) is not checked", quotes('It is "certified mail" here.') == [])
+check("a section number written without the stored text's space, s. 83.51(1), checks out",
+      quotes('The defense needs "a material noncompliance with s. 83.51(1)" (83.60(1)(b)).')[0]["ok"])
+check('a cut written ". . ." is read as a cut',
+      quotes('A tenant may not "damage . . . any part of the premises . . . nor permit any person to do so" '
+             '(83.52(6)).')[0]["ok"])
 first = quotes('Under 83.49(5), failing to give notice "relieves the landlord of the notice requirement of paragraph (3)(a)."')
 check("a statute quote whose cite comes first checks out", first[0]["ok"] and first[0]["where"] == "Fla. Stat. 83.49(5)")
 two = quotes('Under the "Notices" part of your lease, it says "delivered by hand to the office, or sent there by '
@@ -79,6 +84,17 @@ wrong_part = law.check_quotes('"must give at least 7 days’ written notice by c
 check("a real quote cited to the wrong paragraph is caught", wrong_part and not wrong_part[0][2])
 check("a cite finds its paragraph", law.cited_text("83.49(3)(b)").startswith("(b) Unless the tenant objects"))
 check("the history note is not part of the cited words", "History" not in law.cited_text("83.505(6)"))
+# The statute often writes a subsection and its first paragraph run together, "(2)(a) Unless", with no space.
+check("a run-together part is found: 83.51(2)(a)",
+      (law.cited_text("83.51(2)(a)") or "").startswith("(a) Unless otherwise agreed in writing"))
+check("the parts after it are found: 83.51(4)",
+      (law.cited_text("83.51(4)") or "").startswith("(4) The landlord is not responsible"))
+check("83.51(1)(b) stops where (2) starts", "Unless otherwise agreed" not in law.cited_text("83.51(1)(b)"))
+check("83.60(1)(b) and 83.56(5)(a) are found",
+      (law.cited_text("83.60(1)(b)") or "").startswith("(b) The defense of a material noncompliance")
+      and (law.cited_text("83.56(5)(a)") or "").startswith("(a) If the landlord accepts rent"))
+check("a cross-reference like 'paragraph (3)(a)' starts no part",
+      "(5)(a)" not in law.parts_of(law.section_text("83.49")))
 
 # ---- count_days (tools.py), with facts made up for the test
 
@@ -227,7 +243,15 @@ check("a heading with nothing under it gives no empty box",
 # reply shows whole again.
 check("the rules ask for the marker the page looks for",
       f"a line with only {chat.DETAILS} on it" in chat.RULES
-      and "### Does Florida's deposit law cover you?" in chat.RULES)
+      and "### Did your letter count as notice?" in chat.RULES)
+# The model copied the old example, "### Does Florida's deposit law cover you?", into a box of its own for the
+# college check (comparisons/each_skill/README.md, 2026-10-28).
+check("the rules' example heading is not about whether the law covers the tenant",
+      "law cover you" not in chat.RULES)
+# The model counts time spans itself unless rule 7 names them, vague ones too (comparisons/each_skill/README.md).
+check("rule 7 names time spans: the tenant's words, the start date, or nothing",
+      "how long something has lasted" in chat.RULES and '"several days"' in chat.RULES
+      and "only in the tenant's own words, give the date it began from the facts" in chat.RULES)
 
 # ---- Reading the lease (lease.py), with a stand-in for the vision model, so no model is called
 

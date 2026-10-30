@@ -28,6 +28,19 @@ against rule 7).
   "July 2026" as July 20; the counts above were not rechecked.
 - 2026-10-25, memory test (`comparisons/memory/`, Sonnet 5.5): 1 of 18, new memory, leave-early story: "May 15 to
   July 31 would be about 2.5 months", a period it worked out itself.
+- 2026-10-28, repair skill test (`comparisons/each_skill/`, Sonnet 5.5), story 3: a leak that began 13 days
+  before called "about a month" or "over a month" (new skill 2 of 3, v1 2 of 3), and once (new) "the 7 days would
+  probably not be over by May 1" for a notice delivered April 10.
+  After the round of fixes (shared skill only changed): 2 of 3 again.
+- 2026-10-28, repair rerun on the new keys (Sonnet 5.5): story 2's outage, 23 days, called "more than three weeks"
+  or "about three and a half weeks", keys2 3 of 3; story 3, 0 of 3. Spans that repeat the tenant's words not counted.
+- 2026-10-28, five ways side by side (repair stories 1, 2, 3, 7, 9; `comparisons/each_skill/README.md`): answers with
+  a span the model counted, of 15: current 3, v1's rule 1, rule 7 naming spans 1, code's day counts 5, both 3. With
+  code's counts it also misapplied one ("more than 9 weeks" for a leak that ended 26 days in).
+- 2026-10-28, the repair skill under rule 7 naming spans (all nine stories, graded beside keys2): 1 of 27, "no
+  repair for several days after your notice" (story 7), a span with no number. keys2, same graders: 4 of 27.
+- 2026-10-29, after rule 7 named vague spans and allowed the start date: 0 of 27 by `spans.py`, which now finds
+  vague spans too; the run before, 1. No span in the tenant's words either (the run before, 5).
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -52,6 +65,10 @@ The skill marks a point as not settled, with a reading on each side; the answer 
 - 2026-10-24, the current skill on Sonnet: after the no-lean line, still a lean where the skill does not mark the
   point not settled: story 11 ("Probably yes" on the college question), story 18 ("Yes, the 30-day deadline has
   passed" after an objection), story 9 once.
+- 2026-10-28, repair skill test (Sonnet 5.5), story 2: "You probably can move out" on the hot-water question,
+  v1 3 of 3, new 0 of 3.
+- 2026-10-28, repair rerun, story 7: both readings of when the lease ended, then one outcome for both ("Under either
+  reading, the 15-day return date ... has passed"), keys2 2 of 3; v1's first-round answers, regraded, 2 of 3.
 
 ## Says the balance is due on day 30 after an objection
 
@@ -88,6 +105,19 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
   unless your landlord shows it has a right to keep some of it", story 14; the landlord "would have to show the
   carpet damage is more than ordinary wear", story 18); old rules 1 of 54 (the fee might be a deposit "under another
   name", against the confirmed facts, story 12).
+- 2026-10-28, repair skill test (Sonnet 5.5): v1 8 of 21 answers (a lease cannot change the hot-water duty; 83.64
+  bars any retaliatory end; no way to sue over a rent increase; the 83.60 defense only in an eviction), new 1 of 21
+  (story 7: the repair question "does not change the notice rules").
+- 2026-10-28, repair rerun: keys2 2 of 27 (83.51(4) read as making the landlord answer for whatever the tenant did
+  not cause, story 8; "no defense based on the garage", though 83.60(1)(a) allows other defenses, story 9). v1's new
+  answers 5 of 15, stories 8 and 9 (the 83.56(1)(b) rent cut for the landlord's own repaving, twice; ending the
+  lease "the only remedy" rent paid could affect; notice before May 1 "avoids" that question; the garage "a
+  structural component", against the lease).
+- 2026-10-28, the repair skill under the new rule 7: 1 of 27 (story 2: stopping rent after moving out "isn't safe
+  yet, because your letter only said you would end the lease", as if the notice for holding back rent decided it;
+  that notice is needed only for the 83.51(1) defense if sued for rent (83.60(1)), and ending the lease needs none).
+- 2026-10-29, the rule 7 run's answers regraded beside the fixes: story 6 once, "Your lease is month to month, so your
+  landlord can generally change the rent", against the lease's clause on changes in a writing both sign.
 
 ## Does not load the skill
 
@@ -96,6 +126,10 @@ never read.
 
 - 2026-10-21, model test, deposit stories (skill not loaded for it, as on the page): nemotron 4 of 15 (sample lease)
   and 0 of 15 (own lease); haiku, gemini, sonnet 30 of 30.
+- 2026-10-28, repair skill test (Sonnet 5.5): new 1 of 21 (story 6, read 83.64 itself), v1 0 of 21.
+- 2026-10-28, repair rerun: keys2 0 of 27, v1 0 of 15.
+- 2026-10-28, the repair skill under the new rule 7: 2 of 27, both story 6 (retaliation), which read 83.64 itself and
+  was right both times.
 
 ## Empty answer
 
@@ -138,6 +172,16 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
 
 - 2026-10-26, deposit skill test (`comparisons/deposit/`, Sonnet 5.5, stories 16 and 18): 3 of 6 answers. A period
   added inside the quote 3 times; "forfeited the right" for the statute's "forfeits the right" once.
+- 2026-10-28, repair rerun (quotes not found word for word anywhere): keys2 4 of 193 ("will not pay rent by reason"
+  for "not to pay rent by reason"; "provision" for "provisions"; "beyond the landlord's control"; "is the landlord
+  covered", nobody's words); v1's new answers 4 times the sign's words from the facts, "closed until further notice".
+  Not slips: 7 more were right but flagged, since the stored text writes "s. 83.51 (1)" with a space (5) and the
+  check did not read ". . ." as a cut (2, v1). The check reads both since 2026-10-28.
+- 2026-10-28, the repair skill under the new rule 7: 3 of 183 ("beyond the landlord's control" twice, for "beyond
+  the control of the landlord"; "after delivery" for "after the delivery").
+- 2026-10-29, after the three fixes: 7 of 185. "due to causes beyond the landlord's control" 3 times, the repair
+  skill's own unquoted wording of 83.56(1), put in quote marks; "until further notice", the sign's words from the
+  facts, 4 times.
 
 ## Writes a short answer longer than asked
 
@@ -168,3 +212,24 @@ The reply names one of the model's tools, like "(count_days)", which means nothi
 
 - 2026-10-27, plain replies test (Sonnet 5.5): old rules 2 of 54, both in what the tenant sees first; new rules 1 of
   54, inside a box.
+
+## Gives the college-housing check its own point when the lease settles it
+
+The shared skill asks for one line when the lease shows no tie to a school; the answer gives it a box of its own and
+tells the tenant the noted fact waits for them to confirm.
+
+- 2026-10-28, repair skill test (Sonnet 5.5), story 3 (no `school_housing` in the facts): new skill 3 of 3, a box
+  titled "Does Florida's landlord-tenant law cover your home?"; once it names the fact as "school_housing = no".
+- 2026-10-28, after the shared skill asked for one line inside another point: 2 of 3 still give it a box. The reply
+  rules' example heading, "Does Florida's deposit law cover you?", may invite it.
+- 2026-10-28, repair rerun (keys2), story 3: 3 of 3, each a box titled "Does Florida's landlord-tenant law cover your
+  home?". The key now allows one line at most, as optional detail, so the graders did not count it.
+- 2026-10-28, the repair skill under the new rule 7, story 3: 3 of 3 a box of its own; once it ends "I've saved 'no
+  school housing' as a pending fact for you to confirm", which the grader read as asking (1 of 54 answers say so).
+  The example heading also shows up where the check is settled: "Does Florida's deposit law cover you?" in story 7,
+  2 of 3 in both versions. The example was changed on 2026-10-29.
+- 2026-10-29, after the example changed: story 3 still 3 of 3, each titled "Does Florida's landlord-tenant law cover
+  your home?", close to the shared skill's description ("Whether Florida's landlord-tenant law covers the tenant's
+  home at all"); no other story copies it now. Once, after noting the fact from the lease: "If the housing is run by
+  or for a school, tell me, because that would change the answer", rule 3's words ("Say how an unknown would change
+  the answer"). Graded as asking the college question.

@@ -1,0 +1,98 @@
+{
+ "repair-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Says 'You shouldn't just skip May rent', 'Your two phone calls don't count', the notice 'must name the leak, and must say you will not pay rent because of it', and gives the registry rule ('5 days, not counting weekends and legal holidays, after you are served') with no date; the optional third point fails only on school housing, which gets more than a line and a prompt to act ('I've noted this as school_housing = no, and you can confirm it in the sidebar'), though no question is asked."
+ },
+ "repair-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'You shouldn't stop paying yet', says the defense 'only opens after you give a written notice and 7 days pass, and your two phone calls don't count', quotes the registry rule '5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process' with no date, and covers ending the lease, damages, a code complaint with retaliation protection, 'material' unsettled, and one line on school with no question."
+ },
+ "repair-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'You shouldn't just skip May's rent', requires a written notice that 'names the problem and says you won't pay rent because of it' plus 7 days, says 'phone calls don't count', and gives the registry rule ('5 days, not counting weekends and court holidays, after you are served', 'an absolute waiver of the tenant's defenses other than payment') with no date; other paths, 'material' unsettled, and a one-clause school note with no question are all there."
+ },
+ "repair-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'Yes. The deposit is your money, and your landlord can't keep any of it without sending you a written claim', then gives both readings without a lean (2026-05-15 'has passed ... must return all $1,050' vs 2026-08-30 'has not passed ... could still send a proper claim notice'), and finds the April 2 hand-delivered letter with new address met 83.49(5) by the '2026-04-08' last day; all dates check out."
+ },
+ "repair-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It is not settled whether your landlord has already lost the right to keep any of your deposit', gives both readings evenly ('passed on May 15, and you should get all $1,050 back' vs 'still has until August 30'), notes the landlord 'may still sue you for damages after returning the deposit', and finds the April 2 hand-delivered letter with address before the 'last day ... April 8' met 83.49(5); it decides the deposit under 83.49, not the repair rules, and all dates check out."
+ },
+ "repair-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'Yes, the landlord has to return your $1,050 unless it properly claims part of it', then gives both readings without a lean (move-out: 'ran out on 2026-05-15 ... it would have lost the right to deduct anything'; lease end: 'until 2026-08-30'), resting them on the 'vacating ... for termination' wording and the 'WITHIN 30 DAYS AFTER YOU MOVE OUT' disclosure, and finds the April 2 hand-delivered letter with address met 83.49(5) ('The last day to give that notice was 2026-04-08 ... the landlord is not excused'); all dates check out."
+ }
+}

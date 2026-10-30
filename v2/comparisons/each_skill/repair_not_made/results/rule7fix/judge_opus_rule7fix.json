@@ -1,0 +1,506 @@
+{
+ "repair-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says the lease promises the AC but 'Florida's rent-withholding rule probably doesn't cover air conditioning', that withholding risks an eviction case 'you could lose', that the portal request 'isn't this notice', and that materiality is 'not settled', with the beyond-control rent cut, damages and fees."
+ },
+ "repair-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says the duty 'comes from your lease' not the statute's list, that 'you probably couldn't use the AC as a defense' with eviction and registry risk, that the portal request 'doesn't count as that notice', and that materiality is 'not settled'; gives the beyond-control rent cut and 83.55 damages but leaves out attorney fees."
+ },
+ "repair-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says the lease, not 83.51, makes the AC the landlord's job, that the rent-withholding defense 'doesn't cover it' and skipping rent invites eviction, that the portal request 'doesn't count as that notice', and that materiality 'is an open question'; 'you would have no good defense' is a slight overstatement, not an error."
+ },
+ "repair-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says 'The count runs from the day the landlord received the letter... Seven days from March 9 ended March 16, 2026', calls both the hot-water and March-rent questions open with two readings each, and says withholding 'has its own notice'."
+ },
+ "repair-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says 'The 7 days count from delivery, not mailing... so the 7 days ended March 16', gives both hot-water readings ('It isn't settled which list holds hot water') and both March-rent readings, and says 'Stopping rent while you stay is a different step'."
+ },
+ "repair-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says 'Counting from the March 9 delivery, the 7 days ended March 16', gives both hot-water readings and both March-rent readings without leaning, and keeps withholding separate ('would need its own written notice')."
+ },
+ "repair-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says 'Your two phone calls don't count as that notice', gives the 3-day demand and registry rule with a motion 'within 5 days (not counting weekends and legal holidays)', and covers ending the lease, both April-rent readings, retaliation, damages and fees without asking about school."
+ },
+ "repair-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   false,
+   false,
+   false
+  ],
+  "reason": "Gives the notice rule and registry rule but leaves the length to 'the deadline stated in your summons' (no 5 days), offers no other paths (no code complaint, damages, or fees), and asks about school housing with 'If the housing is run by or for a school, tell me'."
+ },
+ "repair-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says 'Your two phone calls don't count, and you have nothing in writing yet', gives the registry rule with 'The 5 days run from the day you are served', and covers ending the lease, both April-rent readings, damages and a code complaint (no attorney fees)."
+ },
+ "repair-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"I wouldn't hold back part of your rent over these two problems,\" limits the withholding defense to 83.51(1), says \"A portal message isn't one of the delivery methods in 83.56(4),\" leaves materiality \"isn't settled,\" and covers 83.55, 83.48, 83.47 and 83.56(5)(a); \"broken since April 20\" repeats the facts' dates, with no counting."
+ },
+ "repair-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "\"No, I wouldn't hold back part of your rent,\" with \"Your two portal requests don't qualify as that notice,\" materiality \"not settled,\" and \"Whether that clause covers a closure with no end date is not settled,\" plus 83.55, 83.48, 83.47 and 83.56(5)(a)."
+ },
+ "repair-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "\"You can't safely hold back part of your rent,\" with \"no statutory defense for these two items,\" notice \"by hand or certified mail,\" and \"Whether the dishwasher or the pool counts as serious enough to end the lease is not settled\"; \"July 31, 2026\" is the lease's own end date, not a worked-out date."
+ },
+ "repair-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true
+  ],
+  "reason": "\"you probably can't force the landlord to fix this one\" under 83.51(4) and the lease's guest clause; calling the remedies \"risky\" in the summary is backed by \"83.51(4) likely removes the landlord's duty\" in the details, so it never tells the tenant they may withhold or end the lease."
+ },
+ "repair-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true
+  ],
+  "reason": "\"Probably not,\" because the friend is \"a person on the premises with your consent\" under 83.51(4) and the lease says \"Tenant shall pay for repairing damage caused by ... Tenant's guests,\" so ending the lease or holding back rent \"probably won't work.\""
+ },
+ "repair-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true
+  ],
+  "reason": "\"Probably not,\" because \"the law excludes damage caused by a person the tenant let in\" (the details quote the full \"negligent or wrongful\" test and leave negligence to a court) and \"a notice to end the lease or to stop paying rent would not likely work.\""
+ },
+ "repair-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"It may be illegal, but I can't say for sure,\" covering 83.64(1)(a), the 83.64(4) \"treated differently\" prerequisite, good faith, and good cause \"for an eviction,\" giving \"complaint April 28, inspection May 5, rent letter May 8\" without counting and naming 83.55 (no 83.48); it does not raise preemption, which is not needed."
+ },
+ "repair-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"It may be illegal, but I can't say for certain,\" covering 83.64(1)(a), (4), good faith, the eviction defense and \"good faith actions for nonpayment of rent,\" the dates as given, and 83.55 named as unconfirmed (no 83.48)."
+ },
+ "repair-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "\"Maybe not,\" with the code complaint, \"treated differently\" as \"a prerequisite,\" good faith, and good cause read as \"about evictions,\" and the dates as the tenant gave them; no 83.55 or 83.48 (an optional point)."
+ },
+ "repair-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Both readings with no lean (\"ran out on May 15\" / \"could still send a claim notice by August 30\"), the April 2 letter \"on time,\" the April 30 return date and the fee rule; it never says in so many words that the landlord stays bound to send notice, but its forfeiture analysis rests on that."
+ },
+ "repair-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"It is not settled whether your landlord's deadline to claim the deposit has passed,\" with both readings (August 30, 2026, not passed; May 15, 2026, passed and the full $1,050 owed) and \"the landlord is not excused from the 30-day claim-notice rule\"; no 15-day return date."
+ },
+ "repair-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Both readings with no lean (\"That deadline was May 15, 2026, and it has passed\" / \"the 30 days end on August 30, 2026. That date has not passed\"); its \"It looks that way\" on the right to end the lease is a lean on materiality, not on the deposit readings, which rest on the deposit law's words; no 15-day return date."
+ },
+ "repair-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"Florida law doesn't let you subtract the cost of a new frame,\" withholding is not protected because \"furniture isn't on it,\" the portal request and e-mail \"are not this notice,\" materiality \"is not settled,\" and 83.55 damages with 83.48 fees."
+ },
+ "repair-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"gives you no right to subtract the cost,\" \"The withholding defense doesn't reach lease-only duties,\" the April 9 and April 14 requests do not meet the notice rules, materiality \"is not settled,\" and 83.55 damages with 83.48 fees."
+ },
+ "repair-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"doesn't let you subtract the cost of a new frame,\" the frame is \"a lease duty, not an 83.51(1) duty,\" the portal request and e-mail \"didn't say that,\" and materiality \"is not settled\"; it gives 83.55 damages but not the attorney-fee rule, so the parenthetical point is not fully made."
+ },
+ "repair-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"Your rent doesn't go down automatically,\" the withholding defense \"doesn't cover a parking promise,\" the April 15 visit \"isn't this notice,\" materiality not settled, damages with fees, and both May-payment readings; \"Section 83.55 and 83.56(1) both reach 'material provisions of the rental agreement'\" puts 83.56's words on 83.55, a misquote noted but not counted."
+ },
+ "repair-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"Your rent doesn't go down automatically,\" withholding rests \"only on a failure of an 83.51(1) duty,\" the April 15 question \"is not this notice,\" materiality \"is open,\" 83.55 damages with fees, both May-payment readings, and 83.56(1)(b) raised with its conditions."
+ },
+ "repair-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"Your rent doesn't go down automatically, and you can't hold back rent over this,\" parking \"falls outside\" 83.60(1)(b), \"Asking the office in person on April 15 doesn't count,\" materiality not settled, damages with fees, both May-payment readings, and 83.56(1)(b) raised with its conditions."
+ }
+}

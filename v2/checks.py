@@ -16,16 +16,22 @@ SHOWN = 1500                                                 # characters of cit
 NEAR = 150                                                   # characters on each side of a quote searched for its cite
 
 
+def plain(text):
+    """Text as the check compares it: squashed, lowercase, and no space before a section number's "(" (the stored
+    statutes write "s. 83.51 (1)", replies "s. 83.51(1)"). Kept here, not in law.squash: law.py's splitter needs it."""
+    return re.sub(r"(\d) \(", r"\1(", law.squash(text)).lower()
+
+
 def quote_parts(quote):
-    """A quotation's words to look for. Bold marks and a closing comma or period are typography; an ellipsis or a
-    bracketed change ("forfeit[s]") marks a cut, so each part between them is looked for on its own."""
+    """A quotation's words to look for. Bold marks and a closing comma or period are typography; an ellipsis (...,
+    …, or . . .) or a bracketed change ("forfeit[s]") marks a cut, so each part between them is looked for on its own."""
     quote = quote.replace("**", "").strip().rstrip(",.;:")
-    return [law.squash(p).lower() for p in re.split(r"\.\.\.|…|\[[^\]]*\]", quote) if len(p.strip()) > 3]
+    return [plain(p) for p in re.split(r"\. \. \.|\.\.\.|…|\[[^\]]*\]", quote) if len(p.strip()) > 3]
 
 
 def found_in(parts, text):
     """Whether every part of a quotation is in the text."""
-    text = law.squash(text).lower()
+    text = plain(text)
     return bool(parts) and all(p in text for p in parts)
 
 

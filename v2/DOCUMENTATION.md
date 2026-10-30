@@ -29,7 +29,8 @@ The statutes in `statutes/`, the skills in `skills/`, and the skill quote checke
 - `squash(text)`: spacing, line breaks, quote marks, and hyphens made uniform, so only words are compared.
 - `section_text(section)`: one section's full text. `section_titles()`: each section's title, from `index.json`.
 - `search_statute(phrase)`: the sections holding a phrase, with the words around it.
-- `parts_of(text)`: a section cut into subsections and paragraphs, `(3)` and `(3)(a)`, in order.
+- `parts_of(text)`: a section cut into subsections and paragraphs, `(3)` and `(3)(a)`, in order, also when the
+  statute writes them run together, `(2)(a)`; a cross-reference like "paragraph (3)(a)" starts no part.
 - `cited_text(cite)`: the words a cite like `83.49(3)(a)` points to, without the history note.
 - `read_skill(path)`, `skills()`: a skill's name, description, and body; every skill by name.
 - `check_quotes(text)`: each quote followed by a cite, and whether it is word for word in that part.
@@ -70,7 +71,10 @@ Every page is read from its image by the vision model (`comparisons/models/`), 1
 
 Shown under each reply; the reply is never blocked.
 
-- `quote_parts(quote)`, `found_in(parts, text)`: a quotation's words, cut at an ellipsis or a bracketed change.
+- `plain(text)`: text as the check compares it: squashed, lowercase, no space before a section number's "(" (the
+  stored statutes write "s. 83.51 (1)").
+- `quote_parts(quote)`, `found_in(parts, text)`: a quotation's words, cut at an ellipsis ("...", "…", ". . .") or a
+  bracketed change.
 - `QUOTE`: a quotation of 20+ characters. Its opening mark must follow the start, a space, a bracket, or a bold mark,
   and its closing mark must not be followed by a letter or digit, so the words between two quotations are not one.
 - `nearby_cites(reply, match)`: the statute cites next to a quotation: the first just after it, the last just before.
@@ -94,8 +98,9 @@ The six tools the model can call, their descriptions (`SCHEMAS`), and `run_tool(
 
 ### chat.py
 
-- `RULES`: the system prompt's rules (README.md, 703 words). Rule 9 keeps the timeline; rule 10 says how to pick
-  up after a gap; rule 8 ends the short answer with its question. "Writing the reply" asks for the short answer, a
+- `RULES`: the system prompt's rules (README.md, 765 words). Rule 7 keeps dates to `count_days` and time spans,
+  vague ones too, to the tenant's own words or the date it began; rule 9 keeps the timeline; rule 10 says how to pick up after a gap; rule 8 ends the short
+  answer with its question. "Writing the reply" asks for the short answer, a
   `DETAILS` line, and a `###` question heading per point, in plain words.
 - `facts_text`, `timeline_text(lines)`, `since_text(since)`, `system_prompt(m, pages)`: the prompt, built fresh for
   each message. After the facts: TIMELINE, and SINCE LAST VISIT when the last message was on an earlier day.
@@ -128,6 +133,7 @@ not let the preview's launcher read the Documents folder.
 
 ## Elsewhere in v2
 
-`statutes/` (read-only), `skills/` (one file per situation, format A), `comparisons/` (the lease, skills, model,
+`statutes/` (read-only), `skills/` (one file per situation, format A: `deposit_not_returned`, `repair_not_made`, and
+`who_the_law_covers`, the college-housing check the new skills share), `comparisons/` (`each_skill/`, one runner for each new skill's test, and `spans.py`, a time-span counter; the lease, skills, model,
 deposit skill, plain replies, and intake speed tests, the memory tests, their answer keys, and scores),
 `docs/superpowers/` (the memory's spec and plan), `matters/` (private, not in git), `V2_PROMPT.md` (how v2 started).

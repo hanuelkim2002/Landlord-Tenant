@@ -251,3 +251,112 @@ pictures cost less but did not save time. Replaces nothing in the app.
 the new `read_page`, which opens the PDF itself; the pages are kept in order. Replaces one page at a time. Live on
 the 46-page sample lease: 11 seconds, every word and all 35 boxes right. `tests.py`: a stand-in reader checks order
 and 16 at once.
+
+## 2026-10-28: the quote checker finds run-together parts
+
+`law.py`: `parts_of` reads a subsection written run together with its first paragraph, "(2)(a)", so cites like
+83.51(2)(a), 83.51(4), and 83.60(1)(b) are found (they were not, and 83.51(1)(b) ran to the end of the section). The
+page's quote check gains the same. `comparisons/skills/check_key.py` uses `law`'s splitter and takes a key file by its
+path. Replaces the space-only marker and the key checker's own copy of the splitter.
+
+## 2026-10-28: the shared skill, who the law covers
+
+`skills/who_the_law_covers.md`: the deposit skill's college-housing check (83.42(1)), word for word, and one line on
+83.42's other four exclusions, checked only when the facts point to one. The new skills load it instead of carrying
+their own copy. AUTHOR.md records the method approved for the other skills; README.md and TODO.md follow. Replaces
+"the others follow only after the author approves".
+
+## 2026-10-28: the repair skill, drafted
+
+`skills/repair_not_made.md`, from v1's repair skill and 83.51, 83.56, 83.60, 83.55, 83.64, 83.47, 83.505: whose job
+the repair is (the statute's lists, the lease, who caused it), then five options (end the lease, hold back rent,
+damages, retaliation, a landlord unable to fix it), each open point inside its condition. 42 quotes check out. What
+it says beyond v1 waits for the author (AUTHOR.md item 16). Replaces nothing; v1's skill stays as the baseline.
+
+## 2026-10-28: one test runner for every skill
+
+`comparisons/each_skill/`: `run.py` runs any skill's stories through the app's chat on Sonnet (new, v1, or a frozen
+version), `judge.py` packs the answers blind for Opus graders and unpacks their grades, `grade.py` writes the scores.
+The repair skill's seven stories sit in `repair_not_made/`. Tried with a fake model end to end. Replaces nothing; the
+deposit test keeps its own runner.
+
+## 2026-10-28: the repair skill test, run and graded
+
+`comparisons/each_skill/repair_not_made/`: seven stories, 3 runs each, on Sonnet; three Opus graders, blind. Right of
+21: new 15, v1 5 (14 and 1 if every point is required). No made-up dates; $4.10. `grade.py` counts only required
+points, as the rubric says. Misses sorted in the README; five SLIPS.md entries. AUTHOR.md item 16 approved. Replaces
+nothing in the app.
+
+## 2026-10-28: the repair pilot's round of fixes
+
+`skills/who_the_law_covers.md`: when the lease settles it, the college check is one line inside another point, never a
+point of its own (its repeated opening line dropped). Story 7's key accepts either ground for its two readings.
+Stories 3 and 7 rerun: story 7 right 3 of 3 under the widened key (the first round was graded on the old one), story
+3 1 of 3 (the "about a month" slip twice). `grade.py` applies
+`review.json`, my changes to a grader's verdict. Replaces "say what it shows in one line" and the narrower key.
+
+## 2026-10-28: fixes from the whole-branch review
+
+`comparisons/skills/check_key.py` again offers `squash`, so `score.py` imports. `skills/repair_not_made.md` quotes
+three rules it had narrowed: an 83.51(2)(a) item may be changed in writing in any home, an 83.505 e-mail counts when
+sent (83.505(4)), and 83.60(2)'s motion to determine rent; some quotes put in plain words to stay under 3,200 words.
+`grade.py` applies a `review.json` change only when its quoted words are in the answer, never to a dry run. AUTHOR.md 17.
+
+## 2026-10-28: the repair skill's lease step, general
+
+`skills/repair_not_made.md`: anything the lease says comes with the home, or that the landlord keeps up, counts,
+named or not; two worked examples show the handling (a broken dishwasher, a pool closed under a clause). Replaces the
+example lists of amenities and the air-conditioning-only rule. Some quotes put in cited plain words (3,196 words).
+Two new repair stories, 8 and 9, use amenities the skill never names (furniture, covered parking). Not yet run.
+
+## 2026-10-28: the repair keys take the author's answers
+
+`comparisons/each_skill/repair_not_made/STORIES_REVIEW.md` reviews the nine stories and keys; the author's 25 answers,
+at its end, are now in `stories.json`: softer wording on other rent defenses, either 7-day count in story 2, a careless
+guest and a pool repair in the facts, three new dates, notes telling graders what not to count, and six sections more.
+`skills/repair_not_made.md` option 3 adds attorney fees (83.48); 3,199 words. Replaces the keys as first written.
+
+## 2026-10-28: the repair test, rerun on the new keys
+
+`keys2` (the repair skill with the attorney-fees line, frozen) ran all nine stories; v1 ran stories 1, 4, 5, 8, 9 and
+its first-round answers to 2, 3, 6, 7 were regraded. Right of 27: keys2 19, v1 12; about $4.05. The first round's
+answers, grades, scores, and `review.json` moved to `results/round1/`. Replaces SCORES.md's first-round scores.
+
+## 2026-10-28: the quote check reads two more ways of writing
+
+`checks.py`: a new `plain()` drops the space before a section number's "(" on both sides, since the stored statutes
+write "s. 83.51 (1)" and replies "s. 83.51(1)"; ". . ." now marks a cut like "...". Seven right quotes in the repair
+rerun had shown "Does not check out". Two tests added. Replaces the check's exact-spacing match.
+
+## 2026-10-28: five ways to stop the model counting time spans, side by side
+
+`comparisons/each_skill/spans.py` counts the spans in answers and sorts them. Five versions on five repair stories:
+v1's date rule and rule 7 naming spans each cut model-counted spans from 3 of 15 to 1; code's day counts raised it to
+5 (3 with the rule). Right answers 12 to 14 in all. Results in `repair_not_made/results/spans/`. Nothing in the app
+changed yet; AUTHOR.md 19 asks which way to take.
+
+## 2026-10-28: rule 7 names time spans
+
+`chat.py` rule 7 adds: how long something has lasted or how long until a date, and whether one date will have passed
+by another, are said only in the tenant's own words, or not at all. In the side-by-side test it cut model-counted
+spans from 3 of 15 answers to 1. Replaces the rule's dates-only wording. One test added.
+
+## 2026-10-28: the repair skill tested under the new rule 7
+
+The repair skill ran all nine stories under rule 7's new wording, graded blind beside keys2's rerun answers by the
+same graders: right 24 of 27, against 20; spans the model counted itself fell from 3 to 0 by `spans.py` (the graders found
+1 against 4). Results in `comparisons/each_skill/repair_not_made/results/rule7/`; about $2.50. Nothing in the app
+changed.
+
+## 2026-10-29: three fixes from the repair test under rule 7
+
+`skills/repair_not_made.md` option 1: option 2's notice is not one of its conditions, and in a suit for unpaid rent
+only the 83.51(1) defense needs it (83.60(1)), with one more mistake to avoid. `chat.py`: rule 7 names vague spans and
+allows the date a problem began; the reply rules' example heading is "### Did your letter count as notice?", replacing
+"### Does Florida's deposit law cover you?". Two tests changed, one added. Not yet run live.
+
+## 2026-10-29: the repair test after the three fixes
+
+All nine repair stories on the fixes, graded blind beside the rule 7 run: right 26 of 27, against 25; spans the model
+worked out itself 0, against 1. `comparisons/each_skill/spans.py` now finds spans with no number ("several days",
+"for weeks"), replacing reading them by hand. Results in `repair_not_made/results/rule7fix/`; about $2.43.

@@ -50,6 +50,20 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   past the rule's 3 to 5 sentences (median 7, 127 words). Both exemptions in my review of the plain counts are
   accepted: an "it" echoing the tenant's question in the first sentence, and a "this" or "it" that can only mean
   the dispute or the answer ("What if this goes to court?"), box titles included. The reviewed counts stand.
+- 2026-10-28: the other skills follow the deposit skill's method (format A, built from v1's skill and statutes/).
+  A shared skill holds the college-housing check (`who_the_law_covers`); the repair skill is the pilot, then the
+  rest go two at a time, each with a small test (about 6 to 8 stories, 3 runs, v1 beside it, judged blind). Every
+  skill has a "what the lease adds" step. Weekday counting for the unpaid-rent notice is decided when that skill is
+  reached; it goes last (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
+- 2026-10-28: the nine repair stories' keys, with your 25 answers in
+  `comparisons/each_skill/repair_not_made/STORIES_REVIEW.md` (every recommended choice; Q4 accepts either date). The
+  repair skill's new law point, against v1's: the winner of a suit may recover attorney fees and court costs (83.48).
+- 2026-10-28: rule 7 also names time spans: say how long something lasted, or how long until a date, only in the
+  tenant's own words. Chosen over v1's date rule and code's day counts (item 19, `comparisons/each_skill/README.md`).
+- 2026-10-29: after the repair test under the new rule 7, rule 7 also names vague spans ("several days", "for weeks")
+  and allows the date a problem began from the facts ("since March 20"); the reply rules' example heading is now
+  "### Did your letter count as notice?", since answers copied the old one ("Does Florida's deposit law cover you?")
+  into a box of its own. The pending-fact line ("for you to confirm", 1 of 54) is logged in SLIPS.md, not fixed.
 
 ## Open
 
@@ -93,3 +107,42 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     renewal. The skill does not ask; it takes the date the tenancy ended. Does that need its own answer?
 15. **Decided 2026-10-27:** the plain replies test's two calls: the short answer stays as it is, and both exemptions
     in my review of the plain counts are accepted (see Decided; `comparisons/plain/README.md`).
+16. **Decided 2026-10-28: the repair skill's new law points approved,** with the seven repair stories' keys
+    (`comparisons/each_skill/repair_not_made/stories.json`). What it says that v1's repair skill did not:
+    - Option 3, damages (83.55), for a lease promise or an 83.51 duty; rent paid with knowledge may give it up too
+      (83.56(5)(a) names "a civil action").
+    - Option 4, retaliation (83.64): good faith, being treated differently (83.64(4)), and good cause, whose examples
+      include actions for nonpayment of rent (83.64(3)), so a tenant sued over rent held back looks to option 2.
+    - Option 5, a landlord trying but unable to fix it (83.56(1)(a) and (b)); two readings of "terminated or altered
+      by the parties".
+    - Lease-promised items (an appliance, air conditioning, a pool): ending the lease, damages, and retaliation can
+      reach them, holding back rent never does; two readings of whether a clause limiting an amenity is void under
+      83.47(1).
+    - Air conditioning is named nowhere in 83.51. Pest treatment: rent abated, 7 days' notice, at most 4 days out
+      (83.51(2)(a)). Screens (83.51(1)). A mobile home the tenant owns is not the landlord's to maintain (83.51(1)).
+    - A lease cannot waive the notice rules of 83.56(1) to (3) (83.56(4)); e-mail counts only with every condition of
+      83.505(1), not the signed addendum alone.
+17. **Three corrections to the repair skill, from the branch review** (2026-10-28, not yet in a live run). Each
+    quotes stored text the skill had left out or narrowed:
+    - For an item only 83.51(2)(a) names (pests, locks, common areas, garbage, heat, water), a writing may change the
+      landlord's duty in any home: the paragraph applies "Unless otherwise agreed in writing". v1 said the same.
+    - An e-mail notice under 83.505 counts from when it was sent, not received (83.505(4)). New against v1.
+    - Once sued, paying the rent into the registry "or" filing "a motion to determine the amount of rent" within the 5
+      days keeps the defenses (83.60(2)); the skill had named only paying. New against v1.
+18. **Judging the repair rerun: narrow but harmless wordings.** Told that any other error fails an answer, one grader
+    moved five lines to its reasons: the 83.60 defense "only if" sued for eviction (story 4, v1); ending the lease
+    only for an 83.51(1) duty (story 5, keys2 twice, v1 once), harmless since the lease puts guest damage on the
+    tenant; "doesn't spell out any other remedy", hedged at once (story 6, keys2). Not counted: keys2 19 of 27 right,
+    v1 12. Counted: 16 and 10. Your call. Also: should 83.57 join the graders' sections? Every story-6 answer cites it.
+    (`comparisons/each_skill/README.md`, the rerun.)
+19. **Decided 2026-10-28: rule 7 names time spans** (see Decided). Side by side on five repair stories, 15 answers
+    each: rule 7 naming spans cut model-counted spans from 3 to 1, with the fewest spans of any kind (2 answers) and
+    no made-up date; v1's longer date rule also 1; code's day counts made it worse (5, and 3 with the rule). Right
+    answers 12 to 14 in all. (`comparisons/each_skill/README.md`)
+20. **The repair skill's new law point on moving out and rent** (2026-10-29, applied on your OK, not yet in a live
+    run). Option 1 now says option 2's notice is not one of its conditions, and that if the landlord sues for unpaid
+    rent (83.60(1)(a) names "an action by the landlord under s. 83.55 seeking to recover unpaid rent"), only the
+    defense of "a material noncompliance with s. 83.51 (1)" needs that notice (83.60(1)(b)). New against v1, which
+    says neither. It does not say rent stops once the lease ends: the stored text says only that the tenant "may
+    terminate the rental agreement" (83.56(1)). The grader's ground in story 2 ("applies only to a tenant who stays")
+    overstates 83.60(1)(a); the answer still reads as if the notice decided it.

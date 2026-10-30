@@ -1,0 +1,44 @@
+keys2 repair-1/2 tenant | it affects living there. You have about two weeks without AC, a repor
+keys2 repair-1/3 tenant |  living there. Ninety degrees for about two weeks supports this secon
+keys2 repair-2/1 own    | water since February 25, which is about 3½ weeks, and the landlord h
+keys2 repair-2/2 code   | reading, your facts help you: more than three weeks, since February 25,
+keys2 repair-2/3 own    | water since February 25, which is about three and a half weeks, and the landlord h
+keys2 repair-9/1 tenant |  lost a reserved covered space for over a month, with no reopening 
+keys2 repair-9/2 tenant | ects your life there. A closure of over a month, with no reopening 
+keys2 repair-9/3 tenant | his problem. Whether a closure of about a month is serious enough t
+keys2 repair-9/3 tenant | here. Here, the closure has lasted over a month with no reopening d
+== keys2: 15 answers; spans: {'tenant': 6, 'code': 1, 'own': 2}
+
+v1rule repair-1/1 tenant | have described 90-degree heat and about two weeks without a fix. 2. *
+v1rule repair-1/2 tenant | nd reading are 90-degree heat and about two weeks without a fix. 3. *
+v1rule repair-1/3 tenant | ts living there. You've described about two weeks without AC at about
+v1rule repair-3/2 own    |  bedroom every time it rains, for about a month, with no response, 
+v1rule repair-9/1 tenant | You have lost a promised space for over a month, with no end date g
+== v1rule: 15 answers; spans: {'tenant': 4, 'code': 0, 'own': 1}
+
+ruleA repair-1/3 tenant | g there. You told me it has been almost two weeks and that it is 90 d
+ruleA repair-9/2 tenant | red space for what you describe as over a month, and you park on th
+== ruleA: 15 answers; spans: {'tenant': 2, 'code': 0, 'own': 0}
+
+codeB repair-1/1 tenant | nd reading, 90 degrees inside for about two weeks supports you, but a
+codeB repair-1/2 code   | asted, and how it affects living there. Twelve days of 90-degree heat h
+codeB repair-1/3 tenant | there. Ninety degrees inside for almost two weeks fits the second rea
+codeB repair-2/1 code   | caused the problem (§83.51(4)).  ### Is three weeks without hot water "
+codeB repair-2/2 own    | ts living there. No hot water for about three and a half weeks, with no landlord r
+codeB repair-2/3 code   |  reading, you have had no hot water for 23 days, and your landlord 
+codeB repair-3/3 own    |  bedroom every time it rains, for about two weeks, with two unanswere
+codeB repair-7/1 own    | only toilet that went unfixed for about two weeks after your notice f
+codeB repair-7/2 code   | k, in your only bathroom, for more than 9 weeks, are the facts a co
+codeB repair-7/3 own    | as out and a pipe was leaking for about two weeks before your move-ou
+codeB repair-9/2 code   | break it. Since the closure is now over five weeks old with no reopeni
+codeB repair-9/2 code   | has lasted, and its effect on you. Over five weeks without a space is 
+codeB repair-9/3 code   | erved space that's been closed for over five weeks with no end date is
+== codeB: 15 answers; spans: {'tenant': 2, 'code': 7, 'own': 4}
+
+codeBA repair-2/2 own    | n (2), subsection (1) controls.  ### Is a month without hot water "
+codeBA repair-7/2 own    |  is your only one, and a leak, for over two weeks after your notice. 
+codeBA repair-9/1 code   | d since April 10, which code counted as 40 days ago (5 weeks and 5 
+codeBA repair-9/1 code   | your life there. A closure of more than five weeks with no end date is
+codeBA repair-9/2 code   | ou have lost a paid-for space for about 5 weeks and 5 days (counted
+== codeBA: 15 answers; spans: {'tenant': 0, 'code': 3, 'own': 2}
+
