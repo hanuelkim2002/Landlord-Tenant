@@ -164,5 +164,5 @@ with the points and the mistakes that fail an answer, are in `stories.json`.
 The same as the repair test: 3 runs a story through the app's own chat on Sonnet, the old version beside the new, graded
 blind by Opus. That is 102 answers, about $10 of your API credit, with the results shown as a chart.
 
-Both new files are longer than planned: about 3,700 and 3,400 words, against 2,500 to 3,000. I left them long for the
+Both new files are longer than planned: about 3,800 and 3,500 words, against 2,500 to 3,000. I left them long for the
 test and will trim whatever the test shows does nothing.
