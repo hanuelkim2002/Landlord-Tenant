@@ -1,6 +1,6 @@
 {
  "how_to_read": "The leaving-early skill's stories, in the repair stories' shape. Each runs on comparisons/skills/lease.txt unless it has a 'lease' field naming a copy in this folder: lease_addendum.txt (clause 11 and a signed Addendum A, $2,100, 'I agree' marked), lease_highfee.txt (the same, $3,000), lease_charge.txt (clause 11: a re-rental charge and loss of the deposit, no addendum), or lease_2026.txt (the same home, a term from January 1 to December 31, 2026, signed December 10, 2025). 'today' is the date count_days compares with. 'facts' are confirmed facts. 'points' are what a right answer must convey, judged by meaning; a point written wholly in parentheses is helpful detail, not required. 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story holds school_housing. Check with: python ../skills/check_key.py wants_to_leave_early/stories.json (from comparisons/each_skill/).",
- "sections": ["83.42", "83.43", "83.46", "83.47", "83.48", "83.49", "83.505", "83.51", "83.512", "83.52", "83.55", "83.56", "83.57", "83.575", "83.59", "83.595", "83.60", "83.63", "83.64", "83.682"],
+ "sections": ["83.42", "83.43", "83.46", "83.47", "83.48", "83.49", "83.505", "83.51", "83.512", "83.52", "83.55", "83.56", "83.57", "83.575", "83.59", "83.595", "83.60", "83.63", "83.64", "83.67", "83.682"],
  "stories": [
   {
    "id": "leave-1",

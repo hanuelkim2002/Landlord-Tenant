@@ -71,10 +71,11 @@ asks about a text as the deposit notice.
   (83.595(1)), or the landlord may keep all its choices.
 - Or the landlord keeps its choices.
 
-**Q10. One small fix to the repair skill.** It says being treated differently "from other tenants" is required for
-retaliation. Those three words are not in 83.64(4).
+**Q10. Two small fixes to the repair skill.** It says being treated differently "from other tenants" is required for
+retaliation; those three words are not in 83.64(4). Its opening list of sections also leaves out 83.48 and 83.59, which
+it relies on.
 
-- Recommended: take them out. No rerun.
+- Recommended: make both. No rerun.
 - Or leave it.
 
 ## What the new versions say that the old ones did not
@@ -102,7 +103,8 @@ These are the points for your check. Everything else comes from the old versions
 - The deposit can go toward the landlord's loss, but only through the deposit steps (83.43(14)).
 - When a tenant counts as having abandoned the home (83.59(3)(c)), belongings left behind (83.67(5)), and interest
   (83.49(9)).
-- Month to month is not leaving early (83.57). Staying on without the notice can cost a month's rent (83.575(3)).
+- Month to month is not leaving early (83.57). A tenant who stayed on after a set term and leaves without the notice can
+  owe a month's rent (83.575(3)). For a tenancy month to month from the start: not settled.
 
 ### The 7-day notice
 
@@ -112,8 +114,9 @@ These are the points for your check. Everything else comes from the old versions
 - How the notice came, for the first time: the ways the statute names (83.56(4)); a copy at the door counts only if the
   tenant is away; e-mail counts from when it was sent; for mail or a door copy, both dates; for a text or portal message,
   two readings.
-- Flaws: no violation at all, the wrong kind of notice, or missing words. A notice that does not say what the tenant did
-  is not the required notice, the same call you made for a deposit notice with no reason. Missing form words get two
+- Flaws: no violation at all, the wrong kind of notice, or missing words. Whether conduct on one of the statute's lists
+  is also "material" is not settled. A notice that does not say what the tenant did is not the required notice, the
+  same call you made for a deposit notice with no reason. Missing form words get two
   readings, as they do for the deposit. The sentence that lets a landlord fix a flawed notice (83.60(1)(a)) sits in a
   paragraph about unpaid rent, so whether it reaches this case is not settled.
 - Taking part of a month's rent gives up nothing, and the subsidized-rent rule has its own 45 days (83.56(5)).

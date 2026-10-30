@@ -367,3 +367,10 @@ worked out itself 0, against 1. `comparisons/each_skill/spans.py` now finds span
 on, in the repair skill's format; 56 and 51 quotes check out. `comparisons/each_skill/`: 8 and 9 stories with keys and
 new leases, and `REVIEW_leave_and_notice.md`, with the new law points and ten questions (AUTHOR.md 21). Two independent
 readings of the drafts, fixes applied. Not run yet. Replaces nothing; v1's skills stay the baseline.
+
+## 2026-10-30: a third reading of the two drafts
+
+From a check the author passed on: 83.575(3) limited to staying on after a set term (from the start, not settled);
+the "casualty" reading rests on that word; the abandonment quote keeps its opening words; "does not undo the
+termination" replaced, since that is the point in doubt; a lease-over notice can have two dates; whether listed conduct
+is "material" is not settled. Both opening lists name every section used; the graders now get 83.67. Not run yet.
