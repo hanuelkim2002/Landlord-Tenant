@@ -194,6 +194,10 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
 - 2026-10-29, after the three fixes: 7 of 185. "due to causes beyond the landlord's control" 3 times, the repair
   skill's own unquoted wording of 83.56(1), put in quote marks; "until further notice", the sign's words from the
   facts, 4 times.
+- 2026-10-30, the two new tests, new: 8 of 456 not found word for word. 5 are slips: a clause cut out of 83.56(2) with
+  no ellipsis, the notice's or the skill's words in quote marks ("lease over, leave in 7 days"), and "accepted with
+  reservation", nobody's words. 3 are right but flagged: the stored text writes "s. 83.505 , or" with a space before the
+  comma.
 
 ## Writes a short answer longer than asked
 
