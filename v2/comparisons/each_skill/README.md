@@ -7,8 +7,8 @@ skill run beside the new one as the baseline, graded blind by Claude Opus 5.5 su
 ## The files
 
 - `run.py`, `judge.py`, `grade.py`: one runner, packer, and scorer for every skill.
-- `spans.py`: finds the time spans in answers ("more than three weeks") and sorts each: the tenant's words, a count
-  code would give, or the model's own counting. It misses spans with no number ("for weeks"); read those by hand.
+- `spans.py`: finds the time spans in answers ("more than three weeks", "several days", "for weeks") and sorts each:
+  the tenant's words, a count code would give, or the model's own counting.
 - `<skill>/stories.json`: the stories and their keys, in the deposit stories' shape, plus `sections` (the statute
   sections the graders read) and, on a story, `lease` (a lease file in that folder; none means
   `comparisons/skills/lease.txt`) and `open: true` (a key that turns on an open call; not counted as settled).
@@ -155,3 +155,23 @@ Right of 27, same graders: rule7 24 (3 wrong), keys2 20 (1 partly, 6 wrong; the 
   call; read that way, rule7 is 25.
 - The skill was not loaded in 2 of 3 story-6 answers (retaliation); the model read 83.64 itself and was right both
   times. keys2 loaded it in all 27.
+
+### repair_not_made after the three fixes (2026-10-29)
+
+The fixes from the run above (the repair skill on options 1 and 2, rule 7 naming vague spans and allowing the start
+date, a new example heading) ran all nine stories as `rule7fix` (`versions/rule7fix.md`). Its answers were shuffled
+blind among the rule 7 run's, and three new Opus graders graded both, three stories each, with the same instructions
+(`repair_not_made/results/rule7fix/`). About $2.43; no errors, no empty answers, no made-up dates.
+
+Right of 27, same graders: rule7fix 26, rule7 25 (the graders before gave rule7 24). Within noise.
+
+- These graders read the rule 7 run differently: its story-2 answer that tied rent to the notice, and its "several
+  days", only as notes; a story-6 line ("month to month, so your landlord can generally change the rent") as an error.
+- Spans by `spans.py`, which now finds vague ones too: rule7fix 0, rule7 1. No span in the tenant's words either (5
+  before).
+- Story 2: all three rule7fix answers keep ending the lease and holding back rent apart.
+- Story 3: the college check still has a box of its own in 3 of 3; only story 3 copies a "law cover you" heading now.
+  One answer, wrong, ends the check "If the housing is run by or for a school, tell me, because that would change the
+  answer", rule 3's words.
+- The skill loaded in all 27 (rule7 25). Quotes not found word for word: 7 of 185 (rule7 3 of 183); three are the
+  skill's own wording, "beyond the landlord's control", put in quote marks.

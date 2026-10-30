@@ -1,4 +1,4 @@
-"""Counts the time spans in a skill test's answers ("more than three weeks", "about a month", "23 days") and sorts each
+"""Counts the time spans in a skill test's answers ("more than three weeks", "23 days", "several days") and sorts each
 one: the tenant's own words, a count code gives (days or whole weeks from a date fact to the story's today), or the
 model's own counting. Statute periods ("within 7 days after delivery") are left out. Run from this folder:
 python spans.py repair_not_made keys2 [more versions] [--stories 1,2,3,7,9] [--folder results/spans]
@@ -13,6 +13,9 @@ NUMBERS = {"a": 1, "an": 1, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5
            "nine": 9, "ten": 10, "eleven": 11, "twelve": 12}
 NUMBER = r"(\d+(?:\.\d+)?½?|" + "|".join(NUMBERS) + r")"
 SPAN = re.compile(rf"\b{NUMBER}(\s+and\s+a\s+half)?[\s-]+(day|week|month|year)s?\b(\s+and\s+a\s+half)?", re.I)
+# A span with no number ("several days", "for weeks"). Its words stand in for the number, so it can match the
+# tenant's own words but never a count code gives.
+VAGUE = re.compile(r"\b(several|a few|a couple of|many|some)\s+(day|week|month)s\b|\bfor\s+(day|week|month)s\b", re.I)
 # Words that make a span a length of time that has passed or is left, not a statute's period.
 ELAPSED_BEFORE = re.compile(r"(for|been|lasted|over|more than|almost|nearly|about|roughly|around|already|past|last|"
                             r"close to|just over|under|less than|only)\s*$", re.I)
@@ -40,6 +43,11 @@ def spans_in(text):
             continue
         if ELAPSED_BEFORE.search(before) or ELAPSED_AFTER.search(after):
             found.append((text[max(0, m.start() - 40):m.end() + 20].replace("\n", " "), value, unit))
+    for m in VAGUE.finditer(text):
+        if re.search(r"within\s*$", text[max(0, m.start() - 10):m.start()], re.I):   # a period to act in, not a span
+            continue
+        found.append((text[max(0, m.start() - 40):m.end() + 20].replace("\n", " "), m.group(0).lower(),
+                      (m.group(2) or m.group(3)).lower()))
     return found
 
 

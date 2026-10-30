@@ -354,3 +354,9 @@ changed.
 only the 83.51(1) defense needs it (83.60(1)), with one more mistake to avoid. `chat.py`: rule 7 names vague spans and
 allows the date a problem began; the reply rules' example heading is "### Did your letter count as notice?", replacing
 "### Does Florida's deposit law cover you?". Two tests changed, one added. Not yet run live.
+
+## 2026-10-29: the repair test after the three fixes
+
+All nine repair stories on the fixes, graded blind beside the rule 7 run: right 26 of 27, against 25; spans the model
+worked out itself 0, against 1. `comparisons/each_skill/spans.py` now finds spans with no number ("several days",
+"for weeks"), replacing reading them by hand. Results in `repair_not_made/results/rule7fix/`; about $2.43.

@@ -39,6 +39,8 @@ against rule 7).
   code's counts it also misapplied one ("more than 9 weeks" for a leak that ended 26 days in).
 - 2026-10-28, the repair skill under rule 7 naming spans (all nine stories, graded beside keys2): 1 of 27, "no
   repair for several days after your notice" (story 7), a span with no number. keys2, same graders: 4 of 27.
+- 2026-10-29, after rule 7 named vague spans and allowed the start date: 0 of 27 by `spans.py`, which now finds
+  vague spans too; the run before, 1. No span in the tenant's words either (the run before, 5).
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -114,6 +116,8 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
 - 2026-10-28, the repair skill under the new rule 7: 1 of 27 (story 2: stopping rent after moving out "isn't safe
   yet, because your letter only said you would end the lease", as if the notice for holding back rent decided it;
   that notice is needed only for the 83.51(1) defense if sued for rent (83.60(1)), and ending the lease needs none).
+- 2026-10-29, the rule 7 run's answers regraded beside the fixes: story 6 once, "Your lease is month to month, so your
+  landlord can generally change the rent", against the lease's clause on changes in a writing both sign.
 
 ## Does not load the skill
 
@@ -175,6 +179,9 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
   check did not read ". . ." as a cut (2, v1). The check reads both since 2026-10-28.
 - 2026-10-28, the repair skill under the new rule 7: 3 of 183 ("beyond the landlord's control" twice, for "beyond
   the control of the landlord"; "after delivery" for "after the delivery").
+- 2026-10-29, after the three fixes: 7 of 185. "due to causes beyond the landlord's control" 3 times, the repair
+  skill's own unquoted wording of 83.56(1), put in quote marks; "until further notice", the sign's words from the
+  facts, 4 times.
 
 ## Writes a short answer longer than asked
 
@@ -221,3 +228,8 @@ tells the tenant the noted fact waits for them to confirm.
   school housing' as a pending fact for you to confirm", which the grader read as asking (1 of 54 answers say so).
   The example heading also shows up where the check is settled: "Does Florida's deposit law cover you?" in story 7,
   2 of 3 in both versions. The example was changed on 2026-10-29.
+- 2026-10-29, after the example changed: story 3 still 3 of 3, each titled "Does Florida's landlord-tenant law cover
+  your home?", close to the shared skill's description ("Whether Florida's landlord-tenant law covers the tenant's
+  home at all"); no other story copies it now. Once, after noting the fact from the lease: "If the housing is run by
+  or for a school, tell me, because that would change the answer", rule 3's words ("Say how an unknown would change
+  the answer"). Graded as asking the college question.
