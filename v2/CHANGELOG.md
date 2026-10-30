@@ -360,3 +360,10 @@ allows the date a problem began; the reply rules' example heading is "### Did yo
 All nine repair stories on the fixes, graded blind beside the rule 7 run: right 26 of 27, against 25; spans the model
 worked out itself 0, against 1. `comparisons/each_skill/spans.py` now finds spans with no number ("several days",
 "for weeks"), replacing reading them by hand. Results in `repair_not_made/results/rule7fix/`; about $2.43.
+
+## 2026-10-30: leaving early and the 7-day notice, drafted
+
+`skills/wants_to_leave_early.md` and `skills/notice_received_violation.md`, from v1's skills and the statutes they rest
+on, in the repair skill's format; 56 and 51 quotes check out. `comparisons/each_skill/`: 8 and 9 stories with keys and
+new leases, and `REVIEW_leave_and_notice.md`, with the new law points and ten questions (AUTHOR.md 21). Two independent
+readings of the drafts, fixes applied. Not run yet. Replaces nothing; v1's skills stay the baseline.

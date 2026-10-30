@@ -1,0 +1,351 @@
+{
+ "how_to_read": "The 7-day notice skill's stories, in the repair stories' shape. Each runs on lease_rules.txt in this folder: comparisons/skills/lease.txt with a new clause 11 on pets, guests, parking, and noise. 'today' is the date count_days compares with. 'facts' are confirmed facts. 'points' are what a right answer must convey, judged by meaning; a point written wholly in parentheses is helpful detail, not required. 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story holds school_housing. Check with: python ../skills/check_key.py notice_received_violation/stories.json (from comparisons/each_skill/).",
+ "sections": ["83.42", "83.43", "83.44", "83.47", "83.48", "83.49", "83.505", "83.52", "83.55", "83.56", "83.57", "83.575", "83.58", "83.59", "83.595", "83.60", "83.62", "83.64", "83.67", "83.681"],
+ "stories": [
+  {
+   "id": "notice-1",
+   "title": "The dog: 7 days to fix it, in a letter dated before it came",
+   "today": "2026-03-11",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "notice_words": "You are hereby notified that you are keeping a dog in Apartment 12 without written consent, in violation of clause 11. Demand is hereby made that you remedy the noncompliance within 7 days of receipt of this notice or your lease shall be deemed terminated and you shall vacate the premises upon such termination. If this same conduct or conduct of a similar nature is repeated within 12 months, your tenancy is subject to termination without further warning and without your being given an opportunity to cure the noncompliance.",
+    "notice_date_written": "2026-03-02",
+    "notice_delivered": "2026-03-09",
+    "how_it_came": "the manager handed it to the tenant at the door",
+    "earlier_warning": "none",
+    "rent_since": "March rent paid on 2026-03-01, before the notice",
+    "eviction_filed": "no"
+   },
+   "message": "I got a letter from the office about my dog. It's dated March 2 but the manager handed it to me March 9. It says I have 7 days to fix it or my lease is over. Do I have to move out? How long do I have?",
+   "answer": "You do not have to move out if you fix this in time. The 7 days run from the day the letter was handed to you, not the date on it, so your last day is March 16. Fixing it means the dog is out of the apartment, or you have your landlord's written consent, as clause 11 says. If you fix it in time, your landlord may not end the lease on this notice. If the dog comes back within 12 months, your landlord can file an eviction case without another notice. Even if the 7 days pass, your landlord has to go to court to get the apartment back, and cannot lock you out.",
+   "points": [
+    "Says the tenant does not have to move out if the problem is fixed in time: this notice gives 7 days to fix it, and if it is fixed the landlord may not end the lease on it.",
+    "Gives the last day as 2026-03-16, from count_days, counted from the day it was delivered, not the date on the letter.",
+    "Says what fixing it means under clause 11: the dog is out, or the landlord gives written consent.",
+    "Says that if it happens again within 12 months, the landlord may bring an eviction case without another notice.",
+    "Says the notice does not by itself put the tenant out: the landlord needs a court case. (The landlord may not lock them out.)"
+   ],
+   "mistakes": [
+    "Counts the 7 days from the date on the letter (2026-03-09).",
+    "Says the tenant must leave within 7 days whatever they do.",
+    "Says that fixing it ends the matter for good, leaving out the next 12 months.",
+    "Works out when the 12 months end.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(2)(b)", "quote": "if the noncompliance is not corrected within 7 days from the date that the written notice is delivered, the landlord shall terminate the rental agreement by reason thereof"},
+    {"cite": "83.56(2)(b)", "quote": "If such noncompliance recurs within 12 months after notice, an eviction action may commence without delivering a subsequent notice pursuant to paragraph (a) or this paragraph."},
+    {"cite": "83.59(3)", "quote": "The landlord shall not recover possession of a dwelling unit except:"},
+    {"cite": "83.67(2)", "quote": "shall not prevent the tenant from gaining reasonable access to the dwelling unit by any means"}
+   ],
+   "dates": [
+    {"fact": "notice_delivered", "days": 7, "date": "2026-03-16", "passed": false},
+    {"fact": "notice_date_written", "days": 7, "date": "2026-03-09", "passed": true}
+   ]
+  },
+  {
+   "id": "notice-2",
+   "title": "A guest: lease over, with no warning before",
+   "today": "2026-04-08",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "notice_words": "You are advised that your lease is terminated effective immediately. You shall have 7 days from the delivery of this letter to vacate the premises. This action is taken because your boyfriend has stayed in your apartment more than 14 nights without Landlord's written consent.",
+    "notice_delivered": "2026-04-06",
+    "how_it_came": "the manager handed it to the tenant at the door",
+    "earlier_warning": "none, written or spoken",
+    "conduct": "the tenant's boyfriend stayed more than 14 nights; he moved out on 2026-04-07",
+    "rent_since": "April rent paid on 2026-04-01, before the notice",
+    "eviction_filed": "no"
+   },
+   "message": "I got a letter saying my lease is terminated and I have 7 days to get out because my boyfriend stayed over too many nights. I never got a warning before this. He's gone now. Do I really have to be out in 7 days?",
+   "answer": "Not by the notice alone. Your landlord has to file a court case to get the apartment back, and cannot lock you out. An unauthorized guest is on the statute's list of things a tenant should get the chance to fix, and you had no earlier written warning, so a notice ending the lease at once does not fit; you should have had 7 days to fix it. Still, do not ignore the notice. The 7 days end April 13, and after that your landlord can sue. You could raise the wrong kind of notice in court, and whether it ends the case is for the court. The statute lets a landlord fix a flawed notice in some cases, and whether that reaches this kind of case is not settled.",
+   "points": [
+    "Says an unauthorized guest is on the statute's list of things a tenant should get the chance to fix (83.56(2)(b)), and with no earlier written warning, a notice ending the lease at once does not fit: the tenant should have had 7 days.",
+    "Says the notice does not by itself put the tenant out: the landlord needs a court case. (The landlord may not lock them out.) Gives the 7-day date as 2026-04-13, from count_days.",
+    "Says not to ignore the notice: the landlord may still sue, the flaw is something to raise, and whether it ends a case is for the court.",
+    "(The sentence on curing a deficiency in a notice, 83.60(1)(a), sits in a paragraph about unpaid rent; whether it reaches this case is not settled.)",
+    "(If sued, the tenant must meet 83.60(2) to defend: 83.56(5)(b). Having the guest gone is worth doing, but under the notice's words it does not undo the termination.)"
+   ],
+   "mistakes": [
+    "Says the tenant must be out by the date, or may be removed without a court case.",
+    "Says the notice is void so it can be ignored, or says flatly that a case would be dismissed.",
+    "Says the tenant has a right under this notice to fix the problem and so keep the lease.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(2)(b)", "quote": "having or permitting unauthorized pets, guests, or vehicles"},
+    {"cite": "83.56(2)(a)", "quote": "a subsequent or continuing noncompliance within 12 months of a written warning by the landlord of a similar violation"},
+    {"cite": "83.59(3)", "quote": "The landlord shall not recover possession of a dwelling unit except:"},
+    {"cite": "83.60(1)(a)", "quote": "The landlord must be given an opportunity to cure a deficiency in a notice or in the pleadings before dismissal of the action."}
+   ],
+   "dates": [
+    {"fact": "notice_delivered", "days": 7, "date": "2026-04-13", "passed": false}
+   ]
+  },
+  {
+   "id": "notice-3",
+   "title": "One party: lease over on a first noise complaint",
+   "today": "2026-05-06",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "notice_words": "You are advised that your lease is terminated effective immediately. You shall have 7 days from the delivery of this letter to vacate the premises. This action is taken because of loud music from your apartment after midnight on May 1, which disturbed your neighbors.",
+    "notice_delivered": "2026-05-04",
+    "how_it_came": "the manager handed it to the tenant at the door",
+    "earlier_warning": "none, written or spoken; this is the first complaint",
+    "eviction_filed": "no"
+   },
+   "message": "One party, one noise complaint, and now I have a letter saying my lease is terminated and I've got 7 days to leave. Can they do that over one party? They've never warned me about anything.",
+   "answer": "The law does not settle whether your landlord can do that over one party. The statute's list of things a tenant gets no chance to fix names a 'subsequent or continued' disturbance, and this was a first one. Noise is not on its list of things a tenant may fix either, and both lists are only examples. One reading: this is the kind a tenant should get to fix, so the notice should have given you 7 days. The other: the lists are only examples, so your landlord may treat it as the kind with no chance to fix. Either way the notice does not put you out by itself: your landlord needs a court case. The 7 days end May 11, and after that your landlord can sue.",
+   "points": [
+    "Opens by saying it is not settled whether the landlord can end the lease this way, and leans neither way. Gives the reason: the no-fix list names a 'subsequent or continued' disturbance, this was a first complaint, noise is not on the fix list, and both lists are only examples.",
+    "Gives both readings and what each means for the tenant.",
+    "Says the notice does not by itself put the tenant out: the landlord needs a court case; gives the 7-day date as 2026-05-11, from count_days, and says the landlord may sue after it.",
+    "('Material' is not defined, and an answer may raise it with both readings. If sued, the tenant must meet 83.60(2).)"
+   ],
+   "mistakes": [
+    "Says flatly that the landlord can, or cannot, end the lease over this.",
+    "Says the tenant must be out by the date, or may be removed without a court case.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(2)(a)", "quote": "a subsequent or continued unreasonable disturbance"},
+    {"cite": "83.56(2)(a)", "quote": "Examples of noncompliance which are of a nature that the tenant should not be given an opportunity to cure include, but are not limited to"},
+    {"cite": "83.56(2)(b)", "quote": "If such noncompliance is of a nature that the tenant should be given an opportunity to cure it"},
+    {"cite": "83.52(7)", "quote": "in a manner that does not unreasonably disturb the tenant’s neighbors or constitute a breach of the peace"}
+   ],
+   "dates": [
+    {"fact": "notice_delivered", "days": 7, "date": "2026-05-11", "passed": false}
+   ]
+  },
+  {
+   "id": "notice-4",
+   "title": "A second loud party, after a written warning",
+   "today": "2026-03-25",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "earlier_warning": "a letter from the office about loud parties after midnight, handed to the tenant",
+    "earlier_warning_date": "2026-01-15",
+    "notice_words": "You are advised that your lease is terminated effective immediately. You shall have 7 days from the delivery of this letter to vacate the premises. This action is taken because of another loud party in your apartment after midnight on March 20, which disturbed your neighbors, after our written warning of January 15.",
+    "notice_delivered": "2026-03-23",
+    "how_it_came": "the manager handed it to the tenant at the door",
+    "eviction_filed": "no"
+   },
+   "message": "I got a warning letter in January about noise, then we had another loud party last weekend, and now I got a letter saying my lease is terminated and I've got 7 days. Can I just promise no more parties and fix it? Do I get another chance?",
+   "answer": "No, the law does not give you another chance under this kind of notice. A repeat of a similar violation within 12 months of a written warning is one the statute lets a landlord end without a chance to fix. Your warning is dated January 15 and the party was March 20; this tool counts days, not months, so check those two dates on a calendar. You may still ask your landlord to let it go, but your landlord does not have to. The notice does not put you out by itself: your landlord needs a court case. The 7 days end March 30, and after that your landlord can sue.",
+   "points": [
+    "Says the tenant has no right to fix it under this notice: a similar violation within 12 months of a written warning, or a subsequent unreasonable disturbance, is the kind the landlord may end without a chance to fix (83.56(2)(a)). Either ground is right.",
+    "Sets the two dates beside the 12 months as the facts give them, without counting the time between them.",
+    "Says the notice does not by itself put the tenant out: the landlord needs a court case; gives the 7-day date as 2026-03-30, from count_days.",
+    "(The tenant may still ask the landlord to agree to something; an answer may say so. An answer that says January 15 and March 20 fall within 12 months is not counting; working out when the 12 months end, or saying 'two months later', is. 'Similar' is not defined.)"
+   ],
+   "mistakes": [
+    "Says the tenant has a right to fix it within 7 days and keep the lease.",
+    "Says the tenant must be out by the date, or may be removed without a court case.",
+    "Works out when the 12 months end, or says how long it was between the warning and the party.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(2)(a)", "quote": "a subsequent or continuing noncompliance within 12 months of a written warning by the landlord of a similar violation"},
+    {"cite": "83.56(2)(a)", "quote": "the tenant shall have 7 days from the date that the notice is delivered to vacate the premises"},
+    {"cite": "83.59(3)", "quote": "The landlord shall not recover possession of a dwelling unit except:"}
+   ],
+   "dates": [
+    {"fact": "notice_delivered", "days": 7, "date": "2026-03-30", "passed": false}
+   ]
+  },
+  {
+   "id": "notice-5",
+   "title": "The landlord took the next month's rent, and it never happened again",
+   "today": "2026-04-06",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "notice_words": "You are advised that your lease is terminated effective immediately. You shall have 7 days from the delivery of this letter to vacate the premises. This action is taken because your guests fought in the hallway on March 14, disturbing other residents.",
+    "notice_delivered": "2026-03-20",
+    "how_it_came": "the manager handed it to the tenant at the door",
+    "earlier_warning": "none",
+    "rent_since": "the tenant paid all of April's rent, $1,050, through the portal on 2026-04-01; the landlord accepted it and has not returned it",
+    "since_then": "nothing like the fight has happened again",
+    "eviction_filed": "no"
+   },
+   "message": "I got a notice March 20 saying my lease was terminated because of a fight my guests had in the hallway on March 14. I paid April rent through the portal anyway on April 1 and they took it. Nothing has happened since. Does that change anything?",
+   "answer": "Yes. A landlord who takes rent knowing about a violation gives up the right to end the lease or sue over that violation. Your landlord knew about the fight, since it sent the notice, and took all of April's rent after that. It has not happened again. So your landlord gave up ending the lease over that fight. That does not cover anything new. There is nothing you need to do now; you would raise this if your landlord sues.",
+   "points": [
+    "Says plainly that the landlord gave up the right to end the lease over this event: it knew (it sent the notice), it took the whole month's rent after that, and the event has not happened again (83.56(5)(a)).",
+    "Says the limit: it does not cover a subsequent or continuing violation.",
+    "Says what it means in practice: it is an answer to the notice or a defense if sued.",
+    "(Part of a month's rent would not give up the right. If sued, the tenant must meet 83.60(2).)"
+   ],
+   "mistakes": [
+    "Says taking the rent changes nothing, or that the lease is still over.",
+    "Says flatly that no eviction case can ever be brought, leaving out new or continuing conduct.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(5)(a)", "quote": "If the landlord accepts rent with actual knowledge of a noncompliance by the tenant"},
+    {"cite": "83.56(5)(a)", "quote": "waives his or her right to terminate the rental agreement or to bring a civil action for that noncompliance, but not for any subsequent or continuing noncompliance"},
+    {"cite": "83.56(5)(a)", "quote": "a landlord does not waive the right to terminate the rental agreement or to bring a civil action for that noncompliance by accepting partial rent for the period"}
+   ],
+   "dates": []
+  },
+  {
+   "id": "notice-6",
+   "title": "The dog is still there, and the landlord has taken rent for months",
+   "today": "2026-03-11",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "landlord_knew": "the manager saw the dog in the apartment on 2025-11-10 and said nothing",
+    "rent_since": "the tenant paid full rent on the first of each month from December to March; each was accepted",
+    "notice_words": "You are hereby notified that you are keeping a dog in Apartment 12 without written consent, in violation of clause 11. Demand is hereby made that you remedy the noncompliance within 7 days of receipt of this notice or your lease shall be deemed terminated and you shall vacate the premises upon such termination. If this same conduct or conduct of a similar nature is repeated within 12 months, your tenancy is subject to termination without further warning and without your being given an opportunity to cure the noncompliance.",
+    "notice_delivered": "2026-03-09",
+    "how_it_came": "the manager handed it to the tenant at the door",
+    "conduct": "the dog is still in the apartment",
+    "eviction_filed": "no"
+   },
+   "message": "The manager saw my dog back in November and never said anything. I've paid full rent every month since and they took it. Now they've sent me a 7-day notice about the dog. Hasn't the landlord lost the right to complain?",
+   "answer": "The law does not settle that, because the dog is still there. A landlord who takes rent knowing about a violation gives up the right to end the lease over it, but not for a 'continuing' violation. One reading: a dog still in the home is a continuing violation, so taking rent gave up nothing, and the notice stands. The other: taking rent with knowledge gave up ending the lease over this dog, and only a new violation starts over. Getting the dog out, or written consent from your landlord, by March 16 meets the notice under either reading.",
+   "points": [
+    "Opens by saying it is not settled, and leans neither way. Gives both readings of 'continuing noncompliance' for a dog still in the home.",
+    "Says what each reading means for the tenant.",
+    "Gives the last day to fix it as 2026-03-16, from count_days, and says fixing it by then (the dog out, or written consent) meets the notice under either reading.",
+    "(The manager having seen the dog goes to the landlord's actual knowledge. An answer may say the tenant should keep what shows that.)"
+   ],
+   "mistakes": [
+    "Says flatly that the landlord lost the right, or flatly that it did not.",
+    "Leaves out 83.56(5)(a).",
+    "Works out when the 12 months end, or says how long the landlord has known.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(5)(a)", "quote": "If the landlord accepts rent with actual knowledge of a noncompliance by the tenant"},
+    {"cite": "83.56(5)(a)", "quote": "waives his or her right to terminate the rental agreement or to bring a civil action for that noncompliance, but not for any subsequent or continuing noncompliance"},
+    {"cite": "83.56(2)(b)", "quote": "if the noncompliance is not corrected within 7 days from the date that the written notice is delivered, the landlord shall terminate the rental agreement by reason thereof"}
+   ],
+   "dates": [
+    {"fact": "notice_delivered", "days": 7, "date": "2026-03-16", "passed": false}
+   ]
+  },
+  {
+   "id": "notice-7",
+   "title": "A text message about parking",
+   "today": "2026-02-18",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "notice_words": "A text from the manager's phone: your car has been in the visitor spot all week, which breaks the lease's parking rule; move it within 7 days or your lease is terminated.",
+    "notice_delivered": "2026-02-16",
+    "how_it_came": "a text message only; nothing on paper",
+    "earlier_warning": "none",
+    "eviction_filed": "no"
+   },
+   "message": "The manager texted me that my car has been in the visitor spot and I have 7 days to move it or my lease is terminated. Is a text even a legal notice? Do I have to do anything?",
+   "answer": "The law does not settle whether a text counts. It names mailing, handing over a copy, e-mail under a signed agreement, and leaving a copy at the home if you are away. A text is none of these, and your lease says you and your landlord did not agree to e-mail. One reading: this is not the required notice, so no count has started. The other: a notice that actually reached you is enough. Moving the car to your own space by February 23 meets both readings. Either way the text does not put you out by itself: your landlord needs a court case.",
+   "points": [
+    "Opens by saying it is not settled whether a text counts, and leans neither way. Says a text is not one of the ways 83.56(4) names, and gives both readings.",
+    "Gives the date as 2026-02-23, from count_days, counted from the day the text came, and says moving the car by then meets both readings.",
+    "(Parking in an unauthorized manner is on the statute's fix list. The notice does not by itself put the tenant out. The landlord could also send a proper notice.)"
+   ],
+   "mistakes": [
+    "Says flatly that the text is a valid notice, or flatly that it is not and can be ignored.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(4)", "quote": "shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505 , or, if the tenant is absent from the premises, by leaving a copy thereof at the residence"},
+    {"cite": "83.505(6)", "quote": "This section does not preclude service of notices by any other means permitted by law."},
+    {"cite": "83.56(2)(b)", "quote": "parking in an unauthorized manner or permitting such parking"}
+   ],
+   "dates": [
+    {"fact": "notice_delivered", "days": 7, "date": "2026-02-23", "passed": false}
+   ]
+  },
+  {
+   "id": "notice-8",
+   "title": "Sued over the notice: court papers came yesterday",
+   "today": "2026-04-22",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "notice_words": "You are advised that your lease is terminated effective immediately. You shall have 7 days from the delivery of this letter to vacate the premises. This action is taken because you intentionally damaged the hallway door on March 28.",
+    "notice_delivered": "2026-04-02",
+    "how_it_came": "the manager handed it to the tenant at the door",
+    "eviction_filed": "yes: a complaint for possession; the tenant was served with the summons and complaint on 2026-04-21",
+    "conduct": "the tenant says someone else damaged the door",
+    "rent_since": "April rent paid on 2026-04-01; May rent is due 2026-05-01"
+   },
+   "message": "The landlord filed an eviction against me over that notice and I got served yesterday. The damage wasn't me. What do I do?",
+   "answer": "Act on the court papers first. To defend the case you must meet a rule about the court registry, an account the court clerk keeps. You pay in the rent the complaint claims and the rent that comes due while the case goes on, or you file a motion asking the court to set the amount, within 5 days after you were served, not counting Saturdays, Sundays, and legal holidays. The summons states this. This tool does not count those days. If you miss it, you lose your defenses other than payment, and the court must order you removed. If you meet it, you can raise that you did not do the damage. Other court steps are outside this tool.",
+   "points": [
+    "Leads with what the tenant must do to defend: pay into the court registry the rent as the complaint alleges and the rent coming due during the case, or file a motion to determine the amount, within 5 days excluding Saturdays, Sundays, and legal holidays after service; the summons states the requirement (83.56(5)(b), 83.60(2)).",
+    "Says what follows if they miss it: an absolute waiver of defenses other than payment, and a default judgment for removal.",
+    "Says the tenant can raise that they did not do it as a defense once that rule is met.",
+    "(83.56(2)(a)'s example turns on damage 'by intentional act'. Other court steps are outside the tool. An answer may say to get a lawyer at once.)"
+   ],
+   "mistakes": [
+    "Gives a calendar date for the 5 days.",
+    "Says the tenant can simply tell the court they did not do it, leaving out the registry rule.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(5)(b)", "quote": "Any tenant who wishes to defend against an action by the landlord for possession of the unit for noncompliance of the rental agreement or of relevant statutes must comply with s. 83.60 (2)."},
+    {"cite": "83.60(2)", "quote": "Failure of the tenant to pay the rent into the registry of the court or to file a motion to determine the amount of rent to be paid into the registry within 5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process constitutes an absolute waiver of the tenant’s defenses other than payment"},
+    {"cite": "83.60(2)", "quote": "The clerk shall notify the tenant of such requirement in the summons."}
+   ],
+   "dates": []
+  },
+  {
+   "id": "notice-9",
+   "title": "Leaving on the notice: is that the end of it?",
+   "today": "2026-06-01",
+   "lease": "lease_rules.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "notice_words": "You are advised that your lease is terminated effective immediately. You shall have 7 days from the delivery of this letter to vacate the premises. This action is taken because you intentionally damaged the door of Apartment 12 on May 25.",
+    "notice_delivered": "2026-06-01",
+    "how_it_came": "the manager handed it to the tenant this morning",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-06-08",
+    "conduct": "the tenant does not dispute the damage",
+    "rent_since": "June rent paid on 2026-06-01, before the notice arrived",
+    "eviction_filed": "no"
+   },
+   "message": "I got a lease termination letter this morning over a door I damaged. I'm not going to fight it. If I move out by June 8, am I done? Do I still owe rent through July? What about my deposit?",
+   "answer": "Moving out does not by itself settle what you owe, and the law does not settle whether you still owe rent through July. One reading: your landlord ended the lease, and that is the choice that ends any further liability. The other: the rule on remedies covers any tenant who broke the lease and gave up the home, so your landlord keeps its choice, including holding you to the rent. Your landlord must also follow the deposit rules, and may make a claim for the door. To keep the landlord's duty to send you a notice about the deposit, give a written notice by hand or certified mail with your new address; for a June 8 move, the last day is today.",
+   "points": [
+    "Opens by saying moving out does not by itself settle what is owed, and that whether the tenant still owes rent through July is not settled. Gives both readings (83.595(1) against 83.595's opening) and leans neither way.",
+    "Says the landlord must comply with 83.49(3) for the deposit (83.56(6)), and may make a claim on it through those steps.",
+    "Gives the 7-day notice before leaving: written, by hand or certified mail, with an address; the last day for a June 8 move is 2026-06-01, today, from count_days. Says what it does: it keeps the landlord's duty to send a notice about the deposit.",
+    "(The last day to leave under the notice is 2026-06-08, from count_days.)"
+   ],
+   "mistakes": [
+    "Says flatly that the tenant is done and owes nothing more, or flatly that they owe the rent through July.",
+    "States one total the tenant owes, or counts the months left or totals the rent left.",
+    "Says the deposit is lost because of the damage, or that the landlord may simply keep it.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.595(1)", "quote": "Treat the rental agreement as terminated and retake possession for his or her own account, thereby terminating any further liability of the tenant"},
+    {"cite": "83.595", "quote": "If the tenant breaches the rental agreement for the dwelling unit and the landlord has obtained a writ of possession, or the tenant has surrendered possession of the dwelling unit to the landlord"},
+    {"cite": "83.56(6)", "quote": "If the rental agreement is terminated, the landlord shall comply with s. 83.49 (3)."},
+    {"cite": "83.49(5)", "quote": "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"}
+   ],
+   "dates": [
+    {"fact": "planned_move_out", "days": -7, "date": "2026-06-01", "passed": false},
+    {"fact": "notice_delivered", "days": 7, "date": "2026-06-08", "passed": false}
+   ]
+  }
+ ]
+}

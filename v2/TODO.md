@@ -5,10 +5,13 @@ mistakes are in SLIPS.md.
 
 ## Now
 
+- Leaving early and the 7-day notice: drafted; on the author's OK (AUTHOR.md item 21), apply the answers, run the test
+  (`comparisons/each_skill/`), one round of fixes, trim both skills.
+
 ## Later
 
-- The other skills, two at a time after the pilot: leaving early and the 7-day notice; lease ending and rent going
-  up; entry and the neighbor; unpaid rent last (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
+- The other skills, two at a time: lease ending and rent going up; entry and the neighbor; unpaid rent last
+  (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
 - Once the deposit fixes are merged, `deposit_not_returned` loads `who_the_law_covers` instead of its own copy.
 - Story 8's lease (`comparisons/skills/lease_email.txt`): have the e-mail addendum say the election is voluntary and
   can be revoked (83.505(1)), so the key holds; rerun story 8 on Sonnet (`comparisons/deposit/README.md`).

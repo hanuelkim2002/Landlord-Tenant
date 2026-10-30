@@ -146,3 +146,7 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     says neither. It does not say rent stops once the lease ends: the stored text says only that the tenant "may
     terminate the rental agreement" (83.56(1)). The grader's ground in story 2 ("applies only to a tenant who stays")
     overstates 83.60(1)(a); the answer still reads as if the notice decided it.
+21. **The leaving-early and 7-day-notice skills: new law points and test keys** (2026-10-30, nothing run yet). Your
+    checks before any test, with ten questions, a recommended answer on each:
+    `comparisons/each_skill/REVIEW_leave_and_notice.md`. Q1 reaches back to the repair skill: a problem still going on
+    may simply be "continuing" (83.56(5)(a)), not an open point. Q10 takes three words out of that skill.

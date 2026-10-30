@@ -1,0 +1,315 @@
+{
+ "how_to_read": "The leaving-early skill's stories, in the repair stories' shape. Each runs on comparisons/skills/lease.txt unless it has a 'lease' field naming a copy in this folder: lease_addendum.txt (clause 11 and a signed Addendum A, $2,100, 'I agree' marked), lease_highfee.txt (the same, $3,000), lease_charge.txt (clause 11: a re-rental charge and loss of the deposit, no addendum), or lease_2026.txt (the same home, a term from January 1 to December 31, 2026, signed December 10, 2025). 'today' is the date count_days compares with. 'facts' are confirmed facts. 'points' are what a right answer must convey, judged by meaning; a point written wholly in parentheses is helpful detail, not required. 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story holds school_housing. Check with: python ../skills/check_key.py wants_to_leave_early/stories.json (from comparisons/each_skill/).",
+ "sections": ["83.42", "83.43", "83.46", "83.47", "83.48", "83.49", "83.505", "83.51", "83.512", "83.52", "83.55", "83.56", "83.57", "83.575", "83.59", "83.595", "83.60", "83.63", "83.64", "83.682"],
+ "stories": [
+  {
+   "id": "leave-1",
+   "title": "A new job: can they just give notice and go?",
+   "today": "2026-03-02",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-03-31",
+    "reason": "a new job in Tampa; no problem with the apartment",
+    "leaving_notice_given": "none yet"
+   },
+   "message": "I got a job in Tampa and I need to move out on March 31. My lease goes through July. Can I just give them notice and leave? What would I owe?",
+   "answer": "No law lets you end a lease with a set end date just because you give notice. You can move out, but the lease and the rent do not stop on their own. Your landlord then chooses: end the lease with nothing more owed; re-rent the apartment in good faith and charge you only the difference between your rent and what comes in; or wait and hold you to the rent as it comes due through July 31. The choice is the landlord's, so no one can give you a total yet. Separately, give at least 7 days' written notice by hand or certified mail, with your new address, by March 24. That notice keeps the landlord's duty to tell you of any claim on your deposit; it does not end the lease or the rent.",
+   "points": [
+    "Says there is no right to end a lease with a set end date by giving notice: giving notice or moving out does not by itself end the lease or stop the rent.",
+    "Says the landlord chooses what happens, and names its choices: end the lease with no more liability (83.595(1)); re-rent and hold the tenant to the difference, with a good-faith duty to try (83.595(2)); or stand by and hold the tenant to the rent as it comes due (83.595(3)). The answer picks none of them.",
+    "Gives the 7-day notice: written, by certified mail or by hand, with an address where the tenant can be reached; the last day is 2026-03-24, from count_days, counted back from the move. Says what it does: it keeps the landlord's duty to send a notice about the deposit.",
+    "(The lease has no separate addendum, so a fee under 83.595(4) is not one of the landlord's choices here.)",
+    "(Asking the landlord for a written release or buyout is possible. An answer may say so; clause 10 says changes must be in writing signed by both.)"
+   ],
+   "mistakes": [
+    "Says that giving notice, the 7-day notice included, ends the lease or stops the rent.",
+    "States one total the tenant owes, says which choice the landlord will make, or counts the months left or totals the rent left. (Saying 'the rent through July 31' is not this mistake.)",
+    "Says the landlord must re-rent the apartment in every case, or that the tenant will owe nothing.",
+    "Says the law forbids the tenant to move out.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.595(1)", "quote": "Treat the rental agreement as terminated and retake possession for his or her own account, thereby terminating any further liability of the tenant"},
+    {"cite": "83.595(2)", "quote": "the landlord has a duty to exercise good faith in attempting to relet the premises"},
+    {"cite": "83.595(3)", "quote": "Stand by and do nothing, holding the lessee liable for the rent as it comes due"},
+    {"cite": "83.49(5)", "quote": "must give at least 7 days’ written notice by certified mail or personal delivery to the landlord before vacating or abandoning the premises, which notice must include the address where the tenant may be reached"}
+   ],
+   "dates": [
+    {"fact": "planned_move_out", "days": -7, "date": "2026-03-24", "passed": false}
+   ]
+  },
+  {
+   "id": "leave-2",
+   "title": "A signed addendum within the limits",
+   "today": "2026-04-13",
+   "lease": "lease_addendum.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-05-31",
+    "reason": "moving home to care for a parent",
+    "leaving_notice_given": "none yet"
+   },
+   "message": "I need to move out May 31. I remember signing something about an early termination fee when I got the lease. What do I actually owe if I leave, and do I need to do anything first?",
+   "answer": "You signed Addendum A, with 'I agree' marked, for $2,100. That is not more than two months' rent, and the lease asks for 30 days' notice, which is not more than 60, so the fee is available. You owe $2,100, plus rent and other charges through the end of the month your landlord takes the apartment back, plus any charges for damage. Under the addendum your landlord gave up asking for rent beyond that month. Clause 11 asks for 30 days' written notice, by hand or certified mail: the last day is May 1.",
+   "points": [
+    "Says the fee route is open because its conditions are met: a separate addendum with 'I agree' marked; $2,100, which does not exceed two months' rent; and a 30-day notice, not more than 60.",
+    "Says what it costs: the $2,100, plus rent and other charges through the end of the month the landlord retakes possession, plus charges for damage (83.595(4)(a)).",
+    "Says the landlord, in the addendum, gave up seeking rent beyond the month it retakes possession.",
+    "Gives clause 11's notice: written, delivered as clause 7 says; the last day is 2026-05-01, from count_days.",
+    "(83.49(5)'s 7-day notice has a last day of 2026-05-24, from count_days. Whether clause 11's notice takes its place is not settled; one notice in time, by hand or certified mail, with an address, meets both.)"
+   ],
+   "mistakes": [
+    "Says the addendum's fee is not available, or is more than the law allows.",
+    "Says the fee is all the tenant owes, leaving out the rent through the month the landlord retakes possession.",
+    "Says the landlord may still hold the tenant to the rent through July 31 after the fee.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.595(4)", "quote": "if the amount does not exceed 2 months’ rent"},
+    {"cite": "83.595(4)", "quote": "the tenant is required to give no more than 60 days’ notice, as provided in the rental agreement, prior to the proposed date of early termination"},
+    {"cite": "83.595(4)", "quote": "The tenant must indicate acceptance of liquidated damages or an early termination fee by signing a separate addendum to the rental agreement"},
+    {"cite": "83.595(4)(a)", "quote": "the landlord is entitled to the rent and other charges accrued through the end of the month in which the landlord retakes possession of the dwelling unit and charges for damages to the dwelling unit"}
+   ],
+   "dates": [
+    {"fact": "planned_move_out", "days": -30, "date": "2026-05-01", "passed": false},
+    {"fact": "planned_move_out", "days": -7, "date": "2026-05-24", "passed": false}
+   ]
+  },
+  {
+   "id": "leave-3",
+   "title": "A charge only in the body of the lease",
+   "today": "2026-02-09",
+   "lease": "lease_charge.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-03-15",
+    "reason": "moving closer to work",
+    "leaving_notice_given": "none yet",
+    "early_addendum": "none: the tenant signed only the lease"
+   },
+   "message": "My lease says if I move out early I pay a $1,500 re-rental charge and lose my deposit. I never signed anything else. I want to leave March 15. Is that really what I have to pay?",
+   "answer": "Not on that clause. Whatever the lease calls them, a charge and a loss of the deposit for leaving early are an early termination fee under the statute, and that can be charged only if you signed a separate addendum. You signed only the lease. Your deposit is not simply gone: to keep any of it, your landlord must follow the deposit rules. Leaving is still not free. Your landlord can end the lease with nothing more owed, re-rent the apartment in good faith and hold you to the difference, or wait and hold you to the rent as it comes due through July 31. Give 7 days' written notice by hand or certified mail, with your new address, by March 8.",
+   "points": [
+    "Says the $1,500 and the loss of the deposit are, whatever the lease calls them, an early termination fee (83.43(6): 'any charge, fee, or forfeiture') or liquidated damages, which 83.595(4) treats alike. Either label is right.",
+    "Says the fee cannot be charged on this clause, since the tenant signed no separate addendum (83.595(4)).",
+    "Says the deposit is not lost by the clause: the landlord can keep any of it only through the steps in 83.49(3).",
+    "Says leaving is not free: the landlord keeps its other choices (83.595(1) to (3)), and the answer picks none and gives no total.",
+    "(The 7-day notice's last day is 2026-03-08, from count_days.)",
+    "(The landlord may still claim its actual losses as the law allows; an answer may say so.)"
+   ],
+   "mistakes": [
+    "Says the tenant owes the $1,500 or loses the deposit because the lease says so.",
+    "Says the tenant will owe nothing for leaving.",
+    "States one total the tenant owes, says which choice the landlord will make, or counts the months left or totals the rent left.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.43(6)", "quote": "means any charge, fee, or forfeiture that is provided for in a written rental agreement and is assessed to a tenant when a tenant elects to terminate the rental agreement, as provided in the agreement, and vacates a dwelling unit before the end of the rental agreement"},
+    {"cite": "83.595(4)", "quote": "This remedy is available only if the tenant and the landlord, at the time the rental agreement was made, indicated acceptance of liquidated damages or an early termination fee."},
+    {"cite": "83.595(4)", "quote": "The tenant must indicate acceptance of liquidated damages or an early termination fee by signing a separate addendum to the rental agreement"},
+    {"cite": "83.49(3)(a)", "quote": "If the landlord intends to impose a claim on the deposit, the landlord must, within 30 days after the termination of the rental agreement, provide the tenant written notice"}
+   ],
+   "dates": [
+    {"fact": "planned_move_out", "days": -7, "date": "2026-03-08", "passed": false}
+   ]
+  },
+  {
+   "id": "leave-4",
+   "title": "An addendum above two months' rent",
+   "today": "2026-02-16",
+   "lease": "lease_highfee.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-04-30",
+    "reason": "moving in with family",
+    "leaving_notice_given": "none yet"
+   },
+   "message": "I signed an early termination addendum when I moved in that says I pay $3,000 to break the lease. My rent is $1,050. I want to leave April 30. Do I have to pay the $3,000?",
+   "answer": "The law does not settle what happens here. The limit on a fee is two months' rent, which is $2,100, and yours is $3,000, so it does not meet that condition as written. One reading: the remedy exists only within the limit, so this addendum gives no fee at all, and your landlord is left with its other choices, including holding you to the rent as it comes due. The other reading: the addendum is good up to the limit, so your landlord may charge $2,100, plus rent and charges through the end of the month it takes the apartment back.",
+   "points": [
+    "Opens by saying what happens to a fee over the limit is not settled, and says $3,000 is above the limit of two months' rent ($2,100), so the condition is not met as written.",
+    "Gives both readings and leans neither way: one, the addendum gives no fee at all; the other, it is good up to the limit.",
+    "Says what each reading means for the tenant: under the first, the landlord's other choices apply (83.595(1) to (3)), which may include rent as it comes due; under the second, $2,100.",
+    "(Under the second reading, rent and charges through the end of the month the landlord retakes possession, and charges for damage, come on top.)",
+    "(Clause 11's 30-day notice has a last day of 2026-03-31, from count_days; the 7-day notice, 2026-04-23.)"
+   ],
+   "mistakes": [
+    "Says the tenant must pay the $3,000.",
+    "Says flatly that the fee falls away, or flatly that it is cut to $2,100.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.595(4)", "quote": "if the amount does not exceed 2 months’ rent"},
+    {"cite": "83.595(4)", "quote": "This remedy is available only if the tenant and the landlord, at the time the rental agreement was made, indicated acceptance of liquidated damages or an early termination fee."}
+   ],
+   "dates": [
+    {"fact": "planned_move_out", "days": -30, "date": "2026-03-31", "passed": false},
+    {"fact": "planned_move_out", "days": -7, "date": "2026-04-23", "passed": false}
+   ]
+  },
+  {
+   "id": "leave-5",
+   "title": "Military orders, and the office says a fee is still due",
+   "today": "2026-04-08",
+   "lease": "lease_addendum.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "servicemember": "yes: active duty, Air Force",
+    "orders": "permanent change of station orders to San Diego, California, more than 35 miles from the apartment",
+    "servicemember_notice_received": "2026-04-06",
+    "servicemember_notice": "a written notice with a copy of the orders, handed to the office on 2026-04-06; it says the lease ends on 2026-05-31",
+    "planned_move_out": "2026-05-31"
+   },
+   "message": "I'm active duty Air Force and got PCS orders to San Diego. On April 6 I handed the office a letter with a copy of my orders saying my lease ends May 31. The office says I still owe the $2,100 early termination fee from my addendum and rent through July. Is that right?",
+   "answer": "Not the rent through July. Your orders and your letter meet the servicemember rule, and May 31 is later than the earliest date the rule allows, May 6. You owe rent prorated to May 31, and no other rent or damages because of the early end; your lease and addendum cannot change that. Whether the $2,100 is still owed is not settled. One reading: it is owed only because of the early end, so the rule bars it. The other: the rule names rent and damages, and names penalties only for a tenant who has not moved in, so it does not reach a fee.",
+   "points": [
+    "Says the tenant may end the lease under 83.682: permanent change of station orders 35 miles or more away; a written notice with a copy of the orders; a date at least 30 days after the landlord's receipt. The earliest date is 2026-05-06, from count_days, and May 31 meets it.",
+    "Says the tenant owes the rent prorated to the effective date, and is not liable for any other rent or damages due to the early end, so not rent through July (83.682(4)).",
+    "Says the lease cannot change this (83.682(5)).",
+    "Says whether the fee is still owed is not settled, gives both readings, and leans neither way.",
+    "(The landlord may not retaliate for this termination: 83.64(1)(d).)",
+    "(The 7-day notice's last day is 2026-05-24, from count_days. An answer need not raise it, since the tenant gave written notice with the date.)"
+   ],
+   "mistakes": [
+    "Says the tenant owes rent through July 31.",
+    "Says flatly that the fee is owed, or flatly that it is not.",
+    "Treats this as ordinary leaving early, with the landlord's choices under 83.595, without 83.682.",
+    "Works out the prorated amount in dollars, since that counts days.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.682(1)", "quote": "written notice of termination to be effective on the date stated in the notice which is at least 30 days after the landlord’s receipt of the notice"},
+    {"cite": "83.682(1)(a)", "quote": "required, pursuant to a permanent change of station orders, to move 35 miles or more from the location of the rental premises"},
+    {"cite": "83.682(2)", "quote": "The notice to the landlord must be accompanied by either a copy of the official military orders or a written verification signed by the servicemember’s commanding officer."},
+    {"cite": "83.682(4)", "quote": "The tenant is not liable for any other rent or damages due to the early termination of the tenancy as provided for in this section."},
+    {"cite": "83.682(5)", "quote": "The provisions of this section may not be waived or modified by the agreement of the parties under any circumstances."}
+   ],
+   "dates": [
+    {"fact": "servicemember_notice_received", "days": 30, "date": "2026-05-06", "passed": false},
+    {"fact": "planned_move_out", "days": -7, "date": "2026-05-24", "passed": false}
+   ]
+  },
+  {
+   "id": "leave-6",
+   "title": "A leak no one fixes is why they want out",
+   "today": "2026-04-20",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "home_type": "a unit in a larger apartment building (Lakeview Terrace)",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-05-15",
+    "problem": "a leak in the bedroom ceiling since 2026-03-20; it drips when it rains",
+    "problem_noticed_date": "2026-03-20",
+    "cause": "rain coming through the roof; nothing the tenant did",
+    "repair_request": "portal requests on 2026-03-21 and 2026-04-02 asking for the repair; neither mentions ending the lease; no reply",
+    "rent_paid_since": "paid April rent on 2026-04-01, knowing of the leak",
+    "eviction_filed": "no"
+   },
+   "message": "My bedroom ceiling has been leaking since March 20. I've put in two portal requests and nobody has come. I want to break my lease and move out May 15. Can I?",
+   "answer": "Not yet on what you have sent, and two parts of the law here are not settled. A leaking roof is your landlord's job. To end the lease over it, you first deliver a written notice, by hand or certified mail, naming the leak and saying you will end the lease over it. Your portal requests are not that notice. If it is not fixed within 7 days after delivery, you may end the lease. Whether the leak is 'material' is not settled, and neither is whether paying April rent gave up that right. If you leave without taking that route, your landlord can treat it as leaving early, and can hold you to rent.",
+   "points": [
+    "Says the way out runs through the landlord's duty and 83.56(1): a written notice delivered by hand or mail that names the problem and says the tenant will end the lease over it; 7 days after delivery with no repair; the portal requests are not that notice.",
+    "Says whether the failure is material is not settled, and that paying rent with knowledge (83.56(5)(a)) raises another point not settled, giving both readings of each and leaning neither way.",
+    "Says what follows if the tenant leaves without that route, or it fails: the landlord's choices under 83.595, which can include the rent.",
+    "(The 7-day notice before leaving has a last day of 2026-05-08, from count_days.)",
+    "(83.63, on damage to the home, may be raised with its conditions, and an answer doing so makes no mistake.)"
+   ],
+   "mistakes": [
+    "Treats the portal requests as the notice that lets the tenant end the lease.",
+    "Says the tenant may move out now and the rent stops.",
+    "Says flatly that the leak is, or is not, material.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.56(1)", "quote": "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement within 7 days after delivery of written notice by the tenant specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof, the tenant may terminate the rental agreement."},
+    {"cite": "83.56(5)(a)", "quote": "if the tenant pays rent with actual knowledge of a noncompliance by the landlord"},
+    {"cite": "83.51(1)(b)", "quote": "maintain the roofs, windows, doors, floors, steps, porches, exterior walls, foundations, and all other structural components in good repair"}
+   ],
+   "dates": [
+    {"fact": "planned_move_out", "days": -7, "date": "2026-05-08", "passed": false}
+   ]
+  },
+  {
+   "id": "leave-7",
+   "title": "A fire next door",
+   "today": "2026-05-13",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "damage_date": "2026-05-10",
+    "damage": "smoke and water from a fire on 2026-05-10; the kitchen and living room cannot be used; the bedroom and bathroom can",
+    "cause": "the fire department's report says the fire began in the apartment next door",
+    "rent_paid_since": "paid May rent on 2026-05-01, before the fire"
+   },
+   "message": "A fire in the unit next door on May 10 wrecked my kitchen and living room with smoke and water. I can still use my bedroom and bathroom but it's awful. Can I get out of my lease? Or at least pay less?",
+   "answer": "Both are possible under the statute's rule on damage to the home, if the damage substantially impairs your use of the home; the statute does not define those words, but you can set your facts beside them. You did not cause the fire, so that limit does not apply. You may end the lease and leave right away; the section names no notice and no waiting period. Or you may move out of the part you cannot use, and your rent goes down by the fair rental value of that part. If you end the lease, your landlord must follow the deposit rules, and you must get the chance to collect your things when it is safe.",
+   "points": [
+    "Finds and applies 83.63: damage not caused by the tenant's wrongful or negligent act, so the tenant may end the lease and vacate immediately.",
+    "Gives the other choice: leave the unusable part, with the rent reduced by the fair rental value of that part.",
+    "Says the section names no notice or waiting period for ending the lease this way, or does not require any.",
+    "Sets the facts beside 'substantially impaired' without stating a test the statute does not give.",
+    "(If the lease ends, the landlord must comply with 83.49(3). The tenant must get the chance to collect belongings when it is safe, or notice of a date. Whether a tenant leaving at once still needs 83.49(5)'s 7 days is not settled; raising it with both readings is no mistake, nor is leaving it out.)"
+   ],
+   "mistakes": [
+    "Says the tenant must first give a 7-day notice under 83.56(1) before ending the lease over the fire. (Raising that route as another option is not this mistake.)",
+    "Treats this as ordinary leaving early, with the landlord's choices under 83.595, without 83.63.",
+    "States a test for 'substantially impaired' that the statute does not give.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.63", "quote": "If the premises are damaged or destroyed other than by the wrongful or negligent acts of the tenant so that the enjoyment of the premises is substantially impaired"},
+    {"cite": "83.63(1)", "quote": "The tenant may terminate the rental agreement and immediately vacate the premises."},
+    {"cite": "83.63(1)", "quote": "The tenant may vacate the part of the premises rendered unusable by the casualty, in which case the tenant’s liability for rent shall be reduced by the fair rental value of that part of the premises damaged or destroyed."}
+   ],
+   "dates": []
+  },
+  {
+   "id": "leave-8",
+   "title": "A flood, and no flood paper",
+   "today": "2026-07-02",
+   "lease": "lease_2026.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-12-31",
+    "flood_loss_date": "2026-06-20",
+    "loss": "flooding in a storm on 2026-06-20 ruined the tenant's furniture and electronics; replacing them would cost about $4,000; they were worth about $3,000 that day",
+    "flood_disclosure": "none: the tenant was never given a flood disclosure"
+   },
+   "message": "A storm flooded my ground-floor apartment on June 20 and ruined my furniture and electronics. Replacing it would cost about $4,000, and it was all worth about $3,000. Nobody ever told me about flooding here and I never got anything about it. Can I end my lease?",
+   "answer": "Yes, on these facts. A landlord must give a separate flood disclosure before a lease of a year or longer is signed, and you got none. Your loss meets the statute's test: repairing or replacing your things costs at least half of what they were worth. To end the lease you must give a written notice and give up the apartment by July 20. The lease ends when you give it up, and your landlord must refund rent paid in advance for any time after that. Rent unpaid from before then is still owed.",
+   "points": [
+    "Finds and applies 83.512: a lease of a year or longer, no separate flood disclosure, and a substantial loss, meaning repair or replacement costs 50 percent or more of market value ($4,000 against $3,000 meets it).",
+    "Says the tenant must both give written notice of termination and surrender possession no later than 2026-07-20, from count_days.",
+    "Says what it gives: the lease ends when the tenant gives up the home, and the landlord refunds rent or other amounts paid in advance for any time after; rent unpaid from before is still owed.",
+    "(83.63, on damage to the home, may also apply, and an answer raising it with its conditions makes no mistake. Nor does one saying the stored text does not give the date 83.512 began to apply, though this lease was signed in December 2025.)"
+   ],
+   "mistakes": [
+    "Treats this as ordinary leaving early, with the landlord's choices under 83.595, without 83.512.",
+    "Says only a notice is needed, leaving out giving up possession by the date.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {"cite": "83.512(1)", "quote": "A landlord must complete and provide a flood disclosure to a prospective tenant of residential real property at or before the execution of a rental agreement for a term of 1 year or longer."},
+    {"cite": "83.512(2)", "quote": "by giving a written notice of termination and surrendering possession of the premises to the landlord no later than 30 days after the date of the damage or loss"},
+    {"cite": "83.512(2)", "quote": "the total cost of repairs to or replacement of the personal property is 50 percent or more of the personal property’s market value on the date the flooding occurred"},
+    {"cite": "83.512(3)", "quote": "A landlord shall refund the tenant all rent or other amounts paid in advance under the rental agreement for any period after the effective date of the termination of the rental agreement."}
+   ],
+   "dates": [
+    {"fact": "flood_loss_date", "days": 30, "date": "2026-07-20", "passed": false}
+   ]
+  }
+ ]
+}
