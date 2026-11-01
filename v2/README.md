@@ -68,7 +68,7 @@ note), it asks for all of them in the same step, not one at a time. One at a tim
 
 - **Stored law.** `statutes/` (40 sections and `index.json`, read-only). `skills/`, one file per situation; the model
   sees each skill's name and description and loads the ones that fit.
-  `who_the_law_covers` holds the college-housing check that the new skills share (2026-10-28).
+  `who_the_law_covers` holds the college-housing check that the skills share (2026-10-28).
 - **The lease.** The tenant uploads a PDF. Every page is read from its image by Claude Haiku 5.5 from Anthropic (a
   PDF's own text can lose what was typed into the form and its check boxes). The text is stored page by page, and
   the whole lease goes into the system prompt once, every turn (method A, 2026-10-19, `comparisons/lease/`; the

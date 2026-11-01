@@ -12,7 +12,6 @@ mistakes are in SLIPS.md.
 
 - `landlord_entered_unannounced` and `notice_received_nonpayment` wait: the plan for counting hours and holidays was
   dropped for now (AUTHOR.md, 2026-10-31).
-- Once the deposit fixes are merged, `deposit_not_returned` loads `who_the_law_covers` instead of its own copy.
 - Story 8's lease (`comparisons/skills/lease_email.txt`): have the e-mail addendum say the election is voluntary and
   can be revoked (83.505(1)), so the key holds; rerun story 8 on Sonnet (`comparisons/deposit/README.md`).
 - Deposit skill: widen the no-lean line to any point the answer cannot settle (stories 9, 11, 18 leaned on Sonnet);
