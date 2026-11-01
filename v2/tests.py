@@ -59,6 +59,12 @@ check("a bracketed change and bold marks are not counted as changes",
 check("a short quotation (under 20 characters) is not checked", quotes('It is "certified mail" here.') == [])
 check("a section number written without the stored text's space, s. 83.51(1), checks out",
       quotes('The defense needs "a material noncompliance with s. 83.51(1)" (83.60(1)(b)).')[0]["ok"])
+check("a section number written without the stored text's space before a comma, s. 83.505, checks out",
+      quotes('Delivery "shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505, or, '
+             'if the tenant is absent from the premises" (83.56(4)).')[0]["ok"])
+check("a section number written without the stored text's space before a period, s. 83.64, checks out",
+      quotes('The tenant may raise "retaliatory conduct in accordance with s. 83.64. The landlord must be given an '
+             'opportunity" (83.60(1)(a)).')[0]["ok"])
 check('a cut written ". . ." is read as a cut',
       quotes('A tenant may not "damage . . . any part of the premises . . . nor permit any person to do so" '
              '(83.52(6)).')[0]["ok"])

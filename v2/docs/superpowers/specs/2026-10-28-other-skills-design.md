@@ -32,6 +32,9 @@ Names follow v1's.
    is decided with that pair.
 5. `notice_received_nonpayment`, after the counting decision.
 
+Changed 2026-10-31: `neighbor_disturbance` goes with step 3 as one group of three. The counting plan is dropped for now, so
+`landlord_entered_unannounced` and `notice_received_nonpayment` wait.
+
 ## The shared skill: `who_the_law_covers`
 
 - Description, draft: "Whether Florida's landlord-tenant law covers the tenant's home at all, such as college housing.

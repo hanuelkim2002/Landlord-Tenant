@@ -71,8 +71,8 @@ Every page is read from its image by the vision model (`comparisons/models/`), 1
 
 Shown under each reply; the reply is never blocked.
 
-- `plain(text)`: text as the check compares it: squashed, lowercase, no space before a section number's "(" (the
-  stored statutes write "s. 83.51 (1)").
+- `plain(text)`: text as the check compares it: squashed, lowercase, no space after a section number before "(", a
+  comma, or a period (the stored statutes write "s. 83.51 (1)" and "s. 83.505 ,").
 - `quote_parts(quote)`, `found_in(parts, text)`: a quotation's words, cut at an ellipsis ("...", "…", ". . .") or a
   bracketed change.
 - `QUOTE`: a quotation of 20+ characters. Its opening mark must follow the start, a space, a bracket, or a bold mark,
@@ -133,7 +133,7 @@ not let the preview's launcher read the Documents folder.
 
 ## Elsewhere in v2
 
-`statutes/` (read-only), `skills/` (one file per situation, format A: `deposit_not_returned`, `repair_not_made`, and
-`who_the_law_covers`, the college-housing check the new skills share), `comparisons/` (`each_skill/`, one runner for each new skill's test, and `spans.py`, a time-span counter; the lease, skills, model,
+`statutes/` (read-only), `skills/` (one file per situation, format A: `deposit_not_returned`, `repair_not_made`,
+`wants_to_leave_early`, `notice_received_violation`, `neighbor_disturbance`, `rent_increased`, `lease_ending`, and `who_the_law_covers`, the college-housing check the new skills share), `comparisons/` (`each_skill/`, one runner for each new skill's test, and `spans.py`, a time-span counter; the lease, skills, model,
 deposit skill, plain replies, and intake speed tests, the memory tests, their answer keys, and scores),
 `docs/superpowers/` (the memory's spec and plan), `matters/` (private, not in git), `V2_PROMPT.md` (how v2 started).

@@ -5,10 +5,13 @@ mistakes are in SLIPS.md.
 
 ## Now
 
+- Three small fixes left out on the author's call (committed as it is, 2026-11-01): the neighbor skill's line on deciding before rent is due is
+  wrong once rent has been paid; end-6's missing line on proper notice; a sentence for end-3's short answer. Each needs a rerun.
+
 ## Later
 
-- The other skills, two at a time after the pilot: leaving early and the 7-day notice; lease ending and rent going
-  up; entry and the neighbor; unpaid rent last (`docs/superpowers/specs/2026-10-28-other-skills-design.md`).
+- `landlord_entered_unannounced` and `notice_received_nonpayment` wait: the plan for counting hours and holidays was
+  dropped for now (AUTHOR.md, 2026-10-31).
 - Once the deposit fixes are merged, `deposit_not_returned` loads `who_the_law_covers` instead of its own copy.
 - Story 8's lease (`comparisons/skills/lease_email.txt`): have the e-mail addendum say the election is voluntary and
   can be revoked (83.505(1)), so the key holds; rerun story 8 on Sonnet (`comparisons/deposit/README.md`).

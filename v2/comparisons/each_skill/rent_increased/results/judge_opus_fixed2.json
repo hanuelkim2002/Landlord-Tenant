@@ -1,0 +1,56 @@
+{
+ "rent-4/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence gives the missing rule, not the verdict, and 'Keep paying $1,050 on time and put your disagreement in writing' picks a choice in the opening while the answer calls the three readings open; the dates and the other choices are there."
+ },
+ "rent-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It isn't settled' but leans with 'so you can keep paying $1,050 for now', against its own 'I'm not naming any of these as the safest'; the other points are all made, and the line is not a flat statement of what is owed because the next sentence names the risk."
+ },
+ "rent-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'is not settled' but leans with 'So you have a good argument that your rent is still $1,050', though it then gives the landlord's side; the dates, the landlord's right to end the tenancy, and all three choices are there."
+ }
+}

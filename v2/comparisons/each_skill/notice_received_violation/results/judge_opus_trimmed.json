@@ -1,0 +1,206 @@
+{
+ "notice-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "States 'the law normally gives a tenant a chance to fix a problem', but 83.56(2) sets out two paths and no default, and that default is the very point left open.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'is not settled under Florida law' and 'A first noise complaint is not on either list' make the points with both readings and 'through May 11', and the 'normally' line is followed by 'it is unclear', so it stays short of a lean."
+ },
+ "notice-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'The law doesn't say which kind a first noise complaint is' conveys the reason even though it calls only the no-fix lists examples and never says outright that noise is missing from the fix list, and 'the last day is May 11' and 'still start a court case' are there."
+ },
+ "notice-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'is not settled in the law' with 'a first noise complaint fits neither list', both readings, 'the last of those days is May 11' and 'A tenant who does nothing can still be sued' make the points."
+ },
+ "notice-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'is not settled', both readings and 'Removing the dog by then meets the notice on either reading' make the points, but 'accepted full rent for four months' is the answer's own count of how long that lasted."
+ },
+ "notice-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Partly' in 'Partly, but it is not settled' is loose wording that 'I can't tell you the landlord has lost the right' takes back, both readings and 'The fix meets the deadline either way' are there, but 'full rent for four months' is its own count."
+ },
+ "notice-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'It isn't settled', 'I'm not choosing one' and 'whichever way the waiver question goes' make the points, but 'took rent for four months' is the answer's own count of how long that lasted."
+ },
+ "notice-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says flatly of the text 'It starts the count', though the statute does not settle that and the answer's own first reading says no count has started.",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "'I'm leaning neither way', both readings and 'Moving the car by February 23 meets both readings' make the points, and the lone 'It starts the count' line is a slip rather than a flat ruling that the text is valid."
+ },
+ "notice-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "'it is not settled whether it counts', both readings and 'Moving the car by February 23 satisfies both readings' make the points, and 'If the notice is valid and the car stays' keeps it from calling the text valid."
+ },
+ "notice-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "'It isn't settled', 'A text isn't named', both readings and 'Moving the car by February 23 meets both' make the points, and the parenthetical point counts on the fix-list and court-case parts though it never says the landlord could send a proper notice."
+ },
+ "notice-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'it doesn't settle everything' and 'is not settled' with both 83.595 readings, 83.56(6) on the deposit and 'that notice is due today, June 1' make the points, and 'stays yours except for what your landlord properly claims' avoids a forfeiture claim."
+ },
+ "notice-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'it may not settle everything', both readings, 'only through the steps in 83.49(3)' and the June 1 notice make the points, and 'Part II doesn't say whether' the notice applies is a harmless hedge because it still says to give it today."
+ },
+ "notice-9/3": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence gives only 'meets the letter's deadline' and leaves 'I can't say you are fully done' to the second, while both readings, the 83.49(3) steps, 'which is today' and 'keeps the landlord's duty to send you a deposit notice' make the points."
+ }
+}

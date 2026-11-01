@@ -41,6 +41,22 @@ against rule 7).
   repair for several days after your notice" (story 7), a span with no number. keys2, same graders: 4 of 27.
 - 2026-10-29, after rule 7 named vague spans and allowed the start date: 0 of 27 by `spans.py`, which now finds
   vague spans too; the run before, 1. No span in the tenant's words either (the run before, 5).
+- 2026-10-30, the leaving-early and 7-day-notice tests (51 answers each way, Sonnet 5.5): new 1, "well over 30 days
+  after the office received it" (leave-5). Old versions 2, "June 9" for the day after a count (notice-9) and "accepted
+  rent for months" (notice-6). `spans.py` also counts words from the statute and the lease ("2 months' rent", "14 nights
+  in any six months"); those were read by hand and left out.
+- 2026-10-30, the trimmed text on five stories: "for four months" for rent taken from December to March (notice-6, 3 of 3;
+  0 of 3 on the longer text, and nothing about spans was trimmed). notice-6 is not counted, so the score does not show it.
+- 2026-11-01, neighbor, rent, and lease-ending test (Sonnet 5.5): new 1 of 72, "May 31", a next period end no tool gave
+  (end-5), which the skill's wording invited. New 1 of 72, "your letter gave about one month" (rent-2), a span of its own.
+- 2026-11-01, the same test's rerun on the fixed skills: "which ends May 31" again (end-5, 1 of 3), with no next period in the
+  facts, and "the letter gave you about a month" (rent-2, 1 of 3).
+- 2026-11-01, the second round of fixes: "a few days is too short to judge" (neighbor-3, 1 of 3), a vague span of its own. No
+  period-end date appears in end-5 now. Code's other flags are rent days the lease states ("April 1", "May 1"), read by hand as before.
+- 2026-11-01, the sentence recipe on rent-4: "on 11 days' notice" and "Is 11 days enough?" (1 of 3), a count of its own and off by
+  one (March 20 to April 1 is 12 days). The tenant said "not even two weeks".
+- 2026-11-01, the final text: "your landlord gave 11 days" (end-6, 1 of 3). The graders counted a span in 1 of 72. Code's three date
+  flags are rent days the lease states ("April 1", "May 1"), read by hand as before.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -69,6 +85,21 @@ The skill marks a point as not settled, with a reading on each side; the answer 
   v1 3 of 3, new 0 of 3.
 - 2026-10-28, repair rerun, story 7: both readings of when the lease ended, then one outcome for both ("Under either
   reading, the 15-day return date ... has passed"), keys2 2 of 3; v1's first-round answers, regraded, 2 of 3.
+- 2026-10-30, the two new tests: a lean, "A text is probably not a notice in the form the statute names" (notice-7,
+  new 1 of 3, old 1 of 3). Old versions also lean on a first noise complaint (notice-3, 3 of 3), on a dog still there
+  (notice-6, 1), and on how serious a leak is (leave-6, 1).
+- 2026-10-30, the trimmed text: a leak "supports the second reading" of "material" (leave-6, 1 of 3), and "the law
+  normally gives a tenant a chance to fix a problem" on a point not settled (notice-3, 1 of 3). No answer says "probably".
+- 2026-11-01, the same test, opening with a lean before saying a point is open: "You likely meet every requirement",
+  "Yes ... you appear to meet every condition" (neighbor-3, 2 of 3); "You have a good argument", "The safest course is to keep
+  paying $1,050" (rent-4, 3 of 3 lean); "that probably doesn't stop your lease from ending" (end-9, 1 of 3).
+- 2026-11-01, the rerun: "Yes ... you appear to be able to end your lease" (neighbor-3, 1 of 3) and "a good argument that your
+  rent stays $1,050" (rent-4, 1 of 3).
+- 2026-11-01, the second round of fixes: rent-4's short answer still leans, 3 of 3 ("Keep paying $1,050", "so you can keep paying
+  $1,050 for now", "a good argument that your rent is still $1,050"), with "points this way" gone from the skill. Across all nine
+  rent-4 answers, 7 lean. neighbor-3: "so it is a 'material provision'" in the details, against the answer's own opening (1 of 3).
+- 2026-11-01, the sentence recipe on rent-4: the short answer no longer picks a default in 2 of 3; the third ends "Do you want to stay
+  at $1,200, or would you rather move out?", rule 8's closing question dropping the choice to pay the old rent.
 
 ## Says the balance is due on day 30 after an objection
 
@@ -118,6 +149,28 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
   that notice is needed only for the 83.51(1) defense if sued for rent (83.60(1)), and ending the lease needs none).
 - 2026-10-29, the rule 7 run's answers regraded beside the fixes: story 6 once, "Your lease is month to month, so your
   landlord can generally change the rent", against the lease's clause on changes in a writing both sign.
+- 2026-10-30, the two new tests: new 3 of 51. "The notice only works if the damage was your intentional act" (notice-8;
+  the statute's list is only examples). "You wouldn't be admitting anything" (notice-6, no support). A guest's stay
+  called "a one-time event that has ended" when it ran past the rent payment (notice-2). Old versions: "doesn't settle"
+  for a repeat the statute covers (notice-4, 3 of 3); "affects the whole home", against the facts (leave-7).
+- 2026-10-30, the guest and lawsuit stories after the round of fixes: 2 of 6. A lease-over notice "fits three situations",
+  a closed list where the statute's is open (notice-2). "The landlord must prove the damage was intentional and that it
+  was you", a burden of proof the stored text does not set (notice-8). A line against the first was already in the skill.
+- 2026-11-01, the same test: retaliation "only" after a complaint, against a list of examples (rent-2, rent-3, once each);
+  "primarily because" the tenant is retaliating, in a short answer (neighbor-7); "Your lease and the law" give a ground, when the
+  lease has no such clause (neighbor-7); a new notice could reach May 1, when 60 days from any new notice is later (rent-2);
+  paying the lease's own rent treated as paying the raise (rent-8); the reading that makes a letter "too early" named for the one
+  that makes it too late, and "on or before May 17" meeting both readings (end-3, 2 of 3); a 7-day date counted from the end date
+  for someone leaving earlier (end-4).
+- 2026-11-01, the rerun: "Don't pay April rent while this is still going on", to keep the right to end the lease, with no warning
+  of a demand or a suit (neighbor-3, 1 of 3; the first round's neighbor-3 has a garbled line like it). Paying with doubt "gives up
+  the right to sue", said flatly (rent-4, 1 of 3). "The $50 difference" for a $100 raise (rent-2, 1 of 3).
+- 2026-11-01, the same test: being treated differently "from other tenants", words not in 83.64(4), in 14 of 36 new and fixed rent
+  answers (6 of 6 on rent-4; v1 14 of 24). No grader counted them.
+- 2026-11-01, the three skills' final text (Sonnet 5.5): "The landlord acted in bad faith" as a condition of retaliation (rent-4, 1 of 3);
+  "Part II doesn't cover rent paid through a voucher" (rent-6, 1 of 3); the statute's condition on the charge credited to the lease
+  (end-2, 1 of 3); "too early" for the reading that makes a letter too late, in the short answer, right in the details (end-3, 2 of 3;
+  0 of 3 and 2 of 3 in earlier rounds); the landlord's letter misdescribed (end-8, 1 of 3). "From other tenants" in 9 of 24 rent answers.
 
 ## Does not load the skill
 
@@ -130,6 +183,7 @@ never read.
 - 2026-10-28, repair rerun: keys2 0 of 27, v1 0 of 15.
 - 2026-10-28, the repair skill under the new rule 7: 2 of 27, both story 6 (retaliation), which read 83.64 itself and
   was right both times.
+- 2026-10-30, the two new tests: new 0 of 51; old 1 of 51 (leave-8, read 83.512 itself and was right).
 
 ## Empty answer
 
@@ -182,6 +236,12 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
 - 2026-10-29, after the three fixes: 7 of 185. "due to causes beyond the landlord's control" 3 times, the repair
   skill's own unquoted wording of 83.56(1), put in quote marks; "until further notice", the sign's words from the
   facts, 4 times.
+- 2026-10-30, the two new tests, new: 8 of 456 not found word for word. 5 are slips: a clause cut out of 83.56(2) with
+  no ellipsis, the notice's or the skill's words in quote marks ("lease over, leave in 7 days"), and "accepted with
+  reservation", nobody's words. 3 were right but flagged, since the stored text writes "s. 83.505 , or" with a space before
+  the comma; the check reads that since 2026-10-30.
+- 2026-11-01, the same test: 5 of 492 quotes not found. Three change the words (rent-6, end-9); two are the tenant's or a
+  paper's words in quote marks, against rule 6 ("it's between neighbors", neighbor-1; "we want to redo the unit", end-6).
 
 ## Writes a short answer longer than asked
 

@@ -1,0 +1,56 @@
+{
+ "rent-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The short answer is neutral and complete (\"the law doesn't pick one\"), but \"on 11 days' notice\" and \"Is 11 days enough?\" are its own count of the time to April 1, not the tenant's \"not even two weeks\"."
+ },
+ "rent-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"I'm not choosing among these readings\" holds, and the short answer draws no conclusion from section 10 and \"You haven't agreed or signed anything\", but the first reading stops at \"too late for April\" and never says whether a late notice works for the next period."
+ },
+ "rent-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It opens neutrally and lists three choices, but the short answer ends \"Do you want to stay at $1,200, or would you rather move out?\", which assumes staying means paying the new rent and drops the pay-the-old-rent choice, so it leans."
+ }
+}

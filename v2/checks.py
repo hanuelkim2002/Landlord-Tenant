@@ -17,9 +17,10 @@ NEAR = 150                                                   # characters on eac
 
 
 def plain(text):
-    """Text as the check compares it: squashed, lowercase, and no space before a section number's "(" (the stored
-    statutes write "s. 83.51 (1)", replies "s. 83.51(1)"). Kept here, not in law.squash: law.py's splitter needs it."""
-    return re.sub(r"(\d) \(", r"\1(", law.squash(text)).lower()
+    """Text as the check compares it: squashed, lowercase, and no space after a section number before "(", a comma, or
+    a period (the stored statutes write "s. 83.51 (1)" and "s. 83.505 ,", replies "s. 83.51(1)" and "s. 83.505,"). Kept
+    here, not in law.squash: law.py's splitter needs it."""
+    return re.sub(r"(\d) ([(,.])", r"\1\2", law.squash(text)).lower()
 
 
 def quote_parts(quote):

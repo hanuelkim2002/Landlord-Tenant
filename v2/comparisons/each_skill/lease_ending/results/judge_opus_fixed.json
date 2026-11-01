@@ -1,0 +1,98 @@
+{
+ "end-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled whether you owe the $2,100\", quotes \"within 15 days before the start of the notification period\", sets May 20 between May 17 and June 1 under both readings, and says content and hand delivery are met."
+ },
+ "end-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It isn't settled\", says May 20 is \"in time under one reading and too late under the other\" with June 1 and May 17, says content and delivery appear met, and adds \"I'm not leaning either way\"."
+ },
+ "end-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It isn't settled whether you owe the $2,100\" and \"I can't choose between the two readings\", sets May 20 \"after May 17 and before June 1\" under both readings, finds content and delivery met, and says the two-month limit \"does not apply\"."
+ },
+ "end-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives \"The last day to give it is March 31, 2026\", hand or certified mail under the lease and statute, says \"the statute names no such method\" for text or portal, and says \"one notice can cover both\" with April 23."
+ },
+ "end-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives March 31 under 83.57(3), quotes the ways in 83.56(4) and section 7, says \"Don't use e-mail, a text, or the resident portal\", and says \"One letter handed over or sent by certified mail by March 31, with your forwarding address, meets both rules\" with April 23."
+ },
+ "end-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives March 31, hand or certified mail, and the 7-day notice by April 23 with \"One notice that covers both works\"; it calls a text or portal message \"not settled\" using 83.505(6), a thin argument, but says the reading that 83.56(4) lists the ways leaves them out."
+ }
+}

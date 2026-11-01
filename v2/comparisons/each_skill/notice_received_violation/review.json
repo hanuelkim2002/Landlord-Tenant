@@ -1,0 +1,9 @@
+{
+ "new": {
+  "notice-1/1": {
+   "verdict": "right",
+   "quote": "That means about March 9, 2027",
+   "why": "The grader said the answer worked out this date itself, but packets do not show tool calls: this answer called count_days(notice_delivered, 365), which gave 2027-03-09, as the skill says. It made every point and no other mistake."
+  }
+ }
+}

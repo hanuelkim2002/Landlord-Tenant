@@ -1,0 +1,431 @@
+{
+ "rent-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point: 'nothing in it lets your landlord raise the rent mid-lease', 'Keep paying $1,050, in full and on time', 'tell the landlord in writing that you don't agree', 'Don't ignore a written demand', and no notice or cap section with 'ask for more rent for a new term'."
+ },
+ "rent-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point: 'nothing in it lets your landlord raise the rent before then', 'Keep paying that amount in full and on time', 'short written note saying you don't agree', 'don't ignore it', and no 'cap on increases or a required notice period' with a higher rent possible 'for a new term'."
+ },
+ "rent-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point: 'your landlord can't raise the rent on its own', 'Keep paying that amount in full and on time', 'send a written demand for the difference. If that happens, don't ignore it', and no section that 'caps rent increases or sets how much notice' with a higher rent possible 'for a new term'."
+ },
+ "rent-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "'Not on these terms' with 'notice would have had to be given by January 31, 2026', '$1,050 remains the rent due on April 1', 'Pay $1,050 in full and on time', and 'May 1, 2026' make every required point, and it does not mention good faith under 83.44."
+ },
+ "rent-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "'Not on these terms' with 'The last day to give notice for an April 1 start was January 31, 2026', 'Your rent stays $1,050 for now', and 'Sixty days from March 2 is May 1, 2026' make every required point, and it does not mention good faith under 83.44."
+ },
+ "rent-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "'but not on the terms in this letter' with 'the last day to give notice was January 31, 2026', 'Your rent stays $1,050 for now', and 'the earliest the increase could start is May 1, 2026' make every required point, and it does not mention good faith under 83.44."
+ },
+ "rent-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "'no cap', no 'right to renew at the same rent', 'your rent stays $1,050 until then', 'only if you agree to a new lease', and the options with no end-of-term notice clause, clause 9 consent, and 'double the amount of rent due' make all three points."
+ },
+ "rent-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "'doesn't cap', no 'right to renew at the same rent', 'Your rent stays $1,050 through the end of this lease unless you agree to something else', and the three options with no end-of-term notice clause, section 9 consent, and 'double the amount of rent due' make all three points."
+ },
+ "rent-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "'puts no limit', no 'right to renew at the same rent', 'Until July 31 your rent stays $1,050', 'If you agree, $1,300 starts with the new term', and the options with no end-of-term notice clause, section 9 consent, and 'double the amount of rent due' make all three points."
+ },
+ "rent-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It is not settled whether your landlord can raise your rent with this letter', gives all three readings with clause 10, says the letter is 'too late for an April 1 increase under this reading', and says the landlord 'doesn't have to give a reason'."
+ },
+ "rent-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says 'it came after March 1, the last day to give a 30-day notice for an April 1 start' and 'Under all three readings, your landlord can end a month-to-month tenancy', and its 'next rent period (the one ending April 30)' names the late-notice question loosely but still conveys that it is not settled."
+ },
+ "rent-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Lists 'The landlord acted in bad faith' among the things that must all be true for retaliation; 83.64(1) requires the tenant's good faith and says nothing of landlord bad faith.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point ('too late for April', 'Under every reading', 'starting May 1, is also not settled') but misstates the good-faith element as 'The landlord acted in bad faith'."
+ },
+ "rent-5/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence, 'Whether the $1,400 rent takes effect is not settled', answers neither retaliation nor what to do, though the rest makes every point, including 'refusing to pay the increase can weaken that defense' and 'it is in time under readings one and two'."
+ },
+ "rent-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence's 'whether you can act on retaliation before a case is filed' answers the what-can-I-do half, and 'only a court decides that', 'Not paying the full new rent could weaken a retaliation defense', both readings and 'It was in time under this reading' make every point."
+ },
+ "rent-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'I can't say yet that this is retaliation' with the four elements, 'The defense can weaken if you stop paying', both readings with 83.54 and 83.55, and 'before March 1. Under this reading the letter was in time' make every point."
+ },
+ "rent-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'the letter was in time for an April 1 start', 'Under every reading, the landlord can end a month-to-month tenancy', 'An increase after a request is not retaliation for that reason alone' and the unsettled portal request make every point without a flat statement of what is owed."
+ },
+ "rent-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'Part II doesn't cover rent paid through a voucher or public housing program' is contradicted by 83.56(5)(c) and 83.60(2), which address rent subsidies and public housing tenants, and 83.42 does not exclude them.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'the letter was in time under readings one and two', 'Under every reading, the landlord can also end your tenancy', 'not retaliation on timing alone' and the unsettled portal request make every point, but the voucher sentence overstates what part II leaves out."
+ },
+ "rent-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'sets no notice period and no cap', 'your letter was in time', 'no reason is needed', 'An increase that follows a complaint is not retaliation for that reason alone' and the unsettled portal request make every point without a flat statement of what is owed."
+ },
+ "rent-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It's not settled', says 'I won't pick one', gives both readings with 83.56(5)(a) beside 'you hadn't read what the lease says', says 'I also can't give amounts or court steps', and adds 'Don't ignore a demand if one comes.'"
+ },
+ "rent-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'is not settled', gives two readings with 83.56(5)(a) beside 'had not read the lease', says 'Amounts and court steps are outside this tool', and adds 'If you get a demand, don't ignore it.'"
+ },
+ "rent-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It's not settled', gives both readings with 83.56(5)(a) beside 'you hadn't read the lease', says 'the amount, and the court steps are outside what I can work out here', and adds 'Don't ignore a demand if one comes.'"
+ },
+ "rent-8/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "First sentence 'you don't owe the extra $300' does not say what to do, but the short answer calls the case 'The more urgent problem' and gives the 5 days, the pay-or-motion choice, the loss of defenses, and the summons, and the details cover fees and 'What is outside this tool'."
+ },
+ "rent-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "First sentence says 'you must act fast in the eviction case', the lead gives 'only 5 days (not counting Saturdays, Sundays, and court holidays)', the pay-or-motion choice, and default with no calendar date, and the details say 'The motion filing is how you tell the court the amount is wrong' and cover fees and what is outside the tool."
+ },
+ "rent-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "First sentence adds 'you have a short deadline in the court case, so act now', the lead gives '5 court days' with the pay-or-motion choice, and the details say 'a motion to determine rent is the way to say so' and set out the three partial-rent steps and fees."
+ }
+}

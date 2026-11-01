@@ -1,0 +1,351 @@
+{
+ "how_to_read": "The neighbor skill's stories, in the repair stories' shape. Each runs on comparisons/skills/lease.txt, or on a copy in this folder with one clause added (lease_enforce.txt: quiet hours, and the landlord will enforce them on a written complaint; lease_quiet.txt: a promise of quiet enjoyment). 'today' is the date count_days compares with. 'facts' are confirmed facts. 'points' are what a right answer must convey, judged by meaning; a point written wholly in parentheses is helpful detail, not required. 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story holds school_housing. Check with: python ../skills/check_key.py neighbor_disturbance/stories.json (from comparisons/each_skill/).",
+ "sections": [
+  "83.42",
+  "83.43",
+  "83.44",
+  "83.47",
+  "83.48",
+  "83.49",
+  "83.51",
+  "83.52",
+  "83.54",
+  "83.55",
+  "83.56",
+  "83.57",
+  "83.59",
+  "83.60",
+  "83.64",
+  "83.67",
+  "83.505",
+  "83.595"
+ ],
+ "stories": [
+  {
+   "id": "neighbor-1",
+   "title": "Music upstairs, a plain lease: must the landlord act?",
+   "today": "2026-03-10",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "disturbance": "loud music from the apartment upstairs, most nights past midnight",
+    "disturbance_started": "2026-02-01",
+    "who_disturbs": "the tenants in Apartment 22, upstairs",
+    "same_landlord": "yes, the same complex and the same office",
+    "complaint_date": "2026-02-15",
+    "complaint_detail": "a letter handed to the office asking it to deal with the noise; the manager said it is between neighbors",
+    "rent_paid_since": "yes, each month"
+   },
+   "message": "The people upstairs blast music most nights past midnight. I gave the office a letter weeks ago and the manager said it's between neighbors. Doesn't my landlord have to do something about this?",
+   "answer": "Not under the landlord-tenant law's own words. The law tells every tenant not to unreasonably disturb the neighbors, and it lets a landlord act against its own tenant who does. But no sentence requires your landlord to act on your complaint, and no deadline runs from it. Your lease makes no promise about other residents either. Whether other law reads such a promise into a lease is outside this tool. You can keep complaining in writing, with dates and times, and keep a log. The police or the city are other routes, outside this tool.",
+   "points": [
+    "Says part II has no sentence requiring a landlord to act on one tenant's complaint about another, and sets no deadline for it. The landlord 'may' act against its own tenant (83.56(2)).",
+    "Says each tenant has a duty not to unreasonably disturb the neighbors (83.52(7)), and that since the upstairs tenants rent from the same landlord it has a remedy against them, which names a 'subsequent or continued unreasonable disturbance' (83.56(2)(a)).",
+    "Says this lease makes no promise about other residents or quiet.",
+    "Says what the tenant can do now: keep complaining in writing with dates and times, and keep a record; the police or the city are other routes, outside the tool.",
+    "(Whether other law reads such a promise into a lease without words is outside the tool.)",
+    "('Unreasonably' is not defined. Holding back rent is not a way here.)"
+   ],
+   "mistakes": [
+    "Says the landlord must stop the noise or evict the neighbor, or states a deadline for it to act.",
+    "Says flatly that the noise is or is not unreasonable, or states a test (set hours, a noise level) the statute does not give.",
+    "Says the tenant may end the lease or hold back rent on these facts.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.52(7)",
+     "quote": "in a manner that does not unreasonably disturb the tenant’s neighbors or constitute a breach of the peace"
+    },
+    {
+     "cite": "83.56(2)",
+     "quote": "the landlord may:"
+    },
+    {
+     "cite": "83.56(2)(a)",
+     "quote": "a subsequent or continued unreasonable disturbance"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "neighbor-2",
+   "title": "A lease promise, portal messages only: can they break the lease now?",
+   "today": "2026-03-10",
+   "lease": "lease_enforce.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "disturbance": "parties in Apartment 14 on most weekends past 2 a.m.",
+    "disturbance_started": "2026-01-10",
+    "who_disturbs": "the tenants in Apartment 14, next door",
+    "same_landlord": "yes, the same complex and the same office",
+    "complaint_date": "2026-01-20",
+    "complaint_detail": "three messages through the resident portal asking the office to stop the parties; no reply",
+    "rent_paid_since": "yes, each month since January"
+   },
+   "message": "My lease says the landlord will enforce the quiet hours if someone complains in writing. I've sent three portal messages about the parties next door and nothing has happened. Can I just break my lease now?",
+   "answer": "Not yet. Your lease has a promise in section 11, so a way to end the lease can be open, but it takes a written notice you have not given: one that names the problem and says you will end the lease over it, delivered by hand or by mail. Your portal messages are not that notice. A portal message is not a way the statute names, and they only ask. After delivery the landlord has 7 days. Two points are not settled. Is failing this promise 'material'? One reading says failing a lease promise is enough; the other says it turns on how serious the problem is. Does paying rent while the failure goes on give anything up? One reading says a continuing failure gives up nothing; the other says paying with knowledge gives up ending the lease over that failure.",
+   "points": [
+    "Answers not yet: section 11's promise can support ending the lease under 83.56(1), but the tenant has not given the notice it requires.",
+    "Says the portal messages are not that notice: a portal message is not a way 83.56(4) names, and they only ask. The notice must name the problem and say the tenant will end the lease over it, go by hand or by mail (section 7 says by hand or certified mail), and then 7 days must pass.",
+    "Says 'material' is not defined and is not settled, with both readings and no lean.",
+    "Says rent paid with knowledge is not settled (83.56(5)(a)), with both readings: a continuing failure gives nothing up, or paying gives up ending the lease over that failure. No lean.",
+    "(A tenant who moves out when these are not met may still owe rent.)"
+   ],
+   "mistakes": [
+    "Says the tenant may end the lease now.",
+    "Says the portal messages count as the notice.",
+    "Says the tenant may hold back rent.",
+    "Says flatly that the failure is or is not material, or which reading on rent paid is right.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.56(1)",
+     "quote": "specifying the noncompliance and indicating the intention of the tenant to terminate the rental agreement by reason thereof"
+    },
+    {
+     "cite": "83.56(4)",
+     "quote": "shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505"
+    },
+    {
+     "cite": "83.56(5)(a)",
+     "quote": "but not for any subsequent or continuing noncompliance"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "neighbor-3",
+   "title": "A lease promise, a notice by hand, and the 7 days are over",
+   "today": "2026-03-13",
+   "lease": "lease_enforce.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "disturbance": "loud parties in Apartment 14 every night after 10 p.m.",
+    "disturbance_started": "2026-03-02",
+    "who_disturbs": "the new tenants in Apartment 14, next door",
+    "same_landlord": "yes, the same complex and the same office",
+    "end_notice_delivered": "2026-03-05",
+    "end_notice_how": "handed to the office",
+    "end_notice_words": "Apartment 14 has had loud parties every night after 10 p.m. since March 2. Section 11 of my lease says you will enforce the quiet hours when a resident complains in writing. If this is not corrected within 7 days, I intend to terminate my lease.",
+    "landlord_response": "no reply; the parties go on",
+    "rent_paid_since": "no: the March rent was paid March 1, before this began, and April's is not due yet"
+   },
+   "message": "I handed the office a letter on March 5 saying I'd end my lease if they don't enforce quiet hours within 7 days. They've done nothing and the parties go on every night. Can I end my lease now?",
+   "answer": "That is not settled, because it turns on whether failing the promise in section 11 is 'material', a word the statute does not define. Everything else is met: the promise, your notice by hand naming the problem and your intent, the 7 days, which ended March 12, and no rent paid since this began. One reading: failing a lease promise is enough, so you may end the lease. The other: it turns on how serious the problem is and how it affects living there. If the ending holds, your landlord must follow the deposit rules. If it does not hold and you have moved out, your landlord may hold you to rent.",
+   "points": [
+    "Opens by saying it is not settled, because of the word 'material', and leans neither way. Gives both readings with the tenant's facts.",
+    "Says the other conditions are met: the promise in section 11; the notice by hand naming the problem and the intent to end the lease; the 7 days, ending 2026-03-12 from count_days, have passed; no rent paid since the problem began.",
+    "Says what follows: if the ending holds, the landlord must follow 83.49(3) on the deposit (83.56(6)); if it does not hold and the tenant moved out, the tenant may still owe rent.",
+    "(The 7 days' notice before moving out, with an address, under 83.49(5).)"
+   ],
+   "mistakes": [
+    "Says flatly that the tenant may, or may not, end the lease.",
+    "Says the notice did not count, or that the 7 days have not passed.",
+    "Says the tenant may hold back rent.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.56(1)",
+     "quote": "within 7 days after delivery of written notice by the tenant"
+    },
+    {
+     "cite": "83.56(6)",
+     "quote": "If the rental agreement is terminated, the landlord shall comply with s. 83.49 (3)."
+    }
+   ],
+   "dates": [
+    {
+     "fact": "end_notice_delivered",
+     "days": 7,
+     "date": "2026-03-12",
+     "passed": true
+    }
+   ]
+  },
+  {
+   "id": "neighbor-4",
+   "title": "The house behind the building, another owner",
+   "today": "2026-04-02",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "disturbance": "all-night parties at the house behind the building",
+    "who_disturbs": "the people renting the house behind the building, which the tenant's landlord does not own",
+    "same_landlord": "no",
+    "complaint_detail": "told the manager in person; the manager said that house is not theirs and there is nothing they can do",
+    "rent_paid_since": "yes, each month"
+   },
+   "message": "The people in the house behind my building party all night. My manager says that house isn't theirs and there's nothing they can do. Is that right? Can I get out of my lease over this?",
+   "answer": "Your manager is right that the landlord's remedy reaches only its own tenants, and those neighbors are not. So far as the statute and your lease go, you have no right to end the lease over this: your lease makes no promise about it, and no repair duty is involved. If you move out anyway, the lease and the rent do not stop by themselves, and your landlord chooses among its options. The police, the city, or the neighbors' own landlord are other routes, outside this tool.",
+   "points": [
+    "Says the landlord's remedy in 83.56(2) runs against its own tenant, so it has none against these neighbors; the manager is right on that.",
+    "Says there is no right to end the lease under 83.56(1) on these facts: the lease makes no promise about this, and no 83.51(1) duty is shown.",
+    "Says moving out anyway does not by itself end the lease or stop the rent; the landlord has its choices (83.595), or points to that.",
+    "Says the police, the city, or the neighbors' own landlord are routes outside this tool.",
+    "(Whether other law reads a promise into a lease without words is outside the tool.)"
+   ],
+   "mistakes": [
+    "Says this landlord must act, or can evict the neighbors.",
+    "Says the tenant may end the lease.",
+    "States a local noise rule from memory.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.56(2)",
+     "quote": "If the tenant materially fails to comply with s. 83.52"
+    },
+    {
+     "cite": "83.595(3)",
+     "quote": "Stand by and do nothing, holding the lessee liable for the rent as it comes due"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "neighbor-5",
+   "title": "Holding back rent, even with a lease promise",
+   "today": "2026-03-25",
+   "lease": "lease_enforce.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "disturbance": "parties in Apartment 14 on most weekends past 2 a.m.",
+    "who_disturbs": "the tenants in Apartment 14, next door",
+    "same_landlord": "yes, the same complex and the same office",
+    "complaint_date": "2026-02-10",
+    "complaint_detail": "two letters handed to the office, asking it to enforce the quiet hours; no reply",
+    "rent_paid_since": "yes, through March"
+   },
+   "message": "The office ignores my written complaints about Apartment 14, even though the lease says they'll enforce quiet hours. I'm thinking of not paying April rent until they fix it. Can I do that?",
+   "answer": "No. Holding back rent is not a right here. That defense covers only the landlord's duties under 83.51(1), and a neighbor's noise is not one of them; a lease promise does not make it one. If you hold back rent, your landlord can demand it and sue, and once sued you must pay the rent into the court's registry or file a motion on the amount within 5 days, not counting Saturdays, Sundays, and legal holidays, or lose your defenses other than payment. The promise in section 11 can reach other things: ending the lease, with a written notice and 7 days, and damages.",
+   "points": [
+    "Says part II gives no right to hold back rent here: the defense in 83.60(1)(b) reaches only 83.51(1), a neighbor's noise is not on it, and a lease promise does not make it so.",
+    "Gives the risk: the landlord can demand the rent (83.56(3)) and sue, and once sued the tenant must pay into the court's registry or file a motion on the amount within 5 days, excluding Saturdays, Sundays, and legal holidays, or lose defenses other than payment. No calendar date for it.",
+    "Names what the lease promise can reach: ending the lease under 83.56(1), with its written notice and 7 days, and damages (83.55).",
+    "('Material' is not settled. Rent paid with knowledge is not settled. Whether a failed promise is 'any other defense' under 83.60(1)(a) is not settled, and it gives no right to stop paying.)"
+   ],
+   "mistakes": [
+    "Says the tenant has a right to hold back rent over this.",
+    "Gives a calendar date for the 5 days.",
+    "Says the letters already sent are the notice to end the lease.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.60(1)(b)",
+     "quote": "The defense of a material noncompliance with s. 83.51 (1) may be raised by the tenant"
+    },
+    {
+     "cite": "83.60(2)",
+     "quote": "within 5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process"
+    },
+    {
+     "cite": "83.55",
+     "quote": "the aggrieved party may recover the damages caused by the noncompliance"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "neighbor-6",
+   "title": "A promise of quiet enjoyment",
+   "today": "2026-03-10",
+   "lease": "lease_quiet.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "disturbance": "shouting and slamming doors at all hours from next door",
+    "who_disturbs": "the tenant in Apartment 14, next door",
+    "same_landlord": "yes, the same complex and the same office",
+    "complaint_date": "2026-02-20",
+    "complaint_detail": "a letter handed to the office asking it to deal with the noise; no reply",
+    "rent_paid_since": "yes, on March 1"
+   },
+   "message": "My lease promises me 'peaceful and quiet enjoyment.' The guy in Apartment 14 screams and slams doors at all hours and the office won't do anything. Isn't the landlord breaking the lease?",
+   "answer": "That is not settled. Section 11 promises you peaceful and quiet enjoyment, but it does not say whether that reaches what another tenant does. Part II itself does not require your landlord to act on a complaint about another tenant. One reading: you were promised quiet use of the home, so a landlord that does nothing about its own tenant fails that promise. The other: the promise is about what the landlord itself does, and a neighbor's noise is not the landlord's act. If it does reach this, the way to act on it is a written notice by hand or by mail that names the problem and says you will end the lease, then 7 days; your letter only asked. Damages are the other route.",
+   "points": [
+    "Opens by saying it is not settled whether section 11's promise reaches what another tenant does, and leans neither way. Gives both readings.",
+    "Quotes or cites section 11, and says part II itself does not require the landlord to act.",
+    "Says that under the reading where it reaches this, the way to end the lease is 83.56(1): a written notice by hand or by mail naming the problem and the intent to end the lease, then 7 days; the letter already sent only asked. Damages (83.55) are also a route.",
+    "('Material' is not settled. Rent paid with knowledge is not settled.)"
+   ],
+   "mistakes": [
+    "Says flatly that the landlord is, or is not, breaking the lease.",
+    "Says the landlord must evict the neighbor.",
+    "Says the letter already sent is the notice to end the lease.",
+    "Says the tenant may hold back rent.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.56(1)",
+     "quote": "If the landlord materially fails to comply with s. 83.51 (1) or material provisions of the rental agreement"
+    },
+    {
+     "cite": "83.55",
+     "quote": "If either the landlord or the tenant fails to comply with the requirements of the rental agreement or this part"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "neighbor-7",
+   "title": "The manager threatens eviction for complaining",
+   "today": "2026-03-20",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "disturbance": "loud music from the apartment upstairs",
+    "who_disturbs": "the tenants in Apartment 22, upstairs",
+    "same_landlord": "yes, the same complex and the same office",
+    "complaint_date": "2026-03-01",
+    "complaint_detail": "a letter handed to the office about the noise",
+    "threat_date": "2026-03-15",
+    "threat": "the manager said, out loud, that if the tenant keeps complaining they will be evicted",
+    "others": "does not know how other tenants who complain are treated",
+    "rent_paid_since": "yes, current",
+    "eviction_filed": "no"
+   },
+   "message": "I've complained about the noise upstairs and now the manager told me if I keep complaining they'll evict me. Is that legal?",
+   "answer": "That is not settled, because the law's examples of protected steps do not name an ordinary complaint about a neighbor, and those examples are only examples. The law makes it unlawful to threaten an eviction primarily to retaliate, if the tenant acted in good faith and is being treated differently. One reading: the list is only examples, so your complaint can count. The other: the examples are steps of a certain kind, and this is not like them. If you were sued, you could raise it as a defense, unless the landlord proves good cause. The threat does not end your lease; your landlord would need a court case.",
+   "points": [
+    "Opens by saying it is not settled whether an ordinary complaint about a neighbor is protected, and leans neither way. Gives both readings: the list is only examples, or the complaint is not like the named ones.",
+    "Says what the rule requires: 83.64(1) names a threat to bring an action for possession, primarily to retaliate; the tenant must have acted in good faith and be treated differently (83.64(4)).",
+    "Says how it is used: a defense in an action for possession (83.64(2)), which falls away if the landlord proves good cause (83.64(3)).",
+    "Says the threat does not end the lease or put the tenant out; the landlord would need a court case (83.59(3)).",
+    "(The ordinary complaint is not the 83.56(1) notice, which is a named example.)"
+   ],
+   "mistakes": [
+    "Says flatly that the threat is illegal retaliation, or that it is not.",
+    "Counts the days between the complaint and the threat.",
+    "Leaves out good faith or being treated differently.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.64(1)",
+     "quote": "to bring or threaten to bring an action for possession or other civil action, primarily because the landlord is retaliating against the tenant"
+    },
+    {
+     "cite": "83.64(2)",
+     "quote": "may be raised by the tenant as a defense in any action brought against him or her for possession"
+    },
+    {
+     "cite": "83.64(3)",
+     "quote": "this section does not apply if the landlord proves that the eviction is for good cause"
+    },
+    {
+     "cite": "83.64(4)",
+     "quote": "a tenant is being treated differently as to the rent charged, the services rendered, or the action being taken by the landlord"
+    }
+   ],
+   "dates": []
+  }
+ ]
+}

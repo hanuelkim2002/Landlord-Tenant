@@ -4,7 +4,7 @@ description: Something in the home needs repair, or something the lease promises
 ---
 # Repair not made
 
-Rests on 83.51 (repairs), 83.56 (ending the lease, notices, rent paid), 83.60 (holding back rent), 83.55 (damages), 83.64 (retaliation), 83.47 (void lease clauses), and 83.505 (e-mail notices). Read a section in full with get_statute_section.
+Rests on 83.51 (repairs), 83.56 (ending the lease, notices, rent paid), 83.60 (holding back rent), 83.55 (damages), 83.64 (retaliation), 83.47 (void lease clauses), 83.48 (attorney fees), 83.59 (actions for possession), and 83.505 (e-mail notices). Read a section in full with get_statute_section.
 
 When the answer turns on a point marked not settled, the first sentence says it is not settled and leans neither way (never "probably yes").
 
@@ -88,7 +88,7 @@ All four conditions must be met.
 3. **Seven days passed.** Call count_days(withhold_notice_delivered, 7).
 4. **The tenant's side did not cause it** (see "Who caused it").
 
-If the landlord sues: "the tenant shall pay into the registry of the court the accrued rent as alleged in the complaint or as determined by the court and the rent that accrues during the pendency of the proceeding, when due." (83.60(2)). "Failure of the tenant to pay the rent into the registry of the court or to file a motion to determine the amount of rent to be paid into the registry within 5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process constitutes an absolute waiver of the tenant's defenses other than payment" (83.60(2)). Paying, or filing that motion, in time keeps the defenses. "The clerk shall notify the tenant of such requirement in the summons." (83.60(2)). Never give a date for those 5 days; say the summons states the requirement.
+If the landlord sues: "the tenant shall pay into the registry of the court the accrued rent as alleged in the complaint or as determined by the court and the rent that accrues during the pendency of the proceeding, when due." (83.60(2)). "Failure of the tenant to pay the rent into the registry of the court or to file a motion to determine the amount of rent to be paid into the registry within 5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process constitutes an absolute waiver of the tenant's defenses other than payment" (83.60(2)). Paying, or filing that motion, in time keeps the defenses. "The clerk shall notify the tenant of such requirement in the summons." (83.60(2)). Give the 5 days and what they leave out, but never a calendar date for them; say the summons states the requirement.
 
 ## Option 3: damages
 
@@ -99,7 +99,7 @@ If the landlord sues: "the tenant shall pay into the registry of the court the a
 A code office can inspect (outside the tool; see "Whose job the repair is"). The protection: "It is unlawful for a landlord to discriminatorily increase a tenant's rent or decrease services to a tenant, or to bring or threaten to bring an action for possession or other civil action, primarily because the landlord is retaliating against the tenant." (83.64(1)). Its examples include a complaint to a code agency (83.64(1)(a)) and a repair notice under 83.56(1) (83.64(1)(c)).
 
 - The tenant must have acted in good faith (83.64(1)).
-- Being treated differently from other tenants, in rent, services, or action taken, is required (83.64(4)).
+- Being treated differently in the rent, the services, or the action taken is required (83.64(4)).
 - It is a defense in an action for possession (83.64(2)).
 - Not when the landlord shows good cause: "In any event, this section does not apply if the landlord proves that the eviction is for good cause." (83.64(3)). Its examples include "good faith actions for nonpayment of rent" (83.64(3)), so for a tenant sued over rent they held back, option 2 is the defense to look at.
 - Whether the landlord acted primarily to retaliate is for a court. Give the dates of the complaint and of the landlord's act as the tenant gave them; never count the days between them.
@@ -118,7 +118,7 @@ When the failure of an 83.51(1) duty or a material lease provision is due to cau
 - Saying the tenant may hold back rent over an item only the lease or 83.51(2) names.
 - Saying 83.51 requires an item its lists do not name, such as air conditioning.
 - Writing any date that count_days did not give you, counting the days between two dates, or counting a 7-day period from the day a notice was sent instead of delivered (except an e-mail under 83.505).
-- Explaining holding back rent without its risk and 83.60(2), or giving a date for its 5 days.
-- Stating a standard for "material", "untenantable", or "good faith" that the statute does not give.
+- Explaining holding back rent without its risk and 83.60(2), or giving a calendar date for its 5 days.
+- Stating a standard for "material" or "untenantable" that the statute does not give.
 - Leaving out 83.56(5)(a) when the tenant paid rent after knowing of the problem.
 - Treating damage the tenant, their family, or a guest caused as the landlord's under 83.51.

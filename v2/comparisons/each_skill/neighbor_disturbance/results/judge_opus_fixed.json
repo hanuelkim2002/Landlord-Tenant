@@ -1,0 +1,116 @@
+{
+ "neighbor-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Not safely\", says \"Your portal messages don't count as that notice\" and that they \"only asked the office to stop the parties\", leaves \"material\" and rent paid \"not settled\" with both readings, and warns the landlord \"could hold you to the rent through July 31, 2026\"."
+ },
+ "neighbor-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Not yet\", says \"A portal message isn't one of the listed ways\" and complaints \"that only ask the landlord to act don't do that\", gives both readings on \"material\" and on rent paid, and warns \"you could still owe rent\"."
+ },
+ "neighbor-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Not yet\", says \"A portal message is not one of those ways\" and that a complaint that only asks \"is not that notice\", and gives both readings on \"material\" and on rent paid with no lean, though the later line \"you may end the lease\" after 7 days is unhedged in its own sentence."
+ },
+ "neighbor-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Correctly says \"this one point is not settled\" with both readings and the other conditions met, but tells the tenant \"Don't pay April rent while this is still going on\" as protection, with no warning of a demand, which amounts to holding back rent."
+ },
+ "neighbor-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens that it \"turns on one point that isn't settled\", gives both readings with the nightly parties and no reply, finds the other conditions met with \"The 7 days ended March 12\", and says \"If it doesn't hold, you may still owe rent\"."
+ },
+ "neighbor-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   false,
+   true
+  ],
+  "reason": "Opens \"Yes, on the facts you've confirmed, you appear to be able to end your lease\", a lean though not flat since \"One point is still open\" follows and both readings appear, and it gives the 83.49(3) deposit rule but never says rent may still be owed if the ending does not hold."
+ }
+}

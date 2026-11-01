@@ -1,0 +1,56 @@
+{
+ "rent-4/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence says only that the law \"has no rule\" and the unsettled answer comes later, and the short answer picks a choice for the tenant with \"Keep paying $1,050 on time and put your disagreement in writing\"."
+ },
+ "rent-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It says the point \"isn't settled\", but the short answer leans with \"You haven't agreed or paid the new rent, so you can keep paying $1,050 for now\", a conclusion for the tenant's side; every other point is made and supported."
+ },
+ "rent-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"So you have a good argument that your rent is still $1,050\" leans toward the agreement reading in the short answer even with \"Your landlord could also argue\"; \"could use the same kind of notice\" is loose, but the details correct it with \"proper notice\"."
+ }
+}

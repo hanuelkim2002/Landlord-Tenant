@@ -1,0 +1,59 @@
+{
+ "leave-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "'Neither said you would end the lease' disposes of the portal requests, it gives both readings of 'Materially' and of the April rent, lists the 83.595 paths and '2026-05-08', and never raises 83.63."
+ },
+ "leave-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'your two portal requests don't do it' and 'This is not settled, and I lean neither way' carry the main points, and it lists the 83.595 choices, '2026-05-08' and 83.63 with its 'substantially impaired' condition."
+ },
+ "leave-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "It makes the notice, 83.595, May 8 and 83.63 points, but after giving both readings of 'material' it says the leak 'supports the second reading', which leans, so the neither-way point fails."
+ }
+}
