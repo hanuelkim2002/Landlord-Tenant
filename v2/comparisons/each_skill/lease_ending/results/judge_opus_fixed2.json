@@ -1,0 +1,50 @@
+{
+ "end-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives 'in the landlord's hands by March 31, 2026', hand or certified mail, 'don't rely on e-mail, a text, or a portal message', and April 23 with one notice meeting both; the opening's 'would end the tenancy at the end of the next rent period' is looser than its own 'not settled' on a late notice, noted only."
+ },
+ "end-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence gives both 'a written notice' and 'delivered by March 31, 2026', and it covers sections 7 and 8, 'A text, portal message, or e-mail would be risky', April 23, and a single letter; 'a month later' only describes the next monthly period, so it is noted and not counted as its own counting."
+ },
+ "end-5/3": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "The first sentence 'Yes, you can end it' answers neither how nor by when, which the next sentences do, and the answer then gives March 31, hand or certified mail, 'don't use e-mail, a text, or a portal message', April 23, and one notice for both."
+ }
+}

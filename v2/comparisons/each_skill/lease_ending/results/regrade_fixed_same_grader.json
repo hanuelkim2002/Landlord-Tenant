@@ -1,0 +1,50 @@
+{
+ "end-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives 'The last day to give it is March 31, 2026', hand or certified mail, 'the statute names no such method for you' on e-mail, text and portal, April 23, and 'one notice can cover both'; its May 31 date is correct."
+ },
+ "end-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'You end it by giving your landlord written notice', then gives 'by March 31, 2026', lease paragraphs 7 and 8, 'Don't use e-mail, a text, or the resident portal', April 23, and one letter meeting both rules."
+ },
+ "end-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives 'deliver it by March 31, 2026', hand or certified mail, section 8 on e-mail, two readings on a text or portal message, April 23, and one letter for both; 'The tool counts in calendar days' is an odd aside, noted and not a legal error."
+ }
+}

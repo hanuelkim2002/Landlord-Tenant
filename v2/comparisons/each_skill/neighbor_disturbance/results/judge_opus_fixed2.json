@@ -1,0 +1,56 @@
+{
+ "neighbor-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'You can end your lease if the landlord's failure counts as \"material\", and the law doesn't settle whether it does', leans neither way, finds the rest met, and gives both outcomes ('If \"material\" were read against you, you could still owe rent after moving out')."
+ },
+ "neighbor-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The opening does not lean ('the law doesn't settle that point') and all points are made, but 'the landlord could argue that a few days is too short to judge' gives a length of time from its own reckoning when the parties began March 2; the gloss 'serious enough to count' is noted as shorthand, not a lean."
+ },
+ "neighbor-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'That is a promise by the landlord, so it is a \"material provision\" of the lease' states as a rule what the statute does not define and what the answer itself later calls not settled.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The opening does not lean ('You can end your lease if the landlord's failure counts as \"material,\" and the law does not settle that') and all points are made, but the details flatly call the section 11 promise a 'material provision'."
+ }
+}

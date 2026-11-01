@@ -1,0 +1,16 @@
+{
+ "new": {
+  "end-5/1": {
+   "verdict": "wrong",
+   "quote": "at the end of the next rent period, May 31",
+   "why": "The grader said right, but packets do not show tool calls. Code flagged May 31: no count_days call gave it, and it is not in the lease or the facts, so the answer makes the key's mistake of a date it worked out itself."
+  }
+ },
+ "fixed": {
+  "end-5/1": {
+   "verdict": "wrong",
+   "quote": "which ends May 31",
+   "why": "The grader said right, but packets do not show tool calls. Code flagged May 31: no count_days call gave it, and it is not in the lease or the facts, so the answer makes the key's mistake of a date it worked out itself. The same change as this answer's run in the first round."
+  }
+ }
+}

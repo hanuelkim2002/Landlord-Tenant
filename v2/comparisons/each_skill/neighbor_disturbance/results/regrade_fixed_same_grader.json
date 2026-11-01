@@ -1,0 +1,56 @@
+{
+ "neighbor-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   true,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "The opening on 'material' does not lean (its gloss 'meaning serious enough' is noted as shorthand) and the points are made, but 'Don't pay April rent while this is still going on' tells the tenant to hold back rent as something that will 'protect your position', with no word on the demand or suit that can follow under 83.56(3)."
+ },
+ "neighbor-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens that it 'turns on one point that isn't settled', gives both readings, the other conditions, both outcomes and the 83.49(5) notice; the gloss '(serious enough)' is plain-language shorthand noted here, not a lean, since it also says 'If a failure to keep this promise is enough, you may end the lease'."
+ },
+ "neighbor-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   false,
+   true
+  ],
+  "reason": "'Yes, on the facts you've confirmed, you appear to be able to end your lease' leans to yes (hedged by 'appear' and 'One point is still open', so not flat), and it gives the deposit rule but never says the tenant may still owe rent if the ending does not hold."
+ }
+}

@@ -400,3 +400,42 @@ trimmed of repeats and long quotes, no citation lost; the trim is not yet run li
 The trimmed skills on five stories: right 9 of 12 settled, 11 on the longer text, not graded side by side; every answer on
 an open point gave both readings; $1.79. `skills/notice_received_violation.md` drops "it starts the count" from the line
 said in every answer, which contradicted the reading that a text starts no count; not rerun. New SLIPS.md entries.
+
+## 2026-10-31: the neighbor, rent, and lease-ending skills drafted
+
+`skills/neighbor_disturbance.md`, `skills/rent_increased.md`, `skills/lease_ending.md`, from v1's and `statutes/`, read by
+three independent readers. Stories, keys, and leases in `comparisons/each_skill/`; `REVIEW_three_skills.md` holds the
+author's questions. Not yet run live. `notice_received_violation` now points to `lease_ending`. Replaces the plan for
+counting hours and holidays, dropped for now, with nothing built.
+
+## 2026-11-01: the neighbor, rent, and lease-ending test, run and graded
+
+The author's OK on every recommended answer; the repair skill's mistakes line no longer says the statute gives no standard for
+good faith (83.43(8)). All three skills against v1's, 144 answers on Sonnet, eight Opus graders, blind; $11.69. Right of 72:
+new 48, v1 8. Misses sorted in `comparisons/each_skill/README.md`; new SLIPS.md entries. Nothing in the app replaced.
+
+## 2026-11-01: the round of fixes on the neighbor, rent, and lease-ending skills
+
+`skills/rent_increased.md`: a clause not met, rent already paid, retaliation not only after complaints, and one guard, "Name no
+choice as the safest". `skills/lease_ending.md`: notice for the next period, the 15-day readings, the 7-day date.
+`skills/neighbor_disturbance.md`: a mailed notice. Eight stories rerun, one Opus grader; $2.22. Right 18 of 24, was 6. New SLIPS.md
+entries. One date is still made up (end-5).
+
+## 2026-11-01: the second round of fixes on the neighbor, rent, and lease-ending skills
+
+After tracing the six misses left: the risk of not paying joined to the rent-paid condition; "You can if X, and X is not settled" for
+a "can I" answer on an open point; the leaving date in the rent skill's own bullet; no date for a next period unless confirmed. Replaces
+"points this way" in the rent skill. Three stories rerun, one Opus grader, last round mixed in; $0.84. Right 4 of 9, was 5: each cause
+aimed at is gone, and the rent-4 lean is not. New SLIPS.md entries.
+
+## 2026-11-01: a sentence recipe for rent-4's short answer
+
+`skills/rent_increased.md`, option 3: "You have three choices, and each has a risk", named without choosing. Replaces the guard "Name no
+choice as the safest", which did not stop the lean. rent-4 rerun, one Opus grader, last round mixed in; $0.38. P P P became W R P, and
+the default is gone in 2 of 3. Stopped here, as agreed; what is left is in SLIPS.md.
+
+## 2026-11-01: the three skills trimmed and rerun whole
+
+About 3 percent off each, no cite, reading, or count lost. All 24 stories on the final text, 72 answers, $6.52; eight Opus graders, blind, with
+v1's answers mixed in. Right of 72: final 61, v1 9. One miss comes from my second-round line on deciding before rent is due. New SLIPS.md entries.
+

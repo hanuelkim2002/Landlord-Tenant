@@ -47,6 +47,16 @@ against rule 7).
   in any six months"); those were read by hand and left out.
 - 2026-10-30, the trimmed text on five stories: "for four months" for rent taken from December to March (notice-6, 3 of 3;
   0 of 3 on the longer text, and nothing about spans was trimmed). notice-6 is not counted, so the score does not show it.
+- 2026-11-01, neighbor, rent, and lease-ending test (Sonnet 5.5): new 1 of 72, "May 31", a next period end no tool gave
+  (end-5), which the skill's wording invited. New 1 of 72, "your letter gave about one month" (rent-2), a span of its own.
+- 2026-11-01, the same test's rerun on the fixed skills: "which ends May 31" again (end-5, 1 of 3), with no next period in the
+  facts, and "the letter gave you about a month" (rent-2, 1 of 3).
+- 2026-11-01, the second round of fixes: "a few days is too short to judge" (neighbor-3, 1 of 3), a vague span of its own. No
+  period-end date appears in end-5 now. Code's other flags are rent days the lease states ("April 1", "May 1"), read by hand as before.
+- 2026-11-01, the sentence recipe on rent-4: "on 11 days' notice" and "Is 11 days enough?" (1 of 3), a count of its own and off by
+  one (March 20 to April 1 is 12 days). The tenant said "not even two weeks".
+- 2026-11-01, the final text: "your landlord gave 11 days" (end-6, 1 of 3). The graders counted a span in 1 of 72. Code's three date
+  flags are rent days the lease states ("April 1", "May 1"), read by hand as before.
 
 ## Asks again for what the tenant said or the lease holds
 
@@ -80,6 +90,16 @@ The skill marks a point as not settled, with a reading on each side; the answer 
   (notice-6, 1), and on how serious a leak is (leave-6, 1).
 - 2026-10-30, the trimmed text: a leak "supports the second reading" of "material" (leave-6, 1 of 3), and "the law
   normally gives a tenant a chance to fix a problem" on a point not settled (notice-3, 1 of 3). No answer says "probably".
+- 2026-11-01, the same test, opening with a lean before saying a point is open: "You likely meet every requirement",
+  "Yes ... you appear to meet every condition" (neighbor-3, 2 of 3); "You have a good argument", "The safest course is to keep
+  paying $1,050" (rent-4, 3 of 3 lean); "that probably doesn't stop your lease from ending" (end-9, 1 of 3).
+- 2026-11-01, the rerun: "Yes ... you appear to be able to end your lease" (neighbor-3, 1 of 3) and "a good argument that your
+  rent stays $1,050" (rent-4, 1 of 3).
+- 2026-11-01, the second round of fixes: rent-4's short answer still leans, 3 of 3 ("Keep paying $1,050", "so you can keep paying
+  $1,050 for now", "a good argument that your rent is still $1,050"), with "points this way" gone from the skill. Across all nine
+  rent-4 answers, 7 lean. neighbor-3: "so it is a 'material provision'" in the details, against the answer's own opening (1 of 3).
+- 2026-11-01, the sentence recipe on rent-4: the short answer no longer picks a default in 2 of 3; the third ends "Do you want to stay
+  at $1,200, or would you rather move out?", rule 8's closing question dropping the choice to pay the old rent.
 
 ## Says the balance is due on day 30 after an objection
 
@@ -136,6 +156,21 @@ The 15-day return applies only when the landlord intends no claim (83.49(3)(a));
 - 2026-10-30, the guest and lawsuit stories after the round of fixes: 2 of 6. A lease-over notice "fits three situations",
   a closed list where the statute's is open (notice-2). "The landlord must prove the damage was intentional and that it
   was you", a burden of proof the stored text does not set (notice-8). A line against the first was already in the skill.
+- 2026-11-01, the same test: retaliation "only" after a complaint, against a list of examples (rent-2, rent-3, once each);
+  "primarily because" the tenant is retaliating, in a short answer (neighbor-7); "Your lease and the law" give a ground, when the
+  lease has no such clause (neighbor-7); a new notice could reach May 1, when 60 days from any new notice is later (rent-2);
+  paying the lease's own rent treated as paying the raise (rent-8); the reading that makes a letter "too early" named for the one
+  that makes it too late, and "on or before May 17" meeting both readings (end-3, 2 of 3); a 7-day date counted from the end date
+  for someone leaving earlier (end-4).
+- 2026-11-01, the rerun: "Don't pay April rent while this is still going on", to keep the right to end the lease, with no warning
+  of a demand or a suit (neighbor-3, 1 of 3; the first round's neighbor-3 has a garbled line like it). Paying with doubt "gives up
+  the right to sue", said flatly (rent-4, 1 of 3). "The $50 difference" for a $100 raise (rent-2, 1 of 3).
+- 2026-11-01, the same test: being treated differently "from other tenants", words not in 83.64(4), in 14 of 36 new and fixed rent
+  answers (6 of 6 on rent-4; v1 14 of 24). No grader counted them.
+- 2026-11-01, the three skills' final text (Sonnet 5.5): "The landlord acted in bad faith" as a condition of retaliation (rent-4, 1 of 3);
+  "Part II doesn't cover rent paid through a voucher" (rent-6, 1 of 3); the statute's condition on the charge credited to the lease
+  (end-2, 1 of 3); "too early" for the reading that makes a letter too late, in the short answer, right in the details (end-3, 2 of 3;
+  0 of 3 and 2 of 3 in earlier rounds); the landlord's letter misdescribed (end-8, 1 of 3). "From other tenants" in 9 of 24 rent answers.
 
 ## Does not load the skill
 
@@ -205,6 +240,8 @@ A quote ends with a period where the statute goes on, or changes a word's form. 
   no ellipsis, the notice's or the skill's words in quote marks ("lease over, leave in 7 days"), and "accepted with
   reservation", nobody's words. 3 were right but flagged, since the stored text writes "s. 83.505 , or" with a space before
   the comma; the check reads that since 2026-10-30.
+- 2026-11-01, the same test: 5 of 492 quotes not found. Three change the words (rent-6, end-9); two are the tenant's or a
+  paper's words in quote marks, against rule 6 ("it's between neighbors", neighbor-1; "we want to redo the unit", end-6).
 
 ## Writes a short answer longer than asked
 

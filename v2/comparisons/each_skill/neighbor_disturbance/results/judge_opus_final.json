@@ -1,0 +1,401 @@
+{
+ "neighbor-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Nothing in it says a landlord must act' and 'it sets no deadline to act' lead, and the lease, next steps, other law and rent are all covered; 'a question of how loud, how late and how often' names no threshold and comes with 'I can't say', so it is not a test."
+ },
+ "neighbor-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Part II has no sentence that requires a landlord to act on a complaint about a neighbor' and 'That is a choice the landlord has, not an order' lead, it says 'I can't say whether that is \"unreasonable\"', and it covers rent ('No'), next steps and 'Other law might read such a promise'."
+ },
+ "neighbor-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Part II has no sentence that requires a landlord to act' and 'It also sets no deadline' lead, it declines on the noise ('I can't say either way'), and it covers 'Complain in writing again', the police or city and 'Whether other Florida law reads a promise into a lease'."
+ },
+ "neighbor-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'a portal message isn't a delivery method the statute names', 'Whether the failure is \"material\" is not settled' with both readings, and both readings on rent paid ('so it is a \"continuing noncompliance\" and you gave up nothing') make every point with no lean."
+ },
+ "neighbor-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'The portal is not a delivery method the statute names', 'The statute doesn't define the word', and two-sided, no-lean readings on 'material' and on rent paid ('so it is \"continuing\" and you lost nothing') make every point."
+ },
+ "neighbor-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'Deciding before the next rent is due avoids this question' is contradicted by the facts: the tenant has already paid rent each month since January knowing of the failure, so the 83.56(5)(a) question is already live and a later decision cannot avoid it.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'A portal message is not a way the statute names', 'They did not say you would end the lease', and both readings each of 'material' and of the rent paid with knowledge ('it is \"continuing\" and you gave up nothing') are given with no lean."
+ },
+ "neighbor-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It opens with 'a \"material\" failure... and the law doesn't settle that', gives both readings with 'parties every night after 10 p.m.' and 'I can't say how a court would see it', shows the other conditions met, and covers 83.56(6), rent owed if it fails, and 83.49(5)."
+ },
+ "neighbor-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It opens with 'counts as \"material\", and the law doesn't settle that', says 'I take no side on this', shows the promise, notice, 'the 7 days ended March 12' and no rent since, and covers 83.56(6), rent owed if it fails, and 83.49(5)."
+ },
+ "neighbor-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "It opens with 'if your landlord's failure counts as \"material\"... and that point is not settled', gives both readings with 'Nightly parties after quiet hours', says 'the 7 days ran out on March 12', and covers 83.56(6), rent owed if it fails, and 83.49(5)."
+ },
+ "neighbor-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, including \"You can't end your lease over this on the facts I have\", \"that would not end the lease or stop the rent\", and \"Other law outside this tool might read such a promise into a lease\"."
+ },
+ "neighbor-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, including \"your landlord has no 83.56(2) remedy against them\", \"moving out doesn't end the lease or stop the rent\", and \"Whether other Florida law reads a quiet-use promise into a lease with no such words is also outside this tool\"."
+ },
+ "neighbor-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says damages under 83.55 \"depend on a failed lease promise\", but 83.55 also reaches a failure to comply with \"this part\".",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point (\"gives you no right to end this lease over these parties\", \"the lease would still be in force\"), and its \"not settled\" on a continuing failure matches the open point on rent paid, so only the narrow reading of 83.55 counts as an error."
+ },
+ "neighbor-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"No, Florida's landlord-tenant law gives you no right to hold back April rent\", gives the demand and the 5-day step with no date, names ending the lease and damages, and marks material, rent paid, and any other defense as not settled."
+ },
+ "neighbor-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says Part II \"gives you no right to stop paying rent\", gives the 3-day demand and the 5-day registry step with no date, names ending the lease and damages, and marks material, rent paid, and any other defense as \"not settled\"."
+ },
+ "neighbor-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, including \"You have no right\" to skip rent and \"A lease promise doesn't move noise onto the list\"; the stray \"options 2 and 3 below\" is a labeling slip, not a legal error."
+ },
+ "neighbor-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled whether the 'peaceful and quiet enjoyment' promise covers a neighbor's noise\", gives both readings, the notice, and damages, and marks material and rent paid not settled; \"avoids the question\" overstates what deciding early does but states no rule."
+ },
+ "neighbor-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It isn't settled whether your landlord is breaking the lease\", gives both readings, the 83.56(1) notice, and damages, and marks material and rent paid unsettled; \"avoids the question\" overstates what deciding early does but states no rule."
+ },
+ "neighbor-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled whether your landlord is breaking the lease\", gives both readings, the notice by hand or certified mail with 7 days, and damages (83.55), and marks material and rent paid not settled."
+ },
+ "neighbor-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Whether the threat is illegal is not settled\", gives both readings, good faith, different treatment, defense, good cause, and \"The threat also doesn't put you out\", and says the letter \"is not the formal notice in 83.64(1)(c)\"."
+ },
+ "neighbor-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled whether the manager's threat is illegal retaliation\", gives both readings, good faith, different treatment, defense, good cause, and \"your landlord can't remove you without a court case\"; \"you aren't in danger right now\" is reassuring beyond the text but states no rule."
+ },
+ "neighbor-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Whether this is illegal is not settled\", gives both readings (\"I can't tell you which reading is right\"), good faith, different treatment, defense, good cause, and \"The threat alone doesn't evict you\"."
+ }
+}

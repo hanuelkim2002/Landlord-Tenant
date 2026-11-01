@@ -1,0 +1,56 @@
+{
+ "rent-4/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "The first sentence gives the missing rule, not the verdict ('not settled' comes third), 'give you a good argument that your rent stays $1,050' leans, and the leaving choice gives no date ('a separate question with its own deadlines')."
+ },
+ "rent-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Opens 'It isn't settled', says 'I'm not choosing between them', and sets March 1, but the move-out choice gives no date ('That is a separate question, and I can go through it if you want to leave'); 'the safest fact for you is that nothing has changed yet' and the firm 'you give up the right to sue', which tracks 83.56(5)(a), are noted and not counted."
+ },
+ "rent-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens 'It's not settled whether the increase is valid', says 'I can't pick one reading', and gives every date and choice, including 'For the period ending April 30, the last day is March 31'."
+ }
+}

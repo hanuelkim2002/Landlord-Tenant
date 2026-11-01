@@ -68,6 +68,18 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
   military orders is not owed, and a fee over two months' rent falls away, both stated plainly. A date in the facts may
   be set beside a date `count_days` gave. The 12 months use `count_days(date, 365)`, with anything within a day too
   close to tell. Two small fixes to the repair skill. Item 22 waits on case law.
+- 2026-10-31: the plan for counting hours and holidays is dropped for now, nothing built. `neighbor_disturbance`,
+  `rent_increased`, and `lease_ending` come next; `landlord_entered_unannounced` and `notice_received_nonpayment` wait.
+- 2026-11-01: the neighbor, rent, and lease-ending skills' new law points and keys, every recommended answer in
+  `comparisons/each_skill/REVIEW_three_skills.md`. The repair skill's mistakes line no longer says the statute gives no
+  standard for good faith (83.43(8)).
+- 2026-11-01: one guard in the rent skill's option 3, your call after rent-4: "Name no choice as the safest; say what each
+  risks."
+- 2026-11-01: the second round of fixes on the three new skills, from the trace of the six misses, including the line that not paying
+  rent is no safe way to keep the right to end the lease (item 24). The repair skill stays as it is.
+- 2026-11-01: the rent skill's guard is replaced by a sentence recipe, "You have three choices, and each has a risk" (your OK, after two
+  tries did not stop the rent-4 lean). No more rounds on that lean; what is left is in SLIPS.md.
+- 2026-11-01: the neighbor, rent, and lease-ending skills are committed as they are, final text 61 of 72 right, v1 9. The three small fixes wait in TODO.md.
 
 ## Open
 
@@ -159,3 +171,11 @@ Your decisions, sign-offs, and open questions. Claude adds an item when somethin
     So far (2026-10-30): the three opinions in `../v1/cases/` that hold the words only quote them (Multach v. Adams, K.D.
     Lewis v. Smith; Wolf v. State quotes the (2)(a) phrase in a jury instruction), and one web search found no appellate
     decision on them. Neither rules one out. A Westlaw or Lexis search is still yours to run.
+23. **Decided 2026-11-01: the neighbor, rent, and lease-ending skills' new law points and keys** (see Decided; the review is
+    `comparisons/each_skill/REVIEW_three_skills.md`).
+24. **Decided 2026-11-01: "Don't pay April rent" (neighbor-3).** The neighbor skill now says not paying is no safe way to keep the
+    right, and that deciding before the rent is due avoids the question (see Decided). The repair skill stays as it is.
+25. **Judging neighbor-4/3 and "from other tenants".** A grader failed "damages depend on a failed lease promise" as narrow against 83.55's "this
+    part"; like item 18, it may be harmless, since no part II duty is at issue there. Separately, 9 of 24 final rent answers say treated differently
+    "from other tenants", words you took out of the repair skill, and no grader counted them. (`comparisons/each_skill/README.md`)
+

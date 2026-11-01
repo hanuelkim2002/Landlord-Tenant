@@ -1,0 +1,401 @@
+{
+ "neighbor-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point (\"Part II has no sentence that requires a landlord to act on one tenant's complaint about another\"); listing \"ending the lease\" among the options is loose but is at once qualified as \"hard to support\" and \"not met\", so it is not the mistake."
+ },
+ "neighbor-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point (\"That rule says 'may,' not 'must'\"; \"Whether other Florida law reads such a promise into a lease that doesn't state one is outside this tool\"); \"needs a lease promise the landlord broke\" skips 83.51(1) but is said of neighbor noise, which it notes is not on that list."
+ },
+ "neighbor-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, opening \"Florida's landlord-tenant law doesn't require your landlord to act on one tenant's complaint about another\" and adding \"Whether that is 'unreasonable' is a judgment I can't make for you.\""
+ },
+ "neighbor-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point (\"Not yet\"; \"Whether the failure is 'material' is not settled\", with both readings, and the same on rent paid); pairing the 2 a.m. facts with the first reading is odd but is not a lean or a legal error."
+ },
+ "neighbor-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point (\"Not yet\"; \"The statute doesn't define it\"; both rent readings); \"well past the lease's quiet hours\" is a slip of wording for parties at 2 a.m., which fall inside those hours, and does not change the analysis."
+ },
+ "neighbor-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"If you mail it, count from the day it arrives\" is stated as a rule with no support: 83.56(4) makes mailing a way of delivering and does not say mailed notice counts only on arrival.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, opening \"You can't safely break the lease yet\" and giving both readings on \"material\" and on rent paid with no lean; \"so you have a real claim\" rests on the promise and does not call the failure material."
+ },
+ "neighbor-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Opens \"It's not settled whether the landlord's failure counts as 'material'\" and lists the met conditions, but says only what follows if the ending fails (\"you could still owe rent\"), never the landlord's duty under 83.49(3) if it holds."
+ },
+ "neighbor-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"You likely meet every requirement to end your lease\", a lean rather than opening on \"material\", though \"one point is open\" keeps it from being flat, and the conditions, deposit, rent risk and move-out notice are all there."
+ },
+ "neighbor-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Yes, on the facts you confirmed, you appear to meet every condition\", which leans instead of opening on the unsettled word, though the next sentence \"One point is not settled\" keeps it from being flat, and the conditions, deposit, rent risk and move-out notice are all there."
+ },
+ "neighbor-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, from \"your landlord has no such power over them\" and \"you also have no right to end your lease over the noise\" to \"Whether other law reads a promise of quiet into a lease that doesn't state one is outside this tool.\""
+ },
+ "neighbor-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, including \"the parties give you no ground to end the lease,\" \"Moving out would not end the lease or stop the rent on its own,\" and \"Whether other law reads a quiet-enjoyment promise into a lease with no such words is outside this tool.\""
+ },
+ "neighbor-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, including \"your landlord has no such power over them,\" \"I found no ground to end the lease early,\" and \"Whether other Florida law reads a quiet-use promise into a lease that doesn't state one is outside this tool.\""
+ },
+ "neighbor-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"No\" and makes every point, including \"no right to stop paying rent because of a neighbor's noise, even though your lease promises enforcement,\" the 5-day rule with no calendar date, the notice route, damages, and the unsettled points."
+ },
+ "neighbor-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes every point, including \"A neighbor's noise isn't on that list, and your lease's quiet-hours promise doesn't add it,\" \"you have 5 days to pay the rent into the court registry or to file a motion about the amount,\" and the damages route under 83.55."
+ },
+ "neighbor-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"No\" and makes every point, including \"It doesn't let you stop paying first,\" the \"5 days, excluding Saturdays, Sundays, and legal holidays\" with no calendar date, and notice-plus-7-days and 83.55 as what the lease promise can reach."
+ },
+ "neighbor-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It isn't settled whether the landlord is breaking the lease\" and makes every point, including \"It did not say you would end the lease, so it doesn't count,\" damages under 83.55, and two readings each on \"material\" and the rent paid."
+ },
+ "neighbor-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Says \"Not necessarily\" and that \"the courts have not settled that,\" then gives both readings without choosing (\"I can't tell you which reading a court would choose\"), the notice route, damages, and the unsettled points on \"material\" and the rent payment."
+ },
+ "neighbor-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled whether the landlord is breaking the lease\" and makes every point, including \"A letter that only asks for action is not this notice,\" damages under 83.55, and both unsettled points."
+ },
+ "neighbor-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The summary says the law bars threatening eviction \"\"primarily because\" the tenant is retaliating\"; 83.64(1) says \"primarily because the landlord is retaliating against the tenant,\" so the summary reverses who retaliates, though the details quote it correctly.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled whether the manager's threat is illegal retaliation\" and makes every point, with \"One reading\" and \"The other reading,\" good faith and \"treated differently,\" the defense and good cause, and \"The threat alone doesn't evict you.\""
+ },
+ "neighbor-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled whether the manager's threat is illegal retaliation\" and makes every point, with a reading each way, good faith and \"treated differently,\" the defense and good cause, and \"A threat also doesn't evict you.\""
+ },
+ "neighbor-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"Your lease and the law do give the landlord a ground against the upstairs tenants,\" but this lease has no clause on noise or conduct, as the answer itself says (\"Your lease also says nothing about noise\").",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Whether this threat is illegal is not settled\" and makes every point, with a reading each way, good faith and \"treated differently,\" the defense and good cause, and \"The threat alone doesn't evict you.\""
+ }
+}

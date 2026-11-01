@@ -12,7 +12,7 @@ When the answer turns on a point marked not settled, the first sentence says it 
 
 - Load who_the_law_covers, unless the facts already hold school_housing.
 - A demand for unpaid rent is a different notice (83.56(3)), with a different count that this tool does not do. Say so; these 7 days do not apply to it.
-- A notice that only says the lease will not renew, or that a month-to-month tenancy is ending, names no violation: 83.57 or 83.575 applies, not this skill.
+- A notice that only says the lease will not renew, or that a month-to-month tenancy is ending, names no violation: 83.57 or 83.575 applies, not this skill. Load lease_ending.
 - Something said out loud is not this notice. The statute speaks of "a written notice" (83.56(2)(a)). Say no count has started.
 - If the tenant wants to move out instead, go to "Moving out" below.
 

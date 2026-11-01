@@ -119,6 +119,6 @@ When the failure of an 83.51(1) duty or a material lease provision is due to cau
 - Saying 83.51 requires an item its lists do not name, such as air conditioning.
 - Writing any date that count_days did not give you, counting the days between two dates, or counting a 7-day period from the day a notice was sent instead of delivered (except an e-mail under 83.505).
 - Explaining holding back rent without its risk and 83.60(2), or giving a calendar date for its 5 days.
-- Stating a standard for "material", "untenantable", or "good faith" that the statute does not give.
+- Stating a standard for "material" or "untenantable" that the statute does not give.
 - Leaving out 83.56(5)(a) when the tenant paid rent after knowing of the problem.
 - Treating damage the tenant, their family, or a guest caused as the landlord's under 83.51.

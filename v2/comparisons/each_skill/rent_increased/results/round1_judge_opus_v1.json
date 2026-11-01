@@ -1,0 +1,431 @@
+{
+ "rent-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says of retaliation \"It is not something you can use before then\", meaning before a possession suit, but 83.64(2) has no such limit and 83.60(1)(a) also allows the defense in a landlord's suit for unpaid rent; also says \"Fla. Stat. 83.46(1) says rent is as agreed\", but the words \"Unless otherwise agreed\" in 83.46(1) concern when rent is payable, not how much it is.",
+  "points_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "\"you most likely don't have to pay $1,200\" hedges but gives the lease reasons, while \"whether to pay or withhold the $150 is your call\" is not advice to keep paying or object in writing, \"try to evict you\" gives a risk with no warning not to ignore a demand, and it never says the landlord can ask for more when the term ends; the 30-day \"Reading 2\" is one reading it says does not apply to this tenant, so it is not a stated notice rule."
+ },
+ "rent-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"83.64(2) lets a tenant raise it only as a defense in a case for possession\", but 83.64(2) has no \"only\" and 83.60(1)(a) also allows the defense in a landlord's suit for unpaid rent; \"requires a good-faith complaint\" is also too narrow, since the examples in 83.64(1) \"include, but are not limited to\" conduct that is not a complaint, such as joining a tenant organization.",
+  "points_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "\"Probably not\" hedges but gives section 4, no raise clause, section 10, and nothing signed, while it never tells the tenant to keep paying or to object in writing, states the risk (\"the landlord could try to claim unpaid rent\") without saying not to ignore a demand, and covers only the notice half of the no-notice, no-cap point; \"Have you paid $1,050 for March\" is odd on February 12 but is a question, not a claim."
+ },
+ "rent-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"The lease doesn't say what happens if you stay without written consent\" and \"The statute I have doesn't settle that either\", but 83.58 gives the landlord possession and double rent when a tenant holds over without permission; also says \"You can raise this only as a defense if the landlord sues to evict you\", but 83.64(2) has no \"only\" and 83.60(1)(a) also allows the defense in a landlord's suit for unpaid rent.",
+  "points_made": [
+   true,
+   false,
+   true,
+   false
+  ],
+  "reason": "\"Probably not\" hedges but gives the lease reasons; \"Pay $1,050 on time\" comes with no advice to object in writing, \"it could send a written 3-day demand\" followed by \"You would then contest it\" gives the risk and tells the tenant to answer a demand rather than ignore it, and it never says Part II sets no cap."
+ },
+ "rent-2/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says retaliation \"works only as a defense if the landlord sues to evict you (83.64(2))\", but 83.64(2) has no \"only\" and 83.60(1)(a) also allows the defense in a landlord's suit for unpaid rent.",
+  "points_made": [
+   true,
+   false,
+   false,
+   true,
+   false
+  ],
+  "reason": "\"Yes, your lease lets the landlord raise the rent during the lease term\" states the general power with no verdict on this raise until later; \"the April 1 start date looks wrong\" comes without the January 31 last day, and the answer never says the rent stays $1,050 or to keep paying it, though it does give \"Counting 60 days from March 2 gives May 1\"."
+ },
+ "rent-2/2": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "\"Yes, your lease lets the landlord raise the rent once during the term\" states the general power and the verdict on April 1 comes only in the next sentence; \"So the letter does not give the full 60 days\" comes without the January 31 last day, while \"I'd keep paying $1,050 and not sign anything\" and \"counts 60 days from March 2 as May 1, 2026\" make those points."
+ },
+ "rent-2/3": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   false,
+   true,
+   false
+  ],
+  "reason": "\"Yes, your lease lets the landlord raise the rent during the lease term\" states the general power with no verdict on this raise until later; it finds \"The letter therefore gives less notice than Section 11 requires\" but never gives the January 31 last day, and \"You would owe $1,050 until then\" comes under one reading only, with no advice to keep paying."
+ },
+ "rent-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"You could raise it only as a defense if your landlord sues to evict you\", but 83.64(2) has no \"only\", 83.60(1)(a) also allows the defense in a landlord's suit for unpaid rent, and the answer's own details say this is \"not settled\".",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens with \"There is no cap in the law I have for this\", then says \"your rent stays $1,050 until then\", \"You haven't agreed to it, so you aren't bound by it\", \"Your lease has no clause requiring notice before you leave at the end\", and that without written consent the landlord \"can sue to remove you and ask for double rent\"."
+ },
+ "rent-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens with \"sets no cap on how much a landlord can raise rent\", then says \"the $1,300 applies only to a new 12-month lease\", \"You haven't agreed to that lease, so you aren't bound by it\", \"Your lease has no clause requiring notice before you leave at the end of the term\", and gives section 9 consent and double rent under 83.58."
+ },
+ "rent-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Answers whether this is retaliation with \"Only if the offer followed a complaint you made\", but the examples in 83.64(1) \"include, but are not limited to\" conduct that is not a complaint, such as taking part in a tenant organization.",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens with \"sets no cap on how much a landlord can raise rent\", then says \"Until July 31 your rent stays at $1,050\", \"this is an offer of a new 12-month lease, and you haven't agreed to it\", \"The lease has no clause requiring notice before you move out at the end of the term\", and gives section 9 consent and double rent under 83.58."
+ },
+ "rent-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'It is $1,050 on the first or second reading and $1,200 on the third' contradicts its own reading two ('the April 1 date could stand') and has no basis on its reading three; 'During a fixed term the lease controls. You have no fixed term, so this reading doesn't help you' has no support and ignores lease clause 10, which applies to this month-to-month lease.",
+  "points_made": [
+   false,
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "Replaces the only-if-you-agree reading with a fixed-term one and never cites clause 10, gets the date and result ('the April 1 date would be too early', 'the last day for notice was March 1'), but omits the landlord's right to end the tenancy under every reading, the risk of paying old rent, and the late-notice question."
+ },
+ "rent-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "reason": "Says 'There are two readings' and drops the no-particular-notice one, uses March 1 only for the tenant's own move-out rather than the letter, never says the landlord may end the tenancy under every reading with no reason, and offers only 'stay without agreeing and see what the landlord does' with no risk of a demand or suit."
+ },
+ "rent-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   false,
+   false,
+   false
+  ],
+  "reason": "Sets out three readings with clause 10 and 'I'm not picking one' (the aside 'I wouldn't pay it or treat it as settled without checking' is a caution, not a pick), but never gives March 1 for the letter, says only 'Either side may end it' with no reason point, and offers only 'stay and contest the raise' or leaving, with no risk of a demand or suit."
+ },
+ "rent-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   true,
+   false,
+   false,
+   true
+  ],
+  "other_error": "'the April 30 option would cost you a month at $1,400' states as fact that the raise takes effect April 1, though the answer itself treats that as open and says that on one reading 'the rent stays $1,050 unless you sign'.",
+  "points_made": [
+   true,
+   false,
+   true,
+   false
+  ],
+  "reason": "Counts the gap itself with 'about five weeks after your complaint', names good cause without drawing the point that not paying the new rent can weaken the defense, and gives March 1 only for moving out, without saying the letter was in time."
+ },
+ "rent-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'You are not the only one who must show it, but you do have to show it' has no support in 83.64(4), which says nothing about anyone else showing different treatment.",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says 'I can't say it is retaliation', gives the defense and good cause ('that could weaken your position') and both readings, but gives March 1 only for the tenant's move-out and never says the letter was in time; 'The timing helps you' is an inference without a count, so it is noted only."
+ },
+ "rent-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'the law only lets you use retaliation as a defense after your landlord files to evict you' states flatly what 83.64(1), 83.54 and 83.55 leave open, and what the answer later calls 'not settled'.",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "'Probably yes' overreaches but is not flat since it adds 'A court would decide that' (and 'A tight timeline supports your side' is an uncounted inference, noted only), 'So paying rent on time matters' carries the good-cause point, but March 1 is given only for leaving and the letter is never called in time."
+ },
+ "rent-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'Probably yes, your landlord can raise the rent' has no support in part II and sits against lease clause 10's signed-change rule; 'Retaliation is also only a defense once a landlord sues you' states flatly what the answer later calls 'unsettled'.",
+  "points_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "reason": "Has the prerequisite ('weighs strongly against a retaliation claim') but not the timing-alone point, and gives no cap, no March 1, no landlord's right to end under every reading, no choices, and treats the repair request only as 'something you would need to check'."
+ },
+ "rent-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'Your complaint is protected only if it counts as a complaint to the landlord pursuant to s. 83.56(1)' contradicts 83.64(1), whose examples 'include, but are not limited to' the listed ones.",
+  "points_made": [
+   false,
+   false,
+   true,
+   false,
+   false
+  ],
+  "reason": "Makes the different-treatment point with 'Timing alone doesn't make an increase retaliatory', but gives no cap, refuses the timing ('I'm not saying whether that timing satisfies any rule'), omits the landlord's right to end the tenancy under every reading, and gives no choices."
+ },
+ "rent-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   true,
+   true
+  ],
+  "reason": "Gets the choice ('If you don't want to pay the new rent') and the open list ('include, but are not limited to'), but gives no cap or March 1, relies on 'the lease's silence' rather than clause 10, omits the landlord's right to end under every reading, and omits the timing-alone point; 'The law you gave me' is a slip, since the tenant gave no law."
+ },
+ "rent-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   false
+  ],
+  "reason": "It opens by leaning, \"You probably can go back to $1,050,\" so point 1 fails even though the two readings come later, and point 3 fails because it never says amounts and court steps are outside the tool or tells the tenant not to ignore a demand."
+ },
+ "rent-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"Under \u00a783.46(1), the parties' agreement controls the rent\" is not what 83.46(1) says; that subsection covers when rent is payable and how it is apportioned, not its amount.",
+  "points_made": [
+   false,
+   true,
+   false
+  ],
+  "reason": "\"Probably yes, you can go back to $1,050\" leans at the open, so point 1 fails, and point 3 fails because it only warns of \"a late-rent notice\" without saying not to ignore it or that amounts and court steps are outside the tool."
+ },
+ "rent-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"Paying the shortfall within that notice period would address it, and you could then dispute the amount\" has no support in the statute, and 83.56(5)(a) cuts against it: a tenant who pays with actual knowledge of a noncompliance waives a civil action for that noncompliance.",
+  "points_made": [
+   false,
+   true,
+   false
+  ],
+  "reason": "\"Going back to $1,050 is well supported by your lease\" leans at the open, so point 1 fails despite the two readings later, and point 3 fails because nothing says amounts and court steps are outside the tool."
+ },
+ "rent-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"you have to act quickly in court\" opens it and the same short answer gives \"Within 5 days after you were served, not counting Saturdays, Sundays, or court holidays\" with pay or motion, while \"I can't give you the exact last day yet\" keeps out a calendar date."
+ },
+ "rent-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"That is evidence for you\" (the office taking $1,050) has no support in the statute and leaves out that under 83.56(5)(a) a landlord gives up nothing by accepting partial rent.",
+  "points_made": [
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "It leads with the merits and a hedge, \"it may be about 5 days counting only business days,\" with no pay-or-file choice or loss of defenses up front, so point 1 fails, and point 4 fails because, of the listed details, only rent during the case appears."
+ },
+ "rent-8/3": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"Retaliation (Fla. Stat. 83.64) is a defense only if you did something protected before the increase\" adds a limit 83.64 does not state; 83.64(1) also reaches a retaliatory action for possession.",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"You don't owe the $300 if your lease is the only agreement on rent\" does not say what to do, and the lead gives only \"may be only a few days\" with the 5-day rule left to the details, so point 1 fails; \"The complaint doesn't show how the landlord got that figure\" goes beyond the facts, noted and not counted."
+ }
+}

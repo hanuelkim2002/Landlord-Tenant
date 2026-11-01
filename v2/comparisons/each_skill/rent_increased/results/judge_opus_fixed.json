@@ -1,0 +1,212 @@
+{
+ "rent-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "Says \"the $50 difference\" would be treated as unpaid rent; the raise is from $1,050 to $1,150, a difference of $100.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Makes the section 11 points with January 31 and May 1, but counts time itself with \"the letter gave you about a month before April 1\" and misstates the gap as \"the $50 difference\", with no mention of good faith under 83.44."
+ },
+ "rent-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens that the landlord \"can't make the rent $1,150 on April 1\", quotes section 11, gives January 31 and \"a start on May 1, 2026 or later\", and says \"Keep paying $1,050, in full and on time\", with no mention of good faith under 83.44."
+ },
+ "rent-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Opens \"Not on these terms\", quotes section 11, gives \"the last day to give notice was January 31, 2026\" and \"the earliest start is May 1, 2026\", and says to keep \"paying that amount in full and on time\", with no mention of good faith under 83.44."
+ },
+ "rent-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"No\" to a limit and says no right to renew, calls the offer \"a proposal for a new term, not an increase to your current lease\" with $1,050 through July 31, and gives all the options including \"no clause that requires notice\" and the 83.58 double rent risk."
+ },
+ "rent-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says Part II \"puts no limit\" and gives no right to renew, \"The $1,300 starts with the new 12-month term\" if signed, and gives the options with \"no clause that requires notice\" and the 83.58 risks, though the garbled line \"Your question is whether the offer has a deadline\" reads oddly."
+ },
+ "rent-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says the law \"sets no limit on how much a landlord can ask for a new lease term\" and gives no right to renew, the offer \"only takes effect if you agree to it\", and lists leaving with \"no clause that requires notice\" and staying under section 9 with the risk of \"double the amount of rent due\"."
+ },
+ "rent-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Gives the three readings but leans in the opening with \"give you a good argument that your rent stays $1,050 unless you agree\", and its leaving option says only \"a separate question with its own deadlines\", without March 31 for April 30."
+ },
+ "rent-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says flatly that if you pay \"knowing the increase may not be valid, section 83.56(5)(a) says you give up the right to sue\" and \"That covers the months you pay\"; the section turns on actual knowledge of a noncompliance and excepts continuing noncompliance, and it does not say that mere doubt about validity waives the claim.",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Opens \"It isn't settled\" with the three readings and March 1, and says \"Under every reading\" the landlord can end the tenancy, but its leaving option says only \"That is a separate question\", without March 31 for April 30."
+ },
+ "rent-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled\", gives all three readings with \"I can't pick one reading\", sets March 1 against the March 20 letter, says \"Under every reading\" either side can end the tenancy, and gives all three choices with \"the last day is March 31\" for April 30."
+ },
+ "rent-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It isn't settled\" with both readings and \"you hadn't read the lease. So you may not have known the increase broke it\", and says \"I can't give amounts or court steps\" and \"Don't ignore a demand\"; the late line \"The lease's rent stands through July 31, 2026\" is read as the lease's term, not a flat answer."
+ },
+ "rent-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"It's not settled\", gives both readings with \"actual knowledge\" beside \"You hadn't read the lease\", cites section 83.55 with \"Amounts and court steps are outside what I can work out here\", and says \"Don't ignore a demand if one comes\"."
+ },
+ "rent-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"is not settled\" with both readings and \"Whether 'actual knowledge' fits what you knew is for a court to decide\", and warns \"don't ignore it\"; the late line \"The $1,050 rent stands through July 31, 2026 (lease \u00b63)\" sits awkwardly but is read as the lease's term, not a flat answer."
+ }
+}

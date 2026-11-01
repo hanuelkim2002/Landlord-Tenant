@@ -1,0 +1,401 @@
+{
+ "neighbor-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "'The word is \"may.\"' and 'No deadline in this part of the law runs from your letter' make the core point, but what to do now is only 'A log can help', with no further written complaint, no police or city route, and nothing on other law."
+ },
+ "neighbor-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "It gives as an unsettled view that 'the failure can still count if you give the proper notice' although the lease has no clause on noise; 83.56(1) reaches only a failure of 83.51(1) or of a material provision of the rental agreement, so a notice cannot supply the failure.",
+  "points_made": [
+   true,
+   true,
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "'Nothing in part II requires a landlord to act' makes the core point, but the next steps are only 'What to keep', with no further written complaint or police or city route, and 'the kind of problem the law has in mind' and 'an ordinary neighbor's measure' lean without a flat verdict because 'A landlord or a court could still see it differently'."
+ },
+ "neighbor-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "'The word is \"may.\"', 'Another written complaint can describe the dates' and the police or city as 'outside this tool' make the points, nothing is said on other law, and 'By an ordinary neighbor's measure' is left open ('the question stays open'), so it is not a flat verdict or a test."
+ },
+ "neighbor-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "'A portal message isn't one of those ways' and the path 'you haven't completed' make the notice points, but its readings ('It can apply' and 'It does not apply') turn on whether the duty exists rather than on how serious the failure is, and rent paid with knowledge never comes up."
+ },
+ "neighbor-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "'A portal message is not one of those ways' and the need to 'state your intention to end the lease' make the notice points, but its two readings ('It can count' and 'It does not count') turn on part II's 'may' rather than on how serious the failure is, and rent paid with knowledge never comes up."
+ },
+ "neighbor-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "It covers delivery and content ('A portal message is not one of those ways'), but under its 'material' heading the 'No, it isn't' reading rests on 'Nothing in Part II requires the landlord to act', not on how serious the failure is, and rent paid with knowledge never comes up."
+ },
+ "neighbor-3/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "It makes 'whether the parties count as an unreasonable disturbance' a point the ending turns on ('a court later disagrees on either point'), though 83.56(1) and lease section 11 do not make that word a condition; and 'the landlord has not yet had enough time or opportunity to act' has no support, since 83.56(1) fixes the time at 7 days after notice.",
+  "points_made": [
+   false,
+   true,
+   false,
+   true
+  ],
+  "reason": "The first sentence, 'The law gives you a path to end your lease', does not answer whether the tenant can end it now, the opening names the promise and unreasonableness rather than 'material' and gives its 'material' readings without the facts, and it omits 83.49(3) after a valid ending, though the notice, 'ran out on March 12' and 'March was paid before this began' show the other conditions."
+ },
+ "neighbor-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   false,
+   true
+  ],
+  "reason": "'The facts you've described make your side reasonable' tilts the opening and its landlord reading is part II's 'may' rather than how serious the failure is, 'March rent is paid' never says it came before the problem, and nothing covers 83.49(3) after a valid ending, though it gives the 83.49(5) notice 'including an address'."
+ },
+ "neighbor-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "It treats 'whether these parties count as unreasonable' as a second open point the ending turns on ('A court would then decide the two open points above'); 83.56(1) and lease section 11, which promises to enforce set quiet hours, do not make the 83.52(7) word 'unreasonably' a condition of the tenant's right.",
+  "points_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "'counts as a serious failure' with both readings makes the first point, but 'Your March rent is paid' never says it came before the problem or addresses waiver, there is nothing on 83.49(3) after a valid ending, and nothing on the 83.49(5) notice."
+ },
+ "neighbor-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Lists an unreasonable disturbance as a condition of ending the lease, but 83.56(1) sets no such condition; the word comes from the neighbor's own duty in 83.52(7).",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Point 2 is made only through the readings (\"Yours doesn't, so this reading wouldn't help you\" and \"it can't\") after the hedged \"I can't tell you the law gives you a way out\", and nothing says other law might read in a promise."
+ },
+ "neighbor-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Offers a reading that \"the landlord's failure to act on a neighbor's noise can still count, because the landlord failed a duty\", but 83.56(1) reaches only 83.51(1) and lease provisions, this lease has no such promise, and the answer names no duty.",
+  "points_made": [
+   true,
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "Point 2 fails because it says \"Whether you could end it is a point the law leaves open\" instead of saying there is no right on these facts, and it never says whether other law reads in a promise."
+ },
+ "neighbor-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true,
+   false
+  ],
+  "reason": "Point 2 is made though hedged (\"You probably can't get out of your lease over this right now\", and both readings come out against the tenant), but it never says what moving out does or whether other law reads in a promise, and \"The deadline is unsettled\" is read as doubt about the route, not about the 7 days."
+ },
+ "neighbor-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "Point 1 is made (the law \"only protects\" 83.51(1) failures and inaction is \"unlikely to support withholding\"), but there is no 5-day count or motion, no damages, and no unsettled points, and \"well outside the lease's quiet hours\" is read as a slip for breaking those hours, since 2 a.m. falls inside them."
+ },
+ "neighbor-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "Point 1 is made though hedged up top (the defense \"covers only\" 83.51(1), \"Neighbor noise is not one of those duties\", and the lease is a separate \"stronger route\"), but it omits the 5 days and the motion, omits damages, and has none of the unsettled points on material, rent paid, or any other defense."
+ },
+ "neighbor-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "Point 1 is made in substance (83.51(1) \"says nothing about a neighbor's noise or a landlord's failure to enforce quiet hours\") though hedged as \"doesn't clearly protect you\", but it omits the 5 days, the motion, and damages, and on rent paid it says \"likely a continuing one\" instead of not settled."
+ },
+ "neighbor-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Lists an unreasonable disturbance as a condition of ending the lease, but 83.56(1) sets no such condition; the word comes from the neighbor's own duty in 83.52(7).",
+  "points_made": [
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Opens \"Maybe, but the law doesn't settle it\" with both readings and gives the notice and 7 days, but it names no damages route and does not say material or rent paid is unsettled."
+ },
+ "neighbor-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Lists an unreasonable disturbance as a condition of ending the lease, but 83.56(1) sets no such condition; the word comes from the neighbor's own duty in 83.52(7).",
+  "points_made": [
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Opens \"Maybe, but the law doesn't settle it\" with both readings (\"I can't pick between them\") and gives the notice, but it names no damages route and does not say material or rent paid is unsettled."
+ },
+ "neighbor-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"the lease covers none of the details of that notice\", but lease section 7 sets how written notices must be delivered, as the answer itself later quotes.",
+  "points_made": [
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Opens \"Maybe, but the law doesn't settle it\" with both readings and cites section 11, but it names no damages route and does not say material or rent paid is unsettled."
+ },
+ "neighbor-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Point 1 fails because it opens \"Probably not\" and says the letter and threat \"fit that rule\", with no second reading laid out, and point 4 fails because it never says the threat alone does not end the lease or that a court case is needed."
+ },
+ "neighbor-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "\"Possibly not, but the law doesn't settle it\" commits to neither side and both readings follow; point 4 is made by \"The threat alone doesn't end your lease\" with a suit as the landlord's route, though it does not cite 83.59(3)."
+ },
+ "neighbor-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Point 1 fails because after \"Maybe, but it isn't clear\" it leans with \"the kind of thing the law is aimed at\", and point 4 fails because \"nothing is pending against you right now\" does not say the threat leaves the lease in place or that a court case is needed."
+ }
+}

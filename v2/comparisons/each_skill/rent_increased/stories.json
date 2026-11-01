@@ -1,0 +1,432 @@
+{
+ "how_to_read": "The rent skill's stories, in the repair stories' shape. Each runs on comparisons/skills/lease.txt, or on a lease in this folder (lease_raise.txt: a clause letting the landlord raise the rent once on 60 days' notice; lease_monthtomonth.txt: no set end date). 'today' is the date count_days compares with. 'facts' are confirmed facts. 'points' are what a right answer must convey, judged by meaning; a point written wholly in parentheses is helpful detail, not required. 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story holds school_housing. Check with: python ../skills/check_key.py rent_increased/stories.json (from comparisons/each_skill/).",
+ "sections": [
+  "83.42",
+  "83.43",
+  "83.44",
+  "83.45",
+  "83.46",
+  "83.48",
+  "83.49",
+  "83.51",
+  "83.54",
+  "83.55",
+  "83.56",
+  "83.57",
+  "83.58",
+  "83.59",
+  "83.60",
+  "83.64",
+  "83.67",
+  "83.425",
+  "83.491",
+  "83.505",
+  "83.575"
+ ],
+ "stories": [
+  {
+   "id": "rent-1",
+   "title": "A raise in the middle of a set term, no clause",
+   "today": "2026-02-12",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "new_rent": "$1,200",
+    "increase_delivered": "2026-02-10",
+    "increase_how": "a letter handed to the tenant at the apartment door",
+    "new_rent_starts": "2026-03-01",
+    "lease_end_date": "2026-07-31",
+    "agreed": "no; nothing signed",
+    "paid_new_rent": "no",
+    "eviction_filed": "no"
+   },
+   "message": "My lease runs through July at $1,050, but I got a letter saying rent goes to $1,200 on March 1. Do I have to pay that?",
+   "answer": "No. Through July 31 your rent is what your lease says, $1,050. The lease has no clause letting the landlord raise it during the term, section 10 says changes must be signed by both of you, and you signed nothing, so the landlord cannot change the rent alone. Keep paying $1,050 in full and on time, and tell the landlord in writing that you do not agree. The risk: your landlord may treat the difference as unpaid rent and send a written demand or sue. Do not ignore either one.",
+   "points": [
+    "Says no: through 2026-07-31 the rent is the lease's $1,050 (section 4). The lease has no clause allowing a raise during the term, section 10 requires a change signed by both, and the tenant signed nothing, so the landlord cannot change it alone.",
+    "Says to keep paying $1,050 in full and on time, and that the tenant can tell the landlord in writing they do not agree.",
+    "Gives the risk: the landlord may treat the difference as unpaid rent (a written demand, a suit), and says not to ignore one.",
+    "(Part II sets no notice for an increase and no cap. The landlord can ask for more when the term ends.)"
+   ],
+   "mistakes": [
+    "Says the tenant must pay $1,200.",
+    "States a notice period for rent increases as the law.",
+    "Says the tenant may stop paying rent altogether.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.56(3)",
+     "quote": "If the tenant fails to pay rent when due and the default continues for 3 days"
+    },
+    {
+     "cite": "83.60(2)",
+     "quote": "to file a motion to determine the amount of rent to be paid into the registry"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "lease_end_date",
+     "days": 0,
+     "date": "2026-07-31",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "rent-2",
+   "title": "The lease allows a raise on 60 days' notice, and the letter gives less",
+   "today": "2026-03-04",
+   "lease": "lease_raise.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "new_rent": "$1,150",
+    "increase_delivered": "2026-03-02",
+    "increase_how": "a letter handed to the tenant at the apartment door",
+    "new_rent_starts": "2026-04-01",
+    "lease_end_date": "2026-07-31",
+    "agreed": "no; nothing signed",
+    "paid_new_rent": "no"
+   },
+   "message": "The office gave me a letter on March 2 raising my rent to $1,150 starting April 1. I read my lease and section 11 says something about raising rent. Can they do this?",
+   "answer": "Not on April 1. Section 11 does let your landlord raise the rent during the term, once, on at least 60 days' written notice delivered to the apartment. For an April 1 start the last day for that notice was January 31, and your letter came March 2, so it does not meet section 11 for that date. Until a raise meets section 11, your rent stays $1,050; keep paying it on time. Counting 60 days from your letter gives May 1.",
+   "points": [
+    "Says section 11 lets the landlord raise the rent during the term, once, on at least 60 days' written notice delivered to the apartment, so a raise is not barred as such.",
+    "Says this letter does not meet section 11 for April 1: the last day for that start was 2026-01-31, from count_days, and the letter came March 2.",
+    "Says the rent stays $1,050 for now, and to keep paying it on time.",
+    "(Sixty days from this letter is 2026-05-01, from count_days.)",
+    "(Good faith under 83.44.)"
+   ],
+   "mistakes": [
+    "Says the raise takes effect April 1.",
+    "Says the landlord cannot raise the rent during the term at all.",
+    "States a notice period from the statute for rent increases, rather than the lease's.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.44",
+     "quote": "imposes an obligation of good faith in its performance or enforcement"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "new_rent_starts",
+     "days": -60,
+     "date": "2026-01-31",
+     "passed": true
+    },
+    {
+     "fact": "increase_delivered",
+     "days": 60,
+     "date": "2026-05-01",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "rent-3",
+   "title": "A much higher rent offered for renewal",
+   "today": "2026-05-20",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "new_rent": "$1,300 for a new 12-month lease",
+    "increase_delivered": "2026-05-15",
+    "new_rent_starts": "2026-08-01",
+    "lease_end_date": "2026-07-31",
+    "agreed": "no",
+    "paid_new_rent": "no"
+   },
+   "message": "My renewal offer came in and they want $1,300 starting August, up from $1,050. That's a huge jump. Is there a limit on how much they can raise it? What are my options?",
+   "answer": "Part II sets no limit on what a landlord may ask for a new term, and it gives no right to renew at the same rent. No local rent rule is stored, and the statute preempts local regulation of matters it covers. Your $1,050 stands through July 31. The new rent starts only if you agree to the new term. You can agree, or leave at the end; this lease asks for no notice before leaving on its end date. If you want to stay, section 9 makes the tenancy month to month with the landlord's written consent. Staying without permission risks a suit and double rent.",
+   "points": [
+    "Says part II sets no limit on the rent a landlord may ask for a new term, and gives no right to renew at the same rent; applies no local rent rule.",
+    "Says $1,050 stands through 2026-07-31, and the new rent starts only if the tenant agrees to the new term.",
+    "Names the options: agree; leave at the end, and this lease asks for no notice before leaving on its end date; or stay, where section 9 needs the landlord's written consent, and staying without permission risks a suit and double rent (83.58)."
+   ],
+   "mistakes": [
+    "States a cap, or says a local rent rule applies.",
+    "Says the new rent applies by itself, or that the tenant must sign.",
+    "Says this lease requires a number of days' notice before leaving at the end.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.425",
+     "quote": "The regulation of residential tenancies, the landlord-tenant relationship, and all other matters covered under this part are preempted to the state."
+    },
+    {
+     "cite": "83.58",
+     "quote": "The landlord may also recover double the amount of rent due on the dwelling unit"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "lease_end_date",
+     "days": 0,
+     "date": "2026-07-31",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "rent-4",
+   "title": "Month to month, a raise on short notice",
+   "today": "2026-03-22",
+   "lease": "lease_monthtomonth.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "new_rent": "$1,200",
+    "increase_delivered": "2026-03-20",
+    "increase_how": "a letter handed to the tenant at the apartment door",
+    "new_rent_starts": "2026-04-01",
+    "period_end": "2026-03-31",
+    "next_period_end": "2026-04-30",
+    "agreed": "no",
+    "paid_new_rent": "no"
+   },
+   "message": "I'm month to month. On March 20 the office handed me a letter raising my rent to $1,200 on April 1. That's not even two weeks. Is that allowed? What can I do?",
+   "answer": "That is not settled, because the statute sets no notice for a rent increase and does not say a landlord may change the rent alone. One reading: a landlord can change the rent only with the notice it needs to end the tenancy, 30 days before the end of a monthly period. The last day for a change after March 31 was March 1, so your letter was late for April. The second: no section sets a notice, so none in particular is needed. The third: the statute only lets a party end the tenancy, so the rent changes only if you agree, and section 10 asks for a signed change. Under every reading your landlord may end the tenancy on that notice with no reason named. You can pay it, pay the old rent and say why (with the risk of a demand or a suit), or end the tenancy with written notice by March 31 for April 30.",
+   "points": [
+    "Opens by saying it is not settled, since part II sets no notice for an increase and does not say a landlord may change the rent alone, and leans no way. Gives the readings: the same notice as 83.57(3); none in particular; or the rent changes only if the tenant agrees, with section 10's signed change set beside it.",
+    "Sets the dates: for the period ending March 31 the 30-day date is 2026-03-01, from count_days, and the March 20 letter is after it, so it is not good for April 1 under the first reading.",
+    "Says that under every reading the landlord may end a month-to-month tenancy on 83.57(3)'s notice, with no reason named.",
+    "Gives the choices: pay it; pay the old rent and say why, with the risk of a demand or a suit; or end the tenancy by written notice by 2026-03-31, from count_days, for April 30.",
+    "(Whether a late notice works for the period after April 30 under the first reading is not settled.)"
+   ],
+   "mistakes": [
+    "Says flatly that 30 days' notice is required for an increase, that no notice is needed, or that the letter alone cannot change the rent.",
+    "Says flatly that the tenant owes $1,200 from April 1, or does not.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.57(3)",
+     "quote": "by giving not less than 30 days’ notice prior to the end of any monthly period"
+    },
+    {
+     "cite": "83.57",
+     "quote": "may be terminated by either party giving written notice in the manner provided in s. 83.56 (4)"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "period_end",
+     "days": -30,
+     "date": "2026-03-01",
+     "passed": true
+    },
+    {
+     "fact": "next_period_end",
+     "days": -30,
+     "date": "2026-03-31",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "rent-5",
+   "title": "A code complaint, then a raise for this tenant only",
+   "today": "2026-02-25",
+   "lease": "lease_monthtomonth.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "complaint_date": "2026-01-15",
+    "complaint_detail": "a complaint to city code enforcement about mold in the apartment",
+    "new_rent": "$1,400",
+    "increase_delivered": "2026-02-20",
+    "increase_how": "a letter handed to the tenant at the apartment door",
+    "new_rent_starts": "2026-04-01",
+    "period_end": "2026-03-31",
+    "next_period_end": "2026-04-30",
+    "others_rent": "the neighbors say no one else's rent changed",
+    "agreed": "no",
+    "eviction_filed": "no"
+   },
+   "message": "Last month I called city code enforcement about mold. Now they're raising only my rent, from $1,050 to $1,400. My neighbors' rent didn't change. Isn't this retaliation? What can I do about it?",
+   "answer": "It can be, and a court would decide. The law makes it unlawful to raise a tenant's rent in a discriminatory way primarily to retaliate. A complaint to code enforcement is a named example, and being treated differently as to rent is required, which your neighbors' rent points to. You must have acted in good faith, and the landlord's motive is for a court. It works as a defense if you are sued for possession, and it falls away if the landlord proves good cause, which includes good faith actions for unpaid rent, so not paying the new rent can weaken it. Whether you can do anything about the raise alone, before any case, is not settled: one reading makes it only a defense, the other lets you sue over an unlawful act.",
+   "points": [
+    "Says it can be retaliation under 83.64(1): a code complaint is a named example (83.64(1)(a)), and the neighbors' rent points to being treated differently (83.64(4)). Good faith is required, and the landlord's primary motive is for a court. Does not say flatly that it is retaliation.",
+    "Says how it is used: a defense in an action for possession (83.64(2)), which falls away if the landlord proves good cause, whose examples include actions for nonpayment (83.64(3)), so not paying the new rent can weaken it.",
+    "Says what the tenant can do about the raise alone is not settled, with both readings: only a defense, or a suit under 83.64(1) with 83.54 or 83.55.",
+    "(This letter came before 2026-03-01, from count_days, so it is in time on the reading that asks for 30 days.)"
+   ],
+   "mistakes": [
+    "Says flatly that it is retaliation, or that it is not.",
+    "Counts the days between the complaint and the raise.",
+    "Says the raise is void, or that the tenant may ignore it, because of the complaint.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.64(1)",
+     "quote": "It is unlawful for a landlord to discriminatorily increase a tenant’s rent"
+    },
+    {
+     "cite": "83.64(2)",
+     "quote": "Evidence of retaliatory conduct may be raised by the tenant as a defense in any action brought against him or her for possession."
+    },
+    {
+     "cite": "83.64(3)",
+     "quote": "good faith actions for nonpayment of rent"
+    },
+    {
+     "cite": "83.64(4)",
+     "quote": "which shall be a prerequisite to a finding of retaliatory conduct"
+    },
+    {
+     "cite": "83.54",
+     "quote": "Any right or duty declared in this part is enforceable by civil action."
+    }
+   ],
+   "dates": [
+    {
+     "fact": "period_end",
+     "days": -30,
+     "date": "2026-03-01",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "rent-6",
+   "title": "Everyone got the same raise, in good time",
+   "today": "2026-02-25",
+   "lease": "lease_monthtomonth.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "complaint_date": "2026-01-20",
+    "complaint_detail": "a portal repair request about a dripping faucet",
+    "new_rent": "$1,102.50",
+    "increase_delivered": "2026-02-20",
+    "increase_how": "a letter handed to the tenant at the apartment door",
+    "new_rent_starts": "2026-04-01",
+    "period_end": "2026-03-31",
+    "next_period_end": "2026-04-30",
+    "others_rent": "every unit in the building got the same letter, the same percent",
+    "agreed": "no"
+   },
+   "message": "I put in a repair request in January and now I got a rent increase for April, from $1,050 to $1,102.50. Everyone in the building got the same letter. Can they do this? Is it retaliation?",
+   "answer": "Your landlord can get to the new rent one way or another, though how is not settled. Part II sets no cap. Your letter came February 20, before March 1, the last day for 30 days' notice before March 31, so it is in time on the reading that asks for that notice. Section 10 says changes must be signed, and another reading is that a letter alone cannot change the rent. But your landlord may end the tenancy on that same notice, with no reason named, and offer the new rent. Retaliation looks unsupported: being treated differently as to rent is required, and the same raise for everyone points against that. An increase that follows a complaint is not retaliation for that reason alone. You can pay it, or end the tenancy with written notice 30 days before the end of a monthly period.",
+   "points": [
+    "Says part II sets no cap, and the letter handed over February 20 is before 2026-03-01, from count_days, so it is in time on the readings about notice.",
+    "Says whether the letter alone changes the rent is not settled, with section 10's signed change set beside it, and that under every reading the landlord may end the tenancy on that notice with no reason named.",
+    "Says the same raise for everyone points against being treated differently, a prerequisite (83.64(4)), and that an increase following a complaint is not retaliation for that reason alone.",
+    "Gives the choices: pay it, or end the tenancy with written notice under 83.57(3).",
+    "(An ordinary repair request is not a named example, and the list is only examples: not settled.)"
+   ],
+   "mistakes": [
+    "Says this is retaliation.",
+    "Says flatly that the tenant owes the new rent from April 1, or does not.",
+    "Counts the days between the repair request and the raise.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.57(3)",
+     "quote": "by giving not less than 30 days’ notice prior to the end of any monthly period"
+    },
+    {
+     "cite": "83.64(4)",
+     "quote": "which shall be a prerequisite to a finding of retaliatory conduct"
+    },
+    {
+     "cite": "83.57",
+     "quote": "may be terminated by either party giving written notice in the manner provided in s. 83.56 (4)"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "period_end",
+     "days": -30,
+     "date": "2026-03-01",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "rent-7",
+   "title": "The tenant already paid the raise for two months",
+   "today": "2026-04-10",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "new_rent": "$1,150",
+    "increase_delivered": "2026-02-15",
+    "new_rent_starts": "2026-03-01",
+    "lease_end_date": "2026-07-31",
+    "agreed": "signed nothing; just started paying the new amount",
+    "paid_new_rent": "yes: March and April at $1,150; when paying, the tenant knew it was more than before but had not read what the lease says about the rent or about changes"
+   },
+   "message": "In February they said rent was going to $1,150, so I just paid it for March and April. I only now read that my lease says $1,050 through July and changes need to be signed. Can I go back to $1,050 and get the extra back?",
+   "answer": "That is not settled. Your lease says $1,050 through July 31, has no clause letting the landlord raise it, and requires a signed change, and you signed nothing. But the statute says a tenant who pays rent with actual knowledge of a landlord's failure gives up a civil action over it, though not over a later or continuing failure, and you say you had not read the lease. One reading: paying with knowledge gives up a suit over those months and may show you agreed. The other: a raise the lease never allowed is not rent due, section 10 still stands, and you can claim the extra as damages. Going back to $1,050 may bring a demand for the difference; do not ignore one.",
+   "points": [
+    "Opens by saying it is not settled whether paying gives up the extra or changes the rent, and leans neither way. Gives both readings, with 83.56(5)(a), and sets 'actual knowledge' beside the tenant's not having read the lease.",
+    "Says section 4 sets $1,050 through 2026-07-31, the lease has no clause allowing a raise, section 10 requires a signed change, and nothing was signed.",
+    "Says a claim for the extra is a damages claim (83.55), with amounts and court steps outside the tool, and that going back to $1,050 may bring a demand, which the tenant should not ignore."
+   ],
+   "mistakes": [
+    "Says flatly that the money can, or cannot, be recovered.",
+    "Says flatly that the rent is now $1,150, or $1,050.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.56(5)(a)",
+     "quote": "if the tenant pays rent with actual knowledge of a noncompliance by the landlord"
+    },
+    {
+     "cite": "83.55",
+     "quote": "the aggrieved party may recover the damages caused by the noncompliance"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "rent-8",
+   "title": "Kept paying the lease's rent, and now sued for the difference",
+   "today": "2026-05-06",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "new_rent": "$1,200",
+    "new_rent_starts": "2026-03-01",
+    "lease_end_date": "2026-07-31",
+    "agreed": "no; nothing signed",
+    "paid_new_rent": "no; kept paying $1,050 every month, and the office took it, the May payment included",
+    "rent_demand": "a written demand for $300 on 2026-04-20",
+    "eviction_filed": "yes; served with court papers on 2026-05-05; the complaint says $300 is owed"
+   },
+   "message": "I kept paying my lease's $1,050 after they tried to raise it to $1,200. Yesterday I was served with eviction papers saying I owe $300. I don't owe that! What do I do?",
+   "answer": "Act on this first: within 5 days after you were served, not counting Saturdays, Sundays, and legal holidays, you must pay the rent the complaint claims into the court's registry or file a motion asking the court to decide the amount. Miss it and you lose your defenses other than payment, and the landlord is entitled to a default judgment removing you. The summons states this requirement. Since the amount is what you dispute, the motion is the way to say so, with papers showing why it is wrong, such as your lease. Your defense: section 4 sets $1,050 through July 31, no clause allows a raise, and section 10 requires a signed change.",
+   "points": [
+    "Leads with the deadline: within 5 days, excluding Saturdays, Sundays, and legal holidays, after service, pay into the court's registry or file a motion to determine the amount, or lose defenses other than payment and face a default. The summons states it. No calendar date for it.",
+    "Says the motion is the way to dispute the amount, and it needs papers showing why the amount is wrong (83.60(2)), such as the lease.",
+    "Gives the defense: section 4 sets $1,050 through 2026-07-31, no clause allows a raise, section 10 requires a signed change, and nothing was signed.",
+    "(Rent that comes due during the case also goes into the registry. Taking partial rent gives up nothing, and after a 3-day notice brings the steps in 83.56(5)(a). Attorney fees. Other court steps are outside the tool.)"
+   ],
+   "mistakes": [
+    "Gives a calendar date for the 5 days.",
+    "Says the case can be ignored, or is void because the raise was not allowed.",
+    "Says the tenant must pay $1,200 going forward.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.60(2)",
+     "quote": "within 5 days, excluding Saturdays, Sundays, and legal holidays, after the date of service of process constitutes an absolute waiver of the tenant’s defenses other than payment"
+    },
+    {
+     "cite": "83.60(2)",
+     "quote": "If a motion to determine rent is filed, documentation in support of the allegation that the rent as alleged in the complaint is in error is required."
+    }
+   ],
+   "dates": []
+  }
+ ]
+}

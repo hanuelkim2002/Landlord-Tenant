@@ -1,0 +1,467 @@
+{
+ "end-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Right on \"no amount of notice is required\" with 83.575(1), section 6, and the deposit rule (\"its 30-day notice of a claim on the deposit\"); calling the 7-day rule \"unclear\" for the last day and advising \"by July 24, 2026\" is a hedge the text of 83.49(5) does not contradict and not a must-give number, so it is only noted."
+ },
+ "end-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Right on \"You don't have to give notice\" with 83.575(1), section 6, 83.49(5), and the deposit (\"its duty to send you a written notice before keeping part of the deposit\"); \"by July 24\" is offered only as \"a cheap safeguard\" under a rule that \"doesn't clearly apply,\" so it is noted and not a must-give number."
+ },
+ "end-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Says \"You don't have to give notice, so the amount is zero,\" gives section 6, and says \"If you left earlier than July 31\" 7 days applies, but \"notices about your deposit\" only ties the address to deposit mail and states no deposit rule."
+ },
+ "end-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"You don't owe the $2,100\" on the 83.575(2) condition and \"Your 60-day notice period began June 1, 2026 ... both dates have passed,\" but says of notice now \"It wouldn't change the result\" without advising it, and \"other costs that have nothing to do with this notice, such as damage\" is not the 83.55 claim for failing to follow the lease."
+ },
+ "end-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Says \"You most likely don't owe the $2,100\" on the 83.575(2) condition, gives \"your notice date, which was June 1, 2026\" as missed, and says \"A landlord can claim damages for a failure to follow the lease (83.55),\" but does not advise giving written notice now."
+ },
+ "end-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "Says \"The lease lets your landlord charge it only if the landlord first sent you its own written notice\"; lease section 12 has no such condition, which comes from 83.575(2), as the answer's own details say.",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Says \"You don't owe the $2,100\" on the 83.575(2) condition, gives \"Your 60-day deadline was June 1, 2026. That date has passed,\" and covers 83.55 with amounts left open, but does not advise giving written notice now, and it uses 83.595(4)(b) only to say the cap \"doesn't change the result.\""
+ },
+ "end-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"You may owe the $2,100, but the answer turns on a timing point in the law that is not settled,\" gives both results with June 1, May 17, and May 20 correctly placed, and confirms content and delivery; \"a few days too late\" is loose but correct and is not a stated length of time, so it is only noted."
+ },
+ "end-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The opening says \"On the other reading it came too early\"; under that reading May 20 is after May 17 and so too late, as the answer's own details say.",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"Whether you owe the $2,100 is not settled,\" leans neither way, and in the details sets May 20 between June 1 and May 17 with each result and confirms content and delivery, but the opening's \"too early\" misstates the second reading."
+ },
+ "end-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The opening says the May 20 letter is \"too early under the other\" reading; under that reading May 20 is after May 17 and so too late, as the answer's own details say.",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Opens \"You may owe the $2,100, and the law doesn't settle it,\" leans neither way, and in the details sets May 20 between June 1 and May 17 with each result and confirms content and delivery, but the opening's \"too early\" misstates the second reading."
+ },
+ "end-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives both readings without leaning under \"It is not settled,\" says of June 1 \"Giving notice by that date satisfies both readings,\" by hand or certified mail, and says \"Your lease has no such charge.\""
+ },
+ "end-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Lays out \"Reading one\" and \"Reading two\" under \"It is not settled,\" says \"Notice given by June 1 meets both readings\" by hand or certified mail, and says of a charge \"Your lease sets none.\""
+ },
+ "end-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Says \"Both readings are open,\" gives each without leaning, says \"Notice delivered by June 1 meets both readings\" by hand or certified mail, and says \"Your lease sets no such fee.\""
+ },
+ "end-5/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives March 31, says e-mail, a text, and the portal \"are not ones the statute names,\" gives April 23 for the 7 days' notice, and says \"One letter handed over or sent certified mail by March 31 can do both jobs.\""
+ },
+ "end-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives March 31 under 83.57(3), hand or certified mail, \"don't rely on e-mail, a text, or a portal message,\" and the 7-day notice by April 23 that \"one notice also covers\"; its flat \"It would work for the next rent period instead\" is taken back at once by \"is not settled,\" so it is only noted here."
+ },
+ "end-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true
+  ],
+  "reason": "Gives March 31, \"Neither the lease nor \u00a7 83.56(4) names\" texts and portal messages, April 23 for the 7 days' notice, and \"One notice that is hand-delivered or sent by certified mail, and that includes your address, before March 31 meets both rules.\""
+ },
+ "end-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "reason": "Gives March 1 and both readings on the text and on April 30, and says \"Don't ignore the text\" and covers court and locks, but never says the landlord needs no reason to give proper notice, so the fourth point falls short."
+ },
+ "end-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes all four points, with \"Don't ignore the text\" and both readings on the text and on April 30; noted only, \"It would also be valid for April 30 under the first reading\" wrongly suggests a fresh timely notice might depend on that reading."
+ },
+ "end-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "\"retaliation, meaning the landlord acting because you made a complaint (83.64(1))\" is narrower than 83.64(1), whose examples also cover tenant organizing, a servicemember's termination, paying rent to an association, and fair housing rights, and which says the list is not exhaustive.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "Makes all four points, but \"your landlord gave 11 days\" is a length of time from its own counting."
+ },
+ "end-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "'You could also owe double rent for the days you stay' and 'can't lawfully lock you out' are made, but 'a written answer from the office about your staying' and section 9 come with no word of the 30-day notice or extra month's rent; point 4 is credited on 83.67(6) alone."
+ },
+ "end-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Asking for written permission', 'lease \u00a79 would make the stay month to month' and 'doesn't give the 30-day notice under 83.57(3)' with the extra month's rent make point 3 in full, and holding over, double rent and 'can't lawfully lock you out' are there; point 4 is credited on 83.67(6) alone."
+ },
+ "end-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Have you asked the office, in writing' with 'must give 30 days' written notice before leaving a month-to-month tenancy, or owes an extra month's rent (83.575(3))' makes point 3, and holding over, double rent and 'can't lock you out' are all there; point 4 is credited on 83.67(6), with 83.60(2) only hinted at by 'Short deadlines apply once you are served'."
+ },
+ "end-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'whether you owe double rent is not settled' with two readings beside section 9, 'If it is month to month, 83.57(3) requires' 30 days, 'You can't be forced out in 5 days' and both 30-day dates make every point, and 'would end August 25' is a correct date so it is not counted."
+ },
+ "end-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "'The landlord's own letter says only that your lease ended July 31. It doesn't say you may stay or that you may not' is contradicted by the letter's words in the facts: 'You have 5 days to get out or you will owe double rent.'",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Whether they can charge you double rent is not settled' with two readings beside lease paragraph 9, 'cannot lock you out or remove you without a court case' and both 30-day dates make every point, but it misdescribes the letter."
+ },
+ "end-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Whether it can charge double rent is not settled' with a reading for each side beside section 9, 'The lease's month-to-month clause (\u00a79) would apply' with the 30-day notice, 'Even if the landlord is right, the landlord still needs a court case' and both 30-day dates make every point."
+ },
+ "end-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Whether that lets you stay past July 31 is not settled' with two readings and no pick makes point 1, June 1 and July 10 and 'risk being sued, and you could owe double rent' with 'It needs a court case' make points 2 and 3, and 'does not give tenants a right to renew' with 'names no reason' makes point 4."
+ },
+ "end-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'whether that lets you stay is not settled' and 'I can't tell you which reading a court would choose' make point 1, June 1 and July 10 and 'Reading one above would make that risk real' make points 2 and 3, and point 4 is credited on 'names no right to renew' though no-reason is left out; 'If the landlord is sued' is a wording slip for the tenant being sued, noted but not counted."
+ },
+ "end-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'doesn't clearly change that. Whether it does is not settled' with two readings and no pick makes point 1, June 1 and July 10 and 'risk being sued and owing double rent' make points 2 and 3, and point 4 is credited on 'names no right to renew' though no-reason is left out; 'The lease ended on July 31' is a past-tense slip on July 12 that the rest of the answer corrects, noted but not counted."
+ }
+}

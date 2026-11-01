@@ -1,0 +1,463 @@
+{
+ "how_to_read": "The lease-ending skill's stories, in the repair stories' shape. Each runs on comparisons/skills/lease.txt, or on a lease in this folder (lease_notice60.txt: 60 days' notice from both sides, and $2,100 for missing it; lease_notice90.txt: 90 days' notice from both sides; lease_monthtomonth.txt: no set end date). 'today' is the date count_days compares with. 'facts' are confirmed facts. 'points' are what a right answer must convey, judged by meaning; a point written wholly in parentheses is helpful detail, not required. 'mistakes' make an answer wrong. 'law' quotes the statute word for word; 'dates' are the count_days results the answer needs. Every story holds school_housing. Check with: python ../skills/check_key.py lease_ending/stories.json (from comparisons/each_skill/).",
+ "sections": [
+  "83.42",
+  "83.43",
+  "83.45",
+  "83.46",
+  "83.47",
+  "83.48",
+  "83.49",
+  "83.55",
+  "83.56",
+  "83.57",
+  "83.58",
+  "83.59",
+  "83.60",
+  "83.64",
+  "83.67",
+  "83.505",
+  "83.575",
+  "83.595",
+  "83.5615"
+ ],
+ "stories": [
+  {
+   "id": "end-1",
+   "title": "A plain lease: is notice owed before leaving on the end date?",
+   "today": "2026-06-20",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-07-31",
+    "tenant_notice": "none yet"
+   },
+   "message": "My lease ends July 31 and I'm moving out that day. Do I have to give them notice? How much?",
+   "answer": "No. This lease has no clause asking for notice before you leave on its end date, and the statute only allows a lease to ask; it does not require notice itself. Section 6 says what move-out requires: leave the apartment clean and empty, return the keys, and give a forwarding address in writing. If you move out before the last day, a separate 7 days' notice applies.",
+   "points": [
+    "Says no: this lease has no clause asking for notice before leaving on the end date, and the statute only lets a lease ask for it (83.575(1)), so none is owed for leaving that day.",
+    "Says what section 6 requires at move-out: clean and empty, keys returned, a forwarding address in writing.",
+    "(Moving out before the last day brings the 7 days' notice in 83.49(5).)",
+    "(The deposit rules after the move.)"
+   ],
+   "mistakes": [
+    "States a number of days' notice this tenant must give to leave on the end date.",
+    "Applies 83.57's 30 days to this set term.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.575(1)",
+     "quote": "may contain a provision requiring the tenant to notify the landlord within a specified period before vacating the premises at the end of the rental agreement"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "end-2",
+   "title": "Missed the 60 days; the landlord never sent its own notice",
+   "today": "2026-06-15",
+   "lease": "lease_notice60.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-07-31",
+    "tenant_notice": "none yet",
+    "landlord_notice": "none; nothing in writing about the end of the lease has come"
+   },
+   "message": "My lease says 60 days' notice or I pay $2,100. I just found out I missed it. The office says I owe the $2,100 if I leave July 31. They never sent me anything. Do I owe it?",
+   "answer": "No, not on these facts. That charge is owed only if the landlord first gave you a written notice of what the lease requires, the date the lease ends, and all the charges, within the time the statute sets. You say nothing came, so the charge is not owed. The lease's last day for your notice was June 1, which has passed. It still makes sense to give written notice now, by hand or certified mail, under section 7.",
+   "points": [
+    "Says no: the charge is owed only if the landlord gave written notice of the tenant's obligations, the end date, and all charges, within the time set (83.575(2)). None came, so it is not owed.",
+    "Gives the lease's last day as 2026-06-01, from count_days, and says it has passed.",
+    "(Give written notice now, by hand or certified mail, under section 7.)",
+    "(The landlord may still claim damages for a failure to follow the lease (83.55), with amounts outside the tool.)"
+   ],
+   "mistakes": [
+    "Says the tenant owes the $2,100.",
+    "Rests the answer on a separate addendum or the two months' rent limit in 83.595(4), which do not apply (83.595(4)(b)).",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.575(2)",
+     "quote": "if the landlord provides written notice to the tenant specifying the tenant’s obligations under the notification provision contained in the rental agreement and the date the rental agreement is terminated"
+    },
+    {
+     "cite": "83.575(2)",
+     "quote": "The written notice must list all fees, penalties, and other charges applicable to the tenant under this subsection."
+    },
+    {
+     "cite": "83.595(4)(b)",
+     "quote": "This subsection does not apply if the breach is failure to give notice as provided in s. 83.575"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "lease_end_date",
+     "days": -60,
+     "date": "2026-06-01",
+     "passed": true
+    }
+   ]
+  },
+  {
+   "id": "end-3",
+   "title": "The landlord's reminder came, and the words 'within 15 days' matter",
+   "today": "2026-06-15",
+   "lease": "lease_notice60.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-07-31",
+    "tenant_notice": "none yet",
+    "landlord_notice_delivered": "2026-05-20",
+    "landlord_notice_how": "handed to the tenant at the apartment door",
+    "landlord_notice_words": "Section 11 of your lease requires 60 days' written notice before moving out at the end of the term. Your lease ends July 31, 2026. If you move out without that notice, section 12 charges $2,100 in liquidated damages. There are no other fees, penalties, or charges."
+   },
+   "message": "The office handed me a letter on May 20 reminding me about 60 days' notice, July 31, and the $2,100. I forgot and missed it. Do I owe the $2,100?",
+   "answer": "That is not settled, because the statute's words 'within 15 days before the start of the notification period' can be read two ways. The period starts June 1, and 15 days before that is May 17. Your letter came May 20, between them. One reading: the notice must come during the 15 days that end when the period starts, so yours was in time and the $2,100 can be owed. The other: it must come no later than 15 days before the period starts, so yours was late and the $2,100 is not owed. The letter's contents and delivery are otherwise what the statute asks.",
+   "points": [
+    "Opens by saying it is not settled, because of the words 'within 15 days before the start of the notification period', and leans neither way. Gives both readings and what each means for the $2,100.",
+    "Gives the dates: the period starts 2026-06-01, and 15 days before that is 2026-05-17, both from count_days. Sets May 20 between them: in time under the first reading, late under the second.",
+    "Says the letter otherwise does what the statute asks: it names the obligation, the end date, and the charges, and it was handed over."
+   ],
+   "mistakes": [
+    "Says flatly that the tenant owes, or does not owe, the $2,100.",
+    "Rests the answer on a separate addendum or the two months' rent limit in 83.595(4).",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.575(2)",
+     "quote": "within 15 days before the start of the notification period contained in the rental agreement"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "lease_end_date",
+     "days": -60,
+     "date": "2026-06-01",
+     "passed": true
+    },
+    {
+     "fact": "lease_end_date",
+     "days": -75,
+     "date": "2026-05-17",
+     "passed": true
+    }
+   ]
+  },
+  {
+   "id": "end-4",
+   "title": "A lease asking for 90 days",
+   "today": "2026-05-15",
+   "lease": "lease_notice90.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "planned_move_out": "2026-07-31",
+    "tenant_notice": "none yet"
+   },
+   "message": "My lease says I have to give 90 days' notice before I move out at the end. That date already went by. Am I stuck? What happens now?",
+   "answer": "What follows is not settled, but you are not stuck. The statute says a lease may not require more than 60 days' notice, and yours asks for 90. One reading: the statute allows only a clause inside the limit, so no notice is owed under this one. The other: a clause is void only to the extent it takes away what the law gives, so it stands at 60 days. Written notice by June 1, the 60-day date, meets both, by hand or certified mail under section 7. This lease names no charge for missing the notice.",
+   "points": [
+    "Says 90 days is over the statute's limit of 60 (83.575(1)), and that what follows is not settled, with both readings: no notice is owed under the clause, or it stands up to 60 days. Leans neither way.",
+    "Says written notice by 2026-06-01, from count_days, meets both readings, and how to give it (by hand or certified mail, section 7).",
+    "(This lease names no charge for missing the notice.)"
+   ],
+   "mistakes": [
+    "Says the tenant is bound by the 90 days, or has missed the notice for good.",
+    "Says flatly that the clause is void and no notice is owed, or flatly that it is cut to 60 days.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.575(1)",
+     "quote": "A rental agreement may not require less than 30 days’ notice or more than 60 days’ notice from either the tenant or the landlord."
+    },
+    {
+     "cite": "83.47(1)",
+     "quote": "A provision in a rental agreement is void and unenforceable to the extent that it"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "lease_end_date",
+     "days": -60,
+     "date": "2026-06-01",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "end-5",
+   "title": "Month to month: the tenant ends it",
+   "today": "2026-03-20",
+   "lease": "lease_monthtomonth.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "period_end": "2026-04-30",
+    "planned_move_out": "2026-04-30",
+    "tenant_notice": "none yet"
+   },
+   "message": "I'm month to month and I want to move out at the end of April. How do I end it, and by when?",
+   "answer": "Give written notice by March 31, at least 30 days before the April 30 end of the monthly period. Hand it to the office or send it by certified mail, as section 7 says; those fit the statute too. E-mail has not been agreed under section 8, and a portal message or text is not a way the statute names. A separate 7 days' written notice with an address where you can be reached also applies, by April 23. One notice by hand or certified mail, with your address, by March 31 meets both.",
+   "points": [
+    "Says a written notice at least 30 days before the end of the monthly period ends the tenancy; the last day for April 30 is 2026-03-31, from count_days.",
+    "Says how: by hand or by mail under 83.56(4), and section 7 says by hand or certified mail. E-mail is not agreed (section 8); a portal message or a text is not a way named.",
+    "Says the 7 days' notice also applies, written, by certified mail or by hand, with an address (83.49(5)), by 2026-04-23 from count_days, or says one notice can meet both."
+   ],
+   "mistakes": [
+    "Says the 7 days' notice alone ends the tenancy.",
+    "Applies a lease-term rule from 83.575(1) as what sets this notice.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.57(3)",
+     "quote": "by giving not less than 30 days’ notice prior to the end of any monthly period"
+    },
+    {
+     "cite": "83.49(5)",
+     "quote": "any tenant who vacates or abandons premises which are the subject of a tenancy from week to week, month to month, quarter to quarter, or year to year"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "period_end",
+     "days": -30,
+     "date": "2026-03-31",
+     "passed": false
+    },
+    {
+     "fact": "planned_move_out",
+     "days": -7,
+     "date": "2026-04-23",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "end-6",
+   "title": "Month to month: a text saying be out in days",
+   "today": "2026-03-22",
+   "lease": "lease_monthtomonth.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "landlord_notice_delivered": "2026-03-20",
+    "landlord_notice_how": "a text message from the manager",
+    "landlord_notice_words": "You need to be out by March 31. We want to redo the unit.",
+    "period_end": "2026-03-31",
+    "next_period_end": "2026-04-30",
+    "eviction_filed": "no"
+   },
+   "message": "My manager texted me on March 20 saying I need to be out by March 31 because they want to redo the unit. I'm month to month. Do I have to leave by then?",
+   "answer": "No, not by March 31. Ending a month-to-month tenancy takes written notice at least 30 days before the end of a monthly period, and for March 31 the last day was March 1. Whether the text counts at all is not settled: a text is not a way the statute names, but it did reach you. Whether a late notice works for a later period is not settled either; if it did, the tenancy could end April 30. Your landlord needs no reason and can still give proper notice, so do not ignore this. And your landlord cannot put you out or change the locks without a court case.",
+   "points": [
+    "Says no, not by March 31: the notice must be written and at least 30 days before the end of the period, and the last day for March 31 was 2026-03-01, from count_days, which has passed.",
+    "Says a text is not a way 83.56(4) names, and that whether it still counts is not settled, with both readings.",
+    "Says whether a late notice works for a later period is not settled, with both readings; if it does, the tenancy could end 2026-04-30 (the date for that is 2026-03-31, from count_days).",
+    "Says the landlord needs a court case and cannot lock the tenant out, and not to ignore this, since the landlord may give proper notice with no reason named (83.57)."
+   ],
+   "mistakes": [
+    "Says the tenant must leave by March 31.",
+    "Says flatly that the text counts or does not count.",
+    "Says flatly that the late notice is good, or no good, for April 30.",
+    "Says the landlord may remove the tenant or change the locks without a court case.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.57(3)",
+     "quote": "by giving not less than 30 days’ notice prior to the end of any monthly period"
+    },
+    {
+     "cite": "83.56(4)",
+     "quote": "shall be by mailing, delivering a true copy thereof, e-mailing in accordance with s. 83.505"
+    },
+    {
+     "cite": "83.505(6)",
+     "quote": "This section does not preclude service of notices by any other means permitted by law."
+    },
+    {
+     "cite": "83.59(3)",
+     "quote": "The landlord shall not recover possession of a dwelling unit except:"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "period_end",
+     "days": -30,
+     "date": "2026-03-01",
+     "passed": true
+    },
+    {
+     "fact": "next_period_end",
+     "days": -30,
+     "date": "2026-03-31",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "end-7",
+   "title": "Staying on without permission until a new place is ready",
+   "today": "2026-08-05",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "permission": "none: the office told the tenant to be out by July 31 and has not changed that",
+    "rent_after_end": "none paid or asked for",
+    "eviction_filed": "no"
+   },
+   "message": "My lease ended July 31 but my new place isn't ready until August 20. The office told me to be out. What happens if I just stay until then? Can they lock me out?",
+   "answer": "They cannot lock you out. Your landlord can only get the apartment back through a court case, and a lockout carries its own damages. But staying without permission has a real cost: your landlord can sue for possession and recover double the rent for the time you refuse to leave. The way to lower that risk is to ask for the landlord's agreement in writing. Under section 9, staying with written consent makes the tenancy month to month on the same terms, and you would then owe 30 days' notice before the end of a monthly period, or an extra month's rent.",
+   "points": [
+    "Says staying without permission is holding over: the landlord can sue for possession and recover double the rent for the time the tenant refuses to leave (83.58).",
+    "Says the landlord cannot remove the tenant or lock them out without a court case (83.59(3), 83.67(2)).",
+    "Says to ask for the landlord's agreement in writing: section 9 makes it month to month with written consent, and then the 83.57(3) notice applies, or an extra month's rent (83.575(3)).",
+    "(83.67(6)'s damages for a lockout. If sued, 83.60(2).)"
+   ],
+   "mistakes": [
+    "Says the tenant may stay with no risk, or that nothing is owed for the time.",
+    "Says the landlord may lock the tenant out, or have them removed without a court case.",
+    "Works out a total for the double rent.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.58",
+     "quote": "The landlord may also recover double the amount of rent due on the dwelling unit, or any part thereof, for the period during which the tenant refuses to surrender possession."
+    },
+    {
+     "cite": "83.67(2)",
+     "quote": "shall not prevent the tenant from gaining reasonable access to the dwelling unit by any means"
+    },
+    {
+     "cite": "83.575(3)",
+     "quote": "the tenant is liable to the landlord for an additional 1 month’s rent"
+    }
+   ],
+   "dates": []
+  },
+  {
+   "id": "end-8",
+   "title": "The landlord took rent after the end, then says leave in 5 days",
+   "today": "2026-08-20",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "permission": "nothing in writing; nobody said anything about staying after July 31 until today",
+    "rent_after_end": "paid $1,050 for August on August 1 through the portal, and it was accepted",
+    "landlord_notice_delivered": "2026-08-20",
+    "landlord_notice_how": "a letter handed to the tenant at the office",
+    "landlord_notice_words": "Your lease ended July 31. You have 5 days to get out or you will owe double rent.",
+    "period_end": "2026-08-31",
+    "next_period_end": "2026-09-30",
+    "eviction_filed": "no"
+   },
+   "message": "I stayed after my lease ended July 31. I paid August rent on the portal and they took it, and nobody said anything. Today they handed me a letter saying I have 5 days to get out or I'll owe double rent. Can they do that?",
+   "answer": "That is not settled, because it turns on whether taking your August rent was permission to stay. One reading: taking rent for that time is permission, so double rent does not apply, the tenancy is month to month, and your landlord needs 30 days' written notice before the end of a monthly period. The other: permission must be given, section 9 asks for written consent, and taking rent alone does not change that, so you are holding over and double rent can apply. Either way the letter does not put you out in 5 days: your landlord needs a court case and cannot lock you out.",
+   "points": [
+    "Says early that it is not settled whether taking the August rent is permission, and leans neither way. Gives both readings, with section 9's written consent set beside them.",
+    "Says what each means: with permission, 83.58 does not apply, the tenancy runs month to month, and the landlord needs 83.57(3)'s notice; without it, the tenant is holding over, with a suit and double rent possible.",
+    "Says that either way the letter does not put the tenant out in 5 days: the landlord needs a court case and cannot lock them out.",
+    "(For August 31 the 30-day date was 2026-08-01, and for September 30 it is 2026-08-31, both from count_days.)"
+   ],
+   "mistakes": [
+    "Says flatly that double rent is owed, or is not.",
+    "Says the tenant must be out in 5 days, or that 5 days is a period the statute sets for this.",
+    "Says the landlord may lock the tenant out.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.58",
+     "quote": "after the expiration of the rental agreement without the permission of the landlord"
+    },
+    {
+     "cite": "83.575(3)",
+     "quote": "If the tenant remains on the premises with the permission of the landlord after the rental agreement has terminated"
+    },
+    {
+     "cite": "83.59(3)",
+     "quote": "The landlord shall not recover possession of a dwelling unit except:"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "period_end",
+     "days": -30,
+     "date": "2026-08-01",
+     "passed": true
+    },
+    {
+     "fact": "next_period_end",
+     "days": -30,
+     "date": "2026-08-31",
+     "passed": false
+    }
+   ]
+  },
+  {
+   "id": "end-9",
+   "title": "The landlord's notice of no renewal comes late",
+   "today": "2026-07-12",
+   "lease": "lease_notice60.txt",
+   "facts": {
+    "school_housing": "no: a private apartment complex, not tied to any school",
+    "lease_end_date": "2026-07-31",
+    "landlord_notice_delivered": "2026-07-10",
+    "landlord_notice_how": "a letter handed to the tenant at the apartment door",
+    "landlord_notice_words": "Your lease will not be renewed. You must be out by July 31, 2026.",
+    "eviction_filed": "no"
+   },
+   "message": "My lease says the landlord has to give 60 days' notice if it won't renew. They only told me on July 10 that I must be out July 31. Can they do that? Do I have to leave?",
+   "answer": "What follows from a late notice is not settled. Section 11 and the statute require your landlord's notice 60 days before the end, which was June 1, and yours came July 10, so it is late. One reading: the lease still ends on July 31 by its own words, and the landlord's miss is a failure of the lease, for damages at most. The other: the clause makes the landlord's notice the way a lease is not renewed, so without it the landlord cannot hold you to the end date. Under the first reading, staying risks a suit and double rent. Either way your landlord needs a court case to remove you.",
+   "points": [
+    "Opens by saying it is not settled what follows from a late notice, and leans neither way. Gives both readings.",
+    "Says section 11 and 83.575(1) require the landlord's notice; the last day was 2026-06-01, from count_days, and July 10 is after it.",
+    "Says the risk: under the first reading, staying is holding over, with a suit and double rent (83.58). Either way the landlord needs a court case.",
+    "(Part II names no right to renew and no reason a landlord must give.)"
+   ],
+   "mistakes": [
+    "Says flatly that the tenant must leave July 31, or flatly that the tenant may stay.",
+    "Says the lease has renewed by itself.",
+    "Says the landlord may remove the tenant without a court case.",
+    "Gives a date it worked out itself instead of from count_days.",
+    "Says how long something has lasted, or how long until a date, from its own counting (repeating the tenant's own words is not this mistake)."
+   ],
+   "law": [
+    {
+     "cite": "83.575(1)",
+     "quote": "if such provision also requires the landlord to notify the tenant in a manner prescribed by s. 83.56 (4) within such notice period if the rental agreement will not be renewed"
+    },
+    {
+     "cite": "83.55",
+     "quote": "the aggrieved party may recover the damages caused by the noncompliance"
+    },
+    {
+     "cite": "83.58",
+     "quote": "The landlord may also recover double the amount of rent due on the dwelling unit"
+    }
+   ],
+   "dates": [
+    {
+     "fact": "lease_end_date",
+     "days": -60,
+     "date": "2026-06-01",
+     "passed": true
+    }
+   ]
+  }
+ ]
+}

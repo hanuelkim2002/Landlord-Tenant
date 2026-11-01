@@ -1,0 +1,467 @@
+{
+ "end-1/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"You don't have to give a set amount of notice\" because the notice clause is optional and \"The law doesn't add one for you,\" quotes section 6, and sets aside 83.57, but omits the 7-day notice and says only \"you could miss mail about your deposit,\" which states no deposit rule."
+ },
+ "end-1/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"the amount of notice is none\" because the statute only lets a lease include a requirement and \"Your lease has no such provision,\" lists section 6, and correctly sets aside 83.57(3), but never mentions the 7-day notice or the deposit rules."
+ },
+ "end-1/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   false
+  ],
+  "reason": "Says \"You don't have to give any notice\" because \"Your lease has no such provision\" and gives section 6, but omits the 7-day notice and the deposit; \"The 30-day notice rule\" being only month to month reads as subsection (3), which the details quote, so it is noted and 83.57 is correctly not applied."
+ },
+ "end-2/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   false
+  ],
+  "reason": "Says \"Probably not\" on the 83.575(2) condition and \"Send it by hand to Suite A or by certified mail, as section 7 of the lease requires,\" but gives no date (\"I haven't computed any date from the lease's 60-day period\") and does not mention 83.55."
+ },
+ "end-2/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   false
+  ],
+  "reason": "Says \"you probably don't owe the $2,100\" on the 83.575(2) condition and \"You can still send your own written notice now\" (the how is left out, noted only), but gives no June 1 date and does not mention 83.55."
+ },
+ "end-2/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   false,
+   false
+  ],
+  "reason": "Says \"Probably not\" because the charge needs a notice with the obligations, end date, and \"all fees\" and \"No notice was sent,\" but gives no June 1 date (only \"your 60-day period had already started\"), does not advise giving notice now, and does not mention 83.55."
+ },
+ "end-3/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   true
+  ],
+  "reason": "Leans neither way (\"I can't say for sure\") and confirms content and delivery, but gives no May 17 (\"I don't count the 15-day line myself\") and never says what each reading means for this letter; \"the landlord would have more room on timing\" hides that the broad reading makes it late, which is noted as unhelpful and not contradicted."
+ },
+ "end-3/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "The opening says \"Under the other reading it was too early\"; under that reading a late letter is the problem and early is fine, as the answer's own details say (\"may have been late\").",
+  "points_made": [
+   false,
+   false,
+   true
+  ],
+  "reason": "Opens \"You probably owe the $2,100,\" which leans though not flatly, gives neither June 1 nor May 17 (\"this tool doesn't compute a last day\"), and misstates the second reading as \"too early,\" while content and delivery are confirmed."
+ },
+ "end-3/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   true
+  ],
+  "reason": "Opens \"Probably yes, but one point is open,\" which leans though not flatly, and gives June 1 and May 17 but leaves the key step to the tenant (\"Compare May 20 with those dates under each reading\"), while content and delivery are confirmed."
+ },
+ "end-4/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   false,
+   true
+  ],
+  "reason": "Says 90 is over the maximum but gives no readings and leans (\"It would likely help you, but it is not settled in this tool\"), names no June 1 date, and does say the lease \"names no fee, penalty, or extra rent.\""
+ },
+ "end-4/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"Whether you'd owe anything turns mostly on whether your landlord sent you a certain written notice\": under 83.575(2) a charge must be specified in the rental agreement and this lease names none, so a landlord's letter cannot create one, and a damages claim under 83.55 does not turn on that letter.",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Says the clause \"might be unenforceable\" or \"cut down to 60 days. I can't pick one,\" but gives June 1 only as the last day \"If the 60-day limit applies\" and never says notice by then meets both readings, since \"written notice now costs you nothing\" carries no date and the to-do step names no deadline."
+ },
+ "end-4/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"One thing could change this\" (a landlord's letter): under 83.575(2) a charge must be specified in the rental agreement and this lease names none, so a letter cannot create one; and \"doesn't, on what I can see, give your landlord a way to charge you\" leaves out the damages claim 83.55 allows.",
+  "points_made": [
+   true,
+   false,
+   true
+  ],
+  "reason": "Says the clause \"could be unenforceable entirely, or it could be read as the 60-day maximum. I can't pick one\" and that no clause sets a fee, but only says \"Send your written notice now anyway,\" with no June 1 date and no point that it meets both readings."
+ },
+ "end-5/1": {
+  "answers_first": false,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "The first sentence, \"Yes, you can end it at the end of April,\" says neither how nor by when; the answer then gives March 31 and the delivery ways (\"A portal message or text is also not one of the lease's methods\") but never mentions the 7 days' notice."
+ },
+ "end-5/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Gives the 30-day rule with \"The last day to give that notice for an April 30 move-out is March 31, 2026\" and the delivery ways (\"don't use e-mail or the resident portal as your only method\"), but never mentions the 7 days' notice."
+ },
+ "end-5/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "\"A lease may not require 'more than 60 days' notice' (Fla. Stat. 83.575(1))\" is offered for this tenancy, but 83.575 covers only a rental agreement with a specific duration; and \"its notice rules for tenant and landlord notices may not be waived in the lease\" drops the limit in 83.56(4), which covers only notices under subsections (1)-(3), not an 83.57 notice.",
+  "points_made": [
+   true,
+   true,
+   false
+  ],
+  "reason": "Gives March 31 from \"not less than 30 days' notice\" under 83.57(3) (so 83.575(1) is not what sets the notice) and the delivery ways, but never mentions the 7 days' notice."
+ },
+ "end-6/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   false,
+   true
+  ],
+  "reason": "Gives March 1 and court, locks, and \"Your landlord can still end your tenancy at the end of April,\" but on the text says only \"Probably not\" and \"A court could read these rules differently\" with no second reading, and never asks whether the late text works for April 30."
+ },
+ "end-6/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "Gives March 1, marks the text \"**Unsettled:**\" with both readings, and covers court, locks, and \"could end the tenancy at the end of the next period,\" but speaks only of a new \"valid notice delivered by March 31\" and never asks whether the late text works for April 30."
+ },
+ "end-6/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   false
+  ],
+  "reason": "Gives March 1 and both readings on the late notice, but on the text says only \"the text probably doesn't work as notice\" with no second reading, and says \"Only a court can order you out\" without ever saying the landlord cannot lock the tenant out."
+ },
+ "end-7/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "It makes holding over, double rent and the lockout bar ('double the rent for the days you stay', 'can't lawfully lock you out') and raises written consent under section 9, but never says the 30-day notice or extra month's rent then applies; point 4 is credited on 83.67(6) alone, and 'Neither the statute nor the lease says how that doubling is figured' passes over 83.46(1)'s day-to-day apportionment, noted but not counted because 83.46(1) does not speak to doubling."
+ },
+ "end-7/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "'they can file an eviction case' with double rent and 'can't lock you out' are made and 'agrees in writing' raises consent under section 9, but no 30-day notice or extra month's rent follows; point 4 is credited on 83.67(6) alone, and 'The statute doesn't say how this works for a partial month' passes over 83.46(1), noted but not counted because 83.46(1) does not speak to doubling."
+ },
+ "end-7/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   false,
+   true
+  ],
+  "reason": "'you could owe double rent' and 'can't lock you out' are made and 'A signed note from the office' raises written consent, but no 30-day notice or extra month's rent follows; '$3,150.00' is the lockout damages, not a double-rent total, so mistake 3 is not made, point 4 is credited on 83.67(6) alone, and 'The law doesn't say how the rent would be worked out' passes over 83.46(1), noted but not counted because 83.46(1) does not speak to doubling."
+ },
+ "end-8/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   false,
+   true,
+   false
+  ],
+  "reason": "'the law doesn't settle that' and 'I can't pick one' make point 1 and 'can't lock you out' makes point 3, but the permission side gives only the tenant's 'one extra month's rent instead', never month to month or the landlord's 30-day notice, and neither 30-day date appears."
+ },
+ "end-8/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   true
+  ],
+  "other_error": "'You already paid $1,050 for August, and that payment would count toward what is owed' states a crediting rule with no support in the statute or the lease.",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'one point the law doesn't settle' and 'I can't pick one' make point 1 and both outcomes and both 30-day dates are given, but 'written 20 days into the August rent period' is a length of time from its own counting; point 3 is credited on 'Only a court can order you out' though it never names a lockout."
+ },
+ "end-8/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "reason": "'Whether that applies to you is unsettled' and 'I can't say which reading a court would choose' make point 1 and 'can't throw you out' with 'The letter is a demand, not a court order' makes point 3, though it never names a lockout; point 4 is credited on 'period ending September 30 is August 31' though August 1 is left out, and 'August 25' is a correct date so it is not counted."
+ },
+ "end-9/1": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "'that probably doesn't let you stay past July 31' leans toward the landlord despite 'this point is unsettled', so point 1 fails, though 'probably' keeps it short of mistake 1; section 11, 83.575(1), June 1 and July 10, double rent and the court case are all there, and it never says Part II gives no right to renew."
+ },
+ "end-9/2": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   true
+  ],
+  "reason": "'that probably doesn't let you stay past July 31' and 'you shouldn't count on it' lean toward the landlord, so point 1 fails, though 'probably' keeps it short of mistake 1; section 11, 83.575(1), June 1 and July 10, double rent and the court case are there, and point 4 is credited on 'Nothing in the statute makes a landlord renew a lease' though no-reason is left out."
+ },
+ "end-9/3": {
+  "answers_first": true,
+  "mistakes_made": [
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "other_error": "",
+  "points_made": [
+   false,
+   true,
+   true,
+   false
+  ],
+  "reason": "'so you probably do have to leave unless the landlord agrees otherwise' leans toward the landlord, so point 1 fails, though 'probably' keeps it short of mistake 1; section 11, 83.575(1), June 1 and July 10, double rent and the court case are there, and it never says Part II gives no right to renew."
+ }
+}
