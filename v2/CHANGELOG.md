@@ -439,3 +439,8 @@ the default is gone in 2 of 3. Stopped here, as agreed; what is left is in SLIPS
 About 3 percent off each, no cite, reading, or count lost. All 24 stories on the final text, 72 answers, $6.52; eight Opus graders, blind, with
 v1's answers mixed in. Right of 72: final 61, v1 9. One miss comes from my second-round line on deciding before rent is due. New SLIPS.md entries.
 
+## 2026-11-01: the deposit skill loads the shared college-housing check
+
+`skills/deposit_not_returned.md` loads `who_the_law_covers`, replacing its own copy of the check and its `school_housing` fact line. It keeps the
+two points only it has: which deposits 83.49(4) leaves out, and money under 83.491. Not yet run live.
+

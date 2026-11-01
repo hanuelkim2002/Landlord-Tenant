@@ -134,6 +134,6 @@ not let the preview's launcher read the Documents folder.
 ## Elsewhere in v2
 
 `statutes/` (read-only), `skills/` (one file per situation, format A: `deposit_not_returned`, `repair_not_made`,
-`wants_to_leave_early`, `notice_received_violation`, `neighbor_disturbance`, `rent_increased`, `lease_ending`, and `who_the_law_covers`, the college-housing check the new skills share), `comparisons/` (`each_skill/`, one runner for each new skill's test, and `spans.py`, a time-span counter; the lease, skills, model,
+`wants_to_leave_early`, `notice_received_violation`, `neighbor_disturbance`, `rent_increased`, `lease_ending`, and `who_the_law_covers`, the college-housing check the skills share), `comparisons/` (`each_skill/`, one runner for each new skill's test, and `spans.py`, a time-span counter; the lease, skills, model,
 deposit skill, plain replies, and intake speed tests, the memory tests, their answer keys, and scores),
 `docs/superpowers/` (the memory's spec and plan), `matters/` (private, not in git), `V2_PROMPT.md` (how v2 started).
